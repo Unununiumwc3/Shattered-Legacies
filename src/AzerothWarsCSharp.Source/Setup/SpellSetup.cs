@@ -1,6 +1,6 @@
-﻿using AzerothWarsCSharp.Source.Libraries;
-using AzerothWarsCSharp.Source.Libraries.SpellSystem;
-using AzerothWarsCSharp.Source.Spells;
+﻿using AzerothWarsCSharp.MacroTools;
+using AzerothWarsCSharp.MacroTools.Spells;
+using AzerothWarsCSharp.MacroTools.SpellSystem;
 using static War3Api.Common;
 
 namespace AzerothWarsCSharp.Source.Setup

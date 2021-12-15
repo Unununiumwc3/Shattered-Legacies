@@ -1,6 +1,6 @@
 ﻿using AzerothWarsCSharp.MacroTools;
+using AzerothWarsCSharp.MacroTools.Powers;
 using AzerothWarsCSharp.MacroTools.QuestOutcomes;
-using AzerothWarsCSharp.Source.Powers;
 using static War3Api.Common;
 
 namespace AzerothWarsCSharp.Source.Setup

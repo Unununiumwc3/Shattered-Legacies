@@ -1,7 +1,7 @@
 ﻿using AzerothWarsCSharp.MacroTools;
+using AzerothWarsCSharp.MacroTools.Powers;
 using AzerothWarsCSharp.MacroTools.QuestObjectives;
 using AzerothWarsCSharp.MacroTools.QuestOutcomes;
-using AzerothWarsCSharp.Source.Powers;
 using WCSharp.Shared.Data;
 using static War3Api.Common;
 
