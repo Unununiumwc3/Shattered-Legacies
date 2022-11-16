@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using MacroTools.Extensions;
 using MacroTools.FactionSystem;
 using MacroTools.Wrappers;
@@ -9,7 +11,7 @@ namespace MacroTools.QuestSystem.UtilityStructs
   /// <summary>
   /// Completed when an eligible player moves a unit into the specified <see cref="Rectangle"/>.
   /// </summary>
-  public sealed class ObjectiveAnyUnitInRect : Objective
+  public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit
   {
     private readonly bool _heroOnly;
     private readonly rect _targetRect;
@@ -33,9 +35,9 @@ namespace MacroTools.QuestSystem.UtilityStructs
         .AddAction(() =>
         {
           var triggerUnit = GetTriggerUnit();
-          if (IsValidUnitInRect())
+          if (IsUnitValid(triggerUnit))
           {
-            TriggerUnit = triggerUnit;
+            CompletingUnit = triggerUnit;
             Progress = QuestProgress.Complete;
           }
           else
@@ -55,19 +57,17 @@ namespace MacroTools.QuestSystem.UtilityStructs
     /// <inheritdoc />
     public override Point Position => new(GetRectCenterX(_targetRect), GetRectCenterY(_targetRect));
 
-    /// <summary>
-    ///   The <see cref="unit" /> that completed this objective.
-    /// </summary>
-    public unit? TriggerUnit { get; private set; }
+    /// <inheritdoc />
+    public unit? CompletingUnit { get; private set; }
 
-    private bool IsValidUnitInRect()
-    {
-      foreach (var unit in new GroupWrapper().EnumUnitsInRect(_targetRect).EmptyToList())
-        if (EligibleFactions.Contains(unit.OwningPlayer()) && unit.IsAlive() &&
-            (IsUnitType(unit, UNIT_TYPE_HERO) || !_heroOnly))
-          return true;
-      return false;
-    }
+    /// <inheritdoc />
+    public string CompletingUnitName => CompletingUnit != null ? CompletingUnit.GetProperName() : "an unknown hero";
+
+    private bool IsUnitValid(unit whichUnit) =>
+      EligibleFactions.Contains(whichUnit.OwningPlayer()) && whichUnit.IsAlive() &&
+      (IsUnitType(whichUnit, UNIT_TYPE_HERO) || !_heroOnly);
+
+    private bool IsValidUnitInRect() => new GroupWrapper().EnumUnitsInRect(_targetRect).EmptyToList().Any(IsUnitValid);
 
     internal override void OnAdd(Faction whichFaction)
     {
