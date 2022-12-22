@@ -10,7 +10,7 @@ using static War3Api.Common;
 namespace WarcraftLegacies.Source.Quests.Lordaeron
 {
   /// <summary>
-  ///  Lordaeron has to kill the lich king, acquire various artifacts and control certain control points to get stronger units and a powered up Arthas.
+  /// Lordaeron can secure the Eastern Kingdoms to become High King.
   /// </summary>
   public sealed class QuestKingdomOfManLordaeron : QuestData
   {
@@ -30,7 +30,6 @@ namespace WarcraftLegacies.Source.Quests.Lordaeron
       AddObjective(new ObjectiveControlLegend(LegendLordaeron.Arthas, true));
       AddObjective(new ObjectiveAcquireArtifact(crownOfLordaeron));
       AddObjective(new ObjectiveAcquireArtifact(crownOfStormwind));
-      AddObjective(new ObjectiveCapitalDead(LegendScourge.LegendLichking));
       AddObjective(new ObjectiveControlPoint(ControlPointManager.Instance.GetFromUnitType(Constants.UNIT_N010_STORMWIND_CITY_30GOLD_MIN)));
       AddObjective(new ObjectiveControlPoint(ControlPointManager.Instance.GetFromUnitType(Constants.UNIT_N01G_LORDAERON_CITY_30GOLD_MIN)));
       Global = true;
@@ -61,19 +60,13 @@ namespace WarcraftLegacies.Source.Quests.Lordaeron
       ArtifactManager.Destroy(_crownOfLordaeron);
       ArtifactManager.Destroy(_crownOfStormwind);
 
-      var crownOfTheEasternKingdoms = new Artifact(CreateItem(Constants.ITEM_I00U_CROWN_OF_THE_EASTERN_KINGDOMS, 0, 0))
-      {
-        LocationType = ArtifactLocationType.Hidden,
-        LocationDescription = "Stormwind and Lordaeron Quest"
-      };
+      var crownOfTheEasternKingdoms = new Artifact(CreateItem(Constants.ITEM_I00U_CROWN_OF_THE_EASTERN_KINGDOMS, 0, 0));
       ArtifactManager.Register(crownOfTheEasternKingdoms);
       crownHolder?.AddItemSafe(crownOfTheEasternKingdoms.Item);
     }
 
     /// <inheritdoc/>
-    protected override void OnAdd(Faction whichFaction)
-    {
+    protected override void OnAdd(Faction whichFaction) =>
       whichFaction.ModObjectLimit(RewardResearchId, Faction.UNLIMITED);
-    }
   }
 }
