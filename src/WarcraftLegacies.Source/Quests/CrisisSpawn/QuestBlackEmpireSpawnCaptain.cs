@@ -24,7 +24,7 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
     private readonly unit _secondpick;
     private readonly LegendaryHero _nzoth;
     /// <summary>
-    /// Initializes a new instance of the <see cref="QuestBlackEmpireSpawnFootman"/> class.
+    /// Initializes a new instance of the <see cref="QuestBlackEmpireSpawnCaptain"/> class.
     /// </summary>
     public QuestBlackEmpireSpawnCaptain(PreplacedUnitSystem preplacedUnitSystem, Rectangle spawnLocation, LegendaryHero nzoth) : base("Pick the Black Empire", "The Black Empire will awaken.", "ReplaceableTextures\\CommandButtons\\BTNNzothIcon.blp")
     {
@@ -32,10 +32,9 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
       _nzoth = nzoth;
       _picker = preplacedUnitSystem.GetUnit(Constants.UNIT_N0DR_CRISIS_FACTION_PICKER_OLD_GODS, new Point(13068, -29532));
       _secondpick = preplacedUnitSystem.GetUnit(Constants.UNIT_N0DR_CRISIS_FACTION_PICKER_OLD_GODS, new Point(12700, -29532));
-      AddObjective(new ObjectiveEitherOf(
-       new ObjectiveResearch(Constants.UPGRADE_R07W_FORTIFIED_HULLS, Constants.UNIT_N0DR_CRISIS_FACTION_PICKER_OLD_GODS),
-       new ObjectiveTime(1590)));
+      AddObjective(new ObjectiveResearch(Constants.UPGRADE_R07W_FORTIFIED_HULLS, Constants.UNIT_N0DR_CRISIS_FACTION_PICKER_OLD_GODS));
       Shared = true;
+      Required = true;
     }
 
     /// <inheritdoc/>
@@ -52,7 +51,7 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
       var spawn = _spawnLocation.Center;
       foreach (var player in WCSharp.Shared.Util.EnumeratePlayers())
       {
-        SetPlayerTechMaxAllowed(player, Constants.UPGRADE_R07E_FORTIFIED_HULLS, 0);
+        SetPlayerTechMaxAllowed(player, Constants.UPGRADE_R07W_FORTIFIED_HULLS, 0);
       }
 
       KillNeutralHostileUnitsInRadius(spawn.X, spawn.Y, 2000);
@@ -90,7 +89,7 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
         if (GetLocalPlayer() == completingFaction.Player)
           SetCameraPosition(spawn.X, spawn.Y);
 
-        completingFaction.Player.SetFaction(NazjatarSetup.Nazjatar);
+        completingFaction.Player.SetFaction(BlackEmpireSetup.BlackEmpire);
       }
     }
   }
