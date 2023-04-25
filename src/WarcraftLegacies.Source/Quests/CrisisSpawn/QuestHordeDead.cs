@@ -4,8 +4,10 @@ using MacroTools.LegendSystem;
 using MacroTools.ObjectiveSystem.Objectives.FactionBased;
 using MacroTools.ObjectiveSystem.Objectives.LegendBased;
 using MacroTools.ObjectiveSystem.Objectives.MetaBased;
+using MacroTools.ObjectiveSystem.Objectives.TeamBased;
 using MacroTools.QuestSystem;
-using WarcraftLegacies.Source.Setup.FactionSetup;
+using WarcraftLegacies.Source.Setup;
+using static War3Api.Common;
 
 namespace WarcraftLegacies.Source.Quests.CrisisSpawn
 {
@@ -15,10 +17,10 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
   public sealed class QuestHordeDead : QuestData
   {
     /// <inheritdoc/>
-    protected override string RewardFlavour => "The Horde is defeated, C'thun is awakening in the sands of Ahn'qiraj";
+    protected override string RewardFlavour => "The Horde is defeated, a crisis can be picked in Kalimdor";
 
     /// <inheritdoc/>
-    protected override string RewardDescription => "The C'thun faction will become available to pick as a crisis";
+    protected override string RewardDescription => "The Kalimdor crisis are available";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="QuestHordeDead"/> class.
@@ -27,11 +29,18 @@ namespace WarcraftLegacies.Source.Quests.CrisisSpawn
       "With the Horde eliminated, something stirs in the sands of Ahn'qiraj",
       "ReplaceableTextures\\CommandButtons\\BTNFountainOfLife.blp")
     {
-      AddObjective(new ObjectiveFactionDefeated(WarsongSetup.WarsongClan));
-      AddObjective(new ObjectiveFactionDefeated(FrostwolfSetup.Frostwolf));
+      AddObjective(new ObjectiveTeamContolPointAmountLessThan(TeamSetup.NightElves, 40));
+      AddObjective(new ObjectiveTeamContolPointAmountGreaterThan(TeamSetup.Horde, 10));
       ResearchId = Constants.UPGRADE_R091_QUEST_COMPLETED_HORDE_OR_NIGHT_ELF_DEFEATED;
       Required = true;
     }
 
+    protected override void OnComplete(Faction completingFaction)
+    {
+      foreach (var player in WCSharp.Shared.Util.EnumeratePlayers())
+      {
+        SetPlayerTechResearched(player, Constants.UPGRADE_R09D_TURN_25_HAS_PASSED_OR_OLD_GODS_ARE_PICKABLE, 1);
+      }
+    }
   }
 }
