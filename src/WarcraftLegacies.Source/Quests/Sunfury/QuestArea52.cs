@@ -15,7 +15,7 @@ using MacroTools.ObjectiveSystem.Objectives.FactionBased;
 namespace WarcraftLegacies.Source.Quests.Sunfury
 {
   /// <summary>
-  /// Build various structures inside <see cref="Regions.AzuremystAmbient"/>
+  /// Build various structures inside <see cref="Regions.Area52Unlock"/>
   /// </summary>
   public sealed class QuestArea52 : QuestData
   {
@@ -23,11 +23,11 @@ namespace WarcraftLegacies.Source.Quests.Sunfury
     /// <summary>
     /// Initializes a new instance of the <see cref="QuestArea52"/> class.
     /// </summary>
-    public QuestArea52(Rectangle rescueRect) : base("The Way Forward", "The Draenei will need to rebuild their civilisation in Azeroth. Desolace seems like a perfect place for the birth of the second Draenei settlement.", "ReplaceableTextures\\CommandButtons\\BTNDraeneiDivineCitadel.blp")
+    public QuestArea52(Rectangle rescueRect) : base("Area 52", "The Sunfury will need to settle the surrounding lands, Area 52 is a perfect target", "ReplaceableTextures\\CommandButtons\\BTNLordaeronPalace.blp")
     {
       Required = true;
-      AddObjective(new ObjectiveKillAllInArea(new List<Rectangle> { Regions.DraeneiQuestKill }, "in Desolace"));
-      AddObjective(new ObjectiveControlPoint(ControlPointManager.Instance.GetFromUnitType(Constants.UNIT_N0BF_ANTORAN_WASTES_10GOLD_MIN)));
+      AddObjective(new ObjectiveKillAllInArea(new List<Rectangle> { Regions.Area52Unlock }, "in Area 52"));
+      AddObjective(new ObjectiveControlPoint(ControlPointManager.Instance.GetFromUnitType(Constants.UNIT_N07Q_AREA_52_10GOLD_MIN)));
       AddObjective(new ObjectiveExpire(1430, Title));
       AddObjective(new ObjectiveSelfExists());
       _rescueUnits = rescueRect.PrepareUnitsForRescue(RescuePreparationMode.HideAll);
@@ -37,7 +37,7 @@ namespace WarcraftLegacies.Source.Quests.Sunfury
     protected override void OnComplete(Faction whichFaction)
     {
       if (whichFaction.Player != null)
-        whichFaction.Player.AddGold(200);
+        whichFaction.Player.AddGold(400);
         whichFaction.Player.AddLumber(200);
       if (whichFaction.Player != null)
         whichFaction.Player.RescueGroup(_rescueUnits);
@@ -46,10 +46,10 @@ namespace WarcraftLegacies.Source.Quests.Sunfury
     }
 
     /// <inheritdoc/>
-    protected override string RewardFlavour => "Maraad joins the Draenai and the new settlement is born";
+    protected override string RewardFlavour => "The Area 52 is now settled by the Sunfury";
 
     /// <inheritdoc/>
-    protected override string RewardDescription => "Gain 200 Gold, 200 Lumber, an Outpost in Desolace and Maraad is now trainable at the altar.";
+    protected override string RewardDescription => "Gain 400 Gold, 200 Lumber and a base in Area 52.";
 
    }
  }
