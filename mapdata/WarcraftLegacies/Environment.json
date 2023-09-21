@@ -966944,7 +966944,7 @@
       "CliffTexture": 1
     },
     {
-      "Height": 1.724609375,
+      "Height": 1.623046875,
       "WaterHeight": 1,
       "Texture": 14,
       "IsWater": true,
@@ -970413,7 +970413,7 @@
       "CliffTexture": 1
     },
     {
-      "Height": 1.46484375,
+      "Height": 1.5625,
       "WaterHeight": 1,
       "Texture": 13,
       "IsWater": true,
@@ -994479,7 +994479,7 @@
       "CliffTexture": 1
     },
     {
-      "Height": 1.89453125,
+      "Height": 1.943359375,
       "WaterHeight": 1,
       "IsWater": true,
       "Variation": 1,
