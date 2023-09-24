@@ -458821,16 +458821,15 @@
       "Height": 2.705078125,
       "WaterHeight": 1,
       "Texture": 9,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 2.705078125,
       "WaterHeight": 1,
-      "Texture": 1,
-      "Variation": 12,
+      "Texture": 9,
+      "Variation": 7,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -472407,9 +472406,9 @@
     {
       "Height": 2.96484375,
       "WaterHeight": 1,
-      "Texture": 8,
+      "Texture": 1,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
