@@ -1,58 +1,34 @@
 {
   "OldId": 1651787841,
-  "NewId": 1431515201,
+  "NewId": 842092628,
   "Unk": [
     0
   ],
   "Modifications": [
     {
-      "Level": 1,
-      "Id": 1701994849,
-      "Type": 2,
-      "Value": 150
-    },
-    {
-      "Level": 2,
-      "Id": 1701994849,
-      "Type": 2,
-      "Value": 150
-    },
-    {
-      "Level": 3,
-      "Id": 1701994849,
-      "Type": 2,
-      "Value": 150
-    },
-    {
-      "Level": 4,
-      "Id": 1701994849,
-      "Type": 2,
-      "Value": 150
-    },
-    {
       "Level": 2,
       "Id": 1935895905,
-      "Value": 80
+      "Value": 100
     },
     {
       "Level": 3,
       "Id": 1935895905,
-      "Value": 85
+      "Value": 125
     },
     {
       "Level": 4,
       "Id": 1935895905,
-      "Value": 90
+      "Value": 150
     },
     {
       "Level": 1,
       "Pointer": 1,
       "Id": 828535880,
       "Type": 2,
-      "Value": 250
+      "Value": 150
     },
     {
-      "Level": 2,
+      "Level": 3,
       "Pointer": 1,
       "Id": 828535880,
       "Type": 2,
@@ -63,7 +39,7 @@
       "Pointer": 1,
       "Id": 828535880,
       "Type": 2,
-      "Value": 400
+      "Value": 375
     },
     {
       "Level": 1,
@@ -115,25 +91,25 @@
       "Level": 1,
       "Id": 1851880033,
       "Type": 2,
-      "Value": 200
+      "Value": 700
     },
     {
       "Level": 2,
       "Id": 1851880033,
       "Type": 2,
-      "Value": 200
+      "Value": 700
     },
     {
       "Level": 3,
       "Id": 1851880033,
       "Type": 2,
-      "Value": 200
+      "Value": 700
     },
     {
       "Level": 4,
       "Id": 1851880033,
       "Type": 2,
-      "Value": 200
+      "Value": 700
     }
   ]
 }
