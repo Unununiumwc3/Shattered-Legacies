@@ -983618,10 +983618,9 @@
     {
       "Height": 1.611328125,
       "WaterHeight": 1,
-      "Texture": 10,
+      "Texture": 1,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
