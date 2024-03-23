@@ -1170640,6 +1170640,7 @@
     {
       "Height": 1.1484375,
       "WaterHeight": 1,
+      "Texture": 11,
       "IsWater": true,
       "CliffVariation": 1,
       "CliffLevel": 2,
@@ -1170666,8 +1170667,9 @@
     {
       "Height": 0.88671875,
       "WaterHeight": 1,
-      "Texture": 10,
+      "Texture": 11,
       "IsWater": true,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1174144,17 +1174146,18 @@
     {
       "Height": 1.580078125,
       "WaterHeight": 1,
+      "Texture": 14,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 1.322265625,
       "WaterHeight": 1,
+      "Texture": 14,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1177707,9 +1177710,9 @@
     {
       "Height": 0.880859375,
       "WaterHeight": 1,
+      "Texture": 11,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1181212,9 +1181215,9 @@
     {
       "Height": 1.1015625,
       "WaterHeight": 1,
-      "Texture": 10,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 4,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1195408,9 +1195411,10 @@
     {
       "Height": 1.04296875,
       "WaterHeight": 1,
-      "Texture": 12,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 1,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1358772,19 +1358776,16 @@
     {
       "Height": 1.708984375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 1.755859375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1362301,25 +1362302,29 @@
     {
       "Height": 1.740234375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "CliffVariation": 2,
+      "Variation": 1,
+      "CliffVariation": 3,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 1.5078125,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 4,
+      "Variation": 1,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 1.443359375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "CliffVariation": 1,
+      "Variation": 6,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1365844,8 +1365849,10 @@
     {
       "Height": 0.947265625,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "CliffVariation": 3,
+      "Variation": 13,
+      "CliffVariation": 2,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1365861,16 +1365868,16 @@
     {
       "Height": 1.08984375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 8,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 1.03125,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1369383,15 +1369390,16 @@
     {
       "Height": 0.80078125,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 4,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.806640625,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
       "Variation": 12,
       "CliffLevel": 2,
@@ -1369400,9 +1369408,9 @@
     {
       "Height": 0.83984375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 13,
+      "Variation": 12,
       "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1369410,9 +1369418,8 @@
     {
       "Height": 0.826171875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1372883,15 +1372890,17 @@
     {
       "Height": 0.474609375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 9,
+      "Variation": 1,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.63671875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
       "CliffVariation": 5,
       "CliffLevel": 2,
@@ -1372900,19 +1372909,19 @@
     {
       "Height": 0.58203125,
       "WaterHeight": 1,
-      "Texture": 12,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 5,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.576171875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "CliffVariation": 5,
+      "Variation": 12,
+      "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1372936,6 +1372945,7 @@
     {
       "Height": 0.771484375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
       "Variation": 4,
       "CliffLevel": 2,
@@ -1376377,9 +1376387,9 @@
     {
       "Height": 0.50390625,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 8,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1376395,35 +1376405,37 @@
     {
       "Height": 0.521484375,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 5,
+      "Variation": 8,
+      "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.71484375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 1,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.7421875,
       "WaterHeight": 1,
+      "Texture": 4,
       "IsWater": true,
-      "CliffVariation": 1,
+      "Variation": 14,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.751953125,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 1,
       "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1379890,7 +1379902,7 @@
     {
       "Height": 0.3515625,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1379898,7 +1379910,7 @@
     {
       "Height": 0.6640625,
       "WaterHeight": 1,
-      "Texture": 1,
+      "Texture": 4,
       "IsWater": true,
       "Variation": 12,
       "CliffLevel": 2,
@@ -1379907,10 +1379919,9 @@
     {
       "Height": 0.564453125,
       "WaterHeight": 1,
-      "Texture": 1,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1379925,9 +1379936,10 @@
     {
       "Height": 0.193359375,
       "WaterHeight": 1,
-      "Texture": 1,
+      "Texture": 4,
       "IsWater": true,
-      "Variation": 8,
+      "Variation": 1,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1386791,9 +1386803,9 @@
     {
       "Height": 1.6796875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 13,
+      "Variation": 12,
       "CliffVariation": 2,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1386801,9 +1386813,9 @@
     {
       "Height": 1.568359375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1386819,9 +1386831,8 @@
     {
       "Height": 0.630859375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
       "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1390274,17 +1390285,17 @@
     {
       "Height": 0.857421875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 5,
+      "Variation": 5,
+      "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.400390625,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
       "Variation": 1,
       "CliffVariation": 5,
@@ -1393762,9 +1393773,10 @@
     {
       "Height": 0.814453125,
       "WaterHeight": 1,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 3,
+      "Variation": 4,
+      "CliffVariation": 2,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1393850,18 +1393862,16 @@
     {
       "Height": 0.279296875,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.08203125,
       "WaterHeight": 1,
-      "Texture": 12,
+      "Texture": 7,
       "IsWater": true,
-      "Variation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1397319,7 +1397329,9 @@
     {
       "Height": 0.771484375,
       "WaterHeight": 1,
+      "Texture": 6,
       "IsWater": true,
+      "Variation": 12,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1397388,43 +1397400,46 @@
     {
       "Height": -0.138671875,
       "WaterHeight": 1,
+      "Texture": 6,
       "IsWater": true,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.267578125,
       "WaterHeight": 1,
-      "Texture": 11,
-      "IsWater": true,
-      "Variation": 12,
-      "CliffLevel": 2,
-      "CliffTexture": 1
-    },
-    {
-      "Height": 0.29296875,
-      "WaterHeight": 1,
-      "Texture": 12,
+      "Texture": 6,
       "IsWater": true,
       "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
+      "Height": 0.29296875,
+      "WaterHeight": 1,
+      "Texture": 7,
+      "IsWater": true,
+      "Variation": 1,
+      "CliffVariation": 1,
+      "CliffLevel": 2,
+      "CliffTexture": 1
+    },
+    {
       "Height": 0.2578125,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.287109375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 4,
+      "Variation": 8,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1400914,8 +1400929,9 @@
     {
       "Height": 0.771484375,
       "WaterHeight": 1,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 8,
+      "Variation": 12,
       "CliffVariation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
@@ -1400996,17 +1401012,18 @@
     {
       "Height": 0.365234375,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
+      "Variation": 12,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.322265625,
       "WaterHeight": 1,
-      "Texture": 11,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 12,
+      "Variation": 5,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1404507,17 +1404524,18 @@
     {
       "Height": 0.43359375,
       "WaterHeight": 1,
+      "Texture": 7,
       "IsWater": true,
-      "Variation": 5,
+      "Variation": 9,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
     {
       "Height": 0.333984375,
       "WaterHeight": 1,
+      "Texture": 7,
       "IsWater": true,
-      "Variation": 1,
-      "CliffVariation": 1,
+      "Variation": 4,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
@@ -1404533,8 +1404551,9 @@
     {
       "Height": -0.02734375,
       "WaterHeight": 1,
+      "Texture": 6,
       "IsWater": true,
-      "Variation": 8,
+      "CliffVariation": 1,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
