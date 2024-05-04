@@ -14,6 +14,13 @@ namespace War3Api.Object
         protected virtual Unit LoadArchmage_Hamg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Archmage_Hamg, db);
+            unit.TextTooltipAwaken = "Revive Archmage";
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Archmage";
+            unit.TextProperNamesRaw = "Tenn Flamecaster,Nilas Arcanister,Andromath,Shal Lightbinder,Aran Spellweaver,Manath Magesinger,Landazar,Doril Magefont,Peril Spellbinder,Conjurus Rex,Fordred Aran,Dalar Dawnweaver,Kelen the Seeker";
+            unit.TextTooltipRevive = "Revive Archmage";
+            unit.TextTooltipBasic = "Summon Archmage";
+            unit.TextTooltipExtended = "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHbz,AHab,AHwe,AHmt";
@@ -65,7 +72,7 @@ namespace War3Api.Object
             unit.StatsStockStartDelay = 0;
             unit.StatsStockInitialAfterStartDelay = 1;
             unit.StatsStartingStrength = 14;
-            unit.StatsStrengthPerLevel = 1.8f;
+            unit.StatsStrengthPerLevel = 2f;
             unit.EditorTilesetsRaw = "*";
             unit.StatsUnitClassificationRaw = "_";
             unit.TechtreeUpgradesUsedRaw = "_";
@@ -163,6 +170,13 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodmage(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodmage, db);
+            unit.TextTooltipAwaken = "Revive Blood Mage";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blood Mage";
+            unit.TextProperNamesRaw = "Eldin Sunstrider,Tanin Hawkwing,Lorn Bloodseeker,Aldos Firestar,Gilaras Drakeson,Hale Magefire,Kath'ranis Remar,Tyoril Sunchaser,Sylvos Windrunner,Tenris Mirkblood,Marakanis Starfury,Geldor Earthfire,Halendor Burnkin,Kelen the Destroyer";
+            unit.TextTooltipRevive = "Revive Blood Mage";
+            unit.TextTooltipBasic = "Summon Blood Mage";
+            unit.TextTooltipExtended = "Mystical Hero, adept at controlling magic and ranged assaults. Can learn Flame Strike, Banish, Siphon Mana and Phoenix. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Asph";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHfs,AHbn,AHdr,AHpx";
@@ -312,6 +326,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMountainking(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mountainking, db);
+            unit.TextTooltipAwaken = "Revive Mountain King";
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Mountain King";
+            unit.TextProperNamesRaw = "Bor Stonebreaker,Munin Ironcliff,Thorgas Broadaxe,Kelv Sternhammer,Grim Thunderbrew,Buri Frostbeard,Huginn Ironcliff,Thordin Rockbeard,Bandis Forgefire,Gar Doomforge,Beazel Bludstone,Modi Stonesmith,Aggronor the Mighty";
+            unit.TextTooltipRevive = "Revive Mountain King";
+            unit.TextTooltipBasic = "Summon Mountain King";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHtc,AHtb,AHbh,AHav";
@@ -461,6 +481,13 @@ namespace War3Api.Object
         protected virtual Unit LoadPaladin_Hpal(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Paladin_Hpal, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Granis Darkhammer,Jorn the Redeemer,Sage Truthbearer,Malak the Avenger,Gavinrad the Dire,Morlune the Mighty,Agamand the True,Ballador the Bright,Manadar the Healer,Zann the Defender,Arius the Seeker,Aurrius the Pure,Karnwield the Seeker,Buzan the Fearless";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipBasic = "Summon Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -506,7 +533,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1800;
-            unit.MovementSpeedBase = 290;
+            unit.MovementSpeedBase = 300;
             unit.StatsStockMaximum = 3;
             unit.StatsStockReplenishInterval = 30;
             unit.StatsStockStartDelay = 120;
@@ -610,6 +637,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumantransportship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humantransportship, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Human Transport Ship";
+            unit.TextTooltipBasic = "Hire Transport Ship";
+            unit.TextTooltipExtended = "A sturdy transport ship capable of carrying units over the sea.";
             unit.AbilitiesNormalRaw = "Sch5,Slo3,Sdro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -759,6 +790,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumanbattleship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humanbattleship, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Human Battleship";
+            unit.TextTooltipBasic = "Hire Battleship";
+            unit.TextTooltipExtended = "Massive battleship good at destroying enemy ships and bombarding buildings from the sea. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -908,6 +943,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumandestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humandestroyer, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Human Frigate";
+            unit.TextTooltipBasic = "Hire Frigate";
+            unit.TextTooltipExtended = "A versatile attack ship good at destroying air attackers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1057,6 +1096,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDragonhawk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dragonhawk, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Dragonhawk Rider";
+            unit.TextTooltipBasic = "Train Dragonhawk Rider";
+            unit.TextTooltipExtended = "Swift flying unit, mounted by an Elven warrior. Has the Aerial Shackles ability, which allows it to immobilize and disarm enemy air units temporarily. Can learn Animal War Training, and the Cloud ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aclf,Amls,Ahan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1355,6 +1398,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGryphonrider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gryphonrider, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Gryphon Rider";
+            unit.TextTooltipBasic = "Train Gryphon Rider";
+            unit.TextTooltipExtended = "Powerful flying creature, mounted by a Dwarven hammer-thrower. Can learn Animal War Training, and the Storm Hammers ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Asth,Ahan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1504,6 +1551,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFlyingmachine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Flyingmachine, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Flying Machine";
+            unit.TextTooltipBasic = "Train Flying Machine";
+            unit.TextTooltipExtended = "Fast moving flying machine. Excellent at scouting, and effective against air units. Can learn the Flying Machine Bombs and Flak Cannons upgrades. |nCan see invisible units. |n|n|cffffcc00Attacks air units.|r";
             unit.AbilitiesNormalRaw = "Agyb,Agyv,Aflk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1653,6 +1704,10 @@ namespace War3Api.Object
         protected virtual Unit LoadKnight(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Knight, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Knight";
+            unit.TextTooltipBasic = "Train Knight";
+            unit.TextTooltipExtended = "Powerful mounted warrior. Can learn Animal War Training and Sundering Blades. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aihn,Ahsb,Ahan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1802,6 +1857,7 @@ namespace War3Api.Object
         protected virtual Unit LoadMilitia(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Militia, db);
+            unit.TextName = "Militia";
             unit.AbilitiesNormalRaw = "Ahar,Amil,Ahrp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -1951,6 +2007,12 @@ namespace War3Api.Object
         protected virtual Unit LoadPriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Priest, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Heal,- Heal|n- Dispel Magic,- Heal|n- Dispel Magic|n- Inner Fire";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Priest";
+            unit.TextTooltipBasic = "Train Priest";
+            unit.TextTooltipExtended = "Supporting spellcaster. Can initially cast Heal, which increases the life of wounded units. Can also learn Dispel Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ahea,Ainf,Adis,Aihn";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ahea";
             unit.AbilitiesHeroRaw = null;
@@ -2051,7 +2113,7 @@ namespace War3Api.Object
             unit.CombatAttack1AnimationBackswingPoint = 0.58f;
             unit.CombatAttack2AnimationBackswingPoint = 0f;
             unit.ArtAnimationCastBackswing = 0.67f;
-            unit.ArtAnimationCastPoint = 0.5f;
+            unit.ArtAnimationCastPoint = 0.4f;
             unit.CombatAttack1CooldownTime = 2f;
             unit.CombatAttack2CooldownTime = 0f;
             unit.CombatAttack1DamageLossFactor = 0f;
@@ -2100,6 +2162,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMortarteam(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mortarteam, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Mortar Team";
+            unit.TextTooltipBasic = "Train Mortar Team";
+            unit.TextTooltipExtended = "Long-range siege weaponry. Exceptional damage versus buildings, but slow and vulnerable. Can learn the Fragmentation Shards and Flare abilities. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Afla,Afsh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2249,6 +2315,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_hmtt(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_hmtt, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Siege Engine";
+            unit.TextTooltipBasic = "Train Siege Engine";
+            unit.TextTooltipExtended = "Heavily armored vehicle, effective at destroying buildings. Can be upgraded with the Barrage ability. |n|n|cffffcc00Attacks buildings.|r";
             unit.AbilitiesNormalRaw = "Srtt,Aroc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2398,6 +2468,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPeasant_hpea(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Peasant_hpea, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Peasant";
+            unit.TextTooltipBasic = "Train Peasant";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, build structures and Repair. Can become Militia. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahar,Amil,Ahrp,Ahlh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2547,6 +2621,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPhoenix(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Phoenix, db);
+            unit.TextName = "Phoenix";
             unit.AbilitiesNormalRaw = "Aphx,ACmi,ACrk,Apxf,Ahpe";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2696,6 +2771,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPhoenixegg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Phoenixegg, db);
+            unit.TextName = "Phoenix Egg";
             unit.AbilitiesNormalRaw = "Aphx,ACrk,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2845,6 +2921,10 @@ namespace War3Api.Object
         protected virtual Unit LoadRifleman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rifleman, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Rifleman";
+            unit.TextTooltipBasic = "Train Rifleman";
+            unit.TextTooltipExtended = "Highly skilled sharpshooter, effective against air units. Can gain the Long Rifles upgrade. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aihn,Ahri";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -2994,6 +3074,11 @@ namespace War3Api.Object
         protected virtual Unit LoadRocketengine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rocketengine, db);
+            unit.TextNameEditorSuffix = " (Barrage)";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Siege Engine";
+            unit.TextTooltipBasic = "Train Siege Engine";
+            unit.TextTooltipExtended = "Heavily armored vehicle, effective at destroying buildings. Has the Barrage ability, which fires rockets at nearby enemy air units. |n|n|cffffcc00Attacks buildings.|r";
             unit.AbilitiesNormalRaw = "Aroc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -3143,6 +3228,12 @@ namespace War3Api.Object
         protected virtual Unit LoadSorceress(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sorceress, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Slow,- Slow|n- Invisibility,- Slow|n- Invisibility|n- Polymorph";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Sorceress";
+            unit.TextTooltipBasic = "Train Sorceress";
+            unit.TextTooltipExtended = "Versatile spellcaster. Can initially cast Slow, which decreases movement and attack speed on enemy units. Can also learn Invisibility and Polymorph. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aivs,Aply,Aslo,Aihn";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -3292,6 +3383,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpellbreaker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spellbreaker, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Spellbreaker";
+            unit.TextTooltipBasic = "Train Spellbreaker";
+            unit.TextTooltipExtended = "Elven warrior trained to destroy spellcasters. Initially has Spell Steal, which manipulates buffs to your advantage, Spell Immunity and Feedback. Can also learn Control Magic. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asps,Acmg,Amim,Afbk,Aihn";
             unit.AbilitiesDefaultActiveAbilityRaw = "Asps";
             unit.AbilitiesHeroRaw = null;
@@ -3441,6 +3536,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWaterelemental1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Waterelemental1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Water Elemental";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -3590,6 +3687,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWaterelemental2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Waterelemental2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Water Elemental";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -3739,6 +3838,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWaterelemental3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Waterelemental3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Water Elemental";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -3888,6 +3989,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAltarofkings(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Altarofkings, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Altar of Kings";
+            unit.TextTooltipBasic = "Build Altar of Kings";
+            unit.TextTooltipExtended = "Summons Heroes. Revives slain Heroes.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4186,6 +4291,10 @@ namespace War3Api.Object
         protected virtual Unit LoadArcanesanctum(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Arcanesanctum, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Arcane Sanctum";
+            unit.TextTooltipBasic = "Build Arcane Sanctum";
+            unit.TextTooltipExtended = "Trains Priests, Sorceresses, and Spellbreakers. |nAlso contains spell upgrades for Priests and Sorceresses, Control Magic, and Magic Sentry.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4335,6 +4444,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumanarcanetower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humanarcanetower, db);
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Arcane Tower";
+            unit.TextTooltipBasic = "Upgrade to Arcane Tower";
+            unit.TextTooltipExtended = "Magical defensive tower. Particularly effective against enemy Heroes and spellcasters. Has the Feedback ability, which causes its attacks to destroy mana, dealing extra damage equal to the mana destroyed. Deals bonus damage against summoned units. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Afbt,AHta,Adts";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4484,6 +4597,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumanbarracks(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humanbarracks, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Barracks";
+            unit.TextTooltipBasic = "Build Barracks";
+            unit.TextTooltipExtended = "Primary troop production building. Trains Footmen, Riflemen and Knights. |nAlso contains the Defend, Long Rifles, Animal War Training, and Sundering Blades upgrades.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4633,6 +4750,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBlacksmith(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blacksmith, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Blacksmith";
+            unit.TextTooltipBasic = "Build Blacksmith";
+            unit.TextTooltipExtended = "Contains upgrades for improved armor, weaponry and gunpowder.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4782,6 +4903,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCastle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Castle, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Castle";
+            unit.TextTooltipBasic = "Upgrade to Castle";
+            unit.TextTooltipExtended = "Upgrade to Castle to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abdl,Amic,Argl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -4798,7 +4923,7 @@ namespace War3Api.Object
             unit.CombatDefenseBase = 5;
             unit.CombatDefenseTypeRaw = "fort";
             unit.CombatDefenseUpgradeBonus = 1;
-            unit.StatsFoodProduced = 12;
+            unit.StatsFoodProduced = 16;
             unit.StatsFoodCost = 0;
             unit.StatsGoldCost = 1025;
             unit.StatsRepairGoldCost = 1065;
@@ -4931,6 +5056,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCannontower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cannontower, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Cannon Tower";
+            unit.TextTooltipBasic = "Upgrade to Cannon Tower";
+            unit.TextTooltipExtended = "Heavy defensive structure. Particularly effective against clusters of troops. Can learn Fragmentation Shards and Magic Sentry ability. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Abds,Adts,Afsh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5080,6 +5209,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGryphonaviary(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gryphonaviary, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Gryphon Aviary";
+            unit.TextTooltipBasic = "Build Gryphon Aviary";
+            unit.TextTooltipExtended = "Trains Gryphon Riders, and Dragonhawk Riders. |nAlso contains the Storm Hammers and Cloud upgrades.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5229,6 +5362,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGuardtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Guardtower, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Guard Tower";
+            unit.TextTooltipBasic = "Upgrade to Guard Tower";
+            unit.TextTooltipExtended = "Primary defensive structure. Can learn the Magic Sentry ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Adts";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5378,6 +5515,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFarm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Farm, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Farm";
+            unit.TextTooltipBasic = "Build Farm";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5543,7 +5684,7 @@ namespace War3Api.Object
             unit.CombatDefenseBase = 5;
             unit.CombatDefenseTypeRaw = "fort";
             unit.CombatDefenseUpgradeBonus = 1;
-            unit.StatsFoodProduced = 12;
+            unit.StatsFoodProduced = 14;
             unit.StatsFoodCost = 0;
             unit.StatsGoldCost = 705;
             unit.StatsRepairGoldCost = 705;
@@ -5676,6 +5817,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHumanlumbermill(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humanlumbermill, db);
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Lumber Mill";
+            unit.TextTooltipBasic = "Build Lumber Mill";
+            unit.TextTooltipExtended = "Serves as a drop-off point for harvested lumber. |nAlso contains the upgrades for Lumber Harvesting and Masonry.";
             unit.AbilitiesNormalRaw = "Abds,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5825,6 +5970,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHumanshipyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Humanshipyard, db);
+            unit.TextName = "Human Shipyard";
+            unit.TextTooltipBasic = "Build Human Shipyard";
+            unit.TextTooltipExtended = "Boat construction facility. Produces Human Transport Ships, Human Frigates, and Human Battleships.";
             unit.AbilitiesNormalRaw = "Ane2,Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -5974,6 +6122,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTownhall(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Townhall, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Town Hall";
+            unit.TextTooltipBasic = "Build Town Hall";
+            unit.TextTooltipExtended = "Primary structure, used to train Peasants and receive gathered resources. Can be upgraded to Keep and then Castle to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abdl,Argl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -6123,6 +6275,10 @@ namespace War3Api.Object
         protected virtual Unit LoadArcanevault(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Arcanevault, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Arcane Vault";
+            unit.TextTooltipBasic = "Build Arcane Vault";
+            unit.TextTooltipExtended = "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Town Hall has (Town Hall, Keep, or Castle) and which buildings you have.";
             unit.AbilitiesNormalRaw = "Abds,Aall,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -6272,6 +6428,10 @@ namespace War3Api.Object
         protected virtual Unit LoadScouttower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Scouttower, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Scout Tower";
+            unit.TextTooltipBasic = "Build Scout Tower";
+            unit.TextTooltipExtended = "Basic observation tower. Has no attack, but can be upgraded into a Guard Tower, an Arcane Tower, or a Cannon Tower. Can learn the Magic Sentry ability.";
             unit.AbilitiesNormalRaw = "Abds,Adts";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -6421,6 +6581,13 @@ namespace War3Api.Object
         protected virtual Unit LoadBlademaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blademaster, db);
+            unit.TextTooltipAwaken = "Revive Blademaster";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blademaster";
+            unit.TextProperNamesRaw = "Tojara,Nikoro,Kajind,Mikasa,Samuro,Akinos,Mazuru,Yozshura,Daisho,Kigami,Arashicage,Moogul the Sly,Jubei";
+            unit.TextTooltipRevive = "Revive Blademaster";
+            unit.TextTooltipBasic = "Summon Blademaster";
+            unit.TextTooltipExtended = "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOwk,AOcr,AOmi,AOww";
@@ -6570,6 +6737,13 @@ namespace War3Api.Object
         protected virtual Unit LoadFarseer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Farseer, db);
+            unit.TextTooltipAwaken = "Revive Far Seer";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Far Seer";
+            unit.TextProperNamesRaw = "Gar'dal Grimsight,Negal Fireye,Kazil Darkeye,Magis Coldeye,Bale Bleakstare,Gorr Grimwolf,Kag'ar Winterfang,Nazgrel,Morg Wolfsong,Kazragore,Fenris'ar Gul";
+            unit.TextTooltipRevive = "Revive Far Seer";
+            unit.TextTooltipBasic = "Summon Far Seer";
+            unit.TextTooltipExtended = "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOfs,AOsf,AOcl,AOeq";
@@ -6719,6 +6893,13 @@ namespace War3Api.Object
         protected virtual Unit LoadShadowhunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shadowhunter, db);
+            unit.TextTooltipAwaken = "Revive Shadow Hunter";
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Shadow Hunter";
+            unit.TextProperNamesRaw = "Zul'kis,Zul'abar,Zul'rajas,Zul'maran,Jo Jo Headshrinker,Shaka-zahn,Shakti-lar,Mezil-kree";
+            unit.TextTooltipRevive = "Revive Shadow Hunter";
+            unit.TextTooltipBasic = "Summon Shadow Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at healing magics and voodoo curses. Can learn Healing Wave, Hex, Serpent Ward and Big Bad Voodoo. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOhw,AOhx,AOsw,AOvd";
@@ -6868,6 +7049,13 @@ namespace War3Api.Object
         protected virtual Unit LoadTaurenchieftain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Taurenchieftain, db);
+            unit.TextTooltipAwaken = "Revive Tauren Chieftain";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren Chieftain";
+            unit.TextProperNamesRaw = "Marn Thunderhorn,Tygore Dusthoof,Tam Windtotem,Durn Harpyslayer,Kam Ghoststeer,Kel Stonebull,Mull Stormhoof,Grok Bloodhorn,Malar Plainstrider,Taur Runetotem";
+            unit.TextTooltipRevive = "Revive Tauren Chieftain";
+            unit.TextTooltipBasic = "Summon Tauren Chieftain";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOsh,AOae,AOre,AOws";
@@ -7017,6 +7205,7 @@ namespace War3Api.Object
         protected virtual Unit LoadWatcherward(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Watcherward, db);
+            unit.TextName = "Watcher Ward";
             unit.AbilitiesNormalRaw = "Adt1,Aeth,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7166,6 +7355,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOrcishtransportship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Orcishtransportship, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Orc Transport Ship";
+            unit.TextTooltipBasic = "Hire Transport Ship";
+            unit.TextTooltipExtended = "A sturdy transport ship capable of carrying units over the sea.";
             unit.AbilitiesNormalRaw = "Sch5,Slo3,Sdro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7315,6 +7508,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDemolisher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Demolisher, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demolisher";
+            unit.TextTooltipBasic = "Train Demolisher";
+            unit.TextTooltipExtended = "Long-range siege weaponry. Effective against buildings but slow and vulnerable. Can learn the Burning Oil ability. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Abof";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7464,6 +7661,9 @@ namespace War3Api.Object
         protected virtual Unit LoadOrcishdestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Orcishdestroyer, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Orc Frigate";
+            unit.TextTooltipBasic = "Hire Frigate";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7613,6 +7813,12 @@ namespace War3Api.Object
         protected virtual Unit LoadWitchdoctor(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Witchdoctor, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Sentry Ward,- Sentry Ward|n- Stasis Trap,- Sentry Ward|n- Stasis Trap|n- Healing Ward";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Witch Doctor";
+            unit.TextTooltipBasic = "Train Witch Doctor";
+            unit.TextTooltipExtended = "Supporting spellcaster. Can initially cast Sentry Ward, which summons an invisible detector. Can also learn Stasis Trap and Healing Ward. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aeye,Ahwd,Asta,Aion,Aotr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7762,6 +7968,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSentryward(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sentryward, db);
+            unit.TextName = "Sentry Ward";
             unit.AbilitiesNormalRaw = "Adt1,Aeth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7911,6 +8118,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGrunt(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Grunt, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Grunt";
+            unit.TextTooltipBasic = "Train Grunt";
+            unit.TextTooltipExtended = "Brutish Orc warrior. Can learn Brute Strength. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asal,Aion,Aobs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8060,6 +8271,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHeadhunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Headhunter, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Headhunter";
+            unit.TextTooltipBasic = "Train Headhunter";
+            unit.TextTooltipExtended = "Versatile spear-thrower, effective against air units. Can learn Troll Regeneration. Can be upgraded to Berserker, which has the Berserk ability. |n|n|cffffcc00Attacks land and air units.|r ";
             unit.AbilitiesNormalRaw = "Sbsk,Aion,Absk,Aobk,Aotr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8080,7 +8295,7 @@ namespace War3Api.Object
             unit.StatsFoodCost = 2;
             unit.StatsGoldCost = 140;
             unit.StatsRepairGoldCost = 135;
-            unit.StatsHitPointsMaximumBase = 350;
+            unit.StatsHitPointsMaximumBase = 375;
             unit.StatsStartingIntelligence = 0;
             unit.StatsIntelligencePerLevel = 0f;
             unit.StatsIsABuildingRaw = 0;
@@ -8209,6 +8424,7 @@ namespace War3Api.Object
         protected virtual Unit LoadHealingward(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Healingward, db);
+            unit.TextName = "Healing Ward";
             unit.AbilitiesNormalRaw = "Aoar";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8358,6 +8574,10 @@ namespace War3Api.Object
         protected virtual Unit LoadKotobeast(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kotobeast, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Kodo Beast";
+            unit.TextTooltipBasic = "Train Kodo Beast";
+            unit.TextTooltipExtended = "Lumbering war beast, mounted by an Orcish drummer. Has the abilities War Drums, and Devour. War Drums gives friendly units nearby a bonus to attack damage. Devour allows the Kodo to eat a target enemy unit. Can gain the War Drums Upgrade. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aakb,Advc,Adev,Apak";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8507,6 +8727,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPeon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Peon, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Peon";
+            unit.TextTooltipBasic = "Train Peon";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Burrows to give it an attack. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahar,Arep,Asal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8656,6 +8880,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWolfrider_orai(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wolfrider_orai, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Raider";
+            unit.TextTooltipBasic = "Train Raider";
+            unit.TextTooltipExtended = "Highly mobile wolf rider. Effective against buildings. Can learn the Ensnare ability. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aens,Asal,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -8805,6 +9033,12 @@ namespace War3Api.Object
         protected virtual Unit LoadShaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shaman, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Purge,- Purge|n- Lightning Shield,- Purge|n- Lightning Shield|n- Bloodlust";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Shaman";
+            unit.TextTooltipBasic = "Train Shaman";
+            unit.TextTooltipExtended = "Primary spellcaster. Can initially cast Purge, which dispels magical buffs and can immobilize enemies. Can also learn Lightning Shield and Bloodlust. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ablo,Alsh,Apg2,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -8954,6 +9188,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSerpentward1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Serpentward1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Serpent Ward";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -9103,6 +9339,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSerpentward2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Serpentward2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Serpent Ward";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -9252,6 +9490,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSerpentward3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Serpentward3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Serpent Ward";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -9401,6 +9641,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSerpentward4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Serpentward4, db);
+            unit.TextNameEditorSuffix = " (Level 4)";
+            unit.TextName = "Serpent Ward";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -9550,12 +9792,19 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwalkermorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwalkermorph, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Ethereal Form|n- Spirit Link,- Ethereal Form|n- Spirit Link|n- Disenchant,- Ethereal Form|n- Spirit Link|n- Disenchant|n- Ancestral Spirit";
+            unit.TextNameEditorSuffix = " (Ethereal)";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Spirit Walker";
+            unit.TextTooltipBasic = "Train Spirit Walker";
+            unit.TextTooltipExtended = "Mystical Tauren caster. Has Ethereal Form, which allows him to avoid physical damage. Also has Spirit Link, which allows units to distribute incoming damage. Can learn Disenchant, and Ancestral Spirit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acpf,Aspl,Adcn,Aast,Aion,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
             unit.StatsAgilityPerLevel = 0f;
-            unit.StatsBuildTime = 38;
+            unit.StatsBuildTime = 35;
             unit.StatsGoldBountyAwardedNumberOfDice = 8;
             unit.StatsGoldBountyAwardedBase = 30;
             unit.StatsGoldBountyAwardedSidesPerDie = 3;
@@ -9588,7 +9837,7 @@ namespace War3Api.Object
             unit.StatsHitPointsRegenerationRate = 0.25f;
             unit.StatsManaRegeneration = 1f;
             unit.StatsHitPointsRegenerationTypeRaw = "always";
-            unit.StatsRepairTime = 38;
+            unit.StatsRepairTime = 35;
             unit.MovementGroupSeparationEnabledRaw = 0;
             unit.MovementGroupSeparationGroupNumber = 0;
             unit.MovementGroupSeparationParameter = 0;
@@ -9699,12 +9948,19 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwalker_ospw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwalker_ospw, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Ethereal Form|n- Spirit Link,- Ethereal Form|n- Spirit Link|n- Disenchant,- Ethereal Form|n- Spirit Link|n- Disenchant|n- Ancestral Spirit";
+            unit.TechtreeDependencyEquivalentsRaw = "ospm";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Spirit Walker";
+            unit.TextTooltipBasic = "Train Spirit Walker";
+            unit.TextTooltipExtended = "Mystical Tauren caster. Has Ethereal Form, which allows him to avoid physical damage. Also has Spirit Link, which allows units to distribute incoming damage. Can learn Disenchant, and Ancestral Spirit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acpf,Aspl,Adcn,Aast,Aion,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
             unit.StatsAgilityPerLevel = 0f;
-            unit.StatsBuildTime = 38;
+            unit.StatsBuildTime = 35;
             unit.StatsGoldBountyAwardedNumberOfDice = 8;
             unit.StatsGoldBountyAwardedBase = 30;
             unit.StatsGoldBountyAwardedSidesPerDie = 3;
@@ -9737,7 +9993,7 @@ namespace War3Api.Object
             unit.StatsHitPointsRegenerationRate = 0.25f;
             unit.StatsManaRegeneration = 1f;
             unit.StatsHitPointsRegenerationTypeRaw = "always";
-            unit.StatsRepairTime = 38;
+            unit.StatsRepairTime = 35;
             unit.MovementGroupSeparationEnabledRaw = 0;
             unit.MovementGroupSeparationGroupNumber = 0;
             unit.MovementGroupSeparationParameter = 0;
@@ -9848,6 +10104,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwolf1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwolf1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Spirit Wolf";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -9997,6 +10255,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwolf2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwolf2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Dire Wolf";
             unit.AbilitiesNormalRaw = "ACct";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -10146,6 +10406,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwolf3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwolf3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Shadow Wolf";
             unit.AbilitiesNormalRaw = "ACct,Apiv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -10295,12 +10557,16 @@ namespace War3Api.Object
         protected virtual Unit LoadTauren(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tauren, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren";
+            unit.TextTooltipBasic = "Train Tauren";
+            unit.TextTooltipExtended = "Mighty warrior. Has Pulverize, which gives Tauren a chance of dealing area effect damage on their attacks. Can gain the Pulverize Upgrade. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Awar,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
             unit.StatsAgilityPerLevel = 0f;
-            unit.StatsBuildTime = 44;
+            unit.StatsBuildTime = 39;
             unit.StatsGoldBountyAwardedNumberOfDice = 8;
             unit.StatsGoldBountyAwardedBase = 30;
             unit.StatsGoldBountyAwardedSidesPerDie = 3;
@@ -10333,7 +10599,7 @@ namespace War3Api.Object
             unit.StatsHitPointsRegenerationRate = 0.25f;
             unit.StatsManaRegeneration = 0f;
             unit.StatsHitPointsRegenerationTypeRaw = "always";
-            unit.StatsRepairTime = 50;
+            unit.StatsRepairTime = 39;
             unit.MovementGroupSeparationEnabledRaw = 0;
             unit.MovementGroupSeparationGroupNumber = 0;
             unit.MovementGroupSeparationParameter = 0;
@@ -10444,6 +10710,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBerserker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Berserker, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Berserker";
+            unit.TextTooltipBasic = "Train Berserker";
+            unit.TextTooltipExtended = "Versatile spear-thrower, effective against air units. Has the Berserk ability, which allows it to deal more damage, but take more damage when attacked. Can learn Troll Regeneration. |n|n|cffffcc00Attacks land and air units.|r ";
             unit.AbilitiesNormalRaw = "Absk,Aion,Aobk,Aotr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -10464,7 +10734,7 @@ namespace War3Api.Object
             unit.StatsFoodCost = 2;
             unit.StatsGoldCost = 140;
             unit.StatsRepairGoldCost = 135;
-            unit.StatsHitPointsMaximumBase = 450;
+            unit.StatsHitPointsMaximumBase = 475;
             unit.StatsStartingIntelligence = 0;
             unit.StatsIntelligencePerLevel = 0f;
             unit.StatsIsABuildingRaw = 0;
@@ -10593,6 +10863,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTrollbatrider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Trollbatrider, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Batrider";
+            unit.TextTooltipBasic = "Train Batrider";
+            unit.TextTooltipExtended = "Light flying unit with incredible perception. Good at destroying buildings. Has the Unstable Concoction ability, which allows the Batrider to explode, dealing damage to nearby enemy air units. Can learn Liquid Fire, and Troll Regeneration. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aliq,Auco,Aotr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -10742,6 +11016,7 @@ namespace War3Api.Object
         protected virtual Unit LoadStasistraptotem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stasistraptotem, db);
+            unit.TextName = "Stasis Trap";
             unit.AbilitiesNormalRaw = "Aeth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -10891,6 +11166,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWindrider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Windrider, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Wind Rider";
+            unit.TextTooltipBasic = "Train Wind Rider";
+            unit.TextTooltipExtended = "Highly mobile flying creature. Excellent at scouting. Can learn Envenomed Spears. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aven";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11040,6 +11319,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAltarofstorms(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Altarofstorms, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Altar of Storms";
+            unit.TextTooltipBasic = "Build Altar of Storms";
+            unit.TextTooltipExtended = "Summons Heroes. Revives slain Heroes.";
             unit.AbilitiesNormalRaw = "Abds,Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11189,6 +11472,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOrcbarracks(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Orcbarracks, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Barracks";
+            unit.TextTooltipBasic = "Build Barracks";
+            unit.TextTooltipExtended = "Primary troop production building. Trains Grunts, Headhunters and Demolishers. |nAlso contains the Brute Strength, Berserker, Troll Regeneration, and Burning Oil upgrades.";
             unit.AbilitiesNormalRaw = "Abds,Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11338,6 +11625,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBeastiary(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Beastiary, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Beastiary";
+            unit.TextTooltipBasic = "Build Beastiary";
+            unit.TextTooltipExtended = "Trains Raiders, Kodo Beasts, Batriders, and Wind Riders. |nAlso contains the Ensnare, Envenomed Spears, Liquid Fire and War Drums upgrades.";
             unit.AbilitiesNormalRaw = "Abds,Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11487,6 +11778,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWarmill(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Warmill, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "War Mill";
+            unit.TextTooltipBasic = "Build War Mill";
+            unit.TextTooltipExtended = "Serves as a drop-off point for harvested lumber. |nAlso contains upgrades for improved armor, melee weapons, ranged weapons, Reinforced Defenses, and Spiked Barricades.";
             unit.AbilitiesNormalRaw = "Abds,Aspi,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11636,6 +11931,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFortress(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fortress, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Fortress";
+            unit.TextTooltipBasic = "Upgrade to Fortress";
+            unit.TextTooltipExtended = "Upgrade to Fortress to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abdl,Aspi,Argl,Aosp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11785,6 +12084,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGreathall(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greathall, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Great Hall";
+            unit.TextTooltipBasic = "Build Great Hall";
+            unit.TextTooltipExtended = "Primary structure, used to train Peons and receive gathered resources. Can be upgraded to Stronghold and then Fortress to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abdl,Aspi,Argl,Aosp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -11934,6 +12237,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOrcshipyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Orcshipyard, db);
+            unit.TextDescription = "Sells boats.";
+            unit.TextName = "Orc Shipyard";
+            unit.TextTooltipBasic = "Build Orc Shipyard";
+            unit.TextTooltipExtended = "Boat construction facility. Produces Orc Transport Ships, Orc Frigates, and Orc Battleships.";
             unit.AbilitiesNormalRaw = "Ane2,Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12083,6 +12390,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritlodge(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritlodge, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Spirit Lodge";
+            unit.TextTooltipBasic = "Build Spirit Lodge";
+            unit.TextTooltipExtended = "Spellcaster production building. Trains Shaman and Witch Doctors. |nAlso contains spell upgrades for Shaman and Witch Doctors.";
             unit.AbilitiesNormalRaw = "Abds,Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12232,6 +12543,10 @@ namespace War3Api.Object
         protected virtual Unit LoadStronghold(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stronghold, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Stronghold";
+            unit.TextTooltipBasic = "Upgrade to Stronghold";
+            unit.TextTooltipExtended = "Upgrade to Stronghold to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abdl,Aspi,Argl,Aosp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12381,6 +12696,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTrollburrow(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Trollburrow, db);
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Burrow";
+            unit.TextTooltipBasic = "Build Burrow";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained. Peons can garrison inside to attack enemy units. Can learn the Reinforced Defenses upgrade. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aspi,Abun,Abtl,Astd,Arbr,Aorb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12530,6 +12849,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTaurentotem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Taurentotem, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren Totem";
+            unit.TextTooltipBasic = "Build Tauren Totem";
+            unit.TextTooltipExtended = "Trains Spirit Walkers and Tauren. |nAlso contains upgrades for Spirit Walkers and Tauren.";
             unit.AbilitiesNormalRaw = "Abds,Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12679,6 +13002,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVoodoolounge(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Voodoolounge, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Voodoo Lounge";
+            unit.TextTooltipBasic = "Build Voodoo Lounge";
+            unit.TextTooltipExtended = "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Great Hall has (Great Hall, Stronghold, or Fortress) and which buildings you have.";
             unit.AbilitiesNormalRaw = "Abds,Aall,Aspi,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12828,6 +13155,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWatchtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Watchtower, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Watch Tower";
+            unit.TextTooltipBasic = "Build Watch Tower";
+            unit.TextTooltipExtended = "Defensive structure. Can learn the Reinforced Defenses upgrade. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Arbr,Aspi,Aorb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -12977,6 +13308,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDemonhunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Demonhunter, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Shadowsong,Shadowfury,Shadowstalker,Flameseeker,Darkweaver,Darkterror,Darksorrow,Sindweller,Painkiller,Hellbourne,Wrathbringer,Ragerunner,Firebrand,Bloodwrath,Terrorblade";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipBasic = "Summon Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEme";
@@ -13126,6 +13464,14 @@ namespace War3Api.Object
         protected virtual Unit LoadDemonhuntermorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Demonhuntermorphed, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextNameEditorSuffix = " (Demon Form)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Shadowsong,Shadowfury,Shadowstalker,Flameseeker,Darkweaver,Darkterror,Darksorrow,Sindweller,Painkiller,Hellbourne,Wrathbringer,Ragerunner,Firebrand,Bloodwrath,Terrorblade";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipBasic = "Summon Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEme";
@@ -13275,6 +13621,13 @@ namespace War3Api.Object
         protected virtual Unit LoadKeeperofthegrove(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Keeperofthegrove, db);
+            unit.TextTooltipAwaken = "Revive Keeper of the Grove";
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Keeper of the Grove";
+            unit.TextProperNamesRaw = "Larodar,Anubris,Nandieb,Califax,Bandalar,Malorne,Gholbine,Dagda,Nuada,Oghma,Centrius,Ceredwyn";
+            unit.TextTooltipRevive = "Revive Keeper of the Grove";
+            unit.TextTooltipBasic = "Summon Keeper of the Grove";
+            unit.TextTooltipExtended = "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -13424,6 +13777,13 @@ namespace War3Api.Object
         protected virtual Unit LoadPriestessofthemoon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Priestessofthemoon, db);
+            unit.TextTooltipAwaken = "Revive Priestess of the Moon";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Priestess of the Moon";
+            unit.TextProperNamesRaw = "Kathris Starsong,Adora Nightshade,Mora Moonsinger,Felore Moonray,Anara Chillwind,Kera Stardragon,Mave Whisperwind,Delas Moonfang,Mira Whitemane,Theta Saberfang,Tygra Snowscar,Ariel Darkmoon,Diana Windwood";
+            unit.TextTooltipRevive = "Revive Priestess of the Moon";
+            unit.TextTooltipBasic = "Summon Priestess of the Moon";
+            unit.TextTooltipExtended = "Warrior Hero, adept at enhancing ranged attacks and slaying enemies from afar. Can learn Scout, Searing Arrows, Trueshot Aura, and Starfall. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ashm,AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHfa,AEst,AEar,AEsf";
@@ -13573,6 +13933,13 @@ namespace War3Api.Object
         protected virtual Unit LoadWarden(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Warden, db);
+            unit.TextTooltipAwaken = "Revive Warden";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warden";
+            unit.TextProperNamesRaw = "Alsa Iron-cell,The Iron Raven,Marin Bladewing,Shalis Darkhunter,Sira Moonwarden,Saithis,Malace Shade,Kiri Starstalker,Anaya Felgrove,Mirana Starlight,Felhala Starmoon,Drelanim Whisperwind,Cordana Felsong,Nalmeena Darkfollow";
+            unit.TextTooltipRevive = "Revive Warden";
+            unit.TextTooltipBasic = "Summon Warden";
+            unit.TextTooltipExtended = "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm,AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEbl,AEfk,AEsh,AEsv";
@@ -13722,6 +14089,10 @@ namespace War3Api.Object
         protected virtual Unit LoadArcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Archer, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Archer";
+            unit.TextTooltipBasic = "Train Archer";
+            unit.TextTooltipExtended = "Basic long-ranged attacker. Has the Elune's Grace ability and Hippogryph Taming. Can learn the Marksmanship and Improved Bows upgrades.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aco2,Ashm,Aien,Ault,Aegr,Aeib,Aemk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -13871,6 +14242,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGlaivethrower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Glaivethrower, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Glaive Thrower";
+            unit.TextTooltipBasic = "Train Glaive Thrower";
+            unit.TextTooltipExtended = "Long-range siege weaponry. Exceptional damage versus buildings. Can gain the Vorpal Blades upgrade to attack trees. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aimp,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14020,6 +14395,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelfbattleship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelfbattleship, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Night Elf Battleship";
+            unit.TextTooltipBasic = "Hire Battleship";
+            unit.TextTooltipExtended = "Massive battleship good at destroying enemy ships and bombarding buildings from the sea. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14169,6 +14548,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChimaera(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chimaera, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Chimaera";
+            unit.TextTooltipBasic = "Train Chimaera";
+            unit.TextTooltipExtended = "Flying two headed Dragon. Can learn Corrosive Breath. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Acor,Alit,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14318,6 +14701,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDruidoftheclawmorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Druidoftheclawmorphed, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Roar,- Roar|n- Rejuvenation,- Roar|n- Rejuvenation|n- Bear Form";
+            unit.TextNameEditorSuffix = " (Bear Form)";
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Druid of the Claw";
+            unit.TextTooltipBasic = "Train Druid of the Claw";
+            unit.TextTooltipExtended = "Melee spellcaster. Can initially cast Roar, which increases attack damage. Can also learn Rejuvenation, Bear Form and Mark of the Claw. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abrf,Ara2,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14467,6 +14857,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelfdestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelfdestroyer, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Night Elf Frigate";
+            unit.TextTooltipBasic = "Hire Frigate";
+            unit.TextTooltipExtended = "A versatile attack ship good at destroying air attackers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14616,6 +15010,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDruidoftheclaw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Druidoftheclaw, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Roar,- Roar|n- Rejuvenation,- Roar|n- Rejuvenation|n- Bear Form";
+            unit.TextNameEditorSuffix = " (Night Elf Form)";
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Druid of the Claw";
+            unit.TextTooltipBasic = "Train Druid of the Claw";
+            unit.TextTooltipExtended = "Melee spellcaster. Can initially cast Roar, which increases attack damage. Can also learn Rejuvenation, Bear Form and Mark of the Claw. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abrf,Arej,Aroa,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -14765,6 +15166,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDruidofthetalon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Druidofthetalon, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Faerie Fire,- Faerie Fire|n- Storm Crow Form,- Faerie Fire|n- Storm Crow Form|n- Cyclone";
+            unit.TextNameEditorSuffix = " (Night Elf Form)";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Druid of the Talon";
+            unit.TextTooltipBasic = "Train Druid of the Talon";
+            unit.TextTooltipExtended = "Maneuverable spellcaster. Can initially cast Faerie Fire, which reduces armor and gives vision of an enemy unit. Can also learn Storm Crow Form, Cyclone and Mark of the Talon. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acyc,Arav,Afae,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afae";
             unit.AbilitiesHeroRaw = null;
@@ -14914,6 +15322,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDryad(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dryad, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Dryad";
+            unit.TextTooltipBasic = "Train Dryad";
+            unit.TextTooltipExtended = "Anti-spellcaster that has a poison attack which slows and damages enemy units. Also has Spell Immunity which renders her invulnerable to magical effects and damage. Can learn Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aadm,Amim,Aspo,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aadm";
             unit.AbilitiesHeroRaw = null;
@@ -15063,6 +15475,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDruidofthetalonmorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Druidofthetalonmorphed, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Faerie Fire,- Faerie Fire|n- Storm Crow Form,- Faerie Fire|n- Storm Crow Form|n- Cyclone";
+            unit.TextNameEditorSuffix = " (Storm Crow Form)";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Druid of the Talon";
+            unit.TextTooltipBasic = "Train Druid of the Talon";
+            unit.TextTooltipExtended = "Maneuverable spellcaster. Can initially cast Faerie Fire, which reduces armor and gives vision of an enemy unit. Can also learn Storm Crow Form, Cyclone and Mark of the Talon. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Arav,Afa2,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afae";
             unit.AbilitiesHeroRaw = null;
@@ -15082,7 +15501,7 @@ namespace War3Api.Object
             unit.StatsFoodProduced = 0;
             unit.StatsFoodCost = 2;
             unit.StatsGoldCost = 135;
-            unit.StatsRepairGoldCost = 150;
+            unit.StatsRepairGoldCost = 135;
             unit.StatsHitPointsMaximumBase = 300;
             unit.StatsStartingIntelligence = 0;
             unit.StatsIntelligencePerLevel = 0f;
@@ -15212,6 +15631,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFaeriedragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Faeriedragon, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Faerie Dragon";
+            unit.TextTooltipBasic = "Train Faerie Dragon";
+            unit.TextTooltipExtended = "Small flying creature adept at harming spellcasters and avoiding damage. Has Spell Immunity, Phase Shift and Mana Flare. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Amim,Amfl,Apsh,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "Apsh";
             unit.AbilitiesHeroRaw = null;
@@ -15361,6 +15784,7 @@ namespace War3Api.Object
         protected virtual Unit LoadForceofnature(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Forceofnature, db);
+            unit.TextName = "Treant";
             unit.AbilitiesNormalRaw = "Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -15510,6 +15934,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHippogryph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hippogryph, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Hippogryph";
+            unit.TextTooltipBasic = "Train Hippogryph";
+            unit.TextTooltipExtended = "Flying melee attack beast. Has the Hippogryph Taming ability. |n|n|cffffcc00Attacks air units.|r";
             unit.AbilitiesNormalRaw = "Aco3,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -15659,6 +16087,10 @@ namespace War3Api.Object
         protected virtual Unit LoadRiddenhippogryph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Riddenhippogryph, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Hippogryph Rider";
+            unit.TextTooltipBasic = "Ride Hippogryph";
+            unit.TextTooltipExtended = "Archer mounted Hippogryph. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Adec,Ault,Aeib,Aemk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -15808,6 +16240,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMountaingiant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mountaingiant, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Mountain Giant";
+            unit.TextTooltipBasic = "Train Mountain Giant";
+            unit.TextTooltipExtended = "Massive melee unit that can disrupt enemy attackers and take incredible amounts of punishment. Has the Taunt and War Club abilities. Can learn Hardened Skin, and Resistant Skin. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Atau,Agra,Arsk,Assk,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -15957,6 +16393,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHuntress(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Huntress, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Huntress";
+            unit.TextTooltipBasic = "Train Huntress";
+            unit.TextTooltipExtended = "Agile short-ranged warrior. Can learn the Sentinel ability and the Moon Glaive attack. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aesn,Ashm,Amgl,Aien,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -16106,6 +16546,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritofvengeance(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritofvengeance, db);
+            unit.TextName = "Avatar of Vengeance";
             unit.AbilitiesNormalRaw = "ACmi,Asp1,ACrk,Avng,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "Avng";
             unit.AbilitiesHeroRaw = null;
@@ -16255,6 +16696,7 @@ namespace War3Api.Object
         protected virtual Unit LoadVengeance(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Vengeance, db);
+            unit.TextName = "Spirit of Vengeance";
             unit.AbilitiesNormalRaw = "Avul,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -16404,6 +16846,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWisp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wisp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Wisp";
+            unit.TextTooltipBasic = "Train Wisp";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, create Night Elf buildings and Renew. |nCan Detonate to dispel magic, hurt summoned creatures and drain mana in an area.";
             unit.AbilitiesNormalRaw = "Adtn,Aren,Awha,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -16553,6 +16999,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientoflore(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientoflore, db);
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Ancient of Lore";
+            unit.TextTooltipBasic = "Create Ancient of Lore";
+            unit.TextTooltipExtended = "Keeper of ground based spellcasters. Trains Druids of the Claw, Dryads, and Mountain Giants. |nAlso contains the upgrades for Druids of the Claw, Mark of the Claw, Abolish Magic, Hardened Skin, and Resistant Skin. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aeat,Aro1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -16702,6 +17152,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientofwar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientofwar, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Ancient of War";
+            unit.TextTooltipBasic = "Create Ancient of War";
+            unit.TextTooltipExtended = "Keeper of primary assault troops. Trains Archers, Huntresses, and Glaive Throwers. |nAlso contains Archer, Huntress, and Glaive Thrower upgrades. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aeat,Aro1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -16851,6 +17305,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientofwind(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientofwind, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Ancient of Wind";
+            unit.TextTooltipBasic = "Create Ancient of Wind";
+            unit.TextTooltipExtended = "Keeper of aerial assault units and spellcasters. Trains Hippogryphs, Druids of the Talon, and Faerie Dragons. |nAlso contains the upgrades for Druids of the Talon and Mark of the Talon. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aeat,Aro1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17000,6 +17458,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAltarofelders(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Altarofelders, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Altar of Elders";
+            unit.TextTooltipBasic = "Create Altar of Elders";
+            unit.TextTooltipExtended = "Summons Heroes. Revives slain Heroes.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17149,6 +17611,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientofwonders(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientofwonders, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Ancient of Wonders";
+            unit.TextTooltipBasic = "Build Ancient of Wonders";
+            unit.TextTooltipExtended = "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Tree of Life has (Tree of Life, Tree of Ages, or Tree of Eternity) and which buildings you have. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aall,Aeat,Aro1,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17298,6 +17764,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHuntershall(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Huntershall, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Hunter's Hall";
+            unit.TextTooltipBasic = "Create Hunter's Hall";
+            unit.TextTooltipExtended = "Contains the attack and armor upgrades for all units, the Ultravision and Well Spring upgrades.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17447,6 +17917,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChimaeraroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chimaeraroost, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Chimaera Roost";
+            unit.TextTooltipBasic = "Create Chimaera Roost";
+            unit.TextTooltipExtended = "Trains Chimaeras. |nAlso contains the Corrosive Breath upgrade.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17596,6 +18070,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEntangledgoldmine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Entangledgoldmine, db);
+            unit.TextName = "Entangled Gold Mine";
+            unit.TextTooltipBasic = "Entangle Gold Mine";
+            unit.TextTooltipExtended = "A cluster of roots that allows wisps to mine gold from goldmines.";
             unit.AbilitiesNormalRaw = "Abds,Aenc,Slo2,Adri,Aegm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17745,6 +18222,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMoonwell(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Moonwell, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Moon Well";
+            unit.TextTooltipBasic = "Create Moon Well";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained. Has the Replenish Mana and Life ability. Can gain the Well Spring upgrade. Regenerates mana at night.";
             unit.AbilitiesNormalRaw = "Abds,Ambt,Aews";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -17781,7 +18262,7 @@ namespace War3Api.Object
             unit.PathingPlacementRequiresRaw = "unbuildable";
             unit.StatsPrimaryAttributeRaw = "_";
             unit.StatsHitPointsRegenerationRate = 0f;
-            unit.StatsManaRegeneration = 1.5f;
+            unit.StatsManaRegeneration = 1.35f;
             unit.StatsHitPointsRegenerationTypeRaw = "none";
             unit.StatsRepairTime = 50;
             unit.MovementGroupSeparationEnabledRaw = 0;
@@ -17894,6 +18375,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelfshipyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelfshipyard, db);
+            unit.TextDescription = "Sells boats.";
+            unit.TextName = "Night Elf Shipyard";
+            unit.TextTooltipBasic = "Build Night Elf Shipyard";
+            unit.TextTooltipExtended = "Boat construction facility. Produces Night Elf Transport Ships, Night Elf Frigates, and Night Elf Battleships.";
             unit.AbilitiesNormalRaw = "Abds,Ane2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -18043,6 +18528,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTreeofages(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Treeofages, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Tree of Ages";
+            unit.TextTooltipBasic = "Upgrade to Tree of Ages";
+            unit.TextTooltipExtended = "Upgrade to Tree of Ages to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Abdl,Atol,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -18192,6 +18681,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTreeofeternity(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Treeofeternity, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Tree of Eternity";
+            unit.TextTooltipBasic = "Upgrade to Tree of Eternity";
+            unit.TextTooltipExtended = "Upgrade to Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Abdl,Atol,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -18341,6 +18834,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTreeoflife(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Treeoflife, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tree of Life";
+            unit.TextTooltipBasic = "Create Tree of Life";
+            unit.TextTooltipExtended = "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Tree of Ages and then Tree of Eternity to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Abdl,Atol,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -18490,6 +18987,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientprotector(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientprotector, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Ancient Protector";
+            unit.TextTooltipBasic = "Create Ancient Protector";
+            unit.TextTooltipExtended = "Defensive Ancient. When rooted in the ground, can hurl enormous rocks at nearby enemy units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aeat,Aro2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -18639,6 +19140,13 @@ namespace War3Api.Object
         protected virtual Unit LoadCryptlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cryptlord, db);
+            unit.TextTooltipAwaken = "Revive Crypt Lord";
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Crypt Lord";
+            unit.TextProperNamesRaw = "Thebis-Ra,Typhis-Ahn,Anubiros,Memphis-Ahn,Horus'aman,Nephri'thos,Arak-arahm,Tuten'arak,Pharoh-moth";
+            unit.TextTooltipRevive = "Revive Crypt Lord";
+            unit.TextTooltipBasic = "Summon Crypt Lord";
+            unit.TextTooltipExtended = "Warrior Hero, adept at summoning insect minions and crushing enemies. Can learn Impale, Spiked Carapace, Carrion Beetles and Locust Swarm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUim,AUts,AUcb,AUls";
@@ -18788,6 +19296,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDeathknight(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deathknight, db);
+            unit.TextTooltipAwaken = "Revive Death Knight";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Death Knight";
+            unit.TextProperNamesRaw = "Lord Nightsorrow,Lord Soulrender,Lord Dethstorm,Lord Maldazzar,Lord Darkhallow,Lord Lightstalker,Baron Bloodbane,Baron Felblade,Duke Dreadmoore,Duke Ragereaver,Baron Frostfel,Lord Darkscythe,Duke Wintermaul,Baron Perenolde,Baron Morte";
+            unit.TextTooltipRevive = "Revive Death Knight";
+            unit.TextTooltipBasic = "Summon Death Knight";
+            unit.TextTooltipExtended = "Warrior Hero, evil counterpart to the Human Paladin. Can learn Death Coil, Death Pact, Unholy Aura, and Animate Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUdc,AUdp,AUau,AUan";
@@ -18937,6 +19452,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDreadlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dreadlord, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Terrordar,Nerothos,Bleakill,Necros,Fearoth,Dethecus,Maldibion,Nochthitus,Gholbine,Rashgarroth,Aramachus,Zilfallon,Lorthiras,Zenedar,Mullioch,Algammon,Banehallow,Ven'Gyr";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipBasic = "Summon Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUav,AUsl,AUcs,AUin";
@@ -18982,7 +19504,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1800;
-            unit.MovementSpeedBase = 290;
+            unit.MovementSpeedBase = 300;
             unit.StatsStockMaximum = 3;
             unit.StatsStockReplenishInterval = 30;
             unit.StatsStockStartDelay = 0;
@@ -19086,6 +19608,13 @@ namespace War3Api.Object
         protected virtual Unit LoadLich(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lich, db);
+            unit.TextTooltipAwaken = "Revive Lich";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Lich";
+            unit.TextProperNamesRaw = "Ordin Frostbane,Ras Splinterspine,Morbent Fell,Rage Winterchill,Araj the Summoner,Kali'naj Dethknell,Rak Coldskull,Din Frostfire,Calis Wraithson,Venim Iceblade,Naze the Eternal,Ras Frostwhisper,Coldreaver,Cho'Nammoth,Kryptikk Soulslayer,Alandil Lieng";
+            unit.TextTooltipRevive = "Revive Lich";
+            unit.TextTooltipBasic = "Summon Lich";
+            unit.TextTooltipExtended = "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUfn,AUfu,AUdr,AUdd";
@@ -19235,6 +19764,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAbomination(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Abomination, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Abomination";
+            unit.TextTooltipBasic = "Train Abomination";
+            unit.TextTooltipExtended = "Heavy melee unit. Can learn the Disease Cloud ability and Cannibalize. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aap1,Aiun,Acn2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -19313,7 +19846,7 @@ namespace War3Api.Object
             unit.StatsRaceRaw = "undead";
             unit.PathingPlacementRequiresWaterRadius = 0f;
             unit.CombatTargetedAsRaw = "ground";
-            unit.MovementTurnRate = 0.4f;
+            unit.MovementTurnRate = 0.5f;
             unit.EditorCategorizationCampaignRaw = 0;
             unit.ArtAllowCustomTeamColorRaw = 0;
             unit.EditorCanDropItemsOnDeathRaw = 1;
@@ -19384,6 +19917,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAcolyte(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Acolyte, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Acolyte";
+            unit.TextTooltipBasic = "Train Acolyte";
+            unit.TextTooltipExtended = "Basic worker. Can summon structures, harvest gold, and Restore. Acolytes may be sacrificed at a Sacrificial Pit to create Shades. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aaha,Arst,Alam,Auns";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -19533,6 +20070,12 @@ namespace War3Api.Object
         protected virtual Unit LoadBanshee(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Banshee, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Curse,- Curse|n- Anti-magic Shell,- Curse|n- Anti-magic Shell|n- Possession";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Banshee";
+            unit.TextTooltipBasic = "Train Banshee";
+            unit.TextTooltipExtended = "Supporting caster. Can initially cast Curse, which causes enemy units to occasionally miss in combat. Can also learn Anti-magic Shell and Possession. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aam2,Acrs,Aps2,Aiun";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -19682,6 +20225,10 @@ namespace War3Api.Object
         protected virtual Unit LoadObsidiandestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Obsidiandestroyer, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Destroyer";
+            unit.TextTooltipBasic = "Morph into Destroyer";
+            unit.TextTooltipExtended = "Large flying unit that must consume magic to sustain its mana. Excellent at destroying enemy casters and clusters of ground forces. Initially has Spell Immunity, Devour Magic, Absorb Mana, and Orb of Annihilation. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advm,Afak,Aave,Aabs,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afak";
             unit.AbilitiesHeroRaw = null;
@@ -19795,14 +20342,14 @@ namespace War3Api.Object
             unit.CombatAttack2AnimationDamagePoint = 0f;
             unit.CombatAttack1DamageUpgradeAmount = 0;
             unit.CombatAttack2DamageUpgradeAmount = 0;
-            unit.CombatAttack1AreaOfEffectFullDamage = 0;
+            unit.CombatAttack1AreaOfEffectFullDamage = 1;
             unit.CombatAttack2AreaOfEffectFullDamage = 0;
-            unit.CombatAttack1AreaOfEffectMediumDamage = 0;
+            unit.CombatAttack1AreaOfEffectMediumDamage = 1;
             unit.CombatAttack2AreaOfEffectMediumDamage = 0;
             unit.CombatAttack1DamageFactorMedium = 0f;
             unit.CombatAttack2DamageFactorMedium = 0f;
             unit.CombatMinimumAttackRange = 0;
-            unit.CombatAttack1AreaOfEffectSmallDamage = 0;
+            unit.CombatAttack1AreaOfEffectSmallDamage = 1;
             unit.CombatAttack2AreaOfEffectSmallDamage = 0;
             unit.CombatAttack1DamageFactorSmall = 0f;
             unit.CombatAttack2DamageFactorSmall = 0f;
@@ -19831,6 +20378,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCryptfiendmorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cryptfiendmorph, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Burrowed Crypt Fiend";
+            unit.TextTooltipBasic = "Train Crypt Fiend";
+            unit.TextTooltipExtended = "Ranged combat support creature. Can learn the Web, and Burrow abilities. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aweb,Aspa,Abur,Aiun";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -19909,7 +20460,7 @@ namespace War3Api.Object
             unit.StatsRaceRaw = "undead";
             unit.PathingPlacementRequiresWaterRadius = 0f;
             unit.CombatTargetedAsRaw = "ground";
-            unit.MovementTurnRate = 0.5f;
+            unit.MovementTurnRate = 0.6f;
             unit.EditorCategorizationCampaignRaw = 0;
             unit.ArtAllowCustomTeamColorRaw = 0;
             unit.EditorCanDropItemsOnDeathRaw = 1;
@@ -19980,6 +20531,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCryptfiend(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cryptfiend, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Crypt Fiend";
+            unit.TextTooltipBasic = "Train Crypt Fiend";
+            unit.TextTooltipExtended = "Ranged combat support creature. Can learn the Web, and Burrow abilities. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aweb,Aspa,Abur,Aiun";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aweb";
             unit.AbilitiesHeroRaw = null;
@@ -20058,7 +20613,7 @@ namespace War3Api.Object
             unit.StatsRaceRaw = "undead";
             unit.PathingPlacementRequiresWaterRadius = 0f;
             unit.CombatTargetedAsRaw = "ground";
-            unit.MovementTurnRate = 0.5f;
+            unit.MovementTurnRate = 0.6f;
             unit.EditorCategorizationCampaignRaw = 0;
             unit.ArtAllowCustomTeamColorRaw = 0;
             unit.EditorCanDropItemsOnDeathRaw = 1;
@@ -20129,6 +20684,8 @@ namespace War3Api.Object
         protected virtual Unit LoadCarrionscarab1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Carrionscarab1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Carrion Beetle";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -20278,6 +20835,8 @@ namespace War3Api.Object
         protected virtual Unit LoadCarrionscarab2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Carrionscarab2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Carrion Beetle";
             unit.AbilitiesNormalRaw = "Abu2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -20427,6 +20986,8 @@ namespace War3Api.Object
         protected virtual Unit LoadCarrionscarab3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Carrionscarab3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Carrion Beetle";
             unit.AbilitiesNormalRaw = "Abu3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -20576,6 +21137,8 @@ namespace War3Api.Object
         protected virtual Unit LoadCarrionscarabburrowed2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Carrionscarabburrowed2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Burrowed Carrion Beetle";
             unit.AbilitiesNormalRaw = "Abu2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -20725,6 +21288,8 @@ namespace War3Api.Object
         protected virtual Unit LoadCarrionscarabburrowed3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Carrionscarabburrowed3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Burrowed Carrion Beetle";
             unit.AbilitiesNormalRaw = "Abu3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -20874,6 +21439,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFrostwyrm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Frostwyrm, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Frost Wyrm";
+            unit.TextTooltipBasic = "Train Frost Wyrm";
+            unit.TextTooltipExtended = "Flying heavy assault creature. Can learn the Freezing Breath ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Afrz,Afrc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21023,6 +21592,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGargoyle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gargoyle, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Gargoyle";
+            unit.TextTooltipBasic = "Train Gargoyle";
+            unit.TextTooltipExtended = "Flying attack creature. Can learn the Stone Form ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Astn,Aatp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21172,6 +21745,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGhoul(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ghoul, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Ghoul";
+            unit.TextTooltipBasic = "Train Ghoul";
+            unit.TextTooltipExtended = "Basic attack unit and lumber harvester. Can learn Cannibalize and Ghoul Frenzy. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Acan,Ahrl,Aiun,Augf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21321,6 +21898,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGargoylemorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gargoylemorphed, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Stone Form Gargoyle";
+            unit.TextTooltipBasic = "Train Gargoyle";
+            unit.TextTooltipExtended = "Flying attack creature. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Astn,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21470,6 +22051,7 @@ namespace War3Api.Object
         protected virtual Unit LoadLocust(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Locust, db);
+            unit.TextName = "Locust";
             unit.AbilitiesNormalRaw = "Aloc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21619,6 +22201,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMeatwagon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Meatwagon, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Meat Wagon";
+            unit.TextTooltipBasic = "Train Meat Wagon";
+            unit.TextTooltipExtended = "Corpse storage machine. Also serves as long-range siege weaponry. Exceptional damage versus buildings, but slow and vulnerable. Can learn the Disease Cloud ability. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Sch2,Amel,Amed,Apts,Aexh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21768,6 +22354,12 @@ namespace War3Api.Object
         protected virtual Unit LoadNecromancer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Necromancer, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Raise Dead,- Raise Dead|n- Unholy Frenzy,- Raise Dead|n- Unholy Frenzy|n- Cripple";
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Necromancer";
+            unit.TextTooltipBasic = "Train Necromancer";
+            unit.TextTooltipExtended = "Dark spellcaster. Can initially cast Raise Dead on corpses. Can also learn Unholy Frenzy and Cripple. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acri,Arai,Aiun,Auhf,Ausm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -21917,6 +22509,10 @@ namespace War3Api.Object
         protected virtual Unit LoadObsidianstatue(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Obsidianstatue, db);
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Obsidian Statue";
+            unit.TextTooltipBasic = "Create Obsidian Statue";
+            unit.TextTooltipExtended = "Fortified statue that can help replenish the life and mana of your army. Can initially cast Spirit Touch and Essence of Blight, and learn the Destroyer Form ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Arpl,Arpm,Aave";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22066,6 +22662,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPlagueward(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Plagueward, db);
+            unit.TextName = "Disease Cloud";
             unit.AbilitiesNormalRaw = "Aap2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22215,6 +22812,9 @@ namespace War3Api.Object
         protected virtual Unit LoadShade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shade, db);
+            unit.TextName = "Shade";
+            unit.TextTooltipBasic = "Train Shade";
+            unit.TextTooltipExtended = "A permanently invisible spirit that can see other invisible units, but cannot attack.";
             unit.AbilitiesNormalRaw = "Atru,Agho,Augh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22364,6 +22964,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletonwarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletonwarrior, db);
+            unit.TextName = "Skeleton Warrior";
+            unit.TextTooltipBasic = "Summon Skeleton Warrior";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22513,6 +23115,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalmage(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalmage, db);
+            unit.TextName = "Skeletal Mage";
+            unit.TextTooltipBasic = "Summon Skeletal Mage";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22662,6 +23266,10 @@ namespace War3Api.Object
         protected virtual Unit LoadUndeadbattleship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Undeadbattleship, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Undead Battleship";
+            unit.TextTooltipBasic = "Hire Battleship";
+            unit.TextTooltipExtended = "Massive battleship good at destroying enemy ships and bombarding buildings from the sea. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22811,6 +23419,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAltarofdarkness(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Altarofdarkness, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Altar of Darkness";
+            unit.TextTooltipBasic = "Summon Altar of Darkness";
+            unit.TextTooltipExtended = "Summons Heroes. Revives slain Heroes.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -22960,6 +23572,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBoneyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Boneyard, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Boneyard";
+            unit.TextTooltipBasic = "Summon Boneyard";
+            unit.TextTooltipExtended = "Produces Frost Wyrms. Also contains the Freezing Breath upgrade.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23109,6 +23725,10 @@ namespace War3Api.Object
         protected virtual Unit LoadUndeadgoldmine2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Undeadgoldmine2, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Haunted Gold Mine";
+            unit.TextTooltipBasic = "Haunt Gold Mine";
+            unit.TextTooltipExtended = "Haunts a gold mine so that Acolytes can mine. Use on gold mines to corrupt them.";
             unit.AbilitiesNormalRaw = "Abgs,Abgm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23258,6 +23878,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGraveyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Graveyard, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Graveyard";
+            unit.TextTooltipBasic = "Summon Graveyard";
+            unit.TextTooltipExtended = "Provides attack and armor upgrades for Undead units. Also produces corpses and serves as a drop-off point for harvested lumber.";
             unit.AbilitiesNormalRaw = "Abgs,Agyd,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23407,6 +24031,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNecropolis1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Necropolis1, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Halls of the Dead";
+            unit.TextTooltipBasic = "Upgrade to Halls of the Dead";
+            unit.TextTooltipExtended = "Upgrade to Halls of the Dead to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abgl,Arlm,Afr2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23556,6 +24184,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNecropolis2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Necropolis2, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Black Citadel";
+            unit.TextTooltipBasic = "Upgrade to Black Citadel";
+            unit.TextTooltipExtended = "Upgrade to Black Citadel to enable the production of additional types of structures and units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abgl,Arlm,Afr2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23705,6 +24337,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNecropolis(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Necropolis, db);
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Necropolis";
+            unit.TextTooltipBasic = "Summon Necropolis";
+            unit.TextTooltipExtended = "Primary structure, used to train Acolytes and receive lumber gathered by Ghouls. Can be upgraded to Halls of the Dead and then Black Citadel to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Abgl,Arlm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -23854,6 +24490,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSacrificialpit(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sacrificialpit, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Sacrificial Pit";
+            unit.TextTooltipBasic = "Summon Sacrificial Pit";
+            unit.TextTooltipExtended = "Has the Sacrifice ability for turning Acolytes into Shades. Shades are invisible spirits that can see invisible units, but cannot attack.";
             unit.AbilitiesNormalRaw = "Abgs,Asac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24003,6 +24643,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCrypt(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Crypt, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Crypt";
+            unit.TextTooltipBasic = "Summon Crypt";
+            unit.TextTooltipExtended = "Primary troop production building. Trains Ghouls, Crypt Fiends, and Gargoyles. Also contains the upgrades Ghoul Frenzy, Cannibalize, Stone Form, Web and Burrow.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24152,6 +24796,10 @@ namespace War3Api.Object
         protected virtual Unit LoadUndeadshipyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Undeadshipyard, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Undead Shipyard";
+            unit.TextTooltipBasic = "Shipyard";
+            unit.TextTooltipExtended = "Boat construction facility. Produces Undead Transport Ships, Undead Frigates, and Undead Battleships.";
             unit.AbilitiesNormalRaw = "Abgs,Ane2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24301,6 +24949,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSlaughterhouse(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Slaughterhouse, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Slaughterhouse";
+            unit.TextTooltipBasic = "Summon Slaughterhouse";
+            unit.TextTooltipExtended = "Produces Abominations, Obsidian Statues, and Meat Wagons. Also contains the Disease Cloud, and Destroyer Form upgrades.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24450,6 +25102,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTempleofthedamned(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Templeofthedamned, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Temple of the Damned";
+            unit.TextTooltipBasic = "Summon Temple of the Damned";
+            unit.TextTooltipExtended = "Spellcaster production building. Trains Necromancers and Banshees. |nAlso contains upgrades for Necromancers, Banshees, and Skeletal Mastery.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24599,6 +25255,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTombofrelics(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tombofrelics, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Tomb of Relics";
+            unit.TextTooltipBasic = "Summon Tomb of Relics";
+            unit.TextTooltipExtended = "Creates a shop with purchasable items. The items available depend upon what level of upgrade your Necropolis has (Necropolis, Halls of the Dead, or Black Citadel) and which buildings you have.";
             unit.AbilitiesNormalRaw = "Aall,Abgs,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24748,6 +25408,10 @@ namespace War3Api.Object
         protected virtual Unit LoadZiggurat1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ziggurat1, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Spirit Tower";
+            unit.TextTooltipBasic = "Upgrade to Spirit Tower";
+            unit.TextTooltipExtended = "Upgrade to create a defensive structure. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24897,6 +25561,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFrosttower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Frosttower, db);
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Nerubian Tower";
+            unit.TextTooltipBasic = "Upgrade to Nerubian Tower";
+            unit.TextTooltipExtended = "Upgrade to create a defensive structure that deals cold damage and slows enemy units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abgs,Afra";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -24998,7 +25666,7 @@ namespace War3Api.Object
             unit.CombatAttack2AnimationBackswingPoint = 0f;
             unit.ArtAnimationCastBackswing = 0.51f;
             unit.ArtAnimationCastPoint = 0f;
-            unit.CombatAttack1CooldownTime = 1f;
+            unit.CombatAttack1CooldownTime = 1.3f;
             unit.CombatAttack2CooldownTime = 0f;
             unit.CombatAttack1DamageLossFactor = 0f;
             unit.CombatAttack2DamageLossFactor = 0f;
@@ -25046,6 +25714,10 @@ namespace War3Api.Object
         protected virtual Unit LoadZiggurat(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ziggurat, db);
+            unit.TextHotkeyRaw = "Z";
+            unit.TextName = "Ziggurat";
+            unit.TextTooltipBasic = "Summon Ziggurat";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained. Can be upgraded to a defensive structure that attacks land and air units.";
             unit.AbilitiesNormalRaw = "Abgs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -25195,6 +25867,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkranger(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkranger, db);
+            unit.TextTooltipAwaken = "Revive Dark Ranger";
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Dark Ranger";
+            unit.TextProperNamesRaw = "Nara Pathstrider,Anya Eversong,Anthis Sunbow,Clea Deathstrider,Cyndia Hawkspear,Mira Shadewither,Amora Eagleye,Siren Ghostsong,Somand Wayfinder";
+            unit.TextTooltipRevive = "Revive Dark Ranger";
+            unit.TextTooltipBasic = "Summon Dark Ranger";
+            unit.TextTooltipExtended = "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsi,ANba,ANdr,ANch";
@@ -25344,6 +26023,13 @@ namespace War3Api.Object
         protected virtual Unit LoadBeastmaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Beastmaster, db);
+            unit.TextTooltipAwaken = "Revive Beastmaster";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Beastmaster";
+            unit.TextProperNamesRaw = "Mag Bearmaul,Tagar Bearclaw,Gorsh Talonfang,Maxx Rocmane,Gaz Boartusk,Mok Rocksnout,Gish Eagle Eye";
+            unit.TextTooltipRevive = "Revive Beastmaster";
+            unit.TextTooltipBasic = "Summon Beastmaster";
+            unit.TextTooltipExtended = "Warrior Hero, adept at summoning beasts into battle. Can learn Summon Bear, Summon Quilbeast, Summon Hawk, and Stampede. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsg,ANsq,ANsw,ANst";
@@ -25493,6 +26179,13 @@ namespace War3Api.Object
         protected virtual Unit LoadSeawitch(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seawitch, db);
+            unit.TextTooltipAwaken = "Revive Sea Witch";
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Sea Witch";
+            unit.TextProperNamesRaw = "Anna Kondra,Scilla Murkshadow,Ursula Snakemane,Lady Venomtongue,Lady Serpentra,Lady Darkscale,Serena Scarscale,Asprah Serpus,Venna Seastorm,Charib'dishal";
+            unit.TextTooltipRevive = "Revive Sea Witch";
+            unit.TextTooltipBasic = "Summon Sea Witch";
+            unit.TextTooltipExtended = "Mystical Hero, adept at ranged combat. Can learn Forked Lightning, Frost Arrows, Mana Shield, and Tornado. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANfl,ANfa,ANms,ANto";
@@ -25642,6 +26335,13 @@ namespace War3Api.Object
         protected virtual Unit LoadPandarenbrewmaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pandarenbrewmaster, db);
+            unit.TextTooltipAwaken = "Revive Brewmaster";
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Brewmaster";
+            unit.TextProperNamesRaw = "Mojo Dark-Ale,Sinjo Honeybrew,Kesha Wildbarley,Tatsa Sweetbarrow,Mushi Ale-Hearth,Jinto Reedwine,Masha Storm-Stout,Polo Barrel-keg";
+            unit.TextTooltipRevive = "Revive Brewmaster";
+            unit.TextTooltipBasic = "Summon Brewmaster";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth, And Fire. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANbf,ANdh,ANdb,ANef";
@@ -25791,6 +26491,13 @@ namespace War3Api.Object
         protected virtual Unit LoadAlchemist(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Alchemist, db);
+            unit.TextTooltipAwaken = "Revive Alchemist";
+            unit.TextHotkeyRaw = "X";
+            unit.TextName = "Alchemist";
+            unit.TextProperNamesRaw = "Razzil Naypolm,Niffy Gurglebeaker,Ezzel Darkbrewer,Lapis Concocter,Savvy Foulmixer,Fictious Warpotion";
+            unit.TextTooltipRevive = "Revive Alchemist";
+            unit.TextTooltipBasic = "Summon Alchemist";
+            unit.TextTooltipExtended = "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANhs,ANab,ANcr,ANtm";
@@ -25940,6 +26647,14 @@ namespace War3Api.Object
         protected virtual Unit LoadAlchemistmorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Alchemistmorph, db);
+            unit.TextTooltipAwaken = "Revive Alchemist";
+            unit.TextNameEditorSuffix = " (Morph level 1)";
+            unit.TextHotkeyRaw = "X";
+            unit.TextName = "Alchemist";
+            unit.TextProperNamesRaw = "Razzil Naypolm,Niffy Gurglebeaker,Ezzel Darkbrewer,Lapis Concocter,Savvy Foulmixer,Fictious Warpotion";
+            unit.TextTooltipRevive = "Revive Alchemist";
+            unit.TextTooltipBasic = "Summon Alchemist";
+            unit.TextTooltipExtended = "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANhs,ANab,ANcr,ANtm";
@@ -26089,6 +26804,14 @@ namespace War3Api.Object
         protected virtual Unit LoadAlchemistmorph2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Alchemistmorph2, db);
+            unit.TextTooltipAwaken = "Revive Alchemist";
+            unit.TextNameEditorSuffix = " (Morph level 2)";
+            unit.TextHotkeyRaw = "X";
+            unit.TextName = "Alchemist";
+            unit.TextProperNamesRaw = "Razzil Naypolm,Niffy Gurglebeaker,Ezzel Darkbrewer,Lapis Concocter,Savvy Foulmixer,Fictious Warpotion";
+            unit.TextTooltipRevive = "Revive Alchemist";
+            unit.TextTooltipBasic = "Summon Alchemist";
+            unit.TextTooltipExtended = "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANhs,ANab,ANcr,ANtm";
@@ -26238,6 +26961,14 @@ namespace War3Api.Object
         protected virtual Unit LoadAlchemistmorph3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Alchemistmorph3, db);
+            unit.TextTooltipAwaken = "Revive Alchemist";
+            unit.TextNameEditorSuffix = " (Morph level 3)";
+            unit.TextHotkeyRaw = "X";
+            unit.TextName = "Alchemist";
+            unit.TextProperNamesRaw = "Razzil Naypolm,Niffy Gurglebeaker,Ezzel Darkbrewer,Lapis Concocter,Savvy Foulmixer,Fictious Warpotion";
+            unit.TextTooltipRevive = "Revive Alchemist";
+            unit.TextTooltipBasic = "Summon Alchemist";
+            unit.TextTooltipExtended = "Warrior Hero, known for offensive and defensive versatility. Can learn Healing Spray, Chemical Rage, Acid Bomb and Transmute.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANhs,ANab,ANcr,ANtm";
@@ -26387,6 +27118,13 @@ namespace War3Api.Object
         protected virtual Unit LoadTinker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tinker, db);
+            unit.TextTooltipAwaken = "Revive Tinker";
+            unit.TextHotkeyRaw = "Z";
+            unit.TextName = "Tinker";
+            unit.TextProperNamesRaw = "Gazz Stripbolt,Riket Contraption,Mekka Gobb,Tek Piecetinker,Plug Rattletrap,Ratso Steamwheedle";
+            unit.TextTooltipRevive = "Revive Tinker";
+            unit.TextTooltipBasic = "Summon Tinker";
+            unit.TextTooltipExtended = "Cunning Hero, exceptional at disrupting battles and enduring damage. Can learn Pocket Factory, Cluster Rockets, Engineering Upgrade and Robo-Goblin.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsy,ANcs,ANeg,ANrg";
@@ -26536,6 +27274,13 @@ namespace War3Api.Object
         protected virtual Unit LoadRobogoblintinker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Robogoblintinker, db);
+            unit.TextTooltipAwaken = "Revive Tinker";
+            unit.TextHotkeyRaw = "Z";
+            unit.TextName = "Tinker";
+            unit.TextProperNamesRaw = "Gazz Stripbolt,Riket Contraption,Mekka Gobb,Tek Piecetinker,Plug Rattletrap,Ratso Steamwheedle";
+            unit.TextTooltipRevive = "Revive Tinker";
+            unit.TextTooltipBasic = "Summon Tinker";
+            unit.TextTooltipExtended = "Cunning Hero, exceptional at disrupting battles and enduring damage. Can learn Pocket Factory, Cluster Rockets, Engineering Upgrade and Robo-Goblin.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,ANde";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsy,ANcs,ANeg,ANrg";
@@ -26685,6 +27430,10 @@ namespace War3Api.Object
         protected virtual Unit LoadClockwerkgoblin1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Clockwerkgoblin1, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Clockwerk Goblin";
+            unit.TextTooltipBasic = "Summon Clockwerk Goblin";
+            unit.TextTooltipExtended = "Poorly engineered mechanical goblin melee warrior.  Detonates after a certain period of time.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asdg";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -26834,6 +27583,10 @@ namespace War3Api.Object
         protected virtual Unit LoadClockwerkgoblin2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Clockwerkgoblin2, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Clockwerk Goblin";
+            unit.TextTooltipBasic = "Summon Clockwerk Goblin";
+            unit.TextTooltipExtended = "Poorly engineered mechanical goblin melee warrior.  Detonates after a certain period of time.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asd2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -26983,6 +27736,10 @@ namespace War3Api.Object
         protected virtual Unit LoadClockwerkgoblin3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Clockwerkgoblin3, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Clockwerk Goblin";
+            unit.TextTooltipBasic = "Summon Clockwerk Goblin";
+            unit.TextTooltipExtended = "Poorly engineered mechanical goblin melee warrior.  Detonates after a certain period of time.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asd3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -27132,6 +27889,10 @@ namespace War3Api.Object
         protected virtual Unit LoadClockwerkgoblin4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Clockwerkgoblin4, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Clockwerk Goblin";
+            unit.TextTooltipBasic = "Summon Clockwerk Goblin";
+            unit.TextTooltipExtended = "Poorly engineered mechanical goblin melee warrior.  Detonates after a certain period of time.|n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asd3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -27281,6 +28042,11 @@ namespace War3Api.Object
         protected virtual Unit LoadPocketfactory(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pocketfactory, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Pocket Factory";
+            unit.TextTooltipBasic = "Summon Pocket Factory";
+            unit.TextTooltipExtended = "Factory unit for spawning Clockwerk Goblins via the Pocket Factory ability.";
             unit.AbilitiesNormalRaw = "ARal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -27430,6 +28196,11 @@ namespace War3Api.Object
         protected virtual Unit LoadPocketfactory2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pocketfactory2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Pocket Factory";
+            unit.TextTooltipBasic = "Summon Pocket Factory";
+            unit.TextTooltipExtended = "Factory unit for spawning Clockwerk Goblins via the Pocket Factory ability.";
             unit.AbilitiesNormalRaw = "ARal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -27579,6 +28350,11 @@ namespace War3Api.Object
         protected virtual Unit LoadPocketfactory3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pocketfactory3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Pocket Factory";
+            unit.TextTooltipBasic = "Summon Pocket Factory";
+            unit.TextTooltipExtended = "Factory unit for spawning Clockwerk Goblins via the Pocket Factory ability.";
             unit.AbilitiesNormalRaw = "ARal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -27728,6 +28504,13 @@ namespace War3Api.Object
         protected virtual Unit LoadPitlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pitlord, db);
+            unit.TextTooltipAwaken = "Revive Pit Lord";
+            unit.TextHotkeyRaw = "I";
+            unit.TextName = "Pit Lord";
+            unit.TextProperNamesRaw = "Azgalor,Brutillus,Mongrethod,Destromath,Gogonnash";
+            unit.TextTooltipRevive = "Revive Pit Lord";
+            unit.TextTooltipBasic = "Summon Pit Lord";
+            unit.TextTooltipExtended = "Warrior Hero, adept at terrorizing enemies. Can learn Rain of Fire, Howl of Terror, Cleaving Attack, and Doom. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANrf,ANht,ANca,ANdo";
@@ -27877,6 +28660,13 @@ namespace War3Api.Object
         protected virtual Unit LoadFirelord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Firelord, db);
+            unit.TextTooltipAwaken = "Revive Firelord";
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Firelord";
+            unit.TextProperNamesRaw = "Ragepyre,Hatespark,Blazefury,Heatflayer,Volcanus,Flashfire,Kar the Everburning,Smolderas,Singeslayer";
+            unit.TextTooltipRevive = "Revive Firelord";
+            unit.TextTooltipBasic = "Summon Firelord";
+            unit.TextTooltipExtended = "Mystical Hero, adept at disrupting spells and dealing large amounts of fire damage.  Can learn Soul Burn, Summon Lava Spawn, Incinerate and Volcano.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANia,ANso,ANlm,ANvc";
@@ -28026,6 +28816,8 @@ namespace War3Api.Object
         protected virtual Unit LoadLavaspawn(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lavaspawn, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Lava Spawn";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28175,6 +28967,8 @@ namespace War3Api.Object
         protected virtual Unit LoadLavaspawn2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lavaspawn2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Lava Spawn";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28324,6 +29118,8 @@ namespace War3Api.Object
         protected virtual Unit LoadLavaspawn3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lavaspawn3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Lava Spawn";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28473,6 +29269,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkminion1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkminion1, db);
+            unit.TextName = "Lesser Dark Minion";
+            unit.TextTooltipBasic = "Summon Dark Minion";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28622,6 +29420,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkminion2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkminion2, db);
+            unit.TextName = "Dark Minion";
+            unit.TextTooltipBasic = "Summon Dark Minion";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28771,6 +29571,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkminion3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkminion3, db);
+            unit.TextName = "Greater Dark Minion";
+            unit.TextTooltipBasic = "Summon Dark Minion";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -28920,6 +29722,8 @@ namespace War3Api.Object
         protected virtual Unit LoadGrizzlybear1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Grizzlybear1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Bear";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29069,6 +29873,8 @@ namespace War3Api.Object
         protected virtual Unit LoadGrizzlybear2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Grizzlybear2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Raging Bear";
             unit.AbilitiesNormalRaw = "ANbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29218,6 +30024,8 @@ namespace War3Api.Object
         protected virtual Unit LoadGrizzlybear3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Grizzlybear3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Spirit Bear";
             unit.AbilitiesNormalRaw = "ANbh,ANbl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29367,6 +30175,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMisha1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Misha1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Misha";
             unit.AbilitiesNormalRaw = "ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29516,6 +30326,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMisha2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Misha2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Misha";
             unit.AbilitiesNormalRaw = "ANbh,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29665,6 +30477,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMisha3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Misha3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Misha";
             unit.AbilitiesNormalRaw = "ANb2,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29814,6 +30628,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMisha4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Misha4, db);
+            unit.TextNameEditorSuffix = " (Level 4)";
+            unit.TextName = "Misha";
             unit.AbilitiesNormalRaw = "ANb2,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -29963,6 +30779,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda1, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Fire";
+            unit.TextTooltipBasic = "Summon Fire";
+            unit.TextTooltipExtended = "Fierce Pandaren warrior of fire. Has Permanent Immolation and Resistant Skin. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Apig,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30112,6 +30932,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda2, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Storm";
+            unit.TextTooltipBasic = "Summon Storm";
+            unit.TextTooltipExtended = "Quick Pandaren warrior of storms. Has Resistant Skin. Can cast Dispel Magic, Cyclone, and Wind Walk. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Adsm,ACcy,ACrk,ANwk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30261,6 +31085,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda3, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Earth";
+            unit.TextTooltipBasic = "Summon Earth";
+            unit.TextTooltipExtended = "Sturdy Pandaren warrior of earth. Has Resistant Skin, and Spell Immunity. Can cast Pulverize, and Taunt. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACpv,ANta,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30410,6 +31238,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda4, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Fire";
+            unit.TextTooltipBasic = "Summon Fire";
+            unit.TextTooltipExtended = "Fierce Pandaren warrior of fire. Has Permanent Immolation and Resistant Skin. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Apig,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30559,6 +31391,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda5(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda5, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Storm";
+            unit.TextTooltipBasic = "Summon Storm";
+            unit.TextTooltipExtended = "Quick Pandaren warrior of storms. Has Resistant Skin. Can cast Dispel Magic, Cyclone, and Wind Walk. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Adsm,ACcy,ACrk,ANwk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30708,6 +31544,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPanda6(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Panda6, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Earth";
+            unit.TextTooltipBasic = "Summon Earth";
+            unit.TextTooltipExtended = "Sturdy Pandaren warrior of earth. Has Resistant Skin, and Spell Immunity. Can cast Pulverize, and Taunt. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACpv,ANta,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -30857,6 +31697,8 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillbeast1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillbeast1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Quilbeast";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -31006,6 +31848,8 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillbeast2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillbeast2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Dire Quilbeast";
             unit.AbilitiesNormalRaw = "Afzy";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afzy";
             unit.AbilitiesHeroRaw = null;
@@ -31155,6 +31999,8 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillbeast3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillbeast3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Raging Quilbeast";
             unit.AbilitiesNormalRaw = "Afzy";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afzy";
             unit.AbilitiesHeroRaw = null;
@@ -31304,6 +32150,8 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillbeast4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillbeast4, db);
+            unit.TextNameEditorSuffix = " (Level 4)";
+            unit.TextName = "Berserk Quilbeast";
             unit.AbilitiesNormalRaw = "Afzy";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afzy";
             unit.AbilitiesHeroRaw = null;
@@ -31453,6 +32301,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWareagle1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wareagle1, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Hawk";
             unit.AbilitiesNormalRaw = "ANtr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -31602,6 +32452,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWareagle2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wareagle2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Thunder Hawk";
             unit.AbilitiesNormalRaw = "ANtr,Alit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -31751,6 +32603,8 @@ namespace War3Api.Object
         protected virtual Unit LoadWareagle3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wareagle3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Spirit Hawk";
             unit.AbilitiesNormalRaw = "ANtr,Alit,Apiv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -31900,6 +32754,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAzuredrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Azuredrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Blue Drake";
+            unit.TextTooltipBasic = "Summon Blue Drake";
+            unit.TextTooltipExtended = "Small ranged flying unit that deals cold damage and slows enemy units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Afrc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32049,6 +32907,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAzuredragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Azuredragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Blue Dragon";
+            unit.TextTooltipBasic = "Summon Blue Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that deals cold damage and slows enemy units. Can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advc,ACdv,Afrc,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32198,6 +33060,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAzuredragonwhelp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Azuredragonwhelp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Blue Dragon Whelp";
+            unit.TextTooltipBasic = "Summon Blue Dragon Whelp";
+            unit.TextTooltipExtended = "Tiny ranged flying unit that deals cold damage and slows enemy units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Afrc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32347,6 +33213,9 @@ namespace War3Api.Object
         protected virtual Unit LoadAncienthydra(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancienthydra, db);
+            unit.TextName = "Ancient Hydra";
+            unit.TextTooltipBasic = "Hire Ancient Hydra";
+            unit.TextTooltipExtended = "Heavy ranged amphibious unit with Devour, War Stomp, and Slow Poison. When it is slain, smaller Hydras will arise from its corpse. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aspo,Awrh,ACdv,Advc,Aspy";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32496,6 +33365,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBarbedarachnathid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Barbedarachnathid, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Barbed Arachnathid";
+            unit.TextTooltipBasic = "Hire Barbed Arachnathid";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32645,6 +33518,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBarbedarachnathidmerc(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Barbedarachnathidmerc, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Barbed Arachnathid";
+            unit.TextTooltipBasic = "Hire Barbed Arachnathid";
+            unit.TextTooltipExtended = "Light ranged unit that has the Burrow ability. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abu5";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32794,6 +33671,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCrystalarachnathid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Crystalarachnathid, db);
+            unit.TextName = "Crystal Arachnathid";
+            unit.TextTooltipBasic = "Hire Crystal Arachnathid";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -32943,6 +33823,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEarthborerarachnathid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Earthborerarachnathid, db);
+            unit.TextName = "Arachnathid Earth-borer";
+            unit.TextTooltipBasic = "Hire Arachnathid Earth-borer";
+            unit.TextTooltipExtended = "Medium ranged unit with Envenomed Weapons and Shadow Strike. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACvs,ACss";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33092,6 +33975,9 @@ namespace War3Api.Object
         protected virtual Unit LoadOverlordarachnathid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Overlordarachnathid, db);
+            unit.TextName = "Overlord Arachnathid";
+            unit.TextTooltipBasic = "Hire Overlord Arachnathid";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33241,6 +34127,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWarriorarachnathid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Warriorarachnathid, db);
+            unit.TextName = "Warrior Arachnathid";
+            unit.TextTooltipBasic = "Hire Warrior Arachnathid";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33390,6 +34279,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBattlegolem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Battlegolem, db);
+            unit.TextName = "Battle Golem";
+            unit.TextTooltipBasic = "Summon Battle Golem";
+            unit.TextTooltipExtended = "Heavy melee unit. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33539,6 +34431,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAssassin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Assassin, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Assassin";
+            unit.TextTooltipBasic = "Hire Assassin";
+            unit.TextTooltipExtended = "Medium ranged unit that fires envenomed bolts and can Shadowmeld. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ashm,ACvs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33584,7 +34480,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1400;
-            unit.MovementSpeedBase = 300;
+            unit.MovementSpeedBase = 270;
             unit.StatsStockMaximum = 1;
             unit.StatsStockReplenishInterval = 210;
             unit.StatsStockStartDelay = 220;
@@ -33688,6 +34584,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDoomguard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Doomguard, db);
+            unit.TextNameEditorSuffix = "(Standard)";
+            unit.TextName = "Doom Guard";
+            unit.TextTooltipBasic = "Summon Doom Guard";
+            unit.TextTooltipExtended = "Heavy ranged unit can cast Dispel Magic, War Stomp, Cripple and Rain of Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcr,Adsm,Awrs,ACrf,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33837,6 +34737,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDoomguardsummoned(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Doomguardsummoned, db);
+            unit.TextNameEditorSuffix = "(Summoned)";
+            unit.TextName = "Doom Guard";
+            unit.TextTooltipBasic = "Summon Doom Guard";
+            unit.TextTooltipExtended = "Heavy ranged unit can cast Dispel Magic, War Stomp, Cripple and Rain of Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcr,Adsm,Awrs,ACrf,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -33986,6 +34890,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBandit(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bandit, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Bandit";
+            unit.TextTooltipBasic = "Hire Bandit";
+            unit.TextTooltipExtended = "Light melee unit with Shadowmeld. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34135,6 +35043,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonspawnapprentice(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonspawnapprentice, db);
+            unit.TextName = "Blue Dragonspawn Apprentice";
+            unit.TextTooltipBasic = "Hire Blue Dragonspawn Apprentice";
+            unit.TextTooltipExtended = "Light ranged unit with Evasion and Rejuvenation. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACrj,ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34284,6 +35195,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBlackdrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blackdrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Black Drake";
+            unit.TextTooltipBasic = "Summon Black Drake";
+            unit.TextTooltipExtended = "Small ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34433,6 +35348,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonspawnmeddler(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonspawnmeddler, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Blue Dragonspawn Meddler";
+            unit.TextTooltipBasic = "Hire Blue Dragonspawn Meddler";
+            unit.TextTooltipExtended = "Light melee unit with Evasion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34582,6 +35501,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonspawnoverseer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonspawnoverseer, db);
+            unit.TextName = "Blue Dragonspawn Overseer";
+            unit.TextTooltipBasic = "Hire Blue Dragonspawn Overseer";
+            unit.TextTooltipExtended = "Heavy melee unit with Breath of Frost, Devotion Aura, and Evasion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACev,ACav,ACbf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34731,6 +35653,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBlackdragonwhelp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blackdragonwhelp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Black Dragon Whelp";
+            unit.TextTooltipBasic = "Summon Black Dragon Whelp";
+            unit.TextTooltipExtended = "Tiny ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -34880,6 +35806,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonspawnsorceror(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonspawnsorceror, db);
+            unit.TextName = "Blue Dragonspawn Sorcerer";
+            unit.TextTooltipBasic = "Hire Blue Dragonspawn Sorcerer";
+            unit.TextTooltipExtended = "Medium ranged unit with Evasion and Frost Nova. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACfn,ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35029,6 +35958,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonspawnwarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonspawnwarrior, db);
+            unit.TextName = "Blue Dragonspawn Warrior";
+            unit.TextTooltipBasic = "Hire Blue Dragonspawn Warrior";
+            unit.TextTooltipExtended = "Heavy melee unit with Evasion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35178,6 +36110,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBanditlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Banditlord, db);
+            unit.TextName = "Bandit Lord";
+            unit.TextTooltipBasic = "Hire Bandit Lord";
+            unit.TextTooltipExtended = "Heavy melee unit with Shadowmeld and Devotion Aura. Can cast Divine Shield. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm,ACav,ACds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35327,6 +36262,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBarbedarachnathidburrowed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Barbedarachnathidburrowed, db);
+            unit.TextName = "Burrowed Barbed Arachnathid";
+            unit.TextTooltipBasic = "Hire Barbed Arachnathid";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abu5";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35476,6 +36414,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTransportship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Transportship, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Transport Ship";
+            unit.TextTooltipBasic = "Hire Transport Ship";
+            unit.TextTooltipExtended = "A sea vessel capable of carrying units.";
             unit.AbilitiesNormalRaw = "Sch5,Slo3,Sdro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35625,6 +36567,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBrigand(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Brigand, db);
+            unit.TextName = "Brigand";
+            unit.TextTooltipBasic = "Hire Brigand";
+            unit.TextTooltipExtended = "Light ranged unit with Shadowmeld. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35774,6 +36719,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBlackdragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blackdragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Black Dragon";
+            unit.TextTooltipBasic = "Summon Black Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advc,ACdv,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -35923,6 +36872,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBronzedragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bronzedragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Bronze Dragon";
+            unit.TextTooltipBasic = "Summon Bronze Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advc,ACdv,Alit,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36072,6 +37025,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBronzedrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bronzedrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Bronze Drake";
+            unit.TextTooltipBasic = "Summon Bronze Drake";
+            unit.TextTooltipExtended = "Small ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36221,6 +37178,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBronzedragonwhelp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bronzedragonwhelp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Bronze Dragon Whelp";
+            unit.TextTooltipBasic = "Summon Bronze Dragon Whelp";
+            unit.TextTooltipExtended = "Tiny ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36370,6 +37331,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurarcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurarcher, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Centaur Archer";
+            unit.TextTooltipBasic = "Hire Centaur Archer";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36519,6 +37484,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCentauroutrunner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centauroutrunner, db);
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Centaur Outrunner";
+            unit.TextTooltipBasic = "Hire Centaur Outrunner";
+            unit.TextTooltipExtended = "Medium melee attacker wielding a large axe. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36668,6 +37637,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurdrudge(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurdrudge, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Centaur Drudge";
+            unit.TextTooltipBasic = "Hire Centaur Drudge";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36817,6 +37790,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWateryminioncliffrunner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wateryminioncliffrunner, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Watery Minion";
+            unit.TextTooltipBasic = "Summon Watery Minion";
+            unit.TextTooltipExtended = "Light melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -36966,6 +37943,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurimpaler(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurimpaler, db);
+            unit.TextName = "Centaur Impaler";
+            unit.TextTooltipBasic = "Hire Centaur Impaler";
+            unit.TextTooltipExtended = "Medium ranged unit with Searing Arrows. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsa";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -37115,6 +38095,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaursorceror(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaursorceror, db);
+            unit.TextName = "Centaur Sorcerer";
+            unit.TextTooltipBasic = "Hire Centaur Sorcerer";
+            unit.TextTooltipExtended = "Medium ranged unit that hurls fiery missiles. Casts Abolish Magic and Bloodlust. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbl,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -37264,6 +38247,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurkhan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurkhan, db);
+            unit.TextName = "Centaur Khan";
+            unit.TextTooltipBasic = "Hire Centaur Khan";
+            unit.TextTooltipExtended = "Heavy melee unit with Endurance Aura. Has the abilities War Stomp and Reincarnation. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "SCae,ACrn,Awrs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -37413,6 +38399,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSuccubus(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Succubus, db);
+            unit.TextName = "Succubus";
+            unit.TextTooltipBasic = "Hire Succubus";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -37562,6 +38551,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMaidenofpain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Maidenofpain, db);
+            unit.TextName = "Maiden of Pain";
+            unit.TextTooltipBasic = "Hire Maiden of Pain";
+            unit.TextTooltipExtended = "Heavy melee unit that can cast Life Drain and Shadow Strike. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACdr,ACss";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -37711,6 +38703,9 @@ namespace War3Api.Object
         protected virtual Unit LoadQueenofsuffering(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Queenofsuffering, db);
+            unit.TextName = "Queen of Suffering";
+            unit.TextTooltipBasic = "Hire Queen of Suffering";
+            unit.TextTooltipExtended = "Heavy melee unit with Death Coil, Unholy Aura and Charm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACdc,ACua,ACch";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -37860,6 +38855,9 @@ namespace War3Api.Object
         protected virtual Unit LoadViletemptress(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Viletemptress, db);
+            unit.TextName = "Vile Temptress";
+            unit.TextTooltipBasic = "Hire Vile Temptress";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38009,6 +39007,9 @@ namespace War3Api.Object
         protected virtual Unit LoadViletormentor(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Viletormentor, db);
+            unit.TextName = "Vile Tormentor";
+            unit.TextTooltipBasic = "Hire Vile Tormentor";
+            unit.TextTooltipExtended = "Medium melee unit that can cast Silence. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACsi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38158,6 +39159,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRevenantofthedepths(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Revenantofthedepths, db);
+            unit.TextName = "Revenant of the Depths";
+            unit.TextTooltipBasic = "Hire Revenant of the Depths";
+            unit.TextTooltipExtended = "Heavy melee unit who can cast Summon Sea Elemental. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACwe";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38307,6 +39311,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktrollberserker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktrollberserker, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Dark Troll Berserker";
+            unit.TextTooltipBasic = "Hire Dark Troll Berserker";
+            unit.TextTooltipExtended = "Rabid axe-thrower. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38456,6 +39464,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktrollhighpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktrollhighpriest, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Dark Troll High Priest";
+            unit.TextTooltipBasic = "Hire Dark Troll High Priest";
+            unit.TextTooltipExtended = "High Priest of healing magic. Hurls fiery missiles. Can cast Sleep. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh2,ACsl";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -38605,6 +39617,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktrollshadowpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktrollshadowpriest, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Dark Troll Shadow Priest";
+            unit.TextTooltipBasic = "Hire Dark Troll Shadow Priest";
+            unit.TextTooltipExtended = "Shadow Priest of healing magic. Hurls fiery missiles. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -38754,6 +39770,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktroll(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktroll, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Dark Troll";
+            unit.TextTooltipBasic = "Hire Dark Troll";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38903,6 +39923,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktrolltrapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktrolltrapper, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Dark Troll Trapper";
+            unit.TextTooltipBasic = "Hire Dark Troll Trapper";
+            unit.TextTooltipExtended = "Light ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -38948,7 +39972,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1400;
-            unit.MovementSpeedBase = 300;
+            unit.MovementSpeedBase = 270;
             unit.StatsStockMaximum = 1;
             unit.StatsStockReplenishInterval = 160;
             unit.StatsStockStartDelay = 440;
@@ -39052,6 +40076,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDarktrollwarlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darktrollwarlord, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Dark Troll Warlord";
+            unit.TextTooltipBasic = "Hire Dark Troll Warlord";
+            unit.TextTooltipExtended = "Heavy ranged unit with Trueshot Aura. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACat";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -39201,6 +40229,9 @@ namespace War3Api.Object
         protected virtual Unit LoadElderhydra(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elderhydra, db);
+            unit.TextName = "Elder Hydra";
+            unit.TextTooltipBasic = "Hire Elder Hydra";
+            unit.TextTooltipExtended = "Heavy ranged amphibious unit with Faerie Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACff";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afae";
             unit.AbilitiesHeroRaw = null;
@@ -39350,6 +40381,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBereserkelemental(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bereserkelemental, db);
+            unit.TextName = "Berserk Elemental";
+            unit.TextTooltipBasic = "Summon Berserk Elemental";
+            unit.TextTooltipExtended = "Heavy melee unit that can cast Frost Nova. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACfn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -39499,6 +40533,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEnragedelemental(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Enragedelemental, db);
+            unit.TextName = "Enraged Elemental";
+            unit.TextTooltipBasic = "Summon Enraged Elemental";
+            unit.TextTooltipExtended = "Medium melee unit. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -39648,6 +40685,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedent, db);
+            unit.TextName = "Corrupted Treant";
+            unit.TextTooltipBasic = "Summon Corrupted Treant";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -39797,6 +40837,10 @@ namespace War3Api.Object
         protected virtual Unit LoadEnforcer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Enforcer, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Enforcer";
+            unit.TextTooltipBasic = "Hire Enforcer";
+            unit.TextTooltipExtended = "Light melee unit with Shadowmeld and Evasion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm,ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -39946,6 +40990,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPoisonent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Poisonent, db);
+            unit.TextName = "Poison Treant";
+            unit.TextTooltipBasic = "Summon Poison Treant";
+            unit.TextTooltipExtended = "Light melee unit that poisons opponents. Can cast Entangling Roots. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aenr,ACvs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -40095,6 +41142,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPlagueent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Plagueent, db);
+            unit.TextName = "Plague Treant";
+            unit.TextTooltipBasic = "Summon Plague Treant";
+            unit.TextTooltipExtended = "Medium melee unit that diseases opponents. Can cast Entangling Roots. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aenr,Aap3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -40244,6 +41294,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEredardiabolist(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Eredardiabolist, db);
+            unit.TextName = "Eredar Diabolist";
+            unit.TextTooltipBasic = "Hire Eredar Diabolist";
+            unit.TextTooltipExtended = "Heavy ranged unit that casts Firebolt and Parasite. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACpa,ANfb";
             unit.AbilitiesDefaultActiveAbilityRaw = "ANpa";
             unit.AbilitiesHeroRaw = null;
@@ -40393,6 +41446,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEredarsorceror(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Eredarsorceror, db);
+            unit.TextName = "Eredar Sorcerer";
+            unit.TextTooltipBasic = "Hire Eredar Sorcerer";
+            unit.TextTooltipExtended = "Light ranged unit that casts Sleep and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACdm,ACsl";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aadm";
             unit.AbilitiesHeroRaw = null;
@@ -40542,6 +41598,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEredarwarlock(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Eredarwarlock, db);
+            unit.TextName = "Eredar Warlock";
+            unit.TextTooltipBasic = "Hire Eredar Warlock";
+            unit.TextTooltipExtended = "Heavy ranged unit with Bash. Can cast Finger of Pain and Mana Shield. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbh,ACfd,ACmf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -40691,6 +41750,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFelstalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Felstalker, db);
+            unit.TextName = "Fel Stalker";
+            unit.TextTooltipBasic = "Summon Fel Stalker";
+            unit.TextTooltipExtended = "Demonic beast that casts Mana Burn. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ambb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -40840,6 +41902,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodfiend(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodfiend, db);
+            unit.TextName = "Bloodfiend";
+            unit.TextTooltipBasic = "Hire Bloodfiend";
+            unit.TextTooltipExtended = "Medium melee unit with Cleaving Attack. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACce";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -40989,6 +42054,9 @@ namespace War3Api.Object
         protected virtual Unit LoadForgottenone(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Forgottenone, db);
+            unit.TextName = "Forgotten One";
+            unit.TextTooltipBasic = "Hire Forgotten One";
+            unit.TextTooltipExtended = "An ancient and powerful creature who hurls fire at its enemies. Can cast Spawn Tentacle, Firebolt, and Charm. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACfb,ACch,ACtn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -41138,6 +42206,8 @@ namespace War3Api.Object
         protected virtual Unit LoadTentacle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tentacle, db);
+            unit.TextName = "Tentacle";
+            unit.TextTooltipExtended = "A gnarly tentacle from the depths. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -41287,6 +42357,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFelguard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Felguard, db);
+            unit.TextName = "Felguard";
+            unit.TextTooltipBasic = "Hire Felguard";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -41436,6 +42509,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFacelessonedeathbringer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Facelessonedeathbringer, db);
+            unit.TextName = "Faceless One Deathbringer";
+            unit.TextTooltipBasic = "Hire Faceless One Deathbringer";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning. Can cast Silence and Animate Dead. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACad,ACsi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -41585,6 +42661,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFacelessonetrickster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Facelessonetrickster, db);
+            unit.TextName = "Faceless One Trickster";
+            unit.TextTooltipBasic = "Hire Faceless One Trickster";
+            unit.TextTooltipExtended = "Heavy melee unit with Purge and Curse. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACcs,ACpu";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -41734,6 +42813,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFacelessoneterror(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Facelessoneterror, db);
+            unit.TextName = "Faceless One Terror";
+            unit.TextTooltipBasic = "Hire Faceless One Terror";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning. Can cast Sleep and Mana Shield. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsl,ACmf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -41883,6 +42965,9 @@ namespace War3Api.Object
         protected virtual Unit LoadOverlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Overlord, db);
+            unit.TextName = "Overlord";
+            unit.TextTooltipBasic = "Hire Overlord";
+            unit.TextTooltipExtended = "Heavy melee unit with Howl of Terror, Cleaving Attack and Vampiric Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Acht,ACce,ACvp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -42032,6 +43117,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolgchampion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolgchampion, db);
+            unit.TextName = "Polar Furbolg Champion";
+            unit.TextTooltipBasic = "Hire Polar Furbolg Champion";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -42181,6 +43269,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolgeldershaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolgeldershaman, db);
+            unit.TextName = "Polar Furbolg Elder Shaman";
+            unit.TextTooltipBasic = "Hire Polar Furbolg Elder Shaman";
+            unit.TextTooltipExtended = "Heavy ranged unit with Frost Nova and Healing Wave. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AChv,ACfn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -42330,6 +43421,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolg, db);
+            unit.TextName = "Polar Furbolg";
+            unit.TextTooltipBasic = "Hire Polar Furbolg";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -42479,6 +43573,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolgshaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolgshaman, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Polar Furbolg Shaman";
+            unit.TextTooltipBasic = "Hire Polar Furbolg Shaman";
+            unit.TextTooltipExtended = "Medium ranged unit with Abolish Magic and Frost Armor. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACf2,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "AUfu";
             unit.AbilitiesHeroRaw = null;
@@ -42628,6 +43726,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolgtracker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolgtracker, db);
+            unit.TextName = "Polar Furbolg Tracker";
+            unit.TextTooltipBasic = "Hire Polar Furbolg Tracker";
+            unit.TextTooltipExtended = "Heavy melee unit that can Slow opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACsw";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -42777,6 +43878,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarfurbolgursawarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarfurbolgursawarrior, db);
+            unit.TextName = "Polar Furbolg Ursa Warrior";
+            unit.TextTooltipBasic = "Hire Polar Furbolg Ursa Warrior";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura and War Stomp. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Awrs,ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -42926,6 +44030,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgancient(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgancient, db);
+            unit.TextName = "Furbolg Ursa Warrior";
+            unit.TextTooltipBasic = "Hire Furbolg Ursa Warrior";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura. Can also War Stomp. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Awrs,ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43075,6 +44182,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgtracker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgtracker, db);
+            unit.TextName = "Furbolg Tracker";
+            unit.TextTooltipBasic = "Hire Furbolg Tracker";
+            unit.TextTooltipExtended = "Heavy melee unit that casts Faerie Fire. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACff";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afae";
             unit.AbilitiesHeroRaw = null;
@@ -43224,6 +44334,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgeldershaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgeldershaman, db);
+            unit.TextName = "Furbolg Elder Shaman";
+            unit.TextTooltipBasic = "Hire Furbolg Elder Shaman";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning. Can cast Rejuvenation and Lightning Shield. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACr2,ACls";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43373,6 +44486,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgchampion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgchampion, db);
+            unit.TextName = "Furbolg Champion";
+            unit.TextTooltipBasic = "Hire Furbolg Champion";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43522,6 +44638,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolg, db);
+            unit.TextName = "Furbolg";
+            unit.TextTooltipBasic = "Hire Furbolg";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43671,6 +44790,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgpanda(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgpanda, db);
+            unit.TextName = "Primal Pandaren";
+            unit.TextTooltipBasic = "Hire Primal Pandaren";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43820,6 +44942,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolgshaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolgshaman, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Furbolg Shaman";
+            unit.TextTooltipBasic = "Hire Furbolg Shaman";
+            unit.TextTooltipExtended = "Medium ranged unit that hurls bolts of lightning. Can cast Rejuvenation. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACr2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -43969,6 +45095,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollhighpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollhighpriest, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Forest Troll High Priest";
+            unit.TextTooltipBasic = "Hire Forest Troll High Priest";
+            unit.TextTooltipExtended = "High Priest of healing magic. Hurls fiery missiles. Can cast Abolish Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh2,ACif,ACd2";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -44118,6 +45248,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollshadowpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollshadowpriest, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Forest Troll Shadow Priest";
+            unit.TextTooltipBasic = "Hire Forest Troll Shadow Priest";
+            unit.TextTooltipExtended = "Shadow Priest of healing magic. Hurls fiery missiles. Can cast Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -44267,6 +45401,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollberserker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollberserker, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Forest Troll Berserker";
+            unit.TextTooltipBasic = "Hire Forest Troll Berserker";
+            unit.TextTooltipExtended = "Rabid axe-thrower. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -44416,6 +45554,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollking(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollking, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Forest Troll Warlord";
+            unit.TextTooltipBasic = "Hire Forest Troll Warlord";
+            unit.TextTooltipExtended = "Heavy ranged unit with Trueshot Aura. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACat";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -44565,6 +45707,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttroll(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttroll, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Forest Troll";
+            unit.TextTooltipBasic = "Hire Forest Troll";
+            unit.TextTooltipExtended = "Axe-throwing Troll. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -44714,6 +45860,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrolltrapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrolltrapper, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Forest Troll Trapper";
+            unit.TextTooltipBasic = "Hire Forest Troll Trapper";
+            unit.TextTooltipExtended = "Medium ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -44863,6 +46013,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGreendrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greendrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Green Drake";
+            unit.TextTooltipBasic = "Summon Green Drake";
+            unit.TextTooltipExtended = "Small ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45012,6 +46166,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGranitegolem_nggr(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Granitegolem_nggr, db);
+            unit.TextName = "Granite Golem";
+            unit.TextTooltipBasic = "Summon Granite Golem";
+            unit.TextTooltipExtended = "Heavy melee unit that can Slam opponents and hurl boulders. Immune to spells. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACtb,ACtc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45161,6 +46318,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGhost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ghost, db);
+            unit.TextName = "Ghost";
+            unit.TextTooltipBasic = "Summon Ghost";
+            unit.TextTooltipExtended = "Light ranged unit that can cast Possession. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACps";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45310,6 +46470,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWraith(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wraith, db);
+            unit.TextName = "Wraith";
+            unit.TextTooltipBasic = "Summon Wraith";
+            unit.TextTooltipExtended = "Heavy ranged unit that can cast Curse and Possession. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACps,ACcs";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -45459,6 +46622,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinshredder(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinshredder, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Shredder";
+            unit.TextTooltipBasic = "Hire Shredder";
+            unit.TextTooltipExtended = "Medium melee unit made of iron. Excellent at harvesting large amounts of lumber. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahr3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45608,6 +46775,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinlandmine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinlandmine, db);
+            unit.TextName = "Goblin Land Mine";
             unit.AbilitiesNormalRaw = "Amnx,Amin";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45757,6 +46925,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollpoacher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollpoacher, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Gnoll Poacher";
+            unit.TextTooltipBasic = "Hire Gnoll Poacher";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -45906,6 +47078,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollbrute(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollbrute, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Gnoll Brute";
+            unit.TextTooltipBasic = "Hire Gnoll Brute";
+            unit.TextTooltipExtended = "Light melee unit to bolster your forces. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46055,6 +47231,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnoll1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnoll1, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Gnoll";
+            unit.TextTooltipBasic = "Hire Gnoll Robber";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46204,6 +47384,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollassassin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollassassin, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Gnoll Assassin";
+            unit.TextTooltipBasic = "Hire Gnoll Assassin";
+            unit.TextTooltipExtended = "Light ranged unit that fires envenomed bolts. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACvs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46353,6 +47537,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollking_ngnv(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollking_ngnv, db);
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Gnoll Overseer";
+            unit.TextTooltipBasic = "Hire Gnoll Overseer";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46502,6 +47690,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnoll3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnoll3, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Gnoll Warden";
+            unit.TextTooltipBasic = "Hire Gnoll Warden";
+            unit.TextTooltipExtended = "Light ranged unit that hurls bolts of lightning. Can cast Purge. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACpu";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46651,6 +47843,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGreendragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greendragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Green Dragon";
+            unit.TextTooltipBasic = "Summon Green Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advc,ACdv,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -46800,6 +47996,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMudgolem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mudgolem, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Mud Golem";
+            unit.TextTooltipBasic = "Summon Mud Golem";
+            unit.TextTooltipExtended = "Light melee unit that can Slow opponents. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACsw";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -46949,6 +48149,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGreendragonwhelp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greendragonwhelp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Green Dragon Whelp";
+            unit.TextTooltipBasic = "Summon Green Dragon Whelp";
+            unit.TextTooltipExtended = "Tiny ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -47098,6 +48302,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinsapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinsapper, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Sapper";
+            unit.TextTooltipBasic = "Hire Sapper";
+            unit.TextTooltipExtended = "Explosive team of goblin sappers. Particularly effective against buildings. |n|cffffcc00Can Kaboom land units and trees.|r";
             unit.AbilitiesNormalRaw = "Asds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -47247,6 +48455,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRockgolem_ngst(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rockgolem_ngst, db);
+            unit.TextName = "Rock Golem";
+            unit.TextTooltipBasic = "Summon Rock Golem";
+            unit.TextTooltipExtended = "Heavy melee unit that hurls boulders at opponents. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACtb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -47396,6 +48607,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpyscout(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpyscout, db);
+            unit.TextName = "Harpy Scout";
+            unit.TextTooltipBasic = "Hire Harpy Scout";
+            unit.TextTooltipExtended = "Light flying ranged unit that hurls pin-feathers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -47545,6 +48759,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDeceiver(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deceiver, db);
+            unit.TextName = "Deceiver";
+            unit.TextTooltipBasic = "Hire Deceiver";
+            unit.TextTooltipExtended = "Light ranged unit that hurls Demon fire. Can cast Curse. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcs";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -47694,6 +48911,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFallenpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fallenpriest, db);
+            unit.TextName = "Fallen Priest";
+            unit.TextTooltipBasic = "Hire Fallen Priest";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -47843,6 +49063,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHeretic(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Heretic, db);
+            unit.TextName = "Heretic";
+            unit.TextTooltipBasic = "Hire Heretic";
+            unit.TextTooltipExtended = "Medium ranged unit that hurls Demon fire. Can cast Raise Dead and Carrion Swarm. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACrd,ACca";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -47992,6 +49215,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpyhag(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpyhag, db);
+            unit.TextName = "Harpy Storm-hag";
+            unit.TextTooltipBasic = "Hire Harpy Storm-hag";
+            unit.TextTooltipExtended = "Medium flying ranged unit that hurls bolts of lightning. Can Curse opponents and cast Sleep. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcs,ACsl";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -48141,6 +49367,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpyqueen(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpyqueen, db);
+            unit.TextName = "Harpy Queen";
+            unit.TextTooltipBasic = "Hire Harpy Queen";
+            unit.TextTooltipExtended = "Heavy flying ranged unit that can cast Rejuvenation and Cyclone. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACr2,ACcy";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -48290,6 +49519,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpyrogue(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpyrogue, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Harpy Rogue";
+            unit.TextTooltipBasic = "Hire Harpy Rogue";
+            unit.TextTooltipExtended = "Light flying ranged unit that hurls pin-feathers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -48439,6 +49672,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpywitch(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpywitch, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Harpy Windwitch";
+            unit.TextTooltipBasic = "Hire Harpy Windwitch";
+            unit.TextTooltipExtended = "Light flying ranged unit that hurls bolts of lightning. Casts Faerie Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACff";
             unit.AbilitiesDefaultActiveAbilityRaw = "Afae";
             unit.AbilitiesHeroRaw = null;
@@ -48588,6 +49825,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCampaignturtle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Campaignturtle, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Dragon Turtle";
+            unit.TextTooltipBasic = "Train Dragon Turtle";
+            unit.TextTooltipExtended = "A powerful Turtle that can devour enemy units. Good at destroying enemy buildings. Has Hardened Skin, which reduces damage taken, and Spiked Shell which deals damage to enemy melee attackers. |n|n|cffffcc00Attacks land units.";
             unit.AbilitiesNormalRaw = "Advc,ACdv,ANth,Ansk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -48737,6 +49978,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHydra(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hydra, db);
+            unit.TextName = "Hydra";
+            unit.TextTooltipBasic = "Hire Hydra";
+            unit.TextTooltipExtended = "Light ranged amphibious unit with Slow Poison. When it is slain, smaller Hydras will arise from its corpse. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aspo, Aspt";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -48886,6 +50130,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHydrahatchling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hydrahatchling, db);
+            unit.TextName = "Hydra Hatchling";
+            unit.TextTooltipBasic = "Hire Hydra Hatchling";
+            unit.TextTooltipExtended = "Medium ranged amphibious unit with Slow Poison. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aspo";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -49035,6 +50282,9 @@ namespace War3Api.Object
         protected virtual Unit LoadInfernaljuggernaut(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Infernaljuggernaut, db);
+            unit.TextName = "Infernal Juggernaut";
+            unit.TextTooltipBasic = "Hire Infernal Juggernaut";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls fiery missiles. Can cast Inferno. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ANin";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -49184,6 +50434,9 @@ namespace War3Api.Object
         protected virtual Unit LoadInfernalcontraption(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Infernalcontraption, db);
+            unit.TextName = "Infernal Contraption";
+            unit.TextTooltipBasic = "Hire Infernal Contraption";
+            unit.TextTooltipExtended = "Medium ranged unit that hurls fiery missiles. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -49333,6 +50586,9 @@ namespace War3Api.Object
         protected virtual Unit LoadInfernal(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Infernal, db);
+            unit.TextName = "Infernal";
+            unit.TextTooltipBasic = "Summon Infernal";
+            unit.TextTooltipExtended = "Heavy melee unit cloaked in demonic flames that damage nearby enemy ground units. Immune to magic. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ANpi,ACrk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -49482,6 +50738,9 @@ namespace War3Api.Object
         protected virtual Unit LoadInfernalmachine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Infernalmachine, db);
+            unit.TextName = "Infernal Machine";
+            unit.TextTooltipBasic = "Hire Infernal Machine";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls fiery missiles. Can cast Breath of Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -49631,6 +50890,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollhighpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollhighpriest, db);
+            unit.TextName = "Ice Troll High Priest";
+            unit.TextTooltipBasic = "Hire Ice Troll High Priest";
+            unit.TextTooltipExtended = "High Priest of healing magic. Can cast Abolish Magic and Frost Armor. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh2,ACf2,ACd2";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -49676,7 +50938,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1400;
-            unit.MovementSpeedBase = 300;
+            unit.MovementSpeedBase = 270;
             unit.StatsStockMaximum = 1;
             unit.StatsStockReplenishInterval = 210;
             unit.StatsStockStartDelay = 440;
@@ -49780,6 +51042,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollshadowpriest(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollshadowpriest, db);
+            unit.TextName = "Ice Troll Priest";
+            unit.TextTooltipBasic = "Hire Ice Troll Priest";
+            unit.TextTooltipExtended = "Priest of healing magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -49929,6 +51194,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetroll(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetroll, db);
+            unit.TextName = "Ice Troll";
+            unit.TextTooltipBasic = "Hire Ice Troll";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50078,6 +51346,10 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollberserker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollberserker, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Ice Troll Berserker";
+            unit.TextTooltipBasic = "Hire Ice Troll Berserker";
+            unit.TextTooltipExtended = "Medium ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50123,7 +51395,7 @@ namespace War3Api.Object
             unit.MovementGroupSeparationPriority = 0;
             unit.PathingPlacementPreventedByRaw = "_";
             unit.StatsSightRadiusDay = 1400;
-            unit.MovementSpeedBase = 300;
+            unit.MovementSpeedBase = 270;
             unit.StatsStockMaximum = 1;
             unit.StatsStockReplenishInterval = 210;
             unit.StatsStockStartDelay = 220;
@@ -50227,6 +51499,10 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrolltrapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrolltrapper, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Ice Troll Trapper";
+            unit.TextTooltipBasic = "Hire Ice Troll Trapper";
+            unit.TextTooltipExtended = "Medium ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50376,6 +51652,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollwarlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollwarlord, db);
+            unit.TextName = "Ice Troll Warlord";
+            unit.TextTooltipBasic = "Hire Ice Troll Warlord";
+            unit.TextTooltipExtended = "Heavy ranged unit with Trueshot Aura. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACat";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50525,6 +51804,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEnrangedjunglestalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Enrangedjunglestalker, db);
+            unit.TextName = "Enraged Jungle Stalker";
+            unit.TextTooltipBasic = "Summon Enraged Jungle Stalker";
+            unit.TextTooltipExtended = "Heavy melee unit that can Slam opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACtc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50674,6 +51956,9 @@ namespace War3Api.Object
         protected virtual Unit LoadElderjunglestalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elderjunglestalker, db);
+            unit.TextName = "Elder Jungle Stalker";
+            unit.TextTooltipBasic = "Summon Elder Jungle Stalker";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50823,6 +52108,9 @@ namespace War3Api.Object
         protected virtual Unit LoadJunglestalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Junglestalker, db);
+            unit.TextName = "Jungle Stalker";
+            unit.TextTooltipBasic = "Summon Jungle Stalker";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -50972,6 +52260,10 @@ namespace War3Api.Object
         protected virtual Unit LoadKobold(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kobold, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Kobold";
+            unit.TextTooltipBasic = "Hire Kobold";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -51121,6 +52413,10 @@ namespace War3Api.Object
         protected virtual Unit LoadKoboldgeomancer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Koboldgeomancer, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Kobold Geomancer";
+            unit.TextTooltipBasic = "Hire Kobold Geomancer";
+            unit.TextTooltipExtended = "Light ranged unit that casts Slow and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -51270,6 +52566,9 @@ namespace War3Api.Object
         protected virtual Unit LoadKoboldtaskmaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Koboldtaskmaster, db);
+            unit.TextName = "Kobold Taskmaster";
+            unit.TextTooltipBasic = "Hire Kobold Taskmaster";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura. Can Bash opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACac,ACbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -51419,6 +52718,9 @@ namespace War3Api.Object
         protected virtual Unit LoadKobolttunneler(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kobolttunneler, db);
+            unit.TextName = "Kobold Tunneler";
+            unit.TextTooltipBasic = "Hire Kobold Tunneler";
+            unit.TextTooltipExtended = "Light melee unit that can Bash opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -51568,6 +52870,10 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokkdeepseer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokkdeepseer, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Makrura Deepseer";
+            unit.TextTooltipBasic = "Hire Makrura Deepseer";
+            unit.TextTooltipExtended = "Medium ranged unit that can cast Entangling Roots and summon Prawns. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aenw,Aslp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -51717,6 +53023,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokktidallord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokktidallord, db);
+            unit.TextName = "Makrura Tidal Lord";
+            unit.TextTooltipBasic = "Hire Makrura Tidal Lord";
+            unit.TextTooltipExtended = "Heavy melee unit with Devotion Aura and Cleaving Attack. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACce,ACav";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -51866,6 +53175,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokkpooldweller(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokkpooldweller, db);
+            unit.TextName = "Makrura Pooldweller";
+            unit.TextTooltipBasic = "Hire Makrura Pooldweller";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -52015,6 +53327,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokkprawn(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokkprawn, db);
+            unit.TextName = "Makrura Prawn";
+            unit.TextTooltipBasic = "Hire Makrura Prawn";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -52164,6 +53479,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokkprawnsummoned(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokkprawnsummoned, db);
+            unit.TextName = "Summoned Prawn";
+            unit.TextTooltipBasic = "Summoned Prawn";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -52313,6 +53631,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDeeplordrevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deeplordrevenant, db);
+            unit.TextName = "Deeplord Revenant";
+            unit.TextTooltipBasic = "Hire Deeplord Revenant";
+            unit.TextTooltipExtended = "Heavy melee unit with Crushing Wave and Frost Armor. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACcv,ACf2";
             unit.AbilitiesDefaultActiveAbilityRaw = "AUfu";
             unit.AbilitiesHeroRaw = null;
@@ -52462,6 +53783,10 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokksnapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokksnapper, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Makrura Snapper";
+            unit.TextTooltipBasic = "Hire Makrura Snapper";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -52611,6 +53936,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLobstrokktidecaller(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lobstrokktidecaller, db);
+            unit.TextName = "Makrura Tidecaller";
+            unit.TextTooltipBasic = "Hire Makrura Tidecaller";
+            unit.TextTooltipExtended = "Light ranged unit with Heal and Frost Armor. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1,ACf2";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -52760,6 +54088,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLightninglizard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lightninglizard, db);
+            unit.TextName = "Lightning Lizard";
+            unit.TextTooltipBasic = "Summon Lightning Lizard";
+            unit.TextTooltipExtended = "Light ranged unit that hurls bolts of lightning. Can cast Purge. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit,ACpu";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -52909,6 +54240,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMonsterlure(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Monsterlure, db);
+            unit.TextName = "Monster Lure";
+            unit.TextTooltipBasic = "Create Monster Lure";
+            unit.TextTooltipExtended = "A ward that lures nearby monsters.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53058,6 +54392,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMammoth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mammoth, db);
+            unit.TextName = "Mammoth";
+            unit.TextTooltipBasic = "Hire Mammoth";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53207,6 +54544,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulbloodgill(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulbloodgill, db);
+            unit.TextName = "Mur'gul Blood-Gill";
+            unit.TextTooltipBasic = "Hire Mur'gul Blood-Gill";
+            unit.TextTooltipExtended = "Light ranged amphibious unit with Heal. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -53356,6 +54696,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulcliffrunner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulcliffrunner, db);
+            unit.TextName = "Mur'gul Cliffrunner";
+            unit.TextTooltipBasic = "Hire Mur'gul Cliffrunner";
+            unit.TextTooltipExtended = "Light melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53505,6 +54848,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDiremammoth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Diremammoth, db);
+            unit.TextName = "Dire Mammoth";
+            unit.TextTooltipBasic = "Hire Dire Mammoth";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53654,6 +55000,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlocflesheater(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlocflesheater, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Murloc Flesheater";
+            unit.TextTooltipBasic = "Hire Murloc Flesheater";
+            unit.TextTooltipExtended = "Light melee unit that can Cannibalize corpses. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACcn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53803,6 +55153,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMagnataurdestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Magnataurdestroyer, db);
+            unit.TextName = "Magnataur Destroyer";
+            unit.TextTooltipBasic = "Hire Magnataur Destroyer";
+            unit.TextTooltipExtended = "Heavy melee unit that can Slam opponents and hurl bolts of frost. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACcb,ACtc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -53952,6 +55305,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMagnataurreaver(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Magnataurreaver, db);
+            unit.TextName = "Magnataur Reaver";
+            unit.TextTooltipBasic = "Hire Magnataur Reaver";
+            unit.TextTooltipExtended = "Heavy melee unit that hurls bolts of frost at opponents. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACcb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54101,6 +55457,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMagnataurwarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Magnataurwarrior, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Magnataur Warrior";
+            unit.TextTooltipBasic = "Hire Magnataur Warrior";
+            unit.TextTooltipExtended = "Heavy melee unit. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54250,6 +55610,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetuskmammoth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetuskmammoth, db);
+            unit.TextName = "Icetusk Mammoth";
+            unit.TextTooltipBasic = "Hire Icetusk Mammoth";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54399,6 +55762,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlocmutant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlocmutant, db);
+            unit.TextName = "Murloc Mutant";
+            unit.TextTooltipBasic = "Hire Murloc Mutant";
+            unit.TextTooltipExtended = "Medium melee unit that can Cripple opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACcr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54548,6 +55914,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlocplaguebearer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlocplaguebearer, db);
+            unit.TextName = "Murloc Plaguebearer";
+            unit.TextTooltipBasic = "Hire Murloc Plaguebearer";
+            unit.TextTooltipExtended = "Light melee unit that diseases opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aap3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54697,6 +56066,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurloctiderunner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murloctiderunner, db);
+            unit.TextName = "Murloc Tiderunner";
+            unit.TextTooltipBasic = "Hire Murloc Tiderunner";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54846,6 +56218,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlocnightcrawler(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlocnightcrawler, db);
+            unit.TextName = "Murloc Nightcrawler";
+            unit.TextTooltipBasic = "Hire Murloc Nightcrawler";
+            unit.TextTooltipExtended = "Light melee unit that poisons opponents. Can also Shadowmeld. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACvs,Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -54995,6 +56370,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlochuntsman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlochuntsman, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Murloc Huntsman";
+            unit.TextTooltipBasic = "Hire Murloc Huntsman";
+            unit.TextTooltipExtended = "Light melee unit that can Ensnare opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -55144,6 +56523,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulreaver(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulreaver, db);
+            unit.TextName = "Mur'gul Marauder";
+            unit.TextTooltipBasic = "Hire Mur'gul Marauder";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit with Command Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -55293,6 +56675,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulshadowcaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulshadowcaster, db);
+            unit.TextName = "Mur'gul Shadowcaster";
+            unit.TextTooltipBasic = "Hire Mur'gul Shadowcaster";
+            unit.TextTooltipExtended = "Heavy ranged amphibious unit with Curse and Hex. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AChx,ACcs";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -55442,6 +56827,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulsnarecaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulsnarecaster, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Mur'gul Snarecaster";
+            unit.TextTooltipBasic = "Hire Mur'gul Snarecaster";
+            unit.TextTooltipExtended = "Medium ranged amphibious unit with Abolish Magic and Slow. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -55591,6 +56980,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgultidewarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgultidewarrior, db);
+            unit.TextName = "Mur'gul Tidewarrior";
+            unit.TextTooltipBasic = "Hire Mur'gul Tidewarrior";
+            unit.TextTooltipExtended = "Light melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -55740,6 +57132,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNagamyrmidon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagamyrmidon, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Naga Myrmidon";
+            unit.TextTooltipBasic = "Train Naga Myrmidon";
+            unit.TextTooltipExtended = "Powerful melee unit. Has the Submerge ability, which allows this unit to hide in water. Can learn the Ensnare ability.  |n|n|cffffcc00Attacks land units.";
             unit.AbilitiesNormalRaw = "ANen,Asb1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -55889,6 +57285,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNagamyrmidonmorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagamyrmidonmorph, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Submerged Naga Myrmidon";
+            unit.TextTooltipBasic = "Train Naga Myrmidon";
+            unit.TextTooltipExtended = "Powerful melee unit. Has the Submerge ability, which allows this unit to hide in water. Can Can learn the Ensnare ability.  |n|n|cffffcc00Attacks land units.";
             unit.AbilitiesNormalRaw = "Asb1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56038,6 +57438,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNetherdrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Netherdrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Nether Drake";
+            unit.TextTooltipBasic = "Summon Nether Drake";
+            unit.TextTooltipExtended = "Heavy ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56187,6 +57591,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNetherdragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Netherdragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Nether Dragon";
+            unit.TextTooltipBasic = "Summon Nether Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that can cast Cripple and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACmi,ACcr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56336,6 +57744,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNetherdragonhatchling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Netherdragonhatchling, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Nether Dragon Hatchling";
+            unit.TextTooltipBasic = "Summon Nether Dragon Hatchling";
+            unit.TextTooltipExtended = "Tiny ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56485,6 +57897,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNagamurgul(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagamurgul, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Mur'gul Reaver";
+            unit.TextTooltipBasic = "Train Mur'gul Reaver";
+            unit.TextTooltipExtended = "Light melee amphibious unit.  |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56634,6 +58050,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNagaroyalguard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagaroyalguard, db);
+            unit.TextName = "Naga Royal Guard";
+            unit.TextTooltipBasic = "Train Naga Royal Guard";
+            unit.TextTooltipExtended = "Incredibly powerful melee unit. Has the Submerge ability, which allows this unit to hide in water. Also has Resistant Skin, which reduces the duration of negative spells, Frost Bolt, which stuns a target enemy unit, Crushing Wave, which deals damage in a line, and Summon Sea Elemental, which summons a ranged attack unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asb2,ACcv,ACcb,ACwe,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56783,6 +58202,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNagaroyalguardmorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagaroyalguardmorph, db);
+            unit.TextName = "Submerged Naga Royal Guard";
+            unit.TextTooltipBasic = "Train Naga Royal Guard";
+            unit.TextTooltipExtended = "Incredibly powerful melee unit. Has the Submerge ability, which allows this unit to hide in water. Also has Resistant Skin, which reduces the duration of negative spells, Frost Bolt, which stuns a target enemy unit, Crushing Wave, which deals damage in a line, and Summon Sea Elemental, which summons a ranged attack unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asb2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -56932,6 +58354,12 @@ namespace War3Api.Object
         protected virtual Unit LoadSummoner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Summoner, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Parasite,- Parasite|n- Frost Armor,- Parasite|n- Frost Armor|n- Cyclone";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Summoner";
+            unit.TextTooltipBasic = "Train Summoner";
+            unit.TextTooltipExtended = "Powerful summoner. Can initially cast Parasite, which damages an enemy unit over time and can spawn a Watery Minion from their corpse. Can also learn Frost Armor, and Cyclone. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acny,ACfu,ANpa,Ahnl";
             unit.AbilitiesDefaultActiveAbilityRaw = "ANpa";
             unit.AbilitiesHeroRaw = null;
@@ -57081,6 +58509,12 @@ namespace War3Api.Object
         protected virtual Unit LoadSiren(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siren, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Parasite,- Parasite|n- Frost Armor,- Parasite|n- Frost Armor|n- Cyclone";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Naga Siren";
+            unit.TextTooltipBasic = "Train Naga Siren";
+            unit.TextTooltipExtended = "Powerful spellcaster. Can initially cast Parasite, which damages an enemy unit over time and can spawn a Watery Minion from their corpse. Can also learn Frost Armor, and Cyclone. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Acny,ACfu,ANpa";
             unit.AbilitiesDefaultActiveAbilityRaw = "ANpa";
             unit.AbilitiesHeroRaw = null;
@@ -57230,6 +58664,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianwarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianwarrior, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Nerubian Warrior";
+            unit.TextTooltipBasic = "Summon Nerubian Warrior";
+            unit.TextTooltipExtended = "Light melee unit that carries its young into battle. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Assp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -57379,6 +58817,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianwebspinner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianwebspinner, db);
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Nerubian Webspinner";
+            unit.TextTooltipBasic = "Summon Nerubian Webspinner";
+            unit.TextTooltipExtended = "Light ranged unit that can cast Web and Raise Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACwb,ACrd,Aspa";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aweb";
             unit.AbilitiesHeroRaw = null;
@@ -57528,6 +58970,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianqueen(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianqueen, db);
+            unit.TextName = "Nerubian Queen";
+            unit.TextTooltipBasic = "Summon Nerubian Queen";
+            unit.TextTooltipExtended = "Heavy melee unit with Unholy Aura. Casts Raise Dead and Carrion Swarm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACua,ACca,ACrd,Aspa";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -57677,6 +59122,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianseer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianseer, db);
+            unit.TextName = "Nerubian Seer";
+            unit.TextTooltipBasic = "Summon Nerubian Seer";
+            unit.TextTooltipExtended = "Heavy melee unit that can cast Abolish Magic and Raise Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACrd,ACdm,Aspa";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -57826,6 +59274,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianspiderlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianspiderlord, db);
+            unit.TextName = "Nerubian Spider Lord";
+            unit.TextTooltipBasic = "Summon Nerubian Spider Lord";
+            unit.TextTooltipExtended = "Heavy melee unit that carries its young into battle. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Assp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -57975,6 +59426,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStonemaulwarchief(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stonemaulwarchief, db);
+            unit.TextName = "Stonemaul Warchief";
+            unit.TextTooltipBasic = "Hire Stonemaul Warchief";
+            unit.TextTooltipExtended = "Lord of the Ogres. This powerfully built Ogre can crush lesser beasts with his bare hands. Has Taunt, Bash, and Endurance Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "SCae,ANta,ACbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58124,6 +59578,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOgrelord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ogrelord, db);
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Ogre Lord";
+            unit.TextTooltipBasic = "Hire Ogre Lord";
+            unit.TextTooltipExtended = "Lord of the Ogre Legion. Has a defensive aura, and can cast Shockwave. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACav,ACsh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58273,6 +59731,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOgre2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ogre2, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Ogre Mauler";
+            unit.TextTooltipBasic = "Hire Ogre Mauler";
+            unit.TextTooltipExtended = "Large brutal warrior of the Ogre Legion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58422,6 +59884,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStonemaulmagi(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stonemaulmagi, db);
+            unit.TextName = "Stonemaul Magi";
+            unit.TextTooltipBasic = "Hire Stonemaul Magi";
+            unit.TextTooltipExtended = "Powerful spellcaster. Intelligent and decisive, these Ogre Magi support their warriors with arcane spells. Can cast Roar. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58571,6 +60036,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStonemaulogre(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stonemaulogre, db);
+            unit.TextName = "Stonemaul Ogre";
+            unit.TextTooltipBasic = "Hire Stonemaul Ogre";
+            unit.TextTooltipExtended = "Powerful warrior. Less intelligent than the two-headed variety, but great combat fodder. Can cast Ensnare. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58720,6 +60188,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOgre1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ogre1, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Ogre Warrior";
+            unit.TextTooltipBasic = "Hire Ogre Warrior";
+            unit.TextTooltipExtended = "Standard warrior of the Ogre Legion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -58869,6 +60341,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOgremagi(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ogremagi, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Ogre Magi";
+            unit.TextTooltipBasic = "Hire Ogre Magi";
+            unit.TextTooltipExtended = "Spellcasting warrior of the Ogre Legion. Can cast Bloodlust. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbb";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -59018,6 +60494,10 @@ namespace War3Api.Object
         protected virtual Unit LoadOwlbear(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Owlbear, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Wildkin";
+            unit.TextTooltipBasic = "Summon Wildkin";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -59167,6 +60647,8 @@ namespace War3Api.Object
         protected virtual Unit LoadEnragedowlbear(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Enragedowlbear, db);
+            unit.TextName = "Enraged Wildkin";
+            unit.TextTooltipBasic = "Summon Enraged Wildkin";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -59316,6 +60798,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBerserkowlbear(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Berserkowlbear, db);
+            unit.TextName = "Berserk Wildkin";
+            unit.TextTooltipBasic = "Summon Berserk Wildkin";
+            unit.TextTooltipExtended = "Heavy melee unit with Bash and War Stomp. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbh,Awrs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -59465,6 +60950,10 @@ namespace War3Api.Object
         protected virtual Unit LoadPurplefelstalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Purplefelstalker, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Fel Beast";
+            unit.TextTooltipBasic = "Summon Fel Beast";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -59614,6 +61103,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFelravager(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Felravager, db);
+            unit.TextName = "Fel Ravager";
+            unit.TextTooltipBasic = "Summon Fel Ravager";
+            unit.TextTooltipExtended = "Heavy melee unit that casts Black Arrow. Can also cast Devour Magic. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbk,ACde";
             unit.AbilitiesDefaultActiveAbilityRaw = "ANba";
             unit.AbilitiesHeroRaw = null;
@@ -59763,6 +61255,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPolarbear(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Polarbear, db);
+            unit.TextName = "Polar Bear";
+            unit.TextTooltipBasic = "Hire Polar Bear";
+            unit.TextTooltipExtended = "Medium melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -59912,6 +61407,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantpolarbear(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantpolarbear, db);
+            unit.TextName = "Giant Polar Bear";
+            unit.TextTooltipBasic = "Hire Giant Polar Bear";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60061,6 +61559,9 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillboarhunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillboarhunter, db);
+            unit.TextName = "Quillboar Hunter";
+            unit.TextTooltipBasic = "Hire Quillboar Hunter";
+            unit.TextTooltipExtended = "Medium ranged unit with Evasion. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60210,6 +61711,10 @@ namespace War3Api.Object
         protected virtual Unit LoadReddragonwhelp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Reddragonwhelp, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Red Dragon Whelp";
+            unit.TextTooltipBasic = "Summon Red Dragon Whelp";
+            unit.TextTooltipExtended = "Tiny ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60359,6 +61864,10 @@ namespace War3Api.Object
         protected virtual Unit LoadReddrake(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Reddrake, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Red Drake";
+            unit.TextTooltipBasic = "Summon Red Drake";
+            unit.TextTooltipExtended = "Small ranged flying unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60508,6 +62017,9 @@ namespace War3Api.Object
         protected virtual Unit LoadReefelemental(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Reefelemental, db);
+            unit.TextName = "Reef Elemental";
+            unit.TextTooltipBasic = "Summon Reef Elemental";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60657,6 +62169,10 @@ namespace War3Api.Object
         protected virtual Unit LoadRogue(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rogue, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Rogue";
+            unit.TextTooltipBasic = "Hire Rogue";
+            unit.TextTooltipExtended = "Light melee unit with Shadowmeld. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -60806,6 +62322,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDeathrevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deathrevenant, db);
+            unit.TextName = "Death Revenant";
+            unit.TextTooltipBasic = "Summon Death Revenant";
+            unit.TextTooltipExtended = "Heavy melee unit that casts Raise Dead, Death Coil, and Animate Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACrd,ACdc,ACad";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -60955,6 +62474,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFirerevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Firerevenant, db);
+            unit.TextName = "Fire Revenant";
+            unit.TextTooltipBasic = "Summon Fire Revenant";
+            unit.TextTooltipExtended = "Light melee unit with Immolation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACim";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61104,6 +62626,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcerevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icerevenant, db);
+            unit.TextName = "Ice Revenant";
+            unit.TextTooltipBasic = "Summon Ice Revenant";
+            unit.TextTooltipExtended = "Heavy melee unit with Vampiric Aura. Can cast Frost Nova. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACvp,ACfn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61253,6 +62778,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLightningrevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lightningrevenant, db);
+            unit.TextName = "Lightning Revenant";
+            unit.TextTooltipBasic = "Summon Lightning Revenant";
+            unit.TextTooltipExtended = "Heavy melee unit that can cast Chain Lightning and Purge. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACpu,ACcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61402,6 +62930,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFrostrevenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Frostrevenant, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Frost Revenant";
+            unit.TextTooltipBasic = "Summon Frost Revenant";
+            unit.TextTooltipExtended = "Medium melee unit that can cast Blizzard. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbz";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61551,6 +63083,10 @@ namespace War3Api.Object
         protected virtual Unit LoadReddragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Reddragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Red Dragon";
+            unit.TextTooltipBasic = "Summon Red Dragon";
+            unit.TextTooltipExtended = "Heavy ranged flying unit that can Devour opponents and is immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Advc,ACdv,ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61700,6 +63236,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRazormanebrute(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Razormanebrute, db);
+            unit.TextName = "Razormane Brute";
+            unit.TextTooltipBasic = "Hire Razormane Brute";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61849,6 +63387,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRazormanechieftain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Razormanechieftain, db);
+            unit.TextName = "Razormane Chieftain";
+            unit.TextTooltipBasic = "Hire Razormane Chieftain";
+            unit.TextTooltipExtended = "Heavy melee unit with Thorns Aura. Can hurl boulders at enemies. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACah,ACtb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -61998,6 +63539,10 @@ namespace War3Api.Object
         protected virtual Unit LoadRazormanemedicineman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Razormanemedicineman, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Razormane Medicine Man";
+            unit.TextTooltipBasic = "Hire Razormane Medicine Man";
+            unit.TextTooltipExtended = "Medium melee unit that can cast Healing Ward and Feral Spirit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AChw,ACs9";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62147,6 +63692,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRazormanescout(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Razormanescout, db);
+            unit.TextName = "Razormane Scout";
+            unit.TextTooltipBasic = "Hire Razormane Scout";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62296,6 +63843,9 @@ namespace War3Api.Object
         protected virtual Unit LoadQuillboar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Quillboar, db);
+            unit.TextName = "Quillboar";
+            unit.TextTooltipBasic = "Hire Quillboar";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62445,6 +63995,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSatyrtrickster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Satyrtrickster, db);
+            unit.TextName = "Satyr Trickster";
+            unit.TextTooltipBasic = "Hire Satyr Trickster";
+            unit.TextTooltipExtended = "Light ranged unit that hurls bolts of hellfire. Can cast Purge. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACpu";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62594,6 +64147,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBroodmother(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Broodmother, db);
+            unit.TextName = "Brood Mother";
+            unit.TextTooltipBasic = "Summon Brood Mother";
+            unit.TextTooltipExtended = "Heavy melee unit that poisons opponents and carries its young into battle. Can cast Ensnare. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACvs,ACen,Aspd";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62743,6 +64299,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSnapdragonmorph(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Snapdragonmorph, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Submerged Snap Dragon";
+            unit.TextTooltipBasic = "Train Snap Dragon";
+            unit.TextTooltipExtended = "Light ranged unit that has a poison attack which slows and damages enemy units. Has the Submerge ability, which allows this unit to hide in water. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Asb3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -62892,6 +64452,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpidercrab2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spidercrab2, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Spider Crab Limbripper";
+            unit.TextTooltipBasic = "Hire Spider Crab";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63041,6 +64605,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpidercrab3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spidercrab3, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Spider Crab Behemoth";
+            unit.TextTooltipBasic = "Hire Spider Crab";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63190,6 +64758,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpidercrab(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spidercrab, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Spider Crab Shorecrawler";
+            unit.TextTooltipBasic = "Hire Spider Crab Shorecrawler";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63339,6 +64911,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeaelemental(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seaelemental, db);
+            unit.TextName = "Sea Elemental";
+            unit.TextTooltipBasic = "Summon Sea Elemental";
+            unit.TextTooltipExtended = "Medium ranged unit that can Bash opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63488,6 +65063,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeagiantbehemoth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seagiantbehemoth, db);
+            unit.TextName = "Sea Giant Behemoth";
+            unit.TextTooltipBasic = "Summon Sea Giant Behemoth";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit with Hurl Boulder, War Stomp, and Pulverize. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACpv,Awrs,ACtb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63637,6 +65215,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegegolem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegegolem, db);
+            unit.TextName = "Siege Golem";
+            unit.TextTooltipBasic = "Summon Siege Golem";
+            unit.TextTooltipExtended = "Heavy melee unit. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63786,6 +65367,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeagianthunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seagianthunter, db);
+            unit.TextName = "Sea Giant Hunter";
+            unit.TextTooltipBasic = "Summon Sea Giant Hunter";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit with Ensnare, and Pulverize. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACpv,ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -63935,6 +65519,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeagiant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seagiant, db);
+            unit.TextName = "Sea Giant";
+            unit.TextTooltipBasic = "Summon Sea Giant";
+            unit.TextTooltipExtended = "Light melee amphibious unit with Pulverize. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACpv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64084,6 +65671,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantspider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantspider, db);
+            unit.TextName = "Giant Spider";
+            unit.TextTooltipBasic = "Summon Giant Spider";
+            unit.TextTooltipExtended = "Medium melee unit that poisons opponents. Can cast Ensnare. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACvs,ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64233,6 +65823,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalarcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalarcher, db);
+            unit.TextName = "Skeleton Archer";
+            unit.TextTooltipBasic = "Hire Skeleton Archer";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64382,6 +65975,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeleton(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeleton, db);
+            unit.TextName = "Skeleton Warrior";
+            unit.TextTooltipBasic = "Hire Skeleton Warrior";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64531,6 +66127,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalarchersummoned(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalarchersummoned, db);
+            unit.TextName = "Skeleton Archer";
+            unit.TextTooltipBasic = "Hire Skeleton Archer";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64680,6 +66279,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletonsummoned(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletonsummoned, db);
+            unit.TextName = "Skeleton Warrior";
+            unit.TextTooltipBasic = "Hire Skeleton Warrior";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64829,6 +66431,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBurningarcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Burningarcher, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Burning Archer";
+            unit.TextTooltipBasic = "Hire Burning Archer";
+            unit.TextTooltipExtended = "Light ranged unit that shoots Searing Arrows. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsa";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -64978,6 +66584,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantskeleton(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantskeleton, db);
+            unit.TextName = "Giant Skeleton Warrior";
+            unit.TextTooltipBasic = "Hire Giant Skeleton Warrior";
+            unit.TextTooltipExtended = "Large melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -65127,6 +66736,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalmarksman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalmarksman, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Skeletal Marksman";
+            unit.TextTooltipBasic = "Hire Skeletal Marksman";
+            unit.TextTooltipExtended = "Light ranged unit that shoots Cold Arrows. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcw";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -65276,6 +66889,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalorc(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalorc, db);
+            unit.TextName = "Skeletal Orc";
+            unit.TextTooltipBasic = "Summon Skeletal Orc";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -65425,6 +67041,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSludgeflinger(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sludgeflinger, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Sludge Flinger";
+            unit.TextTooltipBasic = "Summon Sludge Flinger";
+            unit.TextTooltipExtended = "Light ranged unit that can Slow opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -65574,6 +67194,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSalamanderhatchling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Salamanderhatchling, db);
+            unit.TextName = "Salamander Hatchling";
+            unit.TextTooltipBasic = "Summon Salamander Hatchling";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -65723,6 +67345,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSalamanderlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Salamanderlord, db);
+            unit.TextName = "Salamander Lord";
+            unit.TextTooltipBasic = "Summon Salamander Lord";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls fiery missiles. Has the ability to Devour opponents. Can cast Immolation and Rain of Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACim,ACrf,Advc,ACdv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -65872,6 +67497,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSludgeminion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sludgeminion, db);
+            unit.TextName = "Sludge Minion";
+            unit.TextTooltipBasic = "Summon Sludge Minion";
+            unit.TextTooltipExtended = "Light melee unit that can Slow opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACsw";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -66021,6 +67649,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSludgemonstrosity(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sludgemonstrosity, db);
+            unit.TextName = "Sludge Monstrosity";
+            unit.TextTooltipBasic = "Summon Sludge Monstrosity";
+            unit.TextTooltipExtended = "Medium melee unit that can Slow opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACsw";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -66170,6 +67801,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSalamander(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Salamander, db);
+            unit.TextName = "Salamander";
+            unit.TextTooltipBasic = "Summon Salamander";
+            unit.TextTooltipExtended = "Medium ranged unit that hurls fiery missiles. Can cast Immolation and Firebolt. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACim,ACfb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -66319,6 +67953,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSalamandervizier(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Salamandervizier, db);
+            unit.TextName = "Salamander Vizier";
+            unit.TextTooltipBasic = "Summon Salamander Vizier";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls fiery missiles. Can cast Abolish Magic, Mana Burn, and Bloodlust. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbl,Ambd,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -66468,6 +68105,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSnapdragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Snapdragon, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Snap Dragon";
+            unit.TextTooltipBasic = "Train Snap Dragon";
+            unit.TextTooltipExtended = "Light ranged unit that has a poison attack which slows and damages enemy units. Has the Submerge ability, which allows this unit to hide in water. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aspo,Asb3";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -66617,6 +68258,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWateryminionsnarecaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wateryminionsnarecaster, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Watery Minion";
+            unit.TextTooltipBasic = "Summon Watery Minion";
+            unit.TextTooltipExtended = "Medium ranged amphibious unit with Abolish Magic and Slow. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw,ACdm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -66766,6 +68411,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalorcchampion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalorcchampion, db);
+            unit.TextName = "Skeletal Orc Champion";
+            unit.TextTooltipBasic = "Summon Skeletal Orc Champion";
+            unit.TextTooltipExtended = "Heavy melee unit with Death Coil. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACdc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -66915,6 +68563,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkeletalorcgrunt(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skeletalorcgrunt, db);
+            unit.TextName = "Skeletal Orc Grunt";
+            unit.TextTooltipBasic = "Summon Skeletal Orc Grunt";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67064,6 +68715,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiderblack(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiderblack, db);
+            unit.TextName = "Black Spider";
+            unit.TextTooltipBasic = "Summon Black Spider";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67213,6 +68867,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiderling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiderling, db);
+            unit.TextName = "Spiderling";
+            unit.TextTooltipBasic = "Summon Spiderling";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67362,6 +69019,9 @@ namespace War3Api.Object
         protected virtual Unit LoadForestspider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Forestspider, db);
+            unit.TextName = "Forest Spider";
+            unit.TextTooltipBasic = "Summon Forest Spider";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67511,6 +69171,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritpig(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritpig, db);
+            unit.TextName = "Spirit Pig";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67660,6 +69321,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSpider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spider, db);
+            unit.TextName = "Spider";
+            unit.TextTooltipBasic = "Summon Spider";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67809,6 +69473,9 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientsasquatch(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientsasquatch, db);
+            unit.TextName = "Ancient Sasquatch";
+            unit.TextTooltipBasic = "Summon Ancient Sasquatch";
+            unit.TextTooltipExtended = "Heavy melee unit that can Slam opponents. Can cast Force of Nature. Also has Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACtc,ACfr,ACrn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -67958,6 +69625,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEldersasquatch(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Eldersasquatch, db);
+            unit.TextName = "Elder Sasquatch";
+            unit.TextTooltipBasic = "Summon Elder Sasquatch";
+            unit.TextTooltipExtended = "Heavy melee unit that can Bash opponents. Can cast Force of Nature. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbh,ACfr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -68107,6 +69777,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSasquatchoracle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sasquatchoracle, db);
+            unit.TextName = "Sasquatch Oracle";
+            unit.TextTooltipBasic = "Summon Sasquatch Oracle";
+            unit.TextTooltipExtended = "Heavy melee unit with Roar. Can also cast Rejuvenation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACrj,ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -68256,6 +69929,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSasquatch(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sasquatch, db);
+            unit.TextName = "Sasquatch";
+            unit.TextTooltipBasic = "Summon Sasquatch";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -68405,6 +70081,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStormreaverapprentice(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stormreaverapprentice, db);
+            unit.TextName = "Stormreaver Apprentice";
+            unit.TextTooltipBasic = "Hire Stormreaver Apprentice";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -68554,6 +70233,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStormreaverhermit(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stormreaverhermit, db);
+            unit.TextName = "Stormreaver Hermit";
+            unit.TextTooltipBasic = "Hire Stormreaver Hermit";
+            unit.TextTooltipExtended = "Light ranged unit with Purge. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACpu";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -68703,6 +70385,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStormreavernecrolyte(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stormreavernecrolyte, db);
+            unit.TextName = "Stormreaver Necrolyte";
+            unit.TextTooltipBasic = "Hire Stormreaver Necrolyte";
+            unit.TextTooltipExtended = "Heavy ranged unit with Bloodlust and Chain Lightning. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACbl,ACcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -68852,6 +70537,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRevenantoftheseas(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Revenantoftheseas, db);
+            unit.TextName = "Revenant of the Seas";
+            unit.TextTooltipBasic = "Hire Revenant of the Seas";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -69001,6 +70689,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStormreaverwarlock(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stormreaverwarlock, db);
+            unit.TextName = "Stormreaver Warlock";
+            unit.TextTooltipBasic = "Hire Stormreaver Warlock";
+            unit.TextTooltipExtended = "Heavy ranged unit with Monsoon and Animate Dead. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACmo,ACad";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -69150,6 +70841,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSpittingspider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spittingspider, db);
+            unit.TextName = "Spitting Spider";
+            unit.TextTooltipBasic = "Summon Spitting Spider";
+            unit.TextTooltipExtended = "Light ranged unit that spits poison at opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACvs";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -69299,6 +70993,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSatyrhellcaller(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Satyrhellcaller, db);
+            unit.TextName = "Satyr Hellcaller";
+            unit.TextTooltipBasic = "Hire Satyr Hellcaller";
+            unit.TextTooltipExtended = "Heavy melee unit with Unholy Aura. Can cast Bloodlust and Animate Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbl,ACua,ACad";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -69448,6 +71145,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSatyrsoulstealer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Satyrsoulstealer, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Satyr Soulstealer";
+            unit.TextTooltipBasic = "Hire Satyr Soulstealer";
+            unit.TextTooltipExtended = "Medium melee unit that can cast Mana Burn and Raise Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ambd,ACrd";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -69597,6 +71298,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSatyrshadowdancer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Satyrshadowdancer, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Satyr Shadowdancer";
+            unit.TextTooltipBasic = "Hire Satyr Shadowdancer";
+            unit.TextTooltipExtended = "Light ranged unit with Shadowmeld. Can cast Curse. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcs,Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -69746,6 +71451,9 @@ namespace War3Api.Object
         protected virtual Unit LoadStormwyrm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Stormwyrm, db);
+            unit.TextName = "Storm Wyrm";
+            unit.TextTooltipBasic = "Summon Storm Wyrm";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning. Has the ability to Devour opponents. Can cast Chain Lightning and Lightning Shield. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit,ACls,ACcl,Advc,ACdv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -69895,6 +71603,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSatyr(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Satyr, db);
+            unit.TextName = "Satyr";
+            unit.TextTooltipBasic = "Hire Satyr";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -70044,6 +71755,11 @@ namespace War3Api.Object
         protected virtual Unit LoadThunderlizard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Thunderlizard, db);
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Thunder Lizard";
+            unit.TextTooltipBasic = "Summon Thunder Lizard";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning. Can Slam opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit,ACt2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -70193,6 +71909,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrspearman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrspearman, db);
+            unit.TextName = "Tuskarr Spearman";
+            unit.TextTooltipBasic = "Hire Tuskarr Spearman";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -70342,6 +72061,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrchieftain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrchieftain, db);
+            unit.TextName = "Tuskarr Chieftain";
+            unit.TextTooltipBasic = "Hire Tuskarr Chieftain";
+            unit.TextTooltipExtended = "Heavy melee unit with Command Aura. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -70491,6 +72213,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrfighter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrfighter, db);
+            unit.TextName = "Tuskarr Fighter";
+            unit.TextTooltipBasic = "Hire Tuskarr Fighter";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -70640,6 +72365,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrhealer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrhealer, db);
+            unit.TextName = "Tuskarr Healer";
+            unit.TextTooltipBasic = "Hire Tuskarr Healer";
+            unit.TextTooltipExtended = "Light ranged unit with Heal and Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACdm,Anh1";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -70789,6 +72517,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrsorceror(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrsorceror, db);
+            unit.TextName = "Tuskarr Sorcerer";
+            unit.TextTooltipBasic = "Hire Tuskarr Sorcerer";
+            unit.TextTooltipExtended = "Medium ranged unit with Inner Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACif";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ainf";
             unit.AbilitiesHeroRaw = null;
@@ -70938,6 +72669,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrtrapper(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrtrapper, db);
+            unit.TextName = "Tuskarr Trapper";
+            unit.TextTooltipBasic = "Hire Tuskarr Trapper";
+            unit.TextTooltipExtended = "Medium ranged unit with Ensnare. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71087,6 +72821,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTuskarrwarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tuskarrwarrior, db);
+            unit.TextName = "Tuskarr Warrior";
+            unit.TextTooltipBasic = "Hire Tuskarr Warrior";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71236,6 +72973,7 @@ namespace War3Api.Object
         protected virtual Unit LoadTornado(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tornado, db);
+            unit.TextName = "Tornado";
             unit.AbilitiesNormalRaw = "Atdg,Atsp,Aasl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71385,6 +73123,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDragonturtle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dragonturtle, db);
+            unit.TextName = "Dragon Turtle";
+            unit.TextTooltipBasic = "Hire Dragon Turtle";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit with Devour and Spiked Shell. Can cast Crushing Wave. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACc2,ACdv,Advc,ANt2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71534,6 +73275,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGargantuanseaturtle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gargantuanseaturtle, db);
+            unit.TextName = "Gargantuan Sea Turtle";
+            unit.TextTooltipBasic = "Hire Gargantuan Sea Turtle";
+            unit.TextTooltipExtended = "Heavy melee amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ANth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71683,6 +73427,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeaturtlehatchling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seaturtlehatchling, db);
+            unit.TextName = "Sea Turtle Hatchling";
+            unit.TextTooltipBasic = "Hire Sea Turtle Hatchling";
+            unit.TextTooltipExtended = "Light ranged amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ANth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71832,6 +73579,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeaturtle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seaturtle, db);
+            unit.TextName = "Sea Turtle";
+            unit.TextTooltipBasic = "Hire Sea Turtle";
+            unit.TextTooltipExtended = "Light melee amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ANth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -71981,6 +73731,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantseaturtle(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantseaturtle, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Giant Sea Turtle";
+            unit.TextTooltipBasic = "Hire Giant Sea Turtle";
+            unit.TextTooltipExtended = "Medium ranged amphibious unit whose spiked shell harms enemy melee attackers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ANth";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72130,6 +73884,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRevenantofthetides(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Revenantofthetides, db);
+            unit.TextName = "Revenant of the Tides";
+            unit.TextTooltipBasic = "Hire Revenant of the Tides";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72279,6 +74036,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWateryminiontidewarrior(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wateryminiontidewarrior, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Watery Minion";
+            unit.TextTooltipBasic = "Summon Watery Minion";
+            unit.TextTooltipExtended = "Light melee amphibious unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72428,6 +74189,9 @@ namespace War3Api.Object
         protected virtual Unit LoadUnbrokendarkhunter(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Unbrokendarkhunter, db);
+            unit.TextName = "Unbroken Darkhunter";
+            unit.TextTooltipBasic = "Hire Unbroken Darkhunter";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72577,6 +74341,9 @@ namespace War3Api.Object
         protected virtual Unit LoadUnbrokenrager(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Unbrokenrager, db);
+            unit.TextName = "Unbroken Rager";
+            unit.TextTooltipBasic = "Hire Unbroken Rager";
+            unit.TextTooltipExtended = "Medium melee unit. Can cast ensnare. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72726,6 +74493,9 @@ namespace War3Api.Object
         protected virtual Unit LoadUnbrokendarkweaver(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Unbrokendarkweaver, db);
+            unit.TextName = "Unbroken Darkweaver";
+            unit.TextTooltipBasic = "Hire Unbroken Darkweaver";
+            unit.TextTooltipExtended = "Medium melee unit with Unholy Frenzy. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACuf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -72875,6 +74645,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEldervoidwalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Eldervoidwalker, db);
+            unit.TextName = "Elder Voidwalker";
+            unit.TextTooltipBasic = "Hire Elder Voidwalker";
+            unit.TextTooltipExtended = "Heavy ranged unit that can cast Devour Magic and Forked Lightning. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACfl,ACde";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -73024,6 +74797,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGreatervoidwalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greatervoidwalker, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Greater Voidwalker";
+            unit.TextTooltipBasic = "Hire Greater Voidwalker";
+            unit.TextTooltipExtended = "Heavy ranged unit that casts Chain Lightning and Frost Armor. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACf2,ACcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "AUfu";
             unit.AbilitiesHeroRaw = null;
@@ -73173,6 +74950,9 @@ namespace War3Api.Object
         protected virtual Unit LoadLesservoidwalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lesservoidwalker, db);
+            unit.TextName = "Lesser Voidwalker";
+            unit.TextTooltipBasic = "Hire Lesser Voidwalker";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -73322,6 +75102,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVoidwalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Voidwalker, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Voidwalker";
+            unit.TextTooltipBasic = "Hire Voidwalker";
+            unit.TextTooltipExtended = "Light ranged unit with Cold Arrows. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACcw";
             unit.AbilitiesDefaultActiveAbilityRaw = "AHca";
             unit.AbilitiesHeroRaw = null;
@@ -73471,6 +75255,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWendigo1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wendigo1, db);
+            unit.TextName = "Wendigo";
+            unit.TextTooltipBasic = "Summon Wendigo";
+            unit.TextTooltipExtended = "Medium melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -73620,6 +75407,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNagacoutl(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nagacoutl, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Couatl";
+            unit.TextTooltipBasic = "Train Couatl";
+            unit.TextTooltipExtended = "Light flying unit that can learn Abolish Magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Andm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aadm";
             unit.AbilitiesHeroRaw = null;
@@ -73769,6 +75560,9 @@ namespace War3Api.Object
         protected virtual Unit LoadApprenticewizard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Apprenticewizard, db);
+            unit.TextName = "Apprentice Wizard";
+            unit.TextTooltipBasic = "Hire Apprentice Wizard";
+            unit.TextTooltipExtended = "Light ranged unit. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -73918,6 +75712,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDirewolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Direwolf, db);
+            unit.TextName = "Dire Wolf";
+            unit.TextTooltipBasic = "Summon Dire Wolf";
+            unit.TextTooltipExtended = "Medium melee unit with Critical Strike. Can cast Roar. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACct,ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74067,6 +75864,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantwolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantwolf, db);
+            unit.TextName = "Giant Wolf";
+            unit.TextTooltipBasic = "Summon Giant Wolf";
+            unit.TextTooltipExtended = "Medium melee unit with Critical Strike. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACct";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74216,6 +76016,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTimberwolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Timberwolf, db);
+            unit.TextName = "Timber Wolf";
+            unit.TextTooltipBasic = "Summon Timber Wolf";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74365,6 +76168,9 @@ namespace War3Api.Object
         protected virtual Unit LoadAncientwendigo(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ancientwendigo, db);
+            unit.TextName = "Ancient Wendigo";
+            unit.TextTooltipBasic = "Summon Ancient Wendigo";
+            unit.TextTooltipExtended = "Heavy melee unit with Bash, War Stomp, and Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Awrs,ACbh,ACrn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74514,6 +76320,9 @@ namespace War3Api.Object
         protected virtual Unit LoadElderwendigo(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elderwendigo, db);
+            unit.TextName = "Elder Wendigo";
+            unit.TextTooltipBasic = "Summon Elder Wendigo";
+            unit.TextTooltipExtended = "Heavy melee unit that can Bash opponents. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACbh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74663,6 +76472,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWendigoshaman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wendigoshaman, db);
+            unit.TextName = "Wendigo Shaman";
+            unit.TextTooltipBasic = "Summon Wendigo Shaman";
+            unit.TextTooltipExtended = "Heavy melee unit that can cast Roar and Rejuvenation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACrj,ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74812,6 +76624,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWargolem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wargolem, db);
+            unit.TextName = "War Golem";
+            unit.TextTooltipBasic = "Summon War Golem";
+            unit.TextTooltipExtended = "Heavy melee unit. Immune to spells. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACmi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -74961,6 +76776,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWindserpent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Windserpent, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Dragon Hawk";
+            unit.TextTooltipBasic = "Train Dragon Hawk";
+            unit.TextTooltipExtended = "Heavy ranged unit that can Ensnare opponents. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -75110,6 +76929,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWhitedirewolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Whitedirewolf, db);
+            unit.TextName = "Dire Frost Wolf";
+            unit.TextTooltipBasic = "Summon Dire Frost Wolf";
+            unit.TextTooltipExtended = "Medium melee unit with Critical Strike. Can cast Roar. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACct,ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -75259,6 +77081,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWhitewolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Whitewolf, db);
+            unit.TextName = "Frost Wolf";
+            unit.TextTooltipBasic = "Summon Frost Wolf";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -75408,6 +77233,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGiantwhitewolf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Giantwhitewolf, db);
+            unit.TextName = "Giant Frost Wolf";
+            unit.TextTooltipBasic = "Summon Giant Frost Wolf";
+            unit.TextTooltipExtended = "Medium melee unit with Critical Strike |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACct";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -75557,6 +77385,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkwizard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkwizard, db);
+            unit.TextName = "Dark Wizard";
+            unit.TextTooltipBasic = "Hire Dark Wizard";
+            unit.TextTooltipExtended = "Heavy ranged unit with Brilliance Aura. Can also cast Raise Dead and Polymorph. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACrd,ACba,ACpy";
             unit.AbilitiesDefaultActiveAbilityRaw = "Arai";
             unit.AbilitiesHeroRaw = null;
@@ -75706,6 +77537,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRenegadewizard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Renegadewizard, db);
+            unit.TextName = "Renegade Wizard";
+            unit.TextTooltipBasic = "Hire Renegade Wizard";
+            unit.TextTooltipExtended = "Medium ranged unit that can cast Purge and Lightning Shield. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACpu,ACls";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -75855,6 +77689,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRoguewizard_nwzr(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Roguewizard_nwzr, db);
+            unit.TextName = "Rogue Wizard";
+            unit.TextTooltipBasic = "Hire Rogue Wizard";
+            unit.TextTooltipExtended = "Light ranged unit that can cast Frost Armor. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACf2";
             unit.AbilitiesDefaultActiveAbilityRaw = "AUfu";
             unit.AbilitiesHeroRaw = null;
@@ -76004,6 +77841,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinzeppelin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinzeppelin, db);
+            unit.TextHotkeyRaw = "Z";
+            unit.TextName = "Zeppelin";
+            unit.TextTooltipBasic = "Hire Zeppelin";
+            unit.TextTooltipExtended = "Flying air-transport.";
             unit.AbilitiesNormalRaw = "Sch3,Achd,Aloa,Adro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -76153,6 +77994,9 @@ namespace War3Api.Object
         protected virtual Unit LoadZombie(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Zombie, db);
+            unit.TextName = "Zombie";
+            unit.TextTooltipBasic = "Summon Zombie";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -76302,6 +78146,10 @@ namespace War3Api.Object
         protected virtual Unit LoadZombiefemale(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Zombiefemale, db);
+            unit.TextNameEditorSuffix = " Female";
+            unit.TextName = "Zombie";
+            unit.TextTooltipBasic = "Summon Zombie";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -76451,6 +78299,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaplain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaplain, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Chaplain";
+            unit.TextTooltipBasic = "Train Chaplain";
+            unit.TextTooltipExtended = "Supporting spellcaster. Can cast Heal, Dispel Magic and Inner Fire. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh2,ACif,Adsm";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -76600,6 +78452,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHydromancer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hydromancer, db);
+            unit.TextHotkeyRaw = "Y";
+            unit.TextName = "Hydromancer";
+            unit.TextTooltipBasic = "Train Hydromancer";
+            unit.TextTooltipExtended = "Versatile spellcaster. Can cast Slow, Crushing Wave, and Polymorph. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw,ACpy,ACc3";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -76749,6 +78605,9 @@ namespace War3Api.Object
         protected virtual Unit LoadAlbatross(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Albatross, db);
+            unit.TextName = "Albatross";
+            unit.TextTooltipBasic = "Invoke Albatross";
+            unit.TextTooltipExtended = "Call upon the spirit of Albatross to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -76898,6 +78757,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFrog(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Frog, db);
+            unit.TextName = "Frog";
+            unit.TextTooltipBasic = "Invoke Frog";
+            unit.TextTooltipExtended = "Call upon the spirit of fearsome Frog to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77047,6 +78909,9 @@ namespace War3Api.Object
         protected virtual Unit LoadChicken(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chicken, db);
+            unit.TextName = "Chicken";
+            unit.TextTooltipBasic = "Invoke Chicken";
+            unit.TextTooltipExtended = "Call upon the spirit of fearsome Chicken to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77196,6 +79061,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRabbit(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rabbit, db);
+            unit.TextName = "Rabbit";
+            unit.TextTooltipBasic = "Invoke Rabbit";
+            unit.TextTooltipExtended = "Call upon the spirit of fearsome Rabbit to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77345,6 +79213,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRaccoon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Raccoon, db);
+            unit.TextName = "Raccoon";
+            unit.TextTooltipBasic = "Invoke Raccoon";
+            unit.TextTooltipExtended = "Call upon the spirit of fearsome Raccoon to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77494,6 +79365,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCrab(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Crab, db);
+            unit.TextName = "Crab";
+            unit.TextTooltipBasic = "Invoke Crab";
+            unit.TextTooltipExtended = "Call upon the spirit of Crab to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77643,6 +79517,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDeer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deer, db);
+            unit.TextName = "Stag";
+            unit.TextTooltipBasic = "Invoke Stag";
+            unit.TextTooltipExtended = "Call upon the spirit of Stag to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77792,6 +79669,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDog_ndog(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dog_ndog, db);
+            unit.TextName = "Dog";
+            unit.TextTooltipBasic = "Invoke Dog";
+            unit.TextTooltipExtended = "Call upon the spirit of Dog to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -77941,6 +79821,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDuneworm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Duneworm, db);
+            unit.TextName = "Dune Worm";
+            unit.TextTooltipBasic = "Invoke Dune Worm";
+            unit.TextTooltipExtended = "Call upon the spirit of Dune Worm to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78090,6 +79973,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFelboar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Felboar, db);
+            unit.TextName = "Fel Boar";
+            unit.TextTooltipBasic = "Invoke Fel Boar";
+            unit.TextTooltipExtended = "Call upon the spirit of Fel Boar to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78239,6 +80125,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHermitcrab(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hermitcrab, db);
+            unit.TextName = "Hermit Crab";
+            unit.TextTooltipBasic = "Invoke Hermit Crab";
+            unit.TextTooltipExtended = "Call upon the spirit of Hermit Crab to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78388,6 +80277,8 @@ namespace War3Api.Object
         protected virtual Unit LoadOwl2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Owl2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Owl Scout";
             unit.AbilitiesNormalRaw = "Avul,ACmi,Adtg";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78537,6 +80428,8 @@ namespace War3Api.Object
         protected virtual Unit LoadOwl3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Owl3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Owl Scout";
             unit.AbilitiesNormalRaw = "Avul,ACmi,Adtg";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78686,6 +80579,8 @@ namespace War3Api.Object
         protected virtual Unit LoadOwl(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Owl, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Owl Scout";
             unit.AbilitiesNormalRaw = "Avul,ACmi,Adtg";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78835,6 +80730,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPig(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pig, db);
+            unit.TextName = "Pig";
+            unit.TextTooltipBasic = "Invoke Pig";
+            unit.TextTooltipExtended = "Call upon the spirit of Pig to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -78984,6 +80882,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPenguin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Penguin, db);
+            unit.TextName = "Penguin";
+            unit.TextTooltipBasic = "Invoke Penguin";
+            unit.TextTooltipExtended = "Call upon the spirit of Penguin to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79133,6 +81034,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWaterpenguin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Waterpenguin, db);
+            unit.TextNameEditorSuffix = " (Waterborne)";
+            unit.TextName = "Penguin";
+            unit.TextTooltipBasic = "Invoke Penguin";
+            unit.TextTooltipExtended = "Call upon the spirit of Penguin to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79282,6 +81187,9 @@ namespace War3Api.Object
         protected virtual Unit LoadRat(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rat, db);
+            unit.TextName = "Rat";
+            unit.TextTooltipBasic = "Invoke Rat";
+            unit.TextTooltipExtended = "Call upon the spirit of Rat to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79431,6 +81339,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSeal(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seal, db);
+            unit.TextName = "Seal";
+            unit.TextTooltipBasic = "Invoke Seal";
+            unit.TextTooltipExtended = "Call upon the spirit of Seal to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79580,6 +81491,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAmphibioussheep(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Amphibioussheep, db);
+            unit.TextNameEditorSuffix = " (Amphibious)";
+            unit.TextName = "Sheep";
+            unit.TextTooltipBasic = "Invoke Sheep";
+            unit.TextTooltipExtended = "Call upon the spirit of Sheep to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79729,6 +81644,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSheep(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sheep, db);
+            unit.TextName = "Sheep";
+            unit.TextTooltipBasic = "Invoke Sheep";
+            unit.TextTooltipExtended = "Call upon the spirit of Sheep to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -79878,6 +81796,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFlyingsheep(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Flyingsheep, db);
+            unit.TextName = "Flying Sheep";
+            unit.TextTooltipBasic = "Invoke Uber Sheep";
+            unit.TextTooltipExtended = "Call upon the Uber Sheep to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80027,6 +81948,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWatersheep(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Watersheep, db);
+            unit.TextNameEditorSuffix = " (Waterborne)";
+            unit.TextName = "Sheep";
+            unit.TextTooltipBasic = "Invoke Sheep";
+            unit.TextTooltipExtended = "Call upon the spirit of Sheep to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80176,6 +82101,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSkink(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skink, db);
+            unit.TextName = "Skink";
+            unit.TextTooltipBasic = "Invoke Skink";
+            unit.TextTooltipExtended = "Call upon the spirit of Skink to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80325,6 +82253,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSnowyowl(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Snowyowl, db);
+            unit.TextName = "Snowy Owl";
+            unit.TextTooltipBasic = "Invoke Snowy Owl";
+            unit.TextTooltipExtended = "Call upon the spirit of Snowy Owl to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80474,6 +82405,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVillagerman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Villagerman, db);
+            unit.TextNameEditorSuffix = " (Male)";
+            unit.TextName = "Villager";
+            unit.TextTooltipBasic = "Hire Villager";
+            unit.TextTooltipExtended = "A hearty villager.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80623,6 +82558,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVillagerkid2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Villagerkid2, db);
+            unit.TextNameEditorSuffix = " (2)";
+            unit.TextName = "Child";
+            unit.TextTooltipBasic = "Hire Villager";
+            unit.TextTooltipExtended = "A tiny villager.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80772,6 +82711,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVillagerman2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Villagerman2, db);
+            unit.TextNameEditorSuffix = " (Male 2)";
+            unit.TextName = "Villager";
+            unit.TextTooltipBasic = "Hire Villager";
+            unit.TextTooltipExtended = "A hearty villager.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -80921,6 +82864,9 @@ namespace War3Api.Object
         protected virtual Unit LoadVillagerkid(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Villagerkid, db);
+            unit.TextName = "Child";
+            unit.TextTooltipBasic = "Hire Villager";
+            unit.TextTooltipExtended = "A tiny villager.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81070,6 +83016,10 @@ namespace War3Api.Object
         protected virtual Unit LoadVillagerwoman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Villagerwoman, db);
+            unit.TextNameEditorSuffix = " (Female)";
+            unit.TextName = "Villager";
+            unit.TextTooltipBasic = "Hire Villager";
+            unit.TextTooltipExtended = "An intelligent villager.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81219,6 +83169,9 @@ namespace War3Api.Object
         protected virtual Unit LoadVulture(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Vulture, db);
+            unit.TextName = "Vulture";
+            unit.TextTooltipBasic = "Invoke Vulture";
+            unit.TextTooltipExtended = "Call upon the spirit of Vulture to save you.";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81368,6 +83321,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall0, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 0";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81517,6 +83474,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall1, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 1";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81666,6 +83627,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall2, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81815,6 +83780,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall3, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 3";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -81964,6 +83933,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall4, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 4";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82113,6 +84086,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall5(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall5, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 5";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82262,6 +84239,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall6(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall6, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 6";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82411,6 +84392,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall7(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall7, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 7";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82560,6 +84545,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall8(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall8, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 8";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82709,6 +84698,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmall9(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmall9, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 9";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -82858,6 +84851,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmallA(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmallA, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 10";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83007,6 +85004,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCitybuildingSmallB(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CitybuildingSmallB, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 11";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83156,6 +85157,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCityBuildingLarge0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CityBuildingLarge0, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 12";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83305,6 +85310,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCityBuildingLarge1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CityBuildingLarge1, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 13";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83454,6 +85463,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCityBuildingLarge2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CityBuildingLarge2, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 14";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83603,6 +85616,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCityBuildingLarge3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.CityBuildingLarge3, db);
+            unit.TextDescription = "A large stone building.";
+            unit.TextNameEditorSuffix = " 15";
+            unit.TextName = "City Building";
+            unit.TextTooltipBasic = "Build City Building";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83752,6 +85769,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurtent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurtent, db);
+            unit.TextDescription = "A small hide-covered shelter.";
+            unit.TextName = "Centaur Tent";
+            unit.TextTooltipBasic = "Build Centaur Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -83901,6 +85921,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCircleofpower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Circleofpower, db);
+            unit.TextDescription = "A small pedestal that glows with energy.";
+            unit.TextName = "Circle of Power";
+            unit.TextTooltipBasic = "Build Circle of Power";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84050,6 +86073,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCircleofpowermedium(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Circleofpowermedium, db);
+            unit.TextDescription = "A pedestal that glows with energy.";
+            unit.TextNameEditorSuffix = "(medium)";
+            unit.TextName = "Circle of Power";
+            unit.TextTooltipBasic = "Build Circle of Power";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84199,6 +86226,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCircleofpowerlarge(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Circleofpowerlarge, db);
+            unit.TextDescription = "A large pedestal that glows with energy.";
+            unit.TextNameEditorSuffix = "(large)";
+            unit.TextName = "Circle of Power";
+            unit.TextTooltipBasic = "Build Circle of Power";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84348,6 +86379,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurtent1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurtent1, db);
+            unit.TextDescription = "A small hide-covered shelter.";
+            unit.TextNameEditorSuffix = "(2)";
+            unit.TextName = "Centaur Tent";
+            unit.TextTooltipBasic = "Build Centaur Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84497,6 +86532,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCentaurtent2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Centaurtent2, db);
+            unit.TextDescription = "A small hide-covered shelter.";
+            unit.TextNameEditorSuffix = "(3)";
+            unit.TextName = "Centaur Tent";
+            unit.TextTooltipBasic = "Build Centaur Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84646,6 +86685,9 @@ namespace War3Api.Object
         protected virtual Unit LoadChieftainhut(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chieftainhut, db);
+            unit.TextName = "Draenei Chieftain's Hut";
+            unit.TextTooltipBasic = "Build Draenei Chieftain's Hut";
+            unit.TextTooltipExtended = "The hut of the Draenei Chieftain.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84795,6 +86837,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraneihut0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draneihut0, db);
+            unit.TextName = "Draenei Hut";
+            unit.TextTooltipBasic = "Build Draenei Hut";
+            unit.TextTooltipExtended = "A simple peasant's Draenei hut.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -84944,6 +86989,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDraneihut1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draneihut1, db);
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Draenei Hut";
+            unit.TextTooltipBasic = "Build Draenei Hut";
+            unit.TextTooltipExtended = "A simple peasant's Draenei hut.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85093,6 +87142,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneihaven(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneihaven, db);
+            unit.TextName = "Draenei Haven";
+            unit.TextTooltipBasic = "Build Draenei Haven";
+            unit.TextTooltipExtended = "Allows the collection of gold, produces Laborers and can revive Heroes.";
             unit.AbilitiesNormalRaw = "Abdl,Argl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85242,6 +87294,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiwarriorshall(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiwarriorshall, db);
+            unit.TextName = "Draenei Barracks";
+            unit.TextTooltipBasic = "Build Draenei Barracks";
+            unit.TextTooltipExtended = "Produces Draenei Vindicators, Stalkers, Demolishers and Salamanders.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85391,6 +87446,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiseerden(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiseerden, db);
+            unit.TextName = "Seer's Den";
+            unit.TextTooltipBasic = "Build Seer's Den";
+            unit.TextTooltipExtended = "Produces Draenei Seers and Harbingers.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85540,6 +87598,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGreendragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Greendragonroost, db);
+            unit.TextDescription = "Allows you to call forth Green Dragons.";
+            unit.TextName = "Green Dragon Roost";
+            unit.TextTooltipBasic = "Build Green Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85689,6 +87750,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBlackdragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blackdragonroost, db);
+            unit.TextDescription = "Allows you to call forth Black Dragons.";
+            unit.TextName = "Black Dragon Roost";
+            unit.TextTooltipBasic = "Build Black Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85838,6 +87902,9 @@ namespace War3Api.Object
         protected virtual Unit LoadOutlanddragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Outlanddragonroost, db);
+            unit.TextDescription = "Allows you to call forth Nether Dragons.";
+            unit.TextName = "Nether Dragon Roost";
+            unit.TextTooltipBasic = "Build Nether Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -85987,6 +88054,9 @@ namespace War3Api.Object
         protected virtual Unit LoadReddragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Reddragonroost, db);
+            unit.TextDescription = "Allows you to call forth Red Dragons.";
+            unit.TextName = "Red Dragon Roost";
+            unit.TextTooltipBasic = "Build Red Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86136,6 +88206,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBluedragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bluedragonroost, db);
+            unit.TextDescription = "Allows you to call forth Blue Dragons.";
+            unit.TextName = "Blue Dragon Roost";
+            unit.TextTooltipBasic = "Build Blue Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86285,6 +88358,9 @@ namespace War3Api.Object
         protected virtual Unit LoadBronzedragonroost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bronzedragonroost, db);
+            unit.TextDescription = "Allows you to call forth Bronze Dragons.";
+            unit.TextName = "Bronze Dragon Roost";
+            unit.TextTooltipBasic = "Build Bronze Dragon Roost";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86434,6 +88510,9 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollhut0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollhut0, db);
+            unit.TextDescription = "A hollowed-out log that some Trolls call home.";
+            unit.TextName = "Forest Troll Hut";
+            unit.TextTooltipBasic = "Build Forest Troll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86583,6 +88662,10 @@ namespace War3Api.Object
         protected virtual Unit LoadForesttrollhut1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Foresttrollhut1, db);
+            unit.TextDescription = "A hollowed-out log that some Trolls call home.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Forest Troll Hut";
+            unit.TextTooltipBasic = "Build Forest Troll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86732,6 +88815,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFountainofhealth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fountainofhealth, db);
+            unit.TextDescription = "Regenerates the health of all non-mechanical units nearby.";
+            unit.TextName = "Fountain of Health";
+            unit.TextTooltipBasic = "Build Fountain of Health";
             unit.AbilitiesNormalRaw = "Avul,ACnr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -86881,6 +88967,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolghut1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolghut1, db);
+            unit.TextDescription = "A hollowed-out log that some Furbolgs call home.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Furbolg Hut";
+            unit.TextTooltipBasic = "Build Furbolg Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87030,6 +89120,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFurbolghut2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furbolghut2, db);
+            unit.TextDescription = "A hollowed-out log that some Furbolgs call home.";
+            unit.TextName = "Furbolg Hut";
+            unit.TextTooltipBasic = "Build Furbolg Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87179,6 +89272,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinammodump(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinammodump, db);
+            unit.TextDescription = "Allows you to take advantage of Goblin technology.";
+            unit.TextName = "Goblin Laboratory";
+            unit.TextTooltipBasic = "Build Goblin Laboratory";
             unit.AbilitiesNormalRaw = "Ane2,Andt,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87328,6 +89424,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinmerchant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinmerchant, db);
+            unit.TextDescription = "Sells various magic items.";
+            unit.TextName = "Goblin Merchant";
+            unit.TextTooltipBasic = "Build Goblin Merchant";
             unit.AbilitiesNormalRaw = "Aneu,Avul,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87477,6 +89576,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollhut(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollhut, db);
+            unit.TextDescription = "A sturdy cabin of wood and stone.";
+            unit.TextName = "Gnoll Hut";
+            unit.TextTooltipBasic = "Build Gnoll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87626,6 +89728,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGranaryinfected(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Granaryinfected, db);
+            unit.TextDescription = "A decaying silo full of diseased grain.";
+            unit.TextName = "Infected Granary";
+            unit.TextTooltipBasic = "Build Infected Granary";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87775,6 +89880,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGoldmine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goldmine, db);
+            unit.TextDescription = "The main source of gold.";
+            unit.TextName = "Gold Mine";
+            unit.TextTooltipBasic = "Build Gold Mine";
             unit.AbilitiesNormalRaw = "Agld,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -87924,6 +90032,10 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollhut2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollhut2, db);
+            unit.TextDescription = "A sturdy cabin of wood and stone.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Gnoll Hut";
+            unit.TextTooltipBasic = "Build Gnoll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88073,6 +90185,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGrainwarehouse(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Grainwarehouse, db);
+            unit.TextDescription = "A storage building for grain.";
+            unit.TextName = "Grain Warehouse";
+            unit.TextTooltipBasic = "Build Grain Warehouse";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88222,6 +90337,9 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpynest_nhns(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpynest_nhns, db);
+            unit.TextDescription = "A nest whose wooden frame is sparsely covered with a layer of debris.";
+            unit.TextName = "Harpy Nest";
+            unit.TextTooltipBasic = "Build Harpy Nest";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88371,6 +90489,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampl(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampl, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Lordaeron Summer)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88520,6 +90642,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulhut0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulhut0, db);
+            unit.TextDescription = "A small lookout tower made of bamboo.";
+            unit.TextNameEditorSuffix = " 0";
+            unit.TextName = "Mur'gul Hut";
+            unit.TextTooltipBasic = "Build Mur'gul Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88669,6 +90795,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulhut1_nmg1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulhut1_nmg1, db);
+            unit.TextDescription = "A large lookout tower made of bamboo.";
+            unit.TextNameEditorSuffix = " 1";
+            unit.TextName = "Mur'gul Hut";
+            unit.TextTooltipBasic = "Build Mur'gul Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88818,6 +90948,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlochut0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlochut0, db);
+            unit.TextDescription = "A small lookout tower made of bamboo.";
+            unit.TextNameEditorSuffix = " 0";
+            unit.TextName = "Murloc Hut";
+            unit.TextTooltipBasic = "Build Murloc Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -88967,6 +91101,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlochut1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlochut1, db);
+            unit.TextDescription = "A large lookout tower made of bamboo.";
+            unit.TextNameEditorSuffix = " 1";
+            unit.TextName = "Murloc Hut";
+            unit.TextTooltipBasic = "Build Murloc Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89116,6 +91254,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFountainofmana(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fountainofmana, db);
+            unit.TextDescription = "Regenerates the mana of all non-mechanical units nearby.";
+            unit.TextName = "Fountain of Mana";
+            unit.TextTooltipBasic = "Build Fountain of Mana";
             unit.AbilitiesNormalRaw = "Avul,ANre";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89265,6 +91406,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampv(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampv, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Village)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89414,6 +91559,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampf(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampf, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Lordaeron Fall)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89563,6 +91712,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampw, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Lordaeron Winter)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89712,6 +91865,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampb(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampb, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Barrens)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -89861,6 +92018,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampa(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampa, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Ashenvale)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90010,6 +92171,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampc(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampc, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Felwood)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90159,6 +92324,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampn(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampn, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Northrend)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90308,6 +92477,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampy(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampy, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Cityscape)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90457,6 +92630,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampx(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampx, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Dalaran)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90606,6 +92783,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampd(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampd, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Dungeon)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90755,6 +92936,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampg, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Underground)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -90904,6 +93089,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampz(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampz, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Sunken Ruins)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91053,6 +93242,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampi(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampi, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Icecrown Glacier)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91202,6 +93395,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampo(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampo, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Outland)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91351,6 +93548,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMercenarycampk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mercenarycampk, db);
+            unit.TextDescription = "Allows you to hire various mercenaries.";
+            unit.TextNameEditorSuffix = " (Black Citadel)";
+            unit.TextName = "Mercenary Camp";
+            unit.TextTooltipBasic = "Build Mercenary Camp";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91500,6 +93701,9 @@ namespace War3Api.Object
         protected virtual Unit LoadMarketplace(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Marketplace, db);
+            unit.TextDescription = "A store for purchasing goods.";
+            unit.TextName = "Marketplace";
+            unit.TextTooltipBasic = "Build Marketplace";
             unit.AbilitiesNormalRaw = "Aneu,Asid,Avul,Asud,Apit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91649,6 +93853,9 @@ namespace War3Api.Object
         protected virtual Unit LoadNerubianziggurat(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nerubianziggurat, db);
+            unit.TextDescription = "A small Ziggurat of stone.";
+            unit.TextName = "Nerubian Ziggurat";
+            unit.TextTooltipBasic = "Build Nerubian Ziggurat";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91798,6 +94005,9 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinshipyard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinshipyard, db);
+            unit.TextDescription = "Sells boats.";
+            unit.TextName = "Goblin Shipyard";
+            unit.TextTooltipBasic = "Build Goblin Shipyard";
             unit.AbilitiesNormalRaw = "Ane2,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -91947,6 +94157,9 @@ namespace War3Api.Object
         protected virtual Unit LoadCantina(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cantina, db);
+            unit.TextDescription = "Allows you to hire various Heroes.";
+            unit.TextName = "Tavern";
+            unit.TextTooltipBasic = "Build Tavern";
             unit.AbilitiesNormalRaw = "Ane2,Avul,Aawa";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92096,6 +94309,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tent, db);
+            unit.TextDescription = "A canvas tent decorated with strange markings.";
+            unit.TextName = "Tent";
+            unit.TextTooltipBasic = "Build Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92245,6 +94461,10 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollhut0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollhut0, db);
+            unit.TextDescription = "A snow-covered dwelling that some Trolls call home.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Ice Troll Hut";
+            unit.TextTooltipBasic = "Build Ice Troll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92394,6 +94614,9 @@ namespace War3Api.Object
         protected virtual Unit LoadIcetrollhut1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icetrollhut1, db);
+            unit.TextDescription = "A snow-covered dwelling that some Trolls call home.";
+            unit.TextName = "Ice Troll Hut";
+            unit.TextTooltipBasic = "Build Ice Troll Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92543,6 +94766,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTent2_ntn2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tent2_ntn2, db);
+            unit.TextDescription = "A canvas tent decorated with strange markings.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Tent";
+            unit.TextTooltipBasic = "Build Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92692,6 +94919,9 @@ namespace War3Api.Object
         protected virtual Unit LoadTaurentent(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Taurentent, db);
+            unit.TextDescription = "A sturdy hide-covered shelter.";
+            unit.TextName = "Tauren Tent";
+            unit.TextTooltipBasic = "Build Tauren Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92841,6 +95071,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTaurentent2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Taurentent2, db);
+            unit.TextDescription = "A sturdy hide-covered shelter.";
+            unit.TextNameEditorSuffix = " 2";
+            unit.TextName = "Tauren Tent";
+            unit.TextTooltipBasic = "Build Tauren Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -92990,6 +95224,9 @@ namespace War3Api.Object
         protected virtual Unit LoadWaygate(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Waygate, db);
+            unit.TextDescription = "Teleports units to a sister Way Gate.";
+            unit.TextName = "Way Gate";
+            unit.TextTooltipBasic = "Build Way Gate";
             unit.AbilitiesNormalRaw = "Awrp,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -93139,6 +95376,11 @@ namespace War3Api.Object
         protected virtual Unit LoadCenarius(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cenarius, db);
+            unit.TextTooltipAwaken = "Revive Cenarius";
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Demigod";
+            unit.TextProperNamesRaw = "Cenarius";
+            unit.TextTooltipRevive = "Revive Cenarius";
             unit.AbilitiesNormalRaw = "AInv,SCc1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -93288,6 +95530,13 @@ namespace War3Api.Object
         protected virtual Unit LoadEvilillidan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Evilillidan, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextNameEditorSuffix = " (Evil)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Illidan";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault,ANcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEvi";
@@ -93437,6 +95686,13 @@ namespace War3Api.Object
         protected virtual Unit LoadEvilillidandemonform(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Evilillidandemonform, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextNameEditorSuffix = " (Morphed),  (Evil)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Illidan";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault,ANcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEvi";
@@ -93586,6 +95842,12 @@ namespace War3Api.Object
         protected virtual Unit LoadFurion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Furion, db);
+            unit.TextTooltipAwaken = "Revive Keeper of the Grove";
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Keeper of the Grove";
+            unit.TextProperNamesRaw = "Malfurion";
+            unit.TextTooltipRevive = "Revive Keeper of the Grove";
+            unit.TextTooltipExtended = "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -93735,6 +95997,13 @@ namespace War3Api.Object
         protected virtual Unit LoadIllidandemonform(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Illidandemonform, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextNameEditorSuffix = " (Demon Form)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Illidan";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev";
@@ -93884,6 +96153,12 @@ namespace War3Api.Object
         protected virtual Unit LoadIllidan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Illidan, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Illidan";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEIl";
@@ -94033,6 +96308,13 @@ namespace War3Api.Object
         protected virtual Unit LoadIllidanmorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Illidanmorphed, db);
+            unit.TextTooltipAwaken = "Revive Demon Hunter";
+            unit.TextNameEditorSuffix = " (Morphed)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Demon Hunter";
+            unit.TextProperNamesRaw = "Illidan";
+            unit.TextTooltipRevive = "Revive Demon Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEmb,AEim,AEev,AEIl";
@@ -94182,6 +96464,12 @@ namespace War3Api.Object
         protected virtual Unit LoadKeeperofthegroveghost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Keeperofthegroveghost, db);
+            unit.TextTooltipAwaken = "Revive Ghost";
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Keeper of the Grove";
+            unit.TextProperNamesRaw = "Ghost";
+            unit.TextTooltipRevive = "Revive Ghost";
+            unit.TextTooltipExtended = "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -94331,6 +96619,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMalfurion(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Malfurion, db);
+            unit.TextTooltipAwaken = "Revive Keeper of the Grove";
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Keeper of the Grove";
+            unit.TextProperNamesRaw = "Malfurion";
+            unit.TextTooltipRevive = "Revive Keeper of the Grove";
+            unit.TextTooltipExtended = "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -94480,6 +96774,13 @@ namespace War3Api.Object
         protected virtual Unit LoadMalfurionnostag(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Malfurionnostag, db);
+            unit.TextTooltipAwaken = "Revive Keeper of the Grove";
+            unit.TextNameEditorSuffix = "";
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Keeper of the Grove";
+            unit.TextProperNamesRaw = "Malfurion";
+            unit.TextTooltipRevive = "Revive Keeper of the Grove";
+            unit.TextTooltipExtended = "Mystical Hero, adept at using nature spells. Can learn Entangling Roots, Force of Nature, Thorns Aura, and Tranquility. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEer,AEfn,AEah,AEtq";
@@ -94629,6 +96930,12 @@ namespace War3Api.Object
         protected virtual Unit LoadTyrande(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tyrande, db);
+            unit.TextTooltipAwaken = "Revive Priestess of the Moon";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Priestess of the Moon";
+            unit.TextProperNamesRaw = "Tyrande";
+            unit.TextTooltipRevive = "Revive Priestess of the Moon";
+            unit.TextTooltipExtended = "Warrior Hero, adept at enhancing ranged attacks and slaying enemies from afar. Can learn Scout, Searing Arrows, Trueshot Aura, and Starfall. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Ashm,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHfa,AEst,AEar,AEsf";
@@ -94778,6 +97085,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMaiev(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Maiev, db);
+            unit.TextTooltipAwaken = "Revive Warden";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warden";
+            unit.TextProperNamesRaw = "Maiev";
+            unit.TextTooltipRevive = "Revive Warden";
+            unit.TextTooltipExtended = "Cunning Hero, adept at entering and escaping combat. Can learn Blink, Fan of Knives, Shadow Strike and Vengeance. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Ashm,AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AEbl,AEfk,AEsh,AEsv";
@@ -94927,6 +97240,12 @@ namespace War3Api.Object
         protected virtual Unit LoadAntonidus(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Antonidus, db);
+            unit.TextTooltipAwaken = "Revive Archmage";
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Archmage";
+            unit.TextProperNamesRaw = "Antonidas";
+            unit.TextTooltipRevive = "Revive Archmage";
+            unit.TextTooltipExtended = "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHbz,AHab,AHwe,AHmt";
@@ -95076,6 +97395,12 @@ namespace War3Api.Object
         protected virtual Unit LoadAdmiralproudmoore(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Admiralproudmoore, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Admiral Proudmoore";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -95225,6 +97550,13 @@ namespace War3Api.Object
         protected virtual Unit LoadArthaswithfrostmourne(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Arthaswithfrostmourne, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextNameEditorSuffix = " (wielding Frostmourne)";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Arthas";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -95374,6 +97706,12 @@ namespace War3Api.Object
         protected virtual Unit LoadArthas(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Arthas, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Arthas";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -95523,6 +97861,12 @@ namespace War3Api.Object
         protected virtual Unit LoadDagren(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dagren, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Dagren the Orcslayer";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -95672,6 +98016,12 @@ namespace War3Api.Object
         protected virtual Unit LoadHalahk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Halahk, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Halahk the Lifebringer";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -95821,6 +98171,12 @@ namespace War3Api.Object
         protected virtual Unit LoadJaina(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Jaina, db);
+            unit.TextTooltipAwaken = "Revive Archmage";
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Archmage";
+            unit.TextProperNamesRaw = "Jaina";
+            unit.TextTooltipRevive = "Revive Archmage";
+            unit.TextTooltipExtended = "Mystical Hero, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHbz,AHab,AHwe,AHmt";
@@ -95970,6 +98326,12 @@ namespace War3Api.Object
         protected virtual Unit LoadKael(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kael, db);
+            unit.TextTooltipAwaken = "Revive Blood Mage";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blood Mage";
+            unit.TextProperNamesRaw = "Kael";
+            unit.TextTooltipRevive = "Revive Blood Mage";
+            unit.TextTooltipExtended = "Mystical Hero, adept at controlling magic and ranged assaults. Can learn Flame Strike, Banish, Siphon Mana and Phoenix. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv,Asph";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHfs,AHbn,AHdr,AHpx";
@@ -96119,6 +98481,12 @@ namespace War3Api.Object
         protected virtual Unit LoadLordgarithos(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lordgarithos, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Dark Knight";
+            unit.TextProperNamesRaw = "Lord Garithos";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsh,AHhb,AHad,ANav";
@@ -96268,6 +98636,11 @@ namespace War3Api.Object
         protected virtual Unit LoadMuradinbronzebeard(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Muradinbronzebeard, db);
+            unit.TextTooltipAwaken = "Revive Mountain King";
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Mountain King";
+            unit.TextProperNamesRaw = "Muradin Bronzebeard";
+            unit.TextTooltipRevive = "Revive Mountain King";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHtc,AHtb,AHbh,AHav";
@@ -96417,6 +98790,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMargoth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Margoth, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Magroth the Defender";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -96566,6 +98945,12 @@ namespace War3Api.Object
         protected virtual Unit LoadPaladinboss1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Paladinboss1, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Lord Nicholas Buzan";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -96715,6 +99100,12 @@ namespace War3Api.Object
         protected virtual Unit LoadPaladinboss2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Paladinboss2, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Sir Gregory Edmunson";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -96864,6 +99255,12 @@ namespace War3Api.Object
         protected virtual Unit LoadUther(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Uther, db);
+            unit.TextTooltipAwaken = "Revive Paladin";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Paladin";
+            unit.TextProperNamesRaw = "Uther";
+            unit.TextTooltipRevive = "Revive Paladin";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at defense and augmenting nearby friendly troops. Can learn Holy Light, Divine Shield, Devotion Aura and Resurrection. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHhb,AHds,AHre,AHad";
@@ -97013,6 +99410,12 @@ namespace War3Api.Object
         protected virtual Unit LoadLadyvashj(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ladyvashj, db);
+            unit.TextTooltipAwaken = "Revive Sea Witch";
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Sea Witch";
+            unit.TextProperNamesRaw = "Lady Vashj";
+            unit.TextTooltipRevive = "Revive Sea Witch";
+            unit.TextTooltipExtended = "Mystical Hero, adept at ranged combat. Can learn Forked Lightning, Frost Arrows, Mana Shield, and Tornado. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANfl,ANfa,ANms,ANto";
@@ -97162,6 +99565,11 @@ namespace War3Api.Object
         protected virtual Unit LoadSylvanuswindrunner_Hvwd(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sylvanuswindrunner_Hvwd, db);
+            unit.TextTooltipAwaken = "Revive Ranger";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Ranger";
+            unit.TextProperNamesRaw = "Sylvanas Windrunner";
+            unit.TextTooltipRevive = "Revive Ranger";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHca,AEst,AEar,AEsf";
@@ -97311,6 +99719,12 @@ namespace War3Api.Object
         protected virtual Unit LoadBlackrockblademaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Blackrockblademaster, db);
+            unit.TextTooltipAwaken = "Revive Blademaster";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blademaster";
+            unit.TextProperNamesRaw = "Blademaster of Blackrock Clan";
+            unit.TextTooltipRevive = "Revive Blademaster";
+            unit.TextTooltipExtended = "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOwk,AOcr,AOmi,AOww";
@@ -97460,6 +99874,11 @@ namespace War3Api.Object
         protected virtual Unit LoadKiljaeden(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kiljaeden, db);
+            unit.TextTooltipAwaken = "Revive Warlock";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warlock";
+            unit.TextProperNamesRaw = "Kil'jaeden";
+            unit.TextTooltipRevive = "Revive Warlock";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -97609,6 +100028,12 @@ namespace War3Api.Object
         protected virtual Unit LoadKiljaedencinematic(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kiljaedencinematic, db);
+            unit.TextTooltipAwaken = "Revive Warlock";
+            unit.TextNameEditorSuffix = "(Cinematic)";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warlock";
+            unit.TextProperNamesRaw = "Kil'jaeden";
+            unit.TextTooltipRevive = "Revive Warlock";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -97758,6 +100183,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMagtheridon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Magtheridon, db);
+            unit.TextTooltipAwaken = "Revive Pit Lord";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Pit Lord";
+            unit.TextProperNamesRaw = "Magtheridon";
+            unit.TextTooltipRevive = "Revive Pit Lord";
+            unit.TextTooltipExtended = "Warrior Hero, adept at terrorizing enemies. Can learn Rain of Fire, Howl of Terror, Cleaving Attack, and Doom. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANrf,ANht,ANca,ANdo";
@@ -97907,6 +100338,11 @@ namespace War3Api.Object
         protected virtual Unit LoadMannoroth(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mannoroth, db);
+            unit.TextTooltipAwaken = "Revive Pit Lord";
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Pit Lord";
+            unit.TextProperNamesRaw = "Mannoroth";
+            unit.TextTooltipRevive = "Revive Pit Lord";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOsh,AHtc,AOeq,ANrn";
@@ -98056,6 +100492,11 @@ namespace War3Api.Object
         protected virtual Unit LoadOldpitlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Oldpitlord, db);
+            unit.TextTooltipAwaken = "Revive Pit Lord";
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Pit Lord";
+            unit.TextProperNamesRaw = "Azgalor,Brutillus,Mongrethod,Destromath,Gogonnash,Magtheridon";
+            unit.TextTooltipRevive = "Revive Pit Lord";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOsh,AHtc,AOeq,ANrn";
@@ -98205,6 +100646,13 @@ namespace War3Api.Object
         protected virtual Unit LoadSinjostormstout(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sinjostormstout, db);
+            unit.TextTooltipAwaken = "Revive Brewmaster";
+            unit.TextHotkeyRaw = "N";
+            unit.TextName = "Brewmaster";
+            unit.TextProperNamesRaw = "Chen Stormstout";
+            unit.TextTooltipRevive = "Revive Brewmaster";
+            unit.TextTooltipBasic = "Summon Brewmaster";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Breath of Fire, Drunken Haze, Drunken Brawler and Storm, Earth And Fire. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANcf,Acdh,Acdb,Acef,Aamk";
@@ -98354,6 +100802,12 @@ namespace War3Api.Object
         protected virtual Unit LoadCairnebloodhoof(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cairnebloodhoof, db);
+            unit.TextTooltipAwaken = "Revive Tauren Chieftain";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren Chieftain";
+            unit.TextProperNamesRaw = "Cairne Bloodhoof";
+            unit.TextTooltipRevive = "Revive Tauren Chieftain";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOsh,AOae,AOre,AOws";
@@ -98503,6 +100957,13 @@ namespace War3Api.Object
         protected virtual Unit LoadCairnebloodhoofexp(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cairnebloodhoofexp, db);
+            unit.TextTooltipAwaken = "Revive Tauren Chieftain";
+            unit.TextNameEditorSuffix = "(Expansion)";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren Chieftain";
+            unit.TextProperNamesRaw = "Cairne Bloodhoof";
+            unit.TextTooltipRevive = "Revive Tauren Chieftain";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOs2,AOr2,AOr3,AOw2,Aamk";
@@ -98652,6 +101113,13 @@ namespace War3Api.Object
         protected virtual Unit LoadDrekthar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Drekthar, db);
+            unit.TextTooltipAwaken = "Revive Far Seer";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Far Seer";
+            unit.TextProperNamesRaw = "Drek'Thar";
+            unit.TextTooltipRevive = "Revive Far Seer";
+            unit.TextTooltipBasic = "Summon Far Seer";
+            unit.TextTooltipExtended = "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOfs,AOsf,AOcl,AOeq";
@@ -98801,6 +101269,13 @@ namespace War3Api.Object
         protected virtual Unit LoadGuldan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Guldan, db);
+            unit.TextTooltipAwaken = "Revive Warlock";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warlock";
+            unit.TextProperNamesRaw = "Gul'dan";
+            unit.TextTooltipRevive = "Revive Warlock";
+            unit.TextTooltipBasic = "Summon Warlock";
+            unit.TextTooltipExtended = "Powerful Warlock working under the tutelage of Kil'jaeden himself. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -98950,6 +101425,12 @@ namespace War3Api.Object
         protected virtual Unit LoadGromhellscream(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gromhellscream, db);
+            unit.TextTooltipAwaken = "Revive Blademaster";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blademaster";
+            unit.TextProperNamesRaw = "Grommash Hellscream";
+            unit.TextTooltipRevive = "Revive Blademaster";
+            unit.TextTooltipExtended = "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOwk,AOcr,AOmi,AOww";
@@ -99099,6 +101580,13 @@ namespace War3Api.Object
         protected virtual Unit LoadPossessedgromhellscream(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Possessedgromhellscream, db);
+            unit.TextTooltipAwaken = "Revive Blademaster";
+            unit.TextNameEditorSuffix = " (Possessed)";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blademaster";
+            unit.TextProperNamesRaw = "Grommash Hellscream";
+            unit.TextTooltipRevive = "Revive Blademaster";
+            unit.TextTooltipExtended = "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOwk,AOcr,AOmi,AOww";
@@ -99248,6 +101736,13 @@ namespace War3Api.Object
         protected virtual Unit LoadRexxar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rexxar, db);
+            unit.TextTooltipAwaken = "Revive Beastmaster";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Beastmaster";
+            unit.TextProperNamesRaw = "Rexxar";
+            unit.TextTooltipRevive = "Revive Beastmaster";
+            unit.TextTooltipBasic = "Summon Beastmaster";
+            unit.TextTooltipExtended = "Warrior Hero, adept at summoning beasts and rallying his allies. Can learn Summon Bear, Summon Quilbeast, Battle Roar, and Stampede. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "Arsg,Arsq,ANsb,Arsp,Aamk";
@@ -99397,6 +101892,13 @@ namespace War3Api.Object
         protected virtual Unit LoadRokhan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rokhan, db);
+            unit.TextTooltipAwaken = "Revive Shadow Hunter";
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Shadow Hunter";
+            unit.TextProperNamesRaw = "Rokhan";
+            unit.TextTooltipRevive = "Revive Shadow Hunter";
+            unit.TextTooltipBasic = "Summon Shadow Hunter";
+            unit.TextTooltipExtended = "Cunning Hero, adept at healing magics and voodoo curses. Can learn Healing Wave, Hex, Serpent Ward and Big Bad Voodoo. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANhw,ANhx,Arsw,AOls,Aamk";
@@ -99546,6 +102048,12 @@ namespace War3Api.Object
         protected virtual Unit LoadSamuro(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Samuro, db);
+            unit.TextTooltipAwaken = "Revive Blademaster";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Blademaster";
+            unit.TextProperNamesRaw = "Samuro";
+            unit.TextTooltipRevive = "Revive Blademaster";
+            unit.TextTooltipExtended = "Cunning Hero, adept at quickly killing individual units and creating confusion among enemies. Can learn Mirror Image, Wind Walk, Critical Strike and Bladestorm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOwk,AOcr,AOmi,AOww";
@@ -99695,6 +102203,13 @@ namespace War3Api.Object
         protected virtual Unit LoadCairnebloodhoofcinematic(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Cairnebloodhoofcinematic, db);
+            unit.TextTooltipAwaken = "Revive Tauren Chieftain";
+            unit.TextNameEditorSuffix = " (cinematic)";
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Tauren Chieftain";
+            unit.TextProperNamesRaw = "Cairne Bloodhoof";
+            unit.TextTooltipRevive = "Revive Tauren Chieftain";
+            unit.TextTooltipExtended = "Warrior Hero, exceptional at absorbing damage and melee combat. Can learn Shockwave, War Stomp, Endurance Aura and Reincarnation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOsh,AOae,AOre,AOws";
@@ -99844,6 +102359,12 @@ namespace War3Api.Object
         protected virtual Unit LoadThrall(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Thrall, db);
+            unit.TextTooltipAwaken = "Revive Far Seer";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Far Seer";
+            unit.TextProperNamesRaw = "Thrall";
+            unit.TextTooltipRevive = "Revive Far Seer";
+            unit.TextTooltipExtended = "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOfs,AOsf,AOcl,AOeq";
@@ -99993,6 +102514,13 @@ namespace War3Api.Object
         protected virtual Unit LoadThrallUnmounted(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.ThrallUnmounted, db);
+            unit.TextTooltipAwaken = "Revive Far Seer";
+            unit.TextNameEditorSuffix = " (Unmounted)";
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Far Seer";
+            unit.TextProperNamesRaw = "Thrall";
+            unit.TextTooltipRevive = "Revive Far Seer";
+            unit.TextTooltipExtended = "Mystical Hero, effective at ranged attacks and scouting. Can learn Chain Lightning, Far Sight, Feral Spirit and Earthquake. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AOfs,AOsf,AOcl,AOeq";
@@ -100142,6 +102670,12 @@ namespace War3Api.Object
         protected virtual Unit LoadAnubarak(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Anubarak, db);
+            unit.TextTooltipAwaken = "Revive Crypt Lord";
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Crypt Lord";
+            unit.TextProperNamesRaw = "Anub'arak";
+            unit.TextTooltipRevive = "Revive Crypt Lord";
+            unit.TextTooltipExtended = "Warrior Hero, adept at summoning insect minions and crushing enemies. Can learn Impale, Spiked Carapace, Carrion Beetles and Locust Swarm. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUim,AUts,AUcb,AUls";
@@ -100291,6 +102825,12 @@ namespace War3Api.Object
         protected virtual Unit LoadBalnazzar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Balnazzar, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Balnazzar";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUsl,AUav,ANr3,AOeq,ACf3";
@@ -100440,6 +102980,13 @@ namespace War3Api.Object
         protected virtual Unit LoadKelthuzadlichcinematic(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kelthuzadlichcinematic, db);
+            unit.TextTooltipAwaken = "Revive Lich";
+            unit.TextNameEditorSuffix = " (Lich, cinematic)";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Lich";
+            unit.TextProperNamesRaw = "Kel'Thuzad";
+            unit.TextTooltipRevive = "Revive Lich";
+            unit.TextTooltipExtended = "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUfn,AUfu,AUdr,AUdd";
@@ -100589,6 +103136,12 @@ namespace War3Api.Object
         protected virtual Unit LoadDetheroc(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Detheroc, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Detheroc";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUsl,AEsh,AUcs,AUdd";
@@ -100738,6 +103291,13 @@ namespace War3Api.Object
         protected virtual Unit LoadEvilarthas(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Evilarthas, db);
+            unit.TextTooltipAwaken = "Revive Death Knight";
+            unit.TextNameEditorSuffix = " (Evil)";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Death Knight";
+            unit.TextProperNamesRaw = "Arthas";
+            unit.TextTooltipRevive = "Revive Death Knight";
+            unit.TextTooltipExtended = "Warrior Hero, evil counterpart to the Human Paladin. Can learn Death Coil, Death Pact, Unholy Aura, and Animate Dead. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUdc,AUdp,AUau,AUan";
@@ -100887,6 +103447,13 @@ namespace War3Api.Object
         protected virtual Unit LoadKelthuzadlich(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kelthuzadlich, db);
+            unit.TextTooltipAwaken = "Revive Lich";
+            unit.TextNameEditorSuffix = " (Lich)";
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Lich";
+            unit.TextProperNamesRaw = "Kel'Thuzad";
+            unit.TextTooltipRevive = "Revive Lich";
+            unit.TextTooltipExtended = "Mystical Hero, particularly adept at cold magic. Can learn Frost Armor, Frost Nova, Dark Ritual and Death And Decay. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUfn,AUfu,AUdr,AUdd";
@@ -101036,6 +103603,12 @@ namespace War3Api.Object
         protected virtual Unit LoadMalganis(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Malganis, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Mal'Ganis";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUsl,AUcs,ANsl,ANdc";
@@ -101185,6 +103758,13 @@ namespace War3Api.Object
         protected virtual Unit LoadEvilsylvanas(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Evilsylvanas, db);
+            unit.TextTooltipAwaken = "Revive Dark Ranger";
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Dark Ranger";
+            unit.TextProperNamesRaw = "Sylvanas";
+            unit.TextTooltipRevive = "Revive Dark Ranger";
+            unit.TextTooltipBasic = "Summon Dark Ranger";
+            unit.TextTooltipExtended = "Cunning Hero, adept at manipulating opponents. Can learn Silence, Black Arrow, Life Drain, and Charm. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANsi,ANba,ANdr,ANch";
@@ -101334,6 +103914,12 @@ namespace War3Api.Object
         protected virtual Unit LoadTichondrius(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tichondrius, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Tichondrius";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUsl,AUcs,ANrc,ANfd";
@@ -101483,6 +104069,12 @@ namespace War3Api.Object
         protected virtual Unit LoadVarimathras(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Varimathras, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Varimathras";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUsl,AUav,ANrf,ANdo";
@@ -101632,6 +104224,12 @@ namespace War3Api.Object
         protected virtual Unit LoadVengyr(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Vengyr, db);
+            unit.TextTooltipAwaken = "Revive Dreadlord";
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Dreadlord";
+            unit.TextProperNamesRaw = "Dalvengyr";
+            unit.TextTooltipRevive = "Revive Dreadlord";
+            unit.TextTooltipExtended = "Cunning Hero, adept at controlling combat. Can learn Carrion Swarm, Sleep, Vampiric Aura, and Inferno. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AUav,AUsl,AUcs,AUin";
@@ -101781,6 +104379,11 @@ namespace War3Api.Object
         protected virtual Unit LoadArchimonde(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Archimonde, db);
+            unit.TextTooltipAwaken = "Revive Warlock";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Warlock";
+            unit.TextProperNamesRaw = "Archimonde";
+            unit.TextTooltipRevive = "Revive Warlock";
             unit.AbilitiesNormalRaw = "AInv,ACm2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANrc,ANdp,ANfd,AHbh";
@@ -101930,6 +104533,12 @@ namespace War3Api.Object
         protected virtual Unit LoadGhostlyarchmage(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ghostlyarchmage, db);
+            unit.TextTooltipAwaken = "Revive Ghostly Archmage";
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Ghostly Archmage";
+            unit.TextProperNamesRaw = "Antonidas";
+            unit.TextTooltipRevive = "Revive Ghostly Archmage";
+            unit.TextTooltipExtended = "Mystical Hero Spirit, adept at ranged assaults. Can learn Blizzard, Summon Water Elemental, Brilliance Aura and Mass Teleport. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHbz,AHab,AHwe,AHmt";
@@ -102079,6 +104688,7 @@ namespace War3Api.Object
         protected virtual Unit LoadIllidanwagon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Illidanwagon, db);
+            unit.TextName = "Prison Wagon";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102228,6 +104838,7 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelfrunner(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelfrunner, db);
+            unit.TextName = "Night Elf Runner";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102377,6 +104988,7 @@ namespace War3Api.Object
         protected virtual Unit LoadNaisha(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Naisha, db);
+            unit.TextName = "Naisha";
             unit.AbilitiesNormalRaw = "Aesr,Ashm,Amgr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102526,6 +105138,7 @@ namespace War3Api.Object
         protected virtual Unit LoadShandris(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shandris, db);
+            unit.TextName = "Shandris";
             unit.AbilitiesNormalRaw = "Ashm";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102675,6 +105288,10 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelftransportship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelftransportship, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Night Elf Transport Ship";
+            unit.TextTooltipBasic = "Hire Night Elf Transport Ship";
+            unit.TextTooltipExtended = "A sturdy transport ship capable of carrying units over the sea.";
             unit.AbilitiesNormalRaw = "Sch5,Slo3,Sdro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102824,6 +105441,7 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodelfwagon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodelfwagon, db);
+            unit.TextName = "Wagon";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -102973,6 +105591,7 @@ namespace War3Api.Object
         protected virtual Unit LoadThecaptain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Thecaptain, db);
+            unit.TextName = "Captain";
             unit.AbilitiesNormalRaw = "Adef";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -103122,6 +105741,7 @@ namespace War3Api.Object
         protected virtual Unit LoadRiderlesshorse(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Riderlesshorse, db);
+            unit.TextName = "Riderless Horse";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -103271,6 +105891,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHighelvenswordsman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Highelvenswordsman, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Swordsman";
+            unit.TextTooltipBasic = "Train Swordsman";
+            unit.TextTooltipExtended = "Versatile foot soldier. Can learn the Defend ability. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Adef";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -103420,6 +106044,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPackhorse(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Packhorse, db);
+            unit.TextName = "Pack Horse";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -103569,6 +106194,11 @@ namespace War3Api.Object
         protected virtual Unit LoadAkama(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Akama, db);
+            unit.TextTooltipAwaken = "Revive Akama";
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Elder Sage";
+            unit.TextProperNamesRaw = "Akama";
+            unit.TextTooltipRevive = "Revive Akama";
             unit.AbilitiesNormalRaw = "AInv,Apiv,Ahid";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ACs7,AOcl,AEsh,ANr2";
@@ -103718,6 +106348,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritbeast(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritbeast, db);
+            unit.TextNameEditorSuffix = " (Level 1)";
+            unit.TextName = "Lesser Spirit Beast";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -103867,6 +106499,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritbeast2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritbeast2, db);
+            unit.TextNameEditorSuffix = " (Level 2)";
+            unit.TextName = "Spirit Beast";
             unit.AbilitiesNormalRaw = "Afbb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104016,6 +106650,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritbeast3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritbeast3, db);
+            unit.TextNameEditorSuffix = " (Level 3)";
+            unit.TextName = "Greater Spirit Beast";
             unit.AbilitiesNormalRaw = "Afbb,Ambb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104165,6 +106801,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDemolisherdraenei(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Demolisherdraenei, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Draenei Demolisher";
+            unit.TextTooltipBasic = "Train Draenei Demolisher";
+            unit.TextTooltipExtended = "Long-range siege weaponry. Effective against buildings but slow and vulnerable. Can learn the Burning Oil ability. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Abof";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104314,6 +106954,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodelfengineer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodelfengineer, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Blood Elf Engineer";
+            unit.TextTooltipBasic = "Train Blood Elf Engineer";
+            unit.TextTooltipExtended = "Extremely intelligent Blood Elves that are good at discovering new technologies and crafting powerful towers. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahar,Ahrp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104463,6 +107107,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodelflieutenant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodelflieutenant, db);
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Blood Elf Lieutenant";
+            unit.TextTooltipBasic = "Train Blood Elf Lieutenant";
+            unit.TextTooltipExtended = "Powerful lieutenants from Prince Kael's Blood Elf army. Experts at destroying spellcasters. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asps,Amim,Aiun";
             unit.AbilitiesDefaultActiveAbilityRaw = "Asps";
             unit.AbilitiesHeroRaw = null;
@@ -104612,6 +107260,7 @@ namespace War3Api.Object
         protected virtual Unit LoadBattleship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Battleship, db);
+            unit.TextName = "Ship";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104761,6 +107410,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaosgrunt(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaosgrunt, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "Fel Orc Grunt";
+            unit.TextTooltipBasic = "Train Fel Orc Grunt";
+            unit.TextTooltipExtended = "Brutish Orc warrior infused with the blood of demons. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Asal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -104910,6 +107563,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaoswolfrider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaoswolfrider, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Fel Orc Raider";
+            unit.TextTooltipBasic = "Train Fel Orc Raider";
+            unit.TextTooltipExtended = "Highly mobile wolf rider infused with the blood of demons. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aens,Asal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105059,6 +107716,12 @@ namespace War3Api.Object
         protected virtual Unit LoadChaoswarlock(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaoswarlock, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Firebolt,- Firebolt|n- Unholy Frenzy,- Firebolt|n- Unholy Frenzy|n- Cripple";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Fel Orc Warlock";
+            unit.TextTooltipBasic = "Train Fel Orc Warlock";
+            unit.TextTooltipExtended = "Orc spellcaster infused with the blood of demons. Can initially cast Firebolt, which stuns and damages a target enemy unit. Can also learn Unholy Frenzy and Cripple. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Awfb,Suhf,Scri";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105208,6 +107871,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaoskotobeast(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaoskotobeast, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Fel Orc Kodo Beast";
+            unit.TextTooltipBasic = "Train Fel Orc Kodo Beast";
+            unit.TextTooltipExtended = "Lumbering war beast, mounted by an Orcish drummer. Has the abilities War Drums and Devour. War Drums gives friendly units nearby a bonus to attack damage. Can gain the War Drums Upgrade. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Aakb,Advc,Adev";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105357,6 +108024,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaospeon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaospeon, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Fel Peon";
+            unit.TextTooltipBasic = "Train Fel Peon";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. Can also go inside Fel Burrows to give it an attack. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahar,Arep,Asal";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105506,6 +108177,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDalaranmutant(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dalaranmutant, db);
+            unit.TextName = "Dalaran Mutant";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105655,6 +108327,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneidarkslayer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneidarkslayer, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Draenei Darkslayer";
+            unit.TextTooltipBasic = "Hire Draenei Darkslayer";
+            unit.TextTooltipExtended = "Medium melee unit with Immolation. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACim";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105804,6 +108480,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneivindicator(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneivindicator, db);
+            unit.TextName = "Draenei Vindicator";
+            unit.TextTooltipBasic = "Hire Draenei Vindicator";
+            unit.TextTooltipExtended = "Heavy melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -105953,6 +108632,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneistalker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneistalker, db);
+            unit.TextName = "Draenei Stalker";
+            unit.TextTooltipBasic = "Hire Draenei Stalker";
+            unit.TextTooltipExtended = "Light melee unit with permanent invisibility, Ensnare and Evasion. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Apiv,ACev,ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -106102,6 +108784,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiguardian(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiguardian, db);
+            unit.TextName = "Draenei Guardian";
+            unit.TextTooltipBasic = "Hire Draenei Guardian";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -106251,6 +108936,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiharbinger(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiharbinger, db);
+            unit.TextName = "Draenei Harbinger";
+            unit.TextTooltipBasic = "Hire Draenei Harbinger";
+            unit.TextTooltipExtended = "Medium ranged unit with Bloodlust and Cast Ray of Disruption. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Ache,ACbb";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -106400,6 +109088,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDalaranreject(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dalaranreject, db);
+            unit.TextName = "Dalaran Reject";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -106549,6 +109238,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneidisciple(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneidisciple, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Draenei Disciple";
+            unit.TextTooltipBasic = "Hire Draenei Disciple";
+            unit.TextTooltipExtended = "Light ranged unit that casts Heal. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Anh1";
             unit.AbilitiesDefaultActiveAbilityRaw = "Anhe";
             unit.AbilitiesHeroRaw = null;
@@ -106698,6 +109391,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiprotector(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiprotector, db);
+            unit.TextName = "Draenei Protector";
+            unit.TextTooltipBasic = "Hire Draenei Protector";
+            unit.TextTooltipExtended = "Light melee unit with Ensnare. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "ACen";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -106847,6 +109543,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiseer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiseer, db);
+            unit.TextName = "Draenei Seer";
+            unit.TextTooltipBasic = "Hire Draenei Seer";
+            unit.TextTooltipExtended = "Heavy ranged unit with Brilliance Aura. Can cast Slow and Healing Wave. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACsw,ACba,AChv";
             unit.AbilitiesDefaultActiveAbilityRaw = "Aslo";
             unit.AbilitiesHeroRaw = null;
@@ -106996,6 +109695,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneiwatcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneiwatcher, db);
+            unit.TextName = "Draenei Watcher";
+            unit.TextTooltipBasic = "Hire Draenei Watcher";
+            unit.TextTooltipExtended = "Light melee unit. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -107145,6 +109847,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneilaborer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneilaborer, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Draenei Laborer";
+            unit.TextTooltipBasic = "Train Drainei Laborer";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "Ahar,Arep";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -107294,6 +110000,9 @@ namespace War3Api.Object
         protected virtual Unit LoadDraeneisalamander(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Draeneisalamander, db);
+            unit.TextName = "Salamander";
+            unit.TextTooltipBasic = "Train Salamander";
+            unit.TextTooltipExtended = "Heavy ranged unit that hurls bolts of lightning.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Alit";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -107443,6 +110152,7 @@ namespace War3Api.Object
         protected virtual Unit LoadEngineergazlowe(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Engineergazlowe, db);
+            unit.TextName = "Engineer Gazlowe";
             unit.AbilitiesNormalRaw = "Asds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -107592,6 +110302,9 @@ namespace War3Api.Object
         protected virtual Unit LoadEmissary(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Emissary, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Heal,- Heal|n- Dispel Magic,- Heal|n- Dispel Magic|n- Inner Fire";
+            unit.TextName = "Emissary";
             unit.AbilitiesNormalRaw = "Ahea,Ainf,Adis";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ahea";
             unit.AbilitiesHeroRaw = null;
@@ -107741,6 +110454,7 @@ namespace War3Api.Object
         protected virtual Unit LoadFleshgolem(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fleshgolem, db);
+            unit.TextName = "Flesh Golem";
             unit.AbilitiesNormalRaw = "ACsh,ACcr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -107890,6 +110604,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGoblinblaster(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Goblinblaster, db);
+            unit.TextName = "Goblin Blaster";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108039,6 +110754,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHighelvenarcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Highelvenarcher, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Archer";
+            unit.TextTooltipBasic = "Train Archer";
+            unit.TextTooltipExtended = "Basic long-ranged attacker. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108188,6 +110907,8 @@ namespace War3Api.Object
         protected virtual Unit LoadHighelvenfemale(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Highelvenfemale, db);
+            unit.TextNameEditorSuffix = " (Female)";
+            unit.TextName = "High Elf";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108337,6 +111058,8 @@ namespace War3Api.Object
         protected virtual Unit LoadHighelvenmale(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Highelvenmale, db);
+            unit.TextNameEditorSuffix = " (Male)";
+            unit.TextName = "High Elf";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108486,6 +111209,11 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodelfworker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodelfworker, db);
+            unit.TextNameEditorSuffix = " (Blood Elf)";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Worker";
+            unit.TextTooltipBasic = "Train Worker";
+            unit.TextTooltipExtended = "Basic worker unit. Can build structures, and Repair.";
             unit.AbilitiesNormalRaw = "Ahar,Ahrp";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108635,6 +111363,7 @@ namespace War3Api.Object
         protected virtual Unit LoadJailorkassan(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Jailorkassan, db);
+            unit.TextName = "Jailor Kassan";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108784,6 +111513,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMedivhmorphed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Medivhmorphed, db);
+            unit.TextNameEditorSuffix = " (Raven Form)";
+            unit.TextName = "Medivh";
             unit.AbilitiesNormalRaw = "Amrf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -108933,6 +111664,7 @@ namespace War3Api.Object
         protected virtual Unit LoadMedivh(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Medivh, db);
+            unit.TextName = "Medivh";
             unit.AbilitiesNormalRaw = "Amrf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109082,6 +111814,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulslave(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulslave, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Mur'gul Slave";
+            unit.TextTooltipBasic = "Train Mur'gul Slave";
+            unit.TextTooltipExtended = "Basic worker unit. Can harvest gold and lumber, build structures, and Repair. |n|n|cffffcc00Attacks land units and trees.|r";
             unit.AbilitiesNormalRaw = "ANha,Arep";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109231,6 +111967,7 @@ namespace War3Api.Object
         protected virtual Unit LoadMisha(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Misha, db);
+            unit.TextName = "Misha";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109380,6 +112117,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSearinox(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Searinox, db);
+            unit.TextName = "Searinox";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109529,6 +112267,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSupportcolumn(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Supportcolumn, db);
+            unit.TextName = "Support Column";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109678,6 +112417,7 @@ namespace War3Api.Object
         protected virtual Unit LoadNightelfassassin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nightelfassassin, db);
+            unit.TextName = "Warden";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109827,6 +112567,7 @@ namespace War3Api.Object
         protected virtual Unit LoadTharifas(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tharifas, db);
+            unit.TextName = "Tharifas";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -109976,6 +112717,12 @@ namespace War3Api.Object
         protected virtual Unit LoadWar2warlock(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.War2warlock, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Firebolt,- Firebolt|n- Unholy Frenzy,- Firebolt|n- Unholy Frenzy|n- Cripple";
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Orc Warlock";
+            unit.TextTooltipBasic = "Train Orc Warlock";
+            unit.TextTooltipExtended = "Orc spellcaster. Can initially cast Firebolt, which stuns and damages a target enemy unit. Can also learn Unholy Frenzy and Cripple. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "ACfb,ACuf,ACcr";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -110125,6 +112872,7 @@ namespace War3Api.Object
         protected virtual Unit LoadWatcher(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Watcher, db);
+            unit.TextName = "Sentry";
             unit.AbilitiesNormalRaw = "ACbl";
             unit.AbilitiesDefaultActiveAbilityRaw = "Ablo";
             unit.AbilitiesHeroRaw = null;
@@ -110274,6 +113022,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDrakthul(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Drakthul, db);
+            unit.TextName = "Drak'thul";
             unit.AbilitiesNormalRaw = "ACmo,ACad";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -110423,6 +113172,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGarthok(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Garthok, db);
+            unit.TextName = "Gar'thok";
             unit.AbilitiesNormalRaw = "Asal,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -110572,6 +113322,10 @@ namespace War3Api.Object
         protected virtual Unit LoadJuggernaut(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Juggernaut, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Orc Juggernaught";
+            unit.TextTooltipBasic = "Train Orc Juggernaught";
+            unit.TextTooltipExtended = "Massive battleship good at destroying enemy ships and bombarding buildings from the sea. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -110721,6 +113475,7 @@ namespace War3Api.Object
         protected virtual Unit LoadMathog(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Mathog, db);
+            unit.TextName = "Mathog";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -110870,6 +113625,7 @@ namespace War3Api.Object
         protected virtual Unit LoadNazgrel(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Nazgrel, db);
+            unit.TextName = "Nazgrel";
             unit.AbilitiesNormalRaw = "Aens,Asal,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111019,6 +113775,8 @@ namespace War3Api.Object
         protected virtual Unit LoadKotobeastnorider(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kotobeastnorider, db);
+            unit.TextNameEditorSuffix = " (Riderless)";
+            unit.TextName = "Kodo Beast";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111168,6 +113926,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwyvern(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwyvern, db);
+            unit.TextName = "Spirit Wind Rider";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111317,6 +114076,9 @@ namespace War3Api.Object
         protected virtual Unit LoadVoljin(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Voljin, db);
+            unit.TextCasterUpgradeNamesRaw = "Initiate, Adept, Master";
+            unit.TextCasterUpgradeTipsRaw = "- Sentry Ward,- Sentry Ward|n- Stasis Trap,- Sentry Ward|n- Stasis Trap|n- Healing Ward";
+            unit.TextName = "Vol'jin";
             unit.AbilitiesNormalRaw = "Aeye,Ahwd,Asta,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111466,6 +114228,7 @@ namespace War3Api.Object
         protected virtual Unit LoadChaoswarlord(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaoswarlord, db);
+            unit.TextName = "Orc Warchief";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111615,6 +114378,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRiderlesswyvern(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Riderlesswyvern, db);
+            unit.TextNameEditorSuffix = " (Riderless)";
+            unit.TextName = "Wind Rider";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111764,6 +114529,11 @@ namespace War3Api.Object
         protected virtual Unit LoadAbominationcinematic(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Abominationcinematic, db);
+            unit.TextNameEditorSuffix = " (cinematic)";
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Abomination";
+            unit.TextTooltipBasic = "Train Abomination";
+            unit.TextTooltipExtended = "Heavy melee unit. Can learn the Disease Cloud ability. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aap1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -111913,6 +114683,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAirbarge(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Airbarge, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Sky Barge";
+            unit.TextTooltipBasic = "Summon Sky Barge";
+            unit.TextTooltipExtended = "A massive air transport.";
             unit.AbilitiesNormalRaw = "Sch3,Achd,Aloa,Adro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112062,6 +114836,8 @@ namespace War3Api.Object
         protected virtual Unit LoadAzurelordfrostwyrm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Azurelordfrostwyrm, db);
+            unit.TextNameEditorSuffix = " (undead)";
+            unit.TextName = "Sapphiron";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112211,6 +114987,8 @@ namespace War3Api.Object
         protected virtual Unit LoadAzureloredragon(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Azureloredragon, db);
+            unit.TextNameEditorSuffix = " (living)";
+            unit.TextName = "Sapphiron";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112360,6 +115138,10 @@ namespace War3Api.Object
         protected virtual Unit LoadUndeadtransportship(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Undeadtransportship, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Undead Transport Ship";
+            unit.TextTooltipBasic = "Hire Transport Ship";
+            unit.TextTooltipExtended = "A sturdy transport ship capable of carrying units over the sea.";
             unit.AbilitiesNormalRaw = "Sch5,Slo3,Sdro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112509,6 +115291,10 @@ namespace War3Api.Object
         protected virtual Unit LoadUndeaddestroyer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Undeaddestroyer, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Undead Frigate";
+            unit.TextTooltipBasic = "Hire Frigate";
+            unit.TextTooltipExtended = "A versatile attack ship good at destroying air attackers. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112658,6 +115444,8 @@ namespace War3Api.Object
         protected virtual Unit LoadKelthuzadghost(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kelthuzadghost, db);
+            unit.TextNameEditorSuffix = " (Ghost)";
+            unit.TextName = "Kel'Thuzad";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112807,6 +115595,8 @@ namespace War3Api.Object
         protected virtual Unit LoadKelthuzadnecro(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Kelthuzadnecro, db);
+            unit.TextNameEditorSuffix = " (Necromancer)";
+            unit.TextName = "Kel'Thuzad";
             unit.AbilitiesNormalRaw = "Acri,Arai,Auhf";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -112956,6 +115746,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSylvanusbanshee(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sylvanusbanshee, db);
+            unit.TextNameEditorSuffix = " (Banshee)";
+            unit.TextName = "Sylvanas Windrunner";
             unit.AbilitiesNormalRaw = "ACam,Acrs";
             unit.AbilitiesDefaultActiveAbilityRaw = "Acrs";
             unit.AbilitiesHeroRaw = null;
@@ -113105,6 +115897,9 @@ namespace War3Api.Object
         protected virtual Unit LoadShimmeringportal(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shimmeringportal, db);
+            unit.TextName = "Portal";
+            unit.TextTooltipBasic = "Open Portal";
+            unit.TextTooltipExtended = "Opens the portal.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113254,6 +116049,9 @@ namespace War3Api.Object
         protected virtual Unit LoadArcaneobservatory(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Arcaneobservatory, db);
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Arcane Observatory";
+            unit.TextTooltipBasic = "Build Arcane Observatory";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113403,6 +116201,7 @@ namespace War3Api.Object
         protected virtual Unit LoadBloodfountain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bloodfountain, db);
+            unit.TextName = "Fountain of Blood";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113552,6 +116351,7 @@ namespace War3Api.Object
         protected virtual Unit LoadBookofsummoning(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bookofsummoning, db);
+            unit.TextName = "Book of Summoning Pedestal";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113701,6 +116501,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBouldertower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bouldertower, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Boulder Tower";
+            unit.TextTooltipBasic = "Build Boulder Tower";
+            unit.TextTooltipExtended = "Fires massive boulders that deal splash damage. Good at destroying ground units. Immune to magic. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113850,6 +116654,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBouldertowerupgrade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bouldertowerupgrade, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Advanced Boulder Tower";
+            unit.TextTooltipBasic = "Upgrade to Advanced Boulder Tower";
+            unit.TextTooltipExtended = "Increases the damage of the boulders. Good at destroying ground units. Immune to magic. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -113999,6 +116807,7 @@ namespace War3Api.Object
         protected virtual Unit LoadBarrowden(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Barrowden, db);
+            unit.TextName = "Barrow Den";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114148,6 +116957,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedancientprotector(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedancientprotector, db);
+            unit.TextHotkeyRaw = "P";
+            unit.TextName = "Corrupted Ancient Protector";
+            unit.TextTooltipBasic = "Create Corrupted Ancient Protector";
+            unit.TextTooltipExtended = "Defensive Ancient. When rooted in the ground, can hurl enormous rocks at nearby enemy units. |nAttacks land and air units.";
             unit.AbilitiesNormalRaw = "Aeat,Aro2";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114297,6 +117110,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedancientofwar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedancientofwar, db);
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Corrupted Ancient of War";
+            unit.TextTooltipBasic = "Create Corrupted Ancient of War";
+            unit.TextTooltipExtended = "Keeper of primary assault troops. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "Aeat,Aro1";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114446,6 +117263,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedmoonwell(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedmoonwell, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Corrupted Moon Well";
+            unit.TextTooltipBasic = "Create Corrupted Moon Well";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained. Has the Replenish Mana and Life ability.";
             unit.AbilitiesNormalRaw = "Ambt";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114595,6 +117416,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedtreeofages(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedtreeofages, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Corrupted Tree of Ages";
+            unit.TextTooltipBasic = "Upgrade to Corrupted Tree of Ages";
+            unit.TextTooltipExtended = "Upgrade to Corrupted Tree of Ages to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Atol";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114744,6 +117569,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedtreeofeternity(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedtreeofeternity, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Corrupted Tree of Eternity";
+            unit.TextTooltipBasic = "Upgrade to Corrupted Tree of Eternity";
+            unit.TextTooltipExtended = "Upgrade to Corrupted Tree of Eternity to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Atol";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -114893,6 +117722,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCorruptedtreeoflife(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Corruptedtreeoflife, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Corrupted Tree of Life";
+            unit.TextTooltipBasic = "Create Corrupted Tree of Life";
+            unit.TextTooltipExtended = "Primary structure, used to train Wisps and entangle gold mines. Can be upgraded to Corrupted Tree of Ages and then Corrupted Tree of Eternity to enable the production of additional types of structures and units.";
             unit.AbilitiesNormalRaw = "Aent,Aeat,Aro1,Atol";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115042,6 +117875,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDefiledfountainoflife(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Defiledfountainoflife, db);
+            unit.TextName = "Defiled Fountain of Life";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115191,6 +118025,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDalaranguardtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dalaranguardtower, db);
+            unit.TextName = "Dalaran Guard Tower";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115340,6 +118175,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkportalse(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkportalse, db);
+            unit.TextNameEditorSuffix = " (facing southeast)";
+            unit.TextName = "Dimensional Gate";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115489,6 +118326,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDarkportalsw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Darkportalsw, db);
+            unit.TextNameEditorSuffix = " (facing southwest)";
+            unit.TextName = "Dimensional Gate";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115638,6 +118477,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDemongate(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Demongate, db);
+            unit.TextName = "Demon Gate";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115787,6 +118627,8 @@ namespace War3Api.Object
         protected virtual Unit LoadDragonbuilding(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dragonbuilding, db);
+            unit.TextName = "Dragon Roost";
+            unit.TextTooltipBasic = "Build Dragon Roost";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -115936,6 +118778,10 @@ namespace War3Api.Object
         protected virtual Unit LoadColdtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Coldtower, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Cold Tower";
+            unit.TextTooltipBasic = "Build Cold Tower";
+            unit.TextTooltipExtended = "Fires shards of ice. Good at slowing down enemies. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116085,6 +118931,10 @@ namespace War3Api.Object
         protected virtual Unit LoadColdtowerupgrade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Coldtowerupgrade, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Advanced Cold Tower";
+            unit.TextTooltipBasic = "Upgrade to Advanced Cold Tower";
+            unit.TextTooltipExtended = "Fires shards of ice at a faster rate. Good at slowing down enemies. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116234,6 +119084,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm0, db);
+            unit.TextNameEditorSuffix = "1";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116383,6 +119235,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm1, db);
+            unit.TextNameEditorSuffix = "2";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116532,6 +119386,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm2, db);
+            unit.TextNameEditorSuffix = "3";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116681,6 +119537,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm3, db);
+            unit.TextNameEditorSuffix = "4";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116830,6 +119688,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm4, db);
+            unit.TextNameEditorSuffix = "5";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -116979,6 +119839,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm5(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm5, db);
+            unit.TextNameEditorSuffix = "6";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117128,6 +119990,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm6(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm6, db);
+            unit.TextNameEditorSuffix = "7";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117277,6 +120141,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm7(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm7, db);
+            unit.TextNameEditorSuffix = "8";
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117426,6 +120292,7 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfarm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfarm, db);
+            unit.TextName = "High Elven Farm";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117575,6 +120442,7 @@ namespace War3Api.Object
         protected virtual Unit LoadEarthfurytower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Earthfurytower, db);
+            unit.TextName = "Earth-Fury Tower";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117724,6 +120592,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSkyfurytower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Skyfurytower, db);
+            unit.TextName = "Sky-Fury Tower";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -117873,6 +120742,10 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenguardtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenguardtower, db);
+            unit.TextHotkeyRaw = "G";
+            unit.TextName = "High Elven Guard Tower";
+            unit.TextTooltipBasic = "Build High Elven Guard Tower";
+            unit.TextTooltipExtended = "Primary defensive structure.|n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118022,6 +120895,10 @@ namespace War3Api.Object
         protected virtual Unit LoadEnergytower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Energytower, db);
+            unit.TextHotkeyRaw = "E";
+            unit.TextName = "Energy Tower";
+            unit.TextTooltipBasic = "Build Energy Tower";
+            unit.TextTooltipExtended = "Fires bolts of energy. Good at destroying air units. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118171,6 +121048,10 @@ namespace War3Api.Object
         protected virtual Unit LoadEnergytowerupgrade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Energytowerupgrade, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Advanced Energy Tower";
+            unit.TextTooltipBasic = "Upgrade to Advanced Energy Tower";
+            unit.TextTooltipExtended = "Increases the damage of the energy bolts. Good at destroying air units. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118320,6 +121201,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPurplefountain(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Purplefountain, db);
+            unit.TextName = "Fountain of Power";
             unit.AbilitiesNormalRaw = "ACnr,ANre,Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118469,6 +121351,7 @@ namespace War3Api.Object
         protected virtual Unit LoadFrostmourne(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Frostmourne, db);
+            unit.TextName = "Frostmourne Pedestal";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118618,6 +121501,9 @@ namespace War3Api.Object
         protected virtual Unit LoadFruitstand(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Fruitstand, db);
+            unit.TextName = "Fruit Stand";
+            unit.TextTooltipBasic = "Build Fruit Stand";
+            unit.TextTooltipExtended = "The most incredible fruit stand you have ever seen in your entire life.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118767,6 +121653,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFlametower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Flametower, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Flame Tower";
+            unit.TextTooltipBasic = "Build Flame Tower";
+            unit.TextTooltipExtended = "Fires short jets of flame. Good at destroying enemies that get close. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -118916,6 +121806,10 @@ namespace War3Api.Object
         protected virtual Unit LoadFlametowerupgrade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Flametowerupgrade, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Advanced Flame Tower";
+            unit.TextTooltipBasic = "Upgrade to Advanced Flame Tower";
+            unit.TextTooltipExtended = "Increases the damage of the jets of flame. Good at destroying enemies that get close. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119065,6 +121959,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfishingvillage0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfishingvillage0, db);
+            unit.TextNameEditorSuffix = " (two story, southwest facing)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119214,6 +122110,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfishingvillage1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfishingvillage1, db);
+            unit.TextNameEditorSuffix = " (crested, southwest facing)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119363,6 +122261,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfishingvillage2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfishingvillage2, db);
+            unit.TextNameEditorSuffix = " (one story)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119512,6 +122412,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfishingvillage3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfishingvillage3, db);
+            unit.TextNameEditorSuffix = " (two story, southeast facing)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119661,6 +122563,8 @@ namespace War3Api.Object
         protected virtual Unit LoadElvenfishingvillage4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Elvenfishingvillage4, db);
+            unit.TextNameEditorSuffix = " (crested, southeast facing)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119810,6 +122714,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGemstoneobelisk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gemstoneobelisk, db);
+            unit.TextName = "Enchanted Gemstone Obelisk";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -119959,6 +122864,7 @@ namespace War3Api.Object
         protected virtual Unit LoadHornofcenarius(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hornofcenarius, db);
+            unit.TextName = "Horn of Cenarius Pedestal";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120108,6 +123014,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHighelfbarracks(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Highelfbarracks, db);
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "High Elven Barracks";
+            unit.TextTooltipBasic = "Build Barracks";
+            unit.TextTooltipExtended = "Primary troop production building. Trains High Elven Swordsmen, High Elven Archers and Dragon Hawks. |nAlso contains the Defend upgrade for High Elven Swordsmen.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120257,6 +123167,7 @@ namespace War3Api.Object
         protected virtual Unit LoadIcecrownobelisk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Icecrownobelisk, db);
+            unit.TextName = "Icecrown Obelisk";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120406,6 +123317,11 @@ namespace War3Api.Object
         protected virtual Unit LoadTreasurebox(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Treasurebox, db);
+            unit.TextDescription = "A box sealed by solid ice. Often such boxes hold magical treasures.";
+            unit.TextHotkeyRaw = "B";
+            unit.TextName = "Icy Treasure Box";
+            unit.TextTooltipBasic = "Purchase Icy Treasure Box, Build Treasure Box";
+            unit.TextTooltipExtended = "A treasure lies frozen within.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120555,6 +123471,11 @@ namespace War3Api.Object
         protected virtual Unit LoadMagicvault(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Magicvault, db);
+            unit.TextDescription = "A vault sealed with glowing runes. Often such vaults hold magical treasures.";
+            unit.TextHotkeyRaw = "V";
+            unit.TextName = "Magic Vault";
+            unit.TextTooltipBasic = "Purchase Magic Vault, Build Magic Vault";
+            unit.TextTooltipExtended = "A secret lies within every box.";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120704,6 +123625,10 @@ namespace War3Api.Object
         protected virtual Unit LoadAltarofthedepths(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Altarofthedepths, db);
+            unit.TextHotkeyRaw = "L";
+            unit.TextName = "Altar of the Depths";
+            unit.TextTooltipBasic = "Build Altar of the Depths";
+            unit.TextTooltipExtended = "Summons Heroes. Revives slain Heroes.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -120853,6 +123778,10 @@ namespace War3Api.Object
         protected virtual Unit LoadCoralbed(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Coralbed, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Coral Bed";
+            unit.TextTooltipBasic = "Build Coral Bed";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121002,6 +123931,10 @@ namespace War3Api.Object
         protected virtual Unit LoadShrineofazshara(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shrineofazshara, db);
+            unit.TextHotkeyRaw = "A";
+            unit.TextName = "Shrine of Azshara";
+            unit.TextTooltipBasic = "Build Shrine of Azshara";
+            unit.TextTooltipExtended = "Trains Naga Sirens and Couatl. Also contains spell upgrades for Naga Sirens and Couatl.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121151,6 +124084,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSpawninggrounds(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spawninggrounds, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Spawning Grounds";
+            unit.TextTooltipBasic = "Build Spawning Grounds";
+            unit.TextTooltipExtended = "Trains Naga Myrmidons, Snap Dragons, and Dragon Turtles. Also contains the Ensnare upgrade.";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121300,6 +124237,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTidalguardian(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tidalguardian, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Tidal Guardian";
+            unit.TextTooltipBasic = "Build Tidal Guardian";
+            unit.TextTooltipExtended = "Primary defensive structure. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121449,6 +124390,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTempleoftides(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Templeoftides, db);
+            unit.TextHotkeyRaw = "T";
+            unit.TextName = "Temple of Tides";
+            unit.TextTooltipBasic = "Build Temple of Tides";
+            unit.TextTooltipExtended = "Primary structure, used to train Mur'gul Slaves, Mur'gul Reavers and receive gathered resources. Also contains the Naga weapon and armor upgrades, and the Submerge upgrade.";
             unit.AbilitiesNormalRaw = "Argl,Abds";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121598,6 +124543,9 @@ namespace War3Api.Object
         protected virtual Unit LoadPigfarm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Pigfarm, db);
+            unit.TextHotkeyRaw = "F";
+            unit.TextName = "Pig Farm";
+            unit.TextTooltipBasic = "Build Pig Farm";
             unit.AbilitiesNormalRaw = "Aspi";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121747,6 +124695,7 @@ namespace War3Api.Object
         protected virtual Unit LoadPowergenerator(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Powergenerator, db);
+            unit.TextName = "Power Generator";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -121896,6 +124845,7 @@ namespace War3Api.Object
         protected virtual Unit LoadShrine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Shrine, db);
+            unit.TextName = "Shrine";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122045,6 +124995,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDeathtower(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deathtower, db);
+            unit.TextHotkeyRaw = "D";
+            unit.TextName = "Death Tower";
+            unit.TextTooltipBasic = "Build Death Tower";
+            unit.TextTooltipExtended = "Fires bolts of deadly energy. Excellent at dealing massive damage to everything. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122194,6 +125148,10 @@ namespace War3Api.Object
         protected virtual Unit LoadDeathtowerupgrade(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Deathtowerupgrade, db);
+            unit.TextHotkeyRaw = "U";
+            unit.TextName = "Advanced Death Tower";
+            unit.TextTooltipBasic = "Upgrade to Advanced Death Tower";
+            unit.TextTooltipExtended = "Fires bolts of death. Excellent at destroying everything. Immune to magic. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122343,6 +125301,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRuinedelvenfishingvillage0(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ruinedelvenfishingvillage0, db);
+            unit.TextNameEditorSuffix = " (ruined, two story)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122492,6 +125452,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRuinedelvenfishingvillage1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ruinedelvenfishingvillage1, db);
+            unit.TextNameEditorSuffix = " (ruined, one story)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122641,6 +125603,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRuinedelvenfishingvillage2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Ruinedelvenfishingvillage2, db);
+            unit.TextNameEditorSuffix = " (ruined, crested)";
+            unit.TextName = "Night Elf Fishing Village";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122790,6 +125754,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWyverncage1(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wyverncage1, db);
+            unit.TextDescription = "A sturdy cage designed to hold Wind Riders captive.";
+            unit.TextNameEditorSuffix = " (1)";
+            unit.TextName = "Wind Rider Cage";
+            unit.TextTooltipBasic = "Build Wind Rider Cage";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -122939,6 +125907,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWyverncage2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wyverncage2, db);
+            unit.TextDescription = "A sturdy cage designed to hold Wind Riders captive.";
+            unit.TextNameEditorSuffix = " (2)";
+            unit.TextName = "Wind Rider Cage";
+            unit.TextTooltipBasic = "Build Wind Rider Cage";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123088,6 +126060,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWyverncage3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wyverncage3, db);
+            unit.TextDescription = "A sturdy cage designed to hold Wind Riders captive.";
+            unit.TextNameEditorSuffix = " (3)";
+            unit.TextName = "Wind Rider Cage";
+            unit.TextTooltipBasic = "Build Wind Rider Cage";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123237,6 +126213,10 @@ namespace War3Api.Object
         protected virtual Unit LoadWyverncage4(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wyverncage4, db);
+            unit.TextDescription = "A sturdy cage designed to hold Wind Riders captive.";
+            unit.TextNameEditorSuffix = " (4)";
+            unit.TextName = "Wind Rider Cage";
+            unit.TextTooltipBasic = "Build Wind Rider Cage";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123386,6 +126366,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaosorcburrow(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaosorcburrow, db);
+            unit.TextHotkeyRaw = "O";
+            unit.TextName = "Fel Burrow";
+            unit.TextTooltipBasic = "Build Fel Burrow";
+            unit.TextTooltipExtended = "Provides food, which increases the maximum number of units that can be trained. Fel Peons can garrison inside to attack enemy units. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Abds,Aspi,Abun,Sbtl,Astd,Arbr,Aorb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123535,6 +126519,10 @@ namespace War3Api.Object
         protected virtual Unit LoadZoneindicator(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Zoneindicator, db);
+            unit.TextNameEditorSuffix = " (Custom Campaign)";
+            unit.TextName = "Zone Indicator";
+            unit.TextTooltipBasic = "Zone Indicator";
+            unit.TextTooltipExtended = "Zone Indicator";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123684,6 +126672,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBindstonese(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bindstonese, db);
+            unit.TextNameEditorSuffix = " (southeast facing)";
+            unit.TextName = "Resurrection Stone";
+            unit.TextTooltipBasic = "Create Resurrection Stone";
+            unit.TextTooltipExtended = "";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123833,6 +126825,10 @@ namespace War3Api.Object
         protected virtual Unit LoadBindstonesw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Bindstonesw, db);
+            unit.TextNameEditorSuffix = " (southwest facing)";
+            unit.TextName = "Resurrection Stone";
+            unit.TextTooltipBasic = "Create Resurrection Stone";
+            unit.TextTooltipExtended = "";
             unit.AbilitiesNormalRaw = "Avul";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -123982,6 +126978,10 @@ namespace War3Api.Object
         protected virtual Unit LoadChaosspaceorc(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Chaosspaceorc, db);
+            unit.TextHotkeyRaw = "C";
+            unit.TextName = "Terran Marine";
+            unit.TextTooltipBasic = "Train Terran Marine";
+            unit.TextTooltipExtended = "Powerful Terran marine armed with a powerful flame-thrower, they can decimate large numbers of clustered enemy troops. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "Arng";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124131,6 +127131,10 @@ namespace War3Api.Object
         protected virtual Unit LoadHydralisk(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Hydralisk, db);
+            unit.TextHotkeyRaw = "H";
+            unit.TextName = "Hydralisk";
+            unit.TextTooltipBasic = "Train Hydralisk";
+            unit.TextTooltipExtended = "Powerful Zerg creature, adept at destroying enemies with projectile spines coated in acid. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124280,6 +127284,11 @@ namespace War3Api.Object
         protected virtual Unit LoadOrcjuggernaut(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Orcjuggernaut, db);
+            unit.TextNameEditorSuffix = " (Cinematic)";
+            unit.TextHotkeyRaw = "R";
+            unit.TextName = "Orc Juggernaught";
+            unit.TextTooltipBasic = "Train Orc Juggernaught";
+            unit.TextTooltipExtended = "Massive battleship good at destroying enemy ships and bombarding buildings from the sea. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124429,6 +127438,10 @@ namespace War3Api.Object
         protected virtual Unit LoadMarine(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Marine, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Marine";
+            unit.TextTooltipBasic = "Train Marine";
+            unit.TextTooltipExtended = "Powerful Terran marine armed with an automatic pulse rifle. |n|n|cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124578,6 +127591,10 @@ namespace War3Api.Object
         protected virtual Unit LoadTheshoveler(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Theshoveler, db);
+            unit.TextHotkeyRaw = "K";
+            unit.TextName = "Kobold Shoveler";
+            unit.TextTooltipBasic = "Train Kobold Shoveler";
+            unit.TextTooltipExtended = "Vice President of Blizzard, Frank pearce. Powerful programmer, good at cutting through the chaff and getting tasks done. |n|n|cffffcc00Attacks bugs.|r";
             unit.AbilitiesNormalRaw = "ACcl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124727,6 +127744,10 @@ namespace War3Api.Object
         protected virtual Unit LoadSammycube(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sammycube, db);
+            unit.TextHotkeyRaw = "M";
+            unit.TextName = "Sammy!";
+            unit.TextTooltipBasic = "Train Sammy";
+            unit.TextTooltipExtended = "Lead artist, Sam Didier. Good at concept art and texturing. Has many artist minions that do his bidding. |n|n|cffffcc00Attacks bad art.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -124876,6 +127897,10 @@ namespace War3Api.Object
         protected virtual Unit LoadZergling(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Zergling, db);
+            unit.TextHotkeyRaw = "Z";
+            unit.TextName = "Zergling";
+            unit.TextTooltipBasic = "Train Zergling";
+            unit.TextTooltipExtended = "Small melee creature of the Zerg army. Though fragile, they are good in large numbers. |n|n|cffffcc00Attacks land units.|r";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -125025,6 +128050,10 @@ namespace War3Api.Object
         protected virtual Unit LoadLichking(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Lichking, db);
+            unit.TextNameEditorSuffix = " (cinematic campaign unit)";
+            unit.TextName = "Lich King";
+            unit.TextTooltipBasic = "Lich King";
+            unit.TextTooltipExtended = "This is the Lich King, no honest it is, really. Don't you believe me?";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -125174,6 +128203,13 @@ namespace War3Api.Object
         protected virtual Unit LoadMurlocsorcerer(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murlocsorcerer, db);
+            unit.TextHotkeyRaw = "S";
+            unit.TextName = "Murloc Sorcerer";
+            unit.TextProperNamesRaw = "Murloc Sorcerer";
+            unit.TextTooltipRevive = "Revive Murloc Sorcerer";
+            unit.ArtIconScoreScreenRaw = "UI\\Glues\\ScoreScreen\\scorescreen-hero-lich.blp";
+            unit.TextTooltipBasic = "Summon Murloc Sorcerer";
+            unit.TextTooltipExtended = "Mystical Murloc, adept at ranged assaults. Can learn Rain of Fire. |n|n||cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANrf";
@@ -125323,6 +128359,12 @@ namespace War3Api.Object
         protected virtual Unit LoadSeawitch2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Seawitch2, db);
+            unit.TextHotkeyRaw = "W";
+            unit.TextName = "Sea Witch";
+            unit.TextProperNamesRaw = "Sea Witch";
+            unit.TextTooltipRevive = "Revive Sea Witch";
+            unit.TextTooltipBasic = "Summon Sea Witch";
+            unit.TextTooltipExtended = "Mystical Sea Witch, adept at ranged assaults. Can learn Summon Water Elemental, Brilliance Aura, and Earthquake. |n|n||cffffcc00Attacks land and air units.|r";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "ANfl,ANfa,ANms,ANto";
@@ -125472,6 +128514,8 @@ namespace War3Api.Object
         protected virtual Unit LoadTent2_ntn3(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Tent2_ntn3, db);
+            unit.TextNameEditorSuffix = " 3";
+            unit.TextName = "Tent";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -125621,6 +128665,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGranitegolem_nggm(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Granitegolem_nggm, db);
+            unit.TextName = "Moss Covered Granite Golem";
             unit.AbilitiesNormalRaw = "ACmi,ACtb,ACtc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -125770,6 +128815,7 @@ namespace War3Api.Object
         protected virtual Unit LoadGranitegolem_nggg(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Granitegolem_nggg, db);
+            unit.TextName = "Guardian Golem";
             unit.AbilitiesNormalRaw = "ACmi,ACtb,ACtc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -125919,6 +128965,7 @@ namespace War3Api.Object
         protected virtual Unit LoadRockgolem_nggd(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Rockgolem_nggd, db);
+            unit.TextName = "Defender Golem";
             unit.AbilitiesNormalRaw = "ACmi,ACtb";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -126068,7 +129115,8 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollking_ngow(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollking_ngow, db);
-            unit.AbilitiesNormalRaw = "ANbh,ACbl,ACro ";
+            unit.TextName = "Gnoll Warlord";
+            unit.AbilitiesNormalRaw = "ANbh,ACbl,ACro";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -126217,7 +129265,8 @@ namespace War3Api.Object
         protected virtual Unit LoadRoguewizard_nwzw(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Roguewizard_nwzw, db);
-            unit.AbilitiesNormalRaw = "ACbl ";
+            unit.TextName = "Blood Wizard";
+            unit.AbilitiesNormalRaw = "ACbl";
             unit.AbilitiesDefaultActiveAbilityRaw = "AUfu";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -126366,7 +129415,8 @@ namespace War3Api.Object
         protected virtual Unit LoadGnollking_ngos(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Gnollking_ngos, db);
-            unit.AbilitiesNormalRaw = "ACbl,Ansk,Awrs,ACac ";
+            unit.TextName = "Snarlmane the Bloodgorger";
+            unit.AbilitiesNormalRaw = "ACbl,Ansk,Awrs,ACac";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -126515,6 +129565,7 @@ namespace War3Api.Object
         protected virtual Unit LoadDog_ngog(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Dog_ngog, db);
+            unit.TextName = "Guard Dog";
             unit.AbilitiesNormalRaw = "Awan";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -126664,6 +129715,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_nwar(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_nwar, db);
+            unit.TextName = "War Wagon";
             unit.AbilitiesNormalRaw = "Srtt,Aroc";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -126813,8 +129865,9 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_nccd(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_nccd, db);
-            unit.AbilitiesNormalRaw = "A01X,A01V ";
-            unit.AbilitiesDefaultActiveAbilityRaw = " ";
+            unit.TextName = "Diablo Cart";
+            unit.AbilitiesNormalRaw = "A01X,A01V";
+            unit.AbilitiesDefaultActiveAbilityRaw = "";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
             unit.StatsAgilityPerLevel = 0f;
@@ -126867,7 +129920,7 @@ namespace War3Api.Object
             unit.StatsStrengthPerLevel = 0f;
             unit.EditorTilesetsRaw = "*";
             unit.StatsUnitClassificationRaw = "_";
-            unit.TechtreeUpgradesUsedRaw = " ";
+            unit.TechtreeUpgradesUsedRaw = "";
             unit.PathingAIPlacementRadius = 0f;
             unit.PathingAIPlacementTypeRaw = "_";
             unit.StatsCanBuildOnRaw = 0;
@@ -126962,7 +130015,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_ncco(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_ncco, db);
-            unit.AbilitiesNormalRaw = "A01X,A01V ";
+            unit.TextName = "Orc Cart";
+            unit.AbilitiesNormalRaw = "A01X,A01V";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -127016,7 +130070,7 @@ namespace War3Api.Object
             unit.StatsStrengthPerLevel = 0f;
             unit.EditorTilesetsRaw = "*";
             unit.StatsUnitClassificationRaw = "_";
-            unit.TechtreeUpgradesUsedRaw = " ";
+            unit.TechtreeUpgradesUsedRaw = "";
             unit.PathingAIPlacementRadius = 0f;
             unit.PathingAIPlacementTypeRaw = "_";
             unit.StatsCanBuildOnRaw = 0;
@@ -127111,7 +130165,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_nccu(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_nccu, db);
-            unit.AbilitiesNormalRaw = "A01X,A01V ";
+            unit.TextName = "Undead Cart";
+            unit.AbilitiesNormalRaw = "A01X,A01V";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -127165,7 +130220,7 @@ namespace War3Api.Object
             unit.StatsStrengthPerLevel = 0f;
             unit.EditorTilesetsRaw = "*";
             unit.StatsUnitClassificationRaw = "_";
-            unit.TechtreeUpgradesUsedRaw = " ";
+            unit.TechtreeUpgradesUsedRaw = "";
             unit.PathingAIPlacementRadius = 0f;
             unit.PathingAIPlacementTypeRaw = "_";
             unit.StatsCanBuildOnRaw = 0;
@@ -127260,7 +130315,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSiegeengine_nccr(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Siegeengine_nccr, db);
-            unit.AbilitiesNormalRaw = "A01X,A01V ";
+            unit.TextName = "Dwarf Cart";
+            unit.AbilitiesNormalRaw = "A01X,A01V";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
             unit.StatsStartingAgility = 0;
@@ -127314,7 +130370,7 @@ namespace War3Api.Object
             unit.StatsStrengthPerLevel = 0f;
             unit.EditorTilesetsRaw = "*";
             unit.StatsUnitClassificationRaw = "_";
-            unit.TechtreeUpgradesUsedRaw = " ";
+            unit.TechtreeUpgradesUsedRaw = "";
             unit.PathingAIPlacementRadius = 0f;
             unit.PathingAIPlacementTypeRaw = "_";
             unit.StatsCanBuildOnRaw = 0;
@@ -127409,6 +130465,8 @@ namespace War3Api.Object
         protected virtual Unit LoadSylvanuswindrunner_Hjnd(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Sylvanuswindrunner_Hjnd, db);
+            unit.TextName = "Ranger";
+            unit.TextProperNamesRaw = "Jennalla Deemspring";
             unit.AbilitiesNormalRaw = "AInv,Ault";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHca,AEst,AEar,AEsf";
@@ -127558,6 +130616,8 @@ namespace War3Api.Object
         protected virtual Unit LoadMurgulhut1_nmg2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Murgulhut1_nmg2, db);
+            unit.TextNameEditorSuffix = "2";
+            unit.TextName = "Murloc Hut";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -127707,6 +130767,8 @@ namespace War3Api.Object
         protected virtual Unit LoadHarpynest_nhn2(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Harpynest_nhn2, db);
+            unit.TextNameEditorSuffix = "2";
+            unit.TextName = "Harpy Nest";
             unit.AbilitiesNormalRaw = "_";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -127856,6 +130918,7 @@ namespace War3Api.Object
         protected virtual Unit LoadSpiritwalker_obai(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Spiritwalker_obai, db);
+            unit.TextName = "Baine";
             unit.AbilitiesNormalRaw = "Acpf,Aspl,Adcn,Aast,Aion,ACsk";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -128005,6 +131068,8 @@ namespace War3Api.Object
         protected virtual Unit LoadPeasant_hrrh(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Peasant_hrrh, db);
+            unit.TextNameEditorSuffix = "High Elf";
+            unit.TextName = "Runner";
             unit.AbilitiesNormalRaw = "Ahar,Amil,Ahrp,Ahlh";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -128154,6 +131219,8 @@ namespace War3Api.Object
         protected virtual Unit LoadArchmage_Haah(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Archmage_Haah, db);
+            unit.TextName = "High Elf Archmage";
+            unit.TextProperNamesRaw = "Kelen the Seeker";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = "AHbz,AHab,AHwe,AHmt";
@@ -128303,9 +131370,11 @@ namespace War3Api.Object
         protected virtual Unit LoadPaladin_Hssa(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Paladin_Hssa, db);
+            unit.TextName = "High King";
+            unit.TextProperNamesRaw = "Anasterian Sunstrider";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
-            unit.AbilitiesHeroRaw = "AHab,ANbf,ANrf ";
+            unit.AbilitiesHeroRaw = "AHab,ANbf,ANrf";
             unit.StatsStartingAgility = 13;
             unit.StatsAgilityPerLevel = 1.5f;
             unit.StatsBuildTime = 55;
@@ -128452,9 +131521,11 @@ namespace War3Api.Object
         protected virtual Unit LoadThaloriendawnseeker(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Thaloriendawnseeker, db);
+            unit.TextName = "Master Swordsman";
+            unit.TextProperNamesRaw = "Thalorien Dawnseeker";
             unit.AbilitiesNormalRaw = "AInv";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
-            unit.AbilitiesHeroRaw = "AOcr,ANsb ";
+            unit.AbilitiesHeroRaw = "AOcr,ANsb";
             unit.StatsStartingAgility = 22;
             unit.StatsAgilityPerLevel = 1.75f;
             unit.StatsBuildTime = 55;
@@ -128601,6 +131672,7 @@ namespace War3Api.Object
         protected virtual Unit LoadWolfrider_owad(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Wolfrider_owad, db);
+            unit.TextName = "Slave Master";
             unit.AbilitiesNormalRaw = "Aens,Asal,Aion";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
