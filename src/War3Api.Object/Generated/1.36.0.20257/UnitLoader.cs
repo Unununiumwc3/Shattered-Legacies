@@ -1569,6 +1569,7 @@ namespace War3Api.Object
         protected virtual Unit LoadFootman(ObjectDatabaseBase db)
         {
             var unit = new Unit(UnitType.Footman, db);
+            unit.TextName = "Footman";
             unit.ArtIconGameInterfaceRaw = "ReplaceableTextures\\CommandButtons\\BTNFootman.blp";
             unit.AbilitiesNormalRaw = "Adef,Aihn";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
@@ -7067,6 +7068,7 @@ namespace War3Api.Object
         {
             var unit = new Unit(UnitType.Keep, db);
             unit.ArtIconGameInterfaceRaw = "ReplaceableTextures\\CommandButtons\\BTNKeep.blp";
+            unit.TextName = "Keep";
             unit.AbilitiesNormalRaw = "Abdl,Amic,Argl";
             unit.AbilitiesDefaultActiveAbilityRaw = "_";
             unit.AbilitiesHeroRaw = null;
@@ -7236,6 +7238,7 @@ namespace War3Api.Object
             unit.CombatAttack1WeaponTypeRaw = "_";
             unit.CombatAttack2WeaponTypeRaw = "_";
             unit.AbilitiesNormalSkinRaw = "Abdl,Amic,Argl";
+            unit.TechtreeUpgradesToRaw = "hcas";
             return unit;
         }
 
