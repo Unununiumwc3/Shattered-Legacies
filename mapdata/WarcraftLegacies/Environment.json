@@ -179271,8 +179271,8 @@
     {
       "Height": 1.572265625,
       "WaterHeight": 1,
-      "Texture": 1,
-      "CliffVariation": 4,
+      "Variation": 1,
+      "CliffVariation": 5,
       "CliffLevel": 2,
       "CliffTexture": 1
     },
