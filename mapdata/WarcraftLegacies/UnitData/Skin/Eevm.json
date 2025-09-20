@@ -7,17 +7,27 @@
     {
       "Id": 1718840949,
       "Type": 3,
-      "Value": " (Evil Morphed)"
+      "Value": "(Morphed - Level 1 - Illidari)"
     },
     {
-      "Id": 1633907573,
-      "Type": 1,
-      "Value": 0.85
+      "Id": 1869770869,
+      "Type": 3,
+      "Value": "Illidan Stormrage"
+    },
+    {
+      "Id": 1953980789,
+      "Type": 3,
+      "Value": "Revive The Betrayer"
+    },
+    {
+      "Id": 1885959285,
+      "Type": 3,
+      "Value": "Summon The Betrayer"
     },
     {
       "Id": 1651864693,
       "Type": 3,
-      "Value": "Cunning Hero, adept at maneuvering through battles. Can learn Immolation, Evasion, Mana Burn, and Metamorphosis. "
+      "Value": "Deadly Hero, adept at wading into the fray and cutting down key targets. "
     }
   ]
 }
