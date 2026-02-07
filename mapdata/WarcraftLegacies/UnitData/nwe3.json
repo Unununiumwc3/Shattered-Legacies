@@ -36,7 +36,12 @@
     {
       "Id": 1718840949,
       "Type": 3,
-      "Value": "(Level 3)(Warson-Rexxar)"
+      "Value": "(Wanderer)"
+    },
+    {
+      "Id": 1835101813,
+      "Type": 3,
+      "Value": "Hawk"
     }
   ]
 }
