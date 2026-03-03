@@ -2003,7 +2003,7 @@ namespace War3Api.Object
             unit.CombatAttack1ProjectileSpeed = 0;
             unit.CombatAttack2ProjectileSpeed = 0;
             unit.SoundMovementRaw = "";
-            unit.TextName = "";
+            unit.TextName = "Footman";
             unit.TextProperNamesRaw = "";
             unit.SoundRandomRaw = "";
             unit.TechtreeRequirementsTiersUsed = 0;
@@ -6658,7 +6658,7 @@ namespace War3Api.Object
             unit.CombatAttack1ProjectileSpeed = 0;
             unit.CombatAttack2ProjectileSpeed = 0;
             unit.SoundMovementRaw = "";
-            unit.TextName = "";
+            unit.TextName = "Workshop";
             unit.TextProperNamesRaw = "";
             unit.SoundRandomRaw = "";
             unit.TechtreeRequirementsTiersUsed = 0;
@@ -9108,7 +9108,7 @@ namespace War3Api.Object
             unit.CombatAttack1ProjectileSpeed = 0;
             unit.CombatAttack2ProjectileSpeed = 0;
             unit.SoundMovementRaw = "";
-            unit.TextName = "";
+            unit.TextName = "Keep";
             unit.TextProperNamesRaw = "";
             unit.SoundRandomRaw = "";
             unit.TechtreeRequirementsTiersUsed = 0;
@@ -211723,7 +211723,7 @@ namespace War3Api.Object
             unit.CombatAttack1ProjectileSpeed = 0;
             unit.CombatAttack2ProjectileSpeed = 0;
             unit.SoundMovementRaw = "";
-            unit.TextName = "";
+            unit.TextName = "Mercenary Camp";
             unit.TextProperNamesRaw = "";
             unit.SoundRandomRaw = "";
             unit.TechtreeRequirementsTiersUsed = 0;
