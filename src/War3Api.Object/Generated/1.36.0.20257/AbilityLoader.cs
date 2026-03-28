@@ -49620,7 +49620,7 @@ namespace War3Api.Object
         protected virtual Pulverize LoadPulverize(ObjectDatabaseBase db)
         {
             var ability = new Pulverize(db);
-            ability.TextName = "Pulverize,Pulverize";
+            ability.TextName = "Pulverize";
             ability.TextEditorSuffix = "";
             ability.StatsHeroAbilityRaw = 0;
             ability.StatsItemAbilityRaw = 0;
