@@ -62372,7 +62372,7 @@ namespace War3Api.Object
             ability.StatsCastRange[2] = 0;
             ability.StatsCastRange[3] = 0;
             ability.StatsCastRange[4] = 0;
-            ability.StatsBuffsRaw[1] = "BUhf";
+            ability.StatsBuffsRaw[1] = "Buhf";
             ability.StatsBuffsRaw[2] = "";
             ability.StatsBuffsRaw[3] = "";
             ability.StatsBuffsRaw[4] = "";
@@ -62483,7 +62483,7 @@ namespace War3Api.Object
             ability.StatsCastRange[2] = 0;
             ability.StatsCastRange[3] = 0;
             ability.StatsCastRange[4] = 0;
-            ability.StatsBuffsRaw[1] = "BUhf";
+            ability.StatsBuffsRaw[1] = "Buhf";
             ability.StatsBuffsRaw[2] = "";
             ability.StatsBuffsRaw[3] = "";
             ability.StatsBuffsRaw[4] = "";
@@ -62594,7 +62594,7 @@ namespace War3Api.Object
             ability.StatsCastRange[2] = 0;
             ability.StatsCastRange[3] = 0;
             ability.StatsCastRange[4] = 0;
-            ability.StatsBuffsRaw[1] = "BUhf";
+            ability.StatsBuffsRaw[1] = "Buhf";
             ability.StatsBuffsRaw[2] = "";
             ability.StatsBuffsRaw[3] = "";
             ability.StatsBuffsRaw[4] = "";
@@ -62705,7 +62705,7 @@ namespace War3Api.Object
             ability.StatsCastRange[2] = 0;
             ability.StatsCastRange[3] = 0;
             ability.StatsCastRange[4] = 0;
-            ability.StatsBuffsRaw[1] = "BUhf";
+            ability.StatsBuffsRaw[1] = "Buhf";
             ability.StatsBuffsRaw[2] = "";
             ability.StatsBuffsRaw[3] = "";
             ability.StatsBuffsRaw[4] = "";
