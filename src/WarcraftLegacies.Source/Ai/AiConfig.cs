@@ -54,8 +54,10 @@ public static class AiWorld
   public const float LegionNorthrendPortalY = 20875f;
   //  * Kalimdor end after the summon (Felwood). Also where a bot Legion's host is collected at the summon.
   //    0.34.3: back to the v33 spot beside Felwood -- (-17377, 8732) was next to Auberdine.
-  public const float LegionExitX = -14257f;
-  public const float LegionExitY = 8475f;
+  //    0.35.3: moved 500 east, onto open ground -- (-14257, 8475) is exactly where a preplaced unit stands, 180
+  //    from the Felwood CP; ground units could not use the Argus -> Felwood portal (flyers could).
+  public const float LegionExitX = -13580f;
+  public const float LegionExitY = 8448f;
   //  * WL's own exterior Demon Portal (n037, created at (0,0) by a caster-less summon) is rebuilt here, beside
   //    Quel'Danas / the Sunwell, and WL's Antoran portal (n03C) is re-pointed at it.
   public const float LegionSunwellPortalX = 17856f;
@@ -184,7 +186,8 @@ public static class AiConfig
 
   // v32: Ragnaros summoning pedestal (n02B). WL's neutral quest "Lord of the Firelands" completes when a hero
   // of level >= 10 stands in its rect; the pedestal then belongs to that hero's owner. A bot that owns one of
-  // RagnarosTriggerCps sends its best hero there ONCE (level raised to RagnarosHeroLevel on arrival).
+  // 0.35.2: the first bot whose best hero has reached RagnarosHeroLevel sends it (no level raising; the trigger CP
+  // list below is no longer used).
   // Blackrock Depths itself starts Neutral-Passive (uncapturable), so its graph neighbours also count.
   public const int RagnarosPedestalId = 1848652354;   // n02B
   public const float RagnarosX = 12352f;
@@ -224,6 +227,16 @@ public static class AiConfig
     new KillTarget("Scourge", "Sapphiron", 1969382514 /* 'ubdr' */, -2633f, 18715f, 1200f, 180f),
     // v32: Murmur (n03T, Outland, lvl 9) -- Fel Horde clears it inside the first 10 minutes.
     new KillTarget("Fel Horde", "Murmur", 1848652628 /* 'n03T' */, -74f, -30990f, 1500f, 360f),
+  };
+
+  // 0.35.2: HERO VISITS -- a bot sends its best hero to a quest location and keeps it there until the quest is
+  // complete (the hero leaves the army for that time). Gives up after 8 min and tries again 5 min later.
+  public static readonly List<HeroVisit> HeroVisits = new()
+  {
+    // Yogg-Saron: hero level 14 in the Prison of Yogg-Saron (Regions.YoggSaronPrison) -> Yogg joins the faction
+    new HeroVisit("The Beast With a Thousand Maws", "", 14, 0, 4080f, 23408f),
+    // Fel Horde "Ash and Smoke": a unit in Shadowmoon Valley (Regions.ShadowmoonBaseUnlock) + Terokkar Forest held
+    new HeroVisit("Ash and Smoke", "Fel Horde", 0, 1848652372, 2816f, -30336f),
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -383,6 +396,26 @@ public sealed class KillTarget
   }
 }
 
+public sealed class HeroVisit
+{
+  public readonly string Quest;      // WL quest title; the visit runs while the bot's faction has it incomplete
+  public readonly string Faction;    // "" = any bot that has the quest
+  public readonly int MinLevel;      // hero level needed (the bot WAITS for it -- no level raising)
+  public readonly int RequireCpId;   // 0 = none; else the bot must own this CP first (the quest's other objective)
+  public readonly float X;
+  public readonly float Y;
+
+  public HeroVisit(string quest, string faction, int minLevel, int requireCpId, float x, float y)
+  {
+    Quest = quest;
+    Faction = faction;
+    MinLevel = minLevel;
+    RequireCpId = requireCpId;
+    X = x;
+    Y = y;
+  }
+}
+
 public sealed class ClearArea
 {
   public readonly string Label;
@@ -421,6 +454,7 @@ public sealed class Edge
   public readonly int B;
   public readonly float OpenTime; // seconds before this edge may be used (0 = always). Bridges/portals use this.
   public readonly string Gate;    // named gate flag that must be open ("" = none). e.g. "greymane".
+  public readonly float Weight;   // 0.35.3: a target reached over this edge counts as Weight x its distance (1 = normal)
 
   public Edge(int a, int b)
   {
@@ -428,6 +462,7 @@ public sealed class Edge
     B = b;
     OpenTime = 0f;
     Gate = "";
+    Weight = 1f;
   }
 
   public Edge(int a, int b, float openTime, string gate)
@@ -436,6 +471,16 @@ public sealed class Edge
     B = b;
     OpenTime = openTime;
     Gate = gate;
+    Weight = 1f;
+  }
+
+  public Edge(int a, int b, float openTime, string gate, float weight)
+  {
+    A = a;
+    B = b;
+    OpenTime = openTime;
+    Gate = gate;
+    Weight = weight;
   }
 }
 
@@ -490,7 +535,8 @@ public static class AiGraph
     new Edge(1848652088, 1848653901), // Durnholde <-> Southshore
     new Edge(1848652088, 1848652099), // Durnholde <-> Strahnbrad
     new Edge(1848652122, 1848652088), // Arathi Highlands <-> Durnholde (v30: direct link, per map)
-    new Edge(1848652122, 1848652087, 1200f, ""), // Arathi Highlands <-> Dun Modr
+    // 0.35.3: weight 3 -- the Thandol bridge is often still closed; dwarves marched north while their allies died
+    new Edge(1848652122, 1848652087, 1200f, "", 3f), // Arathi Highlands <-> Dun Modr
     new Edge(1848652087, 1848652632), // Dun Modr <-> Grim Batol
     new Edge(1848652632, 1848654150), // Grim Batol <-> Southern Highlands
     new Edge(1848654150, 1848653908), // Southern Highlands <-> Dragonmaw Port
@@ -556,6 +602,7 @@ public static class AiGraph
     new Edge(1848656472, 1848653644), // Tiragarde Sound <-> Balor (same island, ground path -- v34.1)
     new Edge(1848653644, 1848652361), // Balor <-> Western Stranglethorn (ship -- v34.1)
     new Edge(1848651853, 1848654150), // Highbank <-> Southern Highlands (land, same ground area -- v34.2)
+    new Edge(1848653905, 1848653399), // Tol Barad <-> Menethil Harbour (ship -- 0.35.3)
 
     // ---- v34: Argus. Open from the start (the Legion clears its home first), reached from Northrend by the
     // Antoran <-> Crystalsong portal until the summon; after it, Argus links to Quel'Danas (WL's demon portal).
@@ -677,6 +724,8 @@ public static class AiGraph
     // v34.2: Nazmir <-> Kezan. Given as x-1201 y9903 for the Kezan side; that is the Broken Isles, while
     // x-1201 y-9903 is walkable on Kezan's own island (same ground area as the Kezan CP) -> sign typo assumed.
     new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "always"),
+    // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
+    new PortalLink(11356f, -2009f, 11765f, -3397f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "always"),
     new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
       AiWorld.LegionNorthrendPortalX, AiWorld.LegionNorthrendPortalY, "", "Portal to Northrend", "Portal to Argus", "prelegion"),
     new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
@@ -684,7 +733,7 @@ public static class AiGraph
   };
 
   // v34: Kul Tiras (Combined), Broken Isles, Zandalar, Nazjatar, The Abyss, Maelstrom (Kalimdor) are wired via
-  // ship portals now. Still NOT wired: Tomb of Sargeras 1848651850, Kezan 1848652890, Tol Barad 1848653905
+  // ship portals now (Kezan 0.34.2, Tol Barad 0.35.3). Still NOT wired: Tomb of Sargeras 1848651850
   //   Unresolved       : Highbank 1848651853 (island), Balor 1848653644, Whipping Wind 1848653914
 
   public static readonly List<Edge> Outland = new();
@@ -812,7 +861,9 @@ public static class AiGraph
   // in that graph gate their advance south naturally, so no edge-set swap is needed pre-summon.
   public static string DefaultEdgeSet(string factionName, float clockSec)
   {
-    if (factionName == "Scourge" || factionName == "Legion")
+    // 0.35.2: Illidan and the Fel Horde play from Outland (Combined graph). Since v34 the Broken Isles are Kalimdor
+    // nodes, and owning some of them flipped Illidan to Kalimdor -> "nothing reachable", army parked at the edge.
+    if (factionName == "Scourge" || factionName == "Legion" || factionName == "Illidan" || factionName == "Fel Horde")
     {
       return "Combined";
     }
@@ -959,19 +1010,8 @@ public static class AiWaves
       "|cffaa00ffThe Old Gods' tide recedes from Kalimdor.|r",
       "Combined"),
 
-    // KUL TIRAS: must hold the WHOLE island, then a fast ship-borne push to the mainland. Set GatherX/Y to a
-    // point by their island's coast via -xy; add more DestPoints for variety.
-    new WaveConfig(new List<string> { "Kul'tiras" },
-      1848652119, 0, 1.0f, 4672f, -7424f,
-      new List<DestPoint>
-      {
-        new DestPoint(0, 7056f, -15270f), // mainland coast landing
-      },
-      ShipFx, 60f, 4f, 120f,
-      "|cff66ccffKul Tiras readies its fleets...|r",
-      "|cff66ccffKul Tiras makes landfall on the mainland!|r",
-      "|cff66ccffKul Tiras' fleets are recalled.|r",
-      "Combined"),
+    // 0.35.1: the Kul Tiras wave (gather on the island, teleport to the mainland coast) is removed -- Kul Tiras
+    // reaches the mainland through its two ship portals (Tiragarde <-> Stormwind, Balor <-> Stranglethorn).
   };
 }
 
