@@ -71,13 +71,38 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - WL removes Neutral-Passive units from whole areas at runtime -> AI-created portals are owned by Neutral Extra (26).
 - Win threshold 90 CPs per team (warning at 80).
 - Map coordinates given by the maintainer have contained sign typos 3 times -- check walkability/landmass first.
+- Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep
+  portal ends on open ground (`LandBeside` keeps 250 from buildings).
+- Some heroes can't walk (the Old Gods' level-20 god heroes). Anything that sends "the best hero" must filter
+  `GetUnitMoveSpeed(u) > 1` (`SimpleBot.BestHero` does).
+- Quests a hero must visit are `ObjectiveHeroWithLevelInRect` / `...ReachRect` in WL; read the level and the
+  `Regions.X` rectangle from the quest class (Ragnaros 10 in WL, our rule 12; Yogg-Saron 14; Tomb of Sargeras 10).
+- WL's map name is hard-coded in `src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs` (~line 121);
+  the version comes from `src/WarcraftLegacies.CLI/appsettings.json` (`MapSettings.Version`).
+- The repo has a second map, `mapdata/WarcraftLegacies24p` ("Warcraft Legacies 1.18a", 24 slots). It is an OLD,
+  unmaintained layout: 20 of our 167 graph nodes are missing there and 65 sit elsewhere. Not supported.
+- Bot economy depends on the bonus gold: with the vote on "Recruit" (0) most bots had 0-12 gold and 1-5 units
+  from minute 30 on. The Legion summon (Scourge takes the Sunwell) did not happen in 40-85-min tests.
 
 ## How we work
+
+- Session start: the maintainer pastes the repo/branch and a task; clone sparsely (command above), read this file
+  and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; he does NOT want GitHub Actions.
+- Decode dumps quickly (each line is `call Preload( "..." )`):
+  ```
+  python3 -c "import re,sys;[print(m.group(1)) for l in open(sys.argv[1],errors='replace') for m in [re.match(r'\s*call Preload\( \"(.*)\" \)',l)] if m]" dump.txt
+  ```
+  The header line shows the build -- old dumps get mixed in; ignore those of another build.
+- Freezes on the maintainer's Linux/Proton setup came with alt-tabbing (with and without autopilot): not an AI bug
+  until proven otherwise.
 
 - The maintainer often says "discuss only" -- then do not code. When coding: leave out what is unclear and say so.
 - Ask at most one question per reply; propose defaults instead of asking many.
 - Version bump on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`), `CHANGELOG.md`, git tag
-  `4.8.2-ai.<version>` (tag only after the playtest).
+  `4.8.2-ai.<version>` (tag only after the playtest). A docs-only drop bumps only `CHANGELOG.md`/tag
+  (0.35.4: the in-game banner stays 0.35.3).
+- Before delivering code: `check_refs.py` must print OK (refs, duplicate classes, Lua locals, static fields);
+  tree-sitter syntax check; list exactly which files changed.
 - Deliver whole files; the maintainer copies them into the repo and builds in a Windows VM.
 - Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`, lines wrapped in `call Preload("...")`).
   Read the **PINNED** section first (one-off events and `TICK ERROR`/`FAILED` lines), then **BOTS** (state, target,
@@ -91,3 +116,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - **Bot bonuses**: `SimpleBot.HasPerks(p)` -- real bots and test-mode autopilot only.
 - **Command switch**: `AiDebug.Access` (`Off` release / `HostOnly` / `Everyone`); levels Read / Heavy / Control.
 - **Portals**: `AiGraph.Portals` (phase always / prelegion / legion), created by `AiLegion`, watchdog rebuilds them.
+  Target distance through portals: `SimpleBot.TravelDist2` (portal-aware since 0.35.2). Edge weights: `Edge.Weight`.
+- **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, config
+  `AiConfig.HeroVisits`), kill targets / area clears (`AiConfig.KillTargets`, `ClearAreas`).
+- **Bot strength vote** (`AiGoldVote`, 70 s) sets `SimpleBot.BotGoldBonus`; free hero revive needs a living altar.

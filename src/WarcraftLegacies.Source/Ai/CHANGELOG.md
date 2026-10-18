@@ -3,6 +3,13 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.35.4 (docs only -- the in-game banner stays 0.35.3)
+- `AI_AGENTS_CONTEXT.md`: new hard-won facts (waygate landing spots, immobile heroes, hero-visit quest data, map
+  name/version location, the 24p map is an old unsupported layout, economy depends on bonus gold), session workflow
+  (sparse clone, dump decode one-liner, check before delivery, docs-only drops).
+- `TODO.md` restructured for 0.36 (gameplay / polish / next playtest / open questions / later), with the 85-min
+  test findings: winners can't finish off losers (split armies), stranded Illidan heroes, Legion never summoned.
+
 ## 0.35.3
 - **Edge weights**: an edge can make targets behind it count as farther (`Edge.Weight`). Arathi Highlands <-> Dun Modr
   has weight 3 -- the dwarves marched north over the (often still closed) Thandol bridge while their allies died.
