@@ -1,91 +1,78 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short.
+Move finished items to `CHANGELOG.md`. Keep this file short. Next code version: **0.36.0**.
 
-## Next (0.35.x / 0.36)
+## 0.36 -- gameplay (playtest after)
 
-- [you] Freezes: a third freeze came at 65 min with alt-tabbing and WITHOUT autopilot, so autopilot is not the
-  cause. Likely Proton/Steam + alt-tab. Still worth: one long game without alt-tabbing.
-- [ai] Balance (decided: no catch-up mechanics): the evil side should be slightly favoured. Options discussed:
-  (a) a flat bot-only buff for the evil teams (more gold, faster tech, cheaper units ...), (b) a "melee upkeep"
-  for the good teams: past ~60 food their units cost more or their income drops (bot-only), evil teams exempt.
-  [you] pick one.
-- [ai] Economy curve ("constant steam"): late game starves (Recruit game: most bots had 0-12 gold and 1-5 units
-  from 30 min on, food 0/200). Idea: the vote's strength applies from minute 10-15, and the bonus grows over time
-  (low early, higher late) instead of a flat amount, so early waves don't overwhelm and late game isn't empty.
-- [ai] Bot food floor of at least 100 (farm-sniping exploit: humans kill a bot's farms and its production stops).
-  Re-applied every production turn (WC3 only recalculates food when buildings change).
-- [ai] Armies move in clusters instead of streams (cheap: gather at a staging point before a long march, or let
-  the front units wait for the rest) -- watch the tick cost.
-- [ai] Fel Horde: unfocused Demon Gates never get upgraded -- free upgrade at minute 15, then the further tiers.
-- [ai] `-legion` / Legion summon: epic "Civil War" message explaining the alliance shift (Scourge <-> Legion).
-  Bug: with a human Scourge (or Legion) the shift is incomplete -- "ally under attack" warnings still play and
-  the human still sees the other's resources. Check which alliance flags WL's own betrayal sets.
-- [ai] Ironforge too "far" for Fel Horde/Illidan (they skip it and march north to Dalaran) -- path weights, see
-  path-based targeting below.
-- [you/ai] Jaina's Sanctum (-7555, -9237) needs a CP (neutral, invulnerable until Jaina/Dalaran gets the event,
-  then capturable) to connect it. A CP is map data (a unit + WL ControlPoint setup), not AI code.
-- [ai] Tol Barad ship portal (11356, -2009) <-> (11765, -3397) to Menethil Harbour + graph edges.
-- [ai] Legion pre-summon: check it now walks to Northrend through the portal (0.35.2 portal-aware distance).
-- [ai] Orc factions should pick "Subjugate" in the Tauren / Troll / Ogre quest choices (bots currently take the
-  first/default option, probably "Pillage"). Find WL's choice mechanic and make bots choose.
-- [ai] Scourge plague: choose one of the invasion options, never "no invasion" (same choice mechanic).
-- [ai] Legion/Scourge civil war: start a bit later, with a lore announcement ~30 s before it begins.
-- [ai] Kul Tiras Highbank backup feels flat -- add spice (e.g. starting gold for the new start).
-- [ai] Scourge never gets Arthas: in the 65-min test Arthas died permanently at 24:41 while still Lordaeron's hero
-  (Uther at 25:18), so the Culling / Lich King path never happened. Protect or route Arthas for bots.
-- [ai] Ragnaros/Yogg visits: confirm in a playtest (dump PINNED shows "hero visit ..." / "Ragnaros mission ...").
+- [ai] **Finishing off losers**: winners struggle to take the last CPs of beaten factions. 85-min dump: winning
+  armies are split over several landmasses (Sentinels 98 on an island + 84 on the mainland, Druids over 5
+  landmasses), the army centroid lands in the sea, targets switch every few seconds. Ideas: anchor on the biggest
+  same-landmass group instead of the centroid, stick to a target until taken or blacklisted, send stragglers
+  through portals to the main group.
+- [ai] **Path-based targeting**: precomputed walking distances between connected CPs as edge weights, shortest
+  path from the army (Dijkstra). 0.35.2 (portal-aware distance) and 0.35.3 (`Edge.Weight`) are first steps.
+  Fixes "Ironforge too far" for Fel Horde/Illidan and long cross-map marches.
+- [ai] **Clustered armies**: gather at a staging point before a long march, or let the front wait for the rest.
+- [ai] **Stranded heroes**: Illidan's heroes stood in the sea in the middle of the map (85 min) -- probably a
+  quest event moved them. Rule: a hero far from its army that hasn't moved for ~2 min walks to the army; if it
+  still can't, teleport it to its altar. A `-heroes` command (ping + label per hero) helps find such cases.
+- [ai] **Economy curve** ("constant steam"): late game starves (Recruit: 0-12 gold, 1-5 units from 30 min). The
+  vote's strength applies from minute 10-15 and the bonus grows over time instead of a flat amount.
+- [ai] **Bot food floor >= 100** (humans kill farms -> production stops). Re-applied every production turn.
+- [you] **Balance** (no catch-up mechanics; evil slightly favoured): (a) flat bot-only buff for the evil teams,
+  or (b) "melee upkeep" for the good teams past ~60 food (bot-only). Your thought "make the extra gold ..." was cut
+  off -- finish it.
+- [ai] **Legion summon never happened** in 40-85-min tests (needs the Scourge to take the Sunwell). Add a fallback
+  (time-based or Legion strength) -- plus the civil war: start a bit later, lore announcement ~30 s before, and
+  fix the incomplete alliance shift with a human Scourge/Legion ("ally under attack" warnings, shared resources;
+  check which alliance flags WL's own betrayal sets).
+- [ai] **Arthas**: died permanently at 24:41 as Lordaeron's hero, so the Scourge never got him. Protect or route
+  Arthas for bots.
+- [ai] **Quest choices**: orcs pick "Subjugate" (Tauren/Troll/Ogre), Scourge's plague picks an invasion option
+  (never "no invasion"). Bots take the first/default option today -- find WL's choice mechanic.
+- [ai] Fel Horde: unfocused Demon Gates -> free upgrade at minute 15, then the further tiers.
+- [ai] Heroes: learn passives/auras first, autocast on for autocast-capable abilities; casting later.
+- [ai] Kul Tiras Highbank backup start: add spice (e.g. starting gold).
+- [ai] Portal "burning" area (unit n036, abilities A01M/A023) too big -- shrink on the AI portals.
+- [ai] Legion's Argus start places only 3 of 8 buildings (cramped) -- fixed spots.
+- [ai] Old Gods late-game portal to the Eastern Kingdoms (replaces the invasion wave and `-ogwave`). Asset `n07E`
+  (unused preplaced one at 22545, -4784). [you] trigger and both ends.
+- [ai] Tomb of Sargeras (`n00J`): gated edge Val'sharah -> Tomb, opened by a hero visit (WL needs level 10).
+- [ai] More hero visits: Soul Gem, Old Hatreds, Lone Wanderer, Jailor of the Damned ... [you] Ironforge quest title.
 
-- [ai] Hero revive only with an HQ or altar standing. [you] define "HQ" per faction (can change, can be several).
-- [ai] Old Gods late-game portal to the Eastern Kingdoms, replacing the invasion wave and `-ogwave`.
-  Asset: unit `n07E` (Shimmering Portal model; an unused preplaced one stands in the Southern Highlands at
-  22545, -4784). [you] trigger (suggest: Old Gods team holds ~50 % of Kalimdor CPs, or a minimum time) and both ends.
-- [ai] Tomb of Sargeras (`n00J`, 1848651850): gated edge Val'sharah -> Tomb, opened by a hero mission (bot holding
-  Val'sharah brings its best hero to the entrance). [you] raise the hero to 12 like Ragnaros, or require a real 12?
-- [ai] Generic hero-visit missions (quest + hero + place): Ironforge quest, Yogg-Saron (level-14 hero in the
-  prison), Soul Gem, Old Hatreds, Lone Wanderer, Jailor of the Damned ... [you] Ironforge quest title.
-- [ai] Portal routing: when a target lies across a portal edge, march to the portal first (WC3 pathing through
-  waygates works but clumps).
-- [ai] Arthas falls to the Scourge when Lordaeron is weak (forcing rule).
-- [ai] Lobby menu for bot gold: -100 / -50 / 0 / +50 / +100 ("Insane, may cause lag").
-- [ai] Losing conditions for the fallback events Escape to Theramore / The Scarlet Crusade, then re-enable them.
-- [ai] Ragnaros mission: minimum game time (~20 min) before a low-level hero is raised to 12.
-- [ai] Neutral CPs pull harder than player CPs (bias 0.5 since v34.2) -- re-check in a playtest.
-- [ai] Frostwolf held only 1 CP for a whole 80-minute game (v33) -- investigate its start and frontiers.
-- [ai] `map_audit.py` into `tools/ai` (needs reading the map's source files instead of the compiled .w3x).
-- [ai] Portal "burning" area (the portals use unit type n036 Dark Portal, abilities A01M/A023): good against
-  turtling, but the area is too big -- shrink it on the AI portals (BlzSetAbilityRealLevelField) or use a
-  smaller custom portal type for ships.
-- [ai] Heroes: bots (and autopilot) learn active skills they never cast. Learn passives/auras first, switch on
-  autocast for autocast-capable abilities; real casting later (watch the tick cost).
-- [ai] Legion's Argus start placed only 3 of 8 buildings (cramped terrain) -- widen the search or use fixed spots.
-- [you] Balance thought was cut off: "another option would be to make the extra gold ..." -- finish the idea.
+## 0.36 -- polish / small
+
 - [you] Map name "Warcraft Legacies Botified": `src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs`
-  line ~121 (`map.Info.MapName = $"Warcraft Legacies {version}"`) and `src/WarcraftLegacies.CLI/appsettings.json`
-  (`MapSettings.Version`, also used in the published file name). Loading screen: `mapdata/WarcraftLegacies/Info.json`
-  (title/text) and the four tiles `Imports/LoadingScreenTL/TR/BL/BR.blp` (source art: `war3mapImported/LoadingScreen.webp`).
+  ~line 121 and `src/WarcraftLegacies.CLI/appsettings.json` (`MapSettings.Version`). Loading screen: title/text in
+  `mapdata/WarcraftLegacies/Info.json`; a red "BOTIFIED" needs an image edit of `Imports/LoadingScreenTL/TR/BL/BR.blp`
+  (the loading screen shows before any game code runs).
+- [you/ai] Jaina's Sanctum (-7555, -9237) needs a CP (map data, not AI code), then graph edges.
+- [ai] Losing conditions for Escape to Theramore / The Scarlet Crusade, then re-enable them.
+- [ai] `map_audit.py` into `tools/ai` (read the map's source files instead of the compiled .w3x).
+- [ai] Debug: team standings + winner record in the dump, `-heroes`, `-scout`, `-tp x y`.
+
+## Check in the next playtest
+
+- Felwood portal takes ground units after `-legion` (0.35.3). Legion walks to Northrend through the portal early.
+- Tol Barad ship. Dwarves stay south while the Thandol bridge is closed (`Edge.Weight` 3).
+- Hero revive only at a living altar. Ragnaros goes only with a real level-12 hero.
+- Freezes: so far only with alt-tabbing on Linux/Proton (with and without autopilot) -- one long game without
+  alt-tabbing would settle it.
 
 ## Open questions
 
-- [you] Stromgarde backup castle feels flat for Stormwind (it only gets the castle). Make Stormwind an ally of
-  the North Alliance too? Or give the backup more (units, CPs)?
-- [you] Bridge near Stromgarde opening sooner: WL's own timed bridge (AI can't change WL timing) or the AI edge time?
-- [you] Tol Barad (`n08Q`): who should own it, where does its ship come from?
+- [you] Stromgarde backup castle feels flat for Stormwind. Make Stormwind an ally of the North Alliance too?
+- [you] Thandol bridge opening sooner: WL's own timed bridge (AI can't change WL timing) or the AI edge time?
 - [you] Broken Isles: a more lore-fitting connection than the Azsuna ship.
-- [you] Kul Tiras pathway: Stormwind City stays locked until rebuilt, so Kul Tiras' ship edge leads nowhere
-  early. Extra landing at an always-capturable CP, or let bots path through locked CPs?
+- [you] Kul Tiras pathway while Stormwind City is still locked: extra landing, or path through locked CPs?
 
-## Later (v36+)
+## Later
 
-- Loading screen: big red diagonal "BOTIFIED" -- via code (a frame/texture over the loading screen is not
-  possible from game code; it runs only after loading). Needs an image edit of the four BLP tiles or a new
-  loading screen model. Map name "Warcraft Legacies Botified": see the Next section above.
-
-- Switch paths: Quel'thalas -> Sunfury (when the Sunwell falls), Scarlet Crusade -> Legion at the betrayal,
-  Dalaran -> Kalimdor, Sentinels -> Maiev, Warsong/Frostwolf -> Dragonmaw at Grim Batol (Old Gods side),
-  Stormwind -> Honor Hold, toned-down mobile Ragnaros for Ironforge.
-- Performance: re-order only idle/retargeted units, wave-tick rotation, one unit scan per bot turn, gate cache.
-- Rebuilding destroyed production buildings (2 min, +1 per repeat, cap 4, gold) + HQ safety net.
-- Debug: team standings and winner record in the dump, `-heroes`, `-scout`, `-tp x y`.
-- Balance: Old Gods stronger (more islands), Legion/Scourge vs Alliance, Illidan/Fel Horde vs Stormwind/Ironforge.
+- Switch paths: Quel'thalas -> Sunfury, Scarlet Crusade -> Legion at the betrayal, Dalaran -> Kalimdor,
+  Sentinels -> Maiev, Warsong/Frostwolf -> Dragonmaw (Old Gods side), Stormwind -> Honor Hold, mobile Ragnaros
+  for Ironforge.
+- Performance: re-order only idle/retargeted units, wave-tick rotation, one unit scan per bot turn.
+- Rebuilding destroyed production buildings + HQ safety net (no barracks -> HQ trains basics).
+- 24-player map (`mapdata/WarcraftLegacies24p`): old 1.18a layout, 20 graph nodes missing, 65 moved -- would need
+  its own graph and coordinates; not planned.
