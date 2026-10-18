@@ -215,7 +215,8 @@ namespace WarcraftLegacies.Source.Ai
         if (!RagHeroValid())
         {
           SimpleBot._ragHero = SimpleBot.BestHero(_ragBot);
-          if (SimpleBot._ragHero == null || GetHeroLevel(SimpleBot._ragHero) < AiConfig.RagnarosHeroLevel)
+          if (SimpleBot._ragHero == null || GetHeroLevel(SimpleBot._ragHero) < AiConfig.RagnarosHeroLevel
+              || AiState.MissionUnits.Contains(SimpleBot._ragHero))
           {
             SimpleBot._ragHero = null;
             return; // wait for a level-12 hero (revive / training / levelling)
@@ -264,9 +265,9 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         var hero = SimpleBot.BestHero(o);
-        if (hero == null || GetHeroLevel(hero) < AiConfig.RagnarosHeroLevel)
+        if (hero == null || GetHeroLevel(hero) < AiConfig.RagnarosHeroLevel || AiState.MissionUnits.Contains(hero))
         {
-          continue;
+          continue; // 0.36: not a hero already on a hero visit
         }
 
         SimpleBot._ragHero = hero;

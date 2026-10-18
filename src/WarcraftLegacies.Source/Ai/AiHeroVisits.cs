@@ -15,6 +15,9 @@ namespace WarcraftLegacies.Source.Ai
   // A bot sends its best hero when its faction has the quest incomplete, the hero has REALLY reached MinLevel and
   // RequireCpId (if any) is owned. The hero is kept out of army orders (AiState.MissionUnits) until the quest is no
   // longer incomplete, it dies, or 8 min pass (then 5 min pause before the next try).
+  // 0.36: a visit can name a specific legend (Hero), wait for the quest's other objectives (LastObjective) and
+  // require the hero to stand on the target's landmass already (SameLandmass). A hero already on a mission (another
+  // visit, Ragnaros) is never picked. Shared quests (Faction "") send one hero at a time across all bots.
   internal static class AiHeroVisits
   {
     private const float GiveUp = 480f;
@@ -66,24 +69,41 @@ namespace WarcraftLegacies.Source.Ai
             continue;
           }
 
-          if (hv.RequireCpId != 0)
+          if (hv.Faction == "" && AnyUnderWay(v))
           {
-            var cp = SimpleBot.SafeCp(hv.RequireCpId);
-            if (cp == null || cp.Unit == null || GetOwningPlayer(cp.Unit) != p)
+            continue; // 0.36: shared quest -- another bot's hero is already on the way
+          }
+
+          if (hv.RequireCpId != 0 && !OwnsNode(p, hv.RequireCpId))
+          {
+            continue;
+          }
+
+          if (hv.LastObjective && OpenObjectives(q) > 1)
+          {
+            continue; // 0.36: other objectives (turn, capital, Frozen Throne ...) still open
+          }
+
+          var best = hv.Hero != "" ? LegendUnit(p, hv.Hero) : SimpleBot.BestHero(p);
+          if (best == null || GetHeroLevel(best) < hv.MinLevel || best == SimpleBot._ragHero
+              || AiState.MissionUnits.Contains(best))
+          {
+            continue; // 0.36: never a hero that is already on a mission (another visit, Ragnaros)
+          }
+
+          if (hv.SameLandmass)
+          {
+            var lmT = Geography.Landmass(hv.X, hv.Y);
+            if (lmT < 0 || Geography.Landmass(GetUnitX(best), GetUnitY(best)) != lmT)
             {
               continue;
             }
           }
 
-          var best = SimpleBot.BestHero(p);
-          if (best == null || GetHeroLevel(best) < hv.MinLevel || best == SimpleBot._ragHero)
-          {
-            continue;
-          }
-
           _hero[key] = best;
           _since[key] = SimpleBot.Clock;
           AiState.MissionUnits.Add(best);
+
           IssuePointOrder(best, "move", hv.X, hv.Y);
           SimpleBot.LogPin(SimpleBot.FacName(p) + ": hero visit '" + hv.Quest + "' -- sends " + GetUnitName(best)
                            + " (lvl " + I2S(GetHeroLevel(best)) + ")");
@@ -95,6 +115,89 @@ namespace WarcraftLegacies.Source.Ai
     {
       AiState.MissionUnits.Remove(hero);
       _hero.Remove(key);
+    }
+
+    // 0.36: a hero of ANY bot is on this visit (shared quests: one at a time). Checks all 24 slots, so a slot that
+    // left the bot list (autopilot off) can't block the visit -- its stale entry is released here.
+    private static bool AnyUnderWay(int v)
+    {
+      for (var i = 0; i < 24; i++)
+      {
+        var key = I2S(v) + "|" + I2S(i);
+        if (!_hero.ContainsKey(key))
+        {
+          continue;
+        }
+
+        if (SimpleBot.IsBot(Player(i)))
+        {
+          return true;
+        }
+
+        Release(key, _hero[key]);
+      }
+
+      return false;
+    }
+
+    // 0.36: objectives of the quest that are not complete yet
+    private static int OpenObjectives(QuestData q)
+    {
+      var n = 0;
+      var objs = q.Objectives;
+      for (var i = 0; i < objs.Count; i++)
+      {
+        if (objs[i].Progress != QuestProgress.Complete)
+        {
+          n++;
+        }
+      }
+
+      return n;
+    }
+
+    // 0.36: the bot's living, walking unit of the named legend (whatever form it is in), or null
+    private static unit LegendUnit(player p, string name)
+    {
+      var all = LegendaryHeroManager.GetAll();
+      for (var i = 0; i < all.Count; i++)
+      {
+        if (all[i].Name != name)
+        {
+          continue;
+        }
+
+        var u = all[i].Unit;
+        if (u != null && GetUnitTypeId(u) != 0 && GetOwningPlayer(u) == p && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+            && GetUnitMoveSpeed(u) > 1f)
+        {
+          return u;
+        }
+      }
+
+      return null;
+    }
+
+    // 0.36: RequireCpId may name a control point or a capital
+    private static bool OwnsNode(player p, int id)
+    {
+      var cp = SimpleBot.SafeCp(id);
+      if (cp != null)
+      {
+        return cp.Unit != null && GetOwningPlayer(cp.Unit) == p;
+      }
+
+      var caps = CapitalManager.GetAll();
+      for (var i = 0; i < caps.Count; i++)
+      {
+        var cu = caps[i].Unit;
+        if (caps[i].UnitType == id && cu != null && GetOwningPlayer(cu) == p && GetUnitState(cu, UNIT_STATE_LIFE) > 0.405f)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 }

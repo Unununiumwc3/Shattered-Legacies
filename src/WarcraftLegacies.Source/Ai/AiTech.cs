@@ -188,6 +188,46 @@ namespace WarcraftLegacies.Source.Ai
         SimpleBot.Log("P" + I2S(GetPlayerId(p)) + " " + SimpleBot.FacName(p) + ": quest upgrade " + GetUnitName(building) + " ordered");
       }
     }
+    // 0.36: timed building upgrades (AiUpgrades.TimedUpgrades, e.g. Fel Horde demon gates) -- free, retried every
+    // 60 s per building; the option index rotates per bot so the upgraded buildings are a mix.
+    private static readonly Dictionary<unit, float> _timedTried = new(); // per building (looked up, never iterated)
+    private static readonly Dictionary<int, int> _timedPick = new();     // per pid
+
+    internal static void TryTimedUpgrade(player p, unit building, int typeId)
+    {
+      var list = AiUpgrades.TimedUpgrades;
+      for (var i = 0; i < list.Count; i++)
+      {
+        var tu = list[i];
+        if (tu.From != typeId || SimpleBot._clock < tu.NotBefore)
+        {
+          continue;
+        }
+
+        if (_timedTried.ContainsKey(building) && SimpleBot._clock - _timedTried[building] < 60f)
+        {
+          return;
+        }
+
+        _timedTried[building] = SimpleBot._clock;
+        var pid = GetPlayerId(p);
+        var pick = _timedPick.ContainsKey(pid) ? _timedPick[pid] : 0;
+        for (var k = 0; k < tu.To.Count; k++)
+        {
+          var target = tu.To[(pick + k) % tu.To.Count];
+          if (FreeOrder(p, building, target))
+          {
+            _timedPick[pid] = pick + 1;
+            SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": timed upgrade " + GetUnitName(building)
+                          + " -> " + GetObjectName(target));
+            return;
+          }
+        }
+
+        return;
+      }
+    }
+
     private static unit _lastCapUnit;
     private static player _lastCapOwner;
 

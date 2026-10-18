@@ -17,6 +17,13 @@ public static class AiWorld
   // ever changes it (generic Way Gate 'nwgt' = 1853319028 is the fallback).
   public const int PortalUnitId = 1848652598; // 'n036' Dark Portal Waygate
 
+  // 0.36: n036 carries two Permanent Immolation abilities with a 1000 range -- "Anti Portal Blocking" A01M (units,
+  // 5 dps) and A023 (structures, 75 dps). Owned by Neutral Extra, an AI portal burned every player's units in a wide
+  // circle. Shrunk to this radius on the AI portals only (landing spots are 300+ away, see AiLegion.LandBeside).
+  public const float PortalBurnRadius = 250f;
+  public const int PortalBurnUnitsAbility = 1093677389;      // A01M
+  public const int PortalBurnStructuresAbility = 1093677619; // A023
+
   // Monuments per theatre. Owning all three is an alternative to the %-gate (see WaveActive).
   public static readonly List<int> CombinedMonuments = new()
   {
@@ -66,6 +73,14 @@ public static class AiWorld
   public const float LegionStartX = 18816f;
   public const float LegionStartY = -30784f;
   public const int LegionHeraldId = 1966092356;          // u00D Legion Herald (worker)
+
+  // 0.36: fixed building spots for the bot Legion's Argus start (the ring search found room for only 3 of 8).
+  // Computed offline from mapdata PathingMap.json (tools/ai/map_query.py): each 288x288 footprint fully walkable,
+  // >= 200 from preplaced units, >= 384 apart, nearest first; a flood fill with all 8 placed (plus a one-unit lane
+  // around each) still reaches the Argus portal, Antoran Wastes, Nath'raxas Hold and the east. Order = placement
+  // order (5 barracks, altar, 2 farms). A spot that is not walkable at runtime falls back to the ring search.
+  public static readonly float[] ArgusSpotX = { 19352f, 18840f, 19736f, 19800f, 20568f, 19864f, 19096f, 19480f };
+  public static readonly float[] ArgusSpotY = { -31016f, -30120f, -30184f, -31336f, -30952f, -28712f, -28456f, -28456f };
 
   // v34.1: Kul Tiras' starting quest ("The Admiralty of Kul Tiras") crashes in WL's reward code (a '%' in the
   // City of Admirals text breaks WL's text replacement) BEFORE it hands over the base. The AI repairs that
@@ -205,6 +220,10 @@ public static class AiConfig
   public const int CapitalPalaceId = 1747988528;
   public const int LordaeronCityCpId = 1848652103;
 
+  // 0.36: named graph gates (AiGates.OpenNamedGates)
+  public const int GilneasCityCpId = 1848652854;           // "greymane" opens when a player owns it
+  public const string TombQuestTitle = "Tomb of Sargeras"; // "tomb" opens when this shared quest is complete
+
   // v31: extra share of the flat bot gold subsidy (SimpleBot.BotGoldBonus) per faction, in percent.
   // Scourge/Legion were losing to the Alliance -> +50%. Factions not listed get 100%.
   public static readonly Dictionary<string, int> FactionGoldPct = new()
@@ -231,12 +250,33 @@ public static class AiConfig
 
   // 0.35.2: HERO VISITS -- a bot sends its best hero to a quest location and keeps it there until the quest is
   // complete (the hero leaves the army for that time). Gives up after 8 min and tries again 5 min later.
+  // 0.36: optional fields (object initializer):
+  //   Hero          the visit needs THIS legend (LegendaryHero.Name, any form) instead of the bot's best hero
+  //   LastObjective send only when every other objective of the quest is complete (turn timers, capitals, ...)
+  //   SameLandmass  send only while the hero already stands on the target's landmass (no route across the sea)
+  // Shared quests (Faction "") send one hero at a time, all bots together -- only one can complete them.
+  // Targets: centre of the quest's Regions.X rectangle (src/WarcraftLegacies.Source/Regions.g.cs), moved to the
+  // nearest walkable point where needed (checked with tools/ai/map_query.py).
   public static readonly List<HeroVisit> HeroVisits = new()
   {
     // Yogg-Saron: hero level 14 in the Prison of Yogg-Saron (Regions.YoggSaronPrison) -> Yogg joins the faction
     new HeroVisit("The Beast With a Thousand Maws", "", 14, 0, 4080f, 23408f),
     // Fel Horde "Ash and Smoke": a unit in Shadowmoon Valley (Regions.ShadowmoonBaseUnlock) + Terokkar Forest held
     new HeroVisit("Ash and Smoke", "Fel Horde", 0, 1848652372, 2816f, -30336f),
+    // 0.36: Tomb of Sargeras (shared): turn 15 + any level-10 hero at Regions.Sargeras_Entrance. Opens the Tomb
+    // and the graph gate "tomb". Broken Isles only (reached by the Azsuna ship).
+    new HeroVisit("Tomb of Sargeras", "", 10, 0, -736f, 8336f) { LastObjective = true, SameLandmass = true },
+    // 0.36: Dalaran "The Soul Gem": Jaina at Caer Darrow (Regions.CaerDarrow) while Dalaran controls Caer Darrow.
+    new HeroVisit("The Soul Gem", "Dalaran", 0, 0, 14832f, 6896f) { Hero = "Jaina Proudmoore", LastObjective = true },
+    // 0.36: Kul Tiras "Old Hatreds": Daelin Proudmoore in Hellfire (Regions.HellfireUnlock). Kul Tiras -> ship ->
+    // Stormwind -> Dark Portal; WC3's pathing uses the waygates. Gives up after 8 min if he can't get there.
+    new HeroVisit("Old Hatreds", "Kul'tiras", 0, 0, 1120f, -26112f) { Hero = "Daelin Proudmoore" },
+    // 0.36: Frostwolf "Lone Wanderer" (Rexxar in Borean Tundra) and "Jailor of the Damned" (Thrall in Icecrown
+    // once the Frozen Throne is dead/ruptured). Frostwolf starts on Kalimdor and bots have no route to Northrend,
+    // so these only fire while the hero is already there (e.g. after an invasion wave).
+    new HeroVisit("Lone Wanderer", "Frostwolf", 0, 0, -6832f, 16368f) { Hero = "Rexxar", SameLandmass = true },
+    new HeroVisit("Jailor of the Damned", "Frostwolf", 0, 0, -3388f, 22068f)
+      { Hero = "Thrall", LastObjective = true, SameLandmass = true },
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -401,9 +441,12 @@ public sealed class HeroVisit
   public readonly string Quest;      // WL quest title; the visit runs while the bot's faction has it incomplete
   public readonly string Faction;    // "" = any bot that has the quest
   public readonly int MinLevel;      // hero level needed (the bot WAITS for it -- no level raising)
-  public readonly int RequireCpId;   // 0 = none; else the bot must own this CP first (the quest's other objective)
+  public readonly int RequireCpId;   // 0 = none; else the bot must own this CP (or capital, 0.36) first
   public readonly float X;
   public readonly float Y;
+  public string Hero = "";          // 0.36: LegendaryHero.Name the visit needs ("" = the bot's best hero)
+  public bool LastObjective;        // 0.36: wait until every other objective of the quest is complete
+  public bool SameLandmass;         // 0.36: only while the hero is on the target's landmass
 
   public HeroVisit(string quest, string faction, int minLevel, int requireCpId, float x, float y)
   {
@@ -688,6 +731,8 @@ public static class AiGraph
     // ---- v34: Kalimdor islands (ship portals in AiGraph.Portals) ----
     new Edge(1848653107, 1848653145), // Val'sharah <-> Azsuna
     new Edge(1848653107, 1848652594), // Val'sharah <-> Suramar
+    // 0.36: Tomb of Sargeras (n00J), same island as Val'sharah; open once WL's shared quest opened the Tomb
+    new Edge(1848653107, 1848651850, 0f, "tomb"), // Val'sharah <-> Tomb of Sargeras
     new Edge(1848652594, 1848653146), // Suramar <-> Stormheim
     new Edge(1848653145, 1848652115), // Azsuna <-> Azshara Coast (ship)
     new Edge(1848651856, 1848652344), // The Abyss <-> Maelstrom
@@ -733,7 +778,7 @@ public static class AiGraph
   };
 
   // v34: Kul Tiras (Combined), Broken Isles, Zandalar, Nazjatar, The Abyss, Maelstrom (Kalimdor) are wired via
-  // ship portals now (Kezan 0.34.2, Tol Barad 0.35.3). Still NOT wired: Tomb of Sargeras 1848651850
+  // ship portals now (Kezan 0.34.2, Tol Barad 0.35.3). Tomb of Sargeras 1848651850: gated edge since 0.36.
   //   Unresolved       : Highbank 1848651853 (island), Balor 1848653644, Whipping Wind 1848653914
 
   public static readonly List<Edge> Outland = new();
