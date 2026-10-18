@@ -3,6 +3,51 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.36.0
+Gameplay
+- **Army anchor = biggest group on real ground.** The target anchor was the centroid of the whole army; a winner split
+  over two continents (85-min test: Sentinels 98 on an island + 84 on the mainland) had it in the sea and changed
+  targets every few seconds. Now the biggest same-landmass group decides (dump: `anchor=army@x,y(Nu)`).
+- **Target stickiness:** a bot keeps the frontier it is marching on unless another one is in a better class
+  (home graph / goal route) or clearly closer (< 0.5x the squared score, about 30 % closer). Dump: `kept=1`.
+- **Food floor 100** for bots (perks): food cap and ceiling are raised to 100 every production turn, never lowered.
+  Humans killing a bot's farms no longer stops its production for good.
+- **Stranded heroes** (new `AiHeroCare.cs`): a bot hero > 4000 from its army that hasn't moved for 2 min gets a move
+  order back; still stuck 2 min later -> put beside its nearest living altar (perks only). Mission heroes and heroes
+  that can't walk are left alone.
+- **Fel Horde demon gates:** Unfocused Demon Gates (n081) are upgraded for free to Fel Hound / Voidwalker gates from
+  15:00, their second tier from 20:00 (WC3 still enforces the hall tiers). `AiUpgrades.TimedUpgrades`.
+- **Argus start:** the bot Legion's 8 buildings go to fixed spots computed from the map's pathing data (a flood fill
+  confirmed the portal and both Argus CPs stay reachable). The ring search's +-220 footprint test rejected 7 of these 8
+  spots -- the reason only 3 buildings appeared. Ring search kept as fallback; the pin says how many used fixed spots.
+- **AI portals burn less:** n036's two "Anti Portal Blocking" immolations (A01M units, A023 structures) have a 1000
+  range; on AI portals they are set to 250 (landing spots are 300+ away).
+- **Hero visits** (`AiConfig.HeroVisits`) can name a legend (`Hero`), wait for the quest's other objectives
+  (`LastObjective`) and require the hero to be on the target's landmass already (`SameLandmass`). New visits:
+  Tomb of Sargeras (any level-10 hero, turn 15), The Soul Gem (Jaina, Caer Darrow held), Old Hatreds (Daelin to
+  Hellfire), Lone Wanderer (Rexxar) and Jailor of the Damned (Thrall) -- the last two only once the hero is in
+  Northrend. Shared quests send one hero at a time; a hero on one mission is never picked for another (visits and
+  Ragnaros could both take the same hero before).
+- **Tomb of Sargeras on the graph:** edge Val'sharah <-> Tomb (n00J) behind the new gate "tomb", opened when WL's
+  shared quest has opened the Tomb.
+
+Fixes
+- **Gate "greymane" was never opened** (since v25): no bot could attack Gilneas City from Silverpine. It opens now
+  once a real player owns Gilneas City (pinned).
+- Removed dead code: `SimpleBot.PlaceFirstOf`, `LastAttack`, three unused constants, `AiLegion.SpawnPortalPair`.
+  `AiGates.OpenThandolIfDue` is also never called -- left in place and marked (open question, TODO.md).
+
+Debug / tools
+- `-heroes` (read): label + ping every living bot hero for 30 s (level, owner, `mission` / `still Ns` /
+  `walking back`) and list them in chat.
+- `-tp x y` (heavy = single-human games only): move your selected units there.
+- Dump: new TEAMS section (CPs per team and member); pins when a team first reaches 80 and 90 CPs; bot lines show the
+  anchor group size and `kept=`; hero list shows `mission` and the stranded state.
+- New `tools/ai/map_query.py`: walkability, nearest walkable point, preplaced units, `Regions.X` rectangles -- straight
+  from the map's source files.
+- `tools/ai/check_refs.py`: nested enums are members (the unchanged 0.35.4 tree reported 2x `MISSING
+  AiDebug.CommandAccess`).
+
 ## 0.35.4 (docs only -- the in-game banner stays 0.35.3)
 - `AI_AGENTS_CONTEXT.md`: new hard-won facts (waygate landing spots, immobile heroes, hero-visit quest data, map
   name/version location, the 24p map is an old unsupported layout, economy depends on bonus gold), session workflow
