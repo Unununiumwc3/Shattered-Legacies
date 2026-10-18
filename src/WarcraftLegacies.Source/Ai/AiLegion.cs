@@ -96,11 +96,19 @@ namespace WarcraftLegacies.Source.Ai
       AddFirstOf(fac, UnitCategory.Farm, types);
       AddFirstOf(fac, UnitCategory.Farm, types);
       var placed = 0;
+      var fixedUsed = 0;
       var usedX = new List<float>();
       var usedY = new List<float>();
       for (var i = 0; i < types.Count; i++)
       {
-        if (!FindBuildSpot(AiWorld.LegionStartX, AiWorld.LegionStartY, usedX, usedY))
+        // 0.36: fixed, offline-checked spots first (AiWorld.ArgusSpotX/Y); the ring search only as a fallback
+        if (i < AiWorld.ArgusSpotX.Length && FootprintWalkable(AiWorld.ArgusSpotX[i], AiWorld.ArgusSpotY[i], 144f))
+        {
+          SimpleBot._spotX = AiWorld.ArgusSpotX[i];
+          SimpleBot._spotY = AiWorld.ArgusSpotY[i];
+          fixedUsed++;
+        }
+        else if (!FindBuildSpot(AiWorld.LegionStartX, AiWorld.LegionStartY, usedX, usedY))
         {
           continue;
         }
@@ -111,7 +119,8 @@ namespace WarcraftLegacies.Source.Ai
         placed++;
       }
 
-      SimpleBot.LogPin("Legion: Argus start -- " + I2S(removed) + " workers replaced by " + I2S(placed) + " buildings");
+      SimpleBot.LogPin("Legion: Argus start -- " + I2S(removed) + " workers replaced by " + I2S(placed) + " of "
+                       + I2S(types.Count) + " buildings (" + I2S(fixedUsed) + " on fixed spots)");
     }
 
     // open ground for a ~512-wide building: rings 500..2000 out, 16 directions; centre and 4 corners walkable and
@@ -125,11 +134,7 @@ namespace WarcraftLegacies.Source.Ai
           var a = i * 0.392699f;
           var x = cx + r * Cos(a);
           var y = cy + r * Sin(a);
-          if (IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x + 220f, y + 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x - 220f, y + 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x + 220f, y - 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x - 220f, y - 220f, PATHING_TYPE_WALKABILITY))
+          if (!FootprintWalkable(x, y, 220f))
           {
             continue;
           }
@@ -152,6 +157,17 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       return false;
+    }
+
+    // centre and 4 corners (+-h) walkable (IsTerrainPathable is TRUE when NOT walkable). The ring search uses 220
+    // (a ~512-wide area); the fixed Argus spots were checked offline cell by cell over +-144 and use that.
+    private static bool FootprintWalkable(float x, float y, float h)
+    {
+      return !IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY)
+             && !IsTerrainPathable(x + h, y + h, PATHING_TYPE_WALKABILITY)
+             && !IsTerrainPathable(x - h, y + h, PATHING_TYPE_WALKABILITY)
+             && !IsTerrainPathable(x + h, y - h, PATHING_TYPE_WALKABILITY)
+             && !IsTerrainPathable(x - h, y - h, PATHING_TYPE_WALKABILITY);
     }
 
     private static void AddFirstOf(Faction fac, UnitCategory cat, List<int> into)
@@ -598,7 +614,24 @@ namespace WarcraftLegacies.Source.Ai
 
       BlzSetUnitName(u, name);
       SetUnitInvulnerable(u, true);
+      ShrinkBurn(u, AiWorld.PortalBurnUnitsAbility);      // 0.36: n036's 1000-range immolation -> 250
+      ShrinkBurn(u, AiWorld.PortalBurnStructuresAbility);
       return u;
+    }
+
+    // 0.36: per-unit area of the portal's "Anti Portal Blocking" immolation. The disable/enable pair makes WC3
+    // re-apply the passive with the new area (an aura keeps its old area until it is refreshed).
+    private static void ShrinkBurn(unit u, int abilityId)
+    {
+      var ab = BlzGetUnitAbility(u, abilityId);
+      if (ab == null)
+      {
+        return;
+      }
+
+      BlzSetAbilityRealLevelField(ab, ABILITY_RLF_AREA_OF_EFFECT, 0, AiWorld.PortalBurnRadius);
+      BlzUnitDisableAbility(u, abilityId, true, false);
+      BlzUnitDisableAbility(u, abilityId, false, false);
     }
 
     // open, walkable point ~300 from a portal (falls back to the portal itself) -> _spotX/_spotY
@@ -643,23 +676,6 @@ namespace WarcraftLegacies.Source.Ai
 
       DestroyGroup(g);
       return found;
-    }
-
-    // A linked, active waygate pair. Units that walk onto either end are teleported to the other; a portal
-    // edge in the node graph routes bots to one end so they cross. Uses one confirmed-present portal effect.
-    private static void SpawnPortalPair(float ax, float ay, float bx, float by)
-    {
-      var pa = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), AiWorld.PortalUnitId, ax, ay, 0f);
-      var pb = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), AiWorld.PortalUnitId, bx, by, 0f);
-      WaygateSetDestination(pa, bx, by);
-      WaygateSetDestination(pb, ax, ay);
-      WaygateActivate(pa, true);
-      WaygateActivate(pb, true);
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, ax, ay));
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, bx, by));
-      // Distinct label: this waygate uses the same model as the map's Dark Portals, so name it to tell it apart.
-      SimpleBot.FloatLabel("Legion Portal", ax, ay);
-      SimpleBot.FloatLabel("Legion Portal", bx, by);
     }
   }
 }

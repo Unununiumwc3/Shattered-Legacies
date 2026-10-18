@@ -377,10 +377,11 @@ namespace WarcraftLegacies.Source.Ai
     private const float HeartbeatEvery = 20.0f;    // v12: re-issue attack-move at most this often per bot
     private const float ObjectiveRadius = 1500f;   // v14: scripted-doctrine step clear/capture radius
     private const int QueuePerBuilding = 2;
-    private const float ScanRadius = 10000f;
-    private const float AttackEvery = 6.0f;       // (unused in v8; stagger sets the cadence)
     private const float CommitTimeout = 30.0f;
-    private const int MinArmy = 20;          // v13: mass this many before attacking (was 5)
+    private const int LmSlots = 27;                // 0.36: landmass ids -1..25 -> array slots 0..26
+    private const float StickySwitch = 0.5f;       // 0.36: leave the current frontier only for one with < 0.5x its
+                                                   // (squared) score, i.e. about 30 % closer
+    private const int FoodFloor = 100;             // 0.36: bots' food cap never below this (humans kill farms)
     public static int BotGoldBonus = 25;     // v13/v21/v24: flat gold per bot per production service; set live with -gold*
     private const float ReviveEvery = 180.0f; // v13: free hero revival for bots every 3 min
     private const float DiagEvery = 3.0f;
@@ -396,7 +397,6 @@ namespace WarcraftLegacies.Source.Ai
     public static bool AtkOn = true;              // -atk      : attack/gather orders on/off
 
     internal static List<player> Bots = new();
-    private static readonly Dictionary<int, float> LastAttack = new();
     public static Dictionary<int, unit> Committed = new();
     private static readonly Dictionary<int, float> CommitTime = new();
     public static Dictionary<int, int> Cand = new();
@@ -594,7 +594,6 @@ namespace WarcraftLegacies.Source.Ai
         if (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING && GetPlayerController(p) == MAP_CONTROL_COMPUTER)
         {
           Bots.Add(p);
-          LastAttack[i] = -999f;
           Committed[i] = null;
           CommitTime[i] = 0f;
           Cand[i] = 0;
@@ -622,16 +621,6 @@ namespace WarcraftLegacies.Source.Ai
       TimerStart(legionBase, 3.0f, false, AiLegion.SpawnLegionBase);
       var portals = CreateTimer();
       TimerStart(portals, 2.0f, false, AiLegion.SetupPortals);
-    }
-
-    private static void PlaceFirstOf(player p, Faction fac, UnitCategory cat, float x, float y)
-    {
-      var ids = new List<int>();
-      AddCategory(fac, cat, ids);
-      if (ids.Count > 0)
-      {
-        CreateUnit(p, ids[0], x, y, 270f);
-      }
     }
 
     internal static void OnBotBreak()
@@ -740,7 +729,7 @@ namespace WarcraftLegacies.Source.Ai
     // v13: bring back bots' dead (non-perma) heroes for free every few minutes, at their start location.
     // Bots are too gold-starved to pay altar revive costs, so heroes were staying dead.
     // 0.35.3: the bot's living altar nearest to (x, y), or null
-    private static unit FindAltar(player p, float x, float y)
+    internal static unit FindAltar(player p, float x, float y)
     {
       var fac = p.GetPlayerData().Faction;
       if (fac == null)
@@ -924,6 +913,19 @@ namespace WarcraftLegacies.Source.Ai
           {
             SetPlayerTechResearched(p, AiConfig.CombatUpgrades[ui], techLvl);
           }
+
+          // 0.36: food floor. Humans kill a bot's farms and its production stops for good (bots never build).
+          // WC3 recomputes the cap whenever a food building is made or lost, so this is re-applied every turn.
+          // Only ever raises: a bot with more farms keeps its higher cap.
+          if (GetPlayerState(p, PLAYER_STATE_FOOD_CAP_CEILING) < FoodFloor)
+          {
+            SetPlayerState(p, PLAYER_STATE_FOOD_CAP_CEILING, FoodFloor);
+          }
+
+          if (GetPlayerState(p, PLAYER_STATE_RESOURCE_FOOD_CAP) < FoodFloor)
+          {
+            SetPlayerState(p, PLAYER_STATE_RESOURCE_FOOD_CAP, FoodFloor);
+          }
         }
 
         var faction = p.GetPlayerData().Faction;
@@ -996,6 +998,7 @@ namespace WarcraftLegacies.Source.Ai
           {
             AiTech.TryEventResearch(p, u, tid); // v32: event researches first, while the building's queue is free
             AiTech.TryQuestUpgrade(p, u, tid);  // v34: quest building upgrades (Stormwind's Construction Sites)
+            AiTech.TryTimedUpgrade(p, u, tid);  // 0.36: timed building upgrades (Fel Horde demon gates)
           }
           if (bCredits > 0 && AiUpgrades.BuildingUpgrades.ContainsKey(tid) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
           {
@@ -1099,6 +1102,12 @@ namespace WarcraftLegacies.Source.Ai
       var haveBase = false;
       float sumX = 0f, sumY = 0f;
       var army = 0;
+      // 0.36: army per landmass (index = landmass + 1; 0 = sea / uncovered cells). The target anchor is the biggest
+      // group on real ground, not the centroid of everything -- an army split over two continents had its centroid
+      // in the sea and switched targets every few seconds (85-min test: Sentinels 98 on an island + 84 mainland).
+      var lmCount = new int[LmSlots];
+      var lmX = new float[LmSlots];
+      var lmY = new float[LmSlots];
 
       var g = CreateGroup();
       GroupEnumUnitsOfPlayer(g, p, null);
@@ -1119,8 +1128,19 @@ namespace WarcraftLegacies.Source.Ai
         else if (!IsUnitType(u, UNIT_TYPE_PEON))
         {
           army++;
-          sumX += GetUnitX(u);
-          sumY += GetUnitY(u);
+          var ux = GetUnitX(u);
+          var uy = GetUnitY(u);
+          sumX += ux;
+          sumY += uy;
+          var slot = Geography.Landmass(ux, uy) + 1;
+          if (slot < 0 || slot >= LmSlots)
+          {
+            slot = 0;
+          }
+
+          lmCount[slot]++;
+          lmX[slot] += ux;
+          lmY[slot] += uy;
           if (IsUnitType(u, UNIT_TYPE_HERO))
           {
             HeroGrabItems(u); // v24: only heroes, only on this bot's turn -> effectively free
@@ -1155,17 +1175,30 @@ namespace WarcraftLegacies.Source.Ai
       // frontier to the base" sent armies that had marched far away back across the map (e.g. Scourge army in
       // Lordaeron re-targeting Borean Tundra in Northrend). Nearest-to-army is also naturally sticky: an army
       // walking toward X keeps X as its nearest frontier. ax/ay (base) is still used for landmass + holding.
+      // 0.36: ...of the biggest group on real ground (see lmCount above); sea-only armies fall back to the centroid.
       float tx = ax, ty = ay;
+      var anchorUnits = 0;
       if (army > 0)
       {
-        tx = sumX / army;
-        ty = sumY / army;
+        var bestSlot = 0;
+        for (var k = 1; k < LmSlots; k++)
+        {
+          if (lmCount[k] > lmCount[bestSlot] || (bestSlot == 0 && lmCount[k] > 0))
+          {
+            bestSlot = k;
+          }
+        }
+
+        anchorUnits = lmCount[bestSlot];
+        tx = lmX[bestSlot] / anchorUnits;
+        ty = lmY[bestSlot] / anchorUnits;
       }
 
       var diag = GetDiag(pid);
       diag.AnchorX = tx;
       diag.AnchorY = ty;
       diag.AnchorIsBase = army == 0;
+      diag.AnchorUnits = anchorUnits;
 
       var lm = Geography.Landmass(ax, ay);
       var state = "off";
@@ -1578,6 +1611,7 @@ namespace WarcraftLegacies.Source.Ai
       d.NoCp = 0;
       d.Skipped = 0;
       d.Stuck = 0;
+      d.Sticky = 0;
       var setName = _factionEdgeSet.ContainsKey(fac.Name)
         ? _factionEdgeSet[fac.Name]
         : ResolveEdgeSet(fac, p);
@@ -1606,6 +1640,12 @@ namespace WarcraftLegacies.Source.Ai
       var bestForeign = 0;
       var bestHops = 0;
       var bestScore = 0f;
+      // 0.36: stickiness -- the frontier we are already marching on (if it is still a valid candidate)
+      var current = Committed.ContainsKey(pid) ? Committed[pid] : null;
+      var curFound = false;
+      var curForeign = 0;
+      var curHops = 0;
+      var curScore = 0f;
       for (var i = 0; i < edges.Count; i++)
       {
         var a = edges[i].A;
@@ -1704,6 +1744,14 @@ namespace WarcraftLegacies.Source.Ai
 
         // home-first (after the merge); a goal route (Legion -> Nordrassil) overrides it
         var foreign = home != null && goalHops == null && !home.Contains(fid) ? 1 : 0;
+        if (frontier == current && !curFound)
+        {
+          curFound = true;
+          curForeign = foreign;
+          curHops = hops;
+          curScore = score;
+        }
+
         if (best == null || foreign < bestForeign
             || (foreign == bestForeign && (hops < bestHops || (hops == bestHops && score < bestScore))))
         {
@@ -1712,6 +1760,15 @@ namespace WarcraftLegacies.Source.Ai
           bestHops = hops;
           bestScore = score;
         }
+      }
+
+      // 0.36: keep the current target unless the new best is in a better class (home/goal hops) or clearly closer.
+      // Without this, a moving army flipped between two similar frontiers every service (85-min test).
+      if (curFound && best != current && curForeign == bestForeign && curHops == bestHops
+          && bestScore >= curScore * StickySwitch)
+      {
+        d.Sticky++;
+        return current;
       }
 
       return best;
@@ -2044,12 +2101,15 @@ namespace WarcraftLegacies.Source.Ai
       Safe("destructible gates", AiGates.SweepDestructibleGates); // v27.1: destructible gates ONCE (not bridges/walls)
       Safe("gate sweep", AiGates.SweepBotGates);                  // v26: gate units, at start then every ~5 min
       Safe("tempest reach", AiGates.WireTempestReach);            // v25
+      Safe("named gates", AiGates.OpenNamedGates);                // 0.36: "greymane" (never opened before), "tomb"
       Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
       Safe("starter kit", AiMissions.RunStarterKit);                 // v32: barracks + altar (0:20 and 3:00)
       Safe("ragnaros", AiMissions.RunRagnarosMission);
-      Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon
+      Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon; 0.36: more
+      Safe("hero care", AiHeroCare.Run);                  // 0.36: stranded heroes walk back / go home
+      Safe("standings", AiStandings.Check);               // 0.36: team CP counts, 80/90 pins
       Safe("palace handover", AiMissions.LegionPalaceHandover);      // v32
       Safe("banned forms", AiMissions.ScanBannedForms);              // v32: Cenarius stays dead for bots
       Safe("demon portal", () => AiLegion.FixDemonPortal());       // v31: WL's caster-less portal off (0,0)
@@ -2259,7 +2319,6 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       Bots.Add(p);
-      LastAttack[i] = -999f;
       Committed[i] = null;
       CommitTime[i] = 0f;
       Cand[i] = 0;
@@ -2404,6 +2463,8 @@ namespace WarcraftLegacies.Source.Ai
     public int Skipped;      // frontiers that are SkipNodes
     public int NoCp;         // edges with an id that isn't a registered control point
     public int Stuck;        // v31: frontiers skipped because this bot gave up on them (stuck blacklist)
+    public int Sticky;       // 0.36: 1 = the current target was kept although another frontier scored better
+    public int AnchorUnits;  // 0.36: units in the group the target anchor is taken from (biggest landmass group)
     public unit Target;      // current objective unit (null = point/none)
     public string Reason = "-";
     public float TargetSince;
@@ -2465,7 +2526,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.35.3";
+    public const string Build = "0.36.0";
 
     public static void Setup()
     {

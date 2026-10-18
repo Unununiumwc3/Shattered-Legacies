@@ -137,8 +137,57 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.36: named graph gates (Edge.Gate). "legion"/"prelegion" are set by AiLegion; these two are opened here.
+    //  * "greymane" (Silverpine <-> Gilneas City): was NEVER opened since v25, so no bot could attack Gilneas City
+    //    from Silverpine. The gate unit itself is removed by the sweep and a quest-locked (Neutral-Passive) Gilneas
+    //    City is skipped by IsUncapturable anyway -> open the edge once a real player owns Gilneas City.
+    //  * "tomb" (Val'sharah <-> Tomb of Sargeras): WL keeps everyone out of the Tomb until its shared quest
+    //    "Tomb of Sargeras" (turn 15 + a level-10 hero at the entrance; AiConfig.HeroVisits sends one) is complete.
+    private static bool _greymaneOpen;
+    private static QuestData _tombQuest;
+
+    internal static void OpenNamedGates()
+    {
+      if (!_greymaneOpen)
+      {
+        var cp = SimpleBot.SafeCp(AiConfig.GilneasCityCpId);
+        if (cp != null && cp.Unit != null && GetPlayerId(GetOwningPlayer(cp.Unit)) < 24)
+        {
+          _greymaneOpen = true;
+          SimpleBot._gateOpen["greymane"] = true;
+          SimpleBot.LogPin("gate 'greymane' open: Gilneas City held by " + SimpleBot.FacName(GetOwningPlayer(cp.Unit)));
+        }
+      }
+
+      if (SimpleBot.GateOpen("tomb"))
+      {
+        return;
+      }
+
+      if (_tombQuest == null)
+      {
+        var all = FactionManager.GetAllFactions();
+        for (var i = 0; i < all.Count && _tombQuest == null; i++)
+        {
+          _tombQuest = QuestAutoComplete.FindQuest(all[i], AiConfig.TombQuestTitle); // shared: one instance
+        }
+
+        if (_tombQuest == null)
+        {
+          return;
+        }
+      }
+
+      if (_tombQuest.Progress == QuestProgress.Complete)
+      {
+        SimpleBot._gateOpen["tomb"] = true;
+        SimpleBot.LogPin("gate 'tomb' open: the Tomb of Sargeras was opened");
+      }
+    }
+
     // WL sets Thandol Span (destructible LT08 ~15695,457) invulnerable and never opens it, so bots can never
     // cross Arathi <-> Dun Modr. Force it open at 20 min, matching that edge's OpenTime.
+    // 0.36 note: NOT called anywhere (since 0.35 at least) -- WL's own timing applies. See TODO open questions.
     private static void OpenThandolIfDue()
     {
       if (_thandolOpened || SimpleBot._clock < 1200f)

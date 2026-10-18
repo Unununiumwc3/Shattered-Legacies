@@ -82,6 +82,8 @@ public static class AiDebug
     Register("-ids", OnIds, Level.Heavy);
     Register("-id", OnId, Level.Read);
     Register("-portals", OnPortals, Level.Read);
+    Register("-heroes", OnHeroes, Level.Read);    // 0.36
+    RegisterLoose("-tp", OnTp, Level.Heavy);      // 0.36: single-human games only (selection is not synced)
     Register("-ogwave", OnOgWave, Level.Control);
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -334,6 +336,77 @@ public static class AiDebug
       + B(SimpleBot.GraphMerged) + ")");
   }
 
+  // 0.36: every bot hero -- label (name, level, owner, mission / stuck state) + ping for 30 s, and a chat list.
+  private static void OnHeroes()
+  {
+    var p = GetTriggerPlayer();
+    var all = LegendaryHeroManager.GetAll();
+    var n = 0;
+    for (var i = 0; i < all.Count; i++)
+    {
+      var hu = all[i].Unit;
+      if (hu == null || GetUnitTypeId(hu) == 0 || GetUnitState(hu, UNIT_STATE_LIFE) <= 0.405f
+          || !SimpleBot.IsBot(GetOwningPlayer(hu)))
+      {
+        continue;
+      }
+
+      var pid = GetPlayerId(GetOwningPlayer(hu));
+      var st = AiState.MissionUnits.Contains(hu) ? "mission" : AiHeroCare.Status(hu);
+      var x = GetUnitX(hu);
+      var y = GetUnitY(hu);
+      Mark(GetUnitName(hu) + " L" + I2S(GetHeroLevel(hu)) + " P" + I2S(pid) + (st != "" ? " [" + st + "]" : ""), x, y);
+      DisplayTimedTextToPlayer(p, 0, 0, 30, "P" + I2S(pid) + " " + FacOf(GetOwningPlayer(hu)) + ": " + GetUnitName(hu)
+        + " L" + I2S(GetHeroLevel(hu)) + " @" + I2S(R2I(x)) + "," + I2S(R2I(y)) + " lm" + I2S(Geography.Landmass(x, y))
+        + (st != "" ? " |cffffcc00" + st + "|r" : ""));
+      n++;
+    }
+
+    DisplayTimedTextToPlayer(p, 0, 0, 10, "|cffffcc00-heroes|r: " + I2S(n) + " living bot heroes marked for 30 s");
+  }
+
+  // 0.36: "-tp x y" -- move your selected units there (testing; Heavy = single-human games, selection isn't synced)
+  private static void OnTp()
+  {
+    var p = GetTriggerPlayer();
+    var msg = GetEventPlayerChatString();
+    var rest = msg.Length > 4 && msg.Substring(0, 4) == "-tp " ? msg.Substring(4) : "";
+    var sp = -1;
+    for (var i = 1; i < rest.Length && sp < 0; i++) // only Substring/Length -- safest in CSharp.lua
+    {
+      if (rest.Substring(i, 1) == " ")
+      {
+        sp = i;
+      }
+    }
+
+    if (sp <= 0)
+    {
+      DisplayTimedTextToPlayer(p, 0, 0, 8, "|cffffcc00-tp|r: usage -tp <x> <y>, e.g. -tp -13580 8448");
+      return;
+    }
+
+    var x = S2R(rest.Substring(0, sp));
+    var y = S2R(rest.Substring(sp + 1));
+    var g = CreateGroup();
+    GroupEnumUnitsSelected(g, p, null);
+    var n = 0;
+    unit u;
+    while ((u = FirstOfGroup(g)) != null)
+    {
+      GroupRemoveUnit(g, u);
+      if (!IsUnitType(u, UNIT_TYPE_STRUCTURE))
+      {
+        SetUnitPosition(u, x, y);
+        n++;
+      }
+    }
+
+    DestroyGroup(g);
+    DisplayTimedTextToPlayer(p, 0, 0, 8, "|cffffcc00-tp|r: " + I2S(n) + " unit(s) -> " + I2S(R2I(x)) + "," + I2S(R2I(y))
+      + " landmass " + I2S(Geography.Landmass(x, y)) + (IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY) ? " (NOT walkable)" : ""));
+  }
+
   private static int MarkUnit(unit u)
   {
     if (u == null || GetUnitTypeId(u) == 0)
@@ -505,7 +578,7 @@ public static class AiDebug
     var p = GetTriggerPlayer();
     DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00WL AI|r " + AiSetup.Build + " (commands: " + (Access == CommandAccess.HostOnly ? "host only" : "everyone")
       + ") -- full list: README.md."
-      + " Most used: -dump  -autodump  -why  -portals  -edges  -xy  -id  -autopilot");
+      + " Most used: -dump  -autodump  -why  -portals  -heroes  -edges  -xy  -id  -autopilot");
   }
 
 
@@ -634,6 +707,8 @@ public static class AiDebug
       }
     });
 
+    Section(o, "teams", () => AiStandings.Lines(o)); // 0.36
+
     Section(o, "load", () =>
     {
       o.Add("## LOAD  (units touched; last/max. combat = one bot's service; def is part of combat)");
@@ -732,6 +807,7 @@ public static class AiDebug
           + " food=" + I2S(GetPlayerState(pl, PLAYER_STATE_RESOURCE_FOOD_USED))
           + "/" + I2S(GetPlayerState(pl, PLAYER_STATE_RESOURCE_FOOD_CAP))
           + " anchor=" + (d.AnchorIsBase ? "base" : "army") + "@" + I2S(R2I(d.AnchorX)) + "," + I2S(R2I(d.AnchorY))
+          + "(" + I2S(d.AnchorUnits) + "u)"
           + " lm=" + I2S(GetI(SimpleBot.BotLm, pid)) + " homeLm=" + I2S(d.HomeLm));
 
     // army by landmass (non-structure, non-worker, alive) -> exposes units stranded on another continent
@@ -800,6 +876,7 @@ public static class AiDebug
     o.Add("  frontiers: neutral=" + I2S(d.Neutral) + " enemy=" + I2S(d.Enemy) + " locked<10m=" + I2S(d.Locked)
           + " uncapturable=" + I2S(d.Invuln) + " closed=" + I2S(d.Closed) + " skipnode=" + I2S(d.Skipped)
           + " stuck-skip=" + I2S(d.Stuck)
+          + " kept=" + I2S(d.Sticky)
           + " non-cp-edges=" + I2S(d.NoCp));
 
     var ul = "  army by landmass:";
@@ -830,7 +907,9 @@ public static class AiDebug
       any = true;
       hl = hl + " " + GetUnitName(hu) + "(" + RawCode(GetUnitTypeId(hu)) + ","
            + (GetUnitState(hu, UNIT_STATE_LIFE) > 0.405f ? "alive" : "DEAD")
-           + (GetUnitAbilityLevel(hu, FourCC("LEgo")) > 0 ? ",perma" : "") + ")";
+           + (GetUnitAbilityLevel(hu, FourCC("LEgo")) > 0 ? ",perma" : "")
+           + (AiState.MissionUnits.Contains(hu) ? ",mission" : "")
+           + (AiHeroCare.Status(hu) != "" ? "," + AiHeroCare.Status(hu) : "") + ")";
     }
 
     o.Add(any ? hl : "  heroes: (none)");

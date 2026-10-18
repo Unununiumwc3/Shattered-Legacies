@@ -22,6 +22,10 @@ def collect(n, src, cls=None):
             members[cls][name] = bool(mods(n, src) & {"public", "internal"})
         for c in n.children: collect(c, src, name)
         return
+    # 0.36: nested enums / structs / interfaces are members of the enclosing class too (AiDebug.CommandAccess)
+    if cls and n.type in ("enum_declaration", "struct_declaration", "interface_declaration"):
+        members[cls][txt(n.child_by_field_name("name"), src)] = bool(mods(n, src) & {"public", "internal"})
+        return
     if cls and n.type in ("field_declaration", "property_declaration", "method_declaration", "event_field_declaration"):
         pub = bool(mods(n, src) & {"public", "internal"})
         if n.type == "field_declaration" or n.type == "event_field_declaration":

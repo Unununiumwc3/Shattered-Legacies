@@ -544,6 +544,18 @@ public static class AiUpgrades
     { 1747989813, 1747989834 }, // h055 Construction Site -> h05J
   };
 
+  // 0.36: TIMED building upgrades -- free (like QuestUpgrades), from NotBefore on, as soon as WC3 accepts the order
+  // (the target's own requirements, e.g. the Fel Horde hall tiers o02Z / o030, still apply). Options alternate per
+  // bot so the gates don't all become the same type. Ids from mapdata UnitData ("uupt" upgrades-to field).
+  // Fel Horde demon gates: Unfocused (n081) -> Fel Hound (n000) / Voidwalker (n05F) at 15:00, their second tier
+  // from 20:00. Not in BuildingUpgrades (the generator excluded "gate" types), so credits never touched them.
+  public static readonly List<TimedUpgrade> TimedUpgrades = new()
+  {
+    new TimedUpgrade(1848653873, new List<int> { 1848651824, 1848653126 }, 900f),             // n081 -> n000,n05F
+    new TimedUpgrade(1848651824, new List<int> { 1848653129, 1848653384, 1848653138 }, 1200f), // n000 -> n05I,n06H,n05R
+    new TimedUpgrade(1848653126, new List<int> { 1848653383, 1848653645, 1848653647 }, 1200f), // n05F -> n06G,n07M,n07O
+  };
+
   // v32: EVENT researches -- they trigger quests/events, not combat stats. Never on a timer. A bot orders them at
   // the building that researches them as soon as WC3 allows it (requirements met), for free, but not before
   // NotBefore. (Building ids read from the map: which unit type lists the research.)
@@ -581,6 +593,21 @@ public sealed class EventResearch
   {
     ResearchId = researchId;
     BuildingId = buildingId;
+    NotBefore = notBefore;
+  }
+}
+
+// 0.36: a building that is upgraded for free to one of To (alternating) from NotBefore on (AiUpgrades.TimedUpgrades)
+public sealed class TimedUpgrade
+{
+  public readonly int From;
+  public readonly List<int> To;
+  public readonly float NotBefore;
+
+  public TimedUpgrade(int from, List<int> to, float notBefore)
+  {
+    From = from;
+    To = to;
     NotBefore = notBefore;
   }
 }

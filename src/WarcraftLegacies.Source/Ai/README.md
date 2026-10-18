@@ -2,7 +2,7 @@
 
 Computer-player bots for **Warcraft Legacies 4.8.2** (the version that still has the Old Gods). The bots capture
 control points, fight, produce, research, follow faction quests and lore events (Legion summon, Ragnaros, ...).
-Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.35.3") and `CHANGELOG.md`.
+Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.36.0") and `CHANGELOG.md`.
 
 ## Installing into a WL fork
 
@@ -28,7 +28,7 @@ public const CommandAccess Access = CommandAccess.Everyone;
 | `HostOnly` | Read-only commands for everyone; game-changing commands only for the host (lowest human slot). |
 | `Everyone` | Every command for every player. **Testing only.** |
 
-Heavy display commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`) only work when a single human is in the game.
+Heavy commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`, `-tp`) only work when a single human is in the game.
 
 ## Playing with bots
 
@@ -50,6 +50,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-dump` | read | Full snapshot to `Documents\Warcraft III\CustomMapData\WLAI_dump_<time>.txt` |
 | `-why` / `-why <pid>` | read | One line per bot (state, target, reason) / detailed trace for one bot |
 | `-portals` | read | Labels and pings every AI portal for 30 s; says whether the graphs are merged |
+| `-heroes` | read | Labels and pings every living bot hero for 30 s (level, owner, mission / stranded state) |
 | `-xy` | read | Position and landmass of your selected unit |
 | `-id` | read | Type id, name, owner, position of your selected unit |
 | `-fac` | read | Each bot's faction and its unit/building types per category |
@@ -57,6 +58,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-edges` | heavy | Toggle: draws every graph edge (green held, yellow neutral frontier, orange uncapturable, red contested, blue neutral↔neutral, magenta crosses landmass, grey closed) |
 | `-ids` | heavy | Every control point's id above it for 30 s |
 | `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
+| `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
 | `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
@@ -67,7 +69,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 ## The dump file
 
 `call Preload( "…" )` wraps every line — send the file as it is. Sections:
-**PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **PORTALS**, **LOAD** (units touched per tick,
+**PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **TEAMS** (CPs per team), **PORTALS**, **LOAD** (units touched per tick,
 the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
@@ -85,6 +87,8 @@ Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-package
   CSharp.lua limits (Lua locals per class, initialized static fields per class). **Run before every build.**
 - `python3 tools/ai/lua_check.py artifacts/war3map.lua` — compiles the built script with Lua 5.3; catches what
   makes Warcraft III call the map "unavailable or corrupted".
+- `python3 tools/ai/map_query.py walk X Y` (also `near`, `area`, `find`, `around`, `rect`) — checks coordinates
+  against the map's source data (terrain pathing, preplaced units, `Regions.X`) before they go into `AiConfig.cs`.
 
 **CSharp.lua limits to remember:** all static members of a class become locals of one Lua function (limit 200),
 and non-private static `readonly` fields are added uncounted; initialized static fields past ~55 per class stay
