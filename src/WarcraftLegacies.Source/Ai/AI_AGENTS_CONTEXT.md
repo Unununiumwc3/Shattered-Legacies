@@ -17,8 +17,12 @@ literal replace (0.34.3).
 ```
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch 4.8.2-ai \
     https://github.com/lehmbein/WarcraftLegacies.git wl && cd wl
-git sparse-checkout set src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools
+git sparse-checkout set src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools \
+    mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData
 ```
+(Cone mode also brings the files directly in the parent folders: `mapdata/WarcraftLegacies/PathingMap.json` and
+`src/WarcraftLegacies.Source/Regions.g.cs` -- what `tools/ai/map_query.py` needs. Add `src/WarcraftLegacies.Source/Factions`
+to read quest classes.)
 The repo is huge (map data, LFS models); never clone it fully. Upstream WL for comparison:
 `https://github.com/AzerothWarsLR/WarcraftLegacies` (`main` = 5.x).
 
@@ -34,12 +38,14 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiGates.cs` | AiGates | gate removal, Tempest Reach edge, Thandol bridge |
 | `AiAutopilot.cs` | AiAutopilot | `-autopilot` |
 | `AiGoldVote.cs` | AiGoldVote | bot strength vote at 70 s (sets `SimpleBot.BotGoldBonus`) |
-| `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Fel Horde Shadowmoon); config `AiConfig.HeroVisits` |
+| `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
+| `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |
 | `AiConfig.cs` | AiConfig, AiGraph, AiWorld, ... | data: CP graph edges, portals, quest rules, kill targets, coordinates |
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
+| `tools/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
 
 ## Hard rules (each one cost a broken build)
 
@@ -70,7 +76,20 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - Gates are lowercase-h custom units; gate destructables use big-endian FourCC.
 - WL removes Neutral-Passive units from whole areas at runtime -> AI-created portals are owned by Neutral Extra (26).
 - Win threshold 90 CPs per team (warning at 80).
-- Map coordinates given by the maintainer have contained sign typos 3 times -- check walkability/landmass first.
+- Map coordinates given by the maintainer have contained sign typos 3 times -- check walkability/landmass first,
+  offline with `tools/ai/map_query.py` (0.36).
+- Offline map data (the repo has it, no game needed): `mapdata/WarcraftLegacies/PathingMap.json` = 32-unit cells,
+  rows bottom-up from (-28672, -32256), flag 0x02 not walkable / 0x08 not buildable, terrain only. Preplaced units
+  `Units/*.json` (TypeId **little-endian**), doodads `Doodads/*.json`, object data `UnitData/<id>.json` (`uupt` =
+  upgrades to, `uabi` = abilities), `AbilityData/<id>.json`. Rectangles: `src/WarcraftLegacies.Source/Regions.g.cs`.
+- Footprint tests: the old Argus ring search checked corners at +-220 and rejected 7 of 8 good spots. Argus is cramped;
+  fixed spots (`AiWorld.ArgusSpotX/Y`) were chosen with a flood fill so the exits stay open.
+- Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
+  added to every faction -- completing it for one completes it for all.
+- Graph gate flags (`Edge.Gate`) must be opened by code: `legion`/`prelegion` (AiLegion), `greymane`/`tomb`
+  (AiGates.OpenNamedGates, 0.36). `greymane` was never opened from v25 to 0.35.4 -- a new flag needs its opener.
+- Waygate n036 (AI portals) carries A01M/A023 "Anti Portal Blocking" (Permanent Immolation, 1000 range); AI
+  portals shrink it to 250 (0.36).
 - Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep
   portal ends on open ground (`LandBeside` keeps 250 from buildings).
 - Some heroes can't walk (the Old Gods' level-20 god heroes). Anything that sends "the best hero" must filter
@@ -118,5 +137,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - **Portals**: `AiGraph.Portals` (phase always / prelegion / legion), created by `AiLegion`, watchdog rebuilds them.
   Target distance through portals: `SimpleBot.TravelDist2` (portal-aware since 0.35.2). Edge weights: `Edge.Weight`.
 - **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, config
-  `AiConfig.HeroVisits`), kill targets / area clears (`AiConfig.KillTargets`, `ClearAreas`).
+  `AiConfig.HeroVisits`; `Hero` / `LastObjective` / `SameLandmass` since 0.36), kill targets / area clears
+  (`AiConfig.KillTargets`, `ClearAreas`). Heroes on a mission are in `AiState.MissionUnits` (never two missions).
+- **Army anchor** (0.36): biggest same-landmass group of the army (`BotDiag.AnchorUnits`); target stickiness
+  `SimpleBot.StickySwitch`. Stranded heroes: `AiHeroCare`.
 - **Bot strength vote** (`AiGoldVote`, 70 s) sets `SimpleBot.BotGoldBonus`; free hero revive needs a living altar.
