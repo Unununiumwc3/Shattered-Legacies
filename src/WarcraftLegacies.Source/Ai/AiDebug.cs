@@ -10,7 +10,8 @@ using WarcraftLegacies.Source.Factions.Legion.Quests;
 namespace WarcraftLegacies.Source.Ai;
 
 // All inspection / measurement lives here, separate from the logic in AiSystem.cs.
-//  * Master switch: set Enabled = false for a release build with NO debug commands and NO display work at
+//  * Master switch (0.35): Access below -- Off / HostOnly / Everyone. Off is a release build with NO AI chat command
+//    (except -autopilot, which then runs in fair mode) and NO display work at
 //    all. The op counters in AiSystem stay (they're near-free and always on); only the display is gated.
 //  * Per-player, default OFF -> zero screen spam until someone opts in. Toggles are independent:
 //      -debug1  per-bot state     (army / landmass / candidates / has-target)
@@ -32,7 +33,29 @@ namespace WarcraftLegacies.Source.Ai;
 //    lockstep, and the one to watch: MaxOpUnits in the heaviest single tick, full-bots lategame.
 public static class AiDebug
 {
-  private const bool Enabled = true;   // <- flip to false to ship a zero-debug build
+  // ============================================================================================================
+  // 0.35: THE ONE SWITCH FOR ALL AI CHAT COMMANDS -- check it before publishing a map (see README).
+  //   Off      = release: no AI command at all; -autopilot still works but FAIR (no bot bonuses).
+  //   HostOnly = read-only commands for everyone; game-changing ones only for the host (lowest human slot).
+  //   Everyone = every command for every player (testing).
+  // Heavy display commands (-debug1..4, -edges, -ids, -autodump) only work when a single human is in the game.
+  // ============================================================================================================
+  public enum CommandAccess
+  {
+    Off,
+    HostOnly,
+    Everyone,
+  }
+
+  public const CommandAccess Access = CommandAccess.Everyone;
+
+  private enum Level
+  {
+    Read,
+    Heavy,
+    Control,
+  }
+
   private const float ShowEvery = 3.0f;
   private const float AutoDumpEvery = 300f;
   private const int PreloadChunk = 180; // keep every Preload() line short; longer lines are wrapped with "  ~"
@@ -44,33 +67,36 @@ public static class AiDebug
 
   public static void Setup()
   {
-    if (!Enabled)
+    if (Access == CommandAccess.Off)
     {
       return;
     }
 
-    Register("-debug1", () => Toggle(On1, "state"));
-    Register("-debug2", () => Toggle(On2, "load"));
-    Register("-debug3", () => Toggle(On3, "decisions"));
-    Register("-debug4", () => Toggle(On4, "economy"));
-    Register("-xy", OnXy);
-    Register("-fac", OnFac);
-    Register("-legion", OnLegion);
-    Register("-ids", OnIds);
-    Register("-id", OnId);
-    Register("-portals", OnPortals);
-    Register("-ogwave", OnOgWave);
-    Register("-gold0", () => SetGold(0));
-    Register("-gold50", () => SetGold(50));
-    Register("-gold100", () => SetGold(100));
-    Register("-gold150", () => SetGold(150));
-    Register("-gold200", () => SetGold(200));
-    Register("-help", OnHelp);
-    Register("-dump", () => WriteDump(GetTriggerPlayer(), "manual"));
-    Register("-autodump", OnAutoDump);
-    Register("-edges", OnEdges);
-    RegisterLoose("-why", OnWhy);
-    Register("-ship", OnShipTest);
+    Register("-debug1", () => Toggle(On1, "state"), Level.Heavy);
+    Register("-debug2", () => Toggle(On2, "load"), Level.Heavy);
+    Register("-debug3", () => Toggle(On3, "decisions"), Level.Heavy);
+    Register("-debug4", () => Toggle(On4, "economy"), Level.Heavy);
+    Register("-xy", OnXy, Level.Read);
+    Register("-fac", OnFac, Level.Read);
+    Register("-legion", OnLegion, Level.Control);
+    Register("-ids", OnIds, Level.Heavy);
+    Register("-id", OnId, Level.Read);
+    Register("-portals", OnPortals, Level.Read);
+    Register("-ogwave", OnOgWave, Level.Control);
+    Register("-gold0", () => SetGold(0), Level.Control);
+    Register("-gold50", () => SetGold(50), Level.Control);
+    Register("-gold100", () => SetGold(100), Level.Control);
+    Register("-gold150", () => SetGold(150), Level.Control);
+    Register("-gold200", () => SetGold(200), Level.Control);
+    Register("-help", OnHelp, Level.Read);
+    Register("-dump", () => WriteDump(GetTriggerPlayer(), "manual"), Level.Read);
+    Register("-autodump", OnAutoDump, Level.Heavy);
+    Register("-edges", OnEdges, Level.Heavy);
+    RegisterLoose("-why", OnWhy, Level.Read);
+    Register("-ship", OnShipTest, Level.Control);
+    Register("-botbreak", SimpleBot.OnBotBreak, Level.Control); // 0.35: moved here from SimpleBot (now switched)
+    Register("-prod", SimpleBot.OnProd, Level.Control);
+    Register("-atk", SimpleBot.OnAtk, Level.Control);
 
     var t = CreateTimer();
     TimerStart(t, ShowEvery, true, Show);
@@ -79,7 +105,7 @@ public static class AiDebug
   }
 
   // Like Register, but matches any chat line CONTAINING cmd (so "-why 3" works).
-  private static void RegisterLoose(string cmd, System.Action act)
+  private static void RegisterLoose(string cmd, System.Action act, Level level)
   {
     var tr = CreateTrigger();
     for (var i = 0; i < 24; i++)
@@ -87,10 +113,10 @@ public static class AiDebug
       TriggerRegisterPlayerChatEvent(tr, Player(i), cmd, false);
     }
 
-    TriggerAddAction(tr, () => RunCommand(cmd, act));
+    TriggerAddAction(tr, () => RunCommand(cmd, act, level));
   }
 
-  private static void Register(string cmd, System.Action act)
+  private static void Register(string cmd, System.Action act, Level level)
   {
     var tr = CreateTrigger();
     for (var i = 0; i < 24; i++)
@@ -98,12 +124,68 @@ public static class AiDebug
       TriggerRegisterPlayerChatEvent(tr, Player(i), cmd, true);
     }
 
-    TriggerAddAction(tr, () => RunCommand(cmd, act));
+    TriggerAddAction(tr, () => RunCommand(cmd, act, level));
+  }
+
+  // humans in the game (playing, user-controlled) and the "host" = lowest such slot (WC3 can't see the real host)
+  public static int HumanCount()
+  {
+    var n = 0;
+    for (var i = 0; i < 24; i++)
+    {
+      if (GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING && GetPlayerController(Player(i)) == MAP_CONTROL_USER)
+      {
+        n++;
+      }
+    }
+
+    return n;
+  }
+
+  public static bool IsHost(player p)
+  {
+    for (var i = 0; i < 24; i++)
+    {
+      if (GetPlayerSlotState(Player(i)) == PLAYER_SLOT_STATE_PLAYING && GetPlayerController(Player(i)) == MAP_CONTROL_USER)
+      {
+        return Player(i) == p;
+      }
+    }
+
+    return false;
+  }
+
+  private static string Denied(Level level, player p)
+  {
+    if (level == Level.Heavy && HumanCount() > 1)
+    {
+      return "only in single-player games (it costs every player performance)";
+    }
+
+    if (level == Level.Control && Access == CommandAccess.HostOnly && !IsHost(p))
+    {
+      return "only the host may use it in this build";
+    }
+
+    if (level == Level.Heavy && Access == CommandAccess.HostOnly && !IsHost(p))
+    {
+      return "only the host may use it in this build";
+    }
+
+    return null;
   }
 
   // v34.2: a failing command reports its error to the player instead of silently doing nothing.
-  private static void RunCommand(string cmd, System.Action act)
+  // 0.35: and a command the access switch doesn't allow says so.
+  private static void RunCommand(string cmd, System.Action act, Level level)
   {
+    var why = Denied(level, GetTriggerPlayer());
+    if (why != null)
+    {
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "|cffffcc00" + cmd + "|r: " + why);
+      return;
+    }
+
     try
     {
       act();
@@ -232,7 +314,7 @@ public static class AiDebug
   // which unlocks the Nether Pit + Summoning Circle, rescues its units, and opens the portals.
   private static void OnLegion()
   {
-    SimpleBot.SummonLegion(); // completes the quest AND spawns a fresh portal pair at the configured endpoints
+    AiLegion.SummonLegion(); // completes the quest AND spawns a fresh portal pair at the configured endpoints
     DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8,
       "|cffff5555Legion force-summoned. Use -portals to find the exit.|r");
   }
@@ -242,13 +324,13 @@ public static class AiDebug
   private static void OnPortals()
   {
     var n = 0;
-    for (var i = 0; i < SimpleBot.PortalPairCount; i++)
+    for (var i = 0; i < AiLegion.PortalPairCount; i++)
     {
-      n += MarkUnit(SimpleBot.PortalA(i)) + MarkUnit(SimpleBot.PortalB(i));
+      n += MarkUnit(AiLegion.PortalA(i)) + MarkUnit(AiLegion.PortalB(i));
     }
 
     DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 10, "|cffffcc00-portals|r: " + I2S(n)
-      + " AI portal ends labelled + pinged for 30s (" + I2S(SimpleBot.PortalPairCount) + " pairs; graphs merged="
+      + " AI portal ends labelled + pinged for 30s (" + I2S(AiLegion.PortalPairCount) + " pairs; graphs merged="
       + B(SimpleBot.GraphMerged) + ")");
   }
 
@@ -304,7 +386,7 @@ public static class AiDebug
 
   private static void OnOgWave()
   {
-    SimpleBot.ForceWave(0); // wave 0 = Old Gods
+    AiWaveRunner.ForceWave(0); // wave 0 = Old Gods
     DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "|cffaa00ffwave 0 (Old Gods) forced.|r");
   }
 
@@ -421,8 +503,9 @@ public static class AiDebug
   private static void OnHelp()
   {
     var p = GetTriggerPlayer();
-    DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00WL AI|r " + AiSetup.Build
-      + " -- full command list: README.md. Most used: -dump  -autodump  -why  -portals  -edges  -xy  -id");
+    DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00WL AI|r " + AiSetup.Build + " (commands: " + (Access == CommandAccess.HostOnly ? "host only" : "everyone")
+      + ") -- full list: README.md."
+      + " Most used: -dump  -autodump  -why  -portals  -edges  -xy  -id  -autopilot");
   }
 
 
@@ -545,9 +628,9 @@ public static class AiDebug
     Section(o, "portals", () =>
     {
       o.Add("## PORTALS (AI waygates: name @x,y alive -> destination)  merged=" + B(SimpleBot.GraphMerged));
-      for (var i = 0; i < SimpleBot.PortalPairCount; i++)
+      for (var i = 0; i < AiLegion.PortalPairCount; i++)
       {
-        o.Add(PortalLine(SimpleBot.PortalA(i)) + "   <->   " + PortalLine(SimpleBot.PortalB(i)));
+        o.Add(PortalLine(AiLegion.PortalA(i)) + "   <->   " + PortalLine(AiLegion.PortalB(i)));
       }
     });
 
@@ -559,7 +642,7 @@ public static class AiDebug
             + " | def-scan " + I2S(SimpleBot.LastDefOps) + "/" + I2S(SimpleBot.MaxDefOps)
             + " | production peak " + I2S(SimpleBot.MaxProdOps)
             + " | wave-tick " + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
-            + " | last gate sweep " + I2S(SimpleBot.LastSweepOps));
+            + " | last gate sweep " + I2S(AiGates.LastSweepOps));
     });
 
     o.Add("## BOTS");
@@ -784,7 +867,7 @@ public static class AiDebug
   private static void WaveLine(int idx, List<string> o)
   {
     var cfg = AiWaves.All[idx];
-    var w = SimpleBot.GetWaveDiag(idx);
+    var w = AiWaveRunner.GetWaveDiag(idx);
     var names = "";
     for (var i = 0; i < cfg.Factions.Count; i++)
     {

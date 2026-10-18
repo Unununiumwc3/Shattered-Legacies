@@ -86,14 +86,61 @@ def count_ctor(n, src, cls=None):
 for f, src, t in trees:
     count_ctor(t.root_node, src)
 
+# 0.34.4: CSharp.lua turns a class's static members into locals of ONE Lua function (Lua limit: 200, incl. its
+# parameter). It counts methods, non-auto property getters and private static fields up to ~195 (the rest go to a
+# table called "const"), but every non-private static READONLY field is added on top of that, uncounted.
+# 0.34.3 hit 201 -> the map would not load ("map corrupted"). Estimate the locals per class.
+LOCALS_LIMIT = 196
+locals_est = {}
+
+def count_locals(n, src):
+    if n.type == "class_declaration":
+        name = txt(n.child_by_field_name("name"), src)
+        counted = uncounted = 0
+        body = n.child_by_field_name("body")
+        for m in (body.children if body else []):
+            ms = mods(m, src)
+            private = not (ms & {"public", "internal", "protected"})
+            if m.type == "field_declaration" and "const" not in ms and "static" in ms:
+                k = sum(1 for d in m.children if d.type == "variable_declaration"
+                        for v in d.children if v.type == "variable_declarator")
+                if private:
+                    counted += k
+                elif "readonly" in ms:
+                    uncounted += k
+            elif m.type == "method_declaration":
+                counted += 1
+            elif m.type == "property_declaration":
+                acc = txt(m, src)
+                if "=>" in acc or "return" in acc:
+                    counted += 1
+            elif m.type == "class_declaration":
+                count_locals(m, src)
+        locals_est[name] = (min(counted, 190) + uncounted + 4, counted, uncounted)
+        return
+    for c in n.children:
+        count_locals(c, src)
+
+for f, src, t in trees:
+    count_locals(t.root_node, src)
+
 bad = 0
 for cls, names in sorted(ctor_fields.items()):
     if len(names) > CTOR_LIMIT:
         print(f"TOO MANY INITIALIZED STATIC FIELDS  {cls}: {len(names)} (limit {CTOR_LIMIT}) -- "
               f"create the newest ones in an Init method instead; last: {', '.join(names[CTOR_LIMIT:])}")
         bad += 1
+for cls, (est, counted, uncounted) in sorted(locals_est.items()):
+    if est > LOCALS_LIMIT:
+        print(f"TOO MANY LUA LOCALS  {cls}: ~{est} (limit {LOCALS_LIMIT}); {uncounted} non-private static readonly "
+              f"field(s) are added on top of CSharp.lua's cap -- drop 'readonly' or move them to another class")
+        bad += 1
+    elif counted > 180:
+        print(f"WARNING  {cls} has {counted} counted members (CSharp.lua cap ~195) -- split it into smaller classes")
 print("initialized static fields per class: "
       + ", ".join(f"{c} {len(n)}" for c, n in sorted(ctor_fields.items(), key=lambda kv: -len(kv[1]))[:5]))
+print("estimated Lua locals per class: "
+      + ", ".join(f"{c} ~{v[0]}" for c, v in sorted(locals_est.items(), key=lambda kv: -kv[1][0])[:5]))
 
 for f, line, frm, cls, m in refs:
     if cls not in members:

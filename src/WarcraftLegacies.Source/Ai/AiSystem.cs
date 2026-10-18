@@ -8,82 +8,13 @@ using MacroTools.ControlPoints;
 using MacroTools.GameTime;
 using WarcraftLegacies.Source.Factions.Legion.Quests;
 
-// Warcraft Legacies AI -- build 0.34.3 (hotfix). main / 4.8.x.
-//  * 0.34.3: 18 static collections created in InitState -- CSharp.lua left static fields with initializers past
-//    ~55 per class nil, which broke portals, area clears and every bot's attack logic (v34-v34.2). Legion exit
-//    back beside Felwood; Legion's Argus buildings placed on searched open ground. Versions now 0.MINOR.PATCH.
-// Warcraft Legacies AI -- build v34.2 (robustness: isolated tick/commands/dump; area clears; links).
-//  * v34.2: every wave-tick subtask, summon step, chat command and dump section runs isolated (one error used
-//    to stop the gate sweep, -dump and -portals); gates swept first. Area clears (Oculus, Nexus). Highbank <->
-//    Southern Highlands, Nazmir <-> Kezan ship. Neutral bias 0.5. -help shortened (README.md has the list).
-// Warcraft Legacies AI -- build v34.1 (portal + summon fixes, Kul Tiras repair, Balor).
-//  * v34.1: portals owned by Neutral Extra (WL removes Neutral-Passive units from areas) + watchdog + per-pair
-//    try/catch; summon handling runs whatever completed the quest (polled), once, merge guaranteed; Kul Tiras'
-//    crashed Admiralty reward repaired (base rescued); Balor <-> W. Stranglethorn ship + Balor on the island
-//    graph; pinned log + PORTALS section in -dump; -portals pings every AI portal.
-// Warcraft Legacies AI -- build v34 (node system: islands, Kul Tiras, Argus hub, merge event; bug fixes).
-//  * v34: ship portals (real waygates, named, landing beside the other end) for the Kalimdor islands and Kul
-//    Tiras; Argus open from the start and linked to Northrend until the summon, then to Felwood and (WL's demon
-//    portal) Quel'Danas; the summon MERGES the graphs, home graph first. Bot Legion starts in Argus (workers ->
-//    buildings). The Sunwell capital now triggers the summon (once). Construction Sites upgraded (Stormwind
-//    City). Fallback events (Theramore, Scarlet Crusade) no longer auto-ordered. Fallback target respects the
-//    10-min lock. No naval techs. Illidan's Broken Isles grant removed.
-// Warcraft Legacies AI -- build v33 (tech pools, Ragnaros summon+kill, ship-portal test).
-//  * v33: two tech pools besides weapon/armor (unchanged): UNIT/ABILITY (casters + abilities, incl. stock
-//    abilities the auto-list missed) = 1 + 1 per 5 min + 1 per 2 CPs, stepped by level; BUILDING/MISC (free
-//    building upgrades, town halls first; then naval/flight) = 1 per 2 CPs. v32 caster schedule removed.
-//    Ragnaros: pedestal captured -> summoned -> killed for free by the bot's level-12 hero standing by.
-//    Legion exit back beside Felwood. -ship asset test for the Kul Tiras ship portals.
-// Warcraft Legacies AI -- build v32 (early quests by turn, starter buildings, tech split, lore rules).
-//  * v32: early quests force-completed for bots during turn N-1 of their expiry (WL turn counter), one per 3 s.
-//    Starter barracks + altar for every bot (workers become buildings). Upgrades split: techs (5-min timer +1 per
-//    2 CP captures), caster trainings (all, up to max level at 4/10/18 min), event researches (ordered when WC3
-//    allows, free; Fireland Invasion not before 15:00; plague left to WL). Stromgarde rule fixed. Cenarius stays
-//    dead for bots. Late-game quest rules (World-Shaman, Guardian, Line of Succession, Ascension). Ragnaros
-//    pedestal hero trip. Murmur kill target. Legion's Lordaeron capital + northern CPs handed to the Scourge.
-// Warcraft Legacies AI -- build v31 (target ranking, stuck detection, quest rules, Legion portal).
-//  * v31: frontier ranking -- neutral-only before 10 min, then nearest-to-army with a neutral bias; per-faction
-//    goal routing (Legion -> Nordrassil); stuck detection blacklists a target after 4 min without progress.
-//    Kill targets by unit type (Scourge -> Sapphiron 'ubdr'). Quest rules with conditions (capital lost, CP
-//    held by ally). WL's caster-less Demon Portal rebuilt off (0,0) + Antoran portal re-pointed; +3000 gold
-//    for a bot Legion on summon. Per-faction gold subsidy. CP grants (Illidan's Broken Isles).
-// Warcraft Legacies AI -- build v30 (neutral-CP fix, army anchor, bot-only waves, graph edits).
-//  * v30: IsEnemyCp ignores neutral players (their slot state reads PLAYING -> every creep CP was "enemy").
-//    Target selection anchors on the army centroid. Waves only run when a BOT is in the group (a human
-//    Kul Tiras got the fleet messages). Timed quest auto-complete for bots (AiConfig.TimedQuests).
-// Warcraft Legacies AI -- build v29 (defense rewrite).
-//  * v29: Rule 0 defense only fires for a DAMAGED owned anchor with >5 ENEMY-PLAYER ground units near it.
-//    Neutrals (creeps + ~1900 preplaced Neutral-Passive rescue units), allies and units on unwalkable terrain
-//    (ships) are ignored. Undamaged anchors are not scanned at all (removes most of the combat-tick load).
-//  * v28: graph walker skips invulnerable / Neutral-Passive CPs (quest-locked; can never be captured -> bots parked
-//    on them forever). Clash window + staging REMOVED: enemy frontiers are attacked directly (the 30s release
-//    window yo-yo'd armies back to the muster CP mid-march). Perma-death guard: heroes that died permanently
-//    (LegendaryHero.Died, Permanent=true) or carry WL's 'LEgo' perma-dies marker are never re-trained/revived.
-//    Diagnostics: per-bot BotDiag + per-wave WaveDiag + decision event log + per-subsystem op counters, read by
-//    AiDebug (-dump writes them to a file). Logic only WRITES diagnostics; it never branches on them.
-//  * v14: per-faction ordered attack march from AiConfig.Doctrine (coordinate waypoints via -xy, time-gated,
-//    ownership-aware, advances when a step is clear+held). Falls back to the generic picker when unfilled.
-//  * v13: bots get a flat gold subsidy each production service (they were gold-starved, not food-capped);
-//    mass to MinArmy=20 before attacking (bigger pushes); free hero revival for bots every 3 min.
-//  * v12: production now services ONE bot per tick (was all bots every 15s) -> the big load spike is gone.
-//    Attack-move is re-issued only when the target changes or every ~20s -> no more stop-and-go stutter.
-//  * v11: inspection moved to AiDebug.cs (own file, master const, per-player -debug1/2/3, default OFF).
-//    Deterministic op counters live in the logic here (near-free, always on). Control commands
-//    -botbreak/-prod/-atk stay here so they work even in a no-debug build.
-//  * v8-main: dropped the dev-only H00B vertical-gate constant (absent on main -> would not compile).
-//  * v9: area doctrine -- attack nearest reachable enemy/neutral CONTROL POINT first, then CAPITAL;
-//    Rule 0 defense (recall if >5 enemies near an owned anchor); home landmass taken from an owned
-//    capital/CP (fixes idle-at-portal, snaking, and the Druids l-1 hug). Replaces FindTarget's scan.
-//  * v10: bots train/revive heroes at owned Altars using faction-correct ids from AiConfig.cs
-//    (source-derived, no id spray). Gold-gated; WC3 hero-limit self-caps; faction absent -> skip.
-//    NEW FILE: AiConfig.cs must sit beside this file in the Ai/ folder -- copy BOTH into the build.
-//  * v8: one bot serviced per combat tick (round-robin); ~13x less enum/orders per second.
-//  * v8: chat toggles -botbreak (stop), -debug (readout mute), -prod, -atk.  Diagnostics kept.
-//  * QuestAutoComplete: at 2:00, completes every in-play faction's designated StartingQuest (humans + bots for
-//    now; flip computerOnly=true later to exclude humans -- that is the split point).
-//  * Capital-targeting for SCOURGE only: attack-moves toward the nearest reachable enemy/unowned CAPITAL
-//    (clears the yard; capital becomes takeable), instead of snaking through nearest hostile. Others unchanged.
-//  * everything from v6 (gate removal, gather-to-5, attack-move, hold-if-unknown-landmass, faction production, -xy, -fac).
+// Warcraft Legacies bot AI -- see README.md (overview, commands), AI_AGENTS_CONTEXT.md (for AI assistants),
+// CHANGELOG.md (history) and TODO.md in this folder. Version: AiSetup.Build at the end of this file.
+//
+// This file: SimpleBot (the core loop: targets, combat, defense, production, heroes, logging), QuestAutoComplete,
+// Geography, AiState, AiSetup. Other parts live in AiTech / AiMissions / AiLegion / AiWaveRunner / AiGates /
+// AiAutopilot (.cs) -- split in 0.35 because CSharp.lua turns all static members of a class into Lua locals of one
+// function (limit 200). Keep every class small; run tools/ai/check_refs.py before building.
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -206,7 +137,7 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static QuestData FindQuest(Faction f, string title)
+    internal static QuestData FindQuest(Faction f, string title)
     {
       var quests = f.GetAllQuests();
       for (var k = 0; k < quests.Count; k++)
@@ -464,19 +395,19 @@ namespace WarcraftLegacies.Source.Ai
     public static bool ProdOn = true;             // -prod     : production on/off
     public static bool AtkOn = true;              // -atk      : attack/gather orders on/off
 
-    private static readonly List<player> Bots = new();
+    internal static List<player> Bots = new();
     private static readonly Dictionary<int, float> LastAttack = new();
-    public static readonly Dictionary<int, unit> Committed = new();
+    public static Dictionary<int, unit> Committed = new();
     private static readonly Dictionary<int, float> CommitTime = new();
-    public static readonly Dictionary<int, int> Cand = new();
+    public static Dictionary<int, int> Cand = new();
 
     private static int _cursor;                    // v8: round-robin bot index
     // per-bot state written by logic, read-only for AiDebug
-    public static readonly Dictionary<int, int> BotArmy = new();
-    public static readonly Dictionary<int, int> BotLm = new();
-    public static readonly Dictionary<int, int> BotFac = new();
-    public static readonly Dictionary<int, string> BotState = new();
-    public static readonly Dictionary<int, string> BotTargetName = new(); // v21: current graph/attack target
+    public static Dictionary<int, int> BotArmy = new();
+    public static Dictionary<int, int> BotLm = new();
+    public static Dictionary<int, int> BotFac = new();
+    public static Dictionary<int, string> BotState = new();
+    public static Dictionary<int, string> BotTargetName = new(); // v21: current graph/attack target
     // deterministic op counters (same on every machine -> safe to display, never branch logic on them)
     public static int OpUnits;
     public static int OpOrders;
@@ -492,14 +423,13 @@ namespace WarcraftLegacies.Source.Ai
     public static int MaxDefOps;
     public static int WaveOps;         // units touched by the 15s wave tick (gate sweep, wave gates, gather, teleport)
     public static int LastWaveOps;
-    public static int MaxWaveOps;
-    public static int LastSweepOps;    // units touched by the last whole-map gate sweep
+    public static int MaxWaveOps;    // units touched by the last whole-map gate sweep
     // v28: diagnostics written by logic, read by AiDebug. Never branch logic on these.
-    public static readonly Dictionary<int, BotDiag> Diag = new();
-    public static readonly List<string> EventLog = new();
+    public static Dictionary<int, BotDiag> Diag = new();
+    public static List<string> EventLog = new();
     private const int EventLogCap = 300;
     // v28: hero types that died PERMANENTLY (from LegendaryHero.Died). Never re-train / revive these.
-    public static readonly HashSet<int> PermaDead = new();
+    public static HashSet<int> PermaDead = new();
     private static int _legendsHooked;
     private static readonly int PermaDiesMarker = FourCC("LEgo"); // WL adds this dummy ability to PermaDies heroes
     private static int _defWorst;      // enemies near the anchor FindDefenseTarget picked (for the log)
@@ -508,27 +438,15 @@ namespace WarcraftLegacies.Source.Ai
     private static readonly Dictionary<int, float> LastPtX = new();
     private static readonly Dictionary<int, float> LastPtY = new();
     private static readonly Dictionary<int, float> LastIssueTime = new();
-    private static readonly Dictionary<int, bool> FiredEvents = new(); // v15: node events fired once
-    private static readonly Dictionary<int, int> _wavePhase = new();      // v23: 0 idle, 1 gather, 2 channel
-    private static readonly Dictionary<int, float> _wavePhaseAt = new();
-    private static readonly Dictionary<int, float> _waveLastDone = new();
-    private static readonly Dictionary<int, float> _waveDestX = new();
-    private static readonly Dictionary<int, float> _waveDestY = new();
-    private static readonly Dictionary<int, effect> _waveSrcFx = new();
-    private static readonly Dictionary<int, effect> _waveDstFx = new();
-    private static readonly Dictionary<int, bool> _waveWasActive = new();
     // v24: per-faction node-system state. An event (invasion arrival, Legion summon) writes the faction's
     // current edge-set name here; the graph walker reads it. Absent -> AiGraph.DefaultEdgeSet decides.
-    private static readonly Dictionary<string, string> _factionEdgeSet = new();
-    private static readonly Dictionary<string, bool> _gateOpen = new(); // named graph gates (e.g. "greymane")
-    private static bool _thandolOpened;      // v25: force-open Thandol Span once at 20 min
-    private static bool _tempestWired;       // v25: inject Blackwald<->Tempest Reach edge once
-    private static HashSet<int> _combinedNodes; // v26: CP ids in each graph, for runtime edge-set resolution
-    private static HashSet<int> _kalimdorNodes;
-    private static readonly HashSet<int> _oneShotDone = new(); // consumed one-shot objective indices
-    private static rect _itemRect;           // v24: reused hero item-grab rect (no per-call allocation)
+    internal static Dictionary<string, string> _factionEdgeSet = new();
+    internal static Dictionary<string, bool> _gateOpen = new();       // v25: inject Blackwald<->Tempest Reach edge once
+    internal static HashSet<int> _combinedNodes; // v26: CP ids in each graph, for runtime edge-set resolution
+    private static HashSet<int> _kalimdorNodes; // consumed one-shot objective indices
+    internal static rect _itemRect;           // v24: reused hero item-grab rect (no per-call allocation)
     private static unit _grabHero;           // v24: hero currently grabbing (read by the enum callback)
-    private static float _clock;
+    internal static float _clock;
     private static float _diag;
 
     public static int BotCount => Bots.Count;
@@ -547,382 +465,29 @@ namespace WarcraftLegacies.Source.Ai
       return BotGoldBonus;
     }
 
-    // ---- v32 tech pool / event researches / CP-capture counting ----------------------------------------------
-    // v33: unit/ability tech steps per faction (built once): ByFaction + Extra, minus events / never-grant,
-    // deduplicated, then expanded by level (all level 1 -> multi-level ones at 2 -> at 3).
-    private sealed class TechSteps
-    {
-      public readonly List<int> Ids = new();
-      public readonly List<int> Levels = new();
-    }
-
-    private static readonly Dictionary<string, TechSteps> _techSteps = new();
-    private static HashSet<int> _eventIds;
-
-    private static TechSteps TechStepsFor(string facName)
-    {
-      if (_techSteps.ContainsKey(facName))
-      {
-        return _techSteps[facName];
-      }
-
-      if (_eventIds == null)
-      {
-        _eventIds = new HashSet<int>();
-        for (var i = 0; i < AiUpgrades.Events.Count; i++)
-        {
-          _eventIds.Add(AiUpgrades.Events[i].ResearchId);
-        }
-      }
-
-      var ids = new List<int>();
-      AddPoolIds(ids, AiUpgrades.ByFaction, facName);
-      AddPoolIds(ids, AiUpgrades.Extra, facName);
-      var st = new TechSteps();
-      for (var lv = 1; lv <= 3; lv++)
-      {
-        for (var i = 0; i < ids.Count; i++)
-        {
-          var max = AiUpgrades.MaxLevel.ContainsKey(ids[i]) ? AiUpgrades.MaxLevel[ids[i]] : 1;
-          if (lv <= max)
-          {
-            st.Ids.Add(ids[i]);
-            st.Levels.Add(lv);
-          }
-        }
-      }
-
-      _techSteps[facName] = st;
-      return st;
-    }
-
-    private static void AddPoolIds(List<int> into, Dictionary<string, List<int>> src, string facName)
-    {
-      if (!src.TryGetValue(facName, out var ups) || ups == null)
-      {
-        return;
-      }
-
-      for (var i = 0; i < ups.Count; i++)
-      {
-        var id = ups[i];
-        if (!_eventIds.Contains(id) && !AiUpgrades.NeverGrant.Contains(id) && !into.Contains(id))
-        {
-          into.Add(id);
-        }
-      }
-    }
-
     // v33: spend ONE building/misc credit: upgrade a town hall (else another upgradable building) for free --
     // WC3 refuses the order if the tier's requirements aren't met; otherwise grant the next misc research.
-    private static readonly Dictionary<int, int> _bSpent = new();
-    private static readonly Dictionary<int, int> _miscIdx = new();
-
-    private static void SpendBuildingCredit(player p, int pid, unit hall, unit other)
-    {
-      var spent = _bSpent.ContainsKey(pid) ? _bSpent[pid] : 0;
-      if (TryFreeUpgrade(p, hall, spent) || TryFreeUpgrade(p, other, spent))
-      {
-        _bSpent[pid] = spent + 1;
-        return;
-      }
-
-      var mi = _miscIdx.ContainsKey(pid) ? _miscIdx[pid] : 0;
-      if (mi < AiUpgrades.MiscAll.Count)
-      {
-        SetPlayerTechResearched(p, AiUpgrades.MiscAll[mi], 1);
-        _miscIdx[pid] = mi + 1;
-        _bSpent[pid] = spent + 1;
-        Log("P" + I2S(pid) + " " + FacName(p) + ": misc tech granted (" + I2S(AiUpgrades.MiscAll[mi]) + ")");
-      }
-    }
-
-    private static bool TryFreeUpgrade(player p, unit b, int salt)
-    {
-      if (b == null)
-      {
-        return false;
-      }
-
-      var opts = AiUpgrades.BuildingUpgrades[GetUnitTypeId(b)];
-      for (var k = 0; k < opts.Count; k++)
-      {
-        var target = opts[(salt + k) % opts.Count]; // vary the branch (e.g. which demon gate) between upgrades
-        if (FreeOrder(p, b, target))
-        {
-          Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": building upgrade " + GetUnitName(b) + " -> "
-              + GetObjectName(target));
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    // Issue an order that costs resources for free: top up, order, restore. Returns WC3's accept/refuse.
-    private static bool FreeOrder(player p, unit u, int orderId)
-    {
-      var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD);
-      var wood = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER);
-      SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold + 10000);
-      SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, wood + 10000);
-      var ok = IssueImmediateOrderById(u, orderId);
-      SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold);
-      SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, wood);
-      return ok;
-    }
-
-    // Event research: if this building researches an event the bot doesn't have yet, order it. WC3 itself refuses
-    // the order while the research's requirements aren't met ("only when they can"); once accepted it is free --
-    // gold/lumber are topped up for the order and restored right after, so the research costs nothing.
-    private static readonly Dictionary<int, float> _eventTried = new(); // key: pid*100 + event index
-
-    private static void TryEventResearch(player p, unit building, int typeId)
-    {
-      var evs = AiUpgrades.Events;
-      for (var i = 0; i < evs.Count; i++)
-      {
-        var ev = evs[i];
-        if (ev.BuildingId != typeId || _clock < ev.NotBefore || GetPlayerTechCount(p, ev.ResearchId, true) > 0)
-        {
-          continue;
-        }
-
-        var key = GetPlayerId(p) * 100 + i;
-        if (_eventTried.ContainsKey(key) && _clock - _eventTried[key] < 60f)
-        {
-          continue; // accepted recently (research in progress) or refused recently
-        }
-
-        _eventTried[key] = _clock;
-        if (FreeOrder(p, building, ev.ResearchId))
-        {
-          Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": event research ordered (" + I2S(ev.ResearchId) + ")");
-        }
-      }
-    }
-
-    // v34: quest building upgrades -- free, as soon as WC3 accepts (requirements met), retried every 60 s.
-    private static readonly Dictionary<unit, float> _questUpTried = new(); // per building (only looked up, never iterated)
-
-    private static void TryQuestUpgrade(player p, unit building, int typeId)
-    {
-      if (!AiUpgrades.QuestUpgrades.ContainsKey(typeId))
-      {
-        return;
-      }
-
-      if (_questUpTried.ContainsKey(building) && _clock - _questUpTried[building] < 60f)
-      {
-        return;
-      }
-
-      _questUpTried[building] = _clock;
-      if (FreeOrder(p, building, AiUpgrades.QuestUpgrades[typeId]))
-      {
-        Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": quest upgrade " + GetUnitName(building) + " ordered");
-      }
-    }
+    internal static Dictionary<int, int> _bSpent = new();
 
     // CP captures per bot (for the tech pool). A WC3 change-owner trigger on every player; deduplicated per
     // unit+owner so a double fire counts once; transfers made by the AI itself are not counted.
-    private static readonly Dictionary<int, int> _cpCaptures = new();
-    private static unit _lastCapUnit;
-    private static player _lastCapOwner;
-    private static bool _suppressCaptureCount;
-
-    private static void SetupCaptureCounting()
-    {
-      var t = CreateTrigger();
-      for (var i = 0; i < 28; i++)
-      {
-        TriggerRegisterPlayerUnitEvent(t, Player(i), EVENT_PLAYER_UNIT_CHANGE_OWNER, null);
-      }
-
-      TriggerAddAction(t, OnUnitChangeOwner);
-    }
-
-    private static void OnUnitChangeOwner()
-    {
-      if (_suppressCaptureCount)
-      {
-        return;
-      }
-
-      var u = GetTriggerUnit();
-      var owner = GetOwningPlayer(u);
-      if (u == _lastCapUnit && owner == _lastCapOwner)
-      {
-        return;
-      }
-
-      if (!IsBot(owner) || !ControlPointManager.Instance.UnitIsControlPoint(u))
-      {
-        return;
-      }
-
-      _lastCapUnit = u;
-      _lastCapOwner = owner;
-      var pid = GetPlayerId(owner);
-      _cpCaptures[pid] = (_cpCaptures.ContainsKey(pid) ? _cpCaptures[pid] : 0) + 1;
-    }
+    internal static Dictionary<int, int> _cpCaptures = new();
+    internal static bool _suppressCaptureCount;
 
     // Ownership transfers done by the AI (grants, hand-overs) -- not counted as captures.
-    private static void GiveUnit(unit u, player to)
+    internal static void GiveUnit(unit u, player to)
     {
       _suppressCaptureCount = true;
       SetUnitOwner(u, to, true);
       _suppressCaptureCount = false;
     }
 
-    // ---- v32 starter kit: every bot owns at least one barracks and one altar --------------------------------
-    // Bots never construct buildings. A faction that starts without them (Stormwind, Illidan, ...) would idle
-    // until a quest rescues its base. At 0:20 and again at 3:00 (after the 2:00 starting-quest rescue) each
-    // missing building is created -- the cheapest barracks / altar type of the faction -- on a worker's spot
-    // (the worker is removed: "workers become buildings"), else next to the main building / home CP.
-    private static readonly float[] StarterKitAt = { 20f, 180f };
-    private static int _starterKitDone;
-
-    private static void RunStarterKit()
-    {
-      if (_starterKitDone >= StarterKitAt.Length || _clock < StarterKitAt[_starterKitDone])
-      {
-        return;
-      }
-
-      _starterKitDone++;
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var p = Bots[b];
-        var f = p.GetPlayerData().Faction;
-        if (f == null)
-        {
-          continue;
-        }
-
-        var barracks = new List<int>();
-        AddCategory(f, UnitCategory.Barracks, barracks);
-        var altars = new List<int>();
-        AddCategory(f, UnitCategory.Altar, altars);
-
-        var haveBarracks = false;
-        var haveAltar = false;
-        unit hall = null;
-        var workers = new List<unit>();
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          WaveOps++;
-          if (GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-          {
-            continue;
-          }
-
-          var t = GetUnitTypeId(u);
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
-          {
-            haveBarracks = haveBarracks || ListHas(barracks, t);
-            haveAltar = haveAltar || ListHas(altars, t);
-            if (hall == null && IsUnitType(u, UNIT_TYPE_TOWNHALL))
-            {
-              hall = u;
-            }
-          }
-          else if (IsUnitType(u, UNIT_TYPE_PEON))
-          {
-            workers.Add(u);
-          }
-        }
-
-        DestroyGroup(g);
-        if (!haveBarracks)
-        {
-          PlaceStarter(p, Cheapest(barracks), workers, hall, "barracks");
-        }
-
-        if (!haveAltar)
-        {
-          PlaceStarter(p, Cheapest(altars), workers, hall, "altar");
-        }
-      }
-    }
-
-    private static int Cheapest(List<int> types)
-    {
-      var best = 0;
-      var bestCost = 0;
-      for (var i = 0; i < types.Count; i++)
-      {
-        var c = GetUnitGoldCost(types[i]);
-        if (best == 0 || c < bestCost)
-        {
-          best = types[i];
-          bestCost = c;
-        }
-      }
-
-      return best;
-    }
-
-    private static void PlaceStarter(player p, int typeId, List<unit> workers, unit hall, string what)
-    {
-      if (typeId == 0)
-      {
-        return; // faction has no building of this category
-      }
-
-      // where: a worker's spot (worker removed) > ring around the main building > ring around the first CP
-      var x = 0f;
-      var y = 0f;
-      var found = false;
-      if (workers.Count > 0)
-      {
-        var w = workers[workers.Count - 1];
-        workers.RemoveAt(workers.Count - 1);
-        x = GetUnitX(w);
-        y = GetUnitY(w);
-        RemoveUnit(w);
-        found = true;
-      }
-
-      if (!found && hall != null)
-      {
-        found = FindOpenSpot(GetUnitX(hall), GetUnitY(hall));
-        x = _spotX;
-        y = _spotY;
-      }
-
-      if (!found)
-      {
-        var cps = p.GetPlayerData().ControlPoints;
-        if (cps.Count > 0 && cps[0].Unit != null)
-        {
-          found = FindOpenSpot(GetUnitX(cps[0].Unit), GetUnitY(cps[0].Unit));
-          x = _spotX;
-          y = _spotY;
-        }
-      }
-
-      if (!found)
-      {
-        Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": starter " + what + " -- no place found");
-        return;
-      }
-
-      CreateUnit(p, typeId, x, y, 270f);
-      LogPin("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": starter " + what + " created ("
-          + GetObjectName(typeId) + ")");
-    }
-
     // First walkable point on a ring 600 units around (cx, cy) -> _spotX/_spotY. Overlap with other buildings
     // isn't checked (CreateUnit places structures regardless).
-    private static float _spotX;
-    private static float _spotY;
+    internal static float _spotX;
+    internal static float _spotY;
 
-    private static bool FindOpenSpot(float cx, float cy)
+    internal static bool FindOpenSpot(float cx, float cy)
     {
       for (var i = 0; i < 8; i++)
       {
@@ -947,222 +512,9 @@ namespace WarcraftLegacies.Source.Ai
     // 3. The hero kills Ragnaros "for free" (one lethal damage instance credited to the hero), so the kill and
     //    its rewards (Sulfuras) go to the bot.
     // The hero ignores army orders for the whole mission. Travel gives up after 6 min; at most 3 attempts.
-    private static unit _ragHero;
-    private static player _ragBot;
-    private static float _ragSince;
-    private static int _ragAttempts;
-    private static bool _ragDone;
-    private static unit _ragPedestal;
-    private static bool _ragSummoned;
-    private static float _ragSummonAt;
-    private const float RagSummonX = 12332f; // where WL's QuestRagnaros spawns him
-    private const float RagSummonY = -10597f;
+    internal static unit _ragHero;
 
-    private static void RunRagnarosMission()
-    {
-      if (_ragDone)
-      {
-        return;
-      }
-
-      if (_ragSummoned)
-      {
-        RagnarosKill();
-        return;
-      }
-
-      if (_ragPedestal == null)
-      {
-        _ragPedestal = FindUnitOfType(AiConfig.RagnarosPedestalId, AiConfig.RagnarosX, AiConfig.RagnarosY, 800f);
-        if (_ragPedestal == null)
-        {
-          RagnarosEnd("pedestal not found -> mission off");
-          return;
-        }
-      }
-
-      if (GetUnitTypeId(_ragPedestal) == 0 || GetUnitState(_ragPedestal, UNIT_STATE_LIFE) <= 0.405f)
-      {
-        RagnarosEnd("pedestal already used");
-        return;
-      }
-
-      var pedOwner = GetOwningPlayer(_ragPedestal);
-      if (GetPlayerId(pedOwner) < 24)
-      {
-        if (pedOwner != _ragBot)
-        {
-          RagnarosEnd("pedestal taken by P" + I2S(GetPlayerId(pedOwner)) + " " + FacName(pedOwner));
-          return;
-        }
-
-        // phase 2: our bot owns the pedestal -- summon only with the level-12 hero standing by
-        if (!RagHeroValid())
-        {
-          _ragHero = BestHero(_ragBot);
-          if (_ragHero == null)
-          {
-            return; // wait for a hero (revive / training)
-          }
-        }
-
-        if (RagHeroReady() && IssueImmediateOrder(_ragPedestal, "selfdestruct"))
-        {
-          _ragSummoned = true;
-          _ragSummonAt = _clock;
-          Log("Ragnaros mission: " + FacName(_ragBot) + " summons Ragnaros");
-          return;
-        }
-
-        RagHeroApproach();
-        return;
-      }
-
-      // phase 1: travel
-      if (_ragHero != null)
-      {
-        if (!RagHeroValid() || _clock - _ragSince > 360f)
-        {
-          Log("Ragnaros mission: " + FacName(_ragBot) + " hero " + (RagHeroValid() ? "too slow" : "lost") + " -> released");
-          _ragHero = null;
-          return;
-        }
-
-        RagHeroApproach();
-        return;
-      }
-
-      if (_ragAttempts >= 3)
-      {
-        RagnarosEnd("3 attempts used");
-        return;
-      }
-
-      for (var c = 0; c < AiConfig.RagnarosTriggerCps.Count; c++)
-      {
-        var cp = SafeCp(AiConfig.RagnarosTriggerCps[c]);
-        if (cp == null || cp.Unit == null)
-        {
-          continue;
-        }
-
-        var o = GetOwningPlayer(cp.Unit);
-        if (!IsBot(o))
-        {
-          continue;
-        }
-
-        var hero = BestHero(o);
-        if (hero == null)
-        {
-          continue;
-        }
-
-        _ragHero = hero;
-        _ragBot = o;
-        _ragSince = _clock;
-        _ragAttempts++;
-        Log("Ragnaros mission: " + FacName(o) + " sends " + GetUnitName(hero) + " (lvl " + I2S(GetHeroLevel(hero)) + ")");
-        RagHeroApproach();
-        return;
-      }
-    }
-
-    private static bool RagHeroValid()
-    {
-      return _ragHero != null && GetUnitTypeId(_ragHero) != 0 && GetUnitState(_ragHero, UNIT_STATE_LIFE) > 0.405f
-             && GetOwningPlayer(_ragHero) == _ragBot;
-    }
-
-    private static bool RagHeroNear(float x, float y)
-    {
-      var dx = GetUnitX(_ragHero) - x;
-      var dy = GetUnitY(_ragHero) - y;
-      return dx * dx + dy * dy < 1500f * 1500f;
-    }
-
-    private static bool RagHeroReady()
-    {
-      return RagHeroValid() && RagHeroNear(AiConfig.RagnarosX, AiConfig.RagnarosY)
-             && GetHeroLevel(_ragHero) >= AiConfig.RagnarosHeroLevel;
-    }
-
-    // walk to the pedestal; raise to level 12 once within 1500 (BEFORE entering WL's rect)
-    private static void RagHeroApproach()
-    {
-      if (!RagHeroValid())
-      {
-        return;
-      }
-
-      if (RagHeroNear(AiConfig.RagnarosX, AiConfig.RagnarosY) && GetHeroLevel(_ragHero) < AiConfig.RagnarosHeroLevel)
-      {
-        SetHeroLevel(_ragHero, AiConfig.RagnarosHeroLevel, true);
-      }
-
-      IssuePointOrder(_ragHero, "move", AiConfig.RagnarosX, AiConfig.RagnarosY);
-    }
-
-    // phase 3: find the summoned boss (hostile hero at WL's spawn point) and kill him with the standing-by hero
-    private static void RagnarosKill()
-    {
-      unit rag = null;
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, RagSummonX, RagSummonY, 1000f, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        if (rag == null && IsUnitType(u, UNIT_TYPE_HERO) && GetOwningPlayer(u) == Player(PLAYER_NEUTRAL_AGGRESSIVE)
-            && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
-        {
-          rag = u;
-        }
-      }
-
-      DestroyGroup(g);
-      if (rag == null)
-      {
-        if (_clock - _ragSummonAt > 45f)
-        {
-          RagnarosEnd("Ragnaros not found after the summon (already dead?)");
-        }
-
-        return;
-      }
-
-      if (!RagHeroValid())
-      {
-        _ragHero = BestHero(_ragBot);
-      }
-
-      if (!RagHeroValid())
-      {
-        return;
-      }
-
-      if (!RagHeroNear(RagSummonX, RagSummonY) || GetHeroLevel(_ragHero) < AiConfig.RagnarosHeroLevel)
-      {
-        RagHeroApproach(); // the level-12 hero must be present for the free kill
-        return;
-      }
-
-      UnitDamageTarget(_ragHero, rag, 1000000f, true, false, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNIVERSAL,
-        WEAPON_TYPE_WHOKNOWS);
-      if (GetUnitState(rag, UNIT_STATE_LIFE) <= 0.405f)
-      {
-        RagnarosEnd(FacName(_ragBot) + "'s " + GetUnitName(_ragHero) + " slew Ragnaros");
-      }
-    }
-
-    private static void RagnarosEnd(string why)
-    {
-      _ragDone = true;
-      _ragHero = null;
-      Log("Ragnaros mission: " + why);
-    }
-
-    private static unit BestHero(player p)
+    internal static unit BestHero(player p)
     {
       unit best = null;
       var g = CreateGroup();
@@ -1172,7 +524,9 @@ namespace WarcraftLegacies.Source.Ai
       {
         GroupRemoveUnit(g, u);
         WaveOps++;
-        if (IsUnitType(u, UNIT_TYPE_HERO) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+        // 0.35.3: only heroes that can walk -- the Old Gods' god heroes (level 20) can't move; hero visits sent
+        // them to Yogg-Saron again and again
+        if (IsUnitType(u, UNIT_TYPE_HERO) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f && GetUnitMoveSpeed(u) > 1f
             && (best == null || GetHeroLevel(u) > GetHeroLevel(best)))
         {
           best = u;
@@ -1181,192 +535,6 @@ namespace WarcraftLegacies.Source.Ai
 
       DestroyGroup(g);
       return best;
-    }
-
-    // ---- v32 Legion hand-overs to the Scourge --------------------------------------------------------------
-    // Before the betrayal (Legion still allied to the Scourge): Capital Palace / Lordaeron City taken by a bot
-    // Legion go to the Scourge -- the Scourge, not the demons, sacks Lordaeron.
-    private static void LegionPalaceHandover()
-    {
-      var legion = PlayerOfFaction("Legion");
-      var scourge = PlayerOfFaction("Scourge");
-      if (legion == null || scourge == null || !IsBot(legion) || !IsPlayerAlly(legion, scourge))
-      {
-        return;
-      }
-
-      var cp = SafeCp(AiConfig.LordaeronCityCpId);
-      if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) == legion)
-      {
-        GiveUnit(cp.Unit, scourge);
-        Log("Legion took Lordaeron City before the betrayal -> handed to the Scourge");
-      }
-
-      var caps = CapitalManager.GetAll();
-      for (var i = 0; i < caps.Count; i++)
-      {
-        var cu = caps[i].Unit;
-        if (caps[i].UnitType == AiConfig.CapitalPalaceId && cu != null && GetOwningPlayer(cu) == legion
-            && GetUnitState(cu, UNIT_STATE_LIFE) > 0.405f)
-        {
-          GiveUnit(cu, scourge);
-          Log("Legion took Capital Palace before the betrayal -> handed to the Scourge");
-        }
-      }
-    }
-
-    // At the summon/betrayal: every CP the bot Legion holds on the Combined graph (Lordaeron, Northrend, EK) goes
-    // to the Scourge, so the Legion stops defending/reinforcing a continent it has left.
-    private static void LegionNorthHandover(player legion)
-    {
-      var scourge = PlayerOfFaction("Scourge");
-      if (legion == null || scourge == null || !IsBot(legion))
-      {
-        return;
-      }
-
-      EnsureNodeSets();
-      var mine = legion.GetPlayerData().ControlPoints;
-      var give = new List<unit>();
-      for (var i = 0; i < mine.Count; i++)
-      {
-        var cu = mine[i].Unit;
-        if (cu != null && _combinedNodes.Contains(GetUnitTypeId(cu)) && !AiGraph.ArgusNodes.Contains(GetUnitTypeId(cu)))
-        {
-          give.Add(cu); // collect first: transferring changes the list being read (v34: Argus stays Legion)
-        }
-      }
-
-      for (var i = 0; i < give.Count; i++)
-      {
-        GiveUnit(give[i], scourge);
-      }
-
-      Log("Legion betrayal: " + I2S(give.Count) + " northern CPs handed to the Scourge");
-    }
-
-    // ---- v34.1 Kul Tiras repair -------------------------------------------------------------------------------
-    // WL's Admiralty reward crashes on a '%' in its power text before it rescues the Kul Tiras base (seen as
-    // "Kul'tiras failed to execute OnQuestProgressChanged: invalid use of '%' in replacement string"). Once the
-    // quest is Complete, every Neutral-Passive unit still inside WL's Kul Tiras rescue area is rescued for Kul
-    // Tiras with WL's own Rescue -- the step the crash skipped. Runs once; finds nothing if WL's reward worked.
-    // (The City of Admirals power itself is still lost; that needs the text fix in WL's Loc.cs.)
-    private static bool _ktRepairDone;
-
-    private static void KulTirasRepair()
-    {
-      if (_ktRepairDone)
-      {
-        return;
-      }
-
-      var kt = PlayerOfFaction("Kul'tiras");
-      var fac = kt != null ? kt.GetPlayerData().Faction : null;
-      if (fac == null)
-      {
-        return;
-      }
-
-      QuestData adm = null;
-      foreach (var q in fac.GetAllQuests())
-      {
-        if (q.Title == "The Admiralty of Kul Tiras")
-        {
-          adm = q;
-        }
-      }
-
-      if (adm == null || adm.Progress == QuestProgress.Failed)
-      {
-        _ktRepairDone = true;
-        return;
-      }
-
-      if (adm.Progress != QuestProgress.Complete)
-      {
-        return;
-      }
-
-      _ktRepairDone = true;
-      var found = new List<unit>();
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, Player(PLAYER_NEUTRAL_PASSIVE), null); // includes hidden (prepared) units
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        WaveOps++;
-        var x = GetUnitX(u);
-        var y = GetUnitY(u);
-        if (x >= AiWorld.KulTirasRescueMinX && x <= AiWorld.KulTirasRescueMaxX
-            && y >= AiWorld.KulTirasRescueMinY && y <= AiWorld.KulTirasRescueMaxY)
-        {
-          found.Add(u);
-        }
-      }
-
-      DestroyGroup(g);
-      for (var i = 0; i < found.Count; i++)
-      {
-        found[i].Rescue(kt);
-      }
-
-      LogPin("Kul Tiras repair: " + I2S(found.Count) + " units/buildings rescued (Admiralty reward)");
-    }
-
-    // ---- v31 CP grants ----------------------------------------------------------------------------------------
-    private static readonly HashSet<int> _grantDone = new();
-
-    private static void RunCpGrants()
-    {
-      var list = AiConfig.CpGrants;
-      for (var i = 0; i < list.Count; i++)
-      {
-        if (_grantDone.Contains(i) || _clock < list[i].AtSec)
-        {
-          continue;
-        }
-
-        _grantDone.Add(i);
-        var gr = list[i];
-        var p = PlayerOfFaction(gr.Faction);
-        if (p == null || !IsBot(p))
-        {
-          continue;
-        }
-
-        for (var c = 0; c < gr.CpIds.Count; c++)
-        {
-          var cp = SafeCp(gr.CpIds[c]);
-          if (cp == null || cp.Unit == null || GetOwningPlayer(cp.Unit) != Player(PLAYER_NEUTRAL_AGGRESSIVE))
-          {
-            continue; // only free (creep-held) CPs; never take from a player or a quest lock
-          }
-
-          ClearCreeps(GetUnitX(cp.Unit), GetUnitY(cp.Unit), 1100f);
-          GiveUnit(cp.Unit, p);
-          Log(gr.Faction + ": granted " + GetUnitName(cp.Unit));
-        }
-      }
-    }
-
-    private static void ClearCreeps(float x, float y, float r)
-    {
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, x, y, r, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        WaveOps++;
-        if (GetOwningPlayer(u) == Player(PLAYER_NEUTRAL_AGGRESSIVE) && !IsUnitType(u, UNIT_TYPE_STRUCTURE)
-            && !ControlPointManager.Instance.UnitIsControlPoint(u))
-        {
-          RemoveUnit(u);
-        }
-      }
-
-      DestroyGroup(g);
     }
 
     public static BotDiag GetDiag(int pid)
@@ -1381,7 +549,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // v34.1: important one-off events (portals, summon, repairs, caught errors) are ALSO kept in a pinned list
     // that the ring buffer can't push out -- early-game lines were lost in long games.
-    public static readonly List<string> PinnedLog = new();
+    public static List<string> PinnedLog = new();
 
     public static void LogPin(string msg)
     {
@@ -1410,7 +578,7 @@ namespace WarcraftLegacies.Source.Ai
       return I2S(m) + ":" + (r < 10 ? "0" : "") + I2S(r);
     }
 
-    private static string FacName(player p)
+    internal static string FacName(player p)
     {
       var f = p.GetPlayerData().Faction;
       return f != null ? f.Name : "?";
@@ -1418,36 +586,8 @@ namespace WarcraftLegacies.Source.Ai
 
     public static player BotAt(int i) => Bots[i];
 
-    // 0.34.3: these collections are created here instead of with "= new()" at their declaration. The C#->Lua
-    // translator (CSharp.lua) builds every static field that has an initializer inside one Lua function, and it
-    // only handles about 55 of them per class (Lua upvalue limit); fields past that were silently left nil -- that
-    // broke the portals, area clears and with them all bot attacks in v34-v34.2. Keep SimpleBot below ~40
-    // initialized static fields (tools/check_refs.py checks it) and create new collections here instead.
-    private static void InitState()
-    {
-      _nodeSets = new Dictionary<string, HashSet<int>>();
-      _goalHopCache = new Dictionary<string, Dictionary<int, int>>();
-      _stuckTarget = new Dictionary<int, unit>();
-      _stuckSince = new Dictionary<int, float>();
-      _stuckHp = new Dictionary<int, float>();
-      _stuckOwner = new Dictionary<int, player>();
-      _blackUnits = new Dictionary<int, List<unit>>();
-      _blackUntil = new Dictionary<int, List<float>>();
-      _tickErrors = new HashSet<string>();
-      _killTarget = new Dictionary<int, unit>();
-      _killDone = new HashSet<int>();
-      _killSince = new Dictionary<int, float>();
-      _clearDone = new HashSet<int>();
-      _clearActive = new Dictionary<int, int>();
-      _clearSince = new Dictionary<int, float>();
-      _pairLink = new List<int>();
-      _pairA = new List<unit>();
-      _pairB = new List<unit>();
-    }
-
     public static void Setup()
     {
-      InitState();
       for (var i = 0; i < 24; i++)
       {
         var p = Player(i);
@@ -1462,11 +602,8 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       EnsureLegendHooks();
-      SetupCaptureCounting(); // v32
+      AiTech.SetupCaptureCounting(); // v32
 
-      RegisterControl("-botbreak", OnBotBreak);
-      RegisterControl("-prod", OnProd);
-      RegisterControl("-atk", OnAtk);
 
       var combat = CreateTimer();
       TimerStart(combat, Tick, true, OnCombatTick);
@@ -1475,133 +612,16 @@ namespace WarcraftLegacies.Source.Ai
       var rev = CreateTimer();
       TimerStart(rev, ReviveEvery, true, OnHeroReviveTick);
       var evt = CreateTimer();
-      TimerStart(evt, 2.0f, true, OnEventCheck);
+      TimerStart(evt, 2.0f, true, AiLegion.OnEventCheck);
       var wave = CreateTimer();
       TimerStart(wave, 15f, true, OnWaveTick);
 
       // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
       // Northrend base is gone). Argus reaches Northrend through the portal until the summon.
       var legionBase = CreateTimer();
-      TimerStart(legionBase, 3.0f, false, SpawnLegionBase);
+      TimerStart(legionBase, 3.0f, false, AiLegion.SpawnLegionBase);
       var portals = CreateTimer();
-      TimerStart(portals, 2.0f, false, SetupPortals);
-    }
-
-    // A minimal, functional Legion base beside the Crystalsong Forest CP: a town hall, an altar, a couple of
-    // farms for food, and 5 producers -- all pulled from Legion's own faction categories. Bots only, so a
-    // human Legion is never handed free structures. Ids come from the faction, so a WL rename can't wrong-spawn.
-    private static void SpawnLegionBase()
-    {
-      var legion = PlayerOfFaction("Legion");
-      if (legion == null || !IsBot(legion))
-      {
-        return;
-      }
-
-      var fac = legion.GetPlayerData().Faction;
-      if (fac == null)
-      {
-        return;
-      }
-
-      // remove the Legion Heralds (workers) at the Argus start -- they become the buildings below
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, AiWorld.LegionStartX, AiWorld.LegionStartY, 1500f, null);
-      unit u;
-      var removed = 0;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        if (GetOwningPlayer(u) == legion && GetUnitTypeId(u) == AiWorld.LegionHeraldId)
-        {
-          RemoveUnit(u);
-          removed++;
-        }
-      }
-
-      DestroyGroup(g);
-
-      // 0.34.3: each building gets its own open spot (searched outward from the start location, footprint
-      // checked, kept apart from the others) -- the old fixed ring of 8 found only 1 walkable spot in Argus.
-      // 5 barracks, 1 altar, 2 farms.
-      var types = new List<int>();
-      var barracks = new List<int>();
-      AddCategory(fac, UnitCategory.Barracks, barracks);
-      for (var i = 0; i < 5 && barracks.Count > 0; i++)
-      {
-        types.Add(barracks[i % barracks.Count]);
-      }
-
-      AddFirstOf(fac, UnitCategory.Altar, types);
-      AddFirstOf(fac, UnitCategory.Farm, types);
-      AddFirstOf(fac, UnitCategory.Farm, types);
-      var placed = 0;
-      var usedX = new List<float>();
-      var usedY = new List<float>();
-      for (var i = 0; i < types.Count; i++)
-      {
-        if (!FindBuildSpot(AiWorld.LegionStartX, AiWorld.LegionStartY, usedX, usedY))
-        {
-          continue;
-        }
-
-        CreateUnit(legion, types[i], _spotX, _spotY, 270f);
-        usedX.Add(_spotX);
-        usedY.Add(_spotY);
-        placed++;
-      }
-
-      LogPin("Legion: Argus start -- " + I2S(removed) + " workers replaced by " + I2S(placed) + " buildings");
-    }
-
-    // open ground for a ~512-wide building: rings 500..2000 out, 16 directions; centre and 4 corners walkable and
-    // >= 600 from every spot already used. Result in _spotX/_spotY.
-    private static bool FindBuildSpot(float cx, float cy, List<float> usedX, List<float> usedY)
-    {
-      for (var r = 500f; r <= 2000f; r += 250f)
-      {
-        for (var i = 0; i < 16; i++)
-        {
-          var a = i * 0.392699f;
-          var x = cx + r * Cos(a);
-          var y = cy + r * Sin(a);
-          if (IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x + 220f, y + 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x - 220f, y + 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x + 220f, y - 220f, PATHING_TYPE_WALKABILITY)
-              || IsTerrainPathable(x - 220f, y - 220f, PATHING_TYPE_WALKABILITY))
-          {
-            continue;
-          }
-
-          var free = true;
-          for (var k = 0; k < usedX.Count && free; k++)
-          {
-            var dx = usedX[k] - x;
-            var dy = usedY[k] - y;
-            free = dx * dx + dy * dy >= 600f * 600f;
-          }
-
-          if (free)
-          {
-            _spotX = x;
-            _spotY = y;
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
-
-    private static void AddFirstOf(Faction fac, UnitCategory cat, List<int> into)
-    {
-      var ids = new List<int>();
-      AddCategory(fac, cat, ids);
-      if (ids.Count > 0)
-      {
-        into.Add(ids[0]);
-      }
+      TimerStart(portals, 2.0f, false, AiLegion.SetupPortals);
     }
 
     private static void PlaceFirstOf(player p, Faction fac, UnitCategory cat, float x, float y)
@@ -1614,47 +634,26 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static void RegisterControl(string cmd, System.Action act)
-    {
-      var tr = CreateTrigger();
-      for (var i = 0; i < 24; i++)
-      {
-        TriggerRegisterPlayerChatEvent(tr, Player(i), cmd, true);
-      }
-
-      TriggerAddAction(tr, () =>
-      {
-        try
-        {
-          act();
-        }
-        catch (System.Exception e)
-        {
-          DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 15, "|cffff4444AI command " + cmd + " failed:|r " + e.Message);
-        }
-      });
-    }
-
-    private static void OnBotBreak()
+    internal static void OnBotBreak()
     {
       BotBreak = !BotBreak;
       DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 6,
         BotBreak ? "|cffff5555bots PAUSED (-botbreak)|r" : "|cff55ff55bots RESUMED|r");
     }
 
-    private static void OnProd()
+    internal static void OnProd()
     {
       ProdOn = !ProdOn;
       DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 6, "production " + (ProdOn ? "ON" : "OFF"));
     }
 
-    private static void OnAtk()
+    internal static void OnAtk()
     {
       AtkOn = !AtkOn;
       DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 6, "attacking " + (AtkOn ? "ON" : "OFF"));
     }
 
-    private static void AddCategory(Faction f, UnitCategory cat, List<int> into)
+    internal static void AddCategory(Faction f, UnitCategory cat, List<int> into)
     {
       if (f.TryGetObjectByCategory(cat, out var ids) && ids != null)
       {
@@ -1665,7 +664,7 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static bool ListHas(List<int> list, int v)
+    internal static bool ListHas(List<int> list, int v)
     {
       for (var i = 0; i < list.Count; i++)
       {
@@ -1740,6 +739,45 @@ namespace WarcraftLegacies.Source.Ai
 
     // v13: bring back bots' dead (non-perma) heroes for free every few minutes, at their start location.
     // Bots are too gold-starved to pay altar revive costs, so heroes were staying dead.
+    // 0.35.3: the bot's living altar nearest to (x, y), or null
+    private static unit FindAltar(player p, float x, float y)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (fac == null)
+      {
+        return null;
+      }
+
+      var altarTypes = new List<int>();
+      AddCategory(fac, UnitCategory.Altar, altarTypes);
+      unit best = null;
+      var bestD = 0f;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (!altarTypes.Contains(GetUnitTypeId(u)) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f
+            || BlzIsUnitInvulnerable(u) && IsUnitHidden(u))
+        {
+          continue;
+        }
+
+        var dx = GetUnitX(u) - x;
+        var dy = GetUnitY(u) - y;
+        var d = dx * dx + dy * dy;
+        if (best == null || d < bestD)
+        {
+          best = u;
+          bestD = d;
+        }
+      }
+
+      DestroyGroup(g);
+      return best;
+    }
+
     private static void OnHeroReviveTick()
     {
       if (BotBreak)
@@ -1751,9 +789,16 @@ namespace WarcraftLegacies.Source.Ai
       for (var b = 0; b < Bots.Count; b++)
       {
         var p = Bots[b];
+        if (!HasPerks(p))
+        {
+          continue; // 0.35: fair autopilot -- heroes are revived at the altar like a player's
+        }
+
         var loc = GetPlayerStartLocation(p);
         var hx = GetStartLocationX(loc);
         var hy = GetStartLocationY(loc);
+        unit altar = null;
+        var altarLooked = false;
         for (var i = 0; i < heroes.Count; i++)
         {
           var hu = heroes[i].Unit;
@@ -1774,8 +819,20 @@ namespace WarcraftLegacies.Source.Ai
             continue;
           }
 
-          ReviveHero(hu, hx, hy, true);
-          Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": free revive " + GetUnitName(hu));
+          // 0.35.3: only with a living altar, and the hero appears at that altar (nearest to the start location)
+          if (!altarLooked)
+          {
+            altar = FindAltar(p, hx, hy);
+            altarLooked = true;
+          }
+
+          if (altar == null)
+          {
+            continue;
+          }
+
+          ReviveHero(hu, GetUnitX(altar), GetUnitY(altar), true);
+          Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": free revive " + GetUnitName(hu) + " at " + GetUnitName(altar));
         }
       }
     }
@@ -1784,7 +841,7 @@ namespace WarcraftLegacies.Source.Ai
     // cheap enough to call every production tick, so legends registered mid-game are covered too).
     // v32: also remember each legend's unit type at hook time, so a permanent death blacklists the ORIGINAL form
     // even when WL has already switched the legend to a new form (Cenarius -> ghost) in an earlier handler.
-    private static readonly List<LegendaryHero> _hookedLegends = new();
+    internal static List<LegendaryHero> _hookedLegends = new();
     private static readonly List<int> _hookedType = new();
 
     private static void EnsureLegendHooks()
@@ -1824,38 +881,7 @@ namespace WarcraftLegacies.Source.Ai
         LogPin("PERMA-DEATH " + lh.Name + " (" + I2S(orig) + ") -> excluded from train/revive");
       }
 
-      RemoveBannedForm(lh); // the new form may already exist if WL's handler ran first
-    }
-
-    // v32: a perma-dead legend that WL brought back as a BANNED new form (AiConfig.BannedNewForms, e.g. the
-    // Cenarius ghost) is removed again when a bot owns it. Also scanned on the 15 s wave tick, because WL's
-    // handler may run after ours.
-    private static void RemoveBannedForm(LegendaryHero lh)
-    {
-      var lu = lh.Unit;
-      if (lu == null || GetUnitTypeId(lu) == 0 || !AiConfig.BannedNewForms.Contains(GetUnitTypeId(lu)))
-      {
-        return;
-      }
-
-      var owner = GetOwningPlayer(lu);
-      if (!IsBot(owner))
-      {
-        return; // humans keep WL's mechanic
-      }
-
-      PermaDead.Add(GetUnitTypeId(lu));
-      Log("P" + I2S(GetPlayerId(owner)) + " " + FacName(owner) + ": " + lh.Name
-          + " returned as a banned new form -> removed (stays dead for bots)");
-      RemoveUnit(lu);
-    }
-
-    private static void ScanBannedForms()
-    {
-      for (var i = 0; i < _hookedLegends.Count; i++)
-      {
-        RemoveBannedForm(_hookedLegends[i]);
-      }
+      AiMissions.RemoveBannedForm(lh); // the new form may already exist if WL's handler ran first
     }
 
     private static void OnProductionTick()
@@ -1883,18 +909,23 @@ namespace WarcraftLegacies.Source.Ai
       {
         var p = Bots[b];
         var pid0 = GetPlayerId(p);
-        SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD,
-          GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + GoldBonusFor(p)); // v13: subsidy; v31: per faction
-        var techLvl = R2I(_clock / 600f); // v21: 0 before 10 min, then +1 every 10 min
-        if (techLvl > 5)
+        var perks = HasPerks(p); // 0.35: false for a FAIR autopilot player -- no subsidy, no free techs/upgrades
+        if (perks)
         {
-          techLvl = 5;
+          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD,
+            GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + GoldBonusFor(p)); // v13: subsidy; v31: per faction
+          var techLvl = R2I(_clock / 600f); // v21: 0 before 10 min, then +1 every 10 min
+          if (techLvl > 5)
+          {
+            techLvl = 5;
+          }
+
+          for (var ui = 0; ui < AiConfig.CombatUpgrades.Count; ui++)
+          {
+            SetPlayerTechResearched(p, AiConfig.CombatUpgrades[ui], techLvl);
+          }
         }
 
-        for (var ui = 0; ui < AiConfig.CombatUpgrades.Count; ui++)
-        {
-          SetPlayerTechResearched(p, AiConfig.CombatUpgrades[ui], techLvl);
-        }
         var faction = p.GetPlayerData().Faction;
         if (faction == null)
         {
@@ -1905,8 +936,8 @@ namespace WarcraftLegacies.Source.Ai
         // 1 + one per 5 min (old timer) + one per 2 CPs captured. Steps = every upgrade at level 1 first, then
         // level 2, then level 3, so casters reach their higher tiers too.
         var caps = _cpCaptures.ContainsKey(pid0) ? _cpCaptures[pid0] : 0;
-        var steps = TechStepsFor(faction.Name);
-        if (steps.Ids.Count > 0)
+        var steps = AiTech.TechStepsFor(faction.Name);
+        if (perks && steps.Ids.Count > 0)
         {
           var un = 1 + R2I(_clock / 300f) + caps / 2;
           if (un > steps.Ids.Count)
@@ -1921,7 +952,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         // v33: BUILDING/MISC pool -- one credit per 2 CPs captured (no timer); spent after the structure scan.
-        var bCredits = caps / 2 - (_bSpent.ContainsKey(pid0) ? _bSpent[pid0] : 0);
+        var bCredits = perks ? caps / 2 - (_bSpent.ContainsKey(pid0) ? _bSpent[pid0] : 0) : 0;
         unit upHall = null;
         unit upOther = null;
 
@@ -1961,8 +992,11 @@ namespace WarcraftLegacies.Source.Ai
           }
 
           var tid = GetUnitTypeId(u);
-          TryEventResearch(p, u, tid); // v32: event researches first, while the building's queue is free
-          TryQuestUpgrade(p, u, tid);  // v34: quest building upgrades (Stormwind's Construction Sites)
+          if (perks)
+          {
+            AiTech.TryEventResearch(p, u, tid); // v32: event researches first, while the building's queue is free
+            AiTech.TryQuestUpgrade(p, u, tid);  // v34: quest building upgrades (Stormwind's Construction Sites)
+          }
           if (bCredits > 0 && AiUpgrades.BuildingUpgrades.ContainsKey(tid) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
           {
             if (IsUnitType(u, UNIT_TYPE_TOWNHALL))
@@ -2003,7 +1037,7 @@ namespace WarcraftLegacies.Source.Ai
         DestroyGroup(g);
         if (bCredits > 0)
         {
-          SpendBuildingCredit(p, pid0, upHall, upOther);
+          AiTech.SpendBuildingCredit(p, pid0, upHall, upOther);
         }
       }
 
@@ -2140,7 +1174,7 @@ namespace WarcraftLegacies.Source.Ai
       // wave owns the army -- combat yields, so the two systems never issue conflicting orders to the same
       // units. The wave self-aborts (its %/enemy gate) if home is threatened, handing control straight back.
       var facWave = p.GetPlayerData().Faction;
-      if (facWave != null && WaveOwnsFaction(facWave.Name))
+      if (facWave != null && AiWaveRunner.WaveOwnsFaction(facWave.Name))
       {
         BotArmy[pid] = army;
         BotLm[pid] = lm;
@@ -2177,7 +1211,7 @@ namespace WarcraftLegacies.Source.Ai
 
           // v31: a scripted kill target (AiConfig.KillTargets, e.g. Scourge -> Sapphiron) outranks expansion until
           // the unit is dead. Whole army attack-moves it; defence above still pre-empts.
-          var kill = ActiveKillTarget(p, pid);
+          var kill = AiMissions.ActiveKillTarget(p, pid);
           if (kill != null)
           {
             state = "kill";
@@ -2654,9 +1688,8 @@ namespace WarcraftLegacies.Source.Ai
           d.Neutral++;
         }
 
-        var dx = GetUnitX(frontier) - ax;
-        var dy = GetUnitY(frontier) - ay;
-        var score = dx * dx + dy * dy;
+        var score = TravelDist2(ax, ay, GetUnitX(frontier), GetUnitY(frontier)); // 0.35.2: portal-aware
+        score = score * edges[i].Weight * edges[i].Weight;                       // 0.35.3: edge weight
         if (!enemy)
         {
           score = score * NeutralBias * NeutralBias;
@@ -2684,10 +1717,72 @@ namespace WarcraftLegacies.Source.Ai
       return best;
     }
 
+    // 0.35.2: squared travel distance army -> target. Straight line on the same landmass. To a target on another
+    // landmass, the best AI portal whose one end is on the army's landmass counts as the way: |army->portal| +
+    // |other end->target|. Before, a target across the sea that LOOKED close (Blasted Lands from Argus) beat the
+    // real way out (the Northrend portal), so the Legion sat in Argus. Full path-based targeting: TODO.md.
+    private static float TravelDist2(float ax, float ay, float tx, float ty)
+    {
+      var dx = tx - ax;
+      var dy = ty - ay;
+      var direct = dx * dx + dy * dy;
+      var lmA = Geography.Landmass(ax, ay);
+      var lmT = Geography.Landmass(tx, ty);
+      if (lmA < 0 || lmA == lmT)
+      {
+        return direct;
+      }
+
+      var best = -1f;
+      for (var i = 0; i < AiLegion.PortalPairCount; i++)
+      {
+        var a = AiLegion.PortalA(i);
+        var b = AiLegion.PortalB(i);
+        if (GetUnitTypeId(a) == 0 || GetUnitTypeId(b) == 0)
+        {
+          continue;
+        }
+
+        var d = PortalLeg(ax, ay, tx, ty, a, b, lmA);
+        if (d >= 0f && (best < 0f || d < best))
+        {
+          best = d;
+        }
+
+        d = PortalLeg(ax, ay, tx, ty, b, a, lmA);
+        if (d >= 0f && (best < 0f || d < best))
+        {
+          best = d;
+        }
+      }
+
+      if (best < 0f)
+      {
+        return direct;
+      }
+
+      return best * best;
+    }
+
+    // army -> entry (must be on the army's landmass) -> exit -> target; -1 if the entry is elsewhere
+    private static float PortalLeg(float ax, float ay, float tx, float ty, unit entry, unit exit, int lmA)
+    {
+      var ex = GetUnitX(entry);
+      var ey = GetUnitY(entry);
+      if (Geography.Landmass(ex, ey) != lmA)
+      {
+        return -1f;
+      }
+
+      var ox = GetUnitX(exit);
+      var oy = GetUnitY(exit);
+      return SquareRoot((ex - ax) * (ex - ax) + (ey - ay) * (ey - ay))
+             + SquareRoot((tx - ox) * (tx - ox) + (ty - oy) * (ty - oy));
+    }
+
     // v34: graph merge (set at the Legion summon) and node sets per edge-set name (built once).
     public static bool GraphMerged => _graphMerged;
-    private static bool _graphMerged;
-    private static Dictionary<string, HashSet<int>> _nodeSets; // 0.34.3: created in InitState (see there)
+    internal static bool _graphMerged;
 
     private static HashSet<int> NodeSetOf(string setName)
     {
@@ -2696,9 +1791,9 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
-      if (_nodeSets.ContainsKey(setName))
+      if (AiState.NodeSets.ContainsKey(setName))
       {
-        return _nodeSets[setName];
+        return AiState.NodeSets[setName];
       }
 
       var set = new HashSet<int>();
@@ -2712,14 +1807,13 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      _nodeSets[setName] = set;
+      AiState.NodeSets[setName] = set;
       return set;
     }
 
     // v31: hop distance from every node to the faction's goal CP over its current edge set (all edges, open or
     // not -- topology only). Cached per (set, goal). Null when the faction has no goal, the goal isn't in this
     // edge set, or the faction (or an ally) already owns it.
-    private static Dictionary<string, Dictionary<int, int>> _goalHopCache; // 0.34.3: created in InitState (see there)
 
     private static Dictionary<int, int> GoalHopsFor(string facName, string setName, player p)
     {
@@ -2736,9 +1830,9 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var key = setName + "|" + I2S(goal);
-      if (_goalHopCache.ContainsKey(key))
+      if (AiState.GoalHopCache.ContainsKey(key))
       {
-        return _goalHopCache[key];
+        return AiState.GoalHopCache[key];
       }
 
       var edges = AiGraph.EdgesByName(setName);
@@ -2771,7 +1865,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var result = inSet ? hops : null;
-      _goalHopCache[key] = result;
+      AiState.GoalHopCache[key] = result;
       return result;
     }
 
@@ -2781,67 +1875,61 @@ namespace WarcraftLegacies.Source.Ai
     // every "parked forever" cause at once: unreachable islands, blocked bridges, invulnerable CPs, etc.
     private const float StuckSec = 240f;
     private const float BlacklistSec = 300f;
-    private static Dictionary<int, unit> _stuckTarget; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, float> _stuckSince; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, float> _stuckHp; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, player> _stuckOwner; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, List<unit>> _blackUnits; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, List<float>> _blackUntil; // 0.34.3: created in InitState (see there)
 
     private static void TrackStuck(player p, int pid, unit tgt)
     {
       if (tgt == null)
       {
-        _stuckTarget[pid] = null;
+        AiState.StuckTarget[pid] = null;
         return;
       }
 
       var hp = GetUnitState(tgt, UNIT_STATE_LIFE);
       var owner = GetOwningPlayer(tgt);
-      var same = _stuckTarget.ContainsKey(pid) && _stuckTarget[pid] == tgt && _stuckOwner[pid] == owner;
+      var same = AiState.StuckTarget.ContainsKey(pid) && AiState.StuckTarget[pid] == tgt && AiState.StuckOwner[pid] == owner;
       if (!same)
       {
-        _stuckTarget[pid] = tgt;
-        _stuckSince[pid] = _clock;
-        _stuckHp[pid] = hp;
-        _stuckOwner[pid] = owner;
+        AiState.StuckTarget[pid] = tgt;
+        AiState.StuckSince[pid] = _clock;
+        AiState.StuckHp[pid] = hp;
+        AiState.StuckOwner[pid] = owner;
         return;
       }
 
-      if (hp < _stuckHp[pid] * 0.9f)
+      if (hp < AiState.StuckHp[pid] * 0.9f)
       {
-        _stuckSince[pid] = _clock; // real progress -> reset the timer
-        _stuckHp[pid] = hp;
+        AiState.StuckSince[pid] = _clock; // real progress -> reset the timer
+        AiState.StuckHp[pid] = hp;
         return;
       }
 
-      if (_clock - _stuckSince[pid] < StuckSec)
+      if (_clock - AiState.StuckSince[pid] < StuckSec)
       {
         return;
       }
 
-      if (!_blackUnits.ContainsKey(pid))
+      if (!AiState.BlackUnits.ContainsKey(pid))
       {
-        _blackUnits[pid] = new List<unit>();
-        _blackUntil[pid] = new List<float>();
+        AiState.BlackUnits[pid] = new List<unit>();
+        AiState.BlackUntil[pid] = new List<float>();
       }
 
-      _blackUnits[pid].Add(tgt);
-      _blackUntil[pid].Add(_clock + BlacklistSec);
-      _stuckTarget[pid] = null;
+      AiState.BlackUnits[pid].Add(tgt);
+      AiState.BlackUntil[pid].Add(_clock + BlacklistSec);
+      AiState.StuckTarget[pid] = null;
       Log("P" + I2S(pid) + " " + FacName(p) + ": STUCK on " + GetUnitName(tgt) + " for "
           + I2S(R2I(StuckSec)) + "s, no progress -> skip it for " + I2S(R2I(BlacklistSec)) + "s");
     }
 
     private static bool IsBlacklisted(int pid, unit cp)
     {
-      if (!_blackUnits.ContainsKey(pid))
+      if (!AiState.BlackUnits.ContainsKey(pid))
       {
         return false;
       }
 
-      var us = _blackUnits[pid];
-      var ts = _blackUntil[pid];
+      var us = AiState.BlackUnits[pid];
+      var ts = AiState.BlackUntil[pid];
       for (var i = us.Count - 1; i >= 0; i--)
       {
         if (ts[i] <= _clock)
@@ -2879,123 +1967,7 @@ namespace WarcraftLegacies.Source.Ai
              && !IsPlayerAlly(p, owner);
     }
 
-    // v15: fire a node's event once, when a bot of its ByFaction owns that control point.
-    private static unit CapitalUnitOfType(int typeId)
-    {
-      var caps = CapitalManager.GetAll();
-      for (var i = 0; i < caps.Count; i++)
-      {
-        var cu = caps[i].Unit;
-        if (cu != null && GetUnitTypeId(cu) == typeId && GetUnitState(cu, UNIT_STATE_LIFE) > 0.405f)
-        {
-          return cu;
-        }
-      }
-
-      return null;
-    }
-
-    private static void OnEventCheck()
-    {
-      if (BotBreak)
-      {
-        return;
-      }
-
-      var evs = AiGraph.Events;
-      for (var i = 0; i < evs.Count; i++)
-      {
-        var ev = evs[i];
-        if (ev.NodeId == 0 || FiredEvents.ContainsKey(ev.NodeId))
-        {
-          continue;
-        }
-
-        // v34: an event node may also be a CAPITAL (The Sunwell is not a control point -- that is why the
-        // Scourge took it and nothing happened).
-        var cp = SafeCp(ev.NodeId);
-        var nodeUnit = cp != null ? cp.Unit : CapitalUnitOfType(ev.NodeId);
-        if (nodeUnit == null)
-        {
-          continue;
-        }
-
-        var owner = GetOwningPlayer(nodeUnit);
-        if (GetPlayerId(owner) >= 24)
-        {
-          continue; // still neutral / unclaimed
-        }
-
-        var ownerFac = owner.GetPlayerData().Faction;
-        if (ownerFac != null && ownerFac.Name == ev.ByFaction)
-        {
-          FiredEvents[ev.NodeId] = true;
-          FireEvent(ev);
-        }
-      }
-    }
-
-    private static void FireEvent(NodeEvent ev)
-    {
-      if (ev.Kind == "legion")
-      {
-        Log("event: " + ev.ByFaction + " holds node " + I2S(ev.NodeId) + " -> Legion summon");
-        SummonLegion();
-      }
-      else if (ev.Kind == "chat")
-      {
-        for (var i = 0; i < 24; i++)
-        {
-          DisplayTimedTextToPlayer(Player(i), 0, 0, 10, ev.Text);
-        }
-      }
-    }
-
-    // v27: true while an invasion wave has this faction in its gather (1) or channel (2) phase -- the window
-    // during which the wave is actively commanding/teleporting the army, so combat must stand down.
-    private static bool WaveOwnsFaction(string facName)
-    {
-      var waves = AiWaves.All;
-      for (var i = 0; i < waves.Count; i++)
-      {
-        var phase = _wavePhase.ContainsKey(i) ? _wavePhase[i] : 0;
-        if ((phase == 1 || phase == 2) && InGroup(waves[i], facName))
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    public static bool GroupHasBot(WaveConfig cfg)
-    {
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var f = Bots[b].GetPlayerData().Faction;
-        if (f != null && InGroup(cfg, f.Name))
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    private static bool InGroup(WaveConfig cfg, string facName)
-    {
-      for (var i = 0; i < cfg.Factions.Count; i++)
-      {
-        if (cfg.Factions[i] == facName)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    private static bool OwnsCp(WaveConfig cfg, int cpId)
+    internal static bool OwnsCp(WaveConfig cfg, int cpId)
     {
       if (cpId == 0)
       {
@@ -3015,10 +1987,10 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var f = owner.GetPlayerData().Faction;
-      return f != null && InGroup(cfg, f.Name);
+      return f != null && AiWaveRunner.InGroup(cfg, f.Name);
     }
 
-    private static void Announce(string msg)
+    internal static void Announce(string msg)
     {
       for (var i = 0; i < 24; i++)
       {
@@ -3027,16 +1999,15 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // Bright flashing minimap ping (visible to everyone) so a big event isn't missed.
-    private static void PingAt(float x, float y)
+    internal static void PingAt(float x, float y)
     {
       PingMinimapEx(x, y, 6f, 255, 40, 40, true);
       PingMinimapEx(x, y, 8f, 255, 0, 255, true); // second, offset-colour ping = "double ping"
     }
 
     // v34.2: run one wave-tick subtask; an error is logged (once per subtask) instead of aborting the tick.
-    private static HashSet<string> _tickErrors; // 0.34.3: created in InitState (see there)
 
-    private static void Safe(string name, System.Action task)
+    internal static void Safe(string name, System.Action task)
     {
       try
       {
@@ -3050,9 +2021,9 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void TickError(string name, System.Exception e)
     {
-      if (!_tickErrors.Contains(name))
+      if (!AiState.TickErrors.Contains(name))
       {
-        _tickErrors.Add(name);
+        AiState.TickErrors.Add(name);
         LogPin("TICK ERROR in " + name + ": " + e.Message);
       }
     }
@@ -3070,27 +2041,28 @@ namespace WarcraftLegacies.Source.Ai
       // v34.2: every subtask runs isolated. Before, one failing subtask aborted the whole tick every 15 s --
       // which is why the gate sweeps (they ran LAST) stopped and the gates came back. Gates now go first, and a
       // failure is written once to the pinned log ("TICK ERROR in ...") instead of killing everything after it.
-      Safe("destructible gates", SweepDestructibleGates); // v27.1: destructible gates ONCE (not bridges/walls)
-      Safe("gate sweep", SweepBotGates);                  // v26: gate units, at start then every ~5 min
-      Safe("tempest reach", WireTempestReach);            // v25
-      Safe("one-shots", RunOneShots);                     // v25: runestones
-      Safe("kill targets", AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
-      Safe("cp grants", RunCpGrants);                     // v31
-      Safe("starter kit", RunStarterKit);                 // v32: barracks + altar (0:20 and 3:00)
-      Safe("ragnaros", RunRagnarosMission);               // v32/v33
-      Safe("palace handover", LegionPalaceHandover);      // v32
-      Safe("banned forms", ScanBannedForms);              // v32: Cenarius stays dead for bots
-      Safe("demon portal", () => FixDemonPortal());       // v31: WL's caster-less portal off (0,0)
-      Safe("legion check", CheckLegionSummoned);          // v34.1: summon handling, whatever completed it
-      Safe("portal watchdog", PortalWatchdog);            // v34.1
-      Safe("kul tiras repair", KulTirasRepair);           // v34.1
+      Safe("destructible gates", AiGates.SweepDestructibleGates); // v27.1: destructible gates ONCE (not bridges/walls)
+      Safe("gate sweep", AiGates.SweepBotGates);                  // v26: gate units, at start then every ~5 min
+      Safe("tempest reach", AiGates.WireTempestReach);            // v25
+      Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
+      Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
+      Safe("cp grants", AiMissions.RunCpGrants);                     // v31
+      Safe("starter kit", AiMissions.RunStarterKit);                 // v32: barracks + altar (0:20 and 3:00)
+      Safe("ragnaros", AiMissions.RunRagnarosMission);
+      Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon
+      Safe("palace handover", AiMissions.LegionPalaceHandover);      // v32
+      Safe("banned forms", AiMissions.ScanBannedForms);              // v32: Cenarius stays dead for bots
+      Safe("demon portal", () => AiLegion.FixDemonPortal());       // v31: WL's caster-less portal off (0,0)
+      Safe("legion check", AiLegion.CheckLegionSummoned);          // v34.1: summon handling, whatever completed it
+      Safe("portal watchdog", AiLegion.PortalWatchdog);            // v34.1
+      Safe("kul tiras repair", AiMissions.KulTirasRepair);           // v34.1
 
       var waves = AiWaves.All;
       for (var w = 0; w < waves.Count; w++)
       {
         try
         {
-          RunWave(w, waves[w]);
+          AiWaveRunner.RunWave(w, waves[w]);
         }
         catch (System.Exception e)
         {
@@ -3126,92 +2098,7 @@ namespace WarcraftLegacies.Source.Ai
       return _validCpIds.Contains(id) ? ControlPointManager.Instance.GetFromUnitType(id) : null;
     }
 
-    private static float _lastGateSweep = -1f;
-    private static HashSet<int> _gateSet;
-    private static bool _destGatesSwept;
-    private static HashSet<int> _destGateSet;
-
-    // One-time: kill every destructible GATE doodad so no chokepoint gate blocks anyone. Gates are preplaced,
-    // so the single whole-map destructible enum runs once. Only AiGraph.GateDestructibles types (gates) are
-    // touched -- bridges and tree/stone walls are excluded, so this cannot delete a bridge deck.
-    private static void SweepDestructibleGates()
-    {
-      if (_destGatesSwept)
-      {
-        return;
-      }
-
-      _destGatesSwept = true;
-      if (_destGateSet == null)
-      {
-        _destGateSet = new HashSet<int>();
-        for (var i = 0; i < AiGraph.GateDestructibles.Count; i++)
-        {
-          _destGateSet.Add(AiGraph.GateDestructibles[i]);
-        }
-      }
-
-      EnumDestructablesInRect(GetWorldBounds(), null, KillGateDestructable);
-    }
-
-    private static void KillGateDestructable()
-    {
-      var d = GetEnumDestructable();
-      if (_destGateSet.Contains(GetDestructableTypeId(d)))
-      {
-        SetDestructableInvulnerable(d, false);
-        KillDestructable(d);
-      }
-    }
-
-    // Remove every bot-owned wall-gate so a bot can never wall its own army in. Runs once immediately, then
-    // ~every 5 min (gates can be built later). Strict type match against AiGraph.GateTypes -> only real gates.
-    private static void SweepBotGates()
-    {
-      if (_lastGateSweep >= 0f && _clock - _lastGateSweep < 300f)
-      {
-        return;
-      }
-
-      _lastGateSweep = _clock;
-      if (_gateSet == null)
-      {
-        _gateSet = new HashSet<int>();
-        for (var i = 0; i < AiGraph.GateTypes.Count; i++)
-        {
-          _gateSet.Add(AiGraph.GateTypes[i]);
-        }
-      }
-
-      // v27.2: whole-map unit enum (not per-player) -- catches gate units no matter who owns them or how they
-      // were placed. Strict gate-type match -> only real gates are removed. Use -id on a surviving gate to read
-      // its true type id; if it isn't one of these, add it to AiGraph.GateTypes.
-      var g = CreateGroup();
-      GroupEnumUnitsInRect(g, GetWorldBounds(), null);
-      unit u;
-      var touched = 0;
-      var removed = 0;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        touched++;
-        if (_gateSet.Contains(GetUnitTypeId(u)))
-        {
-          RemoveUnit(u);
-          removed++;
-        }
-      }
-
-      DestroyGroup(g);
-      WaveOps += touched;
-      LastSweepOps = touched;
-      if (removed > 0)
-      {
-        Log("gate sweep: removed " + I2S(removed) + " gate units (" + I2S(touched) + " units scanned)");
-      }
-    }
-
-    private static void EnsureNodeSets()
+    internal static void EnsureNodeSets()
     {
       if (_combinedNodes != null)
       {
@@ -3278,1105 +2165,7 @@ namespace WarcraftLegacies.Source.Ai
       return name;
     }
 
-    // Tempest Reach has no named CP constant in WL source (CPs are auto-detected by buff), so we resolve it at
-    // runtime from its coord (8960,-1152): find the nearest CP and add the Blackwald edge. Niche Gilneas spur --
-    // if nothing sits there, it just stays a leaf.
-    private static void WireTempestReach()
-    {
-      if (_tempestWired)
-      {
-        return;
-      }
-
-      _tempestWired = true;
-      const int blackwald = 1848653398;
-      var bestType = 0;
-      var bestD = 1500f * 1500f;
-      var cps = ControlPointManager.Instance.GetAllControlPoints();
-      for (var i = 0; i < cps.Count; i++)
-      {
-        var ex = GetUnitX(cps[i].Unit) - 8960f;
-        var ey = GetUnitY(cps[i].Unit) - (-1152f);
-        var d = ex * ex + ey * ey;
-        if (d < bestD)
-        {
-          bestD = d;
-          bestType = cps[i].UnitType;
-        }
-      }
-
-      if (bestType != 0 && bestType != blackwald)
-      {
-        AiGraph.Combined.Add(new Edge(blackwald, bestType));
-      }
-    }
-
-    // WL sets Thandol Span (destructible LT08 ~15695,457) invulnerable and never opens it, so bots can never
-    // cross Arathi <-> Dun Modr. Force it open at 20 min, matching that edge's OpenTime.
-    private static void OpenThandolIfDue()
-    {
-      if (_thandolOpened || _clock < 1200f)
-      {
-        return;
-      }
-
-      _thandolOpened = true;
-      var best = FindDestructableNear(1280585784, 15695f, 457f, 2000f);
-      if (best != null)
-      {
-        SetDestructableInvulnerable(best, false);
-        KillDestructable(best);
-        PingMinimap(15695f, 457f, 4f);
-      }
-    }
-
-    private static destructable _destFound;
-    private static int _destWant;
-    private static float _destBx, _destBy, _destBest;
-    private static destructable FindDestructableNear(int typeId, float x, float y, float r)
-    {
-      _destFound = null;
-      _destWant = typeId;
-      _destBx = x;
-      _destBy = y;
-      _destBest = r * r;
-      if (_itemRect == null)
-      {
-        _itemRect = Rect(0f, 0f, 1f, 1f);
-      }
-
-      SetRect(_itemRect, x - r, y - r, x + r, y + r);
-      EnumDestructablesInRect(_itemRect, null, PickDestructable);
-      return _destFound;
-    }
-
-    private static void PickDestructable()
-    {
-      var d = GetEnumDestructable();
-      if (GetDestructableTypeId(d) != _destWant)
-      {
-        return;
-      }
-
-      var ex = GetDestructableX(d) - _destBx;
-      var ey = GetDestructableY(d) - _destBy;
-      var dist = ex * ex + ey * ey;
-      if (dist <= _destBest)
-      {
-        _destBest = dist;
-        _destFound = d;
-      }
-    }
-
-    // ---- v31 kill targets ------------------------------------------------------------------------------------
-    // AiConfig.KillTargets: a faction's bot hunts one specific unit (found by TYPE id near X/Y) from AtSec until
-    // it is dead. Assigned on the 15 s wave tick (one range scan, once); Process just reads _killTarget.
-    private static Dictionary<int, unit> _killTarget; // 0.34.3: created in InitState (see there)
-    private static HashSet<int> _killDone; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, float> _killSince; // 0.34.3: created in InitState (see there)
-    private const float KillGiveUpSec = 360f; // army can't finish it (too strong / unreachable) -> give up
-
-    private static void AssignKillTargets()
-    {
-      AssignClearAreas(); // v34.2
-      var list = AiConfig.KillTargets;
-      for (var i = 0; i < list.Count; i++)
-      {
-        if (_killDone.Contains(i) || _clock < list[i].AtSec)
-        {
-          continue;
-        }
-
-        var kt = list[i];
-        var bot = PlayerOfFaction(kt.Faction);
-        if (bot == null || !IsBot(bot))
-        {
-          _killDone.Add(i);
-          continue;
-        }
-
-        _killDone.Add(i);
-        var g = CreateGroup();
-        GroupEnumUnitsInRange(g, kt.X, kt.Y, kt.Radius, null);
-        unit found = null;
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          WaveOps++;
-          if (found == null && GetUnitTypeId(u) == kt.UnitType && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
-          {
-            found = u;
-          }
-        }
-
-        DestroyGroup(g);
-        if (found == null)
-        {
-          Log("kill target " + kt.Label + ": not found near " + I2S(R2I(kt.X)) + "," + I2S(R2I(kt.Y)) + " -> skipped");
-          continue;
-        }
-
-        _killTarget[GetPlayerId(bot)] = found;
-        _killSince[GetPlayerId(bot)] = _clock;
-        Log(kt.Faction + ": KILL TARGET " + kt.Label + " assigned");
-      }
-    }
-
-    // ---- v34.2 area clears (AiConfig.ClearAreas) ----
-    private static HashSet<int> _clearDone; // 0.34.3: created in InitState (see there)
-    private static Dictionary<int, int> _clearActive; // 0.34.3: created in InitState (see there)   // pid -> ClearAreas index (-1 = none)
-    private static Dictionary<int, float> _clearSince; // 0.34.3: created in InitState (see there)
-
-    private static void AssignClearAreas()
-    {
-      var list = AiConfig.ClearAreas;
-      for (var i = 0; i < list.Count; i++)
-      {
-        if (_clearDone.Contains(i))
-        {
-          continue;
-        }
-
-        var cp = SafeCp(list[i].TriggerCpId);
-        if (cp == null || cp.Unit == null)
-        {
-          continue;
-        }
-
-        var o = GetOwningPlayer(cp.Unit);
-        var pid = GetPlayerId(o);
-        if (!IsBot(o) || (_clearActive.ContainsKey(pid) && _clearActive[pid] >= 0)
-            || (_killTarget.ContainsKey(pid) && _killTarget[pid] != null))
-        {
-          continue; // owner is no bot, or already busy with a kill target / another clear
-        }
-
-        _clearDone.Add(i);
-        _clearActive[pid] = i;
-        _clearSince[pid] = _clock;
-        LogPin(FacName(o) + ": AREA CLEAR " + list[i].Label + " started (holds trigger CP)");
-      }
-    }
-
-    // nearest living Neutral Hostile unit in the bot's active clear area, or null (area done / given up)
-    private static unit ActiveClearTarget(player p, int pid)
-    {
-      if (!_clearActive.ContainsKey(pid) || _clearActive[pid] < 0)
-      {
-        return null;
-      }
-
-      var ca = AiConfig.ClearAreas[_clearActive[pid]];
-      if (_clock - _clearSince[pid] > 480f)
-      {
-        _clearActive[pid] = -1;
-        LogPin(FacName(p) + ": area clear " + ca.Label + " given up after 8 min");
-        return null;
-      }
-
-      unit best = null;
-      var bestD = 0f;
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, ca.X, ca.Y, ca.Radius, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        OpUnits++;
-        if (GetOwningPlayer(u) != Player(PLAYER_NEUTRAL_AGGRESSIVE) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f
-            || BlzIsUnitInvulnerable(u) || ControlPointManager.Instance.UnitIsControlPoint(u))
-        {
-          continue;
-        }
-
-        var dx = GetUnitX(u) - ca.X;
-        var dy = GetUnitY(u) - ca.Y;
-        var dd = dx * dx + dy * dy;
-        if (best == null || dd < bestD)
-        {
-          best = u;
-          bestD = dd;
-        }
-      }
-
-      DestroyGroup(g);
-      if (best == null)
-      {
-        _clearActive[pid] = -1;
-        LogPin(FacName(p) + ": area clear " + ca.Label + " DONE");
-      }
-
-      return best;
-    }
-
-    private static unit ActiveKillTarget(player p, int pid)
-    {
-      if (!_killTarget.ContainsKey(pid) || _killTarget[pid] == null)
-      {
-        return ActiveClearTarget(p, pid); // v34.2: area clears run when no single kill target is active
-      }
-
-      var u = _killTarget[pid];
-      if (GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-      {
-        _killTarget[pid] = null;
-        Log("P" + I2S(pid) + " " + FacName(p) + ": kill target dead -> back to expansion");
-        return null;
-      }
-
-      if (_killSince.ContainsKey(pid) && _clock - _killSince[pid] > KillGiveUpSec)
-      {
-        _killTarget[pid] = null;
-        Log("P" + I2S(pid) + " " + FacName(p) + ": kill target " + GetUnitName(u) + " still alive after "
-            + I2S(R2I(KillGiveUpSec)) + "s -> giving up");
-        return null;
-      }
-
-      return u;
-    }
-
-    // One-shots: when a non-excluded bot owns the trigger CP (or any CP within radius), send a small force to
-    // the point once, then mark it consumed. Evaluated on the 15s wave tick -> no scanning loop.
-    private static void RunOneShots()
-    {
-      for (var i = 0; i < AiGraph.OneShots.Count; i++)
-      {
-        if (_oneShotDone.Contains(i))
-        {
-          continue;
-        }
-
-        var os = AiGraph.OneShots[i];
-        var claimant = OneShotClaimant(os);
-        if (claimant == null)
-        {
-          continue;
-        }
-
-        _oneShotDone.Add(i);
-        SendForceTo(claimant, os.X, os.Y, 6);
-        PingMinimap(os.X, os.Y, 4f);
-      }
-    }
-
-    // The first bot that owns the trigger CP (or a CP within radius) and isn't excluded. Null if none yet.
-    private static player OneShotClaimant(AiGraph.OneShot os)
-    {
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var p = Bots[b];
-        var fac = p.GetPlayerData().Faction;
-        if (fac == null || os.Exclude.Contains(fac.Name))
-        {
-          continue;
-        }
-
-        if (os.NearCpId != 0)
-        {
-          var cp = SafeCp(os.NearCpId);
-          if (cp != null && GetOwningPlayer(cp.Unit) == p)
-          {
-            return p;
-          }
-        }
-        else
-        {
-          var cps = ControlPointManager.Instance.GetAllControlPoints();
-          for (var c = 0; c < cps.Count; c++)
-          {
-            var cu = cps[c].Unit;
-            if (GetOwningPlayer(cu) != p)
-            {
-              continue;
-            }
-
-            var ex = GetUnitX(cu) - os.X;
-            var ey = GetUnitY(cu) - os.Y;
-            if (ex * ex + ey * ey <= os.NearRadius * os.NearRadius)
-            {
-              return p;
-            }
-          }
-        }
-      }
-
-      return null;
-    }
-
-    // Order up to n of a bot's nearest army units to attack-move a point (clears whatever is there).
-    private static void SendForceTo(player p, float x, float y, int n)
-    {
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      var sent = 0;
-      unit u;
-      while ((u = FirstOfGroup(g)) != null && sent < n)
-      {
-        GroupRemoveUnit(g, u);
-        if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || IsUnitType(u, UNIT_TYPE_PEON)
-            || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-        {
-          continue;
-        }
-
-        IssuePointOrder(u, "attack", x, y);
-        sent++;
-      }
-
-      // drain the rest without ordering
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-      }
-
-      DestroyGroup(g);
-    }
-
-    // v27.1: a position is "home" if it's on the home landmass -- or, when the home landmass is -1 (islands the
-    // downsample can't resolve, e.g. Kul Tiras), within HomeWaveRadius of the home CP. Without this, island
-    // waves count the whole map's -1 coastline and their %/enemy gate can never pass -> they never teleport.
-    private static bool IsHomeArea(int homeLm, float hx, float hy, float x, float y)
-    {
-      if (homeLm != -1)
-      {
-        return Geography.Landmass(x, y) == homeLm;
-      }
-
-      var dx = x - hx;
-      var dy = y - hy;
-      return dx * dx + dy * dy <= AiWorld.HomeWaveRadius * AiWorld.HomeWaveRadius;
-    }
-
-    private static bool WaveActive(WaveConfig cfg, int homeLm, float hx, float hy)
-    {
-      // v30: cheapest test first -- an unowned trigger CP rules the wave out before any unit enumeration.
-      if (cfg.TriggerCpId != 0 && !OwnsCp(cfg, cfg.TriggerCpId))
-      {
-        return false;
-      }
-
-      HomeCpCounts(cfg, homeLm, hx, hy, out var owned, out var total);
-      var thresholdMet = total > 0 && owned >= R2I(total * cfg.Threshold);
-
-      // v24: launch when the group either holds the %-gate OR owns every monument on its home area,
-      // AND has cleared home down to a handful of enemies. Optional TriggerCpId is still an extra AND.
-      return (thresholdMet || AllMonumentsOwned(cfg, homeLm, hx, hy))
-             && EnemiesOnLandmass(cfg, homeLm, hx, hy, AiWorld.EnemyLeaveThreshold) < AiWorld.EnemyLeaveThreshold;
-    }
-
-    // v28: home-area CP counts for a wave group (shared by WaveActive and the diagnostics snapshot).
-    private static void HomeCpCounts(WaveConfig cfg, int homeLm, float hx, float hy, out int owned, out int total)
-    {
-      total = 0;
-      owned = 0;
-      var cps = ControlPointManager.Instance.GetAllControlPoints();
-      for (var i = 0; i < cps.Count; i++)
-      {
-        var cu = cps[i].Unit;
-        if (!IsHomeArea(homeLm, hx, hy, GetUnitX(cu), GetUnitY(cu)))
-        {
-          continue;
-        }
-
-        total++;
-        var owner = GetOwningPlayer(cu);
-        if (GetPlayerId(owner) < 24)
-        {
-          var of = owner.GetPlayerData().Faction;
-          if (of != null && InGroup(cfg, of.Name))
-          {
-            owned++;
-          }
-        }
-      }
-    }
-
-    // v28: diagnostics snapshot of one wave (on demand from AiDebug; never called by logic).
-    public static WaveDiag GetWaveDiag(int idx)
-    {
-      var w = new WaveDiag();
-      if (idx < 0 || idx >= AiWaves.All.Count)
-      {
-        return w;
-      }
-
-      var cfg = AiWaves.All[idx];
-      w.HasBot = GroupHasBot(cfg);
-      w.Phase = _wavePhase.ContainsKey(idx) ? _wavePhase[idx] : 0;
-      w.PhaseAge = _wavePhaseAt.ContainsKey(idx) ? _clock - _wavePhaseAt[idx] : 0f;
-      var lastDone = _waveLastDone.ContainsKey(idx) ? _waveLastDone[idx] : -99999f;
-      w.CooldownLeft = cfg.IntervalSec - (_clock - lastDone);
-      if (w.CooldownLeft < 0f)
-      {
-        w.CooldownLeft = 0f;
-      }
-
-      var homeCp = SafeCp(cfg.HomeCpId);
-      if (homeCp == null)
-      {
-        return w;
-      }
-
-      w.HomeOk = true;
-      var hx = GetUnitX(homeCp.Unit);
-      var hy = GetUnitY(homeCp.Unit);
-      w.HomeLm = Geography.Landmass(hx, hy);
-      HomeCpCounts(cfg, w.HomeLm, hx, hy, out var owned, out var total);
-      w.Owned = owned;
-      w.Total = total;
-      w.Need = R2I(total * cfg.Threshold);
-      w.Monuments = AllMonumentsOwned(cfg, w.HomeLm, hx, hy);
-      w.Enemies = EnemiesOnLandmass(cfg, w.HomeLm, hx, hy, 500);
-      w.TriggerOk = cfg.TriggerCpId == 0 || OwnsCp(cfg, cfg.TriggerCpId);
-      w.Active = WaveActive(cfg, w.HomeLm, hx, hy);
-      return w;
-    }
-
-    // All monuments in the group's home area must be owned by the group. Monuments elsewhere are ignored,
-    // so the same two lists serve every wave regardless of which theatre it launches from.
-    private static bool AllMonumentsOwned(WaveConfig cfg, int homeLm, float hx, float hy)
-    {
-      var any = false;
-      if (!MonumentsHeld(cfg, homeLm, hx, hy, AiWorld.CombinedMonuments, ref any))
-      {
-        return false;
-      }
-
-      if (!MonumentsHeld(cfg, homeLm, hx, hy, AiWorld.KalimdorMonuments, ref any))
-      {
-        return false;
-      }
-
-      return any; // true only if at least one monument was actually in this home area and all such were held
-    }
-
-    private static bool MonumentsHeld(WaveConfig cfg, int homeLm, float hx, float hy, List<int> monuments, ref bool any)
-    {
-      for (var i = 0; i < monuments.Count; i++)
-      {
-        var cp = SafeCp(monuments[i]);
-        if (cp == null || !IsHomeArea(homeLm, hx, hy, GetUnitX(cp.Unit), GetUnitY(cp.Unit)))
-        {
-          continue;
-        }
-
-        any = true;
-        var owner = cp.Unit != null ? GetOwningPlayer(cp.Unit) : null;
-        var of = owner != null && GetPlayerId(owner) < 24 ? owner.GetPlayerData().Faction : null;
-        if (of == null || !InGroup(cfg, of.Name))
-        {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    // Count enemies (non-group, living, non-structure) on the home landmass, stopping at cap. Runs on the
-    // 15s wave tick for a few active waves only -> cheap. "Cleared home enough to leave" gate.
-    private static int EnemiesOnLandmass(WaveConfig cfg, int homeLm, float hx, float hy, int cap)
-    {
-      var count = 0;
-      for (var i = 0; i < 24; i++)
-      {
-        var p = Player(i);
-        var f = p.GetPlayerData().Faction;
-        if (f != null && InGroup(cfg, f.Name))
-        {
-          continue; // own group isn't "enemy"
-        }
-
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          WaveOps++;
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-          {
-            continue;
-          }
-
-          if (IsHomeArea(homeLm, hx, hy, GetUnitX(u), GetUnitY(u)))
-          {
-            count++;
-          }
-        }
-
-        DestroyGroup(g);
-        if (count >= cap)
-        {
-          return count;
-        }
-      }
-
-      return count;
-    }
-
-    // idle -> gather (units walk to staging) -> channel (portals open) -> jump to ONE random destination.
-    private static void RunWave(int idx, WaveConfig cfg)
-    {
-      var homeCp = SafeCp(cfg.HomeCpId);
-      if (homeCp == null)
-      {
-        return;
-      }
-
-      // v30: waves are a BOT mechanic. With no bot in the group (e.g. Kul Tiras played by a human) the wave
-      // never evaluates -- no fleet/portal messages, and no whole-map enemy count every 15 s.
-      if (!GroupHasBot(cfg))
-      {
-        if (_wavePhase.ContainsKey(idx) && _wavePhase[idx] != 0)
-        {
-          Log("wave " + I2S(idx) + ": no bot in group -> aborted");
-          AbortWave(idx);
-        }
-
-        _waveWasActive[idx] = false;
-        return;
-      }
-
-      var homeLm = Geography.Landmass(GetUnitX(homeCp.Unit), GetUnitY(homeCp.Unit));
-      var active = WaveActive(cfg, homeLm, GetUnitX(homeCp.Unit), GetUnitY(homeCp.Unit));
-      var was = _waveWasActive.ContainsKey(idx) && _waveWasActive[idx];
-      if (!active && was)
-      {
-        Announce(cfg.StopMsg);
-        Log("wave " + I2S(idx) + ": gate lost -> stopped");
-        AbortWave(idx);
-      }
-
-      if (active && !was)
-      {
-        Log("wave " + I2S(idx) + ": gate now OPEN (active)");
-      }
-
-      _waveWasActive[idx] = active;
-
-      var gx = cfg.GatherX == 0f && cfg.GatherY == 0f ? GetUnitX(homeCp.Unit) : cfg.GatherX;
-      var gy = cfg.GatherX == 0f && cfg.GatherY == 0f ? GetUnitY(homeCp.Unit) : cfg.GatherY;
-      var phase = _wavePhase.ContainsKey(idx) ? _wavePhase[idx] : 0;
-
-      if (phase == 0)
-      {
-        if (!active)
-        {
-          return;
-        }
-
-        var lastDone = _waveLastDone.ContainsKey(idx) ? _waveLastDone[idx] : -99999f;
-        if (_clock - lastDone < cfg.IntervalSec || cfg.Dests.Count == 0)
-        {
-          return;
-        }
-
-        var d = cfg.Dests[GetRandomInt(0, cfg.Dests.Count - 1)];
-        var dx = d.X;
-        var dy = d.Y;
-        if (d.CpId != 0)
-        {
-          var dc = SafeCp(d.CpId);
-          if (dc == null)
-          {
-            return;
-          }
-
-          dx = GetUnitX(dc.Unit);
-          dy = GetUnitY(dc.Unit);
-        }
-
-        if (dx == 0f && dy == 0f)
-        {
-          return; // destination not set yet
-        }
-
-        _waveDestX[idx] = dx;
-        _waveDestY[idx] = dy;
-        Announce(cfg.PrepMsg);
-        Log("wave " + I2S(idx) + ": gather -> dest " + I2S(R2I(dx)) + "," + I2S(R2I(dy)));
-        PingAt(gx, gy);
-        _wavePhase[idx] = 1;
-        _wavePhaseAt[idx] = _clock;
-        return;
-      }
-
-      if (!active)
-      {
-        AbortWave(idx);
-        return;
-      }
-
-      if (phase == 1)
-      {
-        GatherToPoint(cfg, homeLm, gx, gy);
-        if (_clock - _wavePhaseAt[idx] >= cfg.GatherSec)
-        {
-          _waveSrcFx[idx] = AddSpecialEffect(cfg.PortalModel, gx, gy);
-          _waveDstFx[idx] = AddSpecialEffect(cfg.PortalModel, _waveDestX[idx], _waveDestY[idx]);
-          PingAt(gx, gy);
-          Log("wave " + I2S(idx) + ": channel");
-          _wavePhase[idx] = 2;
-          _wavePhaseAt[idx] = _clock;
-        }
-
-        return;
-      }
-
-      if (_clock - _wavePhaseAt[idx] >= cfg.ChannelSec)
-      {
-        var moved = TeleportGathered(cfg, homeLm, gx, gy, _waveDestX[idx], _waveDestY[idx]);
-        Log("wave " + I2S(idx) + ": JUMP, " + I2S(moved) + " units teleported");
-        Announce(cfg.ArriveMsg);
-        PingAt(_waveDestX[idx], _waveDestY[idx]);
-        AbortWave(idx);
-        _waveLastDone[idx] = _clock;
-      }
-    }
-
-    private static void GatherToPoint(WaveConfig cfg, int homeLm, float gx, float gy)
-    {
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var p = Bots[b];
-        var fac = p.GetPlayerData().Faction;
-        if (fac == null || !InGroup(cfg, fac.Name))
-        {
-          continue;
-        }
-
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          WaveOps++;
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || IsUnitType(u, UNIT_TYPE_PEON))
-          {
-            continue;
-          }
-
-          var ux = GetUnitX(u);
-          var uy = GetUnitY(u);
-          // In the home area AND not already sitting at a landing zone. The second test stops an away-team from
-          // being dragged back home when home + landing share an ambiguous landmass id (islands).
-          if (IsHomeArea(homeLm, gx, gy, ux, uy) && !NearAnyDest(cfg, ux, uy, 6000f) && u != _ragHero)
-          {
-            IssuePointOrder(u, "attack", gx, gy);
-          }
-        }
-
-        DestroyGroup(g);
-      }
-    }
-
-    private static int TeleportGathered(WaveConfig cfg, int homeLm, float gx, float gy, float dx, float dy)
-    {
-      var moved = 0;
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var p = Bots[b];
-        var fac = p.GetPlayerData().Faction;
-        if (fac == null || !InGroup(cfg, fac.Name))
-        {
-          continue;
-        }
-
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          WaveOps++;
-          var ux = GetUnitX(u);
-          var uy = GetUnitY(u);
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || !IsHomeArea(homeLm, gx, gy, ux, uy)
-              || NearAnyDest(cfg, ux, uy, 6000f) || u == _ragHero)
-          {
-            continue; // structures, off-continent units, units at a landing, the Ragnaros hero: left alone
-          }
-
-          // v24: teleport ALL home-landmass units (gather is flavor now) -> nobody is stranded by a radius.
-          SetUnitX(u, dx + GetRandomReal(-512f, 512f));
-          SetUnitY(u, dy + GetRandomReal(-512f, 512f));
-          moved++;
-        }
-
-        DestroyGroup(g);
-
-        // v24: the arriving group adopts the destination continent's node system (no fallback to non-node).
-        if (cfg.DestEdgeSet != "")
-        {
-          _factionEdgeSet[fac.Name] = cfg.DestEdgeSet;
-          Log(fac.Name + ": edge set -> " + cfg.DestEdgeSet + " (wave arrival)");
-        }
-      }
-
-      return moved;
-    }
-
-    // True if (x,y) is within r of any of the wave's landing zones. Used to exclude an already-departed
-    // away-team from the gather/teleport passes so it isn't pulled home again (islands share landmass ids).
-    private static bool NearAnyDest(WaveConfig cfg, float x, float y, float r)
-    {
-      var r2 = r * r;
-      for (var i = 0; i < cfg.Dests.Count; i++)
-      {
-        var d = cfg.Dests[i];
-        var dx = d.X;
-        var dy = d.Y;
-        if (d.CpId != 0)
-        {
-          var dc = SafeCp(d.CpId);
-          if (dc == null)
-          {
-            continue;
-          }
-
-          dx = GetUnitX(dc.Unit);
-          dy = GetUnitY(dc.Unit);
-        }
-
-        if (dx == 0f && dy == 0f)
-        {
-          continue;
-        }
-
-        var ex = x - dx;
-        var ey = y - dy;
-        if (ex * ex + ey * ey <= r2)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    private static void AbortWave(int idx)
-    {
-      if (_waveSrcFx.ContainsKey(idx) && _waveSrcFx[idx] != null)
-      {
-        DestroyEffect(_waveSrcFx[idx]);
-        _waveSrcFx[idx] = null;
-      }
-
-      if (_waveDstFx.ContainsKey(idx) && _waveDstFx[idx] != null)
-      {
-        DestroyEffect(_waveDstFx[idx]);
-        _waveDstFx[idx] = null;
-      }
-
-      _wavePhase[idx] = 0;
-    }
-
-    // Debug: instant jump of the group's home-landmass units to a random destination (skips prep/channel).
-    public static void ForceWave(int idx)
-    {
-      if (idx < 0 || idx >= AiWaves.All.Count)
-      {
-        return;
-      }
-
-      var cfg = AiWaves.All[idx];
-      if (cfg.Dests.Count == 0)
-      {
-        return;
-      }
-
-      var homeCp = SafeCp(cfg.HomeCpId);
-      if (homeCp == null)
-      {
-        return;
-      }
-
-      var homeLm = Geography.Landmass(GetUnitX(homeCp.Unit), GetUnitY(homeCp.Unit));
-      var d = cfg.Dests[GetRandomInt(0, cfg.Dests.Count - 1)];
-      var dx = d.X;
-      var dy = d.Y;
-      if (d.CpId != 0)
-      {
-        var dc = SafeCp(d.CpId);
-        if (dc == null)
-        {
-          return;
-        }
-
-        dx = GetUnitX(dc.Unit);
-        dy = GetUnitY(dc.Unit);
-      }
-
-      var sfx = AddSpecialEffect(cfg.PortalModel, dx, dy);
-      DestroyEffect(sfx);
-      PingAt(dx, dy);
-      for (var b = 0; b < Bots.Count; b++)
-      {
-        var p = Bots[b];
-        var fac = p.GetPlayerData().Faction;
-        if (fac == null || !InGroup(cfg, fac.Name))
-        {
-          continue;
-        }
-
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && Geography.Landmass(GetUnitX(u), GetUnitY(u)) == homeLm)
-          {
-            SetUnitX(u, dx + GetRandomReal(-512f, 512f));
-            SetUnitY(u, dy + GetRandomReal(-512f, 512f));
-          }
-        }
-
-        DestroyGroup(g);
-      }
-
-      Announce(cfg.ArriveMsg);
-    }
-
-    public static void SummonLegion()
-    {
-      foreach (var f in FactionManager.GetAllFactions())
-      {
-        if (f.Name != "Legion")
-        {
-          continue;
-        }
-
-        foreach (var q in f.GetAllQuests())
-        {
-          if (q is QuestSummonLegion)
-          {
-            if (_legionSummonStarted)
-            {
-              return; // v34: once only (Sunwell + corrupted Sunwell events, or a repeated -legion)
-            }
-
-            _legionSummonStarted = true;
-            var t = CreateTimer();
-            TimerStart(t, 1.0f, false, OnLegionSummoned); // let the quest's own CreatePortals run first
-            try
-            {
-              q.Progress = QuestProgress.Complete;
-            }
-            catch (System.Exception e)
-            {
-              LogPin("Legion summon quest: WL error during completion -- " + e.Message);
-            }
-
-            return;
-          }
-        }
-      }
-    }
-
-    // v24: forget the quest's invisible exterior portal (it spawns at the caster's spot -> (0,0) for a bot, and
-    // its model may not render). Instead spawn a clean, visible waygate pair, pull the Legion to the Kalimdor
-    // exit so the Hyjal march begins at once, switch its node system to Kalimdor, and trigger the betrayal.
-    // v34.1: the summon quest can complete by ANY path (bot ritual, WL, -legion, the Sunwell event). The wave
-    // tick polls it, so the AI's summon handling (portals, merge, gold, betrayal) always runs -- exactly once.
-    private static bool _legionHandled;
-    private static QuestData _legionQuest;
-
-    private static void CheckLegionSummoned()
-    {
-      if (_legionHandled)
-      {
-        return;
-      }
-
-      if (_legionQuest == null)
-      {
-        var f = PlayerOfFaction("Legion");
-        var fac = f != null ? f.GetPlayerData().Faction : null;
-        if (fac == null)
-        {
-          return;
-        }
-
-        foreach (var q in fac.GetAllQuests())
-        {
-          if (q is QuestSummonLegion)
-          {
-            _legionQuest = q;
-          }
-        }
-
-        if (_legionQuest == null)
-        {
-          return;
-        }
-      }
-
-      if (_legionQuest.Progress == QuestProgress.Complete)
-      {
-        LogPin("Legion summon quest is complete -> running the summon handling");
-        OnLegionSummoned();
-      }
-    }
-
-    private static void OnLegionSummoned()
-    {
-      if (_legionHandled)
-      {
-        return;
-      }
-
-      _legionHandled = true;
-      try
-      {
-        OnLegionSummonedSteps();
-      }
-      catch (System.Exception e)
-      {
-        LogPin("Legion summon handling ERROR: " + e.Message);
-      }
-
-      // the graph switches must happen even if a step above failed
-      _factionEdgeSet["Legion"] = "Kalimdor";
-      _gateOpen["legion"] = true;
-      _gateOpen["prelegion"] = false;
-      _graphMerged = true;
-      LogPin("LEGION SUMMONED: Legion home -> Kalimdor, Argus hub open, Northrend link closed, graphs MERGED");
-    }
-
-    private static void OnLegionSummonedSteps()
-    {
-      // 1) v31: WL's own portal pair. QuestSummonLegion creates the exterior Demon Portal (n037) at the casting
-      //    hero's position -- (0,0) when the quest is completed without a caster (bot, -legion, Sunwell event) --
-      //    and points the interior Antoran portal (n03C) at it. Recreate it at the real exit and re-point the
-      //    interior portal. Only if WL's portal can't be found do we fall back to the old workaround pair.
-      //    v34: that portal now goes beside Quel'Danas (Argus <-> Sunwell). The Argus <-> Northrend portal is
-      //    removed and the Argus <-> Felwood portal opens (AiGraph.Portals, phase "legion").
-      Safe("summon: demon portal", () =>
-      {
-        if (!FixDemonPortal())
-        {
-          LogPin("Legion: WL Demon Portal not found at (0,0) -- Argus <-> Sunwell link missing");
-        }
-      });
-      Safe("summon: portals", SwitchPortalsToLegionPhase);
-
-      var legion = PlayerOfFaction("Legion");
-
-      // v31: one-time war chest for a bot Legion arriving on Kalimdor.
-      if (legion != null && IsBot(legion) && !_legionGoldGiven)
-      {
-        _legionGoldGiven = true;
-        SetPlayerState(legion, PLAYER_STATE_RESOURCE_GOLD,
-          GetPlayerState(legion, PLAYER_STATE_RESOURCE_GOLD) + AiWorld.LegionSummonGold);
-        Log("Legion: +" + I2S(AiWorld.LegionSummonGold) + " gold (summon bonus)");
-      }
-
-      // v32: the north stays with the Scourge -- the Legion stops defending a continent it has left.
-      Safe("summon: north handover", () => LegionNorthHandover(legion));
-
-      // 2) collect the Legion's host at the Kalimdor exit -- bots only, so a human Legion keeps control of theirs.
-      if (legion != null && IsBot(legion))
-      {
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, legion, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
-          {
-            continue;
-          }
-
-          SetUnitX(u, AiWorld.LegionExitX + GetRandomReal(-384f, 384f));
-          SetUnitY(u, AiWorld.LegionExitY + GetRandomReal(-384f, 384f));
-        }
-
-        DestroyGroup(g);
-      }
-
-      // 3) graph switches (Legion home -> Kalimdor, hub gates, MERGE) happen in OnLegionSummoned, after this.
-
-      // 4) the betrayal: the Scourge turns on its demon masters. Scattered northern Legion units are left to die.
-      var scourge = PlayerOfFaction("Scourge");
-      if (scourge != null && legion != null)
-      {
-        SetPlayerAlliance(scourge, legion, ALLIANCE_PASSIVE, false);
-        SetPlayerAlliance(legion, scourge, ALLIANCE_PASSIVE, false);
-      }
-
-      PingAt(AiWorld.LegionExitX, AiWorld.LegionExitY);
-      Announce("|cffff5555The Burning Legion pours into Kalimdor -- and the Scourge turns on its masters! (see the ping)|r");
-    }
-
-    private static bool _legionGoldGiven;
-    private static bool _legionSummonStarted;
-
-    // v31: find WL's exterior Demon Portal stranded near (0,0) and rebuild it at AiWorld.LegionExit, re-pointing
-    // WL's interior Antoran portal at it. Returns true if a portal was (or already is) in place. Called after a
-    // summon and from the 15 s wave tick (one small range scan at the map centre -- cheap, catches any summon path).
-    private static bool FixDemonPortal()
-    {
-      var portalType = FourCC("n037");
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, 0f, 0f, 900f, null);
-      unit stranded = null;
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        WaveOps++;
-        if (stranded == null && GetUnitTypeId(u) == portalType)
-        {
-          stranded = u;
-        }
-      }
-
-      DestroyGroup(g);
-      if (stranded == null)
-      {
-        return _demonPortalFixed;
-      }
-
-      var owner = GetOwningPlayer(stranded);
-      var x = AiWorld.LegionSunwellPortalX; // v34: beside Quel'Danas (was: beside Felwood)
-      var y = AiWorld.LegionSunwellPortalY;
-      var fresh = CreateUnit(owner, portalType, x, y, 0f);
-      BlzSetUnitName(fresh, "Demon Portal to Argus");
-
-      // interior portal: preplaced n03C in Antoran (WL points it at the exterior portal's old position)
-      var interior = FindUnitOfType(FourCC("n03C"), AiWorld.LegionInteriorX, AiWorld.LegionInteriorY, 1500f);
-      if (interior != null)
-      {
-        LandBeside(GetUnitX(interior), GetUnitY(interior));
-        WaygateSetDestination(fresh, _spotX, _spotY);
-        LandBeside(x, y);
-        WaygateSetDestination(interior, _spotX, _spotY);
-        WaygateActivate(interior, true);
-        BlzSetUnitName(interior, "Demon Portal to Quel'Danas");
-      }
-      else
-      {
-        WaygateSetDestination(fresh, WaygateGetDestinationX(stranded), WaygateGetDestinationY(stranded));
-      }
-
-      WaygateActivate(fresh, true);
-      RemoveUnit(stranded);
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, x, y));
-      FloatLabel("Legion Portal", x, y);
-      PingAt(x, y);
-      _demonPortalFixed = true;
-      LogPin("Legion: Demon Portal moved (0,0) -> " + I2S(R2I(x)) + "," + I2S(R2I(y))
-          + (interior != null ? ", Antoran portal re-pointed" : ", Antoran portal NOT found"));
-      return true;
-    }
-
-    private static bool _demonPortalFixed;
-
-    private static unit FindUnitOfType(int typeId, float x, float y, float r)
+    internal static unit FindUnitOfType(int typeId, float x, float y, float r)
     {
       var g = CreateGroup();
       GroupEnumUnitsInRange(g, x, y, r, null);
@@ -4395,174 +2184,7 @@ namespace WarcraftLegacies.Source.Ai
       return found;
     }
 
-    // ---- v34 physical portals (AiGraph.Portals) ------------------------------------------------------------
-    // Real waygates -- usable by every player. "always" + "prelegion" are created 2 s into the game, the
-    // "prelegion" ones removed and the "legion" ones created at the summon. Travellers land on open ground
-    // BESIDE the other end (landing exactly on a waygate can bounce them straight back).
-    // v34.1: owned by Neutral EXTRA (player 26), not Neutral Passive -- WL removes Neutral-Passive units from
-    // whole areas at runtime (CleanupNeutralPassiveUnits), which is the likely reason only one ship pair
-    // survived. A watchdog on the wave tick rebuilds any pair whose unit disappeared, and every pair is created
-    // inside try/catch so one failure can't stop the others.
-    private static List<int> _pairLink; // 0.34.3: created in InitState (see there)
-    private static List<unit> _pairA; // 0.34.3: created in InitState (see there)
-    private static List<unit> _pairB; // 0.34.3: created in InitState (see there)
-
-    public static int PortalPairCount => _pairLink.Count;
-    public static unit PortalA(int i) => _pairA[i];
-    public static unit PortalB(int i) => _pairB[i];
-
-    private static void SetupPortals()
-    {
-      _gateOpen["prelegion"] = true;
-      CreatePortals("always");
-      CreatePortals("prelegion");
-    }
-
-    private static void SwitchPortalsToLegionPhase()
-    {
-      for (var i = _pairLink.Count - 1; i >= 0; i--)
-      {
-        if (AiGraph.Portals[_pairLink[i]].Phase == "prelegion")
-        {
-          RemoveUnit(_pairA[i]);
-          RemoveUnit(_pairB[i]);
-          _pairLink.RemoveAt(i);
-          _pairA.RemoveAt(i);
-          _pairB.RemoveAt(i);
-        }
-      }
-
-      CreatePortals("legion");
-    }
-
-    private static void CreatePortals(string phase)
-    {
-      var list = AiGraph.Portals;
-      var n = 0;
-      for (var i = 0; i < list.Count; i++)
-      {
-        if (list[i].Phase == phase && CreatePair(i, -1))
-        {
-          n++;
-        }
-      }
-
-      LogPin("portals: " + I2S(n) + " pair(s) created (" + phase + ")");
-    }
-
-    // build link i; slot >= 0 replaces an existing pair (watchdog), -1 appends
-    private static bool CreatePair(int link, int slot)
-    {
-      var pl = AiGraph.Portals[link];
-      try
-      {
-        var a = CreatePortalEnd(pl.AX, pl.AY, pl.Skin, pl.NameA);
-        var b = CreatePortalEnd(pl.BX, pl.BY, pl.Skin, pl.NameB);
-        LandBeside(pl.BX, pl.BY);
-        WaygateSetDestination(a, _spotX, _spotY);
-        LandBeside(pl.AX, pl.AY);
-        WaygateSetDestination(b, _spotX, _spotY);
-        WaygateActivate(a, true);
-        WaygateActivate(b, true);
-        if (slot < 0)
-        {
-          _pairLink.Add(link);
-          _pairA.Add(a);
-          _pairB.Add(b);
-        }
-        else
-        {
-          _pairA[slot] = a;
-          _pairB[slot] = b;
-        }
-
-        return true;
-      }
-      catch (System.Exception e)
-      {
-        LogPin("portal '" + pl.NameA + "' FAILED: " + e.Message);
-        return false;
-      }
-    }
-
-    // wave tick: rebuild any pair whose unit was removed or killed
-    private static void PortalWatchdog()
-    {
-      for (var i = 0; i < _pairLink.Count; i++)
-      {
-        var aOk = GetUnitTypeId(_pairA[i]) != 0 && GetUnitState(_pairA[i], UNIT_STATE_LIFE) > 0.405f;
-        var bOk = GetUnitTypeId(_pairB[i]) != 0 && GetUnitState(_pairB[i], UNIT_STATE_LIFE) > 0.405f;
-        if (aOk && bOk)
-        {
-          continue;
-        }
-
-        if (aOk)
-        {
-          RemoveUnit(_pairA[i]);
-        }
-
-        if (bOk)
-        {
-          RemoveUnit(_pairB[i]);
-        }
-
-        if (CreatePair(_pairLink[i], i))
-        {
-          LogPin("portal '" + AiGraph.Portals[_pairLink[i]].NameA + "' was gone -> rebuilt");
-        }
-      }
-    }
-
-    private static unit CreatePortalEnd(float x, float y, string skin, string name)
-    {
-      var u = CreateUnit(Player(26), AiWorld.PortalUnitId, x, y, 0f); // 26 = Neutral Extra (see above)
-      if (skin != "")
-      {
-        BlzSetUnitSkin(u, FourCC(skin));
-      }
-
-      BlzSetUnitName(u, name);
-      SetUnitInvulnerable(u, true);
-      return u;
-    }
-
-    // open, walkable point ~300 from a portal (falls back to the portal itself) -> _spotX/_spotY
-    private static void LandBeside(float x, float y)
-    {
-      for (var i = 0; i < 8; i++)
-      {
-        var a = i * 0.785398f;
-        _spotX = x + 300f * Cos(a);
-        _spotY = y + 300f * Sin(a);
-        if (!IsTerrainPathable(_spotX, _spotY, PATHING_TYPE_WALKABILITY))
-        {
-          return;
-        }
-      }
-
-      _spotX = x;
-      _spotY = y;
-    }
-
-    // A linked, active waygate pair. Units that walk onto either end are teleported to the other; a portal
-    // edge in the node graph routes bots to one end so they cross. Uses one confirmed-present portal effect.
-    private static void SpawnPortalPair(float ax, float ay, float bx, float by)
-    {
-      var pa = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), AiWorld.PortalUnitId, ax, ay, 0f);
-      var pb = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), AiWorld.PortalUnitId, bx, by, 0f);
-      WaygateSetDestination(pa, bx, by);
-      WaygateSetDestination(pb, ax, ay);
-      WaygateActivate(pa, true);
-      WaygateActivate(pb, true);
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, ax, ay));
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, bx, by));
-      // Distinct label: this waygate uses the same model as the map's Dark Portals, so name it to tell it apart.
-      FloatLabel("Legion Portal", ax, ay);
-      FloatLabel("Legion Portal", bx, by);
-    }
-
-    private static void FloatLabel(string text, float x, float y)
+    internal static void FloatLabel(string text, float x, float y)
     {
       var tt = CreateTextTag();
       SetTextTagText(tt, text, 0.023f);
@@ -4604,7 +2226,7 @@ namespace WarcraftLegacies.Source.Ai
       UnitAddItem(_grabHero, it); // fails harmlessly when the inventory is full or the item isn't carriable
     }
 
-    private static player PlayerOfFaction(string name)
+    internal static player PlayerOfFaction(string name)
     {
       for (var i = 0; i < 24; i++)
       {
@@ -4619,7 +2241,44 @@ namespace WarcraftLegacies.Source.Ai
       return null;
     }
 
-    private static bool IsBot(player p)
+    // 0.35: the AI controls this slot, AND it gets the bot bonuses (gold subsidy, free techs/upgrades, free hero
+    // revives, starter kit, scripted missions, waves). False for an autopilot player in a FAIR build
+    // (AiDebug.Access == Off): the AI then only plays the faction with its own resources.
+    internal static bool HasPerks(player p)
+    {
+      return IsBot(p) && (!AiState.Autopilot.Contains(GetPlayerId(p)) || AiDebug.Access != AiDebug.CommandAccess.Off);
+    }
+
+    // 0.35: autopilot -- a human slot joins / leaves the bot list
+    internal static void AddBot(player p)
+    {
+      var i = GetPlayerId(p);
+      if (IsBot(p))
+      {
+        return;
+      }
+
+      Bots.Add(p);
+      LastAttack[i] = -999f;
+      Committed[i] = null;
+      CommitTime[i] = 0f;
+      Cand[i] = 0;
+    }
+
+    internal static void RemoveBot(player p)
+    {
+      // 0.35.2: by player id, not by object -- make sure the slot really leaves the bot list
+      var id = GetPlayerId(p);
+      for (var i = Bots.Count - 1; i >= 0; i--)
+      {
+        if (GetPlayerId(Bots[i]) == id)
+        {
+          Bots.RemoveAt(i);
+        }
+      }
+    }
+
+    internal static bool IsBot(player p)
     {
       for (var i = 0; i < Bots.Count; i++)
       {
@@ -4703,7 +2362,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         GroupRemoveUnit(g, u);
         OpUnits++;
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero)
+        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u))
         {
           OpOrders++;
           IssuePointOrder(u, "attack", tx, ty);
@@ -4722,7 +2381,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         GroupRemoveUnit(g, u);
         OpUnits++;
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero)
+        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u))
         {
           OpOrders++;
           IssuePointOrder(u, "attack", ax, ay); // v12: fight to the rally point, not walk blindly
@@ -4754,7 +2413,7 @@ namespace WarcraftLegacies.Source.Ai
     public int HomeLm = -999;
   }
 
-  // v28: one wave's gate status, built on demand by SimpleBot.GetWaveDiag.
+  // v28: one wave's gate status, built on demand by AiWaveRunner.GetWaveDiag.
   public sealed class WaveDiag
   {
     public int Phase;        // 0 idle, 1 gather, 2 channel
@@ -4772,17 +2431,49 @@ namespace WarcraftLegacies.Source.Ai
     public bool HasBot;      // v30: false -> wave disabled (no bot plays any faction of the group)
   }
 
+  // 0.34.4: runtime collections of SimpleBot, kept in their own class. CSharp.lua turns every static member of a
+  // class into a Lua local of one function (limit 200) and builds initialized static fields in one static
+  // constructor (about 55 upvalues). SimpleBot sits at both limits: in v34-v34.2 fields past the second limit were
+  // nil (no bot attacked), and 0.34.3 crossed the first one (map would not load). New state goes here or into
+  // another small class -- never into SimpleBot. tools/ai/check_refs.py checks both limits.
+  internal static class AiState
+  {
+    internal static readonly Dictionary<string, HashSet<int>> NodeSets = new();
+    internal static readonly Dictionary<string, Dictionary<int, int>> GoalHopCache = new();
+    internal static readonly Dictionary<int, unit> StuckTarget = new();
+    internal static readonly Dictionary<int, float> StuckSince = new();
+    internal static readonly Dictionary<int, float> StuckHp = new();
+    internal static readonly Dictionary<int, player> StuckOwner = new();
+    internal static readonly Dictionary<int, List<unit>> BlackUnits = new();
+    internal static readonly Dictionary<int, List<float>> BlackUntil = new();
+    internal static readonly HashSet<string> TickErrors = new();
+    internal static readonly Dictionary<int, unit> KillTargetUnit = new();
+    internal static readonly HashSet<int> KillDone = new();
+    internal static readonly Dictionary<int, float> KillSince = new();
+    internal static readonly HashSet<int> ClearDone = new();
+    internal static readonly Dictionary<int, int> ClearActive = new();
+    internal static readonly Dictionary<int, float> ClearSince = new();
+    internal static readonly List<int> PairLink = new();
+    internal static readonly List<unit> PairA = new();
+    internal static readonly List<unit> PairB = new();
+    internal static readonly HashSet<int> Autopilot = new();                 // 0.35: human pids the AI plays
+    internal static readonly HashSet<unit> MissionUnits = new();             // 0.35.2: heroes on a hero visit
+    internal static readonly Dictionary<int, float> AutopilotToggled = new(); // 0.35: last toggle time per pid
+  }
+
   public static class AiSetup
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.34.3";
+    public const string Build = "0.35.3";
 
     public static void Setup()
     {
       AiDebug.Setup();
       QuestAutoComplete.Setup();
       SimpleBot.Setup();
+      AiAutopilot.Setup(); // 0.35
+      AiGoldVote.Setup();  // 0.35.1
       var t = CreateTimer();
       TimerStart(t, 3f, false, AnnounceBuild);
     }

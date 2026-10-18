@@ -1,111 +1,113 @@
 # Warcraft Legacies – Bot AI
 
-Computer-player bots for Warcraft Legacies (4.8.2 base, Old Gods kept). The whole AI lives in
-`src/WarcraftLegacies.Source/Ai/`; the only change to WL's own code is one line in `GameSetup.cs`:
+Computer-player bots for **Warcraft Legacies 4.8.2** (the version that still has the Old Gods). The bots capture
+control points, fight, produce, research, follow faction quests and lore events (Legion summon, Ragnaros, ...).
+Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.35.3") and `CHANGELOG.md`.
+
+## Installing into a WL fork
+
+1. Copy this `Ai/` folder to `src/WarcraftLegacies.Source/Ai/`.
+2. Add one line to `src/WarcraftLegacies.Source/Setup/GameSetup.cs`, directly after `Artifacts.Setup();`:
+   ```csharp
+   WarcraftLegacies.Source.Ai.AiSetup.Setup();
+   ```
+3. Recommended: the `%` fix in `src/MacroTools/Localization/Loc.cs` (see "Known WL bug" below).
+4. Build as usual. Every computer slot in the lobby becomes a bot.
+
+## Before you publish a build: the command switch
+
+At the top of `AiDebug.cs`:
 
 ```csharp
-WarcraftLegacies.Source.Ai.AiSetup.Setup();   // directly after Artifacts.Setup();
+public const CommandAccess Access = CommandAccess.Everyone;
 ```
 
-| File | Contents |
+| Setting | Effect |
 |---|---|
-| `AiSystem.cs` | All logic: target picking on the control-point graph, defense, production, tech, waves, quests, Legion summon, portals |
-| `AiConfig.cs` | Data: CP graph (`AiGraph`), portals, quest rules, kill targets, area clears, coordinates (`AiWorld`) |
-| `AiUpgrades.cs` | Data: tech pools per faction, building upgrades, event researches |
-| `AiDebug.cs` | Chat commands, `-dump` file writer, on-screen readouts |
+| `Off` | **Release.** No AI chat command at all. `-autopilot` still works, but fair (see below). |
+| `HostOnly` | Read-only commands for everyone; game-changing commands only for the host (lowest human slot). |
+| `Everyone` | Every command for every player. **Testing only.** |
 
-The chat banner at game start shows the version (`WL AI 0.34.3`). If it doesn't, the map is stale.
+Heavy display commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`) only work when a single human is in the game.
+
+## Playing with bots
+
+- **Bot strength vote** 70 s into the game: Recruit (no bonus gold), Soldier (half), Veteran (normal), Commander
+  (1.5x), Warlord (2x, may lag). Majority wins; ties go toward Veteran; no votes = Veteran.
+- `-autopilot` hands your faction to the AI; type it again to take over. All players are told.
+  - **Fair** (release build, `Access = Off`): the AI plays with your own resources — no bot bonuses, 60 s cooldown.
+  - **Test** (`HostOnly`/`Everyone`): full bot treatment (gold subsidy, free techs, revives, missions, waves).
+- Bots get bonuses humans don't: gold subsidy, free techs and upgrades, free hero revives, a starter barracks +
+  altar, scripted missions (Ragnaros, Sapphiron, Murmur, area clears), invasion waves.
 
 ## Chat commands
 
-All commands work for every human player. They only read state or change bots — but some (marked ⚠)
-change the game for everyone, so don't use them in real multiplayer matches. To ship a build without any
-of them, set `Enabled = false` at the top of `AiDebug.cs`.
+Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-changing** ⚠ (host only in `HostOnly`).
 
-### Diagnostics
-
-| Command | What it does |
-|---|---|
-| `-help` | One line: build number and the most used commands |
-| `-dump` | Writes a full snapshot to `Documents\Warcraft III\CustomMapData\WLAI_dump_<time>.txt` |
-| `-autodump` | Toggle: writes a dump every 5 minutes (`WLAI_dump_05m00s.txt`, `…10m00s.txt`, …) |
-| `-why` | One line per bot: state, target, reason, frontier counts |
-| `-why <pid>` | Detailed trace for one bot (e.g. `-why 22`) |
-| `-portals` | Labels and pings every AI portal (ship + Argus) for 30 s; says whether the graphs are merged |
-| `-edges` | Toggle: draws every graph edge as a coloured line (only you see it) |
-| `-debug1` | Toggle repeating readout: per-bot army / landmass / target |
-| `-debug2` | Toggle repeating readout: load (units touched per tick) |
-| `-debug3` | Toggle repeating readout: what each bot is doing |
-| `-debug4` | Toggle repeating readout: gold and food per bot |
-| `-xy` | Position and landmass of your selected unit |
-| `-id` | Type id (rawcode + number), name, owner and position of your selected unit |
-| `-ids` | Shows every control point's id above it for 30 s |
-| `-fac` | Each bot's faction and how many unit/building types it has per category |
-
-`-edges` colours: green = held, yellow = neutral frontier, orange = uncapturable, red = contested,
-blue = neutral↔neutral (faded), magenta = crosses landmass, grey = closed (time/gate).
-
-### Bot control ⚠
-
-| Command | What it does |
-|---|---|
-| `-botbreak` | Toggle: pause all bot logic |
-| `-prod` | Toggle: bot production on/off |
-| `-atk` | Toggle: bot attacking on/off |
-| `-gold0` `-gold50` `-gold100` `-gold150` `-gold200` | Gold every bot gets per production turn (default 25 ≈ 100 gold/min per bot; Scourge/Legion get 150 %) |
-
-### Events and tests ⚠
-
-| Command | What it does |
-|---|---|
-| `-legion` | Forces the Legion summon (Argus hub opens, graphs merge, betrayal) |
-| `-ogwave` | Forces the Old Gods invasion wave |
-| `-ship` | Ship-portal asset test at (0,0) plus a walkable pair beside your selected unit; repeat = next ship model |
+| Command | Level | What it does |
+|---|---|---|
+| `-help` | read | Version, command access and the most used commands |
+| `-dump` | read | Full snapshot to `Documents\Warcraft III\CustomMapData\WLAI_dump_<time>.txt` |
+| `-why` / `-why <pid>` | read | One line per bot (state, target, reason) / detailed trace for one bot |
+| `-portals` | read | Labels and pings every AI portal for 30 s; says whether the graphs are merged |
+| `-xy` | read | Position and landmass of your selected unit |
+| `-id` | read | Type id, name, owner, position of your selected unit |
+| `-fac` | read | Each bot's faction and its unit/building types per category |
+| `-autodump` | heavy | Toggle: a dump every 5 minutes |
+| `-edges` | heavy | Toggle: draws every graph edge (green held, yellow neutral frontier, orange uncapturable, red contested, blue neutral↔neutral, magenta crosses landmass, grey closed) |
+| `-ids` | heavy | Every control point's id above it for 30 s |
+| `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
+| `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
+| `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
+| `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
+| `-ogwave` | ⚠ | Force the Old Gods invasion wave |
+| `-ship` | ⚠ | Ship-portal asset test |
+| `-autopilot` | always | See "Playing with bots" |
 
 ## The dump file
 
-`-dump` / `-autodump` write to `CustomMapData` (on Linux/Proton: inside the Steam prefix,
-`…/pfx/drive_c/users/steamuser/Documents/Warcraft III/CustomMapData`). Each line is wrapped as
-`call Preload( "…" )` — send the file as it is. Sections:
+`call Preload( "…" )` wraps every line — send the file as it is. Sections:
+**PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **PORTALS**, **LOAD** (units touched per tick,
+the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
+**PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
-- **PINNED** – one-off events that are never pushed out (portals created, summon, repairs, quest
-  completions, `TICK ERROR in …` lines)
-- **PORTALS** – every AI portal pair: name, position, alive, destination
-- **LOAD** – units touched per tick (the multiplayer lag indicator)
-- **BOTS** – per bot: target and why, frontier counts, army by landmass, heroes
-- **WAVES**, **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**
+## Testing a build
 
-`wl.sh dumps` (Ubuntu) moves all dumps into one dated archive, so two games never mix.
+1. Banner shows the new version. 2. No `SYSTEM ERROR` text in the first turns. 3. `-autodump` at the start;
+afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 7 pair(s) created (always)". 4. BOTS: states like
+`atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs; `-legion` swaps Northrend for Felwood.
 
-## Build and deploy
+## Developer checks
 
-- **Windows (Winboat):** start `tools\wl-build-watch.ps1` once per session.
-- **Ubuntu:** `wl.sh deploy` takes the newest `Ai*.cs` from Downloads, checks each file contains its
-  own class, installs them, asks Winboat to build + publish, and copies the map into `Maps/Own`.
-  `wl.sh build` rebuilds without new files. Set `SHARED` at the top of `wl.sh` once.
+Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-packages`:
 
-Developer checks (Python, `pip install tree-sitter tree-sitter-c-sharp`):
-`tools/check_refs.py <Ai folder>` (wrong-class / private references – these only fail at the map
-transpile step, not at `dotnet build`) and `tools/map_audit.py <map.w3x> <Ai folder>` (every graph edge
-checked against the map's real pathing).
+- `python3 tools/ai/check_refs.py src/WarcraftLegacies.Source/Ai` — wrong-class/private references and the two
+  CSharp.lua limits (Lua locals per class, initialized static fields per class). **Run before every build.**
+- `python3 tools/ai/lua_check.py artifacts/war3map.lua` — compiles the built script with Lua 5.3; catches what
+  makes Warcraft III call the map "unavailable or corrupted".
 
-## Fixed in this fork: `%` in quest/power text
+**CSharp.lua limits to remember:** all static members of a class become locals of one Lua function (limit 200),
+and non-private static `readonly` fields are added uncounted; initialized static fields past ~55 per class stay
+`nil`. Keep classes small; shared state as `internal static` without `readonly`.
 
-`SYSTEM ERROR: Kul'tiras failed to execute OnQuestProgressChanged: … invalid use of '%' in replacement string`
-(also Stormwind). WL's `Loc.Format` used `string.Replace`, which in the Lua build treats `%` in the replacement as
-a pattern character, so any power text with a percentage (e.g. "35%") crashed the quest reward before it handed
-over units. History upstream: #4061 introduced a safe replacement, #4083 removed it again (WL 4.8.2 ships that
-version), #4189 (5.0 beta, a 253-file commit) brought it back. That commit can't be cherry-picked on its own, so
-this fork carries the same small change in `src/MacroTools/Localization/Loc.cs` as its own commit (0.34.3). The
-AI's Kul Tiras repair stays as a harmless fallback.
+## Working on this with an AI assistant
+
+The files `AI_AGENTS_CONTEXT.md` (architecture, hard rules, workflow) and `TODO.md` let a fresh chat pick up the
+project. Example prompt:
+
+> I'm working on the Warcraft Legacies bot AI. Repo: https://github.com/lehmbein/WarcraftLegacies, branch
+> `4.8.2-ai` (latest tag 4.8.2-ai.0.35.0). First read `src/WarcraftLegacies.Source/Ai/AI_AGENTS_CONTEXT.md` and
+> `TODO.md`. Task: [what you want]. Attached: the latest dump files and screenshots. Discuss first, don't code yet.
 
 ## Versions
 
-`0.MINOR.PATCH` -- a feature build raises MINOR, a fix-only build raises PATCH. The same name is used for the
-in-game banner ("WL AI 0.34.3"), the `-dump` header and the git tag.
+`0.MINOR.PATCH` — a feature build raises MINOR, a fix-only build raises PATCH. Git tags carry the WL base:
+`4.8.2-ai.0.35.0`. Tag only after a successful playtest. History: `CHANGELOG.md`.
 
-## Translator limit to remember (CSharp.lua)
+## Known WL bug fixed in this fork: `%` in quest/power text
 
-A class may have only about 55 static fields with a non-literal initializer (`= new()`, a method call ...). Fields
-beyond that are silently `nil` at runtime -- no build error. `tools/check_refs.py` reports every class over 45;
-create new collections in an Init method instead (see `SimpleBot.InitState`).
+`SYSTEM ERROR: … invalid use of '%' in replacement string` (Kul Tiras, Stormwind). WL's `Loc.Format` used
+`string.Replace`, which in the Lua build treats `%` in the replacement as a pattern character, so a power text
+with "35%" crashed the quest reward before it handed over units. Upstream: #4061 added a safe replacement, #4083
+removed it (4.8.2 ships that), #4189 (5.0 beta, 253 files) restored it — not cherry-pickable alone, so this fork
+carries the same small change in `Loc.cs` as its own commit.
