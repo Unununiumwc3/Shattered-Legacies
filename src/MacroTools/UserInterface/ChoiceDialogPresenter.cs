@@ -38,6 +38,12 @@ public abstract class ChoiceDialogPresenter<TChoice> where TChoice : IChoice
       return;
     }
 
+    // Bot AI hook: a computer player picks without a dialog (see BotChoicePolicy). Humans never get here.
+    if (TryBotPick(whichPlayer, activeChoices.ToList()))
+    {
+      return;
+    }
+
     var choicePicksByButton = new Dictionary<button, TChoice>();
     foreach (var choice in Choices.Where(x => IsChoiceActive(whichPlayer, x)))
     {
@@ -58,6 +64,31 @@ public abstract class ChoiceDialogPresenter<TChoice> where TChoice : IChoice
       ChoiceExpired(whichPlayer);
       @event.ExpiredTimer.Dispose();
     });
+  }
+
+  // Own method on purpose: Run() declares a local named "timer", which hides the timer TYPE in the whole of Run.
+  // The pick happens on the same 4 s delay as the human dialog, so the order of events stays the same.
+  private bool TryBotPick(player whichPlayer, List<TChoice> active)
+  {
+    if (BotChoicePolicy.Pick == null || whichPlayer.Controller != mapcontrol.Computer)
+    {
+      return false;
+    }
+
+    var index = BotChoicePolicy.Pick(whichPlayer, active.Cast<IChoice>().ToList());
+    if (index < 0 || index >= active.Count)
+    {
+      return false;
+    }
+
+    var botChoice = active[index];
+    _pickDialog?.Dispose();
+    timer.Create().Start(4, false, () =>
+    {
+      OnChoicePicked(whichPlayer, botChoice);
+      @event.ExpiredTimer.Dispose();
+    });
+    return true;
   }
 
   private void StartChoicePick(player whichPlayer, Dictionary<button, TChoice> choicePicksByButton)

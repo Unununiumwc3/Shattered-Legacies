@@ -8,9 +8,11 @@ the **bots**, this file is about **AI assistants** working on the code.
 Computer-player bots for **Warcraft Legacies 4.8.2** (a Warcraft III Reforged map written in C# with WCSharp and
 transpiled to Lua by **CSharp.lua**). Kept on 4.8.2 because 5.x removed the Old Gods. Fork:
 `https://github.com/lehmbein/WarcraftLegacies`, branch `4.8.2-ai`, tags `4.8.2-ai.0.MINOR.PATCH`. All bot code is
-in `src/WarcraftLegacies.Source/Ai/`; the only hook into WL is one line in `Setup/GameSetup.cs`
-(`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`). One fork-wide WL fix: `Loc.cs`
-literal replace (0.34.3).
+in `src/WarcraftLegacies.Source/Ai/`. Changes outside it (keep them minimal and listed here): one hook line in
+`Setup/GameSetup.cs` (`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`); `Loc.cs` literal
+replace (0.34.3); the bot-pick hook `MacroTools/UserInterface/BotChoicePolicy.cs` + `ChoiceDialogPresenter.TryBotPick`
+(0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` + version in
+`WarcraftLegacies.CLI/appsettings.json` (0.37.1); map data: the Jaina's Sanctum CP `n0JS` (0.37.2).
 
 ## Getting the code (sandbox)
 
@@ -18,7 +20,8 @@ literal replace (0.34.3).
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch 4.8.2-ai \
     https://github.com/lehmbein/WarcraftLegacies.git wl && cd wl
 git sparse-checkout set src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools \
-    mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData
+    mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData \
+    src/WarcraftLegacies.CLI src/Warcraft.Cartographer
 ```
 (Cone mode also brings the files directly in the parent folders: `mapdata/WarcraftLegacies/PathingMap.json` and
 `src/WarcraftLegacies.Source/Regions.g.cs` -- what `tools/ai/map_query.py` needs. Add `src/WarcraftLegacies.Source/Factions`
@@ -34,17 +37,19 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiTech.cs` | AiTech | tech pools, building credits, free/event/quest upgrades, CP-capture counter |
 | `AiMissions.cs` | AiMissions | starter kit, Ragnaros, kill targets, area clears, one-shots, CP grants, Kul Tiras repair, palace handover, banned forms |
 | `AiLegion.cs` | AiLegion | Legion summon/betrayal, Argus start base, node events (Sunwell), demon portal fix, all AI portals |
-| `AiWaveRunner.cs` | AiWaveRunner | runs the scripted invasion waves (wave data: class `AiWaves` in `AiConfig.cs`) |
-| `AiGates.cs` | AiGates | gate removal, Tempest Reach edge, Thandol bridge |
+| `AiWaveRunner.cs` | AiWaveRunner | invasion-wave runner; no waves configured since 0.37.1 (`AiWaves.All` empty) |
+| `AiGates.cs` | AiGates | gate removal, Tempest Reach edge, named graph gates (greymane, tomb, thandol), Old Gods rift |
 | `AiAutopilot.cs` | AiAutopilot | `-autopilot` |
 | `AiGoldVote.cs` | AiGoldVote | bot strength vote at 70 s (sets `SimpleBot.BotGoldBonus`) |
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
+| `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
 | `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |
 | `AiConfig.cs` | AiConfig, AiGraph, AiWorld, ... | data: CP graph edges, portals, quest rules, kill targets, coordinates |
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
+| `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
 | `tools/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
 
 ## Hard rules (each one cost a broken build)
@@ -65,80 +70,131 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 7. `partial` classes do NOT help with the limits (still one Lua function). Split into separate classes.
 8. Class names must be unique in the namespace -- `dotnet build` of the CLI does not compile the AI code, only the
    map build does ("namespace already contains a definition for ..."). `check_refs.py` reports DUPLICATE CLASS.
-
-## WL facts that bit us
-
-- `ControlPointManager.Instance.GetFromUnitType()` **throws** for non-CP ids -> always `SimpleBot.SafeCp()`.
-- The Sunwell (`n001`) and Sunwell Corrupted (`n079`) are **capitals**, not CPs.
-- Player slots 24+ (neutrals) also report `PLAYER_SLOT_STATE_PLAYING`; only 0-23 are real players.
-- `Geography.Landmass()` returns -1 for islands (and 9 Kalimdor CPs).
-- `LegendaryHero.PermaDies` is set-only; detect death via `LegendaryHero.Died` or ability `LEgo`.
-- Gates are lowercase-h custom units; gate destructables use big-endian FourCC.
-- WL removes Neutral-Passive units from whole areas at runtime -> AI-created portals are owned by Neutral Extra (26).
-- Win threshold 90 CPs per team (warning at 80).
-- Map coordinates given by the maintainer have contained sign typos 3 times -- check walkability/landmass first,
-  offline with `tools/ai/map_query.py` (0.36).
-- Offline map data (the repo has it, no game needed): `mapdata/WarcraftLegacies/PathingMap.json` = 32-unit cells,
-  rows bottom-up from (-28672, -32256), flag 0x02 not walkable / 0x08 not buildable, terrain only. Preplaced units
-  `Units/*.json` (TypeId **little-endian**), doodads `Doodads/*.json`, object data `UnitData/<id>.json` (`uupt` =
-  upgrades to, `uabi` = abilities), `AbilityData/<id>.json`. Rectangles: `src/WarcraftLegacies.Source/Regions.g.cs`.
-- Footprint tests: the old Argus ring search checked corners at +-220 and rejected 7 of 8 good spots. Argus is cramped;
-  fixed spots (`AiWorld.ArgusSpotX/Y`) were chosen with a flood fill so the exits stay open.
-- Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
-  added to every faction -- completing it for one completes it for all.
-- Graph gate flags (`Edge.Gate`) must be opened by code: `legion`/`prelegion` (AiLegion), `greymane`/`tomb`
-  (AiGates.OpenNamedGates, 0.36). `greymane` was never opened from v25 to 0.35.4 -- a new flag needs its opener.
-- Waygate n036 (AI portals) carries A01M/A023 "Anti Portal Blocking" (Permanent Immolation, 1000 range); AI
-  portals shrink it to 250 (0.36).
-- Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep
-  portal ends on open ground (`LandBeside` keeps 250 from buildings).
-- Some heroes can't walk (the Old Gods' level-20 god heroes). Anything that sends "the best hero" must filter
-  `GetUnitMoveSpeed(u) > 1` (`SimpleBot.BestHero` does).
-- Quests a hero must visit are `ObjectiveHeroWithLevelInRect` / `...ReachRect` in WL; read the level and the
-  `Regions.X` rectangle from the quest class (Ragnaros 10 in WL, our rule 12; Yogg-Saron 14; Tomb of Sargeras 10).
-- WL's map name is hard-coded in `src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs` (~line 121);
-  the version comes from `src/WarcraftLegacies.CLI/appsettings.json` (`MapSettings.Version`).
-- The repo has a second map, `mapdata/WarcraftLegacies24p` ("Warcraft Legacies 1.18a", 24 slots). It is an OLD,
-  unmaintained layout: 20 of our 167 graph nodes are missing there and 65 sit elsewhere. Not supported.
-- Bot economy depends on the bonus gold: with the vote on "Recruit" (0) most bots had 0-12 gold and 1-5 units
-  from minute 30 on. The Legion summon (Scourge takes the Sunwell) did not happen in 40-85-min tests.
+9. **A local variable hides a type of the same name in its WHOLE block** (0.37.1 break, CS0841): WL code uses
+   lowercase API types (`timer`, `unit`, `player`, `trigger`, `dialog`, `effect`) and sometimes names locals the same
+   (`timer timer = timer.Create();` in `ChoiceDialogPresenter.Run`). Any `timer.Create()` ABOVE that line in the same
+   block then fails. Never add code to a method that declares such a local -- put it in an own method.
+   `tools/ai/scope_check.py` catches this and nested re-declarations (CS0136).
+10. **No compiler in the sandbox** (no dotnet, no nuget). Before every drop: `check_refs.py`, a tree-sitter syntax
+    pass and `scope_check.py` on EVERY changed .cs file, including files outside `Ai/`; JSON files through `json.load`.
+11. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM. Python: read `utf-8-sig`, write the BOM back
+    if it was there; `/bin/sh` is dash -- `printf '\xef'` writes the text `\xef`, not the byte. Compare BOMs with
+    `git show HEAD:<file> | head -c 3 | od -An -tx1` before delivering.
 
 ## How we work
 
 - Session start: the maintainer pastes the repo/branch and a task; clone sparsely (command above), read this file
-  and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; he does NOT want GitHub Actions.
-- Decode dumps quickly (each line is `call Preload( "..." )`):
+  and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; no GitHub Actions.
+- "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
+- At most one question per reply; propose defaults instead of asking many.
+- Deliver whole files (zip with repo paths) plus one `git diff` patch against the pushed branch, verified with
+  `git apply --check` on a clean worktree of `origin/4.8.2-ai`.
+- Version on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`) AND `MapSettings.Version` in
+  `src/WarcraftLegacies.CLI/appsettings.json` (`4.8.2-ai.<build>`; also the published file name), `CHANGELOG.md`.
+  Map title: "Warcraft Legacies Botified <version>" (`AdvancedMapBuilder.SetMapTitles`). Docs-only drop: CHANGELOG +
+  tag only. Release = commit + tag `4.8.2-ai.<build>` + push (commands in `README.md`, "Releasing").
+- Keep `TODO.md` and `CHANGELOG.md` current in the same drop; TODO only holds open work.
+- Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`). Decode:
   ```
   python3 -c "import re,sys;[print(m.group(1)) for l in open(sys.argv[1],errors='replace') for m in [re.match(r'\s*call Preload\( \"(.*)\" \)',l)] if m]" dump.txt
   ```
-  The header line shows the build -- old dumps get mixed in; ignore those of another build.
-- Freezes on the maintainer's Linux/Proton setup came with alt-tabbing (with and without autopilot): not an AI bug
-  until proven otherwise.
+  The header shows the build -- ignore dumps of another build. Read **PINNED** first (one-off events,
+  `TICK ERROR`/`FAILED`), then **BOTS** (state, target, army), **TEAMS**, **PORTALS**, **EVENT LOG**.
 
-- The maintainer often says "discuss only" -- then do not code. When coding: leave out what is unclear and say so.
-- Ask at most one question per reply; propose defaults instead of asking many.
-- Version bump on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`), `CHANGELOG.md`, git tag
-  `4.8.2-ai.<version>` (tag only after the playtest). A docs-only drop bumps only `CHANGELOG.md`/tag
-  (0.35.4: the in-game banner stays 0.35.3).
-- Before delivering code: `check_refs.py` must print OK (refs, duplicate classes, Lua locals, static fields);
-  tree-sitter syntax check; list exactly which files changed.
-- Deliver whole files; the maintainer copies them into the repo and builds in a Windows VM.
-- Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`, lines wrapped in `call Preload("...")`).
-  Read the **PINNED** section first (one-off events and `TICK ERROR`/`FAILED` lines), then **BOTS** (state, target,
-  army per bot), **PORTALS**, **EVENT LOG**.
-- Keep `TODO.md` and `CHANGELOG.md` current in the same drop.
+## Map data (offline, no game needed)
+
+- `mapdata/WarcraftLegacies/PathingMap.json`: 32-unit cells, rows bottom-up from (-28672, -32256), flag 0x02 not
+  walkable / 0x08 not buildable. **Terrain only** -- doodads, destructables (rocks, bridges, trees) and units are NOT
+  in it. `tools/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
+- Preplaced units: `Units/<x>_<y>.json`, one file per 512x512 chunk, name = position truncated TOWARD ZERO to 512
+  (-7616,-9152 -> `-7168_-8704.json`). `TypeId`/`SkinId` **little-endian** (`struct.unpack('<I', b'n0JS')`), unique
+  `CreationNumber` (max + 1). Doodads/destructables: `Doodads/*.json`. Object data: `UnitData/<id>.json` (`OldId`
+  base, `NewId`, `Modifications`: `unam` name, `uabi` abilities, `uupt` upgrades to), `AbilityData`, `DestructableData`.
+  Rectangles: `src/WarcraftLegacies.Source/Regions.g.cs`. The JSON files round-trip exactly with
+  `json.dumps(obj, indent=2, ensure_ascii=False)` + the original trailing whitespace (check before editing).
+- **A new control point** (0.37.2, Jaina's Sanctum): copy an existing CP's `UnitData` (e.g. `n09C` Alcaz Isle) to a
+  free id, rename it, place one unit (owner 24, like every CP) on a walkable 64-aligned spot clear of units. WL's
+  `ControlPointSetup` finds it at runtime by its income marker ability (`A0LO` = 10 gold/min, buff B025). Then add the
+  graph edges (big-endian id, e.g. `n0JS` = 1848658515).
+- Map coordinates from the maintainer had sign typos 3 times -- always check them offline first.
+- Fixed building spots: the old Argus ring search tested corners at +-220 and rejected 7 of 8 good spots; Argus
+  spots (`AiWorld.ArgusSpotX/Y`) were picked with a flood fill so the exits stay open. Same method for Sulfuron Spire.
+- `mapdata/WarcraftLegacies24p` ("1.18a", 24 slots) is an OLD layout: 20 of our graph nodes missing, 65 moved. Not
+  supported.
+
+## WL facts that bit us
+
+Engine / API
+- `ControlPointManager.Instance.GetFromUnitType()` **throws** for non-CP ids -> always `SimpleBot.SafeCp()`.
+- Player slots 24+ (neutrals) also report `PLAYER_SLOT_STATE_PLAYING`; only 0-23 are real players.
+- `LegendaryHero.PermaDies` is set-only; detect death via `LegendaryHero.Died` or ability `LEgo`.
+- Gates are lowercase-h custom units; gate destructables use big-endian FourCC.
+- WL removes Neutral-Passive units from whole areas at runtime -> AI-created portals are owned by Neutral Extra (26).
+- Some heroes can't walk (Old Gods' god heroes): anything sending "the best hero" must filter `GetUnitMoveSpeed > 1`.
+- Choice names (`IChoice.Name`) and other `Loc.Get` text are localized PER CLIENT -- never base a synced decision on
+  them (desync). Decide from objects/types.
+- `Geography.Landmass()` returns -1 for islands, isolated realms (Black Empire / Maw of Gor'ma) and 9 Kalimdor CPs.
+
+Map mechanics
+- **Rocks**: WL blocks paths with invulnerable `LTrc` rock destructibles (`Setup/RockSetup.cs`, `RockSystem`), removed
+  at a turn: Bridge Rocks (Thandol Span, `Regions.BridgeAmbient`) turn 30, Northrend rocks turn 6, Kalimdor south and
+  AQ by quests. The Thandol bridge itself is only made invulnerable (walkable); the rocks are what blocks it. Not in
+  the pathing data. The AI's "thandol" gate follows the real rocks since 0.37.2 (before: guessed 20:00 -> dwarves
+  stood at the rocks for 10 min).
+- Graph gate flags (`Edge.Gate`) must be opened by code: `legion`/`prelegion` (AiLegion), `greymane`/`tomb`/`thandol`/
+  `oldgods` (AiGates). `greymane` was never opened from v25 to 0.35.4 -- a new flag needs its opener.
+- A frontier can come from an ALLY's node on the far side of a barrier (Ironforge got Arathi through an ally node
+  north of the closed bridge): the graph says reachable, the army can't get there. The stuck blacklist (4 min, then
+  5/10/20 min skip since 0.37.2) limits the damage; real fix = walking costs (TODO, CP graph weights).
+- Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep portal
+  ends on open ground (`LandBeside` keeps 250 from buildings). Waygate n036 carries A01M/A023 "Anti Portal Blocking"
+  (1000-range immolation); AI portals shrink it to 250.
+- The Sunwell (`n001`) and Sunwell Corrupted (`n079`) are **capitals**, not CPs. Win threshold: 90 CPs per team.
+- Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
+  added to every faction -- completing it for one completes it for all.
+
+Economy
+- Income/min = CP values (10-50 each) + `PlayerData.BonusIncome`, paid continuously. Every faction's `StartingGold`
+  adds `Income` to `BonusIncome` for 10 turns (turn = 60 s) -> WL's early bonus ends at 11:00.
+- The AI subsidy is a per-production-turn `SetPlayerState` -> it pays MORE the fewer bots there are (TODO: move to
+  `BonusIncome`). With the vote on "Recruit" (0) bots had 0-12 gold and 1-5 units from minute 30 on.
+
+Quests and story
+- **Click menus**: every WL dialog is a `ChoiceDialogPresenter`. Since 0.37.1 computer players pick through
+  `BotChoicePolicy.Pick` (set by `AiChoices`). Without a pick: option 1 after 24 s (bot orcs always Frostwolf, the
+  Scourge "No invasion"). `AiSetup.Setup()` runs before `FactionChoiceDialogSetup.Setup()` in `GameSetup.cs`.
+- **Arthas**: Scourge quest "The Culling" (Stratholme destroyed while Lordaeron's "Line of Succession" is open)
+  permanently removes Lordaeron's Arthas (Hart) and lets the Scourge train its own (UEAR; N023 after "The Ascension"
+  -- same legend, new unit type). Both legends are named "Arthas Menethil".
+- **Legion summon**: "Under the Burning Sky" = the ritual with the Book of Medivh. Shared quest "Book of Medivh":
+  Dalaran's capital dead + a unit at the pedestal (any Legion unit; others a level-12 hero). The AI summons on the
+  Scourge taking the Sunwell (did not happen in 40-85-min tests before 0.36).
+- "Twilight of the Gods" = Archimonde ENTERS `Regions.ArchimondeChannel` -> 420 s channel (any order breaks it).
+- "Fireland Invasion" (Skywall) rescues the Sulfuron Spire base. Skywall's own Ragnaros hero ("Lord of the
+  Firelands", U02K) comes from its quest "Emissary of the Firelands" -- not the neutral boss.
+- **Highbank** = reward of Kul Tiras' "Eliminate Piracy" (Booty Bay + Katherine), not a backup start.
+- **Subdue/Pillage** (trolls, tauren, ogres) is Warsong only (CP + Grom). Frostwolf gets trolls/tauren from plain
+  quests and has no ogre quest.
+- Hero-visit quests are `ObjectiveHeroWithLevelInRect` / `...ReachRect` / `ObjectiveLegendInRect`; read level and
+  `Regions.X` rectangle from the quest class (Ragnaros 10 in WL, our rule 12; Yogg-Saron 14; Tomb of Sargeras 10).
+- Ramzes the Horror = `h0BD` (-20185,-4704, carries an artifact). Old Gods rift ends: Maw of Gor'ma (-27941,-7181)
+  and the preplaced `n07E` (22545,-4784, replaced at opening).
+
+Your setup
+- Freezes on the maintainer's Linux/Proton setup came only with alt-tabbing (also without autopilot). 0.37.1, turn
+  17: picture frozen, sound kept playing. Points to the graphics layer -- but music streams on its own thread, so
+  sound alone is no proof. Not an AI bug until a freeze without alt-tabbing (or on Windows) shows up.
 
 ## Key mechanisms (where to look)
 
-- **Targeting**: CP graph (`AiGraph.Combined`, `AiGraph.Kalimdor`, merged at the Legion summon), frontiers, home
-  graph first, neutral bias 0.5, 10-min lock on player-owned CPs, stuck blacklist (4 min). `SimpleBot.PickGraphTarget`.
+- **Targeting** ("frontier picker"): CP graph (`AiGraph.Combined`, `AiGraph.Kalimdor`, merged at the Legion summon),
+  frontiers, home graph first, neutral bias 0.5, 10-min lock on player-owned CPs, stuck blacklist (4 min, back-off
+  5/10/20 min), stickiness `SimpleBot.StickySwitch`, army anchor = biggest same-landmass group. `SimpleBot.PickGraphTarget`.
 - **Bot bonuses**: `SimpleBot.HasPerks(p)` -- real bots and test-mode autopilot only.
 - **Command switch**: `AiDebug.Access` (`Off` release / `HostOnly` / `Everyone`); levels Read / Heavy / Control.
-- **Portals**: `AiGraph.Portals` (phase always / prelegion / legion), created by `AiLegion`, watchdog rebuilds them.
-  Target distance through portals: `SimpleBot.TravelDist2` (portal-aware since 0.35.2). Edge weights: `Edge.Weight`.
-- **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, config
-  `AiConfig.HeroVisits`; `Hero` / `LastObjective` / `SameLandmass` since 0.36), kill targets / area clears
-  (`AiConfig.KillTargets`, `ClearAreas`). Heroes on a mission are in `AiState.MissionUnits` (never two missions).
-- **Army anchor** (0.36): biggest same-landmass group of the army (`BotDiag.AnchorUnits`); target stickiness
-  `SimpleBot.StickySwitch`. Stranded heroes: `AiHeroCare`.
+- **Portals**: `AiGraph.Portals` (phases always / prelegion / legion / oldgods), created by `AiLegion`, watchdog
+  rebuilds them. Target distance through portals: `SimpleBot.TravelDist2`. Edge weights: `Edge.Weight`.
+- **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, `AiConfig.HeroVisits`),
+  kill targets / area clears (`AiConfig.KillTargets`, `ClearAreas`, `RequireType`). Heroes on a mission are in
+  `AiState.MissionUnits`. Stranded heroes: `AiHeroCare`. Bot menu picks: `AiChoices`.
 - **Bot strength vote** (`AiGoldVote`, 70 s) sets `SimpleBot.BotGoldBonus`; free hero revive needs a living altar.

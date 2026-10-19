@@ -22,6 +22,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     private const float GiveUp = 480f;
     private const float Pause = 300f;
+    private const float AtTarget = 250f; // 0.37: within this the hero is "there": no new orders, no give-up
 
     private static readonly Dictionary<string, unit> _hero = new();   // key: visit index + "|" + pid
     private static readonly Dictionary<string, float> _since = new();
@@ -46,13 +47,17 @@ namespace WarcraftLegacies.Source.Ai
           if (hero != null)
           {
             var alive = GetUnitTypeId(hero) != 0 && GetUnitState(hero, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(hero) == p;
-            var late = SimpleBot.Clock - _since[key] > GiveUp;
+            var dx = GetUnitX(hero) - hv.X;
+            var dy = GetUnitY(hero) - hv.Y;
+            var there = dx * dx + dy * dy <= AtTarget * AtTarget;
+            // 0.37: never give up while standing at the target (Archimonde's 420 s channel outlasts GiveUp)
+            var late = !there && SimpleBot.Clock - _since[key] > GiveUp;
             if (!open || !alive || late)
             {
               Release(key, hero);
-              if (late)
+              if (late || (open && !alive))
               {
-                _pauseUntil[key] = SimpleBot.Clock + Pause;
+                _pauseUntil[key] = SimpleBot.Clock + Pause; // 0.37: also after "hero lost" (Old Hatreds looped)
               }
 
               SimpleBot.LogPin(SimpleBot.FacName(p) + ": hero visit '" + hv.Quest + "' "
@@ -60,7 +65,11 @@ namespace WarcraftLegacies.Source.Ai
               continue;
             }
 
-            IssuePointOrder(hero, "move", hv.X, hv.Y);
+            if (!there)
+            {
+              IssuePointOrder(hero, "move", hv.X, hv.Y); // 0.37: not when there -- an order breaks a channel
+            }
+
             continue;
           }
 

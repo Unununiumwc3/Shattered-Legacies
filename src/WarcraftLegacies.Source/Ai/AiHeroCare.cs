@@ -25,6 +25,7 @@ namespace WarcraftLegacies.Source.Ai
     private const float StillSec = 120f;
     private const float MoveEps = 150f;
     private const int MinAnchorUnits = 3; // a smaller "army" is no reference point (could be the hero himself)
+    private const float NearAltar = 2000f; // 0.37: closer than this to the altar -> teleport to a CP near the army
 
     private static readonly Dictionary<unit, float> _lastX = new();
     private static readonly Dictionary<unit, float> _lastY = new();
@@ -107,16 +108,65 @@ namespace WarcraftLegacies.Source.Ai
         {
           var loc = GetPlayerStartLocation(owner);
           var altar = SimpleBot.FindAltar(owner, GetStartLocationX(loc), GetStartLocationY(loc));
-          if (altar != null)
+          var useAltar = altar != null;
+          if (useAltar)
+          {
+            var bx = GetUnitX(altar) - x;
+            var by = GetUnitY(altar) - y;
+            // 0.37: the hero stands at its altar already (0.36 test: Black Empire's base is an isolated realm,
+            // Scourge heroes stuck at the Northrend base) -> moving it there changes nothing
+            useAltar = bx * bx + by * by > NearAltar * NearAltar;
+          }
+
+          if (useAltar)
           {
             SetUnitPosition(u, GetUnitX(altar), GetUnitY(altar) - 200f);
             SimpleBot.LogPin("P" + I2S(pid) + " " + SimpleBot.FacName(owner) + ": stranded hero " + GetUnitName(u)
                              + " (" + I2S(R2I(x)) + "," + I2S(R2I(y)) + ") moved to " + GetUnitName(altar));
           }
+          else
+          {
+            // 0.37: to the bot's own control point nearest the army instead
+            var cp = NearestOwnCp(owner, d.AnchorX, d.AnchorY);
+            if (cp != null)
+            {
+              SetUnitPosition(u, GetUnitX(cp), GetUnitY(cp) - 250f);
+              SimpleBot.LogPin("P" + I2S(pid) + " " + SimpleBot.FacName(owner) + ": stranded hero " + GetUnitName(u)
+                               + " (" + I2S(R2I(x)) + "," + I2S(R2I(y)) + ") moved to its CP " + GetUnitName(cp)
+                               + " near the army");
+            }
+          }
         }
 
         Forget(u);
       }
+    }
+
+    // 0.37: the player's control point closest to (x, y), or null
+    private static unit NearestOwnCp(player p, float x, float y)
+    {
+      unit best = null;
+      var bestD = 0f;
+      var cps = p.GetPlayerData().ControlPoints;
+      for (var i = 0; i < cps.Count; i++)
+      {
+        var cu = cps[i].Unit;
+        if (cu == null)
+        {
+          continue;
+        }
+
+        var dx = GetUnitX(cu) - x;
+        var dy = GetUnitY(cu) - y;
+        var dd = dx * dx + dy * dy;
+        if (best == null || dd < bestD)
+        {
+          best = cu;
+          bestD = dd;
+        }
+      }
+
+      return best;
     }
 
     // for -heroes: "" (fine / not watched), "still Ns" or "walking back"

@@ -2,7 +2,7 @@
 
 Computer-player bots for **Warcraft Legacies 4.8.2** (the version that still has the Old Gods). The bots capture
 control points, fight, produce, research, follow faction quests and lore events (Legion summon, Ragnaros, ...).
-Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.36.0") and `CHANGELOG.md`.
+Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.37.1") and `CHANGELOG.md`.
 
 ## Installing into a WL fork
 
@@ -62,7 +62,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
 | `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
-| `-ogwave` | ⚠ | Force the Old Gods invasion wave |
+| `-ogrift` | ⚠ | Force the Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) open |
 | `-ship` | ⚠ | Ship-portal asset test |
 | `-autopilot` | always | See "Playing with bots" |
 
@@ -75,9 +75,20 @@ the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by lan
 
 ## Testing a build
 
-1. Banner shows the new version. 2. No `SYSTEM ERROR` text in the first turns. 3. `-autodump` at the start;
-afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 7 pair(s) created (always)". 4. BOTS: states like
-`atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs; `-legion` swaps Northrend for Felwood.
+1. Lobby shows "Warcraft Legacies Botified <version>", the banner the same AI build. 2. No `SYSTEM ERROR` text in
+the first turns. 3. `-autodump` at the start; afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 8
+pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs;
+`-legion` swaps Northrend for Felwood. The release-specific checks are in `TODO.md` ("Check in the next playtest").
+
+## Map name
+The AI branch builds as **"Warcraft Legacies Botified <version>"** ("Botified" in red, lobby and loading screen), so
+it is never mistaken for the official map. Version = `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`
+(e.g. `4.8.2-ai.0.37.2`), also used in the published file name. Bump it together with `AiSetup.Build`.
+
+## If the game freezes
+So far freezes came only with alt-tabbing on Linux/Proton, picture frozen while sound kept playing -- most likely
+the graphics layer, not the map. The steps to tell the two apart are in `TODO.md` ("Freeze check"). A map/script hang
+also happens without alt-tabbing and, in multiplayer, freezes every player.
 
 ## Developer checks
 
@@ -87,6 +98,9 @@ Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-package
   CSharp.lua limits (Lua locals per class, initialized static fields per class). **Run before every build.**
 - `python3 tools/ai/lua_check.py artifacts/war3map.lua` — compiles the built script with Lua 5.3; catches what
   makes Warcraft III call the map "unavailable or corrupted".
+- `python3 tools/ai/scope_check.py src/WarcraftLegacies.Source/Ai <other changed .cs files>` — catches C# scope
+  errors a syntax check misses (a local hiding a type name, e.g. `timer timer = ...`; a local re-declared in a nested
+  block). Not a compiler, but it caught the 0.37.1 build break.
 - `python3 tools/ai/map_query.py walk X Y` (also `near`, `area`, `find`, `around`, `rect`) — checks coordinates
   against the map's source data (terrain pathing, preplaced units, `Regions.X`) before they go into `AiConfig.cs`.
 
@@ -100,13 +114,32 @@ The files `AI_AGENTS_CONTEXT.md` (architecture, hard rules, workflow) and `TODO.
 project. Example prompt:
 
 > I'm working on the Warcraft Legacies bot AI. Repo: https://github.com/lehmbein/WarcraftLegacies, branch
-> `4.8.2-ai` (latest tag 4.8.2-ai.0.35.0). First read `src/WarcraftLegacies.Source/Ai/AI_AGENTS_CONTEXT.md` and
+> `4.8.2-ai` (latest tag: see `git tag`). First read `src/WarcraftLegacies.Source/Ai/AI_AGENTS_CONTEXT.md` and
 > `TODO.md`. Task: [what you want]. Attached: the latest dump files and screenshots. Discuss first, don't code yet.
 
 ## Versions
 
-`0.MINOR.PATCH` — a feature build raises MINOR, a fix-only build raises PATCH. Git tags carry the WL base:
-`4.8.2-ai.0.35.0`. Tag only after a successful playtest. History: `CHANGELOG.md`.
+`0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags carry the WL base:
+`4.8.2-ai.0.37.2`. History: `CHANGELOG.md`.
+
+## Releasing
+
+On Ubuntu, in the repo, branch `4.8.2-ai`, after the map compiled (version = `AiSetup.Build` and
+`MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`, both already bumped in the delivered files):
+
+```
+git checkout 4.8.2-ai && git pull
+unzip -o ~/Downloads/wl-ai-<build>.zip        # or: git apply ~/Downloads/ai-<build>.patch
+git status                                    # only the files listed in the drop should show up
+git add src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools/UserInterface \
+        src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs src/WarcraftLegacies.CLI/appsettings.json \
+        <any mapdata files listed in the drop>
+git commit -m "AI <build>: <one line>"
+git push origin 4.8.2-ai
+git tag -a 4.8.2-ai.<build> -m "WL AI <build>"   # after the playtest
+git push origin 4.8.2-ai.<build>
+```
+Never `git add -A` blindly: the build writes published maps and artifacts into the working tree.
 
 ## Known WL bug fixed in this fork: `%` in quest/power text
 

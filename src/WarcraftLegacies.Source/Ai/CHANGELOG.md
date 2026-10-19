@@ -3,6 +3,72 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.37.2
+Small fixes on top of 0.37.1 (playtest still running); docs reworked.
+- **Thandol bridge:** the Arathi Highlands <-> Dun Modr edge opened at a guessed 20:00, but the bridge is blocked by
+  WL's invulnerable "Bridge Rocks" (`LTrc` in `Regions.BridgeAmbient`, removed by WL at turn 30). Dwarves stood at
+  the rocks for 10 minutes. The edge now has the gate "thandol", opened by `AiGates` when the rocks are gone.
+- **Stuck back-off:** a target the bot gets stuck on again is skipped longer each time (5, 10, 20 min) -- the
+  dwarves also came back to the rocks every 9 min through an ally-held node north of the bridge.
+- **Jaina's Sanctum CP** (new map data): unit type `n0JS` (copy of Alcaz Isle's CP, 10 gold/min) placed at
+  -7616,-9152 in Theramore (`mapdata/WarcraftLegacies/UnitData/n0JS.json`, `Units/-7168_-8704.json`); graph edge to
+  Alcaz Isle.
+- Version 4.8.2-ai.0.37.2 (`AiSetup.Build`, `appsettings.json`).
+- Docs: `AI_AGENTS_CONTEXT.md` reorganised (hard rules 9-11 from the 0.37.1 build break: a local hiding a type,
+  no compiler in the sandbox, file encodings; new "Map data" section incl. how to add a CP; WL facts grouped);
+  `README.md` "Releasing" with the git commands; `TODO.md` refreshed.
+
+## 0.37.1
+(0.37.0 was never released -- its changes are part of this build.)
+
+Build fix (first 0.37.1 drop did not compile): the bot hook in `ChoiceDialogPresenter.Run` called `timer.Create()`,
+but `Run` declares a local named `timer` further down -- in C# that local hides the `timer` TYPE in the whole method
+(CS0841). The bot pick is now its own method `TryBotPick`. New `tools/ai/scope_check.py` catches this kind of error
+(a local hiding a type; the same local name in a nested block) -- run it before every drop.
+
+Map
+- **Own map name:** "Warcraft Legacies |cffff0000Botified|r 4.8.2-ai.0.37.1" (lobby and loading screen, "Botified"
+  in red) -- `SetMapTitles` in `src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs`. The version comes
+  from `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json` (now `4.8.2-ai.0.37.1`); it is also part
+  of the published file name, so every AI build is its own `.w3x`.
+
+Gameplay
+- **Bots pick in WL's click menus** (new `AiChoices.cs` + a small hook in
+  `MacroTools/UserInterface/ChoiceDialogPresenter.cs` / `BotChoicePolicy.cs`, only for computer players). Before,
+  every menu timed out for bots and took option 1: orcs were always Frostwolf and the Scourge's plague always chose
+  "No invasion". Now the orc slot is Frostwolf or Warsong at random, and the Scourge invades Scholomance,
+  Stratholme or Deathknell at random. Other menus keep WL's default. Decisions use the choice objects, never the
+  (localized) names -- comparing names could desync.
+- **Old Gods rift replaces the Old Gods wave:** when an Old Gods faction takes Nordrassil, a real waygate pair opens
+  between the Maw of Gor'ma and the Twilight Highlands (the unused preplaced portal `n07E` there becomes the real
+  end), usable by every player; lore text for everyone and pings on both ends; graph edge Maw of Gor'ma <->
+  Dragonmaw Port behind the gate "oldgods". `-ogwave` is replaced by `-ogrift`.
+- **Sulfuron Spire:** after Skywall's "Fireland Invasion" each Old Gods bot gets one barracks beside the Spire, so
+  its troops also spawn there.
+- **Ramzes the Horror** (Desolace): area clear for whoever holds the Desolace CP -- only while Ramzes is alive.
+- **Archimonde** walks into WL's channel spot next to the World Tree once the Legion holds Nordrassil (hero visit
+  "Twilight of the Gods"). Hero visits no longer re-order a hero standing at its target (that broke the channel)
+  and never give up there.
+- **Arthas:** the Scourge trains Arthas first (he was last in the list); his later form (Lord of the Scourge) counts
+  as alive, so he is not trained twice. The AI no longer forces Lordaeron's "Line of Succession" at 30:00 -- that
+  made the Scourge's "The Culling" impossible.
+
+Fixes (from the 0.36 playtest dumps)
+- **Old Hatreds** looped all game: Daelin was sent at level 1 from 1:00 and died on the way 11 times. Now level 10
+  first, and every hero visit pauses 5 min after "hero lost".
+- **Stranded heroes:** the teleport to the altar did nothing when the hero already stood there (Black Empire's
+  isolated realm, Scourge heroes at the Northrend base). Then the hero now goes to the bot's own CP nearest its army.
+- Hero visits "Lone Wanderer" / "Jailor of the Damned" removed (Frostwolf never reaches Northrend).
+
+## 0.36.1 (docs only -- the in-game banner stays 0.36.0)
+- TODO.md: 0.37 plan agreed in discussion -- economy via WL's `BonusIncome` from 11:00 with food upkeep on the bonus
+  (100 / 150 / 200), Arthas priority + no forced "Line of Succession", a bot hook for WL's click menus (random orc
+  pick, Scourge always invades), Warsong AI data, CP graph weights from the pathing data, Old Gods portal instead of
+  the wave; 0.38+: melee-like performance work. New "Freeze check" steps (0.36.0 froze in minute 1 with heavy
+  alt-tabbing on Proton) -- no 0.37 code before that is settled.
+- AI_AGENTS_CONTEXT.md: WL facts found in the source (economy and `StartingGold`, click-menu defaults for bots,
+  Arthas hand-over, Book of Medivh, Highbank, Warsong-only subdue quests).
+
 ## 0.36.0
 Gameplay
 - **Army anchor = biggest group on real ground.** The target anchor was the centroid of the whole army; a winner split

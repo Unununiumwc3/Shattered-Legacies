@@ -712,12 +712,15 @@ namespace WarcraftLegacies.Source.Ai
 
     private static bool HaveLiveHero(player p, int heroType)
     {
+      // 0.37: a later form of the same legend counts too (AiConfig.HeroForms: Arthas UEAR -> N023 after "The
+      // Ascension"), otherwise the bot would train the first form again
+      var later = AiConfig.HeroForms.ContainsKey(heroType) ? AiConfig.HeroForms[heroType] : 0;
       var all = LegendaryHeroManager.GetAll();
       for (var i = 0; i < all.Count; i++)
       {
         var hu = all[i].Unit;
-        if (hu != null && all[i].UnitType == heroType && GetOwningPlayer(hu) == p
-            && GetUnitState(hu, UNIT_STATE_LIFE) > 0.405f)
+        if (hu != null && (all[i].UnitType == heroType || (later != 0 && all[i].UnitType == later))
+            && GetOwningPlayer(hu) == p && GetUnitState(hu, UNIT_STATE_LIFE) > 0.405f)
         {
           return true;
         }
@@ -1971,11 +1974,21 @@ namespace WarcraftLegacies.Source.Ai
         AiState.BlackUntil[pid] = new List<float>();
       }
 
+      // 0.37.2: back-off -- every repeat on the same target doubles the skip (5, 10, 20 min max). Dwarves kept
+      // returning to the closed Thandol bridge every 9 min (4 stuck + 5 skipped).
+      if (!AiState.StuckCount.ContainsKey(pid))
+      {
+        AiState.StuckCount[pid] = new Dictionary<unit, int>();
+      }
+
+      var repeats = AiState.StuckCount[pid].ContainsKey(tgt) ? AiState.StuckCount[pid][tgt] : 0;
+      AiState.StuckCount[pid][tgt] = repeats + 1;
+      var skip = BlacklistSec * (repeats >= 2 ? 4f : (repeats == 1 ? 2f : 1f));
       AiState.BlackUnits[pid].Add(tgt);
-      AiState.BlackUntil[pid].Add(_clock + BlacklistSec);
+      AiState.BlackUntil[pid].Add(_clock + skip);
       AiState.StuckTarget[pid] = null;
       Log("P" + I2S(pid) + " " + FacName(p) + ": STUCK on " + GetUnitName(tgt) + " for "
-          + I2S(R2I(StuckSec)) + "s, no progress -> skip it for " + I2S(R2I(BlacklistSec)) + "s");
+          + I2S(R2I(StuckSec)) + "s, no progress -> skip it for " + I2S(R2I(skip)) + "s");
     }
 
     private static bool IsBlacklisted(int pid, unit cp)
@@ -2102,6 +2115,8 @@ namespace WarcraftLegacies.Source.Ai
       Safe("gate sweep", AiGates.SweepBotGates);                  // v26: gate units, at start then every ~5 min
       Safe("tempest reach", AiGates.WireTempestReach);            // v25
       Safe("named gates", AiGates.OpenNamedGates);                // 0.36: "greymane" (never opened before), "tomb"
+      Safe("old gods rift", AiGates.OpenOldGodsRift);             // 0.37: replaces the Old Gods wave
+      Safe("sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37: Old Gods barracks at Sulfuron Spire
       Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
@@ -2507,6 +2522,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static readonly Dictionary<int, player> StuckOwner = new();
     internal static readonly Dictionary<int, List<unit>> BlackUnits = new();
     internal static readonly Dictionary<int, List<float>> BlackUntil = new();
+    internal static readonly Dictionary<int, Dictionary<unit, int>> StuckCount = new(); // 0.37.2: repeats per target
     internal static readonly HashSet<string> TickErrors = new();
     internal static readonly Dictionary<int, unit> KillTargetUnit = new();
     internal static readonly HashSet<int> KillDone = new();
@@ -2526,7 +2542,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.36.0";
+    public const string Build = "0.37.2";
 
     public static void Setup()
     {
@@ -2535,6 +2551,7 @@ namespace WarcraftLegacies.Source.Ai
       SimpleBot.Setup();
       AiAutopilot.Setup(); // 0.35
       AiGoldVote.Setup();  // 0.35.1
+      AiChoices.Setup();   // 0.37: bots pick in WL's click menus (before FactionChoiceDialogSetup runs)
       var t = CreateTimer();
       TimerStart(t, 3f, false, AnnounceBuild);
     }

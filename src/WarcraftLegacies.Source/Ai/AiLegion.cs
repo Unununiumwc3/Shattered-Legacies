@@ -525,6 +525,12 @@ namespace WarcraftLegacies.Source.Ai
       CreatePortals("legion");
     }
 
+    // 0.37: create a later portal phase (e.g. "oldgods") -- AiGates.OpenOldGodsRift
+    internal static void OpenPortalPhase(string phase)
+    {
+      CreatePortals(phase);
+    }
+
     private static void CreatePortals(string phase)
     {
       var list = AiGraph.Portals;
