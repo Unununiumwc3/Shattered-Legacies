@@ -159,6 +159,7 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
+      OpenThandolIfClear();
       if (SimpleBot.GateOpen("tomb"))
       {
         return;
@@ -183,6 +184,116 @@ namespace WarcraftLegacies.Source.Ai
         SimpleBot._gateOpen["tomb"] = true;
         SimpleBot.LogPin("gate 'tomb' open: the Tomb of Sargeras was opened");
       }
+    }
+
+    // 0.37.2: gate "thandol" (Arathi Highlands <-> Dun Modr) follows the real bridge: WL blocks Thandol Span with
+    // invulnerable rocks (LTrc, "Bridge Rocks" in Regions.BridgeAmbient) and removes them at turn 30. The old fixed
+    // 20:00 opening sent dwarves to the rocks for ten minutes. Checked every wave tick until the rocks are gone.
+    private static rect _bridgeRect;
+    private static int _bridgeRocks;
+
+    private static void OpenThandolIfClear()
+    {
+      if (SimpleBot.GateOpen("thandol"))
+      {
+        return;
+      }
+
+      if (_bridgeRect == null)
+      {
+        _bridgeRect = Rect(15232f, -512f, 17856f, 896f); // Regions.BridgeAmbient
+      }
+
+      _bridgeRocks = 0;
+      EnumDestructablesInRect(_bridgeRect, null, CountBridgeRock);
+      if (_bridgeRocks == 0)
+      {
+        SimpleBot._gateOpen["thandol"] = true;
+        SimpleBot.LogPin("gate 'thandol' open: the Thandol Span rocks are gone");
+      }
+    }
+
+    private static void CountBridgeRock()
+    {
+      var d = GetEnumDestructable();
+      if (GetDestructableTypeId(d) == RockChunkId && GetDestructableLife(d) > 0f)
+      {
+        _bridgeRocks++;
+      }
+    }
+
+    private const int RockChunkId = 1280602723; // 'LTrc'
+
+    // 0.37: the OLD GODS RIFT (replaces the Old Gods wave). When an Old Gods faction (AiConfig.OldGodsFactions) takes
+    // Nordrassil, a real waygate pair opens between the Maw of Gor'ma and the Twilight Highlands (portal phase and
+    // graph gate "oldgods"), usable by every player. The unused preplaced portal n07E in the Twilight Highlands is
+    // replaced by the real end. Announced to everyone with both ends pinged. The second trigger (non-Old-Gods take
+    // the Maw + the Old Gods' main base falls) waits for a decision (TODO.md).
+    private static bool _riftOpen;
+    private static bool _riftForced;
+
+    internal static void ForceOldGodsRift() // -ogrift
+    {
+      _riftForced = true;
+      OpenOldGodsRift();
+    }
+
+    internal static void OpenOldGodsRift()
+    {
+      if (_riftOpen)
+      {
+        return;
+      }
+
+      var who = "-ogrift";
+      if (!_riftForced)
+      {
+        var cp = SimpleBot.SafeCp(AiConfig.NordrassilCpId);
+        if (cp == null || cp.Unit == null || GetPlayerId(GetOwningPlayer(cp.Unit)) >= 24)
+        {
+          return;
+        }
+
+        var fac = GetOwningPlayer(cp.Unit).GetPlayerData().Faction;
+        if (fac == null || !AiConfig.OldGodsFactions.Contains(fac.Name))
+        {
+          return;
+        }
+
+        who = fac.Name;
+      }
+
+      _riftOpen = true;
+      RemovePreplacedRiftPortal();
+      AiLegion.OpenPortalPhase("oldgods");
+      SimpleBot._gateOpen["oldgods"] = true;
+      for (var i = 0; i < 24; i++)
+      {
+        DisplayTimedTextToPlayer(Player(i), 0, 0, 25, "|cffaa00ffNordrassil has fallen to the servants of the Old Gods.|r "
+          + "|cffaa00ffIn the Maw of Gor'ma, N'Zoth's whispers tear the veil of the world -- a rift now opens onto the "
+          + "Twilight Highlands.|r");
+      }
+
+      PingMinimapEx(AiConfig.RiftMawX, AiConfig.RiftMawY, 6f, 170, 0, 255, true);
+      PingMinimapEx(AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, 6f, 170, 0, 255, true);
+      SimpleBot.LogPin("OLD GODS RIFT open: Nordrassil taken by " + who + " -- Maw of Gor'ma <-> Twilight Highlands");
+    }
+
+    private static void RemovePreplacedRiftPortal()
+    {
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, 300f, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitTypeId(u) == AiConfig.RiftPreplacedPortalType)
+        {
+          RemoveUnit(u);
+        }
+      }
+
+      DestroyGroup(g);
     }
 
     // WL sets Thandol Span (destructible LT08 ~15695,457) invulnerable and never opens it, so bots can never

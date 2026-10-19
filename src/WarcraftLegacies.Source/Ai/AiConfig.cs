@@ -128,10 +128,8 @@ public static class AiConfig
     new QuestRule("Frostwolf", "The World-Shaman", 1800f) { MinCps = 20, HeroAlive = 1333028978 },
     // Guardian of Tirisfal: Dalaran or an ally holds Karazhan (h00G) after 30 min.
     new QuestRule("Dalaran", "Guardian of Tirisfal", 1800f) { CapitalHeldByAlly = 1747988551 },
-    // Line of Succession: Lordaeron (or ally) holds Capital Palace (h000) + Howling Fjords (n02J) after 30 min,
-    // Arthas (Hart) alive -- the reward crowns him.
-    new QuestRule("Lordaeron", "Line of Succession", 1800f)
-      { CapitalHeldByAlly = 1747988528, CpHeldByAlly = 1848652362, HeroAlive = 1214345844 },
+    // 0.37: "Line of Succession" (Lordaeron) is no longer forced at 30:00 -- it made the Scourge's "The Culling"
+    // impossible (that needs Line of Succession still open when Stratholme falls), so the Scourge never got Arthas.
     // The Ascension: Scourge (or ally) holds Icecrown Citadel (n04R) after 40 min, Arthas (Uear) alive.
     new QuestRule("Scourge", "The Ascension", 2400f) { CpHeldByAlly = 1848652882, HeroAlive = 1432707442 },
   };
@@ -220,6 +218,22 @@ public static class AiConfig
   public const int CapitalPalaceId = 1747988528;
   public const int LordaeronCityCpId = 1848652103;
 
+  // 0.37: Old Gods rift (AiGates.OpenOldGodsRift, portal phase "oldgods", graph gate "oldgods")
+  public static readonly List<string> OldGodsFactions = new() { "Ahn'qiraj", "Black Empire", "Skywall" };
+  public const int NordrassilCpId = 1848652112;             // n01P -- an Old Gods faction taking it opens the rift
+  public const float RiftMawX = -27941f;                    // Maw of Gor'ma end (Black Empire realm, west edge)
+  public const float RiftMawY = -7181f;
+  public const float RiftHighlandsX = 22545f;               // Twilight Highlands end = the preplaced n07E
+  public const float RiftHighlandsY = -4784f;
+  public const int RiftPreplacedPortalType = 1848653637;    // n07E -- removed when the real end is created there
+
+  // 0.37: Sulfuron Spire -- when Skywall's "Fireland Invasion" completes, each Old Gods BOT faction gets one
+  // barracks beside the Spire so its troops also spawn there. Spots west/south-west of Regions.SulfuronSpire,
+  // footprint walkable and clear of preplaced units (tools/ai/map_query.py).
+  public const string FirelandQuestTitle = "Fireland Invasion";
+  public static readonly float[] SulfuronSpotX = { -11550f, -11392f, -12127f };
+  public static readonly float[] SulfuronSpotY = { 4927f, 4339f, 4458f };
+
   // 0.36: named graph gates (AiGates.OpenNamedGates)
   public const int GilneasCityCpId = 1848652854;           // "greymane" opens when a player owns it
   public const string TombQuestTitle = "Tomb of Sargeras"; // "tomb" opens when this shared quest is complete
@@ -270,13 +284,13 @@ public static class AiConfig
     new HeroVisit("The Soul Gem", "Dalaran", 0, 0, 14832f, 6896f) { Hero = "Jaina Proudmoore", LastObjective = true },
     // 0.36: Kul Tiras "Old Hatreds": Daelin Proudmoore in Hellfire (Regions.HellfireUnlock). Kul Tiras -> ship ->
     // Stormwind -> Dark Portal; WC3's pathing uses the waygates. Gives up after 8 min if he can't get there.
-    new HeroVisit("Old Hatreds", "Kul'tiras", 0, 0, 1120f, -26112f) { Hero = "Daelin Proudmoore" },
-    // 0.36: Frostwolf "Lone Wanderer" (Rexxar in Borean Tundra) and "Jailor of the Damned" (Thrall in Icecrown
-    // once the Frozen Throne is dead/ruptured). Frostwolf starts on Kalimdor and bots have no route to Northrend,
-    // so these only fire while the hero is already there (e.g. after an invasion wave).
-    new HeroVisit("Lone Wanderer", "Frostwolf", 0, 0, -6832f, 16368f) { Hero = "Rexxar", SameLandmass = true },
-    new HeroVisit("Jailor of the Damned", "Frostwolf", 0, 0, -3388f, 22068f)
-      { Hero = "Thrall", LastObjective = true, SameLandmass = true },
+    // 0.37: level 10 first -- the 0.36 test sent him at level 1 from 1:00 on; he died on the way every time.
+    new HeroVisit("Old Hatreds", "Kul'tiras", 10, 0, 1120f, -26112f) { Hero = "Daelin Proudmoore" },
+    // 0.37: Legion "Twilight of the Gods": Archimonde must ENTER Regions.ArchimondeChannel (centre -9952,10848, next
+    // to the World Tree) -- that starts WL's 420 s channel. Sent once the Legion holds Nordrassil (n01P), so his
+    // army is around. Not re-ordered while standing there (an order would break the channel).
+    new HeroVisit("Twilight of the Gods", "Legion", 0, 1848652112, -9952f, 10848f) { Hero = "Archimonde" },
+    // (0.37: "Lone Wanderer" / "Jailor of the Damned" removed -- Frostwolf never reaches Northrend.)
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -285,6 +299,9 @@ public static class AiConfig
   {
     new ClearArea("the Oculus", 1848652336 /* n020 Tanaris */, -9103f, -15943f, 1200f),
     new ClearArea("the Nexus", 1848651847 /* n00G Borean Tundra */, -9984f, 17856f, 1200f),
+    // 0.37: Ramzes the Horror (h0BD, carries an artifact) and his centaur guards, by whoever holds Desolace -- only
+    // while Ramzes is alive (RequireType).
+    new ClearArea("Ramzes the Horror", 1848652121 /* Desolace */, -20185f, -4704f, 450f) { RequireType = 1747993156 },
   };
 
   // v31: neutral CPs handed to a BOT faction at a game time (creeps around each are removed so they can't
@@ -325,13 +342,22 @@ public static class AiConfig
     { "Lordaeron", new List<int> { UNIT_H01J_THE_ASHBRINGER_LORDAERON, UNIT_HARF_HIGH_KING_LORDAERON_HIGH_KING, UNIT_HART_CROWN_PRINCE_OF_LORDAERON_LORDAERON, UNIT_HLGR_GRAND_MARSHAL_SCARLET, UNIT_HUTH_LEADER_OF_THE_SILVER_HAND_LORDAERON } },
     { "Quel'thalas", new List<int> { UNIT_H00Q_KING_OF_QUEL_THALAS_QUELTHALAS, UNIT_H02E_REGENT_OF_QUEL_THALAS_QUELTHALAS_VASSAL, UNIT_H04F_ARCHMAGE_QUELTHALAS, UNIT_HVWD_RANGER_GENERAL_OF_SILVERMOON_QUELTHALAS } },
     { "Scarlet Crusade", new List<int> { UNIT_H00Y_HIGH_GENERAL_SCARLET, UNIT_H08G_GRAND_CRUSADER_SCARLET, UNIT_H08H_HIGH_INQUISITOR_SCARLET, UNIT_H0A2_SCARLET_COMMANDER_SCARLET } },
-    { "Scourge", new List<int> { UNIT_N009_REVENANT_SCOURGE, UNIT_N023_LORD_OF_THE_SCOURGE_SCOURGE, UNIT_U001_MASTER_OF_THE_CULT_OF_THE_DAMNED_SCOURGE_NECROMANCER, UNIT_U00A_SCOURGE_COMMANDER_SCOURGE, UNIT_U00M_MASTER_OF_THE_CULT_OF_THE_DAMNED_SCOURGE_GHOST, UNIT_UANB_KING_OF_AZJOL_NERUB_SCOURGE, UNIT_UEAR_CHAMPION_OF_THE_SCOURGE_SCOURGE } },
+    // 0.37: Arthas (UEAR, trainable after WL's "The Culling") FIRST -- he was last, so a full roster never got him.
+    { "Scourge", new List<int> { UNIT_UEAR_CHAMPION_OF_THE_SCOURGE_SCOURGE, UNIT_N009_REVENANT_SCOURGE, UNIT_N023_LORD_OF_THE_SCOURGE_SCOURGE, UNIT_U001_MASTER_OF_THE_CULT_OF_THE_DAMNED_SCOURGE_NECROMANCER, UNIT_U00A_SCOURGE_COMMANDER_SCOURGE, UNIT_U00M_MASTER_OF_THE_CULT_OF_THE_DAMNED_SCOURGE_GHOST, UNIT_UANB_KING_OF_AZJOL_NERUB_SCOURGE } },
     { "Sentinels", new List<int> { UNIT_E002_GENERAL_OF_THE_SENTINEL_ARMY_SENTINELS, UNIT_E025_LIEUTENANT_OF_THE_WATCHERS_SENTINELS, UNIT_ETYR_HIGH_PRIESTESS_OF_ELUNE_SENTINELS, UNIT_EWRD_LEADER_OF_THE_WATCHERS_SENTINELS } },
     { "Skywall", new List<int> { UNIT_E023_GRAND_VIZIER_SKYWALL, UNIT_U01S_WINDLORD_SKYWALL, UNIT_U02K_LORD_OF_THE_FIRELANDS_SKYWALL, UNIT_UELN_THE_TIDEHUNTER_SKYWALL } },
     { "Stormwind", new List<int> { UNIT_H00R_KING_OF_STORMWIND_STORMWIND, UNIT_H00Z_CROWN_PRINCE_OF_STROMGARDE_STORMWIND, UNIT_H017_HIGHLORD_OF_THE_ALLIANCE_STORMWIND, UNIT_H05Y_LORD_WIZARD_STORMWIND } },
     { "Sunfury", new List<int> { UNIT_H098_SUNFURY_MASTERMIND_QUELTHALAS, UNIT_HKAL_PRINCE_OF_QUEL_THALAS_QUELTHALAS, UNIT_U004_THE_DECEIVER_LEGION, UNIT_U02V_HIGH_ASTROMANCER_SUNFURY } },
     { "The Exodar", new List<int> { UNIT_E01I_AGELESS_ONE_DRUIDS, UNIT_E01J_HIGH_SHAMAN_DRUIDS, UNIT_H09M_THE_NAARU_DRAENEI, UNIT_H09S_HAMMER_OF_THE_LIGHT_DRAENEI } },
     { "Warsong", new List<int> { UNIT_MD25_DARKSPEAR_CHAMPION_WARSONG, UNIT_NMAN_MANNOROTH_THE_DESTROYER_WARSONG_BLOODPACT, UNIT_O005_WARSONG_BATTLEMASTER_WARSONG, UNIT_O06L_WARLORD_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OGRH_CHIEFTAIN_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OPGH_CORRUPTOR_OF_THE_WARSONG_CLAN_WARSONG_BLOODPACT, UNIT_VSWS_HIGH_OVERLORD_OF_THE_KOR_KRON_WARSONG } },
+  };
+
+  // 0.37: a hero type counts as "alive" while one of its LATER forms is alive (same legend, new unit type), so the
+  // bot doesn't train the first form again. Arthas: Champion of the Scourge (UEAR) -> Lord of the Scourge (N023,
+  // after "The Ascension").
+  public static readonly Dictionary<int, int> HeroForms = new()
+  {
+    { UNIT_UEAR_CHAMPION_OF_THE_SCOURGE_SCOURGE, UNIT_N023_LORD_OF_THE_SCOURGE_SCOURGE },
   };
 
   // Per-faction ordered attack march. Fill X,Y via in-game -xy (fly to each spot, read its coords). AfterSec
@@ -467,6 +493,8 @@ public sealed class ClearArea
   public readonly float Y;
   public readonly float Radius;
 
+  public int RequireType;            // 0.37: != 0 -> only while a living unit of this type is in the area
+
   public ClearArea(string label, int triggerCpId, float x, float y, float radius)
   {
     Label = label;
@@ -579,10 +607,13 @@ public static class AiGraph
     new Edge(1848652088, 1848652099), // Durnholde <-> Strahnbrad
     new Edge(1848652122, 1848652088), // Arathi Highlands <-> Durnholde (v30: direct link, per map)
     // 0.35.3: weight 3 -- the Thandol bridge is often still closed; dwarves marched north while their allies died
-    new Edge(1848652122, 1848652087, 1200f, "", 3f), // Arathi Highlands <-> Dun Modr
+    // 0.37.2: gate "thandol" instead of a fixed 20:00 -- the bridge is blocked by WL's invulnerable "Bridge Rocks"
+    // (LTrc in Regions.BridgeAmbient), removed by WL at turn 30; AiGates opens the gate when they are gone.
+    new Edge(1848652122, 1848652087, 0f, "thandol", 3f), // Arathi Highlands <-> Dun Modr
     new Edge(1848652087, 1848652632), // Dun Modr <-> Grim Batol
     new Edge(1848652632, 1848654150), // Grim Batol <-> Southern Highlands
     new Edge(1848654150, 1848653908), // Southern Highlands <-> Dragonmaw Port
+    new Edge(1848653908, 1850560327, 0f, "oldgods"), // 0.37: Dragonmaw Port <-> Maw of Gor'ma (Old Gods rift)
     new Edge(1848653908, 1848652886), // Dragonmaw Port <-> Northern Highlands
     new Edge(1848652087, 1848652086), // Dun Modr <-> Wetlands
     new Edge(1848652086, 1848653399), // Wetlands <-> Menethil Harbour
@@ -675,6 +706,7 @@ public static class AiGraph
     new Edge(1848652634, 1848652374), // Durotar <-> Echo Isles
     new Edge(1848652374, 1848654147), // Echo Isles <-> Alcaz Isle
     new Edge(1848654147, 1848656198), // Alcaz Isle <-> Dustwallow Marsh
+    new Edge(1848658515, 1848654147), // 0.37.2: Jaina's Sanctum (new CP n0JS, Theramore) <-> Alcaz Isle
     new Edge(1848656198, 1848652338), // Dustwallow Marsh <-> Stonemaul
     new Edge(1848654162, 1848653909), // Eldarath <-> Southern Ashenvale
     new Edge(1848653909, 1848652116), // Southern Ashenvale <-> Northern Barrens
@@ -688,6 +720,8 @@ public static class AiGraph
     new Edge(1848653127, 1851021132), // Isle of Dread <-> Twilight Landing
     new Edge(1851021132, 1850636641), // Twilight Landing <-> Ny'alotha
     new Edge(1851021132, 1850560327), // Twilight Landing <-> Maw of Gor'ma
+    // 0.37: Old Gods rift (AiConfig.OldGods*, opens when an Old Gods faction takes Nordrassil) -- also in Combined
+    new Edge(1850560327, 1848653908, 0f, "oldgods"), // Maw of Gor'ma <-> Dragonmaw Port (rift)
     new Edge(1848653909, 1848652114), // Southern Ashenvale <-> Astranaar
     new Edge(1848652114, 1848652113), // Astranaar <-> Northern Ashenvale
     new Edge(1848652113, 1848653635), // Northern Ashenvale <-> Felwood
@@ -775,6 +809,11 @@ public static class AiGraph
       AiWorld.LegionNorthrendPortalX, AiWorld.LegionNorthrendPortalY, "", "Portal to Northrend", "Portal to Argus", "prelegion"),
     new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
       AiWorld.LegionExitX, AiWorld.LegionExitY, "", "Portal to Felwood", "Portal to Argus", "legion"),
+    // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
+    // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
+    // replaced by the real one. Both ends walkable (tools/ai/map_query.py).
+    new PortalLink(AiConfig.RiftMawX, AiConfig.RiftMawY, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, "n07E",
+      "Rift to the Twilight Highlands", "Rift to the Maw of Gor'ma", "oldgods"),
   };
 
   // v34: Kul Tiras (Combined), Broken Isles, Zandalar, Nazjatar, The Abyss, Maelstrom (Kalimdor) are wired via
@@ -1039,21 +1078,9 @@ public static class AiWaves
 
   public static readonly List<WaveConfig> All = new()
   {
-    // OLD GODS: hold 60% of Kalimdor AND Nordrassil -> gather on Kalimdor (2 min) -> jump to a random
-    // Eastern Kingdoms foothold. Home = Durotar (main Kalimdor landmass).
-    new WaveConfig(new List<string> { "Ahn'qiraj", "Black Empire", "Skywall" },
-      1848652634, 1848652112, 0.6f, 0f, 0f,
-      new List<DestPoint>
-      {
-        new DestPoint(1848652886, 0f, 0f), // Northern Highlands
-        new DestPoint(1848652122, 0f, 0f), // Arathi Highlands
-        new DestPoint(1848652107, 0f, 0f), // Stromgarde
-      },
-      PortalFx, 120f, 6f, 600f,
-      "|cffaa00ffThe Old Gods stir — something gathers in the dark...|r",
-      "|cffaa00ffThe Old Gods spill across the sea! (see the ping)|r",
-      "|cffaa00ffThe Old Gods' tide recedes from Kalimdor.|r",
-      "Combined"),
+    // 0.37: the OLD GODS wave (and -ogwave) is removed -- replaced by the Old Gods rift (a real waygate pair Maw of
+    // Gor'ma <-> Twilight Highlands, opened when an Old Gods faction takes Nordrassil; AiGates.OpenOldGodsRift).
+    // The wave runner stays (empty list = no waves) for possible future waves.
 
     // 0.35.1: the Kul Tiras wave (gather on the island, teleport to the mainland coast) is removed -- Kul Tiras
     // reaches the mainland through its two ship portals (Tiragarde <-> Stormwind, Balor <-> Stranglethorn).

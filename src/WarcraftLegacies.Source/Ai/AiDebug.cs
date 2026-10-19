@@ -84,7 +84,7 @@ public static class AiDebug
     Register("-portals", OnPortals, Level.Read);
     Register("-heroes", OnHeroes, Level.Read);    // 0.36
     RegisterLoose("-tp", OnTp, Level.Heavy);      // 0.36: single-human games only (selection is not synced)
-    Register("-ogwave", OnOgWave, Level.Control);
+    Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
     Register("-gold100", () => SetGold(100), Level.Control);
@@ -457,10 +457,10 @@ public static class AiDebug
     DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 6, "bot gold bonus = " + I2S(amount));
   }
 
-  private static void OnOgWave()
+  private static void OnOgRift()
   {
-    AiWaveRunner.ForceWave(0); // wave 0 = Old Gods
-    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "|cffaa00ffwave 0 (Old Gods) forced.|r");
+    AiGates.ForceOldGodsRift();
+    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "|cffaa00ffOld Gods rift forced open.|r");
   }
 
   // Report the identity of the selected unit: type id as decimal AND 4-char rawcode (so FourCC byte-order

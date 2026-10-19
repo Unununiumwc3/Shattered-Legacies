@@ -634,6 +634,13 @@ namespace WarcraftLegacies.Source.Ai
           continue; // owner is no bot, or already busy with a kill target / another clear
         }
 
+        if (list[i].RequireType != 0 && !LivingTypeNear(list[i].RequireType, list[i].X, list[i].Y, list[i].Radius))
+        {
+          AiState.ClearDone.Add(i); // 0.37: the unit it is about (Ramzes) is already dead -> nothing to do
+          SimpleBot.LogPin("area clear " + list[i].Label + " skipped: target already dead");
+          continue;
+        }
+
         AiState.ClearDone.Add(i);
         AiState.ClearActive[pid] = i;
         AiState.ClearSince[pid] = SimpleBot._clock;
@@ -659,6 +666,7 @@ namespace WarcraftLegacies.Source.Ai
 
       unit best = null;
       var bestD = 0f;
+      var requiredAlive = ca.RequireType == 0;
       var g = CreateGroup();
       GroupEnumUnitsInRange(g, ca.X, ca.Y, ca.Radius, null);
       unit u;
@@ -672,6 +680,11 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
+        if (GetUnitTypeId(u) == ca.RequireType)
+        {
+          requiredAlive = true;
+        }
+
         var dx = GetUnitX(u) - ca.X;
         var dy = GetUnitY(u) - ca.Y;
         var dd = dx * dx + dy * dy;
@@ -683,6 +696,11 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       DestroyGroup(g);
+      if (!requiredAlive)
+      {
+        best = null; // 0.37: RequireType unit (Ramzes) dead -> the clear is done, the guards don't matter
+      }
+
       if (best == null)
       {
         AiState.ClearActive[pid] = -1;
@@ -690,6 +708,87 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       return best;
+    }
+
+    // 0.37: a living unit of this type within r of (x, y)?
+    private static bool LivingTypeNear(int typeId, float x, float y, float r)
+    {
+      var found = false;
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, x, y, r, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitTypeId(u) == typeId && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+        {
+          found = true;
+        }
+      }
+
+      DestroyGroup(g);
+      return found;
+    }
+
+    // 0.37: Sulfuron Spire. When Skywall's "Fireland Invasion" (WL) has completed, every Old Gods faction that is a
+    // bot with perks gets ONE barracks beside the Spire (AiConfig.SulfuronSpotX/Y), so its production also spawns
+    // there -- the invasion felt flat with only the quest's one-time armies. Once per game, checked on the wave tick.
+    // Humans get nothing (an AI perk, like the starter kit).
+    private static bool _sulfuronDone;
+    private static QuestData _firelandQuest;
+
+    internal static void RunSulfuronBarracks()
+    {
+      if (_sulfuronDone)
+      {
+        return;
+      }
+
+      if (_firelandQuest == null)
+      {
+        var all = FactionManager.GetAllFactions();
+        for (var i = 0; i < all.Count && _firelandQuest == null; i++)
+        {
+          if (all[i].Name == "Skywall")
+          {
+            _firelandQuest = QuestAutoComplete.FindQuest(all[i], AiConfig.FirelandQuestTitle);
+          }
+        }
+
+        if (_firelandQuest == null)
+        {
+          return;
+        }
+      }
+
+      if (_firelandQuest.Progress != QuestProgress.Complete)
+      {
+        return;
+      }
+
+      _sulfuronDone = true;
+      var spot = 0;
+      for (var b = 0; b < SimpleBot.Bots.Count && spot < AiConfig.SulfuronSpotX.Length; b++)
+      {
+        var p = SimpleBot.Bots[b];
+        var f = p.GetPlayerData().Faction;
+        if (f == null || !SimpleBot.HasPerks(p) || !AiConfig.OldGodsFactions.Contains(f.Name))
+        {
+          continue;
+        }
+
+        var types = new List<int>();
+        SimpleBot.AddCategory(f, UnitCategory.Barracks, types);
+        var t = Cheapest(types);
+        if (t == 0)
+        {
+          continue;
+        }
+
+        CreateUnit(p, t, AiConfig.SulfuronSpotX[spot], AiConfig.SulfuronSpotY[spot], 270f);
+        spot++;
+        SimpleBot.LogPin("Sulfuron Spire: " + f.Name + " barracks placed (" + GetObjectName(t) + ")");
+      }
     }
 
     internal static unit ActiveKillTarget(player p, int pid)
