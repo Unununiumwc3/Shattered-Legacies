@@ -255,11 +255,18 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      // 0.35.2: any bot whose best hero has REALLY reached level 12 goes (no level raising any more, no trigger CP)
+      // 0.35.2: any bot whose best hero has REALLY reached level 12 goes (no level raising any more)
+      // 0.38: ...and only while it controls Blackrock Depths (no more level race across the map)
       for (var b = 0; b < SimpleBot.Bots.Count; b++)
       {
         var o = SimpleBot.Bots[b];
         if (!SimpleBot.HasPerks(o))
+        {
+          continue;
+        }
+
+        var brd = SimpleBot.SafeCp(AiConfig.RagnarosRequireCpId);
+        if (brd == null || brd.Unit == null || GetOwningPlayer(brd.Unit) != o)
         {
           continue;
         }
@@ -636,8 +643,8 @@ namespace WarcraftLegacies.Source.Ai
 
         if (list[i].RequireType != 0 && !LivingTypeNear(list[i].RequireType, list[i].X, list[i].Y, list[i].Radius))
         {
-          AiState.ClearDone.Add(i); // 0.37: the unit it is about (Ramzes) is already dead -> nothing to do
-          SimpleBot.LogPin("area clear " + list[i].Label + " skipped: target already dead");
+          // 0.38.1: not found = not there YET as often as dead (Ysondre is hidden at the start; Yogg-Saron only
+          // appears when released) -> try again on a later tick instead of giving up for good
           continue;
         }
 
@@ -728,6 +735,95 @@ namespace WarcraftLegacies.Source.Ai
 
       DestroyGroup(g);
       return found;
+    }
+
+    // 0.38.1: Yogg-Saron. After "The Beast With a Thousand Maws" the completing player owns the prison; it must CAST
+    // "Free Yogg-Saron" (order "selfdestruct") to release Yogg as a boss -- bots never did. A bot with perks that owns
+    // the living prison casts it (retried every wave tick until the prison is gone).
+    private static bool _yoggDone;
+
+    internal static void RunYogg()
+    {
+      if (_yoggDone)
+      {
+        return;
+      }
+
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, AiConfig.YoggPrisonX, AiConfig.YoggPrisonY, 400f, null);
+      unit prison = null;
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitTypeId(u) == AiConfig.YoggPrisonType && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+        {
+          prison = u;
+        }
+      }
+
+      DestroyGroup(g);
+      if (prison == null)
+      {
+        _yoggDone = true; // released (the prison dies when Yogg comes out) or gone
+        return;
+      }
+
+      var owner = GetOwningPlayer(prison);
+      if (!SimpleBot.IsBot(owner) || !SimpleBot.HasPerks(owner))
+      {
+        return;
+      }
+
+      if (IssueImmediateOrder(prison, AiConfig.YoggReleaseOrder))
+      {
+        SimpleBot.LogPin(SimpleBot.FacName(owner) + ": releases Yogg-Saron from his prison");
+      }
+    }
+
+    // 0.38.1: Terrordale (1-gold CP, 0.38) stands inside WL's Stratholme Scourge base, which "Plague of Undeath"
+    // rescues for the Scourge (turn 8-11). An enemy holding the CP then had its defense tower destroy the new base.
+    // The moment the plague is done, the CP goes to the Scourge (whoever plays it), once.
+    private static bool _terrordaleDone;
+    private static QuestData _plagueQuest;
+
+    internal static void RunTerrordale()
+    {
+      if (_terrordaleDone)
+      {
+        return;
+      }
+
+      player scourge = null;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Scourge")
+        {
+          scourge = f.Player;
+          if (_plagueQuest == null)
+          {
+            _plagueQuest = QuestAutoComplete.FindQuest(f, AiConfig.PlagueQuestTitle);
+          }
+        }
+      }
+
+      if (scourge == null || _plagueQuest == null)
+      {
+        return;
+      }
+
+      if (_plagueQuest.Progress != QuestProgress.Complete)
+      {
+        return;
+      }
+
+      _terrordaleDone = true;
+      var cp = SimpleBot.SafeCp(AiConfig.TerrordaleCpId);
+      if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) != scourge)
+      {
+        SimpleBot.GiveUnit(cp.Unit, scourge);
+        SimpleBot.LogPin("Terrordale handed to the Scourge (Plague of Undeath rescued the Stratholme base)");
+      }
     }
 
     // 0.37: Sulfuron Spire. When Skywall's "Fireland Invasion" (WL) has completed, every Old Gods faction that is a

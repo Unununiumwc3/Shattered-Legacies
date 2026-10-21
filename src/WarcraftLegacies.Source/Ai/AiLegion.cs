@@ -203,6 +203,9 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
+      CheckBookSummon();
+      AiMissions.RunTerrordale(); // 0.38.1: every 2 s, so the hand-over comes right after the plague
+
       var evs = AiGraph.Events;
       for (var i = 0; i < evs.Count; i++)
       {
@@ -236,8 +239,67 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.38: is the Legion a bot (with perks)? The AI only forces the summon for a bot Legion -- a human Legion summons
+    // itself through WL's ritual.
+    private static bool LegionIsBot()
+    {
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Legion" && f.Player != null)
+        {
+          return SimpleBot.HasPerks(f.Player);
+        }
+      }
+
+      return false;
+    }
+
+    // 0.38: second summon trigger (lore: "Under the Burning Sky" -- Archimonde summoned with the Book of Medivh in
+    // Dalaran). The Legion's own "Book of Medivh" quest completes when Dalaran's capital is dead and a Legion unit
+    // reached the pedestal (AiConfig.HeroVisits sends one). For a bot Legion that quest done -> summon.
+    private static QuestData _legionBookQuest;
+    private static bool _bookChecked;
+
+    private static void CheckBookSummon()
+    {
+      if (_legionSummonStarted || _bookChecked)
+      {
+        return;
+      }
+
+      if (_legionBookQuest == null)
+      {
+        foreach (var f in FactionManager.GetAllFactions())
+        {
+          if (f.Name == "Legion")
+          {
+            _legionBookQuest = QuestAutoComplete.FindQuest(f, AiConfig.BookQuestTitle);
+          }
+        }
+
+        if (_legionBookQuest == null)
+        {
+          _bookChecked = true; // no Legion in this game / quest not found
+          return;
+        }
+      }
+
+      if (_legionBookQuest.Progress == QuestProgress.Complete && LegionIsBot())
+      {
+        _bookChecked = true;
+        SimpleBot.LogPin("Legion holds the Book of Medivh -> summon");
+        SummonLegion();
+      }
+    }
+
     private static void FireEvent(NodeEvent ev)
     {
+      if (ev.Kind == "legion" && !LegionIsBot())
+      {
+        SimpleBot.LogPin("event: " + ev.ByFaction + " holds the Sunwell -- Legion is human, no forced summon");
+        return; // 0.38: a human Legion summons through WL's own ritual
+      }
+
       if (ev.Kind == "legion")
       {
         SimpleBot.Log("event: " + ev.ByFaction + " holds node " + I2S(ev.NodeId) + " -> Legion summon");
@@ -622,6 +684,13 @@ namespace WarcraftLegacies.Source.Ai
       SetUnitInvulnerable(u, true);
       ShrinkBurn(u, AiWorld.PortalBurnUnitsAbility);      // 0.36: n036's 1000-range immolation -> 250
       ShrinkBurn(u, AiWorld.PortalBurnStructuresAbility);
+
+      // 0.38: a small minimap icon so humans see the AI's portals (ships blue, Legion/rift portals purple). It is
+      // destroyed together with the portal (orphan destroy) -- rebuilt portals get a new one.
+      var ship = skin == "hbot";
+      var icon = CreateMinimapIconOnUnit(u, ship ? 60 : 170, ship ? 140 : 0, 255, AiWorld.PortalIconPath,
+        FOG_OF_WAR_MASKED);
+      SetMinimapIconOrphanDestroy(icon, true);
       return u;
     }
 

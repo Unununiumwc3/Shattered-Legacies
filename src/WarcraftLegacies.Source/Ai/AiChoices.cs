@@ -20,13 +20,15 @@ namespace WarcraftLegacies.Source.Ai
 
     private static int Pick(player p, IReadOnlyList<IChoice> choices)
     {
-      // Faction pick at game start: the orc slot is Frostwolf or Warsong at random. The other picks (Dalaran /
-      // Gilneas, Sentinels / Draenei, Illidari / Sunfury) stay Basic until those factions have AI data (TODO.md).
+      // Faction pick at game start, random for bots: the orc slot (Frostwolf / Warsong, 0.37.1), the Dalaran slot
+      // (Dalaran / Gilneas, 0.38) and the Sentinels slot (Sentinels / Draenei, 0.38.1). Illidari / Sunfury stays
+      // Basic on purpose (Sunfury is meant as Quel'thalas' fallback, TODO.md).
       if (choices.Count > 0 && choices[0] is FactionChoice)
       {
         for (var i = 0; i < choices.Count; i++)
         {
-          if (choices[i] is FactionChoice fc && fc.Faction != null && fc.Faction.Name == "Warsong")
+          if (choices[i] is FactionChoice fc && fc.Faction != null
+              && (fc.Faction.Name == "Warsong" || fc.Faction.Name == "Gilneas" || fc.Faction.Name == "The Exodar"))
           {
             var pick = GetRandomInt(0, choices.Count - 1);
             SimpleBot.LogPin("bot pick P" + I2S(GetPlayerId(p)) + ": faction choice " + I2S(pick + 1) + " of "

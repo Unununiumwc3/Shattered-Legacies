@@ -1,9 +1,8 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.37.2** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.37.2"). Next code version: **0.38.0**. Playtest of 0.37.x still running -- no big changes until
-it is done.
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.38.1** (map "Warcraft Legacies
+Botified 4.8.2-ai.0.38.1"). Next: **0.39.0** = refactor phase 1 + 2 (below).
 
 ## Freeze check (still open)
 
@@ -19,99 +18,105 @@ Music streams on its own thread, so this is a hint, not proof. Next steps, cheap
 6. **Windows 11:** one tester, same build and lobby, 10+ alt-tabs in minute 1.
 A map hang also happens without alt-tabbing and, in multiplayer, freezes every player.
 
-## General overhaul: performance, food, gold, balance (own project, 0.38+)
+## Refactor (agreed concept, 0.39+)
 
-Goal: the game runs smoothly with many armies, bots stay a challenge without flooding the map. Note (maintainer):
-24-player melee maps with melee bots run fine on big maps -- so map size alone is not the reason. Measure before
-changing (bullet 1), then try the levers one at a time.
-- **Measure first** [ai]: count units per player and in total, AI orders per minute (the dump's LOAD section +
-  `-debug2`), at 10 / 20 / 30 / 45 min; compare with a 24-player melee map with melee bots in the same setup.
-  Suspects to rule in/out: total unit count (WL starts with ~1,900 hidden preplaced units + creeps + every bot's
-  army), how often the AI re-issues attack-move to whole armies (every 20 s today), cross-map orders (long paths).
-- **Hard food caps** [you]: a cap for ALL players, e.g. 150 or 200 (WL's faction maximums are 160-612 today, seen in
-  the 0.36 dump) -- or a lower cap only for bots, per difficulty (e.g. Recruit 100 ... Warlord 200).
-- **Bonus gold model** [you] (designed in discussion, not built): per minute through WL's `BonusIncome` (shown on
-  the scoreboard, independent of the bot count -- today's per-production-turn subsidy pays more the fewer bots
-  there are). Start at 11:00 (when WL's starting income ends); Recruit 0.
-  `bonus/min = D x (20 % of WL StartingGold.Income + 10 % of CP income, CP income counted up to 300)`, D: Recruit
-  0, Soldier 0.5, Veteran 1, Commander 1.5, Warlord 2. Evil factions automatically get more (higher WL start income).
-  **Food upkeep on the bonus only**: food used < 100 full, 100-149 half, 150-199 quarter, 200+ none.
-- **Alternatives / additions to compare** [you]: (a) a flat amount per CP instead of a share of CP income;
-  (b) diminishing returns (square root of CPs) instead of a hard cap; (c) the bonus only while the bot is behind its
-  team's average CPs (catch-up); (d) bot-only upkeep that raises unit prices like melee (rejected for now --
-  keep prices); (e) gold to buildings/upgrades instead of units (less army, same strength via tech).
-- **Melee-like AI behaviour** [ai]: attack groups of limited size (30-40 food) instead of the whole army; orders only
-  for new or idle units; short waypoint orders (next CP) instead of cross-map orders.
-- **Balance** [you]: no catch-up; evil slightly favoured. Revisit after the gold model and food caps.
+Vision: bots replace human players and challenge them -- mostly through **many troops on the map** (that is the
+fun; a food cap is the last resort). So the engine budget must go to units, not to AI overhead. Each phase is
+playable on its own; changes stay inside `Ai/` (outside: only the hooks listed in `AI_AGENTS_CONTEXT.md`).
+1. [ai] **Scheduler + load budget** (0.39): one timer, one small task per tick, op counters visible in `-debug2` /
+   the dump. No behaviour change. Spread the 15-s wave-tick work (hero care, standings, gates, missions) over ticks.
+2. [ai] **Army orders** (0.39): orders only for idle, new and straggling units; re-order the whole army only when
+   the target changes. **Attack group** of limited size (start 40-60 food, tunable per faction) goes to the target,
+   the rest holds at the nearest owned node (garrison = defense). Waypoint orders: next node on the route instead
+   of one cross-map order.
+3. [ai] **Route planner on one CP graph** (0.40): one edge list (generated walking cost + optional gate + hand
+   weight); from the army's own node, Dijkstra over OPEN edges only -> the cheapest unowned node is the target;
+   retarget only on events (taken / lost / stuck / attacked). Replaces: Combined/Kalimdor sets and the merge,
+   portal-aware distance, stickiness, most stuck special cases, goals, skip nodes. Fixes "frontier behind a
+   barrier" (Ironforge -> Arathi through an ally node) by construction. Defense = nodes within a few hops of the
+   army. Data: `tools/ai/graph_weights.py` (pathing data + rocks/bridges + portals; feasibility: 176 of 187 edges,
+   median 1.08x the straight line). Names: **CP graph**, **route planner**.
+4. [you/ai] **Economy** (after 2-3 are measured): bonus gold per minute via WL's `BonusIncome` (independent of the
+   bot count; today's per-turn subsidy pays more the fewer bots there are), start 11:00, Recruit 0,
+   `D x (20 % of WL StartingGold.Income + 10 % of CP income, counted up to 300)`, D 0 / 0.5 / 1 / 1.5 / 2.
+   Alternatives to compare: flat amount per CP; square root of CPs; quality instead of quantity (earlier tech, hero
+   XP, elite share) for the same food. Food caps only as the last resort (maintainer: many troops = fun).
+5. [ai] **Cleanup**: wave runner, doctrine steps, `OpenThandolIfDue`, goals; version tags in comments ->
+   CHANGELOG; split `AiSystem.cs` (Army, Economy, Graph, World, Missions).
 
-## 0.38 -- needs a decision first
+Measure before and after each phase: units per player and total, orders per minute (LOAD), at 10/20/30/45 min.
 
-- [you] **Old Gods rift, second trigger** (good side): the Maw of Gor'ma taken by a NON-Old-Gods faction AND "the big
-  Old Gods HQ" fallen -> the rift opens for them. Which building or unit is that HQ -- N'Zoth (`U01Z`, Black Empire,
-  Essential), the Pyramid of Madness (`n0DU`, -26432,-5952), or another? Then: lore text + pings like trigger 1.
-- [you] "The other pair in the Eastern Kingdoms can also spawn for the good guys if they win -- maybe the Scourge
-  losing the Frozen Throne?" -- which portal pair (both ends), and is the trigger "Frozen Throne destroyed/ruptured"?
-- [you] **Archimonde's channel** (420 s in WL's quest "Twilight of the Gods"): 0.37.1 sends him into the channel
-  spot once the Legion holds Nordrassil and stops ordering him there. Open: (a) the Legion army defends him while
-  he channels (gathers at the spot), (b) reinforcements go there, (c) a shorter channel for bots (changes WL's
-  quest -- outside the AI). Humans can interrupt him; he is PermaDies (died for good at 29:08 in the 0.36 test).
-- [you] **Defend range**: the 0.36 dump showed the Legion "defending" a shrine 26 km from its army. Proposal: defend
-  only CPs within ~8000 walking distance of the army; farther ones are left to the faction's other groups / allies.
-- [you] **Other faction picks for bots**: Dalaran/Gilneas, Sentinels/Draenei, Illidari/Sunfury stay Basic (Draenei
-  and Sunfury have no AI data). Random too, once the data exists?
-- [you] **Legion summon, second trigger** (lore: "Under the Burning Sky" -- Book of Medivh in Dalaran): a bot Legion
-  takes the Book once Dalaran's capital is dead (any Legion unit at the pedestal) -> summon. Keeps the Sunwell
-  trigger. Yes / no?
-- [you] Kul Tiras Highbank last stand (`QuestRule` with `CapitalLost`, "the fleet falls back to its outpost")? Note:
-  Highbank is the reward of "Eliminate Piracy" (Booty Bay + Katherine), not a backup start.
-- [you] Loading screen: a red "BOTIFIED" picture needs an image edit of `Imports/LoadingScreenTL/TR/BL/BR.blp`
-  (the title text is already "Warcraft Legacies Botified ..." in red).
+## 0.39 -- after the production rework (0.38)
 
-## 0.38 -- implementation work
+- [ai] **Units of buildings a bot doesn't have**: bots never construct buildings, so units from buildings they lack
+  stay "never" (0.38 test: Quel'thalas' Academy and Consortium units, Kul Tiras' and Stormwind's special units).
+  Proposal: the starter kit (or the building credits) also gives each bot its "Specialist" building(s).
+- [ai] **Quest-locked heroes and units**: `unit_scan.py` lists per faction which quest unlocks what; decide which
+  quests bots should drive (0.38 test: Rommath/Lor'themar came once "The Blood Elves" was done).
+- [ai] Hero care teleports often (0.37.2 test: ~40 in 65 min; Warsong's Chieftain 6x from the same spot
+  -9952,1944). Find out what is at that spot before tuning.
+- [ai] Ships and builders are left out of production on purpose; naval play is not planned.
 
-- [ai] **Frontiers behind a barrier**: a frontier can come from an ALLY's node on the far side of a closed barrier
-  (0.37.1: Ironforge targeted Arathi Highlands through an ally node north of the Thandol rocks; the army stood at the
-  rocks). 0.37.2 limits it (stuck back-off 5/10/20 min). Real fix: only frontiers the army can walk to -- comes with
-  the walking costs below (barriers = gates/rocks as closed edges).
-- [ai] **CP graph weights**: `tools/ai/graph_weights.py` -- walking distance per edge from the pathing data
-  (feasibility checked: 176 of 187 edges; median 1.08x the straight line; outliers Antoran Wastes <-> Nath'raxas
-  Hold 3.05x, Burning Steppes <-> Fuselight 2.1x). Ship/portal edges = walk to the portal + from the exit + boarding
-  penalty; bridge destructibles must be added as walkable. Generated base cost per edge; `Weight` stays the hand
-  knob. Frontier picker: route cost from the army over the graph (Dijkstra, ~190 edges). Names: **CP graph**
-  (`AiGraph`, `Edge`), **frontier picker** (`PickGraphTarget`).
-- [ai] **Warsong as a bot** (it can now be picked): goals for its subdue quests -- Echo Isles (trolls), Thunder
-  Bluff (tauren), Stonemaul (ogres, dead-end CP behind Dustwallow Marsh); each also needs Grom alive.
-- [ai] Old Gods bots switch to the merged graph when the rift opens (until the Legion summon merges the graphs, a
-  Kalimdor-set bot only sees Dragonmaw Port behind the rift).
-- [ai] Heroes: learn passives/auras first, autocast on (skill ids from mapdata UnitData `heroAbilList`).
+## Decisions needed
+
+- [you] **Arthas when Lordaeron turns Scarlet Crusade early** (0.38 test: the human Lordaeron used the Scarlet
+  Crusade event, Arthas died for good at 19:09 and the Scourge never got him -- "The Culling" needs Lordaeron's
+  "Line of Succession" still open). Proposal: when Lordaeron becomes the Scarlet Crusade before "The Culling", give
+  the Scourge its Arthas unlock (the research "The Culling" grants) -- AI-side for a bot Scourge, or a WL change for
+  everyone?
+- [you] **Archimonde's channel** (420 s, "Twilight of the Gods"): options (a) the Legion army gathers at the spot
+  while he channels, (b) reinforcements go there, (c) a shorter channel (WL quest change, outside the AI).
+- [you] **Defend range / flapping**: the Legion "defended" a shrine 26 km away (0.36) and switched defend/attack every
+  15 s (0.37.2). Proposal: defend only within ~8000 of the army, keep a defend target at least 60 s.
+- [you] Kul Tiras Highbank last stand (`QuestRule` with `CapitalLost` = Boralus Keep)?
+- [you] Loading screen: a red "BOTIFIED" picture needs an image edit of `Imports/LoadingScreenTL/TR/BL/BR.blp`.
+- [you] **Free heroes for a human?** In the 0.38 test the human Lordaeron got heroes for free. The AI only trains
+  heroes for bots (perks), WL heroes cost 100 gold in the map data -- so it is not the AI. Check: does gold go down
+  when you queue a hero? If not, find WL's mechanic (Scarlet Crusade event? test-mode cheat?).
+
+## Fallbacks and alternative paths (concept, maintainer ideas)
+
+- [you] **Stromgarde fallback -> alliance change**: when Stromgarde becomes Stormwind's fallback (the AI's quest rule
+  "Stromgarde"), Stormwind joins the North Alliance -- only if it was triggered as the fallback.
+- [you] **Aerie Peak fallback for the dwarves** (like Stromgarde): Ironforge falls -> Aerie Peak -> alliance change,
+  again only when triggered as the fallback.
+- [you] **Sunfury as Quel'thalas' fallback** (instead of a random Illidari/Sunfury pick, which stays Basic).
+- [you] **CPs and food**: tie the food cap to the CP count, not only the income.
+- The 24-player map has no extra content to transplant (checked 0.38.1: 224 unit types differ, all older versions;
+  no separate Dragonmaw camp -- only the Dragonmaw Port CP, in both maps). Dropped from the plans.
+
+## Smaller implementation work
+
+- [ai] **Warsong as a bot** (it is picked now -- seen in the 0.37.2 test): goals for its subdue quests -- Echo Isles
+  (trolls), Thunder Bluff (tauren), Stonemaul (ogres); each also needs Grom alive.
+- [ai] Autocast for bot units/heroes (heal, inner fire, ...) -- not done; skills are learned since 0.38. Some
+  abilities (e.g. Blink) are already used by WC3's own unit AI for computer players.
+- [ai] Gate sweep stays (maintainer: bots must not deal with gates). 0.38 removes new gates when they enter the map;
+  the maintainer checks in playtests which gates still survive (`-id` on it, then add the type to `AiGraph.GateTypes`).
 - [ai] Losing conditions for Escape to Theramore / The Scarlet Crusade, then re-enable them.
-- [ai] `tools/ai/map_query.py` -> `map_audit.py`: check every coordinate in AiConfig.cs in one run.
-- [ai] Finishing off losers part 2 (stragglers through portals, allied bots merge targets).
+- [ai] `tools/ai/map_query.py` -> `map_audit.py`: check every coordinate in AiConfig.cs in one run (incl. doodads
+  near portal ends -- the Maw end stood on an archway).
 - [ai] Debug: `-scout` (define first), winner record when WL declares victory.
 
-## Check in the next playtest (0.37.2)
+## Check in the next playtest (0.38.1)
 
-New in 0.37.2:
-- Dwarves no longer walk to the Thandol bridge before WL's rocks are gone (pin "gate 'thandol' open: ..." at about
-  30:00). A repeated "STUCK on X" shows growing skip times (300 / 600 / 1200 s).
-- Jaina's Sanctum is a CP (10 gold/min, Theramore, next to Jaina's Sanctum building); bots reach it from Alcaz Isle.
-From 0.37.1 (not all seen yet):
-- Pins "bot pick P0: faction choice ..." (orc slot Frostwolf or Warsong; seen) and "Scourge invasion option ..." --
-  the bot Scourge invades. Humans still get their dialogs.
-- Old Gods take Nordrassil -> "OLD GODS RIFT open", purple text + pings; the Twilight Highlands portal works both
-  ways (`-ogrift` forces it).
-- "Sulfuron Spire: ... barracks placed" after Skywall's Fireland Invasion; troops come out there.
-- "AREA CLEAR Ramzes the Horror started" by whoever holds Desolace (or "skipped: target already dead").
-- Archimonde walks into the channel spot after the Legion takes Nordrassil and keeps channelling (timer dialog).
-- Old Hatreds only from Daelin level 10; no "hero lost" loop.
-- Stranded heroes in the Black Empire realm / Icecrown -> "moved to its CP ... near the army".
-- Scourge trains Arthas right after "The Culling"; no second Arthas after "The Ascension".
-- Still from 0.36: AI portals no longer burn at 1000 range; Felwood portal after `-legion`; Tol Barad ship;
-  hero revive only at a living altar; Ragnaros only with a real level-12 hero.
+- **Minimap icons**: still not visible on the AI portals in 0.38. Run `-icontest` (single-player, select a unit):
+  six icons eastwards, numbered -- tell me which numbers show; the portals then use that variant.
+- Terrordale: right after "Plague of Undeath" the pin "Terrordale handed to the Scourge"; the Scourge base near
+  Stratholme survives.
+- Yogg-Saron: the hero visit only for a bot holding Storm Peaks; after it, "releases Yogg-Saron from his prison",
+  then "AREA CLEAR Yogg-Saron" by the Storm Peaks holder.
+- Ysondre: "AREA CLEAR Ysondre started" once a bot holds Shrine to Malorne and she is visible (0.38: skipped at 2:00
+  as "already dead" -- she was hidden).
+- Old Gods rift, second trigger: a non-Old-Gods faction holds the Maw of Gor'ma and N'Zoth is dead -> "OLD GODS RIFT
+  open: Maw of Gor'ma taken by ..." with its own text.
+- Legion after the summon goes to Kalimdor through Felwood (weights: Felwood 1, Sunwell side / Northrend 6).
+- Faction picks: Sentinels slot now also random (Sentinels / The Exodar).
+- From 0.38 (seen working: TRAINED variety, quest heroes like Rommath/Lor'themar, LOAD as before, Sulfuron barracks,
+  Taerar, Ramzes, Dalaran pick, Black Empire on Kalimdor, Book/Legion pins not yet seen).
 
 ## Open questions
 
-- [you] Stromgarde backup castle feels flat for Stormwind. Make Stormwind an ally of the North Alliance too?
 - [you] Thandol bridge sooner? WL removes its "Bridge Rocks" at turn 30 (`Setup/RockSetup.cs`, expiry 30); the AI
   now follows that. Opening it earlier = a WL change (expiry), e.g. 20 -- for everyone, not just bots.
 - [you] Broken Isles: a more lore-fitting connection than the Azsuna ship.
@@ -123,4 +128,3 @@ From 0.37.1 (not all seen yet):
   Sentinels -> Maiev, Warsong/Frostwolf -> Dragonmaw (Old Gods side), Stormwind -> Honor Hold, mobile Ragnaros
   for Ironforge.
 - Rebuilding destroyed production buildings + HQ safety net (no barracks -> HQ trains basics).
-- 24-player map (`mapdata/WarcraftLegacies24p`): old 1.18a layout, 20 graph nodes missing, 65 moved -- not planned.
