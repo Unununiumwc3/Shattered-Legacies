@@ -125,7 +125,7 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // Issue an order that costs resources for free: top up, order, restore. Returns WC3's accept/refuse.
-    private static bool FreeOrder(player p, unit u, int orderId)
+    internal static bool FreeOrder(player p, unit u, int orderId)
     {
       var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD);
       var wood = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER);

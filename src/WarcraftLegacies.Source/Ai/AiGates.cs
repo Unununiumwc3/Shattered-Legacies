@@ -59,6 +59,37 @@ namespace WarcraftLegacies.Source.Ai
 
     // Remove every bot-owned wall-gate so a bot can never wall its own army in. Runs once immediately, then
     // ~every 5 min (gates can be built later). Strict type match against AiGraph.GateTypes -> only real gates.
+    // 0.38: gates that appear DURING the game (quest rewards, rescues that create units, upgrades) are removed the
+    // moment they enter the map, not up to 5 min later. Units that were already on the map (hidden rescue units
+    // that are only shown or handed over) do not "enter" -- the 5-min whole-map sweep below stays for those.
+    // Cost: one HashSet lookup per created unit.
+    private static trigger _gateWatch;
+
+    private static void WatchNewGates()
+    {
+      if (_gateWatch != null)
+      {
+        return;
+      }
+
+      var world = CreateRegion();
+      RegionAddRect(world, GetWorldBounds());
+      _gateWatch = CreateTrigger();
+      TriggerRegisterEnterRegion(_gateWatch, world, null);
+      TriggerAddAction(_gateWatch, OnUnitEntersMap);
+    }
+
+    private static void OnUnitEntersMap()
+    {
+      var u = GetTriggerUnit();
+      if (_gateSet != null && _gateSet.Contains(GetUnitTypeId(u)))
+      {
+        SimpleBot.Log("gate watch: new gate " + GetUnitName(u) + " removed at " + I2S(R2I(GetUnitX(u))) + ","
+                      + I2S(R2I(GetUnitY(u))));
+        RemoveUnit(u);
+      }
+    }
+
     internal static void SweepBotGates()
     {
       if (_lastGateSweep >= 0f && SimpleBot._clock - _lastGateSweep < 300f)
@@ -74,6 +105,8 @@ namespace WarcraftLegacies.Source.Ai
         {
           _gateSet.Add(AiGraph.GateTypes[i]);
         }
+
+        WatchNewGates();
       }
 
       // v27.2: whole-map unit enum (not per-player) -- catches gate units no matter who owns them or how they
@@ -246,21 +279,27 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var who = "-ogrift";
+      var byVictors = false;
       if (!_riftForced)
       {
-        var cp = SimpleBot.SafeCp(AiConfig.NordrassilCpId);
-        if (cp == null || cp.Unit == null || GetPlayerId(GetOwningPlayer(cp.Unit)) >= 24)
+        var oldGods = HolderIsOldGods(AiConfig.NordrassilCpId);
+        if (oldGods != "")
         {
-          return;
+          who = oldGods; // trigger 1: an Old Gods faction took Nordrassil
         }
-
-        var fac = GetOwningPlayer(cp.Unit).GetPlayerData().Faction;
-        if (fac == null || !AiConfig.OldGodsFactions.Contains(fac.Name))
+        else
         {
-          return;
-        }
+          // 0.38.1 trigger 2: the Maw of Gor'ma held by a faction outside the Old Gods AND N'Zoth (Black Empire's
+          // immobile Old God) dead -> the rift opens for the victors
+          var victor = HolderOutsideOldGods(AiConfig.MawCpId);
+          if (victor == "" || OldGodAlive(AiConfig.NZothType))
+          {
+            return;
+          }
 
-        who = fac.Name;
+          who = victor;
+          byVictors = true;
+        }
       }
 
       _riftOpen = true;
@@ -269,14 +308,59 @@ namespace WarcraftLegacies.Source.Ai
       SimpleBot._gateOpen["oldgods"] = true;
       for (var i = 0; i < 24; i++)
       {
-        DisplayTimedTextToPlayer(Player(i), 0, 0, 25, "|cffaa00ffNordrassil has fallen to the servants of the Old Gods.|r "
-          + "|cffaa00ffIn the Maw of Gor'ma, N'Zoth's whispers tear the veil of the world -- a rift now opens onto the "
-          + "Twilight Highlands.|r");
+        DisplayTimedTextToPlayer(Player(i), 0, 0, 25, byVictors
+          ? "|cffaa00ffN'Zoth is slain and the Maw of Gor'ma is in the hands of his foes. The rift the Old God tore "
+            + "through the world now carries them to the Twilight Highlands.|r"
+          : "|cffaa00ffNordrassil has fallen to the servants of the Old Gods.|r "
+            + "|cffaa00ffIn the Maw of Gor'ma, N'Zoth's whispers tear the veil of the world -- a rift now opens onto the "
+            + "Twilight Highlands.|r");
       }
 
       PingMinimapEx(AiConfig.RiftMawX, AiConfig.RiftMawY, 6f, 170, 0, 255, true);
       PingMinimapEx(AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, 6f, 170, 0, 255, true);
-      SimpleBot.LogPin("OLD GODS RIFT open: Nordrassil taken by " + who + " -- Maw of Gor'ma <-> Twilight Highlands");
+      SimpleBot.LogPin("OLD GODS RIFT open: " + (byVictors ? "Maw of Gor'ma taken by " : "Nordrassil taken by ") + who
+                       + " -- Maw of Gor'ma <-> Twilight Highlands");
+    }
+
+    // faction name of the CP's holder if it is an Old Gods faction, else ""
+    private static string HolderIsOldGods(int cpId)
+    {
+      var f = HolderFaction(cpId);
+      return f != null && AiConfig.OldGodsFactions.Contains(f.Name) ? f.Name : "";
+    }
+
+    // faction name of the CP's holder if it is a real player outside the Old Gods, else ""
+    private static string HolderOutsideOldGods(int cpId)
+    {
+      var f = HolderFaction(cpId);
+      return f != null && !AiConfig.OldGodsFactions.Contains(f.Name) ? f.Name : "";
+    }
+
+    private static Faction HolderFaction(int cpId)
+    {
+      var cp = SimpleBot.SafeCp(cpId);
+      if (cp == null || cp.Unit == null || GetPlayerId(GetOwningPlayer(cp.Unit)) >= 24)
+      {
+        return null;
+      }
+
+      return GetOwningPlayer(cp.Unit).GetPlayerData().Faction;
+    }
+
+    // is the immobile Old God (a legend, e.g. N'Zoth) still alive? Not in the game -> counts as dead.
+    private static bool OldGodAlive(int unitType)
+    {
+      var all = LegendaryHeroManager.GetAll();
+      for (var i = 0; i < all.Count; i++)
+      {
+        var u = all[i].Unit;
+        if (u != null && GetUnitTypeId(u) == unitType)
+        {
+          return GetUnitState(u, UNIT_STATE_LIFE) > 0.405f;
+        }
+      }
+
+      return false;
     }
 
     private static void RemovePreplacedRiftPortal()

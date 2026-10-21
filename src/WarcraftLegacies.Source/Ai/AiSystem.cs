@@ -666,6 +666,8 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
+    private static readonly Dictionary<string, float> _heroRefused = new(); // 0.38: "pid|hero" -> retry time
+
     private static void TrainSome(unit building, List<int> pool)
     {
       for (var i = 0; i < QueuePerBuilding; i++)
@@ -678,34 +680,138 @@ namespace WarcraftLegacies.Source.Ai
     // faction-correct ids from AiConfig (source-derived) -- no id spray. Trains any config hero the bot
     // lacks alive (a dead one gets revived instead), one per altar per cycle, gold-gated; WC3's hero limit
     // self-caps. Fallback: a faction missing from AiConfig simply trains no heroes (no crash, no spray).
-    private static void TrainHeroes(unit altar, Faction faction, player p)
+    // 0.38: new heroes are FREE for bots with perks (like researches and upgrades: AiTech.FreeOrder tops up the gold
+    // for the order only). A bot without perks (fair autopilot) pays and returns true = SAVE gold this turn when an
+    // available hero is too expensive. Candidates: AiConfig.Heroes (priority order, e.g. Arthas first), then every
+    // other hero this altar trains (AiData.AltarHeroes). A hero WC3 refuses anyway is skipped for 5 min.
+    private static bool TrainHeroes(unit altar, Faction faction, player p)
     {
       if (GetUnitCurrentOrder(altar) != 0)
       {
-        return; // altar already training or reviving something
+        return false; // altar already training or reviving something
       }
 
-      if (!AiConfig.Heroes.TryGetValue(faction.Name, out var ids) || ids == null)
+      var cand = new List<int>();
+      if (AiConfig.Heroes.TryGetValue(faction.Name, out var ids) && ids != null)
       {
-        return; // no config for this faction -> skip hero training (graceful fallback)
+        for (var i = 0; i < ids.Count; i++)
+        {
+          cand.Add(ids[i]);
+        }
       }
 
-      for (var i = 0; i < ids.Count; i++)
+      var atid = GetUnitTypeId(altar);
+      if (AiData.AltarHeroes.ContainsKey(atid))
       {
-        var hid = ids[i];
+        var more = AiData.AltarHeroes[atid];
+        for (var i = 0; i < more.Length; i++)
+        {
+          if (!ListHas(cand, more[i]))
+          {
+            cand.Add(more[i]);
+          }
+        }
+      }
+
+      var pid = GetPlayerId(p);
+      for (var i = 0; i < cand.Count; i++)
+      {
+        var hid = cand[i];
         if (PermaDead.Contains(hid))
         {
           continue; // v28: died permanently (e.g. Cenarius) -- WL would adopt a re-trained copy, so never train it
         }
 
-        if (HaveLiveHero(p, hid))
+        if (HaveLiveHero(p, hid) || !RequirementsMet(p, hid))
         {
-          continue; // already have this hero alive
+          continue; // already alive, or still locked (quest not done)
         }
 
-        if (IssueImmediateOrderById(altar, hid))
+        var key = I2S(pid) + "|" + I2S(hid);
+        if (_heroRefused.ContainsKey(key) && _clock < _heroRefused[key])
         {
-          return; // trained a new hero, or revived a dead one; one per altar per cycle
+          continue;
+        }
+
+        var perks = HasPerks(p);
+        if (perks ? AiTech.FreeOrder(p, altar, hid) : IssueImmediateOrderById(altar, hid))
+        {
+          return false; // trained a new hero, or revived a dead one; one per altar per cycle
+        }
+
+        if (!perks && GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) < GetUnitGoldCost(hid))
+        {
+          return true; // available but too expensive right now -> save
+        }
+
+        _heroRefused[key] = _clock + 300f; // refused for another reason (limit, hero cap ...)
+      }
+
+      return false;
+    }
+
+    // 0.38: all requirements of a unit/hero type met (AiData.Requires: researches or unit types)
+    internal static bool RequirementsMet(player p, int typeId)
+    {
+      if (!AiData.Requires.ContainsKey(typeId))
+      {
+        return true;
+      }
+
+      var req = AiData.Requires[typeId];
+      for (var i = 0; i < req.Length; i++)
+      {
+        if (GetPlayerTechCount(p, req[i], false) < 1)
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // 0.38: train from the building's REAL list (AiData.Trains): only types whose requirements are met, the type
+    // this bot has trained least first (random among equals) -> an even mix instead of random category pools.
+    private static void TrainFromTable(unit building, int[] list, player p)
+    {
+      var pid = GetPlayerId(p);
+      var avail = new List<int>();
+      for (var i = 0; i < list.Length; i++)
+      {
+        if (RequirementsMet(p, list[i]))
+        {
+          avail.Add(list[i]);
+        }
+      }
+
+      var queued = 0;
+      var tries = 0;
+      while (queued < QueuePerBuilding && avail.Count > 0 && tries < 6)
+      {
+        tries++;
+        var start = GetRandomInt(0, avail.Count - 1);
+        var best = -1;
+        var bestN = 0;
+        for (var k = 0; k < avail.Count; k++)
+        {
+          var idx = (start + k) % avail.Count;
+          var n = AiStats.Count(pid, avail[idx]);
+          if (best < 0 || n < bestN)
+          {
+            best = idx;
+            bestN = n;
+          }
+        }
+
+        var t = avail[best];
+        if (IssueImmediateOrderById(building, t))
+        {
+          queued++;
+          AiStats.Planned(pid, t); // counts the order, so the next slot picks another type
+        }
+        else
+        {
+          avail.RemoveAt(best); // not possible right now (gold, food, limit) -> try another type
         }
       }
     }
@@ -984,6 +1090,8 @@ namespace WarcraftLegacies.Source.Ai
         var flyers = new List<int>();
         AddCategory(faction, UnitCategory.Flyer, flyers);
 
+        var altarUnits = new List<unit>();
+        var trainers = new List<unit>();
         var g = CreateGroup();
         GroupEnumUnitsOfPlayer(g, p, null);
         unit u;
@@ -1018,29 +1126,58 @@ namespace WarcraftLegacies.Source.Ai
             }
           }
 
-          if (fighters.Count > 0 && ListHas(barracks, tid))
+          // 0.38: collect first, train after the loop -- heroes before units (see below)
+          if (ListHas(altars, tid) || AiData.AltarHeroes.ContainsKey(tid))
           {
-            TrainSome(u, fighters);
+            altarUnits.Add(u);
           }
-          else if (siege.Count > 0 && ListHas(siegeShops, tid))
+          else if (AiData.Trains.ContainsKey(tid) || ListHas(barracks, tid) || ListHas(siegeShops, tid)
+                   || ListHas(magicBuildings, tid) || ListHas(flyBuildings, tid))
           {
-            TrainSome(u, siege);
-          }
-          else if (support.Count > 0 && ListHas(magicBuildings, tid))
-          {
-            TrainSome(u, support);
-          }
-          else if (flyers.Count > 0 && ListHas(flyBuildings, tid))
-          {
-            TrainSome(u, flyers);
-          }
-          else if (ListHas(altars, tid))
-          {
-            TrainHeroes(u, faction, p);
+            trainers.Add(u);
           }
         }
 
         DestroyGroup(g);
+
+        // 0.38: heroes first. If a hero is available (requirements met) but the gold is short, the bot SAVES this
+        // turn (no units). Before, units ate all gold every turn: Quel'thalas never had more than ~110 gold, so
+        // Rommath / Lor'themar never came although "The Blood Elves" was done.
+        var saving = false;
+        for (var ai = 0; ai < altarUnits.Count; ai++)
+        {
+          if (TrainHeroes(altarUnits[ai], faction, p))
+          {
+            saving = true;
+          }
+        }
+
+        GetDiag(pid0).Saving = saving;
+        for (var ti = 0; ti < trainers.Count && !saving; ti++)
+        {
+          var tu = trainers[ti];
+          var ttid = GetUnitTypeId(tu);
+          if (AiData.Trains.ContainsKey(ttid))
+          {
+            TrainFromTable(tu, AiData.Trains[ttid], p); // 0.38: the building's REAL train list
+          }
+          else if (fighters.Count > 0 && ListHas(barracks, ttid))
+          {
+            TrainSome(tu, fighters); // fallback: buildings without a train list in the map data
+          }
+          else if (siege.Count > 0 && ListHas(siegeShops, ttid))
+          {
+            TrainSome(tu, siege);
+          }
+          else if (support.Count > 0 && ListHas(magicBuildings, ttid))
+          {
+            TrainSome(tu, support);
+          }
+          else if (flyers.Count > 0 && ListHas(flyBuildings, ttid))
+          {
+            TrainSome(tu, flyers);
+          }
+        }
         if (bCredits > 0)
         {
           AiTech.SpendBuildingCredit(p, pid0, upHall, upOther);
@@ -1621,7 +1758,9 @@ namespace WarcraftLegacies.Source.Ai
       // v34: until the Legion summon every faction walks its own continent's graph. The summon MERGES the graphs
       // (event): from then on everyone walks the whole world, but frontiers on the faction's HOME graph (the one
       // it walked before the merge) always come first -- foreign ones only once home has none left.
-      var useName = _graphMerged && setName != null ? "All" : setName;
+      // 0.38: Old Gods walk the whole world once their rift is open (home = Kalimdor still comes first)
+      var riftAll = setName != null && GateOpen("oldgods") && AiConfig.OldGodsFactions.Contains(fac.Name);
+      var useName = (_graphMerged || riftAll) && setName != null ? "All" : setName;
       d.EdgeSet = setName == null ? "none" : (_graphMerged ? "All(home " + setName + ")" : setName);
       var edges = useName != null ? AiGraph.EdgesByName(useName) : null;
       if (edges == null || edges.Count == 0)
@@ -2117,6 +2256,7 @@ namespace WarcraftLegacies.Source.Ai
       Safe("named gates", AiGates.OpenNamedGates);                // 0.36: "greymane" (never opened before), "tomb"
       Safe("old gods rift", AiGates.OpenOldGodsRift);             // 0.37: replaces the Old Gods wave
       Safe("sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37: Old Gods barracks at Sulfuron Spire
+      Safe("yogg release", AiMissions.RunYogg);                   // 0.38.1: bot casts "Free Yogg-Saron"
       Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
@@ -2124,6 +2264,7 @@ namespace WarcraftLegacies.Source.Ai
       Safe("ragnaros", AiMissions.RunRagnarosMission);
       Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon; 0.36: more
       Safe("hero care", AiHeroCare.Run);                  // 0.36: stranded heroes walk back / go home
+      Safe("hero skills", AiHeroSkills.Run);              // 0.38: unspent skill points of bot heroes
       Safe("standings", AiStandings.Check);               // 0.36: team CP counts, 80/90 pins
       Safe("palace handover", AiMissions.LegionPalaceHandover);      // v32
       Safe("banned forms", AiMissions.ScanBannedForms);              // v32: Cenarius stays dead for bots
@@ -2480,6 +2621,7 @@ namespace WarcraftLegacies.Source.Ai
     public int Stuck;        // v31: frontiers skipped because this bot gave up on them (stuck blacklist)
     public int Sticky;       // 0.36: 1 = the current target was kept although another frontier scored better
     public int AnchorUnits;  // 0.36: units in the group the target anchor is taken from (biggest landmass group)
+    public bool Saving;      // 0.38: last production turn saved gold for an available hero (no units)
     public unit Target;      // current objective unit (null = point/none)
     public string Reason = "-";
     public float TargetSince;
@@ -2542,7 +2684,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.37.2";
+    public const string Build = "0.38.1";
 
     public static void Setup()
     {
@@ -2552,6 +2694,8 @@ namespace WarcraftLegacies.Source.Ai
       AiAutopilot.Setup(); // 0.35
       AiGoldVote.Setup();  // 0.35.1
       AiChoices.Setup();   // 0.37: bots pick in WL's click menus (before FactionChoiceDialogSetup runs)
+      AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
+      AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
       var t = CreateTimer();
       TimerStart(t, 3f, false, AnnounceBuild);
     }

@@ -12,7 +12,8 @@ in `src/WarcraftLegacies.Source/Ai/`. Changes outside it (keep them minimal and 
 `Setup/GameSetup.cs` (`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`); `Loc.cs` literal
 replace (0.34.3); the bot-pick hook `MacroTools/UserInterface/BotChoicePolicy.cs` + `ChoiceDialogPresenter.TryBotPick`
 (0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` + version in
-`WarcraftLegacies.CLI/appsettings.json` (0.37.1); map data: the Jaina's Sanctum CP `n0JS` (0.37.2).
+`WarcraftLegacies.CLI/appsettings.json` (0.37.1); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); map data:
+CPs `n0JS` Jaina's Sanctum (0.37.2), `n0SA`/`n0TD`/`n0RF` + marker `A0ZG`/`B0ZG` (0.38).
 
 ## Getting the code (sandbox)
 
@@ -43,6 +44,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiGoldVote.cs` | AiGoldVote | bot strength vote at 70 s (sets `SimpleBot.BotGoldBonus`) |
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
+| `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order -- re-run after WL updates |
+| `AiHeroSkills.cs` | AiHeroSkills | bot heroes learn skills (level-up event + wave tick) |
+| `AiStats.cs` | AiStats | what bots train (train-finish event) -> dump section TRAINED (0.38) |
 | `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |
 | `AiConfig.cs` | AiConfig, AiGraph, AiWorld, ... | data: CP graph edges, portals, quest rules, kill targets, coordinates |
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
@@ -50,6 +54,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
+| `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` from WL's ObjectInfo + map data (run after every WL update) |
+| `tools/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
 | `tools/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
 
 ## Hard rules (each one cost a broken build)
@@ -106,17 +112,21 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - `mapdata/WarcraftLegacies/PathingMap.json`: 32-unit cells, rows bottom-up from (-28672, -32256), flag 0x02 not
   walkable / 0x08 not buildable. **Terrain only** -- doodads, destructables (rocks, bridges, trees) and units are NOT
   in it. `tools/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
-- Preplaced units: `Units/<x>_<y>.json`, one file per 512x512 chunk, name = position truncated TOWARD ZERO to 512
-  (-7616,-9152 -> `-7168_-8704.json`). `TypeId`/`SkinId` **little-endian** (`struct.unpack('<I', b'n0JS')`), unique
+- Preplaced units: `Units/<x>_<y>.json`, grouped by area. The names follow NO simple rounding rule (checked in
+  0.38) -- append a new unit to the file that already holds its nearest neighbours; never create new files. `TypeId`/`SkinId` **little-endian** (`struct.unpack('<I', b'n0JS')`), unique
   `CreationNumber` (max + 1). Doodads/destructables: `Doodads/*.json`. Object data: `UnitData/<id>.json` (`OldId`
   base, `NewId`, `Modifications`: `unam` name, `uabi` abilities, `uupt` upgrades to), `AbilityData`, `DestructableData`.
   Rectangles: `src/WarcraftLegacies.Source/Regions.g.cs`. The JSON files round-trip exactly with
   `json.dumps(obj, indent=2, ensure_ascii=False)` + the original trailing whitespace (check before editing).
 - **A new control point** (0.37.2, Jaina's Sanctum): copy an existing CP's `UnitData` (e.g. `n09C` Alcaz Isle) to a
   free id, rename it, place one unit (owner 24, like every CP) on a walkable 64-aligned spot clear of units. WL's
-  `ControlPointSetup` finds it at runtime by its income marker ability (`A0LO` = 10 gold/min, buff B025). Then add the
-  graph edges (big-endian id, e.g. `n0JS` = 1848658515).
+  `ControlPointSetup` finds it at runtime by its income marker ability (`A0LO` = 10 gold/min, buff B025; markers exist
+  for 10/15/20/25/30/50, and since 0.38 `A0ZG`/`B0ZG` = 1 gold). Then add the graph edges (big-endian id, e.g.
+  `n0JS` = 1848658515) -- in the edge list of the CP's continent (see "edge list membership" below).
 - Map coordinates from the maintainer had sign typos 3 times -- always check them offline first.
+- **Doodads block pathing but are not in the pathing data**: the first Maw of Gor'ma rift end stood on a Silithid
+  archway -> ground units could not enter the waygate (one-way rift). For portal ends and building spots also check
+  `Doodads/*.json` within ~250 (decor like fog/glow is harmless; archways, obelisks, walls are not).
 - Fixed building spots: the old Argus ring search tested corners at +-220 and rejected 7 of 8 good spots; Argus
   spots (`AiWorld.ArgusSpotX/Y`) were picked with a flood fill so the exits stay open. Same method for Sulfuron Spire.
 - `mapdata/WarcraftLegacies24p` ("1.18a", 24 slots) is an OLD layout: 20 of our graph nodes missing, 65 moved. Not
@@ -141,6 +151,10 @@ Map mechanics
   AQ by quests. The Thandol bridge itself is only made invulnerable (walkable); the rocks are what blocks it. Not in
   the pathing data. The AI's "thandol" gate follows the real rocks since 0.37.2 (before: guessed 20:00 -> dwarves
   stood at the rocks for 10 min).
+- **Edge list membership defines a node's continent**: `ResolveEdgeSet` counts a faction's CPs per list (Combined /
+  Kalimdor). An edge in the WRONG list turns its end node into a node of that continent (0.37.1: the rift edge in
+  Combined made the Maw an EK node -> Black Empire walked the EK graph all game). Cross-continent edges belong in
+  ONE list (the home side of the factions that use them) or are gated and handled by the edge-set logic.
 - Graph gate flags (`Edge.Gate`) must be opened by code: `legion`/`prelegion` (AiLegion), `greymane`/`tomb`/`thandol`/
   `oldgods` (AiGates). `greymane` was never opened from v25 to 0.35.4 -- a new flag needs its opener.
 - A frontier can come from an ALLY's node on the far side of a barrier (Ironforge got Arathi through an ally node
@@ -152,6 +166,20 @@ Map mechanics
 - The Sunwell (`n001`) and Sunwell Corrupted (`n079`) are **capitals**, not CPs. Win threshold: 90 CPs per team.
 - Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
   added to every faction -- completing it for one completes it for all.
+
+Units and production
+- A faction's units, heroes, buildings, limits and categories come from `src/WarcraftLegacies.Shared/
+  FactionObjectLimits/<Faction>ObjectInfo.cs` (`ProcessObjectInfo` in the faction class); only the FIRST category is
+  used by `Faction.TryGetObjectByCategory`. Which building trains what: map data `UnitData/<building>.json` `utra`.
+  Unit requirements: `ureq` (often a "QUEST_COMPLETED" research set by a quest's `ResearchId`).
+- Hero ids start with a capital H/O/E/N/U; Z.../R... entries in ObjectInfo are researches.
+- Production since 0.38: each building trains from its own list (`AiData.Trains`), least-ordered type first,
+  only types with met requirements (`SimpleBot.RequirementsMet`); heroes first, the bot saves gold for an available
+  hero. Before (category pools -> building kinds) only 105 of 448 unit types were trainable; now 248 (rest: ships,
+  builders, quest/summon units). Vanilla buildings used unmodified have no `utra` in the map data -> their WC3
+  default lists are in `unit_scan.VANILLA_TRAINS` (Crypt, Ancients) -- extend it when the scan shows such gaps.
+- Gold was the hidden hero blocker: bots spent everything on units each turn (Quel'thalas ~18-110 gold), so
+  available heroes (Rommath after "The Blood Elves") were never bought.
 
 Economy
 - Income/min = CP values (10-50 each) + `PlayerData.BonusIncome`, paid continuously. Every faction's `StartingGold`
@@ -177,8 +205,19 @@ Quests and story
   quests and has no ogre quest.
 - Hero-visit quests are `ObjectiveHeroWithLevelInRect` / `...ReachRect` / `ObjectiveLegendInRect`; read level and
   `Regions.X` rectangle from the quest class (Ragnaros 10 in WL, our rule 12; Yogg-Saron 14; Tomb of Sargeras 10).
-- Ramzes the Horror = `h0BD` (-20185,-4704, carries an artifact). Old Gods rift ends: Maw of Gor'ma (-27941,-7181)
-  and the preplaced `n07E` (22545,-4784, replaced at opening).
+- Ramzes the Horror = `h0BD` (-20185,-4704, carries an artifact); Ysondre `n04X` (-8240,9090); Taerar `n04S`
+  (-17908,-6308). Old Gods rift ends: Maw of Gor'ma (-28049,-7701 since 0.38) and the preplaced `n07E`
+  (22545,-4784, replaced at opening).
+- Computer players' units use some abilities on their own (e.g. Blink) -- that is WC3's built-in unit AI, not ours.
+- Yogg-Saron: after "The Beast With a Thousand Maws" the completing player owns the prison (`yLL4`, 4160,23424),
+  which must cast "Free Yogg-Saron" (`LLLN`, channel, order `selfdestruct`); Yogg (`U02C`) then appears as a Neutral
+  Aggressive boss. Storm Peaks CP = `n02S`.
+- "Plague of Undeath" (Scourge, turn 8-11) rescues the Stratholme Scourge base (`Regions.StratholmeScourgeBase`) and
+  refunds enemy structures there -- CPs are never refunded (`IsRemovable`), but their towers fight on.
+- Hidden units (WL's rescue preparation) are NOT found by range searches -- "not found" is not "dead".
+- WL heroes cost 100 gold (map data); bot heroes are free since 0.38 (`AiTech.FreeOrder`).
+- Gate sweep is wanted (maintainer: bots must not use the gate mechanic; forcing bots to open gates failed). New
+  gates are caught by an enter-map trigger since 0.38.
 
 Your setup
 - Freezes on the maintainer's Linux/Proton setup came only with alt-tabbing (also without autopilot). 0.37.1, turn

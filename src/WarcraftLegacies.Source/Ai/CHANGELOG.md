@@ -3,6 +3,80 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.38.1
+From the 0.38.0 playtest (45 min; 0.38.0 was played but never pushed -- this release contains it).
+Production check: every bot trained 7-14 unit types, quest heroes appeared (Quel'thalas: Rommath, Lor'themar),
+LOAD about as in 0.37.2.
+- **Terrordale** goes to the Scourge the moment WL's "Plague of Undeath" rescues the Stratholme Scourge base around
+  it (checked every 2 s). Before, an early North Alliance owner's CP tower destroyed the new Scourge base.
+- **Yogg-Saron**: the hero visit only for a bot that holds Storm Peaks; afterwards the bot that owns the prison
+  casts "Free Yogg-Saron" (WL's spell; bots never did), and the Storm Peaks holder clears Yogg (Val'anyr).
+- **Area clears** no longer give up when their target is not found: Ysondre was hidden at 2:00 and the clear was
+  wrongly marked "already dead"; now it is retried later (also needed for Yogg, who only appears when released).
+- **Argus weights** (0.38 test: the summoned Legion still went straight to the Sunwell): Argus <-> Quel'Danas and
+  Argus <-> Crystalsong 6 (were 3), Argus <-> Felwood 1 (was 2).
+- **Old Gods rift, second trigger**: a faction outside the Old Gods holds the Maw of Gor'ma and N'Zoth (Black
+  Empire's immobile Old God) is dead -> the rift opens for the victors, with its own lore text and pings.
+- **Faction picks**: the Sentinels slot is random for bots too (Sentinels / The Exodar). Illidari stays Basic.
+- **Minimap icons** did not show in 0.38: new `-icontest` (heavy) shows six icon variants to find the working one.
+- Version 4.8.2-ai.0.38.1.
+
+## 0.38.0
+From the 0.37.2 playtest (65 min, 15 bots).
+
+Fixes
+- **Black Empire marched east from Kezan into nothing** -- my 0.37.1 bug: the rift edge Maw of Gor'ma <-> Dragonmaw
+  Port was also in the Eastern Kingdoms edge list, which made the Maw an EK node; Black Empire starts owning it and
+  resolved to the EK graph at 0:05. The edge is now in the Kalimdor list only, and the Old Gods' default edge set is
+  Kalimdor. Once the rift is open they walk the whole world (home Kalimdor first).
+- **Old Gods rift only worked one way:** the Maw end stood on a Silithid archway + obelisk (doodads block ground
+  units, and the terrain pathing data doesn't show them). Moved 530 south to -28049,-7701.
+- **Gates that appear during the game** are removed the moment they enter the map (trigger on the whole map,
+  one type lookup per new unit); the 5-min whole-map sweep stays for gates that were already on the map.
+
+Gameplay
+- **Argus weights** (maintainer): inside Argus 0.5, Argus <-> Felwood 2, Argus <-> Quel'Danas / Crystalsong 3 --
+  in and out of Argus is expensive, Felwood cheaper than the Sunwell side.
+- **Ragnaros** only for a bot that controls Blackrock Depths (no more level-12 race across the map).
+- **Area clears** for the green dragons, only while they live: Ysondre by whoever holds Shrine to Malorne, Taerar
+  by whoever holds Feralas.
+- **Three 1-gold CPs** (new map data) so bots attack areas they used to skip: Sunsail Anchorage (Quel'thalas
+  harbour, edge to Silvermoon), Terrordale (Scourge camp, edge to Stratholme), Runestone Falithas (edge to Eversong
+  Woods). New income marker `A0ZG` / buff `B0ZG` (copies of the 10-gold marker) + one line in WL's
+  `Setup/ControlPointSetup.cs` (`new(FourCC("B0ZG"), 1, true)`).
+- Version 4.8.2-ai.0.38.0.
+
+Production (from the unit scan)
+- **Units come from the buildings' real train lists** (new generated `AiData.g.cs`, `tools/ai/gen_ai_data.py`).
+  Before, production sent category pools (Fighter -> barracks, Tank/Siege -> siege workshop, ...) to building kinds
+  and could train only **105 of 448** unit types (Quel'thalas: 4 of 22 -- no Swordsman, Farstrider, Spellbreaker,
+  Dragonhawk ...). Now **248** (the rest are ships, builders and quest/summon units). Each building trains the type
+  this bot has ordered least (random among equals) -> an even mix; only types whose requirements are met (researches
+  / buildings via `GetPlayerTechCount`). Town halls and "Specialist" buildings now train too. Unmodified vanilla
+  buildings (Crypt, Ancients) use WC3's default lists. Old category rule kept as fallback.
+- **New heroes are free for bots** (like researches and upgrades -- before, only the revive was free): heroes are
+  trained first, at no cost. Quel'thalas never had more than ~110 gold in the 0.37.2 test, so Rommath / Lor'themar
+  never came although "The Blood Elves" was done. Candidates: AiConfig.Heroes (priority) + every hero of the altar.
+  A fair autopilot (no perks) pays and saves gold for an available hero instead.
+- **Heroes learn their skills** (`AiHeroSkills.cs`): auras/passives first, then the rest, attribute bonus last; on
+  level-up and every 15 s for unspent points.
+
+Gameplay
+- **Dalaran slot random for bots** (Dalaran / Gilneas), like the orc slot since 0.37.1. Humans keep their dialog.
+- **Legion summon only forced for a bot Legion**; a human Legion summons through WL's ritual. New second trigger
+  (lore: Book of Medivh in Dalaran): once Dalaran's capital is dead a bot Legion sends a unit to the pedestal
+  (hero visit "Book of Medivh"); the Legion holding the Book -> summon.
+- **Small minimap icons on all AI portals** (ships blue, Legion/rift purple), destroyed with the portal.
+
+Analysis
+- **New dump section TRAINED** (`AiStats.cs`): per bot, every unit/hero type it finished training with counts, the
+  faction's categorised types it NEVER trained, and "SAVING for a hero". Event-based, no scans.
+- **New `tools/ai/unit_scan.py`**: per faction, every unit and hero, whether the AI trains it and where, and the
+  quest a requirement depends on.
+
+Docs: TODO.md restructured around the agreed refactor (scheduler, idle-only orders + attack groups, route planner,
+economy, cleanup) and the 0.39 unit statistics; AI_AGENTS_CONTEXT.md: map-data facts corrected and extended.
+
 ## 0.37.2
 Small fixes on top of 0.37.1 (playtest still running); docs reworked.
 - **Thandol bridge:** the Arathi Highlands <-> Dun Modr edge opened at a guessed 20:00, but the bridge is blocked by

@@ -84,6 +84,7 @@ public static class AiDebug
     Register("-portals", OnPortals, Level.Read);
     Register("-heroes", OnHeroes, Level.Read);    // 0.36
     RegisterLoose("-tp", OnTp, Level.Heavy);      // 0.36: single-human games only (selection is not synced)
+    Register("-icontest", OnIconTest, Level.Heavy); // 0.38.1: which minimap icon path/fog setting shows
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -363,6 +364,40 @@ public static class AiDebug
     }
 
     DisplayTimedTextToPlayer(p, 0, 0, 10, "|cffffcc00-heroes|r: " + I2S(n) + " living bot heroes marked for 30 s");
+  }
+
+  // 0.38.1: the AI portals' minimap icons did not show in the 0.38 test. Six variants in a row eastwards from your
+  // selected unit (2500 apart, number labels in the world) -- report which numbers appear on the minimap.
+  private static void OnIconTest()
+  {
+    var p = GetTriggerPlayer();
+    var g = CreateGroup();
+    GroupEnumUnitsSelected(g, p, null);
+    var u = FirstOfGroup(g);
+    DestroyGroup(g);
+    if (u == null)
+    {
+      DisplayTimedTextToPlayer(p, 0, 0, 8, "|cffffcc00-icontest|r: select a unit first");
+      return;
+    }
+
+    var paths = new[]
+    {
+      "UI\\Minimap\\MinimapIcon\\MinimapIconNeutralBuilding.blp", "UI\\Minimap\\MinimapIcon\\MinimapIconNeutralBuilding.blp",
+      "UI\\Minimap\\MiniMap-ControlPoint.mdl", "UI\\Minimap\\Minimap-QuestObjectivePrimary.mdl",
+      "UI\\Minimap\\MiniMap-Hero.mdl", "UI\\Minimap\\MinimapIcon\\MinimapIconGoldmine.blp",
+    };
+    for (var i = 0; i < paths.Length; i++)
+    {
+      var x = GetUnitX(u) + 2500f * (i + 1);
+      var y = GetUnitY(u);
+      CreateMinimapIcon(x, y, 170, 0, 255, paths[i], i == 1 ? FOG_OF_WAR_VISIBLE : FOG_OF_WAR_MASKED);
+      Mark(I2S(i + 1), x, y);
+    }
+
+    DisplayTimedTextToPlayer(p, 0, 0, 30, "|cffffcc00-icontest|r: icons 1-6 eastwards (2500 apart). 1 = current portal "
+      + "icon, 2 = same with fog VISIBLE, 3 ControlPoint.mdl, 4 QuestObjectivePrimary.mdl, 5 Hero.mdl, 6 Goldmine.blp. "
+      + "Which numbers show on the minimap?");
   }
 
   // 0.36: "-tp x y" -- move your selected units there (testing; Heavy = single-human games, selection isn't synced)
@@ -708,6 +743,7 @@ public static class AiDebug
     });
 
     Section(o, "teams", () => AiStandings.Lines(o)); // 0.36
+    Section(o, "trained", () => AiStats.Lines(o));   // 0.38
 
     Section(o, "load", () =>
     {

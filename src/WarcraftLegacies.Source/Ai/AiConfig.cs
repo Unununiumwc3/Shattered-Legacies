@@ -21,6 +21,8 @@ public static class AiWorld
   // 5 dps) and A023 (structures, 75 dps). Owned by Neutral Extra, an AI portal burned every player's units in a wide
   // circle. Shrunk to this radius on the AI portals only (landing spots are 300+ away, see AiLegion.LandBeside).
   public const float PortalBurnRadius = 250f;
+  // 0.38: minimap icon of the AI portals -- WC3's small neutral-building icon (the one waygates use)
+  public const string PortalIconPath = "UI\\Minimap\\MinimapIcon\\MinimapIconNeutralBuilding.blp";
   public const int PortalBurnUnitsAbility = 1093677389;      // A01M
   public const int PortalBurnStructuresAbility = 1093677619; // A023
 
@@ -206,6 +208,7 @@ public static class AiConfig
   public const float RagnarosX = 12352f;
   public const float RagnarosY = -10624f;
   public const int RagnarosHeroLevel = 12;
+  public const int RagnarosRequireCpId = 1848652340; // 0.38: n024 Blackrock Depths -- the bot must control it
   public static readonly List<int> RagnarosTriggerCps = new()
   {
     1848652340, // n024 Blackrock Depths
@@ -221,8 +224,9 @@ public static class AiConfig
   // 0.37: Old Gods rift (AiGates.OpenOldGodsRift, portal phase "oldgods", graph gate "oldgods")
   public static readonly List<string> OldGodsFactions = new() { "Ahn'qiraj", "Black Empire", "Skywall" };
   public const int NordrassilCpId = 1848652112;             // n01P -- an Old Gods faction taking it opens the rift
-  public const float RiftMawX = -27941f;                    // Maw of Gor'ma end (Black Empire realm, west edge)
-  public const float RiftMawY = -7181f;
+  public const float RiftMawX = -28049f;                    // Maw of Gor'ma end (Black Empire realm, west edge)
+  public const float RiftMawY = -7701f;                     // 0.38: 530 south -- the old spot stood on a Silithid
+                                                            // archway + obelisk (doodads block ground units)
   public const float RiftHighlandsX = 22545f;               // Twilight Highlands end = the preplaced n07E
   public const float RiftHighlandsY = -4784f;
   public const int RiftPreplacedPortalType = 1848653637;    // n07E -- removed when the real end is created there
@@ -235,6 +239,18 @@ public static class AiConfig
   public static readonly float[] SulfuronSpotY = { 4927f, 4339f, 4458f };
 
   // 0.36: named graph gates (AiGates.OpenNamedGates)
+  // 0.38.1: the Yogg-Saron prison (yLL4) and its "Free Yogg-Saron" spell (LLLN, channel with order "selfdestruct")
+  public const int YoggPrisonType = 2035043380;
+  public const float YoggPrisonX = 4160f;
+  public const float YoggPrisonY = 23424f;
+  public const string YoggReleaseOrder = "selfdestruct";
+  // 0.38.1: Terrordale goes to the Scourge when WL's "Plague of Undeath" rescues the Stratholme Scourge base around it
+  public const int TerrordaleCpId = 1848661060;
+  public const string PlagueQuestTitle = "Plague of Undeath";
+  // 0.38.1: Old Gods rift, second trigger: the Maw of Gor'ma held by a non-Old-Gods faction and N'Zoth dead
+  public const int MawCpId = 1850560327;
+  public const int NZothType = 1429221722;            // U01Z, Black Empire's immobile Old God (Essential)
+  public const string BookQuestTitle = "Book of Medivh";   // 0.38: the Legion's book quest -> summon (bot Legion)
   public const int GilneasCityCpId = 1848652854;           // "greymane" opens when a player owns it
   public const string TombQuestTitle = "Tomb of Sargeras"; // "tomb" opens when this shared quest is complete
 
@@ -273,8 +289,10 @@ public static class AiConfig
   // nearest walkable point where needed (checked with tools/ai/map_query.py).
   public static readonly List<HeroVisit> HeroVisits = new()
   {
-    // Yogg-Saron: hero level 14 in the Prison of Yogg-Saron (Regions.YoggSaronPrison) -> Yogg joins the faction
-    new HeroVisit("The Beast With a Thousand Maws", "", 14, 0, 4080f, 23408f),
+    // Yogg-Saron: hero level 14 in the Prison of Yogg-Saron (Regions.YoggSaronPrison). 0.38.1: only for a bot that
+    // holds Storm Peaks (n02S). Afterwards the bot owns the prison and casts "Free Yogg-Saron" (AiMissions.RunYogg);
+    // Yogg appears as a boss and is killed by the Storm Peaks holder (ClearArea "Yogg-Saron", Val'anyr).
+    new HeroVisit("The Beast With a Thousand Maws", "", 14, 1848652371, 4080f, 23408f),
     // Fel Horde "Ash and Smoke": a unit in Shadowmoon Valley (Regions.ShadowmoonBaseUnlock) + Terokkar Forest held
     new HeroVisit("Ash and Smoke", "Fel Horde", 0, 1848652372, 2816f, -30336f),
     // 0.36: Tomb of Sargeras (shared): turn 15 + any level-10 hero at Regions.Sargeras_Entrance. Opens the Tomb
@@ -291,6 +309,9 @@ public static class AiConfig
     // army is around. Not re-ordered while standing there (an order would break the channel).
     new HeroVisit("Twilight of the Gods", "Legion", 0, 1848652112, -9952f, 10848f) { Hero = "Archimonde" },
     // (0.37: "Lone Wanderer" / "Jailor of the Damned" removed -- Frostwolf never reaches Northrend.)
+    // 0.38: Legion "Book of Medivh": once Dalaran's capital is dead (LastObjective), a Legion unit goes to the pedestal
+    // (Regions.BookOfMedivhDalaran, any Legion unit counts) -> the Legion holds the Book -> AiLegion summons (bot only).
+    new HeroVisit("Book of Medivh", "Legion", 0, 0, 9456f, 5040f) { LastObjective = true },
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -302,6 +323,11 @@ public static class AiConfig
     // 0.37: Ramzes the Horror (h0BD, carries an artifact) and his centaur guards, by whoever holds Desolace -- only
     // while Ramzes is alive (RequireType).
     new ClearArea("Ramzes the Horror", 1848652121 /* Desolace */, -20185f, -4704f, 450f) { RequireType = 1747993156 },
+    // 0.38: the green dragons of the Nightmare, by whoever holds the neighbouring CP, only while the dragon lives
+    new ClearArea("Ysondre", 1848656457 /* Shrine to Malorne */, -8240f, 9090f, 450f) { RequireType = 1848652888 },
+    new ClearArea("Taerar", 1848652343 /* Feralas */, -17908f, -6308f, 450f) { RequireType = 1848652883 },
+    // 0.38.1: Yogg-Saron (U02C) once a bot released him from his prison -- by whoever holds Storm Peaks
+    new ClearArea("Yogg-Saron", 1848652371 /* Storm Peaks */, 3995f, 23488f, 700f) { RequireType = 1429221955 },
   };
 
   // v31: neutral CPs handed to a BOT faction at a game time (creeps around each are removed so they can't
@@ -597,6 +623,10 @@ public static class AiGraph
     new Edge(1848652110, 1848652108), // Tranquillien <-> Eversong Woods
     new Edge(1848652108, 1848652111), // Eversong Woods <-> Silvermoon
     new Edge(1848652111, 1848652622), // Silvermoon <-> Quel'Danas
+    // 0.38: 1-gold CPs (new map data) so bots also attack areas they used to skip
+    new Edge(1848660801, 1848652111), // Sunsail Anchorage (n0SA, Quel'thalas harbour) <-> Silvermoon
+    new Edge(1848661060, 1848652109), // Terrordale (n0TD, Scourge camp) <-> Stratholme
+    new Edge(1848660550, 1848652108), // Runestone Falithas (n0RF) <-> Eversong Woods
     new Edge(1848652099, 1848652105), // Strahnbrad <-> Caer Darrow
     new Edge(1848652105, 1848652097), // Caer Darrow <-> Hinterlands
     new Edge(1848652097, 1848657218), // Hinterlands <-> Jintha'Alor
@@ -613,7 +643,6 @@ public static class AiGraph
     new Edge(1848652087, 1848652632), // Dun Modr <-> Grim Batol
     new Edge(1848652632, 1848654150), // Grim Batol <-> Southern Highlands
     new Edge(1848654150, 1848653908), // Southern Highlands <-> Dragonmaw Port
-    new Edge(1848653908, 1850560327, 0f, "oldgods"), // 0.37: Dragonmaw Port <-> Maw of Gor'ma (Old Gods rift)
     new Edge(1848653908, 1848652886), // Dragonmaw Port <-> Northern Highlands
     new Edge(1848652087, 1848652086), // Dun Modr <-> Wetlands
     new Edge(1848652086, 1848653399), // Wetlands <-> Menethil Harbour
@@ -680,11 +709,14 @@ public static class AiGraph
 
     // ---- v34: Argus. Open from the start (the Legion clears its home first), reached from Northrend by the
     // Antoran <-> Crystalsong portal until the summon; after it, Argus links to Quel'Danas (WL's demon portal).
-    new Edge(1848656454, 1848656456), // Antoran Wastes <-> Eredath
-    new Edge(1848656454, 1848656455), // Antoran Wastes <-> Krokuun
-    new Edge(1848656454, 1848652609), // Antoran Wastes <-> Nath'raxas Hold
-    new Edge(1848656454, 1848652370, 0f, "prelegion"), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
-    new Edge(1848656454, 1848652622, 0f, "legion"),    // Antoran Wastes <-> Quel'Danas (demon portal, after the summon)
+    // 0.38 weights (maintainer): inside Argus cheap (0.5), in/out of Argus expensive; Felwood (2, Kalimdor list) is
+    // cheaper than the Sunwell side (3).
+    new Edge(1848656454, 1848656456, 0f, "", 0.5f), // Antoran Wastes <-> Eredath
+    new Edge(1848656454, 1848656455, 0f, "", 0.5f), // Antoran Wastes <-> Krokuun
+    new Edge(1848656454, 1848652609, 0f, "", 0.5f), // Antoran Wastes <-> Nath'raxas Hold
+    // 0.38.1: in/out 3 -> 6 -- the summoned Legion still went straight to the Sunwell in the 0.38 test
+    new Edge(1848656454, 1848652370, 0f, "prelegion", 6f), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
+    new Edge(1848656454, 1848652622, 0f, "legion", 6f),    // Antoran Wastes <-> Quel'Danas (demon portal, after the summon)
   };
 
   // Placeholder edge sets for the other theatres. Fill these as the node system is extended; until then a
@@ -720,7 +752,8 @@ public static class AiGraph
     new Edge(1848653127, 1851021132), // Isle of Dread <-> Twilight Landing
     new Edge(1851021132, 1850636641), // Twilight Landing <-> Ny'alotha
     new Edge(1851021132, 1850560327), // Twilight Landing <-> Maw of Gor'ma
-    // 0.37: Old Gods rift (AiConfig.OldGods*, opens when an Old Gods faction takes Nordrassil) -- also in Combined
+    // 0.37: Old Gods rift (AiConfig.OldGods*, opens when an Old Gods faction takes Nordrassil). Kalimdor list ONLY:
+    // 0.37.x also had it in Combined, which made the Maw an EK node -> Black Empire resolved to the EK graph.
     new Edge(1850560327, 1848653908, 0f, "oldgods"), // Maw of Gor'ma <-> Dragonmaw Port (rift)
     new Edge(1848653909, 1848652114), // Southern Ashenvale <-> Astranaar
     new Edge(1848652114, 1848652113), // Astranaar <-> Northern Ashenvale
@@ -760,7 +793,8 @@ public static class AiGraph
     new Edge(1848652363, 1848651851), // Ruins of Ahn'Qiraj <-> Tunnels of Ahn'Qiraj
     new Edge(1848651851, 1850495813), // Tunnels of Ahn'Qiraj <-> Temple of Ahn'Qiraj
     new Edge(1848652855, 1848653127), // Silithus <-> Isle of Dread
-    new Edge(1848656454, 1848653635, 0f, "legion"), // Antoran Wastes <-> Felwood (portal, opens on Legion summon)
+    // 0.38: weight 2 (maintainer) -- in/out of Argus expensive, Felwood cheaper than the Sunwell side (3)
+    new Edge(1848656454, 1848653635, 0f, "legion", 1f), // Antoran Wastes <-> Felwood (portal; 0.38.1: 2 -> 1, the Legion's way)
 
     // ---- v34: Kalimdor islands (ship portals in AiGraph.Portals) ----
     new Edge(1848653107, 1848653145), // Val'sharah <-> Azsuna
@@ -950,6 +984,12 @@ public static class AiGraph
     if (factionName == "Scourge" || factionName == "Legion" || factionName == "Illidan" || factionName == "Fel Horde")
     {
       return "Combined";
+    }
+
+    // 0.38: the Old Gods play from Kalimdor (Black Empire resolved to EK through the rift edge in 0.37.x)
+    if (AiConfig.OldGodsFactions.Contains(factionName))
+    {
+      return "Kalimdor";
     }
 
     return null;
