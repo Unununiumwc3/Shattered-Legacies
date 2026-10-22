@@ -1,28 +1,27 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.38.1** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.38.1"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.0** (map "Warcraft Legacies
+Botified 4.8.2-ai.0.39.0"). Next: **0.39.0** = refactor phase 1 + 2 (below).
 
-## Freeze check (still open)
+## Freeze check (still open -- now also WITHOUT alt-tabbing)
 
-Freezes so far: 0.36.0 minute 1 and 0.37.1 turn 17, both while alt-tabbing (Ubuntu, Battle.net via a Proton
-prefix); other games ran 30+ min. **0.37.1: picture frozen, sound kept playing** -> points to the graphics layer.
-Music streams on its own thread, so this is a hint, not proof. Next steps, cheapest first:
-1. ~~Picture or game?~~ Done: sound kept playing. Next time also check: do unit/ambient sounds or chat sounds still
-   come (game logic alive), or only the music?
-2. **Alt-tab only?** 3 starts without alt-tabbing, 10 min each.
-3. **AI or not?** Same lobby without computer players (the AI then does almost nothing), alt-tab heavily.
-4. **Window mode:** windowed / windowed fullscreen instead of fullscreen.
-5. **Proton log:** launch option `PROTON_LOG=1 %command%` -> `~/steam-<appid>.log`, last lines before the freeze.
-6. **Windows 11:** one tester, same build and lobby, 10+ alt-tabs in minute 1.
-A map hang also happens without alt-tabbing and, in multiplayer, freezes every player.
+- 0.36.0 minute 1 and 0.37.1 turn 17 froze while alt-tabbing (sound kept playing). **0.38.1 froze at ~34 min without
+  alt-tabbing.** The dumps up to 30:00 show nothing unusual: no errors, units fewer than at 10:00 (armies 1753 -> 914),
+  load flat, last event 18:59. So it is not simply unit growth.
+- 0.39 adds the **heartbeat file** `CustomMapData\WLAI_heartbeat.txt` (with `-autodump` on): after a freeze, send it
+  together with the dumps -- its time says when the game stopped, its task list what ran last.
+- Also helpful: the folder listing with times (`ls -l --time-style=full-iso` in `CustomMapData`) -> real seconds per
+  5 game-minutes (does the engine fall behind before the freeze?).
+- Still open: does a freeze also happen without computer players? On Windows?
 
 ## Refactor (agreed concept, 0.39+)
 
 Vision: bots replace human players and challenge them -- mostly through **many troops on the map** (that is the
 fun; a food cap is the last resort). So the engine budget must go to units, not to AI overhead. Each phase is
 playable on its own; changes stay inside `Ai/` (outside: only the hooks listed in `AI_AGENTS_CONTEXT.md`).
+0. **Step 0 (measure) and lever 1 (orders only for idle units) are in 0.39.0** -- compare `-orders idle` vs
+   `-orders all` with the UNITS section / heartbeat file.
 1. [ai] **Scheduler + load budget** (0.39): one timer, one small task per tick, op counters visible in `-debug2` /
    the dump. No behaviour change. Spread the 15-s wave-tick work (hero care, standings, gates, missions) over ticks.
 2. [ai] **Army orders** (0.39): orders only for idle, new and straggling units; re-order the whole army only when
@@ -74,16 +73,12 @@ Measure before and after each phase: units per player and total, orders per minu
   heroes for bots (perks), WL heroes cost 100 gold in the map data -- so it is not the AI. Check: does gold go down
   when you queue a hero? If not, find WL's mechanic (Scarlet Crusade event? test-mode cheat?).
 
-## Fallbacks and alternative paths (concept, maintainer ideas)
+## Fallback scenarios -> `FALLBACKS.md`
 
-- [you] **Stromgarde fallback -> alliance change**: when Stromgarde becomes Stormwind's fallback (the AI's quest rule
-  "Stromgarde"), Stormwind joins the North Alliance -- only if it was triggered as the fallback.
-- [you] **Aerie Peak fallback for the dwarves** (like Stromgarde): Ironforge falls -> Aerie Peak -> alliance change,
-  again only when triggered as the fallback.
-- [you] **Sunfury as Quel'thalas' fallback** (instead of a random Illidari/Sunfury pick, which stays Basic).
-- [you] **CPs and food**: tie the food cap to the CP count, not only the income.
-- The 24-player map has no extra content to transplant (checked 0.38.1: 224 unit types differ, all older versions;
-  no separate Dragonmaw camp -- only the Dragonmaw Port CP, in both maps). Dropped from the plans.
+Big project of its own, after the engine-load rework: every faction gets one fallback (good factions -> roadblocks
+for the other evils, evil factions -> join whoever beat them). Design, team changes, announcements and the per-faction
+work list are in `FALLBACKS.md`. Not related to it: tie the food cap to the CP count (idea); islands still free for
+neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury).
 
 ## Smaller implementation work
 
@@ -98,22 +93,18 @@ Measure before and after each phase: units per player and total, orders per minu
   near portal ends -- the Maw end stood on an archway).
 - [ai] Debug: `-scout` (define first), winner record when WL declares victory.
 
-## Check in the next playtest (0.38.1)
+## Check in the next playtest (0.39.0)
 
-- **Minimap icons**: still not visible on the AI portals in 0.38. Run `-icontest` (single-player, select a unit):
-  six icons eastwards, numbered -- tell me which numbers show; the portals then use that variant.
-- Terrordale: right after "Plague of Undeath" the pin "Terrordale handed to the Scourge"; the Scourge base near
-  Stratholme survives.
-- Yogg-Saron: the hero visit only for a bot holding Storm Peaks; after it, "releases Yogg-Saron from his prison",
-  then "AREA CLEAR Yogg-Saron" by the Storm Peaks holder.
-- Ysondre: "AREA CLEAR Ysondre started" once a bot holds Shrine to Malorne and she is visible (0.38: skipped at 2:00
-  as "already dead" -- she was hidden).
-- Old Gods rift, second trigger: a non-Old-Gods faction holds the Maw of Gor'ma and N'Zoth is dead -> "OLD GODS RIFT
-  open: Maw of Gor'ma taken by ..." with its own text.
-- Legion after the summon goes to Kalimdor through Felwood (weights: Felwood 1, Sunwell side / Northrend 6).
-- Faction picks: Sentinels slot now also random (Sentinels / The Exodar).
-- From 0.38 (seen working: TRAINED variety, quest heroes like Rommath/Lor'themar, LOAD as before, Sulfuron barracks,
-  Taerar, Ramzes, Dalaran pick, Black Empire on Kalimdor, Book/Legion pins not yet seen).
+- `-autodump` on: the heartbeat file appears and is rewritten every 10 s; dumps have the UNITS section.
+- Armies still fight and reinforce with `-orders idle` (default); orders/min in the heartbeat lower than with
+  `-orders all`. If units stand around at the rally points: report it (lever 1 too strict).
+- Scourge does not go to Argus at the start. Legion's Argus start trains more than Felguards.
+- Plague of Undeath: pin "Legion: N units moved to Alterac Mountains".
+- Emerald Portals Shrine of Malorne <-> Feralas work both ways.
+- Bot Sentinels at Feathermoon: pin "Feathermoon: 3 Sentinels buildings placed", "Shores of Feathermoon" completed,
+  Maiev trainable; later "hero visit 'Vault of the Wardens'".
+- Bot Frostwolf: "hero visit 'A Feast for Our Kin'" once Stormheim is held by it or an ally.
+- `-icontest 1` ... `-icontest 6`: which numbers show on the minimap?
 
 ## Open questions
 

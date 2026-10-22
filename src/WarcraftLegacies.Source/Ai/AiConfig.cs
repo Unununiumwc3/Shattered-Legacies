@@ -124,6 +124,9 @@ public static class AiConfig
     new QuestRule("Stormwind", "Stromgarde", 0f) { CapitalLost = 1747988568 },
     // Quel'thalas: an Alliance member (Quel'thalas or any ally) holds Hinterlands (n01A) -> Quel'danil Lodge.
     new QuestRule("Quel'thalas", "Quel'danil Lodge", 0f) { CpHeldByAlly = 1848652097 },
+    // 0.39: "Shores of Feathermoon" (unlocks Maiev) wants 3 different buildings BUILT in Feathermoon -- bots never
+    // build. Done for a bot Sentinels holding Feathermoon (n05U); AiMissions.RunFeathermoon places the 3 buildings.
+    new QuestRule("Sentinels", "Shores of Feathermoon", 0f) { CpHeldByAlly = 1848653141 },
 
     // ---- v32 late-game payoffs ----
     // Thrall becomes the World-Shaman: Frostwolf hold 20 CPs after 30 min, Thrall (Othr) alive.
@@ -250,7 +253,18 @@ public static class AiConfig
   // 0.38.1: Old Gods rift, second trigger: the Maw of Gor'ma held by a non-Old-Gods faction and N'Zoth dead
   public const int MawCpId = 1850560327;
   public const int NZothType = 1429221722;            // U01Z, Black Empire's immobile Old God (Essential)
-  public const string BookQuestTitle = "Book of Medivh";   // 0.38: the Legion's book quest -> summon (bot Legion)
+  public const string BookQuestTitle = "Book of Medivh";
+  // 0.39: Emerald Portals (n07F) -- the preplaced dead pair is replaced by an AI portal pair ("always")
+  public const int EmeraldPortalType = 1848653638;
+  // 0.39: Feathermoon -- 3 building spots in Regions.FeathermoonUnlock (first = maintainer's spot; walkable, clear)
+  public const int FeathermoonCpId = 1848653141;
+  public static readonly float[] FeathermoonSpotX = { -20316f, -20736f, -20160f };
+  public static readonly float[] FeathermoonSpotY = { -9904f, -9888f, -9504f };
+  // 0.39: when the Scourge's "Plague of Undeath" lands, a bot Legion's army is moved to Alterac Mountains
+  public const int AlteracCpId = 1848652089;
+  // 0.39: the bot Legion's Argus production buildings (instead of 5 Nether Pits): Nether Pit x2, Summoning Circle,
+  // Infernal Siegeworks, Demon Gate -> more unit variety from the start
+  public static readonly List<int> LegionArgusProduction = new() { 1848652881, 1848652881, 1966092342, 1848652878, 1852075367 };   // 0.38: the Legion's book quest -> summon (bot Legion)
   public const int GilneasCityCpId = 1848652854;           // "greymane" opens when a player owns it
   public const string TombQuestTitle = "Tomb of Sargeras"; // "tomb" opens when this shared quest is complete
 
@@ -312,6 +326,12 @@ public static class AiConfig
     // 0.38: Legion "Book of Medivh": once Dalaran's capital is dead (LastObjective), a Legion unit goes to the pedestal
     // (Regions.BookOfMedivhDalaran, any Legion unit counts) -> the Legion holds the Book -> AiLegion summons (bot only).
     new HeroVisit("Book of Medivh", "Legion", 0, 0, 9456f, 5040f) { LastObjective = true },
+    // 0.39: Frostwolf "A Feast for Our Kin": Cairne into Highmountain (Regions.Highmountain_Unlock), only while the
+    // Frostwolf or an ally holds Stormheim (n05Z)
+    new HeroVisit("A Feast for Our Kin", "Frostwolf", 0, 1848653146, 2039f, 10926f) { Hero = "Cairne Bloodhoof", AllyCp = true },
+    // 0.39: Sentinels "Vault of the Wardens": Maiev ENTERS Regions.VaultoftheWardens -> WL's channel (not re-ordered
+    // while there, see AtTarget)
+    new HeroVisit("Vault of the Wardens", "Sentinels", 0, 0, -2272f, 4000f) { Hero = "Maiev Shadowsong" },
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -499,6 +519,7 @@ public sealed class HeroVisit
   public string Hero = "";          // 0.36: LegendaryHero.Name the visit needs ("" = the bot's best hero)
   public bool LastObjective;        // 0.36: wait until every other objective of the quest is complete
   public bool SameLandmass;         // 0.36: only while the hero is on the target's landmass
+  public bool AllyCp;               // 0.39: RequireCpId may also be held by an ally
 
   public HeroVisit(string quest, string faction, int minLevel, int requireCpId, float x, float y)
   {
@@ -715,7 +736,8 @@ public static class AiGraph
     new Edge(1848656454, 1848656455, 0f, "", 0.5f), // Antoran Wastes <-> Krokuun
     new Edge(1848656454, 1848652609, 0f, "", 0.5f), // Antoran Wastes <-> Nath'raxas Hold
     // 0.38.1: in/out 3 -> 6 -- the summoned Legion still went straight to the Sunwell in the 0.38 test
-    new Edge(1848656454, 1848652370, 0f, "prelegion", 6f), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
+    // 0.39: 6 -> 15 -- the Scourge still marched into Argus at the start (0.38.1 test)
+    new Edge(1848656454, 1848652370, 0f, "prelegion", 15f), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
     new Edge(1848656454, 1848652622, 0f, "legion", 6f),    // Antoran Wastes <-> Quel'Danas (demon portal, after the summon)
   };
 
@@ -728,6 +750,8 @@ public static class AiGraph
   {
     new Edge(1848652112, 1848656457), // Nordrassil <-> Shrine to Malorne
     new Edge(1848656457, 1848653635), // Shrine to Malorne <-> Felwood
+    // 0.39: the Emerald Portals (WL's preplaced n07F pair had no destination) -- made real in AiGraph.Portals
+    new Edge(1848656457, 1848652343), // Shrine to Malorne <-> Feralas (Emerald Portal)
     new Edge(1848653635, 1848652357), // Felwood <-> Moonglade
     new Edge(1848656457, 1848656176), // Shrine to Malorne <-> Ascendant's Rise
     new Edge(1848656176, 1848652120), // Ascendant's Rise <-> Winterspring
@@ -846,6 +870,9 @@ public static class AiGraph
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
     // replaced by the real one. Both ends walkable (tools/ai/map_query.py).
+    // 0.39: the Emerald Portals between the Shrine of Malorne and Feralas (WL's n07F pair is preplaced but dead)
+    new PortalLink(-8321f, 9256f, -17921f, -6168f, "n07F", "Emerald Portal to Feralas", "Emerald Portal to the Shrine of Malorne",
+      "always"),
     new PortalLink(AiConfig.RiftMawX, AiConfig.RiftMawY, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, "n07E",
       "Rift to the Twilight Highlands", "Rift to the Maw of Gor'ma", "oldgods"),
   };

@@ -84,7 +84,8 @@ public static class AiDebug
     Register("-portals", OnPortals, Level.Read);
     Register("-heroes", OnHeroes, Level.Read);    // 0.36
     RegisterLoose("-tp", OnTp, Level.Heavy);      // 0.36: single-human games only (selection is not synced)
-    Register("-icontest", OnIconTest, Level.Heavy); // 0.38.1: which minimap icon path/fog setting shows
+    RegisterLoose("-icontest", OnIconTest, Level.Heavy); // 0.39: "-icontest N" = one variant on your unit
+    RegisterLoose("-orders", OnOrders, Level.Control);   // 0.39: -orders idle|all (refactor lever 1)
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -105,6 +106,127 @@ public static class AiDebug
     TimerStart(t, ShowEvery, true, Show);
     var ad = CreateTimer();
     TimerStart(ad, AutoDumpEvery, true, OnAutoDumpTick);
+    var hb = CreateTimer();
+    TimerStart(hb, HeartbeatEvery, true, OnHeartbeat); // 0.39: freeze diagnosis, only while -autodump is on
+  }
+
+  // 0.39: "-orders idle" (default) / "-orders all" -- lever 1 of the engine-load refactor, switchable for A/B tests
+  private static void OnOrders()
+  {
+    var msg = GetEventPlayerChatString();
+    if (msg.Length >= 11 && msg.Substring(0, 11) == "-orders all")
+    {
+      SimpleBot.OrdersIdleOnly = false;
+    }
+    else if (msg.Length >= 12 && msg.Substring(0, 12) == "-orders idle")
+    {
+      SimpleBot.OrdersIdleOnly = true;
+    }
+
+    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "army heartbeat orders: "
+      + (SimpleBot.OrdersIdleOnly ? "IDLE units only (same target)" : "ALL units (old behaviour)") + "  -- -orders idle|all");
+  }
+
+  // 0.39: heartbeat file for freeze diagnosis. While -autodump is on, every 10 s: game time, units on the map
+  // (counted every 60 s), orders per minute, the last started periodic tasks. After a freeze, its time and content
+  // show what ran last. Written only on the autodump player's machine (Preload, desync-safe like the dump).
+  private const float HeartbeatEvery = 10f;
+  private static int _hbMapUnits;
+  private static float _hbCountedAt = -999f;
+  private static int _hbLastOrders;
+  private static float _hbLastOrdersAt;
+  private static int _hbOrdersPerMin;
+
+  private static void OnHeartbeat()
+  {
+    if (_autoDumpFor == null)
+    {
+      return;
+    }
+
+    if (SimpleBot.Clock - _hbCountedAt >= 60f)
+    {
+      _hbCountedAt = SimpleBot.Clock;
+      _hbMapUnits = CountMapUnits();
+      var dt = SimpleBot.Clock - _hbLastOrdersAt;
+      _hbOrdersPerMin = dt > 0f ? R2I((SimpleBot.OrdersIssued - _hbLastOrders) * 60f / dt) : 0;
+      _hbLastOrders = SimpleBot.OrdersIssued;
+      _hbLastOrdersAt = SimpleBot.Clock;
+    }
+
+    if (GetLocalPlayer() != _autoDumpFor)
+    {
+      return;
+    }
+
+    PreloadGenClear();
+    PreloadGenStart();
+    Preload("WLAI heartbeat build=" + AiSetup.Build + " t=" + FileTime(SimpleBot.Clock) + " units-on-map=" + I2S(_hbMapUnits)
+            + " orders/min=" + I2S(_hbOrdersPerMin) + " orders=" + (SimpleBot.OrdersIdleOnly ? "idle" : "all"));
+    for (var i = 0; i < SimpleBot.TaskRing.Length; i++)
+    {
+      var e = SimpleBot.TaskRing[(SimpleBot.TaskRingPos + i) % SimpleBot.TaskRing.Length];
+      if (e != null)
+      {
+        Preload("task " + e);
+      }
+    }
+
+    PreloadGenEnd("WLAI_heartbeat.txt");
+  }
+
+  private static int CountMapUnits()
+  {
+    var n = 0;
+    var g = CreateGroup();
+    GroupEnumUnitsInRect(g, GetWorldBounds(), null);
+    unit u;
+    while ((u = FirstOfGroup(g)) != null)
+    {
+      GroupRemoveUnit(g, u);
+      n++;
+    }
+
+    DestroyGroup(g);
+    return n;
+  }
+
+  // 0.39: dump section UNITS -- units per player (army / structures), total on the map, orders per minute
+  private static void UnitLines(List<string> o)
+  {
+    var total = 0;
+    var line = "";
+    for (var i = 0; i < 28; i++)
+    {
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, Player(i), null);
+      var army = 0;
+      var buildings = 0;
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
+        {
+          buildings++;
+        }
+        else
+        {
+          army++;
+        }
+      }
+
+      DestroyGroup(g);
+      total += army + buildings;
+      if (army + buildings > 0)
+      {
+        line = line + " P" + I2S(i) + "=" + I2S(army) + "/" + I2S(buildings);
+      }
+    }
+
+    o.Add("## UNITS (per player: units/structures; 24 NeutralHostile, 25-27 neutral)  total " + I2S(total)
+          + " | orders total " + I2S(SimpleBot.OrdersIssued) + ", mode " + (SimpleBot.OrdersIdleOnly ? "idle" : "all"));
+    o.Add(line);
   }
 
   // Like Register, but matches any chat line CONTAINING cmd (so "-why 3" works).
@@ -387,17 +509,20 @@ public static class AiDebug
       "UI\\Minimap\\MiniMap-ControlPoint.mdl", "UI\\Minimap\\Minimap-QuestObjectivePrimary.mdl",
       "UI\\Minimap\\MiniMap-Hero.mdl", "UI\\Minimap\\MinimapIcon\\MinimapIconGoldmine.blp",
     };
-    for (var i = 0; i < paths.Length; i++)
+    // 0.39: one variant per call, ON the selected unit: "-icontest 1" ... "-icontest 6"
+    var msg = GetEventPlayerChatString();
+    var n = msg.Length >= 11 ? S2I(msg.Substring(10, 1)) : 0;
+    if (n < 1 || n > paths.Length)
     {
-      var x = GetUnitX(u) + 2500f * (i + 1);
-      var y = GetUnitY(u);
-      CreateMinimapIcon(x, y, 170, 0, 255, paths[i], i == 1 ? FOG_OF_WAR_VISIBLE : FOG_OF_WAR_MASKED);
-      Mark(I2S(i + 1), x, y);
+      DisplayTimedTextToPlayer(p, 0, 0, 15, "|cffffcc00-icontest N|r (N = 1..6): one minimap icon on your selected unit. "
+        + "1 current portal icon, 2 same with fog VISIBLE, 3 ControlPoint.mdl, 4 QuestObjectivePrimary.mdl, 5 Hero.mdl, "
+        + "6 Goldmine.blp. Tell which numbers show.");
+      return;
     }
 
-    DisplayTimedTextToPlayer(p, 0, 0, 30, "|cffffcc00-icontest|r: icons 1-6 eastwards (2500 apart). 1 = current portal "
-      + "icon, 2 = same with fog VISIBLE, 3 ControlPoint.mdl, 4 QuestObjectivePrimary.mdl, 5 Hero.mdl, 6 Goldmine.blp. "
-      + "Which numbers show on the minimap?");
+    CreateMinimapIcon(GetUnitX(u), GetUnitY(u), 170, 0, 255, paths[n - 1], n == 2 ? FOG_OF_WAR_VISIBLE : FOG_OF_WAR_MASKED);
+    DisplayTimedTextToPlayer(p, 0, 0, 10, "|cffffcc00-icontest|r: variant " + I2S(n) + " placed on your selected unit -- "
+      + "look at the minimap.");
   }
 
   // 0.36: "-tp x y" -- move your selected units there (testing; Heavy = single-human games, selection isn't synced)
@@ -742,6 +867,7 @@ public static class AiDebug
       }
     });
 
+    Section(o, "units", () => UnitLines(o));          // 0.39: refactor step 0 (measure)
     Section(o, "teams", () => AiStandings.Lines(o)); // 0.36
     Section(o, "trained", () => AiStats.Lines(o));   // 0.38
 

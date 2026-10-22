@@ -83,7 +83,7 @@ namespace WarcraftLegacies.Source.Ai
             continue; // 0.36: shared quest -- another bot's hero is already on the way
           }
 
-          if (hv.RequireCpId != 0 && !OwnsNode(p, hv.RequireCpId))
+          if (hv.RequireCpId != 0 && !OwnsNode(p, hv.RequireCpId, hv.AllyCp))
           {
             continue;
           }
@@ -188,12 +188,18 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // 0.36: RequireCpId may name a control point or a capital
-    private static bool OwnsNode(player p, int id)
+    private static bool OwnsNode(player p, int id, bool allyOk)
     {
       var cp = SimpleBot.SafeCp(id);
       if (cp != null)
       {
-        return cp.Unit != null && GetOwningPlayer(cp.Unit) == p;
+        if (cp.Unit == null)
+        {
+          return false;
+        }
+
+        var o = GetOwningPlayer(cp.Unit);
+        return o == p || (allyOk && GetPlayerId(o) < 24 && IsPlayerAlly(o, p)); // 0.39: ally allowed per visit
       }
 
       var caps = CapitalManager.GetAll();

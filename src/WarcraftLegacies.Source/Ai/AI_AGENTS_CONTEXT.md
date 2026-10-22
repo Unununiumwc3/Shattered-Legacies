@@ -52,6 +52,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
+| `FALLBACKS.md` | | fallback scenarios: design, teams, per-faction work list (big project, after the load rework) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
 | `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` from WL's ObjectInfo + map data (run after every WL update) |

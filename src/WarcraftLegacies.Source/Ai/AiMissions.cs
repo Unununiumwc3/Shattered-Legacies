@@ -818,12 +818,55 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       _terrordaleDone = true;
+      AiLegion.MoveLegionArmyToAlterac(); // 0.39: the bot Legion supports the invasion
       var cp = SimpleBot.SafeCp(AiConfig.TerrordaleCpId);
       if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) != scourge)
       {
         SimpleBot.GiveUnit(cp.Unit, scourge);
         SimpleBot.LogPin("Terrordale handed to the Scourge (Plague of Undeath rescued the Stratholme base)");
       }
+    }
+
+    // 0.39: Feathermoon. A bot Sentinels holding the Feathermoon CP gets 3 different buildings there (the quest
+    // "Shores of Feathermoon" wants them built; AiConfig's QuestRule completes the quest, these make the base whole).
+    private static bool _feathermoonDone;
+
+    internal static void RunFeathermoon()
+    {
+      if (_feathermoonDone)
+      {
+        return;
+      }
+
+      var cp = SimpleBot.SafeCp(AiConfig.FeathermoonCpId);
+      if (cp == null || cp.Unit == null)
+      {
+        return;
+      }
+
+      var p = GetOwningPlayer(cp.Unit);
+      var f = GetPlayerId(p) < 24 ? p.GetPlayerData().Faction : null;
+      if (f == null || f.Name != "Sentinels" || !SimpleBot.IsBot(p) || !SimpleBot.HasPerks(p))
+      {
+        return;
+      }
+
+      _feathermoonDone = true;
+      var cats = new[] { UnitCategory.Barracks, UnitCategory.Farm, UnitCategory.Research };
+      var placed = 0;
+      for (var i = 0; i < cats.Length && i < AiConfig.FeathermoonSpotX.Length; i++)
+      {
+        var types = new List<int>();
+        SimpleBot.AddCategory(f, cats[i], types);
+        var t = Cheapest(types);
+        if (t != 0)
+        {
+          CreateUnit(p, t, AiConfig.FeathermoonSpotX[i], AiConfig.FeathermoonSpotY[i], 270f);
+          placed++;
+        }
+      }
+
+      SimpleBot.LogPin("Feathermoon: " + I2S(placed) + " Sentinels buildings placed");
     }
 
     // 0.37: Sulfuron Spire. When Skywall's "Fireland Invasion" (WL) has completed, every Old Gods faction that is a

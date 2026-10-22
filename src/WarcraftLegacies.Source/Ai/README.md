@@ -59,7 +59,8 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-ids` | heavy | Every control point's id above it for 30 s |
 | `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
-| `-icontest` | heavy | Six numbered minimap icon variants east of your selected unit (which one shows?) |
+| `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
+| `-orders idle\|all` | control | Army heartbeat orders: only idle units (default) or all units (old behaviour) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
 | `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
@@ -70,7 +71,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 ## The dump file
 
 `call Preload( "…" )` wraps every line — send the file as it is. Sections:
-**PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **TEAMS** (CPs per team), **TRAINED** (what each bot trained / never trained), **PORTALS**, **LOAD** (units touched per tick,
+**PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **UNITS** (units per player, orders), **TEAMS** (CPs per team), **TRAINED** (what each bot trained / never trained), **PORTALS**, **LOAD** (units touched per tick,
 the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
@@ -84,7 +85,7 @@ pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army siz
 ## Map name
 The AI branch builds as **"Warcraft Legacies Botified <version>"** ("Botified" in red, lobby and loading screen), so
 it is never mistaken for the official map. Version = `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`
-(e.g. `4.8.2-ai.0.38.1`), also used in the published file name. Bump it together with `AiSetup.Build`.
+(e.g. `4.8.2-ai.0.39.0`), also used in the published file name. Bump it together with `AiSetup.Build`.
 
 ## Checking which units the bots build
 
@@ -96,6 +97,8 @@ it is never mistaken for the official map. Version = `MapSettings.Version` in `s
    that the scan marks OK means: requirement not met yet (often a quest -- the scan names it) or not reached yet.
 
 ## If the game freezes
+With `-autodump` on, `CustomMapData\WLAI_heartbeat.txt` is rewritten every 10 s (time, units on the map, orders
+per minute, last tasks) -- send it with the dumps after a freeze.
 So far freezes came only with alt-tabbing on Linux/Proton, picture frozen while sound kept playing -- most likely
 the graphics layer, not the map. The steps to tell the two apart are in `TODO.md` ("Freeze check"). A map/script hang
 also happens without alt-tabbing and, in multiplayer, freezes every player.
@@ -134,7 +137,7 @@ project. Example prompt:
 ## Versions
 
 `0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags carry the WL base:
-`4.8.2-ai.0.38.1`. History: `CHANGELOG.md`.
+`4.8.2-ai.0.39.0`. History: `CHANGELOG.md`.
 
 ## Releasing
 
