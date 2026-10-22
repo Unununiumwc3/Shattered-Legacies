@@ -3,6 +3,33 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.39.0
+Engine-load refactor started (step 0 + lever 1), fixes from the 0.38.1 playtest (froze at ~34 min WITHOUT alt-tabbing).
+
+Refactor
+- **Step 0 -- measure**: new dump section UNITS (units / structures per player, total, orders since the start, order
+  mode). New **heartbeat file** `WLAI_heartbeat.txt` while `-autodump` is on: every 10 s game time, units on the
+  map (counted every 60 s), orders per minute and the last 12 started periodic tasks -- after a freeze it shows the
+  last state before it.
+- **Lever 1 -- order discipline**: with an unchanged target the 20-s heartbeat only orders IDLE army units (new units
+  after their rally point, units done fighting); a new target still orders the whole army. Switch `-orders idle|all`
+  (default idle) for A/B tests in one build.
+
+Fixes / gameplay
+- Scourge no longer marches into Argus at the start: Argus <-> Crystalsong (pre-summon portal) weight 6 -> 15.
+- **Bot Legion's Argus start**: Nether Pit x2, Summoning Circle, Infernal Siegeworks, Demon Gate instead of 5 Nether
+  Pits (which only produced Felguards).
+- **Legion supports the plague**: when "Plague of Undeath" lands, a bot Legion's army is moved next to Alterac
+  Mountains (it could not reach Lordaeron, the invasion fizzled).
+- **Emerald Portals** (Shrine of Malorne <-> Feralas): WL's preplaced pair had no destination; replaced by a working
+  AI portal pair + graph edge (Ysondre / Taerar area).
+- **Feathermoon**: a bot Sentinels holding Feathermoon gets 3 different buildings there and the quest "Shores of
+  Feathermoon" (Maiev) is completed -- WL counts only buildings that were BUILT, which bots never do.
+- Hero visits: **"Vault of the Wardens"** (Maiev into the channel area) and **"A Feast for Our Kin"** (Cairne into
+  Highmountain, while the Frostwolf or an ally holds Stormheim -- new per-visit option `AllyCp`).
+- `-icontest N`: one minimap icon variant at a time on the selected unit.
+- Version 4.8.2-ai.0.39.0. Docs: `FALLBACKS.md` (new) holds the fallback project; `TODO.md` points to it.
+
 ## 0.38.1
 From the 0.38.0 playtest (45 min; 0.38.0 was played but never pushed -- this release contains it).
 Production check: every bot trained 7-14 unit types, quest heroes appeared (Quel'thalas: Rommath, Lor'themar),

@@ -84,12 +84,11 @@ namespace WarcraftLegacies.Source.Ai
       // 0.34.3: each building gets its own open spot (searched outward from the start location, footprint
       // checked, kept apart from the others) -- the old fixed ring of 8 found only 1 walkable spot in Argus.
       // 5 barracks, 1 altar, 2 farms.
+      // 0.39: a mix of production buildings (AiConfig.LegionArgusProduction) -- 5 Nether Pits only trained Felguards
       var types = new List<int>();
-      var barracks = new List<int>();
-      SimpleBot.AddCategory(fac, UnitCategory.Barracks, barracks);
-      for (var i = 0; i < 5 && barracks.Count > 0; i++)
+      for (var i = 0; i < AiConfig.LegionArgusProduction.Count; i++)
       {
-        types.Add(barracks[i % barracks.Count]);
+        types.Add(AiConfig.LegionArgusProduction[i]);
       }
 
       AddFirstOf(fac, UnitCategory.Altar, types);
@@ -239,9 +238,79 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.39: remove every preplaced unit of a type (e.g. the dead Emerald Portals) -- whole map, once
+    private static void RemovePreplacedOfType(int typeId)
+    {
+      var g = CreateGroup();
+      GroupEnumUnitsInRect(g, GetWorldBounds(), null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitTypeId(u) == typeId)
+        {
+          RemoveUnit(u);
+        }
+      }
+
+      DestroyGroup(g);
+    }
+
+    // 0.39: the Scourge's plague lands and a bot Legion's army is stuck on Argus / in Northrend -> its whole army
+    // (not heroes on a mission, not workers, not buildings) is moved next to Alterac Mountains to support the invasion.
+    internal static void MoveLegionArmyToAlterac()
+    {
+      if (!LegionIsBot())
+      {
+        return;
+      }
+
+      var cp = SimpleBot.SafeCp(AiConfig.AlteracCpId);
+      if (cp == null || cp.Unit == null)
+      {
+        return;
+      }
+
+      player legion = null;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Legion")
+        {
+          legion = f.Player;
+        }
+      }
+
+      if (legion == null)
+      {
+        return;
+      }
+
+      var x = GetUnitX(cp.Unit);
+      var y = GetUnitY(cp.Unit) - 400f;
+      var n = 0;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, legion, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || IsUnitType(u, UNIT_TYPE_PEON) || AiState.MissionUnits.Contains(u)
+            || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || GetUnitMoveSpeed(u) <= 1f)
+        {
+          continue;
+        }
+
+        SetUnitPosition(u, x + GetRandomReal(-500f, 500f), y + GetRandomReal(-500f, 500f));
+        n++;
+      }
+
+      DestroyGroup(g);
+      SimpleBot.LogPin("Legion: " + I2S(n) + " units moved to Alterac Mountains for the Scourge's invasion");
+    }
+
     // 0.38: is the Legion a bot (with perks)? The AI only forces the summon for a bot Legion -- a human Legion summons
     // itself through WL's ritual.
-    private static bool LegionIsBot()
+    internal static bool LegionIsBot()
     {
       foreach (var f in FactionManager.GetAllFactions())
       {
@@ -595,6 +664,11 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void CreatePortals(string phase)
     {
+      if (phase == "always")
+      {
+        RemovePreplacedOfType(AiConfig.EmeraldPortalType); // 0.39: the dead preplaced pair; the AI pair replaces it
+      }
+
       var list = AiGraph.Portals;
       var n = 0;
       for (var i = 0; i < list.Count; i++)

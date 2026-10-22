@@ -375,6 +375,14 @@ namespace WarcraftLegacies.Source.Ai
     private const float ProductionEvery = 15.0f;
     private const float ProdTick = 1.0f;           // v12: production timer interval; one bot per tick
     private const float HeartbeatEvery = 20.0f;    // v12: re-issue attack-move at most this often per bot
+
+    // 0.39 refactor, lever 1 (engine load): with an UNCHANGED target, the heartbeat only orders IDLE units (new units
+    // after their rally point, units that finished a fight). A new target still orders the whole army.
+    // Switch: -orders idle|all (AiDebug). Counters for the dump's UNITS section and the heartbeat file.
+    internal static bool OrdersIdleOnly = true;
+    internal static int OrdersIssued;          // all attack orders since game start (army + gather)
+    internal static string[] TaskRing = new string[12]; // last started periodic tasks (freeze diagnosis)
+    internal static int TaskRingPos;
     private const float ObjectiveRadius = 1500f;   // v14: scripted-doctrine step clear/capture radius
     private const int QueuePerBuilding = 2;
     private const float CommitTimeout = 30.0f;
@@ -1731,7 +1739,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      AttackMove(p, x, y);
+      AttackMove(p, x, y, !moved && OrdersIdleOnly); // 0.39: same target -> only idle units
       LastPtX[pid] = x;
       LastPtY[pid] = y;
       LastIssueTime[pid] = _clock;
@@ -2218,6 +2226,8 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void Safe(string name, System.Action task)
     {
+      TaskRing[TaskRingPos] = TimeTag(_clock) + " " + name; // 0.39: freeze diagnosis (heartbeat file)
+      TaskRingPos = (TaskRingPos + 1) % TaskRing.Length;
       try
       {
         task();
@@ -2257,6 +2267,7 @@ namespace WarcraftLegacies.Source.Ai
       Safe("old gods rift", AiGates.OpenOldGodsRift);             // 0.37: replaces the Old Gods wave
       Safe("sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37: Old Gods barracks at Sulfuron Spire
       Safe("yogg release", AiMissions.RunYogg);                   // 0.38.1: bot casts "Free Yogg-Saron"
+      Safe("feathermoon", AiMissions.RunFeathermoon);             // 0.39: Sentinels' buildings at Feathermoon
       Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
@@ -2568,7 +2579,7 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
-    private static void AttackMove(player p, float tx, float ty)
+    private static void AttackMove(player p, float tx, float ty, bool idleOnly)
     {
       var g = CreateGroup();
       GroupEnumUnitsOfPlayer(g, p, null);
@@ -2577,9 +2588,11 @@ namespace WarcraftLegacies.Source.Ai
       {
         GroupRemoveUnit(g, u);
         OpUnits++;
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u))
+        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u)
+            && (!idleOnly || GetUnitCurrentOrder(u) == 0))
         {
           OpOrders++;
+          OrdersIssued++;
           IssuePointOrder(u, "attack", tx, ty);
         }
       }
@@ -2599,6 +2612,7 @@ namespace WarcraftLegacies.Source.Ai
         if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u))
         {
           OpOrders++;
+          OrdersIssued++;
           IssuePointOrder(u, "attack", ax, ay); // v12: fight to the rally point, not walk blindly
         }
       }
@@ -2684,7 +2698,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.38.1";
+    public const string Build = "0.39.0";
 
     public static void Setup()
     {
