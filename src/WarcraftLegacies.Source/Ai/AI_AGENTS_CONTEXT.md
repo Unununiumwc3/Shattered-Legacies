@@ -12,7 +12,8 @@ in `src/WarcraftLegacies.Source/Ai/`. Changes outside it (keep them minimal and 
 `Setup/GameSetup.cs` (`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`); `Loc.cs` literal
 replace (0.34.3); the bot-pick hook `MacroTools/UserInterface/BotChoicePolicy.cs` + `ChoiceDialogPresenter.TryBotPick`
 (0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` + version in
-`WarcraftLegacies.CLI/appsettings.json` (0.37.1); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); map data:
+`WarcraftLegacies.CLI/appsettings.json` (0.37.1); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); `Setup/GameSetup.cs`: no game-mode vote, Closed
+Alliance forced (0.39.1); `GameLogic/GameEnd/PlayerLeaves.cs`: the AI takes over leaving humans (0.39.2); map data `n0FB` / `AFB1` (fallback trigger building, 0.39.1); map data:
 CPs `n0JS` Jaina's Sanctum (0.37.2), `n0SA`/`n0TD`/`n0RF` + marker `A0ZG`/`B0ZG` (0.38).
 
 ## Getting the code (sandbox)
@@ -52,6 +53,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
+| `Fallbacks/` | FallbackConfig, FallbackSystem | fallback scenarios (0.39.1: trigger buildings + Ironforge placeholder) |
+| `FACTION_UNITS.md` | | GENERATED (`unit_scan.py --md`): units / heroes per faction, for fallback keep/lose decisions |
 | `FALLBACKS.md` | | fallback scenarios: design, teams, per-faction work list (big project, after the load rework) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
@@ -84,6 +87,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
    `tools/ai/scope_check.py` catches this and nested re-declarations (CS0136).
 10. **No compiler in the sandbox** (no dotnet, no nuget). Before every drop: `check_refs.py`, a tree-sitter syntax
     pass and `scope_check.py` on EVERY changed .cs file, including files outside `Ai/`; JSON files through `json.load`.
+12. **Unqualified calls across classes don't compile** (0.39.2 break, CS0103): a helper added to `SimpleBot` and
+    called as `IsActive(...)` from `QuestAutoComplete` (same file, other class). `check_refs.py` reports these as
+    UNQUALIFIED since 0.39.3.
 11. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM. Python: read `utf-8-sig`, write the BOM back
     if it was there; `/bin/sh` is dash -- `printf '\xef'` writes the text `\xef`, not the byte. Compare BOMs with
     `git show HEAD:<file> | head -c 3 | od -An -tx1` before delivering.

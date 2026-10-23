@@ -179,8 +179,29 @@ namespace WarcraftLegacies.Source.Ai
     private static bool _greymaneOpen;
     private static QuestData _tombQuest;
 
+    // 0.39.3: without the Legion summon the two graphs (Eastern Kingdoms / Kalimdor) never merged -- in a 520-min test
+    // Illidan and the Fel Horde won the Eastern Kingdoms but never saw Kalimdor as a target. Merge when the rift
+    // opens, and at the latest at 60:00. Home first still applies (own continent before the other one).
+    private const float MergeAt = 3600f;
+
+    internal static void MergeGraphs(string why)
+    {
+      if (SimpleBot._graphMerged)
+      {
+        return;
+      }
+
+      SimpleBot._graphMerged = true;
+      SimpleBot.LogPin("graphs MERGED (" + why + ") -- every faction may target the whole world, home first");
+    }
+
     internal static void OpenNamedGates()
     {
+      if (SimpleBot._clock >= MergeAt)
+      {
+        MergeGraphs("60:00 without a Legion summon");
+      }
+
       if (!_greymaneOpen)
       {
         var cp = SimpleBot.SafeCp(AiConfig.GilneasCityCpId);
@@ -303,6 +324,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       _riftOpen = true;
+      MergeGraphs("Old Gods rift open"); // 0.39.3: every faction may now target the other continent
       RemovePreplacedRiftPortal();
       AiLegion.OpenPortalPhase("oldgods");
       SimpleBot._gateOpen["oldgods"] = true;

@@ -5,7 +5,7 @@ import sys, glob, os
 import tree_sitter_c_sharp as tscs, tree_sitter as ts
 
 parser = ts.Parser(ts.Language(tscs.language()))
-files = sorted(glob.glob(os.path.join(sys.argv[1] if len(sys.argv) > 1 else ".", "*.cs")))
+files = sorted(glob.glob(os.path.join(sys.argv[1] if len(sys.argv) > 1 else ".", "**", "*.cs"), recursive=True))  # 0.39.1: incl. Fallbacks/
 members = {}   # class -> {name: is_public}
 refs = []      # (file, line, from_class, cls, member)
 
@@ -38,9 +38,15 @@ def collect(n, src, cls=None):
             members[cls][txt(n.child_by_field_name("name"), src)] = pub
     for c in n.children: collect(c, src, cls)
 
+unqualified = []  # 0.39.2: (file, line, class, name) of unqualified calls name(...)
+
 def find_refs(n, src, f, cls=None):
     if n.type == "class_declaration":
         cls = txt(n.child_by_field_name("name"), src)
+    if n.type == "invocation_expression":
+        fn = n.child_by_field_name("function")
+        if fn is not None and fn.type == "identifier":
+            unqualified.append((f, n.start_point[0] + 1, cls, txt(fn, src)))
     if n.type == "member_access_expression":
         e, nm = n.child_by_field_name("expression"), n.child_by_field_name("name")
         if e is not None and nm is not None and e.type == "identifier":
@@ -154,6 +160,14 @@ for f, line, frm, cls, m in refs:
         print(f"MISSING  {f}:{line}  {cls}.{m}  (declared in: {owners or 'nowhere'})"); bad += 1
     elif frm != cls and not members[cls][m]:
         print(f"PRIVATE  {f}:{line}  {cls}.{m} used from {frm}"); bad += 1
+# 0.39.2: an unqualified call to a method that is NOT in the calling class but IS a member of another of our
+# classes does not compile (CS0103, "name does not exist in the current context") -- the 0.39.2 build broke on
+# IsActive(...) used inside QuestAutoComplete. WC3 natives are global and never members of our classes.
+for f, line, frm, name in unqualified:
+    if frm in members and name not in members[frm]:
+        owners = [c for c, ms in members.items() if name in ms and c != frm]
+        if owners:
+            print(f"UNQUALIFIED  {f}:{line}  {name}(...) in {frm} -- belongs to {owners} (write {owners[0]}.{name})"); bad += 1
 print(f"checked {sum(1 for r in refs if r[3] in members)} cross-class references in {len(files)} files: "
       + ("OK" if bad == 0 else f"{bad} problem(s)"))
 sys.exit(1 if bad else 0)

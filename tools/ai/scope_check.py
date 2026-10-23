@@ -79,7 +79,7 @@ def check(path):
 if __name__ == "__main__":
     files = []
     for a in sys.argv[1:] or ["src/WarcraftLegacies.Source/Ai"]:
-        files += sorted(glob.glob(os.path.join(a, "*.cs"))) if os.path.isdir(a) else [a]
+        files += sorted(glob.glob(os.path.join(a, "**", "*.cs"), recursive=True)) if os.path.isdir(a) else [a]
     found = [f for p in files for f in check(p)]
     print("\n".join(found) if found else f"scope check: {len(files)} files OK")
     sys.exit(1 if found else 0)

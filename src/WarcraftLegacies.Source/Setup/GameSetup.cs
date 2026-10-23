@@ -67,17 +67,9 @@ public static class GameSetup
     MapFlagSetup.Setup();
     InfoQuests.Setup();
     DestructibleSetup.Setup();
-    var gameModeManager = new GameModeManager(new IGameMode[]
-    {
-      new ClosedAlliance(),
-      new OpenAlliance(),
-      new GreatWar()
-    })
-    {
-      TimeToDisplay = 49,
-      VoteLength = 10
-    };
-    gameModeManager.Setup();
+    // Bot AI fork (4.8.2-ai 0.39.1): no game-mode vote -- Closed Alliance is forced, applied at 59 s, the moment the
+    // vote used to end. The vote's time slot (49 s) is used by the bot difficulty vote (Ai/AiGoldVote.cs).
+    timer.Create().Start(59, false, () => new ClosedAlliance().OnChoose());
     RockSetup.Setup();
     TurnResearchSetup.Setup();
     ShipyardBanZonesSetup.Setup();

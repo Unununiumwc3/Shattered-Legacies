@@ -21,6 +21,29 @@ namespace WarcraftLegacies.Source.Ai
   {
     private const float Cooldown = 60f;
 
+    // 0.39.2: a leaving human's slot becomes a full bot (with the bot bonuses), instead of WL defeating the faction.
+    // Called from WL's PlayerLeaves. Returns false if the AI cannot take it (no faction / already defeated).
+    internal static bool TakeOverLeaver(player p)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (fac == null)
+      {
+        return false;
+      }
+
+      var pid = GetPlayerId(p);
+      AiState.Autopilot.Remove(pid); // a real bot now, not a (fair) autopilot -> full bot bonuses
+      AiState.TakenOver.Add(pid);
+      SimpleBot.AddBot(p);
+      for (var i = 0; i < 24; i++)
+      {
+        DisplayTimedTextToPlayer(Player(i), 0, 0, 15, "|cff00ffff" + fac.Name + " is now played by the AI.|r");
+      }
+
+      SimpleBot.LogPin("P" + I2S(pid) + " " + fac.Name + ": human left -> taken over by the AI");
+      return true;
+    }
+
     public static void Setup()
     {
       var tr = CreateTrigger();

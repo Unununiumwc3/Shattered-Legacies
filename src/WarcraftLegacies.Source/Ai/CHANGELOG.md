@@ -3,6 +3,47 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.39.3
+- **Build fix** (0.39.2 did not compile): `IsActive(...)` was called without `SimpleBot.` from another class
+  (`QuestAutoComplete`). `check_refs.py` now reports unqualified calls to methods of other classes (UNQUALIFIED) --
+  it reproduces this error.
+- From the 520-min test (0.39.0, no freeze, `-orders idle`): **graphs merge** when the Old Gods rift opens and at the
+  latest at 60:00 -- without a Legion summon the two continents' graphs never merged, so Illidan / Fel Horde won the
+  Eastern Kingdoms and never targeted Kalimdor. Home first still applies.
+- **Sulfuron Spire CP** (new map data `n0SP`, 10 gold, in front of the Spire, edge to Northern Ashenvale): at the
+  Fireland Invasion it goes to Skywall (an early Druids owner's tower killed the new buildings), and a bot Skywall
+  moves its army there.
+- **The Nexus CP** (new map data `n0NX`, 10 gold, edge to Borean Tundra) -- replaces the Nexus area clear.
+- Version 4.8.2-ai.0.39.3.
+
+## 0.39.2
+- **Bots take over leaving humans**: WL used to defeat a leaving player's faction; now the AI plays the slot on as a
+  full bot (bot bonuses) and everyone sees "<faction> is now played by the AI". WL change: one hook in
+  `GameLogic/GameEnd/PlayerLeaves.cs` (falls back to WL's defeat if the AI declines). Taken-over slots count as active
+  opponents (`SimpleBot.IsActive`).
+- **Starter production**: at 0:35 every bot gets each production building of its faction it does not own yet (one of
+  each, only types that train units), placed around its workers with the Argus ring search. Pin per bot: "starter
+  production -- placed: ... | NO ROOM: ..." (maintainer checks where it worked). Fixes "never trained" units of
+  buildings bots never had (Academy, Consortium, ...).
+- Docs: `FALLBACKS.md` -- HQ list per faction (from WL's essential legends, input needed), "lighter fallbacks"
+  (remove / add / re-tune units per player instead of full race changes); new generated `FACTION_UNITS.md`
+  (`tools/ai/unit_scan.py --md`) for keep / lose decisions; TODO: guardian summons decided (bots only, 24 units).
+- Version 4.8.2-ai.0.39.2.
+
+## 0.39.1
+- **No game-mode vote**: Closed Alliance is forced (WL change in `Setup/GameSetup.cs`: `ClosedAlliance.OnChoose()` at
+  59 s, when the vote used to end). The bot difficulty vote moves into the freed slot: 49 s instead of 70 s.
+- **Fallbacks, first slice** (new folder `Ai/Fallbacks/`, design in `FALLBACKS.md`): one **trigger building** per
+  player slot with a fallback, in the sealed north-east corner (WL only creates artifact items there). New map data:
+  unit `n0FB` "Fallback" (invulnerable, no attack) and ability `AFB1` "Begin the Fallback" (channel). Dalaran
+  (Theramore) and Lordaeron (Scarlet Crusade) are listed as WL-driven. **Placeholder**: Ironforge loses its
+  Ironforge CP -> a bot falls back at once, a human gets the ability -> Marin Noggenfogger (`VH01`) appears in the
+  Storm Peaks with an announcement. No team change, base or unit package yet.
+- Ship to Tol Barad: mainland end moved to 13007,-2039 (maintainer).
+- AI portal minimap icon: `MinimapIconGoldmine.blp` (the square from `-icontest`; NeutralBuilding.blp showed nothing).
+- Tools: `check_refs.py` and `scope_check.py` read subfolders (Fallbacks/).
+- Version 4.8.2-ai.0.39.1.
+
 ## 0.39.0
 Engine-load refactor started (step 0 + lever 1), fixes from the 0.38.1 playtest (froze at ~34 min WITHOUT alt-tabbing).
 

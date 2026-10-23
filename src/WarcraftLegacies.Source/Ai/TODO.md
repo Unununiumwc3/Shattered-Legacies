@@ -1,8 +1,8 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.0** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.39.0"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.3** (map "Warcraft Legacies
+Botified 4.8.2-ai.0.39.3"). Next: **0.39.0** = refactor phase 1 + 2 (below).
 
 ## Freeze check (still open -- now also WITHOUT alt-tabbing)
 
@@ -63,8 +63,16 @@ Measure before and after each phase: units per player and total, orders per minu
   "Line of Succession" still open). Proposal: when Lordaeron becomes the Scarlet Crusade before "The Culling", give
   the Scourge its Arthas unlock (the research "The Culling" grants) -- AI-side for a bot Scourge, or a WL change for
   everyone?
-- [you] **Archimonde's channel** (420 s, "Twilight of the Gods"): options (a) the Legion army gathers at the spot
-  while he channels, (b) reinforcements go there, (c) a shorter channel (WL quest change, outside the AI).
+- **Archimonde's channel: ON HOLD** (maintainer). With stronger evils and a Legion focused on Kalimdor the fights
+  happen around the channel area anyway; the remaining risk (humans sneaking past to snipe him) is covered by the
+  guardian summons below.
+- [ai] **Guardian summons (decided, not built)**: bots only. A channelling quest hero that gets attacked pulls the
+  **24 nearest army units** of its owner to it (fewer if it has fewer; none -> nothing happens), with WC3's Mass
+  Teleport look (delay + effects), a ping and a **custom announcement per channel** (Archimonde: "You fool -- you
+  thought you could catch me off guard?", Maiev at the Vault ...). At most once per minute. **HQ last stand**: the
+  same with a **general announcement** when a bot's HQ is attacked, at most once per 5 min, HQ invulnerable during the
+  teleport (~5 s). HQs come from the one HQ list in `FALLBACKS.md` (shared with the fallbacks). Engine: 24 position
+  changes, no pathfinding -- negligible.
 - [you] **Defend range / flapping**: the Legion "defended" a shrine 26 km away (0.36) and switched defend/attack every
   15 s (0.37.2). Proposal: defend only within ~8000 of the army, keep a defend target at least 60 s.
 - [you] Kul Tiras Highbank last stand (`QuestRule` with `CapitalLost` = Boralus Keep)?
@@ -92,8 +100,39 @@ neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury
 - [ai] `tools/ai/map_query.py` -> `map_audit.py`: check every coordinate in AiConfig.cs in one run (incl. doodads
   near portal ends -- the Maw end stood on an archway).
 - [ai] Debug: `-scout` (define first), winner record when WL declares victory.
+- [you/ai] **Ahn'Qiraj is too far**: the Kalimdor team won but did not finish C'Thun in 520 min. The graph path is
+  Spinebark Grove -> Silithus -> Ruins of Ahn'Qiraj -> Tunnels of Ahn'Qiraj -> Temple of Ahn'Qiraj; Silithus ->
+  Tunnels alone is ~8 km. More regular CPs in between (map data) would help -- and also give the Old Gods more income.
+  [ai] can propose spots from the pathing data.
+- [you] **Argus with mixed owners**: without a Legion summon the pre-summon portal (Crystalsong <-> Argus) stays open
+  for everyone -- Lordaeron took Argus CPs. Keep it, or only for the Legion's team (needs a per-team portal)?
+- [ai] **Eye of Sargeras**: nobody picked it up in 520 min (WL has `EyeOfSargerasPickup`). Find where it lies and
+  whether bots can reach it (kill target / hero visit).
+- [ai] **Orc air units fly over the ocean**: probably flyers taking the straight line to a target that ground units
+  reach by portal. Idea: flyers follow the army anchor instead of the target.
+- [ai] **Orders/min in long games**: the heartbeat at 538 min showed ~3700 orders/min with `-orders idle` (all units
+  idle at their targets get re-ordered every heartbeat). Compare with `-orders all` before deciding lever 2.
+- [ai] (low) **Chinese language**: the latest regular WL build seems to have Chinese localization -- check upstream
+  and port it (WL's `Loc` system).
+- Note: WL has no `-spectate` command; the AI takes over a slot only when its human LEAVES (WL's leave event).
+- [ai] (low) Bot heroes die early: a bot trains its hero and attacks creep camps without an army. Accepted for now
+  (they rebuild); probably fixed by group movement (refactor lever 4).
 
-## Check in the next playtest (0.39.0)
+## Check in the next playtest (0.39.0 - 0.39.2)
+
+0.39.2:
+- Pins "starter production -- placed: ... | NO ROOM: ..." per bot at 0:35; look where the buildings landed.
+- A human leaves: "<faction> is now played by the AI", the faction is not defeated and keeps fighting.
+
+0.39.1:
+- No game-mode vote; "Closed Alliance" message at ~59 s; the bot difficulty vote appears at 49 s.
+- North-east corner: a "Fallback: ..." building for each slot with a fallback (Dalaran, Lordaeron, Ironforge).
+  Ironforge loses its Ironforge CP: as a human the building gets "Begin the Fallback"; as a bot Marin Noggenfogger
+  appears at once in the Storm Peaks (pin "FALLBACK P.. Ironforge"). Can you see / select your building in the
+  corner (camera)?
+- Ship to Tol Barad works at its new spot; AI portals show the small square on the minimap.
+
+0.39.0:
 
 - `-autodump` on: the heartbeat file appears and is rewritten every 10 s; dumps have the UNITS section.
 - Armies still fight and reinforce with `-orders idle` (default); orders/min in the heartbeat lower than with
@@ -108,14 +147,16 @@ neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury
 
 ## Open questions
 
-- [you] Thandol bridge sooner? WL removes its "Bridge Rocks" at turn 30 (`Setup/RockSetup.cs`, expiry 30); the AI
-  now follows that. Opening it earlier = a WL change (expiry), e.g. 20 -- for everyone, not just bots.
-- [you] Broken Isles: a more lore-fitting connection than the Azsuna ship.
-- [you] Kul Tiras pathway while Stormwind City is still locked: extra landing, or path through locked CPs?
+- [you] Thandol bridge: opening sooner is NOT needed as long as bots don't try to cross before it opens (0.37.2 gate
+  "thandol") -- maintainer re-checks in playtests.
+- [you] Broken Isles: they are reached only by the AI ship Azshara Coast <-> Azsuna (added in v34 after Illidan's
+  Broken Isles grant was removed). Like every AI portal it is a real waygate -- **humans use it too**, it changes the
+  map for everyone. Question: is a ship from Kalimdor the right lore connection, or should the Isles connect
+  elsewhere (e.g. Dalaran / the Eastern Kingdoms)?
 
 ## Later
 
 - Switch paths: Quel'thalas -> Sunfury, Scarlet Crusade -> Legion at the betrayal, Dalaran -> Kalimdor,
-  Sentinels -> Maiev, Warsong/Frostwolf -> Dragonmaw (Old Gods side), Stormwind -> Honor Hold, mobile Ragnaros
-  for Ironforge.
+  Sentinels -> Maiev, Warsong/Frostwolf -> Dragonmaw (Old Gods side), Stormwind -> Honor Hold (most of these are now
+  covered by FALLBACKS.md).
 - Rebuilding destroyed production buildings + HQ safety net (no barracks -> HQ trains basics).

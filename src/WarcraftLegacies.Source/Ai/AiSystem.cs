@@ -83,7 +83,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           var other = FindFaction(r.UnlessPlayed);
           if (other != null && other.Player != null
-              && GetPlayerSlotState(other.Player) == PLAYER_SLOT_STATE_PLAYING)
+              && SimpleBot.IsActive(other.Player))
           {
             _timedDone.Add(i);
             SimpleBot.Log("quest rule skipped: " + r.Title + " (" + r.UnlessPlayed + " is played)");
@@ -2180,8 +2180,14 @@ namespace WarcraftLegacies.Source.Ai
       var owner = GetOwningPlayer(cp);
       return owner != p
              && GetPlayerId(owner) < 24
-             && GetPlayerSlotState(owner) == PLAYER_SLOT_STATE_PLAYING
+             && IsActive(owner)
              && !IsPlayerAlly(p, owner);
+    }
+
+    // 0.39.2: a slot that plays: a playing human / computer, or a slot whose human left and the AI took over
+    internal static bool IsActive(player p)
+    {
+      return GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING || AiState.TakenOver.Contains(GetPlayerId(p));
     }
 
     internal static bool OwnsCp(WaveConfig cfg, int cpId)
@@ -2272,6 +2278,7 @@ namespace WarcraftLegacies.Source.Ai
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
       Safe("starter kit", AiMissions.RunStarterKit);                 // v32: barracks + altar (0:20 and 3:00)
+      Safe("starter production", AiMissions.RunStarterProduction);   // 0.39.2: one of each production building
       Safe("ragnaros", AiMissions.RunRagnarosMission);
       Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon; 0.36: more
       Safe("hero care", AiHeroCare.Run);                  // 0.36: stranded heroes walk back / go home
@@ -2679,6 +2686,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static readonly Dictionary<int, List<unit>> BlackUnits = new();
     internal static readonly Dictionary<int, List<float>> BlackUntil = new();
     internal static readonly Dictionary<int, Dictionary<unit, int>> StuckCount = new(); // 0.37.2: repeats per target
+    internal static readonly HashSet<int> TakenOver = new(); // 0.39.2: slots taken over from leaving humans
     internal static readonly HashSet<string> TickErrors = new();
     internal static readonly Dictionary<int, unit> KillTargetUnit = new();
     internal static readonly HashSet<int> KillDone = new();
@@ -2698,7 +2706,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.39.0";
+    public const string Build = "0.39.3";
 
     public static void Setup()
     {
@@ -2710,6 +2718,7 @@ namespace WarcraftLegacies.Source.Ai
       AiChoices.Setup();   // 0.37: bots pick in WL's click menus (before FactionChoiceDialogSetup runs)
       AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
+      FallbackSystem.Setup(); // 0.39.1: fallback scenarios, first slice (Ai/Fallbacks/)
       var t = CreateTimer();
       TimerStart(t, 3f, false, AnnounceBuild);
     }
