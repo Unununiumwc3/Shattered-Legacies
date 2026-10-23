@@ -124,7 +124,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // open ground for a ~512-wide building: rings 500..2000 out, 16 directions; centre and 4 corners walkable and
     // >= 600 from every spot already used. Result in _spotX/_spotY.
-    private static bool FindBuildSpot(float cx, float cy, List<float> usedX, List<float> usedY)
+    internal static bool FindBuildSpot(float cx, float cy, List<float> usedX, List<float> usedY)
     {
       for (var r = 500f; r <= 2000f; r += 250f)
       {

@@ -22,7 +22,8 @@ public static class AiWorld
   // circle. Shrunk to this radius on the AI portals only (landing spots are 300+ away, see AiLegion.LandBeside).
   public const float PortalBurnRadius = 250f;
   // 0.38: minimap icon of the AI portals -- WC3's small neutral-building icon (the one waygates use)
-  public const string PortalIconPath = "UI\\Minimap\\MinimapIcon\\MinimapIconNeutralBuilding.blp";
+  // 0.39.1: -icontest showed variants 3-6; 6 (this texture) is the small square, 1 (NeutralBuilding.blp) shows nothing
+  public const string PortalIconPath = "UI\\Minimap\\MinimapIcon\\MinimapIconGoldmine.blp";
   public const int PortalBurnUnitsAbility = 1093677389;      // A01M
   public const int PortalBurnStructuresAbility = 1093677619; // A023
 
@@ -239,6 +240,7 @@ public static class AiConfig
   // footprint walkable and clear of preplaced units (tools/ai/map_query.py).
   public const string FirelandQuestTitle = "Fireland Invasion";
   public static readonly float[] SulfuronSpotX = { -11550f, -11392f, -12127f };
+  public const int SulfuronCpId = 1848660816; // 0.39.3: n0SP, goes to Skywall at the Fireland Invasion
   public static readonly float[] SulfuronSpotY = { 4927f, 4339f, 4458f };
 
   // 0.36: named graph gates (AiGates.OpenNamedGates)
@@ -339,7 +341,7 @@ public static class AiConfig
   public static readonly List<ClearArea> ClearAreas = new()
   {
     new ClearArea("the Oculus", 1848652336 /* n020 Tanaris */, -9103f, -15943f, 1200f),
-    new ClearArea("the Nexus", 1848651847 /* n00G Borean Tundra */, -9984f, 17856f, 1200f),
+    // (0.39.3: "the Nexus" area clear removed -- the Nexus is a CP now, bots attack it through the graph)
     // 0.37: Ramzes the Horror (h0BD, carries an artifact) and his centaur guards, by whoever holds Desolace -- only
     // while Ramzes is alive (RequireType).
     new ClearArea("Ramzes the Horror", 1848652121 /* Desolace */, -20185f, -4704f, 450f) { RequireType = 1747993156 },
@@ -622,6 +624,7 @@ public static class AiGraph
     new Edge(1848653657, 1848652369), // Venture Bay <-> Dragonblight
     new Edge(1848652369, 1848651847), // Dragonblight <-> Borean Tundra
     new Edge(1848651847, 1848654152), // Borean Tundra <-> En'Kilah
+    new Edge(1848651847, 1848659544), // 0.39.3: Borean Tundra <-> The Nexus (new CP n0NX; replaces the Nexus area clear)
     new Edge(1848654152, 1848651846), // En'Kilah <-> Sholazar Basin
     new Edge(1848651846, 1848653892), // Sholazar Basin <-> Icecrown Glacier
     new Edge(1848652362, 1848652102, 600f, ""), // Howling Fjords <-> Tirisfal Glades
@@ -782,6 +785,7 @@ public static class AiGraph
     new Edge(1848653909, 1848652114), // Southern Ashenvale <-> Astranaar
     new Edge(1848652114, 1848652113), // Astranaar <-> Northern Ashenvale
     new Edge(1848652113, 1848653635), // Northern Ashenvale <-> Felwood
+    new Edge(1848660816, 1848652113), // 0.39.3: Sulfuron Spire (new CP n0SP, in front of the Spire) <-> Northern Ashenvale
     new Edge(1848652113, 1848652373), // Northern Ashenvale <-> Darkshore
     new Edge(1848652373, 1848653382), // Darkshore <-> Silvermyst Island
     new Edge(1848653382, 1848656460), // Silvermyst Island <-> Exodar Regalis
@@ -862,7 +866,8 @@ public static class AiGraph
     // x-1201 y-9903 is walkable on Kezan's own island (same ground area as the Kezan CP) -> sign typo assumed.
     new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "always"),
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
-    new PortalLink(11356f, -2009f, 11765f, -3397f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "always"),
+    // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
+    new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "always"),
     new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
       AiWorld.LegionNorthrendPortalX, AiWorld.LegionNorthrendPortalY, "", "Portal to Northrend", "Portal to Argus", "prelegion"),
     new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,

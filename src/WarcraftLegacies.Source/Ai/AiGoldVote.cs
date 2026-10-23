@@ -16,7 +16,7 @@ namespace WarcraftLegacies.Source.Ai
   // The debug commands -gold0 ... -gold200 still override it afterwards.
   internal static class AiGoldVote
   {
-    private const float ShowAt = 70f;
+    private const float ShowAt = 49f; // 0.39.1: the slot of WL's game-mode vote, which is gone (Closed Alliance forced)
     private const float VoteTime = 20f;
     private const int DefaultOption = 2;
 

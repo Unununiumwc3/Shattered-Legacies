@@ -25,6 +25,108 @@ namespace WarcraftLegacies.Source.Ai
     private static readonly float[] StarterKitAt = { 20f, 180f };
     private static int _starterKitDone;
 
+    // 0.39.2: every bot gets each production building of its faction that it does not own yet (one of each), so
+    // all of its units can be trained (0.38 TRAINED: Academy / Consortium / ... units were "never" because bots do not
+    // build). Placed once at StarterProductionAt around the bot's workers (or its start location), with the ring
+    // search of the Argus base; a pin lists what was placed and what found no room.
+    private const float StarterProductionAt = 35f;
+    private static bool _starterProductionDone;
+    private static readonly UnitCategory[] ProductionCats =
+    {
+      UnitCategory.Barracks, UnitCategory.SiegeWorkshop, UnitCategory.Magic, UnitCategory.FlyingBuilding,
+      UnitCategory.Specialist,
+    };
+
+    internal static void RunStarterProduction()
+    {
+      if (_starterProductionDone || SimpleBot._clock < StarterProductionAt)
+      {
+        return;
+      }
+
+      _starterProductionDone = true;
+      for (var b = 0; b < SimpleBot.Bots.Count; b++)
+      {
+        var p = SimpleBot.Bots[b];
+        var fac = p.GetPlayerData().Faction;
+        if (fac == null || !SimpleBot.HasPerks(p))
+        {
+          continue;
+        }
+
+        // centre: the bot's workers, else its start location
+        float cx = 0f, cy = 0f;
+        var n = 0;
+        var g = CreateGroup();
+        GroupEnumUnitsOfPlayer(g, p, null);
+        unit u;
+        while ((u = FirstOfGroup(g)) != null)
+        {
+          GroupRemoveUnit(g, u);
+          if (IsUnitType(u, UNIT_TYPE_PEON))
+          {
+            cx += GetUnitX(u);
+            cy += GetUnitY(u);
+            n++;
+          }
+        }
+
+        DestroyGroup(g);
+        if (n > 0)
+        {
+          cx /= n;
+          cy /= n;
+        }
+        else
+        {
+          var loc = GetPlayerStartLocation(p);
+          cx = GetStartLocationX(loc);
+          cy = GetStartLocationY(loc);
+        }
+
+        var usedX = new List<float>();
+        var usedY = new List<float>();
+        var placed = "";
+        var failed = "";
+        var seen = new List<int>();
+        for (var c = 0; c < ProductionCats.Length; c++)
+        {
+          if (!fac.TryGetObjectByCategory(ProductionCats[c], out var ids) || ids == null)
+          {
+            continue;
+          }
+
+          for (var i = 0; i < ids.Count; i++)
+          {
+            var t = ids[i];
+            if (SimpleBot.ListHas(seen, t) || !AiData.Trains.ContainsKey(t) || GetPlayerTechCount(p, t, true) > 0)
+            {
+              continue; // already handled, trains nothing we use, or already owned
+            }
+
+            seen.Add(t);
+            if (AiLegion.FindBuildSpot(cx, cy, usedX, usedY))
+            {
+              CreateUnit(p, t, SimpleBot._spotX, SimpleBot._spotY, 270f);
+              usedX.Add(SimpleBot._spotX);
+              usedY.Add(SimpleBot._spotY);
+              placed = placed + " " + GetObjectName(t);
+            }
+            else
+            {
+              failed = failed + " " + GetObjectName(t);
+            }
+          }
+        }
+
+        if (placed != "" || failed != "")
+        {
+          SimpleBot.LogPin(SimpleBot.FacName(p) + ": starter production --" + (placed != "" ? " placed:" + placed : "")
+                           + (failed != "" ? " | NO ROOM:" + failed : ""));
+        }
+      }
+    }
+
     internal static void RunStarterKit()
     {
       if (_starterKitDone >= StarterKitAt.Length || SimpleBot._clock < StarterKitAt[_starterKitDone])
@@ -906,6 +1008,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       _sulfuronDone = true;
+      SulfuronToSkywall(); // 0.39.3
       var spot = 0;
       for (var b = 0; b < SimpleBot.Bots.Count && spot < AiConfig.SulfuronSpotX.Length; b++)
       {
@@ -928,6 +1031,66 @@ namespace WarcraftLegacies.Source.Ai
         spot++;
         SimpleBot.LogPin("Sulfuron Spire: " + f.Name + " barracks placed (" + GetObjectName(t) + ")");
       }
+    }
+
+    // 0.39.3: at the Fireland Invasion the Sulfuron Spire CP goes to Skywall (an early Druids owner would otherwise
+    // keep it, and its tower kills the new buildings), and a BOT Skywall moves its army there -- the invasion should
+    // feel like one.
+    private static void SulfuronToSkywall()
+    {
+      player skywall = null;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Skywall")
+        {
+          skywall = f.Player;
+        }
+      }
+
+      var cp = SimpleBot.SafeCp(AiConfig.SulfuronCpId);
+      if (skywall == null || cp == null || cp.Unit == null)
+      {
+        return;
+      }
+
+      if (GetOwningPlayer(cp.Unit) != skywall)
+      {
+        SimpleBot.GiveUnit(cp.Unit, skywall);
+      }
+
+      if (SimpleBot.IsBot(skywall) && SimpleBot.HasPerks(skywall))
+      {
+        var n = TeleportArmy(skywall, GetUnitX(cp.Unit), GetUnitY(cp.Unit) + 400f);
+        SimpleBot.LogPin("Fireland Invasion: Sulfuron Spire to Skywall, " + I2S(n) + " units moved there");
+      }
+      else
+      {
+        SimpleBot.LogPin("Fireland Invasion: Sulfuron Spire to Skywall");
+      }
+    }
+
+    // 0.39.3: move a player's whole army (no buildings, workers, mission heroes, immobile units) next to (x, y)
+    internal static int TeleportArmy(player p, float x, float y)
+    {
+      var n = 0;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || IsUnitType(u, UNIT_TYPE_PEON) || AiState.MissionUnits.Contains(u)
+            || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || GetUnitMoveSpeed(u) <= 1f)
+        {
+          continue;
+        }
+
+        SetUnitPosition(u, x + GetRandomReal(-500f, 500f), y + GetRandomReal(-500f, 500f));
+        n++;
+      }
+
+      DestroyGroup(g);
+      return n;
     }
 
     internal static unit ActiveKillTarget(player p, int pid)
