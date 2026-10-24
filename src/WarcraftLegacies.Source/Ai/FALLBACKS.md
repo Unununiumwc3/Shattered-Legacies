@@ -44,7 +44,7 @@ the **North Alliance**. If every original North Alliance faction is gone, the dw
 | Lordaeron | North Alliance | Scarlet Crusade (as today) | Lordaeron | North Alliance (no change) | as today | after the Third War |
 | Stormwind | South Alliance | Valiance Expedition (hero fallback) | Northrend (Borean Tundra) | North Alliance | Scourge; Legion's Northrend portal | WotLK: Bolvar leads the Alliance in Northrend |
 | Ironforge | South Alliance | Explorers' League | Northrend (Storm Peaks) | North Alliance | Scourge | WotLK: dwarves at Ulduar |
-| Kul Tiras | South Alliance | Goblins of Kezan | island (Kezan, west) | Kalimdor | Old Gods in southern Kalimdor | sea powers |
+| Kul Tiras | South Alliance | Kezan Enterprise (pirates + goblins; built 0.39.6-0.39.8) | island (Kezan, west) | own team ("Kezan Enterprise Pact") | Old Gods in southern Kalimdor | sea powers |
 | Druids | Kalimdor | Dream trees (Twilight Grove in Duskwood, Seradane in the Hinterlands) | Eastern Kingdoms | South Alliance | Fel Horde / Illidan; Scourge | the Emerald Dream's great trees |
 | Sentinels | Kalimdor | Maiev's Watchers | Outland (Warden's Cage) | Kalimdor (no change) | Illidan | WC3 TFT: Maiev hunts Illidan |
 | The Exodar | Kalimdor | Draenei of Shattrath (own base, NOT Illidan's Ashtongue) | Outland | Kalimdor (no change) | Fel Horde, Illidan | TBC: draenei in Outland |
@@ -311,7 +311,7 @@ Risks and how to keep them small:
 - **Bots**: cheap, thanks to the table-driven production (0.38) -- a new faction mostly needs its data generated and
   a home-continent switch.
 
-## Implemented so far (0.39.1)
+## Implemented so far (up to 0.39.9)
 
 - Folder `Ai/Fallbacks/`: `FallbackConfig.cs` (one definition per faction), `FallbackSystem.cs` (trigger buildings,
   HQ watch, run). Map data: `n0FB` trigger building, `AFB1` "Begin the Fallback".

@@ -547,6 +547,8 @@ namespace WarcraftLegacies.Source.Ai
       var scourge = SimpleBot.PlayerOfFaction("Scourge");
       if (scourge != null && legion != null)
       {
+        // 0.39.8: WL's own Unally -- the Scourge gets its own team ("Scourge Pact"), the scoreboard follows
+        scourge.GetPlayerData().Faction?.Unally();
         SetPlayerAlliance(scourge, legion, ALLIANCE_PASSIVE, false);
         SetPlayerAlliance(legion, scourge, ALLIANCE_PASSIVE, false);
       }

@@ -1,8 +1,22 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.6** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.39.6"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.9** (map "Warcraft Legacies
+Botified 4.8.2-ai.0.39.9"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+
+## Where we are (handover, end of the 0.36-0.39 chat)
+
+- **Engine load**: refactor step 0 (UNITS dump, heartbeat file) and lever 1 (`-orders idle`) are in. A 520-min game ran
+  without a freeze. Next: one comparison game with `-orders all`, then decide lever 2 (scheduler / waypoints).
+- **Production** trains from real train lists (0.38); bot heroes are free and learn skills; starter production
+  buildings; bots take over leaving humans.
+- **Fallbacks** (`FALLBACKS.md`): trigger buildings for every faction (corner, 3 columns), placeholder fallbacks for
+  the good factions (Marin Noggenfogger), Kul Tiras -> **Kezan Enterprise** fully playable (own team, oil income,
+  creep market, goblin buildings). Open: HQ choices per faction, a hook before WL's defeat (observer), the real
+  fallback factions.
+- **Map**: many new CPs (1-gold, 10-gold, 100-gold evil CPs), Old Gods rift, Emerald Portals, graph merge at the rift /
+  60:00, Argus Legion-only before the summon.
+- **Next playtest**: the list "Check in the next playtest" below.
 
 ## Freeze check (still open -- now also WITHOUT alt-tabbing)
 
@@ -45,7 +59,7 @@ playable on its own; changes stay inside `Ai/` (outside: only the hooks listed i
 
 Measure before and after each phase: units per player and total, orders per minute (LOAD), at 10/20/30/45 min.
 
-## 0.39 -- after the production rework (0.38)
+## Production follow-ups
 
 - [ai] **Units of buildings a bot doesn't have**: bots never construct buildings, so units from buildings they lack
   stay "never" (0.38 test: Quel'thalas' Academy and Consortium units, Kul Tiras' and Stormwind's special units).
@@ -129,38 +143,41 @@ neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury
   weaker towers on bot-owned CPs, or bots avoiding / focusing towers. Also check against the refactor (lever 1).
 - Gul'dan's corpse (-673,9918): done in 0.39.6 as the Fel Horde hero visit "Gul'dans Legacy" with army escort --
   check that the army really goes along (pins "hero visit 'Gul'dans Legacy'").
+- Kezan Enterprise buildings: done in 0.39.8 (check in the editor / game: Trading Center placement, the creep list,
+  stock refresh, oil income on the scoreboard). Old proposal kept below for reference.
+- [you/ai] **Kezan Enterprise -- functional buildings** (0.39.8 implemented the maintainer's version). The Kezan buildings exist but most train nothing.
+  Proposal: Scrapyard -> siege (Personal Tank, Shredder); Laboratory -> research + Alchemist / Tinker; Mercenary Den
+  -> Ogre Mercenary, Sappers, Gunner (pirates: Defias from 24p); Bunker -> Gunners / Marines; Auction House -> item
+  shop; Missile Battery / Rocket Tower -> defence; Bilgewater Harbor -> ships (already works); Engineer's Guild
+  already trains 3 units. Kezan Oil Supply and Kezan Trading Center should NOT be buildable (they are not in the goblin
+  Builder's list -- check which builder offers them). Special purposes, ideas: **Oil Supply** = income building (+X gold
+  per minute while you own it, like a small CP) or the requirement for zeppelins / tanks; **Trading Center** = the
+  mercenary market (hire ogres / pirates for gold) or a gold-for-lumber trade. Maintainer decides.
+- [ai] **Kezan builders invisible** (0.39.6 test: trained builders do not appear). Their model
+  (`war3mapImported\DayLaborer.mdx`) is in the imports, so it is something else -- use `-id` on the goblin hall while
+  it trains, and check whether the unit exists (`-dump` UNITS count) or is removed / hidden.
 - [ai] (low) **Chinese language**: the latest regular WL build seems to have Chinese localization -- check upstream
   and port it (WL's `Loc` system).
 - Note: WL has no `-spectate` command; the AI takes over a slot only when its human LEAVES (WL's leave event).
 - [ai] (low) Bot heroes die early: a bot trains its hero and attacks creep camps without an army. Accepted for now
   (they rebuild); probably fixed by group movement (refactor lever 4).
 
-## Check in the next playtest (0.39.0 - 0.39.2)
+## Check in the next playtest (0.39.x)
 
-0.39.2:
-- Pins "starter production -- placed: ... | NO ROOM: ..." per bot at 0:35; look where the buildings landed.
-- A human leaves: "<faction> is now played by the AI", the faction is not defeated and keeps fighting.
-
-0.39.1:
-- No game-mode vote; "Closed Alliance" message at ~59 s; the bot difficulty vote appears at 49 s.
-- North-east corner: a "Fallback: ..." building for each slot with a fallback (Dalaran, Lordaeron, Ironforge).
-  Ironforge loses its Ironforge CP: as a human the building gets "Begin the Fallback"; as a bot Marin Noggenfogger
-  appears at once in the Storm Peaks (pin "FALLBACK P.. Ironforge"). Can you see / select your building in the
-  corner (camera)?
-- Ship to Tol Barad works at its new spot; AI portals show the small square on the minimap.
-
-0.39.0:
-
-- `-autodump` on: the heartbeat file appears and is rewritten every 10 s; dumps have the UNITS section.
-- Armies still fight and reinforce with `-orders idle` (default); orders/min in the heartbeat lower than with
-  `-orders all`. If units stand around at the rally points: report it (lever 1 too strict).
-- Scourge does not go to Argus at the start. Legion's Argus start trains more than Felguards.
-- Plague of Undeath: pin "Legion: N units moved to Alterac Mountains".
-- Emerald Portals Shrine of Malorne <-> Feralas work both ways.
-- Bot Sentinels at Feathermoon: pin "Feathermoon: 3 Sentinels buildings placed", "Shores of Feathermoon" completed,
-  Maiev trainable; later "hero visit 'Vault of the Wardens'".
-- Bot Frostwolf: "hero visit 'A Feast for Our Kin'" once Stormheim is held by it or an ally.
-- `-icontest 1` ... `-icontest 6`: which numbers show on the minimap?
+- Heartbeat file and UNITS dump section present; compare `-orders idle` vs `-orders all` (orders/min, feel).
+- Fallback buildings in the corner: 3 tidy columns at x ~22208 from y 23500; Ironforge / other good factions: losing
+  all HQs -> "fallback ready" (human) or an immediate placeholder fallback (bot); recapturing an HQ removes it again.
+- Kul Tiras fallback: "Kezan Enterprise" on the scoreboard in its own team ("... Pact"), Katherine on Kezan, the Kezan
+  buildings and creeps are hers, Oil Supplies +50 gold/min each, Trading Center stock 3 / +1 per 2 min, Laboratory /
+  Mercenary Den / Tank Factory train, Altar of Industry heroes. Builders visible? (`-id` on the goblin hall).
+- Legion summon: the Scourge leaves the team as "Scourge Pact" on the scoreboard.
+- New CPs reachable (`-edges`): Ahn'Qiraj chain (Scarab Wall - Hive'Zora cheap), Deathknell / Terrordale to the Scourge
+  at the plague, Sulfuron Spire to Skywall at the Fireland Invasion, Twilight Shore, the Nexus.
+- 100-gold CPs show "(100 gold/min)": Ny'alotha, Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown Citadel.
+- Emerald Portals (Shrine of Malorne <-> Feralas) and the Old Gods rift work both ways; no duplicates.
+- Hero visits: Gul'dans Legacy (army escorts), Vault of the Wardens, A Feast for Our Kin; Yogg released by the bot.
+- Book of Medivh: the new ability "Guardian's Abjuration" (5 s).
+- Starter production pins at 0:35; Continental Outpost / Feathermoon buildings for bots.
 
 ## Open questions
 

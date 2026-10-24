@@ -1,0 +1,90 @@
+{
+  "OldId": "AOvd",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 120
+    },
+    {
+      "Level": 2,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 135
+    },
+    {
+      "Level": 3,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 150
+    },
+    {
+      "Id": "alsk",
+      "Value": 5
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(Pink - Vol'Jin)"
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "R"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "R"
+    },
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Guardian's Abjuration"
+    },
+    {
+      "Id": "aher",
+      "Type": 0,
+      "Value": 0
+    },
+    {
+      "Id": "aite",
+      "Type": 0,
+      "Value": 1
+    },
+    {
+      "Id": "alev",
+      "Type": 0,
+      "Value": 1
+    },
+    {
+      "Id": "adur",
+      "Type": 2,
+      "Level": 1,
+      "Value": 5.0
+    },
+    {
+      "Id": "ahdu",
+      "Type": 2,
+      "Level": 1,
+      "Value": 5.0
+    },
+    {
+      "Id": "atp1",
+      "Type": 3,
+      "Level": 1,
+      "Value": "Guardian's Abjuration"
+    },
+    {
+      "Id": "aub1",
+      "Type": 3,
+      "Level": 1,
+      "Value": "The Guardian's wards shield the bearer and nearby allies -- they cannot be harmed for 5 seconds."
+    }
+  ],
+  "NewId": "AGAB"
+}

@@ -2,7 +2,7 @@
 
 Computer-player bots for **Warcraft Legacies 4.8.2** (the version that still has the Old Gods). The bots capture
 control points, fight, produce, research, follow faction quests and lore events (Legion summon, Ragnaros, ...).
-Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.37.1") and `CHANGELOG.md`.
+Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.39.9") and `CHANGELOG.md`.
 
 ## Installing into a WL fork
 
@@ -85,7 +85,7 @@ pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army siz
 ## Map name
 The AI branch builds as **"Warcraft Legacies Botified <version>"** ("Botified" in red, lobby and loading screen), so
 it is never mistaken for the official map. Version = `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`
-(e.g. `4.8.2-ai.0.39.0`), also used in the published file name. Bump it together with `AiSetup.Build`.
+(e.g. `4.8.2-ai.0.39.9`), also used in the published file name. Bump it together with `AiSetup.Build`.
 
 ## Checking which units the bots build
 
@@ -137,7 +137,7 @@ project. Example prompt:
 ## Versions
 
 `0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags carry the WL base:
-`4.8.2-ai.0.39.0`. History: `CHANGELOG.md`.
+`4.8.2-ai.0.39.9`. History: `CHANGELOG.md`.
 
 ## Releasing
 

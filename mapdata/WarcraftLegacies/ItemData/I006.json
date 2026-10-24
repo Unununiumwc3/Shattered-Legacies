@@ -8,7 +8,7 @@
     {
       "Id": "iabi",
       "Type": 3,
-      "Value": "A0BT,A0W0"
+      "Value": "A0BT,A0W0,AGAB"
     },
     {
       "Id": "icid",
@@ -54,7 +54,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffff8c00Artifact|r|nIncreases Intelligence by 15 and can be used to summon the Burning Legion from the depths of the Twisting Nether.|n|cffffcc00Lore|r|n|cffffdeadThe last known tome of Medivh\u0027s work."
+      "Value": "|cffff8c00Artifact|r|nIncreases Intelligence by 15 and can be used to summon the Burning Legion from the depths of the Twisting Nether.|n|cffffcc00Lore|r|n|cffffdeadThe last known tome of Medivh's work."
     }
   ]
 }

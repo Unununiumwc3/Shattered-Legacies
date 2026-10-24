@@ -3,6 +3,36 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.39.9
+- **Book of Medivh** gets a third ability: **Guardian's Abjuration** -- WC3's Big Bad Voodoo (`AOvd`) as an item
+  ability, 5 seconds (map data: ability `AGAB`, item `I006`).
+- Docs: all md files reviewed (outdated versions / numbers fixed, playtest list consolidated, a "Where we are" handover
+  section at the top of TODO.md).
+- Version 4.8.2-ai.0.39.9.
+
+## 0.39.8
+- **Kezan Enterprise buildings** (maintainer's design; map data): Laboratory trains Sappers + Alchemist (function
+  units / casters); Mercenary Den trains Merc Gunner (renamed Gunner), Ogre Mercenary, Trade Prince Guard; Tank Factory
+  also trains the Goblin Shredder; Scrapyard is the tech building (Cluster Rockets; Personal Tank and War Zeppelin need
+  it); Bunker already is a food tower (orc Burrow base). **Kezan Oil Supply: +50 gold per minute each** while it stands
+  (`Fallbacks/KezanEnterprise.cs`, WL's BonusIncome; cannot be captured). **Kezan Trading Center: creep market** --
+  Ogre Warrior, Ogre Magi, Forest Troll, Troll Shadow Priest, Murloc Huntsman, Centaur Outrunner; stock 3 each, +1 every
+  2 min (by code: max allowed = alive + stock). Bots train Laboratory / Mercenary Den units (generated tables).
+- **Scoreboard after the Legion betrayal**: the Scourge leaves through WL's `Faction.Unally()` ("Scourge Pact"), so the
+  scoreboard follows (like the Kezan Enterprise).
+- Version 4.8.2-ai.0.39.8.
+
+## 0.39.7
+- **Kezan Enterprise** (Kul Tiras fallback, from the maintainer's test): name without "The" (cut off on the
+  scoreboard); everything neutral on Kezan (Regions.KezanAmbient: Scrapyard, Bunker, Laboratory, Rocket Tower, Oil
+  Supply ..., passive AND hostile units) joins; WL's own `Faction.Unally()` gives it its own team ("... Pact") so the
+  scoreboard follows; all three Altar of Industry heroes allowed (Gallywix, Tinker, Marin).
+- **Argus is Legion-only before the summon**: other factions no longer pick Antoran Wastes, Eredath, Krokuun or
+  Nath'raxas Hold as targets until the Legion is summoned (the Scourge took Antoran early; weight 15 was not enough).
+- **Fallback buildings**: 3 columns around x 22208 from y 23500 northwards, 150 apart (maintainer's spot; 100
+  overlapped the models): middle column first, then left, then right; order = team, then slot.
+- Version 4.8.2-ai.0.39.7.
+
 ## 0.39.6
 - **Kul Tiras fallback -> "The Kezan Enterprise"**: the faction is renamed, Katherine stays, the maintainer's new
   announcement. Start buildings at Kezan from unused main-map goblin data: goblin hall `o03L` (Tinker), Altar of

@@ -982,6 +982,9 @@ public static class AiGraph
   };
 
   // Nodes the walker passes through but must never capture (so a scripted event can still fire there).
+  // 0.39.7: Argus CPs (Antoran Wastes, Eredath, Krokuun, Nath'raxas Hold) -- only the Legion targets them before the summon
+  public static readonly List<int> ArgusNodes = new() { 1848656454, 1848656456, 1848656455, 1848652609 };
+
   public static readonly List<int> SkipNodes = new()
   {
     1848652340, // Blackrock Depths -- leave uncaptured so Ragnaros can trigger
