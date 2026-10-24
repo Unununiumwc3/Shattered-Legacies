@@ -33,11 +33,13 @@ namespace WarcraftLegacies.Source.Ai
 
     // Trigger buildings: the sealed top-right corner (Regions.ArtifactDummyInstance -- WL only creates artifact
     // items there). One per player slot: row = slot / 12, column = slot % 12.
-    // 0.39.5: symmetric layout -- one column per team (scoreboard order), one row per team member
-    internal const float CenterX = 21136f;
-    internal const float ColumnStep = 450f;
-    internal const float FirstRowY = 23450f;
-    internal const float RowStep = 380f;
+    // 0.39.7 (maintainer): 3 columns around x 22208 starting at y 23500 going north; the middle column fills first,
+    // then left, then right. Order: team (scoreboard), then member. 150 apart (100 overlapped the building models).
+    internal const float CenterX = 22208f;
+    internal const float ColumnStep = 150f;
+    internal const float FirstRowY = 23500f;
+    internal const float RowStep = 150f;
+    internal const int RowsPerColumn = 7;
     internal const float CreateAt = 62f;  // after the faction picks (and where the mode vote used to end)
     internal const float CheckEvery = 5f;
 
@@ -48,7 +50,7 @@ namespace WarcraftLegacies.Source.Ai
     // and belonged to no faction: goblin hall o03L (Tinker), Altar of Industry o03O (Gallywix, Tinker hero),
     // Tank Factory o05T (Grenadier, Personal Tank, War Zeppelin), Kezan Oil Supply h04Z (farm) x2; kept from Kul Tiras:
     // Garrison h06R (Marines) and Workshop h07P (Cannons).
-    internal const string KezanName = "The Kezan Enterprise";
+    internal const string KezanName = "Kezan Enterprise"; // 0.39.7: "The ..." was cut off on the scoreboard
     internal static readonly int[] KezanBuildings =
       { 1865429836, 1865429839, 1865430356, 1747990098, 1747990352, 1747989594, 1747989594 };
     // units / heroes the Enterprise may train (WL's limits would block types of no faction)
@@ -58,6 +60,7 @@ namespace WarcraftLegacies.Source.Ai
       1747989553, 1865429313, 1747989583, 1747989591,             // Marine, Cannon, + the Garrison / Workshop extras
     };
     internal const int GallywixType = 1328559182;                   // O04N
+    internal static readonly int[] KezanHeroes = { 1328559182, 1316252014, 1447571505 }; // O04N Gallywix, Ntin, VH01 Marin
 
     internal static readonly List<FallbackDef> All = new()
     {
@@ -89,7 +92,7 @@ namespace WarcraftLegacies.Source.Ai
       },
       // 0.39.5 (maintainer): Kul Tiras keeps Katherine and becomes a mercenary faction on Kezan (special logic in
       // FallbackSystem.KulTirasFallback: old units -> Stormwind, Kezan + the creeps there -> Kul Tiras, no allies).
-      new FallbackDef("Kul'tiras", "The Kezan Enterprise", "spawn")
+      new FallbackDef("Kul'tiras", "Kezan Enterprise", "spawn")
       {
         Hq = new[] { 1747989558 },             // h046 Boralus Keep
         X = -662f, Y = -7410f,                 // Kezan

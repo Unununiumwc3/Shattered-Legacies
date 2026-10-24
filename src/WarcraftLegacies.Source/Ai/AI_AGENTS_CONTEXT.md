@@ -40,9 +40,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiMissions.cs` | AiMissions | starter kit, Ragnaros, kill targets, area clears, one-shots, CP grants, Kul Tiras repair, palace handover, banned forms |
 | `AiLegion.cs` | AiLegion | Legion summon/betrayal, Argus start base, node events (Sunwell), demon portal fix, all AI portals |
 | `AiWaveRunner.cs` | AiWaveRunner | invasion-wave runner; no waves configured since 0.37.1 (`AiWaves.All` empty) |
-| `AiGates.cs` | AiGates | gate removal, Tempest Reach edge, named graph gates (greymane, tomb, thandol), Old Gods rift |
+| `AiGates.cs` | AiGates | gate removal (+ new gates on entering the map), named graph gates (greymane, tomb, thandol, oldgods), Old Gods rift, Emerald Portals, graph merge |
 | `AiAutopilot.cs` | AiAutopilot | `-autopilot` |
-| `AiGoldVote.cs` | AiGoldVote | bot strength vote at 70 s (sets `SimpleBot.BotGoldBonus`) |
+| `AiGoldVote.cs` | AiGoldVote | bot strength vote at 49 s (the old game-mode vote slot) (sets `SimpleBot.BotGoldBonus`) |
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
 | `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order -- re-run after WL updates |
@@ -53,7 +53,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
-| `Fallbacks/` | FallbackConfig, FallbackSystem | fallback scenarios (0.39.1: trigger buildings + Ironforge placeholder) |
+| `Fallbacks/` | FallbackConfig, FallbackSystem, KezanEnterprise | fallback scenarios: trigger buildings, HQ watch, placeholder fallbacks, Kul Tiras -> Kezan Enterprise (oil income, creep market) |
 | `FACTION_UNITS.md` | | GENERATED (`unit_scan.py --md`): units / heroes per faction, for fallback keep/lose decisions |
 | `FALLBACKS.md` | | fallback scenarios: design, teams, per-faction work list (big project, after the load rework) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |

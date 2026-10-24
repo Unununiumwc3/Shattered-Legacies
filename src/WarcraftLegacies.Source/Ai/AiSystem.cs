@@ -1838,6 +1838,13 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
+        // 0.39.7: Argus belongs to the Legion until the summon -- the Scourge took Antoran early (weight alone did not help)
+        if (fac.Name != "Legion" && !GateOpen("legion") && AiGraph.ArgusNodes.Contains(GetUnitTypeId(frontier)))
+        {
+          d.Skipped++;
+          continue;
+        }
+
         // skip nodes: walk past them (they stay a waypoint) but never pick them as a capture target.
         if (AiGraph.SkipNodes.Contains(GetUnitTypeId(frontier)))
         {
@@ -2708,7 +2715,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.39.6";
+    public const string Build = "0.39.9";
 
     public static void Setup()
     {

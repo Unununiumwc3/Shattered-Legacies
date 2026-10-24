@@ -35,9 +35,32 @@ namespace WarcraftLegacies.Source.Ai
     private static void CreateBuildings()
     {
       var teams = FactionManager.GetAllTeams();
-      var membersPlaced = new int[teams.Count + 1];
-      for (var pid = 0; pid < 24; pid++)
+      var order = new List<int>(); // 0.39.7: pids sorted by team (scoreboard order), then slot
+      for (var t = 0; t <= teams.Count; t++)
       {
+        for (var q = 0; q < 24; q++)
+        {
+          var team = Player(q).GetPlayerData().Team;
+          var ti = teams.Count;
+          for (var k = 0; k < teams.Count; k++)
+          {
+            if (team == teams[k])
+            {
+              ti = k;
+            }
+          }
+
+          if (ti == t)
+          {
+            order.Add(q);
+          }
+        }
+      }
+
+      var placedCount = 0;
+      for (var oi = 0; oi < order.Count; oi++)
+      {
+        var pid = order[oi];
         var p = Player(pid);
         var fac = p.GetPlayerData().Faction;
         if (fac == null)
@@ -60,19 +83,12 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         _hqUnits[pid] = FindHqUnits(def.Hq);
-        // 0.39.5: column = the player's team (scoreboard order), row = its place inside the team
-        var col = teams.Count;
-        for (var t = 0; t < teams.Count; t++)
-        {
-          if (p.GetPlayerData().Team == teams[t])
-          {
-            col = t;
-          }
-        }
-
-        var row = membersPlaced[col];
-        membersPlaced[col] = row + 1;
-        var x = FallbackConfig.CenterX + FallbackConfig.ColumnStep * (col - (teams.Count - 1) / 2f);
+        // 0.39.7: middle column first, then left, then right (each RowsPerColumn high, going north)
+        var colIndex = placedCount / FallbackConfig.RowsPerColumn; // 0 middle, 1 left, 2 right, 3 far left ...
+        var row = placedCount % FallbackConfig.RowsPerColumn;
+        placedCount++;
+        var side = colIndex == 0 ? 0 : (colIndex % 2 == 1 ? -((colIndex + 1) / 2) : colIndex / 2);
+        var x = FallbackConfig.CenterX + FallbackConfig.ColumnStep * side;
         var y = FallbackConfig.FirstRowY + FallbackConfig.RowStep * row;
         var u = CreateUnit(p, FallbackConfig.TriggerBuildingType, x, y, 270f);
         BlzSetUnitName(u, "Fallback: " + def.Name);
@@ -242,41 +258,34 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var kezan = SimpleBot.SafeCp(1848652890); // n04Z Kezan
+      unit kezanUnit = null;
       if (kezan != null && kezan.Unit != null)
       {
-        SimpleBot.GiveUnit(kezan.Unit, p);
+        kezanUnit = kezan.Unit;
+        SimpleBot.GiveUnit(kezanUnit, p);
       }
 
-      var creeps = CreateGroup();
-      GroupEnumUnitsInRange(creeps, def.X, def.Y, 3000f, null);
-      while ((u = FirstOfGroup(creeps)) != null)
+      // 0.39.7: everything neutral on Kezan (Regions.KezanAmbient) joins: the goblin buildings there (Scrapyard,
+      // Bunker, Laboratory, Rocket Tower, Oil Supply ...) and the units -- passive AND hostile
+      var area = Rect(-3200f, -10368f, 736f, -5184f);
+      var g2 = CreateGroup();
+      GroupEnumUnitsInRect(g2, area, null);
+      var taken = 0;
+      while ((u = FirstOfGroup(g2)) != null)
       {
-        GroupRemoveUnit(creeps, u);
-        if (GetOwningPlayer(u) == Player(PLAYER_NEUTRAL_AGGRESSIVE) && !IsUnitType(u, UNIT_TYPE_STRUCTURE)
-            && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+        GroupRemoveUnit(g2, u);
+        var o = GetPlayerId(GetOwningPlayer(u));
+        if ((o == PLAYER_NEUTRAL_AGGRESSIVE || o == PLAYER_NEUTRAL_PASSIVE) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+            && u != kezanUnit)
         {
           SetUnitOwner(u, p, true);
+          taken++;
         }
       }
 
-      DestroyGroup(creeps);
-      for (var i = 0; i < 24; i++)
-      {
-        var q = Player(i);
-        if (i == pid)
-        {
-          continue;
-        }
-
-        SetPlayerAlliance(p, q, ALLIANCE_PASSIVE, false);
-        SetPlayerAlliance(q, p, ALLIANCE_PASSIVE, false);
-        SetPlayerAlliance(p, q, ALLIANCE_SHARED_VISION, false);
-        SetPlayerAlliance(q, p, ALLIANCE_SHARED_VISION, false);
-        SetPlayerAlliance(p, q, ALLIANCE_HELP_REQUEST, false);
-        SetPlayerAlliance(q, p, ALLIANCE_HELP_REQUEST, false);
-        SetPlayerAlliance(p, q, ALLIANCE_HELP_RESPONSE, false);
-        SetPlayerAlliance(q, p, ALLIANCE_HELP_RESPONSE, false);
-      }
+      DestroyGroup(g2);
+      RemoveRect(area);
+      SimpleBot.LogPin("Kezan: " + I2S(taken) + " neutral buildings / units joined");
 
       // 0.39.6: the faction becomes "The Kezan Enterprise" -- renamed, goblin start buildings, its units allowed
       var fac = p.GetPlayerData().Faction;
@@ -290,7 +299,13 @@ namespace WarcraftLegacies.Source.Ai
         SetPlayerTechMaxAllowed(p, FallbackConfig.KezanUnits[i], 100);
       }
 
-      SetPlayerTechMaxAllowed(p, FallbackConfig.GallywixType, 1);
+      for (var i = 0; i < FallbackConfig.KezanHeroes.Length; i++)
+      {
+        SetPlayerTechMaxAllowed(p, FallbackConfig.KezanHeroes[i], 1); // 0.39.7: all three Altar of Industry heroes
+      }
+
+      fac?.Unally(); // 0.39.7: WL's own unally -- new team "<name> Pact", the scoreboard follows
+      KezanEnterprise.Start(p); // 0.39.8: oil income, creep market
       var usedX = new List<float>();
       var usedY = new List<float>();
       var placed = 0;
@@ -306,7 +321,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       SimpleBot.LogPin("Kul Tiras fallback -> The Kezan Enterprise: old army to " + (stormwind != null ? "Stormwind" : "removed")
-                       + ", Kezan + creeps, " + I2S(placed) + " goblin buildings, no allies");
+                       + ", " + I2S(placed) + " goblin buildings, own team (Pact)");
     }
 
     private static void Execute(int pid)
