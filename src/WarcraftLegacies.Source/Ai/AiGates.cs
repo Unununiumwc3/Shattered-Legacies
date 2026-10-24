@@ -278,6 +278,53 @@ namespace WarcraftLegacies.Source.Ai
 
     private const int RockChunkId = 1280602723; // 'LTrc'
 
+    // 0.39.5: the Emerald Portals (Shrine of Malorne <-> Feralas). WL's two preplaced waygates (n07F) had no destination.
+    // 0.39 replaced them with an AI pair, but the preplaced ones were hidden at that moment (not found, not removed) and
+    // showed up later as duplicates. Now the preplaced pair itself is activated, as soon as both are visible.
+    private static bool _emeraldDone;
+
+    internal static void RunEmeraldPortals()
+    {
+      if (_emeraldDone)
+      {
+        return;
+      }
+
+      unit a = null;
+      unit b = null;
+      var g = CreateGroup();
+      GroupEnumUnitsInRect(g, GetWorldBounds(), null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitTypeId(u) == AiConfig.EmeraldPortalUnitType)
+        {
+          if (a == null)
+          {
+            a = u;
+          }
+          else
+          {
+            b = u;
+          }
+        }
+      }
+
+      DestroyGroup(g);
+      if (a == null || b == null)
+      {
+        return; // not both visible yet -- try again next wave tick
+      }
+
+      _emeraldDone = true;
+      WaygateSetDestination(a, GetUnitX(b), GetUnitY(b) - 300f);
+      WaygateSetDestination(b, GetUnitX(a), GetUnitY(a) - 300f);
+      WaygateActivate(a, true);
+      WaygateActivate(b, true);
+      SimpleBot.LogPin("Emerald Portals activated (Shrine of Malorne <-> Feralas)");
+    }
+
     // 0.37: the OLD GODS RIFT (replaces the Old Gods wave). When an Old Gods faction (AiConfig.OldGodsFactions) takes
     // Nordrassil, a real waygate pair opens between the Maw of Gor'ma and the Twilight Highlands (portal phase and
     // graph gate "oldgods"), usable by every player. The unused preplaced portal n07E in the Twilight Highlands is

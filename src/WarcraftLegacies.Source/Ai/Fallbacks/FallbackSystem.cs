@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
+using MacroTools.Factions;
+using MacroTools.Legends;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -10,6 +12,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     private static readonly Dictionary<int, unit> _building = new();      // pid -> trigger building
     private static readonly Dictionary<int, FallbackDef> _def = new();    // pid -> its fallback
+    private static readonly Dictionary<int, List<unit>> _hqUnits = new(); // pid -> its HQ units (found at creation)
     private static readonly HashSet<int> _hadHq = new();                  // pid held its HQ CP at least once
     private static readonly HashSet<int> _ready = new();                  // HQ lost -> fallback available
     private static readonly HashSet<int> _done = new();
@@ -31,6 +34,8 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void CreateBuildings()
     {
+      var teams = FactionManager.GetAllTeams();
+      var membersPlaced = new int[teams.Count + 1];
       for (var pid = 0; pid < 24; pid++)
       {
         var p = Player(pid);
@@ -54,8 +59,21 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        var x = FallbackConfig.GridX + FallbackConfig.GridStep * (pid % 12);
-        var y = pid < 12 ? FallbackConfig.Row1Y : FallbackConfig.Row2Y;
+        _hqUnits[pid] = FindHqUnits(def.Hq);
+        // 0.39.5: column = the player's team (scoreboard order), row = its place inside the team
+        var col = teams.Count;
+        for (var t = 0; t < teams.Count; t++)
+        {
+          if (p.GetPlayerData().Team == teams[t])
+          {
+            col = t;
+          }
+        }
+
+        var row = membersPlaced[col];
+        membersPlaced[col] = row + 1;
+        var x = FallbackConfig.CenterX + FallbackConfig.ColumnStep * (col - (teams.Count - 1) / 2f);
+        var y = FallbackConfig.FirstRowY + FallbackConfig.RowStep * row;
         var u = CreateUnit(p, FallbackConfig.TriggerBuildingType, x, y, 270f);
         BlzSetUnitName(u, "Fallback: " + def.Name);
         _building[pid] = u;
@@ -65,33 +83,80 @@ namespace WarcraftLegacies.Source.Ai
       SimpleBot.Log("fallbacks: " + I2S(_building.Count) + " trigger building(s) created");
     }
 
+    // 0.39.4: the HQ units (buildings / CPs) of the given types -- one whole-map scan, once at creation
+    private static List<unit> FindHqUnits(int[] types)
+    {
+      var found = new List<unit>();
+      if (types.Length == 0)
+      {
+        return found;
+      }
+
+      var g = CreateGroup();
+      GroupEnumUnitsInRect(g, GetWorldBounds(), null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        var t = GetUnitTypeId(u);
+        for (var i = 0; i < types.Length; i++)
+        {
+          if (types[i] == t)
+          {
+            found.Add(u);
+          }
+        }
+      }
+
+      DestroyGroup(g);
+      return found;
+    }
+
+    // 0.39.4: ALL HQ units lost (dead or owned by someone else) -> fallback available; any HQ held again -> unavailable
+    // again (it has to fall again). Bots run it at once; a human gets / loses the ability on the trigger building.
     private static void Check()
     {
       foreach (var kv in _def)
       {
         var pid = kv.Key;
         var def = kv.Value;
-        if (def.Mode != "spawn" || _done.Contains(pid) || _ready.Contains(pid))
-        {
-          continue;
-        }
-
-        var cp = SimpleBot.SafeCp(def.HqCpId);
-        if (cp == null || cp.Unit == null)
+        if (def.Mode != "spawn" || _done.Contains(pid) || !_hqUnits.ContainsKey(pid) || _hqUnits[pid].Count == 0)
         {
           continue;
         }
 
         var p = Player(pid);
-        if (GetOwningPlayer(cp.Unit) == p)
+        var held = 0;
+        var hqs = _hqUnits[pid];
+        for (var i = 0; i < hqs.Count; i++)
+        {
+          var u = hqs[i];
+          if (GetUnitTypeId(u) != 0 && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(u) == p)
+          {
+            held++;
+          }
+        }
+
+        if (held > 0)
         {
           _hadHq.Add(pid);
+          if (_ready.Contains(pid))
+          {
+            _ready.Remove(pid); // recaptured -> must fall again
+            if (_building.ContainsKey(pid))
+            {
+              UnitRemoveAbility(_building[pid], FallbackConfig.AbilityId);
+            }
+
+            DisplayTimedTextToPlayer(p, 0, 0, 15, "|cffffcc00Fallback no longer available:|r your HQ is held again.");
+          }
+
           continue;
         }
 
-        if (!_hadHq.Contains(pid))
+        if (!_hadHq.Contains(pid) || _ready.Contains(pid))
         {
-          continue; // never held it -> not "lost"
+          continue; // never held -> not "lost"; or already announced
         }
 
         _ready.Add(pid);
@@ -123,6 +188,127 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.39.5 (maintainer's design): everything Kul Tiras owns goes to Stormwind (if Stormwind still plays) or is removed
+    // -- except Katherine (moved to Kezan) and the trigger building. Kezan and the Neutral Hostile creeps around it
+    // become Kul Tiras'. Kul Tiras loses all its allies. Mercenary units from the 24p data come later (FALLBACKS.md).
+    private static void KulTirasFallback(player p, FallbackDef def)
+    {
+      player stormwind = null;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Stormwind" && f.Player != null && SimpleBot.IsActive(f.Player))
+        {
+          stormwind = f.Player;
+        }
+      }
+
+      unit katherine = null;
+      var legends = LegendaryHeroManager.GetAll();
+      for (var i = 0; i < legends.Count; i++)
+      {
+        if (legends[i].Name == "Katherine Proudmoore")
+        {
+          katherine = legends[i].Unit;
+        }
+      }
+
+      var pid = GetPlayerId(p);
+      var trigger = _building.ContainsKey(pid) ? _building[pid] : null;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (u == katherine || u == trigger)
+        {
+          continue;
+        }
+
+        if (stormwind != null)
+        {
+          SetUnitOwner(u, stormwind, true);
+        }
+        else
+        {
+          RemoveUnit(u);
+        }
+      }
+
+      DestroyGroup(g);
+      if (katherine != null && GetUnitState(katherine, UNIT_STATE_LIFE) > 0.405f)
+      {
+        SetUnitPosition(katherine, def.X, def.Y);
+      }
+
+      var kezan = SimpleBot.SafeCp(1848652890); // n04Z Kezan
+      if (kezan != null && kezan.Unit != null)
+      {
+        SimpleBot.GiveUnit(kezan.Unit, p);
+      }
+
+      var creeps = CreateGroup();
+      GroupEnumUnitsInRange(creeps, def.X, def.Y, 3000f, null);
+      while ((u = FirstOfGroup(creeps)) != null)
+      {
+        GroupRemoveUnit(creeps, u);
+        if (GetOwningPlayer(u) == Player(PLAYER_NEUTRAL_AGGRESSIVE) && !IsUnitType(u, UNIT_TYPE_STRUCTURE)
+            && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+        {
+          SetUnitOwner(u, p, true);
+        }
+      }
+
+      DestroyGroup(creeps);
+      for (var i = 0; i < 24; i++)
+      {
+        var q = Player(i);
+        if (i == pid)
+        {
+          continue;
+        }
+
+        SetPlayerAlliance(p, q, ALLIANCE_PASSIVE, false);
+        SetPlayerAlliance(q, p, ALLIANCE_PASSIVE, false);
+        SetPlayerAlliance(p, q, ALLIANCE_SHARED_VISION, false);
+        SetPlayerAlliance(q, p, ALLIANCE_SHARED_VISION, false);
+        SetPlayerAlliance(p, q, ALLIANCE_HELP_REQUEST, false);
+        SetPlayerAlliance(q, p, ALLIANCE_HELP_REQUEST, false);
+        SetPlayerAlliance(p, q, ALLIANCE_HELP_RESPONSE, false);
+        SetPlayerAlliance(q, p, ALLIANCE_HELP_RESPONSE, false);
+      }
+
+      // 0.39.6: the faction becomes "The Kezan Enterprise" -- renamed, goblin start buildings, its units allowed
+      var fac = p.GetPlayerData().Faction;
+      if (fac != null)
+      {
+        fac.Name = FallbackConfig.KezanName;
+      }
+
+      for (var i = 0; i < FallbackConfig.KezanUnits.Length; i++)
+      {
+        SetPlayerTechMaxAllowed(p, FallbackConfig.KezanUnits[i], 100);
+      }
+
+      SetPlayerTechMaxAllowed(p, FallbackConfig.GallywixType, 1);
+      var usedX = new List<float>();
+      var usedY = new List<float>();
+      var placed = 0;
+      for (var i = 0; i < FallbackConfig.KezanBuildings.Length; i++)
+      {
+        if (AiLegion.FindBuildSpot(def.X, def.Y, usedX, usedY))
+        {
+          CreateUnit(p, FallbackConfig.KezanBuildings[i], SimpleBot._spotX, SimpleBot._spotY, 270f);
+          usedX.Add(SimpleBot._spotX);
+          usedY.Add(SimpleBot._spotY);
+          placed++;
+        }
+      }
+
+      SimpleBot.LogPin("Kul Tiras fallback -> The Kezan Enterprise: old army to " + (stormwind != null ? "Stormwind" : "removed")
+                       + ", Kezan + creeps, " + I2S(placed) + " goblin buildings, no allies");
+    }
+
     private static void Execute(int pid)
     {
       if (!_def.ContainsKey(pid))
@@ -133,7 +319,15 @@ namespace WarcraftLegacies.Source.Ai
       var def = _def[pid];
       var p = Player(pid);
       _done.Add(pid);
-      CreateUnit(p, def.HeroType, def.X, def.Y, 270f);
+      if (def.Special == "kultiras")
+      {
+        KulTirasFallback(p, def);
+      }
+
+      if (def.HeroType != 0)
+      {
+        CreateUnit(p, def.HeroType, def.X, def.Y, 270f);
+      }
       if (_building.ContainsKey(pid))
       {
         UnitRemoveAbility(_building[pid], FallbackConfig.AbilityId);

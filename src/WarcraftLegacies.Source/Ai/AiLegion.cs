@@ -664,10 +664,6 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void CreatePortals(string phase)
     {
-      if (phase == "always")
-      {
-        RemovePreplacedOfType(AiConfig.EmeraldPortalType); // 0.39: the dead preplaced pair; the AI pair replaces it
-      }
 
       var list = AiGraph.Portals;
       var n = 0;

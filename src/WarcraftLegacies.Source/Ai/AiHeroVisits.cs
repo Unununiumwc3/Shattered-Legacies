@@ -70,6 +70,11 @@ namespace WarcraftLegacies.Source.Ai
               IssuePointOrder(hero, "move", hv.X, hv.Y); // 0.37: not when there -- an order breaks a channel
             }
 
+            if (hv.WithArmy)
+            {
+              Escort(p, hv.X, hv.Y); // 0.39.6
+            }
+
             continue;
           }
 
@@ -86,6 +91,16 @@ namespace WarcraftLegacies.Source.Ai
           if (hv.RequireCpId != 0 && !OwnsNode(p, hv.RequireCpId, hv.AllyCp))
           {
             continue;
+          }
+
+          if (hv.RequireGate != "" && !SimpleBot.GateOpen(hv.RequireGate))
+          {
+            continue; // 0.39.6: e.g. the Tomb of Sargeras is still closed
+          }
+
+          if (hv.WithArmy && !ArmyNear(p, hv.X, hv.Y))
+          {
+            continue; // 0.39.6: wait until the army is close
           }
 
           if (hv.LastObjective && OpenObjectives(q) > 1)
@@ -118,6 +133,36 @@ namespace WarcraftLegacies.Source.Ai
                            + " (lvl " + I2S(GetHeroLevel(best)) + ")");
         }
       }
+    }
+
+    private const float EscortRange = 3500f;
+
+    // 0.39.6: the bot's army anchor (biggest group) is within EscortRange of the target
+    private static bool ArmyNear(player p, float x, float y)
+    {
+      var d = SimpleBot.GetDiag(GetPlayerId(p));
+      var dx = d.AnchorX - x;
+      var dy = d.AnchorY - y;
+      return !d.AnchorIsBase && dx * dx + dy * dy <= EscortRange * EscortRange;
+    }
+
+    // 0.39.6: army units near the target attack-move there with the hero (not workers, buildings, mission heroes)
+    private static void Escort(player p, float x, float y)
+    {
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, x, y, EscortRange, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetOwningPlayer(u) == p && !IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON)
+            && !AiState.MissionUnits.Contains(u) && GetUnitCurrentOrder(u) == 0)
+        {
+          IssuePointOrder(u, "attack", x, y);
+        }
+      }
+
+      DestroyGroup(g);
     }
 
     private static void Release(string key, unit hero)

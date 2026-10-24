@@ -128,6 +128,9 @@ public static class AiConfig
     // 0.39: "Shores of Feathermoon" (unlocks Maiev) wants 3 different buildings BUILT in Feathermoon -- bots never
     // build. Done for a bot Sentinels holding Feathermoon (n05U); AiMissions.RunFeathermoon places the 3 buildings.
     new QuestRule("Sentinels", "Shores of Feathermoon", 0f) { CpHeldByAlly = 1848653141 },
+    // 0.39.5: Kul Tiras "Continental Outpost" (5 buildings BUILT in Stranglethorn/Westfall) -- done for a bot Kul Tiras
+    // once it or an ally (Stormwind) holds Western Stranglethorn; AiMissions.RunContinentalOutpost places the buildings.
+    new QuestRule("Kul'tiras", "Continental Outpost", 0f) { CpHeldByAlly = 1848652361 },
 
     // ---- v32 late-game payoffs ----
     // Thrall becomes the World-Shaman: Frostwolf hold 20 CPs after 30 min, Thrall (Othr) alive.
@@ -228,8 +231,8 @@ public static class AiConfig
   // 0.37: Old Gods rift (AiGates.OpenOldGodsRift, portal phase "oldgods", graph gate "oldgods")
   public static readonly List<string> OldGodsFactions = new() { "Ahn'qiraj", "Black Empire", "Skywall" };
   public const int NordrassilCpId = 1848652112;             // n01P -- an Old Gods faction taking it opens the rift
-  public const float RiftMawX = -28049f;                    // Maw of Gor'ma end (Black Empire realm, west edge)
-  public const float RiftMawY = -7701f;                     // 0.38: 530 south -- the old spot stood on a Silithid
+  public const float RiftMawX = -27768f;                    // 0.39.5: landing ring fully clear (Highlands -> Maw failed)                    // Maw of Gor'ma end (Black Empire realm, west edge)
+  public const float RiftMawY = -7864f;                     // 0.38: 530 south -- the old spot stood on a Silithid
                                                             // archway + obelisk (doodads block ground units)
   public const float RiftHighlandsX = 22545f;               // Twilight Highlands end = the preplaced n07E
   public const float RiftHighlandsY = -4784f;
@@ -250,6 +253,12 @@ public static class AiConfig
   public const float YoggPrisonY = 23424f;
   public const string YoggReleaseOrder = "selfdestruct";
   // 0.38.1: Terrordale goes to the Scourge when WL's "Plague of Undeath" rescues the Stratholme Scourge base around it
+  // 0.39.5: Kul Tiras' outpost buildings (Garrison x2, School of the Tides, Town Hall, Workshop) at Western Stranglethorn
+  public const int WesternStranglethornCpId = 1848652361;
+  public static readonly int[] ContinentalOutpostTypes = { 1747990098, 1747990098, 1747990353, 1747990066, 1747990352 };
+  public const int EmeraldPortalUnitType = 1848653638; // n07F
+  // 0.39.5: CPs handed to the Scourge when "Plague of Undeath" lands: Terrordale, Deathknell (new CP n1B2)
+  public static readonly int[] PlagueHandoverCps = { 1848661060, 1848721970 };
   public const int TerrordaleCpId = 1848661060;
   public const string PlagueQuestTitle = "Plague of Undeath";
   // 0.38.1: Old Gods rift, second trigger: the Maw of Gor'ma held by a non-Old-Gods faction and N'Zoth dead
@@ -334,6 +343,10 @@ public static class AiConfig
     // 0.39: Sentinels "Vault of the Wardens": Maiev ENTERS Regions.VaultoftheWardens -> WL's channel (not re-ordered
     // while there, see AtTarget)
     new HeroVisit("Vault of the Wardens", "Sentinels", 0, 0, -2272f, 4000f) { Hero = "Maiev Shadowsong" },
+    // 0.39.6: Fel Horde "Gul'dans Legacy": a level-12 hero to Gul'dan's corpse in the Tomb of Sargeras
+    // (Regions.GuldansCorpse) -- only once the Tomb is open, the Fel Horde holds Broken Shore (n1A6) and its army is
+    // near; the army escorts the hero (the Tomb's guards kill a lone hero).
+    new HeroVisit("Gul'dans Legacy", "Fel Horde", 12, 1848721718, -672f, 9936f) { WithArmy = true, RequireGate = "tomb" },
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile
@@ -398,6 +411,8 @@ public static class AiConfig
     { "Sunfury", new List<int> { UNIT_H098_SUNFURY_MASTERMIND_QUELTHALAS, UNIT_HKAL_PRINCE_OF_QUEL_THALAS_QUELTHALAS, UNIT_U004_THE_DECEIVER_LEGION, UNIT_U02V_HIGH_ASTROMANCER_SUNFURY } },
     { "The Exodar", new List<int> { UNIT_E01I_AGELESS_ONE_DRUIDS, UNIT_E01J_HIGH_SHAMAN_DRUIDS, UNIT_H09M_THE_NAARU_DRAENEI, UNIT_H09S_HAMMER_OF_THE_LIGHT_DRAENEI } },
     { "Warsong", new List<int> { UNIT_MD25_DARKSPEAR_CHAMPION_WARSONG, UNIT_NMAN_MANNOROTH_THE_DESTROYER_WARSONG_BLOODPACT, UNIT_O005_WARSONG_BATTLEMASTER_WARSONG, UNIT_O06L_WARLORD_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OGRH_CHIEFTAIN_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OPGH_CORRUPTOR_OF_THE_WARSONG_CLAN_WARSONG_BLOODPACT, UNIT_VSWS_HIGH_OVERLORD_OF_THE_KOR_KRON_WARSONG } },
+    // 0.39.6: Kul Tiras' fallback faction (FallbackSystem renames Kul'tiras to this) -- Gallywix first
+    { "The Kezan Enterprise", new List<int> { 1328559182 } }, // O04N Trade Prince of the Bilgewater Cartel
   };
 
   // 0.37: a hero type counts as "alive" while one of its LATER forms is alive (same legend, new unit type), so the
@@ -522,6 +537,8 @@ public sealed class HeroVisit
   public bool LastObjective;        // 0.36: wait until every other objective of the quest is complete
   public bool SameLandmass;         // 0.36: only while the hero is on the target's landmass
   public bool AllyCp;               // 0.39: RequireCpId may also be held by an ally
+  public bool WithArmy;             // 0.39.6: only with the army close by; the nearby army escorts the hero
+  public string RequireGate = "";   // 0.39.6: graph gate that must be open (e.g. "tomb")
 
   public HeroVisit(string quest, string faction, int minLevel, int requireCpId, float x, float y)
   {
@@ -742,6 +759,20 @@ public static class AiGraph
     // 0.39: 6 -> 15 -- the Scourge still marched into Argus at the start (0.38.1 test)
     new Edge(1848656454, 1848652370, 0f, "prelegion", 15f), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
     new Edge(1848656454, 1848652622, 0f, "legion", 6f),    // Antoran Wastes <-> Quel'Danas (demon portal, after the summon)
+    // 0.39.4: new CPs (maintainer's spots) -- connected to the two nearest nodes; check with -edges
+    new Edge(1848721717, 1848652097), // 0.39.4: Seradane (new CP n1A5) <-> Hinterlands
+    new Edge(1848721719, 1848652886), // 0.39.4: Dragonmaw Gates (new CP n1A7) <-> Northern Highlands
+    new Edge(1848721719, 1848652632), // 0.39.4: Dragonmaw Gates (new CP n1A7) <-> Grim Batol
+    new Edge(1848721721, 1848652886), // 0.39.4: Thundermar (new CP n1A9) <-> Northern Highlands
+    new Edge(1848721721, 1848653908), // 0.39.4: Thundermar (new CP n1A9) <-> Dragonmaw Port
+    new Edge(1848721968, 1848652366), // 0.39.4: Sporeggar (new CP n1B0) <-> Blade's Edge Mountains
+    new Edge(1848721968, 1835282481), // 0.39.4: Sporeggar (new CP n1B0) <-> West-Zangarmarsh
+    new Edge(1848721969, 1848652366), // 0.39.4: Sylvanaar (new CP n1B1) <-> Blade's Edge Mountains
+    new Edge(1848721969, 1848652367), // 0.39.4: Sylvanaar (new CP n1B1) <-> Netherstorm
+    new Edge(1848721720, 1848654150), // 0.39.5: Twilight Shore (new CP n1A8) <-> Southern Highlands
+    new Edge(1848721720, 1848652101), // 0.39.5: Twilight Shore (new CP n1A8) <-> Fuselight
+    new Edge(1848721970, 1848652102), // 0.39.5: Deathknell (new CP n1B2) <-> Tirisfal Glades
+    new Edge(1848721970, 1848652616), // 0.39.5: Deathknell (new CP n1B2) <-> Brill
   };
 
   // Placeholder edge sets for the other theatres. Fill these as the node system is extended; until then a
@@ -837,6 +868,19 @@ public static class AiGraph
     new Edge(1848653104, 1848656184), // Zuldazar <-> Nazmir
     new Edge(1848656184, 1848653123), // Nazmir <-> Gadgetzan (ship)
     new Edge(1848656184, 1848652890), // Nazmir <-> Kezan (ship -- v34.2)
+    // 0.39.4: new CPs (maintainer's spots) -- connected to the two nearest nodes; check with -edges
+    // 0.39.5 (maintainer): walls removed above; new links
+    new Edge(1848721715, 1851016791), // Ramkahen <-> Throne of the Four Winds
+    new Edge(1848721712, 1848721713, 0f, "", 0.5f), // Scarab Wall <-> Hive'Zora (cheap: Kalimdor must finish Ahn'Qiraj)
+    new Edge(1848721712, 1848651851), // 0.39.4: Scarab Wall (new CP n1A0) <-> Tunnels of Ahn'Qiraj
+    new Edge(1848721712, 1850495813), // 0.39.4: Scarab Wall (new CP n1A0) <-> Temple of Ahn'Qiraj
+    new Edge(1848721713, 1848652363), // 0.39.4: Hive'Zora (new CP n1A1) <-> Ruins of Ahn'Qiraj
+    new Edge(1848721714, 1848652363), // 0.39.4: Hive'Ashi (new CP n1A2) <-> Ruins of Ahn'Qiraj
+    new Edge(1848721715, 1848656452), // 0.39.4: Ramkahen (new CP n1A3) <-> Uldum
+    new Edge(1848721715, 1848656459), // 0.39.4: Ramkahen (new CP n1A3) <-> Lost City of the Tol'vir
+    new Edge(1848721716, 1848653127), // 0.39.4: Hive'Regal (new CP n1A4) <-> Isle of Dread
+    new Edge(1848721718, 1848653107), // 0.39.4: Broken Shore (new CP n1A6) <-> Val'sharah
+    new Edge(1848721718, 1848652594), // 0.39.4: Broken Shore (new CP n1A6) <-> Suramar
   };
 
   // v34: Argus nodes (Legion home). Listed in Combined, but never handed to the Scourge at the betrayal.
@@ -875,9 +919,6 @@ public static class AiGraph
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
     // replaced by the real one. Both ends walkable (tools/ai/map_query.py).
-    // 0.39: the Emerald Portals between the Shrine of Malorne and Feralas (WL's n07F pair is preplaced but dead)
-    new PortalLink(-8321f, 9256f, -17921f, -6168f, "n07F", "Emerald Portal to Feralas", "Emerald Portal to the Shrine of Malorne",
-      "always"),
     new PortalLink(AiConfig.RiftMawX, AiConfig.RiftMawY, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, "n07E",
       "Rift to the Twilight Highlands", "Rift to the Maw of Gor'ma", "oldgods"),
   };

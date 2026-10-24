@@ -17,7 +17,9 @@ public static class ControlPointSetup
     new(BUFF_B054_COMMAND_POINT_50_GOLD_PER_MINUTE, 50, true),
     new(BUFF_B06A_TRADING_POST_10_GOLD_PER_MINUTE, 10, false),
     // Bot AI fork (4.8.2-ai 0.38): 1-gold CPs (map data B0ZG/A0ZG) that only make bots attack areas they skipped
-    new(FourCC("B0ZG"), 1, true)
+    new(FourCC("B0ZG"), 1, true),
+    // Bot AI fork (0.39.5): 100-gold CPs (Ny'alotha, Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown Citadel) -- evil buff
+    new(FourCC("B1HG"), 100, true)
   };
 
   public static void Setup()

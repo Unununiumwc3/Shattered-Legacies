@@ -3,6 +3,50 @@
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
 `4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
 
+## 0.39.6
+- **Kul Tiras fallback -> "The Kezan Enterprise"**: the faction is renamed, Katherine stays, the maintainer's new
+  announcement. Start buildings at Kezan from unused main-map goblin data: goblin hall `o03L` (Tinker), Altar of
+  Industry `o03O` (Gallywix, Tinker hero, Marin), Tank Factory `o05T` (Grenadier, Personal Tank, War Zeppelin), Kezan Oil
+  Supply x2; kept from Kul Tiras: Garrison (Marines), Workshop (Cannons). Their units are allowed per player
+  (`SetPlayerTechMaxAllowed`); `gen_ai_data.py` adds these buildings to the bots' train tables; Gallywix heads the
+  Enterprise's hero list.
+- **Hero visit "Gul'dans Legacy"** (Fel Horde, Gul'dan's corpse in the Tomb of Sargeras): level-12 hero, only when the
+  Tomb is open (gate "tomb"), the Fel Horde holds Broken Shore and its army is within 3500; idle army units near the
+  target escort the hero. New per-visit options `WithArmy`, `RequireGate`.
+- Version 4.8.2-ai.0.39.6.
+
+## 0.39.5
+- **Fallback buildings in a symmetric layout**: one column per team (scoreboard order), one row per member.
+- **Kul Tiras fallback** (maintainer's design): Katherine is moved to Kezan; everything else Kul Tiras owns goes to
+  Stormwind (if it still plays) or is removed; Kezan and the Neutral Hostile creeps within 3000 become Kul Tiras';
+  Kul Tiras loses all allies; announcement "Boralus lies in ruin ...". No placeholder hero.
+- **Graph**: removed the "wall" edges Seradane-Corin's Crossing, Hive'Regal-Silithus, Hive'Zora-Uldum,
+  Uldum-Hive'Ashi; added Ramkahen-Throne of the Four Winds and Scarab Wall-Hive'Zora (weight 0.5).
+- **New CPs**: Twilight Shore (Twilight Highlands, the corrected spot) and **Deathknell** (Tirisfal) -- Deathknell
+  goes to the Scourge when "Plague of Undeath" lands, like Terrordale.
+- **100-gold CPs** (evil buff, new marker `A1HG`/`B1HG` + one line in WL's `ControlPointSetup`): Ny'alotha (the Waking
+  City), The Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown Citadel.
+- **Kul Tiras "Continental Outpost"**: a bot Kul Tiras gets the 5 required buildings at Western Stranglethorn once it
+  or an ally (Stormwind) holds the CP; the quest is completed (WL counts only BUILT buildings).
+- **Bugs**: Emerald Portals duplicated -- the preplaced pair was hidden when the AI pair replaced it; now the
+  preplaced pair itself is activated once both are visible. Rift Highlands -> Maw did not work: the Maw end moves to
+  (-27768,-7864), where the whole landing ring is free of doodads.
+- Version 4.8.2-ai.0.39.5.
+
+## 0.39.4
+- **11 new CPs** (10 gold, maintainer's spots, map data `n1A0`-`n1B1`), each connected to its two nearest graph nodes
+  (check with `-edges`): Scarab Wall, Hive'Zora, Hive'Ashi, Ramkahen, Hive'Regal (the way to Ahn'Qiraj), Seradane
+  (Hinterlands), Broken Shore (Broken Isles), Dragonmaw Gates, Thundermar (Twilight Highlands), Sporeggar, Sylvanaar
+  (Outland). (-16640,16829) was taken as (-16640,-16829) (the first is sea). (19065,-8289) left out: no walkable
+  ground within 600.
+- **Sulfuron Spire CP moved** to (-11160,4520), next to the Spire (the given -1169,4552 is on the Broken Isles).
+- **Fallbacks for all factions**: a trigger building for every faction in the corner. Good factions get a
+  placeholder fallback (Marin Noggenfogger at the planned place: Netherstorm, Darkshore, Borean Tundra, Storm Peaks,
+  Kezan, Duskwood, Warden's Cage, Shattrath, Wetlands). Evil factions: building only. HQs = WL's essential legends;
+  where there are several, ALL must be lost, and a recaptured HQ makes the fallback unavailable again. Ironforge's
+  HQ is now the Great Forge (was the Ironforge CP).
+- Version 4.8.2-ai.0.39.4.
+
 ## 0.39.3
 - **Build fix** (0.39.2 did not compile): `IsActive(...)` was called without `SimpleBot.` from another class
   (`QuestAutoComplete`). `check_refs.py` now reports unqualified calls to methods of other classes (UNQUALIFIED) --

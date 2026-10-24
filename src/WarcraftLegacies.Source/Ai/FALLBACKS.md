@@ -320,6 +320,33 @@ Risks and how to keep them small:
 - Dalaran and Lordaeron: listed as WL-driven (no ability). Ironforge: **placeholder** -- Ironforge CP lost (after
   having held it) -> Marin Noggenfogger (`VH01`) in the Storm Peaks + announcement.
 - 0.39.2: bots take over leaving humans (so every fallback keeps an owner).
+- 0.39.4: **every faction has a trigger building**; every good faction has a **placeholder** fallback (Marin
+  Noggenfogger at the planned place); evil factions: building only. HQs chosen by the AI from WL's essential legends
+  (table above): where several are listed, ALL must be lost; holding one again makes the fallback unavailable again.
+  Ironforge's HQ is the Great Forge. Illidan has no essential legend -> no HQ yet.
+- 0.39.5: symmetric trigger-building layout (team columns); **Kul Tiras fallback** implemented as designed by the
+  maintainer (Katherine to Kezan, old army to Stormwind or removed, Kezan + local creeps, no allies, own text).
+- 0.39.6: **Kul Tiras -> The Kezan Enterprise** (pirates + goblins). Data mined from both maps:
+
+  | Kind | Name | Code | Source | Used |
+  |---|---|---|---|---|
+  | hero | Katherine Proudmoore (Lady of House Proudmoore) | `H05L` | main (Kul Tiras) | kept |
+  | hero | Trade Prince of the Bilgewater Cartel (Gallywix) | `O04N` | main, no faction; Altar of Industry | yes |
+  | hero | Tinker / Marin Noggenfogger | `Ntin` / `VH01` | main; Altar of Industry | trainable |
+  | building | goblin hall (trains Tinker, Builder) | `o03L` | main, no faction | start |
+  | building | Altar of Industry | `o03O` | main, no faction | start |
+  | building | Tank Factory (Grenadier, Personal Tank, War Zeppelin) | `o05T` | main, no faction | start |
+  | building | Kezan Oil Supply (farm) | `h04Z` | main, no faction | start x2 |
+  | building | Garrison (Marines), Workshop (Cannons) | `h06R`, `h07P` | main (Kul Tiras) | start (human share) |
+  | building | Bilgewater Harbor (ships, oil rig) | `o03V` | main, preplaced on Kezan | via Kezan |
+  | unit | Sappers, Trade Prince Guard, Ogre Mercenary | `h08X`, `h090`, `n099` | main, no trainer | later (needs a building) |
+  | building / unit | Mercenary Den, Kezan Trading Center, Goblin Boulder Tower, Trading Zeppelin | `o03P`, `o04M`, `n0AJ`, `nzep` | main / 24p | later |
+  | unit / hero | Defias Assassin, Defias Kingpin, Corsair | `h0AI`, `E01H`, `udes` | 24p | later (pirate flavour) |
+
+  Open [you]: buildings / tooltips in the editor; whether the Mercenary Den should train Sappers / Ogre Mercenaries /
+  Defias (pirates); Bilgewater Harbor ships.
+- TODO (not now): **fallbacks as quests** -- one quest per fallback in the quest log; its minimap marker only appears
+  when the fallback is ready. TODO: Kul Tiras mercenary units from the 24p data (pirate / goblin units).
 - Missing: team change, hidden start bases (rescue rectangles), unit packages, the real factions, "Enslaved".
 - **Must-have (found in the 520-min test)**: WL's defeat makes the player an **observer** (`Faction.Defeat()` ->
   `SetState(Observer)`) -- the player loses everything and could never use a fallback. The fallback must run BEFORE
