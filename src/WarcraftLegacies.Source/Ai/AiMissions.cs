@@ -921,12 +921,66 @@ namespace WarcraftLegacies.Source.Ai
 
       _terrordaleDone = true;
       AiLegion.MoveLegionArmyToAlterac(); // 0.39: the bot Legion supports the invasion
-      var cp = SimpleBot.SafeCp(AiConfig.TerrordaleCpId);
-      if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) != scourge)
+      for (var i = 0; i < AiConfig.PlagueHandoverCps.Length; i++) // 0.39.5: Terrordale + Deathknell
       {
-        SimpleBot.GiveUnit(cp.Unit, scourge);
-        SimpleBot.LogPin("Terrordale handed to the Scourge (Plague of Undeath rescued the Stratholme base)");
+        var cp = SimpleBot.SafeCp(AiConfig.PlagueHandoverCps[i]);
+        if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) != scourge)
+        {
+          SimpleBot.GiveUnit(cp.Unit, scourge);
+          SimpleBot.LogPin(GetUnitName(cp.Unit) + " handed to the Scourge (Plague of Undeath)");
+        }
       }
+    }
+
+    // 0.39.5: Kul Tiras' "Continental Outpost". Once Western Stranglethorn is held by a bot Kul Tiras or an ally of it
+    // (Stormwind), the 5 required buildings are placed around the CP for Kul Tiras (the QuestRule completes the quest --
+    // WL counts only buildings that were BUILT).
+    private static bool _outpostDone;
+
+    internal static void RunContinentalOutpost()
+    {
+      if (_outpostDone)
+      {
+        return;
+      }
+
+      var cp = SimpleBot.SafeCp(AiConfig.WesternStranglethornCpId);
+      player kt = null;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        if (f.Name == "Kul'tiras")
+        {
+          kt = f.Player;
+        }
+      }
+
+      if (cp == null || cp.Unit == null || kt == null || !SimpleBot.IsBot(kt) || !SimpleBot.HasPerks(kt))
+      {
+        return;
+      }
+
+      var o = GetOwningPlayer(cp.Unit);
+      if (o != kt && (GetPlayerId(o) >= 24 || !IsPlayerAlly(o, kt)))
+      {
+        return;
+      }
+
+      _outpostDone = true;
+      var usedX = new List<float>();
+      var usedY = new List<float>();
+      var placed = 0;
+      for (var i = 0; i < AiConfig.ContinentalOutpostTypes.Length; i++)
+      {
+        if (AiLegion.FindBuildSpot(GetUnitX(cp.Unit), GetUnitY(cp.Unit), usedX, usedY))
+        {
+          CreateUnit(kt, AiConfig.ContinentalOutpostTypes[i], SimpleBot._spotX, SimpleBot._spotY, 270f);
+          usedX.Add(SimpleBot._spotX);
+          usedY.Add(SimpleBot._spotY);
+          placed++;
+        }
+      }
+
+      SimpleBot.LogPin("Continental Outpost: " + I2S(placed) + " Kul Tiras buildings placed at Western Stranglethorn");
     }
 
     // 0.39: Feathermoon. A bot Sentinels holding the Feathermoon CP gets 3 different buildings there (the quest

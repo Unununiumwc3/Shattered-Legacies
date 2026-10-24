@@ -2274,6 +2274,8 @@ namespace WarcraftLegacies.Source.Ai
       Safe("sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37: Old Gods barracks at Sulfuron Spire
       Safe("yogg release", AiMissions.RunYogg);                   // 0.38.1: bot casts "Free Yogg-Saron"
       Safe("feathermoon", AiMissions.RunFeathermoon);             // 0.39: Sentinels' buildings at Feathermoon
+      Safe("continental outpost", AiMissions.RunContinentalOutpost); // 0.39.5: Kul Tiras' Stranglethorn buildings
+      Safe("emerald portals", AiGates.RunEmeraldPortals);         // 0.39.5: activate WL's preplaced pair
       Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
       Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
       Safe("cp grants", AiMissions.RunCpGrants);                     // v31
@@ -2706,7 +2708,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.39.3";
+    public const string Build = "0.39.6";
 
     public static void Setup()
     {

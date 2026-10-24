@@ -1,8 +1,8 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.3** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.39.3"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.6** (map "Warcraft Legacies
+Botified 4.8.2-ai.0.39.6"). Next: **0.39.0** = refactor phase 1 + 2 (below).
 
 ## Freeze check (still open -- now also WITHOUT alt-tabbing)
 
@@ -104,6 +104,17 @@ neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury
   Spinebark Grove -> Silithus -> Ruins of Ahn'Qiraj -> Tunnels of Ahn'Qiraj -> Temple of Ahn'Qiraj; Silithus ->
   Tunnels alone is ~8 km. More regular CPs in between (map data) would help -- and also give the Old Gods more income.
   [ai] can propose spots from the pathing data.
+- [ai/you] **Legion still on the Sunwell side** (0.39.3 test): it WAS summoned (17:39, graphs merged), but the 0.39
+  plague support had already teleported its army to Alterac -- from there the Eastern Kingdoms targets are simply
+  nearest. The Argus weights only matter for frontiers reached over those edges; they cannot move an army that is
+  already in the east. Proposal: at the summon, a bot Legion's army is moved through to Felwood (like the plague
+  support), or the plague support stops once the Legion is summoned. Decide.
+- [you] **Book of Medivh redesign** (not now): picking it up after the summon is boring. Idea: the Book gets its own
+  spell; if the Scourge or the Legion gets it, it can trigger the summon ON THAT SPOT -- tempts good players to take
+  it early. The hero would need to be indestructible while channelling (bots cannot defend a channel) -- risk: bad
+  portal placement.
+- [ai] **Argus not taken by the winners**: after 520 min Fel Horde / Illidan had not captured the Argus CPs. Probably
+  the pre-summon edge weight (15) keeps Argus last in their list, and before 0.39.3 the graphs never merged. Re-check.
 - [you] **Argus with mixed owners**: without a Legion summon the pre-summon portal (Crystalsong <-> Argus) stays open
   for everyone -- Lordaeron took Argus CPs. Keep it, or only for the Legion's team (needs a per-team portal)?
 - [ai] **Eye of Sargeras**: nobody picked it up in 520 min (WL has `EyeOfSargerasPickup`). Find where it lies and
@@ -112,6 +123,12 @@ neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury
   reach by portal. Idea: flyers follow the army anchor instead of the target.
 - [ai] **Orders/min in long games**: the heartbeat at 538 min showed ~3700 orders/min with `-orders idle` (all units
   idle at their targets get re-ordered every heartbeat). Compare with `-orders all` before deciding lever 2.
+- [you] **South Alliance vs Naga / Fel Horde**: the South Alliance needs a buff (or Illidan / Fel Horde a debuff).
+- [you/ai] **CP towers vs bots**: fully upgraded CP towers (strong split-arrow attack) were made against human hit-and-
+  run CP stealing; bots handle them badly -> the map felt empty after the start, and winners grew weak later. Ideas:
+  weaker towers on bot-owned CPs, or bots avoiding / focusing towers. Also check against the refactor (lever 1).
+- Gul'dan's corpse (-673,9918): done in 0.39.6 as the Fel Horde hero visit "Gul'dans Legacy" with army escort --
+  check that the army really goes along (pins "hero visit 'Gul'dans Legacy'").
 - [ai] (low) **Chinese language**: the latest regular WL build seems to have Chinese localization -- check upstream
   and port it (WL's `Loc` system).
 - Note: WL has no `-spectate` command; the AI takes over a slot only when its human LEAVES (WL's leave event).

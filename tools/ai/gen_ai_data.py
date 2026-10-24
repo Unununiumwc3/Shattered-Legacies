@@ -65,6 +65,18 @@ def main():
             if heroes:
                 altars.setdefault(b, [])
                 altars[b] += [h for h in heroes if h not in altars[b]]
+    # 0.39.6: fallback factions' buildings that belong to no WL faction yet (The Kezan Enterprise): take their full
+    # train lists (no builders), heroes into AltarHeroes
+    for b in ["o03L", "o05T", "o03O"]:
+        for u in (us.trains(b) or []):
+            base = us.udata(u).get("_base") or u
+            if base in ("opeo", "hpea", "upeo", "ewsp"):
+                continue
+            target = altars if (us.is_hero(u) or us.is_hero(base)) else trains
+            target.setdefault(b, [])
+            if u not in target[b]:
+                target[b].append(u)
+            owned_units.add(u)
     for c in sorted(owned_units):
         r = us.udata(c).get("ureq")
         if isinstance(r, str) and r.strip():
