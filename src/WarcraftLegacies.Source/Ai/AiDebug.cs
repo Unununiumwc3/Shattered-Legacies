@@ -15,7 +15,7 @@ namespace WarcraftLegacies.Source.Ai;
 //    all. The op counters in AiSystem stay (they're near-free and always on); only the display is gated.
 //  * Per-player, default OFF -> zero screen spam until someone opts in. Toggles are independent:
 //      -debug1  per-bot state     (army / landmass / candidates / has-target)
-//      -debug2  load profiler      (combat ops per tick + peak, orders, production peak)
+//      -debug2  load profiler      (combat ops per tick + peak, orders, production peak; 0.40: scheduler line)
 //      -debug3  targeting decision (what each bot is doing: atk/def/gather/hold)
 //      -xy      selected unit's X/Y + landmass id (one-shot)
 //      -fac     each bot's faction + buildable category counts (one-shot)
@@ -89,6 +89,7 @@ public static class AiDebug
     RegisterLoose("-tp", OnTp, Level.Heavy);      // 0.36: single-human games only (selection is not synced)
     RegisterLoose("-icontest", OnIconTest, Level.Heavy); // 0.39: "-icontest N" = one variant on your unit
     RegisterLoose("-orders", OnOrders, Level.Control);   // 0.39: -orders idle|all (refactor lever 1)
+    RegisterLoose("-budget", AiScheduler.OnBudgetCommand, Level.Control); // 0.40: -budget on|off (load budget)
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -398,7 +399,8 @@ public static class AiDebug
            + " orders=" + I2S(SimpleBot.LastOpOrders)
            + " def=" + I2S(SimpleBot.LastDefOps) + "/" + I2S(SimpleBot.MaxDefOps)
            + "  |  prod peak=" + I2S(SimpleBot.MaxProdOps)
-           + "  |  wave tick=" + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps);
+           + "  |  wave cycle=" + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
+           + "\n" + AiScheduler.ShortLine(); // 0.40
   }
 
   private static string EconLine()
@@ -890,6 +892,7 @@ public static class AiDebug
             + " | production peak " + I2S(SimpleBot.MaxProdOps)
             + " | wave-tick " + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
             + " | last gate sweep " + I2S(AiGates.LastSweepOps));
+      AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
 
     o.Add("## BOTS");
