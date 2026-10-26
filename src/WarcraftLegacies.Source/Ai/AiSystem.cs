@@ -1255,6 +1255,7 @@ namespace WarcraftLegacies.Source.Ai
       var lmCount = new int[LmSlots];
       var lmX = new float[LmSlots];
       var lmY = new float[LmSlots];
+      AiArmy.Units.Clear(); // 0.41: the orderable army, collected in this one pass (no second pass for orders)
 
       var g = CreateGroup();
       GroupEnumUnitsOfPlayer(g, p, null);
@@ -1288,6 +1289,12 @@ namespace WarcraftLegacies.Source.Ai
           lmCount[slot]++;
           lmX[slot] += ux;
           lmY[slot] += uy;
+          if (u != _ragHero && !AiState.MissionUnits.Contains(u) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+              && GetUnitMoveSpeed(u) > 1f)
+          {
+            AiArmy.Units.Add(u); // 0.41: alive, can move, not on a mission
+          }
+
           if (IsUnitType(u, UNIT_TYPE_HERO))
           {
             HeroGrabItems(u); // v24: only heroes, only on this bot's turn -> effectively free
@@ -1380,7 +1387,7 @@ namespace WarcraftLegacies.Source.Ai
           state = "def";
           NoteTarget(p, pid, defend, "defend(" + I2S(_defWorst) + " enemy units, " + I2S(_defCreeps) + " neutrals ignored)");
           TrackStuck(p, pid, null);
-          IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend));
+          IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend), true);
         }
         else
         {
@@ -1398,7 +1405,7 @@ namespace WarcraftLegacies.Source.Ai
             BotTargetName[pid] = "K:" + GetUnitName(kill);
             NoteTarget(p, pid, kill, "kill-target");
             TrackStuck(p, pid, null);
-            IssueAttackToPoint(p, pid, GetUnitX(kill), GetUnitY(kill));
+            IssueAttackToPoint(p, pid, GetUnitX(kill), GetUnitY(kill), true);
             handled = true;
           }
 
@@ -1417,7 +1424,7 @@ namespace WarcraftLegacies.Source.Ai
               BotTargetName[pid] = (enemyCp ? "E:" : "N:") + GetUnitName(gnode);
               NoteTarget(p, pid, gnode, enemyCp ? "graph-enemy" : "graph-neutral");
               TrackStuck(p, pid, gnode);
-              IssueAttackToPoint(p, pid, GetUnitX(gnode), GetUnitY(gnode));
+              IssueAttackToPoint(p, pid, GetUnitX(gnode), GetUnitY(gnode), false);
               handled = true;
             }
           }
@@ -1437,7 +1444,7 @@ namespace WarcraftLegacies.Source.Ai
                 Committed[pid] = null;
                 state = "atk";
                 NoteTarget(p, pid, null, "doctrine-step-" + I2S(i));
-                IssueAttackToPoint(p, pid, st.X, st.Y);
+                IssueAttackToPoint(p, pid, st.X, st.Y, false);
                 handled = true;
                 break;
               }
@@ -1460,13 +1467,20 @@ namespace WarcraftLegacies.Source.Ai
               BotTargetName[pid] = "F:" + GetUnitName(tgt);
               NoteTarget(p, pid, tgt, "fallback-nearest");
               TrackStuck(p, pid, tgt);
-              IssueAttackToPoint(p, pid, GetUnitX(tgt), GetUnitY(tgt));
+              IssueAttackToPoint(p, pid, GetUnitX(tgt), GetUnitY(tgt), false);
             }
             else
             {
               state = "hold";
               NoteTarget(p, pid, null, "hold-nothing-reachable");
-              Gather(p, ax, ay); // nothing reachable -> hold at home
+              if (AiArmy.Smart)
+              {
+                IssueAttackToPoint(p, pid, ax, ay, true); // 0.41: hold throttled like any target (was: every service)
+              }
+              else
+              {
+                Gather(p, ax, ay); // nothing reachable -> hold at home
+              }
             }
           }
         }
@@ -1728,7 +1742,8 @@ namespace WarcraftLegacies.Source.Ai
 
     // Re-issue attack-move only when the destination moved a lot or the heartbeat elapsed -- avoids the
     // stop-and-go stutter from constant re-issuing. Works for a unit target (pass its x/y) or a waypoint.
-    private static void IssueAttackToPoint(player p, int pid, float x, float y)
+    // 0.41: whole = defence / kill target / hold (every unit); otherwise AiArmy sends an attack group (smart mode).
+    private static void IssueAttackToPoint(player p, int pid, float x, float y, bool whole)
     {
       var moved = !LastPtX.ContainsKey(pid)
         || (x - LastPtX[pid]) * (x - LastPtX[pid]) + (y - LastPtY[pid]) * (y - LastPtY[pid]) > 300f * 300f;
@@ -1738,7 +1753,15 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      AttackMove(p, x, y, !moved && OrdersIdleOnly); // 0.39: same target -> only idle units
+      if (AiArmy.Smart)
+      {
+        AiArmy.Attack(p, pid, x, y, moved, whole); // 0.41: attack group, rest at the staging CP, idle-and-away
+      }
+      else
+      {
+        AttackMove(p, x, y, !moved && OrdersIdleOnly); // 0.39: same target -> only idle units
+      }
+
       LastPtX[pid] = x;
       LastPtY[pid] = y;
       LastIssueTime[pid] = _clock;
@@ -2603,17 +2626,13 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
+    // 0.41: -orders idle|all (the old modes, for A/B tests). Uses the army collected by Process (no second pass).
     private static void AttackMove(player p, float tx, float ty, bool idleOnly)
     {
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
+      for (var i = 0; i < AiArmy.Units.Count; i++)
       {
-        GroupRemoveUnit(g, u);
-        OpUnits++;
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u)
-            && (!idleOnly || GetUnitCurrentOrder(u) == 0))
+        var u = AiArmy.Units[i];
+        if (!idleOnly || GetUnitCurrentOrder(u) == 0)
         {
           OpOrders++;
           OrdersIssued++;
@@ -2621,30 +2640,22 @@ namespace WarcraftLegacies.Source.Ai
           IssuePointOrder(u, "attack", tx, ty);
         }
       }
-
-      DestroyGroup(g);
     }
 
     private static void Gather(player p, float ax, float ay)
     {
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
+      for (var i = 0; i < AiArmy.Units.Count; i++)
       {
-        GroupRemoveUnit(g, u);
-        OpUnits++;
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && !IsUnitType(u, UNIT_TYPE_PEON) && u != _ragHero && !AiState.MissionUnits.Contains(u))
-        {
-          OpOrders++;
-          OrdersIssued++;
-          AiScheduler.CountOrder(u, ax, ay); // 0.40
-          IssuePointOrder(u, "attack", ax, ay); // v12: fight to the rally point, not walk blindly
-        }
+        var u = AiArmy.Units[i];
+        OpOrders++;
+        OrdersIssued++;
+        AiScheduler.CountOrder(u, ax, ay); // 0.40
+        IssuePointOrder(u, "attack", ax, ay); // v12: fight to the rally point, not walk blindly
       }
-
-      DestroyGroup(g);
     }
+
+    // 0.41: "smart" (AiArmy), "idle" or "all" (the old modes) -- shown in -dump UNITS and the heartbeat
+    internal static string OrdersMode() => AiArmy.Smart ? "smart" : (OrdersIdleOnly ? "idle" : "all");
   }
 
   // v28: per-bot diagnostics, written by SimpleBot.Process, read by AiDebug. Display only.
@@ -2725,7 +2736,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.40.0";
+    public const string Build = "0.41.0";
 
     public static void Setup()
     {

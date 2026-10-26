@@ -64,7 +64,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
-| `-orders idle\|all` | control | Army heartbeat orders: only idle units (default) or all units (old behaviour) |
+| `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |

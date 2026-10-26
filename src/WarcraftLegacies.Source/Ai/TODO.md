@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.40.0**. Next: **0.41** = refactor phase 2 (army orders, below).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.41.0**. Next: **0.42** = refactor phase 3 (route planner, below).
 
 ## Where we are
 
@@ -25,8 +25,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
 10/20/30/45 min). Compare with the phase before.
 
 0. **0.39.10 -- step 0** (done): fork code out of `Ai/`, `AiApi`, markers, `WORKAROUNDS.md`.
-1. **0.40 -- scheduler + load budget** (done; play one game with `-autodump` = the baseline for 0.41, calibrate the
-   budget from "max-slot" in LOAD). One 0.25-s timer; every periodic task has a period and a fixed phase
+1. **0.40 -- scheduler + load budget** (done; not measured yet -- the A/B test of 0.41 covers it: `-orders idle`
+   in 0.41 = 0.40's army behaviour. Calibrate the budget from "max-slot" in LOAD). One 0.25-s timer; every periodic task has a period and a fixed phase
    (static, deterministic staggering): combat every 0.5 s and production every 1 s as today, the 15-s wave tick split
    into its subtasks spread over the cycle in today's order, plus revive, quest checks, Legion event check, debug
    output. One-shot delays stay as they are. Counters (deterministic only, never wall-clock time = desync): per task
@@ -35,7 +35,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
    `-budget on` tests enforcement. Shown in `-debug2` and the dump's LOAD section. No behaviour change beyond the
    phase within a 15-s cycle. Note: this measures and smooths; it is not expected to cure a freeze by itself (the
    0.38.1 freeze had flat script load).
-2. [ai] **0.41 -- army orders.** Fix lever 1's hole: "idle" (order 0) is also true for units standing at the target,
+2. **0.41 -- army orders** (done, see CHANGELOG; tune after the A/B test: floor 50 food, factor 1.5, structures x 8,
+   radii 600 / 1500). Original plan: Fix lever 1's hole: "idle" (order 0) is also true for units standing at the target,
    so they are re-ordered every 20-s heartbeat (~3700 orders/min at 538 min). New rule: re-order only idle units far
    from their assigned point, never units that cannot move (move speed <= 1), one shared unit pass with `Process`
    (`AttackMove` enumerates everything a second time). **Attack group**: size from the target (towers and enemies
@@ -118,9 +119,15 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
 - [ai] (low) Bot heroes die early (train a hero, attack creeps without an army). Probably fixed by 0.41.
 - Note: WL has no `-spectate`; the AI takes over a slot only when its human LEAVES.
 
-## Check in the next playtest (0.40)
+## Check in the next playtest (0.41: A/B test)
 
 - `-version` shows the new build; no `SYSTEM ERROR`, no `TICK ERROR` in PINNED.
+- **A/B test, same settings both games** (strength vote Veteran = normal gold, same factions, 20-25 min,
+  `-autodump` at the start, empty CustomMapData before each game): game A `-orders idle` right at the start (= 0.40),
+  game B default (smart). Summarize each with `dump_summary.py --append "A idle ..."` / `"B smart ..."`. Compare
+  orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
+  Do groups die at upgraded towers? Do units pile up at the staging CPs?
+- 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
 - 0.40: bots behave as in 0.39.9 (attack, produce, gates disappear, quests, portals). `-debug2` shows a second line
   (slot max, over, far orders, idle@target, top tasks); `-dump` LOAD has the scheduler, orders and task lines.
   `-budget on` for a few minutes: "deferred" grows, nothing breaks. Then `dump_summary.py` into MEASUREMENTS.md.
