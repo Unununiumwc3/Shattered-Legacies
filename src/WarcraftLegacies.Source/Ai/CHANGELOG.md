@@ -4,6 +4,32 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.41.0
+Refactor phase 2: army orders (`AiArmy.cs`). New default `-orders smart`; the old modes stay for A/B tests
+(`-orders idle` = 0.39-0.40, `-orders all` = before 0.39).
+- **Attack group**: the units nearest to the target until their food covers the need -- enemy food within 1200 of
+  the target x 1.5 + enemy structures there x 8 (towers, the CP's defenders), at least 50 food. Enemy = an enemy
+  player's unit or Neutral Hostile (creeps guarding neutral CPs). If the need is 80 % of the army or more, the whole
+  army goes. A group that lost half its food is refilled with the nearest other units.
+- **The rest waits at the staging point**: the bot's own CP nearest to the target (on the target's landmass). No
+  owned CP there -> the rest stays where it is. Defence, kill targets and "hold" still use the whole army.
+- **Orders only when needed** (fixes lever 1's hole): on a target change the group and the rest that is away from
+  the staging point; on the 20-s heartbeat only IDLE units AWAY from their point (group 600 from the target, rest
+  1500 from the staging point). Before, idle units standing at the target were re-ordered every heartbeat
+  (~3700 orders/min in a 538-min game).
+- **"Hold" is throttled** like any target. Before, a holding bot re-ordered every unit on every service (~every
+  7 s with 15 bots) -- a second, unlisted order source.
+- Units that cannot move (move speed <= 1, the Old Gods' god heroes), dead units, Ragnaros' hero and units on a
+  hero visit get no army orders (also in the old modes).
+- **One unit pass per service**: the order code uses the army that `Process` already collected (before, it
+  enumerated every unit of the bot a second time). The combat "units touched" numbers drop accordingly.
+- Readouts: `-debug2` third line and dump LOAD: orders by reason (change / idle-away / rest / refill) and per bot
+  "group food / need of army @staging CP".
+- `dump_summary.py` keeps one game only (the build most dumps share, the order counter never going back) and says
+  which dumps it skipped; the 0.39.10 measurement had an old 0.39.9 dump mixed in. File times that cannot be right
+  show "-".
+- Version v0.41.0.
+
 ## 0.40.0
 Refactor phase 1: scheduler + load budget. Same tasks, same periods, same order -- no gameplay change.
 - **One scheduler** (`AiScheduler.cs`) instead of seven periodic timers: a 0.25-s slot timer; every task has a period

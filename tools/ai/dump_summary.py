@@ -101,14 +101,31 @@ def team_short(line):
     return f"{name.strip()} {cps}"
 
 
+def one_game(dumps):
+    """0.41: keep only ONE game -- the build most dumps share, then a monotonic order counter (it never goes back
+    within a game). Old dumps left in CustomMapData repeat their names and were mixed in once (0.39.10 test)."""
+    counts = {}
+    for d in dumps:
+        counts[d["build"]] = counts.get(d["build"], 0) + 1
+    build = max(sorted(counts), key=lambda b: counts[b])
+    keep, skipped = [], [d for d in dumps if d["build"] != build]
+    for d in sorted((d for d in dumps if d["build"] == build), key=lambda d: d["t"]):
+        if keep and d["orders"] is not None and keep[-1]["orders"] is not None and d["orders"] < keep[-1]["orders"]:
+            skipped.append(d)
+        else:
+            keep.append(d)
+    return keep, skipped
+
+
 def summary(dumps, beats, note):
-    dumps.sort(key=lambda d: d["t"])
-    builds = sorted({d["build"] for d in dumps})
+    dumps, skipped = one_game(dumps)
     first, last = dumps[0], dumps[-1]
-    out = [f"### v{'/'.join(builds)} -- {len(dumps)} dumps, {first['tag']} .. {last['tag']}"
+    out = [f"### v{first['build']} -- {len(dumps)} dumps, {first['tag']} .. {last['tag']}"
            + (f" -- {note}" if note else ""), ""]
-    if len(builds) > 1:
-        out += ["**Warning: dumps of different builds mixed.**", ""]
+    if skipped:
+        out += ["Skipped (other build or other game): " + ", ".join(
+            f"{os.path.basename(d['path'])} (v{d['build']}, {d['tag']})" for d in skipped), ""]
+    beats = [b for b in beats if f"build={first['build']} " in b[0]]
     out.append(f"Bots: {len(last['states'])}, orders mode: {last['mode']}.")
     out.append("")
     picks = []
@@ -129,8 +146,9 @@ def summary(dumps, beats, note):
             opm = str(round(d["orders"] / d["t"]))  # since game start
         if prev is not None and d["orders"] is not None and prev["orders"] is not None and d["t"] > prev["t"]:
             opm = str(round((d["orders"] - prev["orders"]) / (d["t"] - prev["t"])))
-            if d["mtime"] > prev["mtime"]:
-                real = f"{(d['mtime'] - prev['mtime']) / ((d['t'] - prev['t']) * 60) * 60:.0f}"
+            r = (d["mtime"] - prev["mtime"]) / ((d["t"] - prev["t"]) * 60) * 60
+            if 20 <= r <= 600:  # outside: file times lost or changed by the copy
+                real = f"{r:.0f}"
         arm = f"{sum(d['armies'])} / {max(d['armies']) if d['armies'] else 0}"
         teams = ", ".join(team_short(t) for t in d["teams"])
         out.append(f"| {d['tag']} | {d['units'] if d['units'] is not None else '-'} | {opm} | {arm} | {real} | {teams} |")

@@ -114,21 +114,31 @@ public static class AiDebug
     TimerStart(hb, HeartbeatEvery, true, OnHeartbeat); // 0.39: freeze diagnosis, only while -autodump is on
   }
 
-  // 0.39: "-orders idle" (default) / "-orders all" -- lever 1 of the engine-load refactor, switchable for A/B tests
+  // "-orders smart" (default since 0.41: attack group + staging, AiArmy) / "-orders idle" (0.39-0.40: whole army,
+  // heartbeat re-orders idle units) / "-orders all" (before 0.39) -- switchable for A/B tests
   private static void OnOrders()
   {
     var msg = GetEventPlayerChatString();
-    if (msg.Length >= 11 && msg.Substring(0, 11) == "-orders all")
+    if (msg.Length >= 13 && msg.Substring(0, 13) == "-orders smart")
     {
+      AiArmy.Smart = true;
+    }
+    else if (msg.Length >= 11 && msg.Substring(0, 11) == "-orders all")
+    {
+      AiArmy.Smart = false;
       SimpleBot.OrdersIdleOnly = false;
     }
     else if (msg.Length >= 12 && msg.Substring(0, 12) == "-orders idle")
     {
+      AiArmy.Smart = false;
       SimpleBot.OrdersIdleOnly = true;
     }
 
-    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "army heartbeat orders: "
-      + (SimpleBot.OrdersIdleOnly ? "IDLE units only (same target)" : "ALL units (old behaviour)") + "  -- -orders idle|all");
+    var mode = SimpleBot.OrdersMode();
+    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "army orders: "
+      + (mode == "smart" ? "SMART (attack group, rest at the staging CP, only idle units away from their point)"
+        : mode == "idle" ? "IDLE (0.40: whole army, idle units re-ordered)" : "ALL (old: whole army, every unit)")
+      + "  -- -orders smart|idle|all");
   }
 
   // 0.39: heartbeat file for freeze diagnosis. While -autodump is on, every 10 s: game time, units on the map
@@ -166,7 +176,7 @@ public static class AiDebug
     PreloadGenClear();
     PreloadGenStart();
     Preload("WLAI heartbeat build=" + AiSetup.Build + " t=" + FileTime(SimpleBot.Clock) + " units-on-map=" + I2S(_hbMapUnits)
-            + " orders/min=" + I2S(_hbOrdersPerMin) + " orders=" + (SimpleBot.OrdersIdleOnly ? "idle" : "all"));
+            + " orders/min=" + I2S(_hbOrdersPerMin) + " orders=" + SimpleBot.OrdersMode());
     for (var i = 0; i < SimpleBot.TaskRing.Length; i++)
     {
       var e = SimpleBot.TaskRing[(SimpleBot.TaskRingPos + i) % SimpleBot.TaskRing.Length];
@@ -229,7 +239,7 @@ public static class AiDebug
     }
 
     o.Add("## UNITS (per player: units/structures; 24 NeutralHostile, 25-27 neutral)  total " + I2S(total)
-          + " | orders total " + I2S(SimpleBot.OrdersIssued) + ", mode " + (SimpleBot.OrdersIdleOnly ? "idle" : "all"));
+          + " | orders total " + I2S(SimpleBot.OrdersIssued) + ", mode " + SimpleBot.OrdersMode());
     o.Add(line);
   }
 
@@ -400,7 +410,8 @@ public static class AiDebug
            + " def=" + I2S(SimpleBot.LastDefOps) + "/" + I2S(SimpleBot.MaxDefOps)
            + "  |  prod peak=" + I2S(SimpleBot.MaxProdOps)
            + "  |  wave cycle=" + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
-           + "\n" + AiScheduler.ShortLine(); // 0.40
+           + "\n" + AiScheduler.ShortLine() // 0.40
+           + "\n" + AiArmy.ShortLine();     // 0.41
   }
 
   private static string EconLine()
@@ -892,6 +903,7 @@ public static class AiDebug
             + " | production peak " + I2S(SimpleBot.MaxProdOps)
             + " | wave-tick " + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
             + " | last gate sweep " + I2S(AiGates.LastSweepOps));
+      AiArmy.Lines(o);      // 0.41: orders by reason, attack group per bot
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
 
