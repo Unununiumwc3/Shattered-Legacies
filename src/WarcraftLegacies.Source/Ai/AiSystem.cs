@@ -2713,7 +2713,7 @@ namespace WarcraftLegacies.Source.Ai
 
   public static class AiSetup
   {
-    // Bump on every code drop. Shown in chat 3s into the game and in every -dump header, so we can always
+    // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
     public const string Build = "0.39.9";
 
@@ -2728,16 +2728,6 @@ namespace WarcraftLegacies.Source.Ai
       AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
       FallbackSystem.Setup(); // 0.39.1: fallback scenarios, first slice (Ai/Fallbacks/)
-      var t = CreateTimer();
-      TimerStart(t, 3f, false, AnnounceBuild);
-    }
-
-    private static void AnnounceBuild()
-    {
-      for (var i = 0; i < 24; i++)
-      {
-        DisplayTimedTextToPlayer(Player(i), 0, 0, 15, "|cff00ffffWL AI " + Build + "|r  (type -help for AI commands)");
-      }
     }
   }
 }

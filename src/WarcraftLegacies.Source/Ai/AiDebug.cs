@@ -67,6 +67,9 @@ public static class AiDebug
 
   public static void Setup()
   {
+    // 0.39.9: -version works in every build (also Access = Off): read-only, shows which map and bot build is running.
+    Register("-version", OnVersion, Level.Read);
+
     if (Access == CommandAccess.Off)
     {
       return;
@@ -736,9 +739,16 @@ public static class AiDebug
   private static void OnHelp()
   {
     var p = GetTriggerPlayer();
-    DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00WL AI|r " + AiSetup.Build + " (commands: " + (Access == CommandAccess.HostOnly ? "host only" : "everyone")
+    DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00Bot AI|r " + AiSetup.Build + " (commands: " + (Access == CommandAccess.HostOnly ? "host only" : "everyone")
       + ") -- full list: README.md."
-      + " Most used: -dump  -autodump  -why  -portals  -heroes  -edges  -xy  -id  -autopilot");
+      + " Most used: -dump  -autodump  -why  -portals  -heroes  -edges  -xy  -id  -autopilot  -version");
+  }
+
+  // 0.39.9: replaces the chat banner at game start.
+  private static void OnVersion()
+  {
+    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 15,
+      "|cffffcc00Shattered Legacies: Botified Realm|r -- Bot AI " + AiSetup.Build);
   }
 
 

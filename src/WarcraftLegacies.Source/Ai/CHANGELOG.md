@@ -1,14 +1,21 @@
 # Changelog -- Warcraft Legacies bot AI
 
-Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags carry the WL base in front:
-`4.8.2-ai.0.35.0`. The in-game banner and every `-dump` header show the same version.
+Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags: `v0.39.9` and later (older
+builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
+same version.
 
 ## 0.39.9
 - **Book of Medivh** gets a third ability: **Guardian's Abjuration** -- WC3's Big Bad Voodoo (`AOvd`) as an item
   ability, 5 seconds (map data: ability `AGAB`, item `I006`).
 - Docs: all md files reviewed (outdated versions / numbers fixed, playtest list consolidated, a "Where we are" handover
   section at the top of TODO.md).
-- Version 4.8.2-ai.0.39.9.
+- **Rebrand** to **Shattered Legacies: Botified Realm** at the original maintainer's request: map name, loading
+  screen, lobby author/description, credits quest and hints say it is an unofficial fork; Discord links removed;
+  published file `ShatteredLegacies-BotifiedRealm-v0.39.9.w3x`. The map title now comes from `Info.json`.
+- The "WL AI" chat banner at game start is gone. New command `-version` (works in every build, also `Access = Off`)
+  shows the map name and bot build; `-help` says "Bot AI".
+- Build fix: duplicate `AiGraph.ArgusNodes` removed.
+- Version v0.39.9 (new tag scheme; first release in the Shattered-Legacies repo).
 
 ## 0.39.8
 - **Kezan Enterprise buildings** (maintainer's design; map data): Laboratory trains Sappers + Alchemist (function

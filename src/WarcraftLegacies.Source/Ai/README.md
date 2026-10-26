@@ -1,8 +1,9 @@
-# Warcraft Legacies – Bot AI
+# Bot AI – Shattered Legacies: Botified Realm
 
-Computer-player bots for **Warcraft Legacies 4.8.2** (the version that still has the Old Gods). The bots capture
+Computer-player bots for **Shattered Legacies: Botified Realm**, an unofficial fork built on **Warcraft Legacies
+4.8.2** (the version that still has the Old Gods). The bots capture
 control points, fight, produce, research, follow faction quests and lore events (Legion summon, Ragnaros, ...).
-Current version: see `AiSetup.Build` in `AiSystem.cs`, the in-game banner ("WL AI 0.39.9") and `CHANGELOG.md`.
+Current version: see `AiSetup.Build` in `AiSystem.cs`, the `-version` chat command and `CHANGELOG.md`.
 
 ## Installing into a WL fork
 
@@ -46,6 +47,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 
 | Command | Level | What it does |
 |---|---|---|
+| `-version` | always | Map name and bot build (works in every build, also with `Access = Off`) |
 | `-help` | read | Version, command access and the most used commands |
 | `-dump` | read | Full snapshot to `Documents\Warcraft III\CustomMapData\WLAI_dump_<time>.txt` |
 | `-why` / `-why <pid>` | read | One line per bot (state, target, reason) / detailed trace for one bot |
@@ -77,15 +79,16 @@ the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by lan
 
 ## Testing a build
 
-1. Lobby shows "Warcraft Legacies Botified <version>", the banner the same AI build. 2. No `SYSTEM ERROR` text in
+1. Lobby shows "Shattered Legacies: Botified Realm v<version>", `-version` the same bot build. 2. No `SYSTEM ERROR` text in
 the first turns. 3. `-autodump` at the start; afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 8
 pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs;
 `-legion` swaps Northrend for Felwood. The release-specific checks are in `TODO.md` ("Check in the next playtest").
 
 ## Map name
-The AI branch builds as **"Warcraft Legacies Botified <version>"** ("Botified" in red, lobby and loading screen), so
-it is never mistaken for the official map. Version = `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`
-(e.g. `4.8.2-ai.0.39.9`), also used in the published file name. Bump it together with `AiSetup.Build`.
+The map builds as **"Shattered Legacies: Botified Realm v<version>"** (lobby and loading screen; name in
+`mapdata/WarcraftLegacies/Info.json`, the version is appended on publish), so it is never mistaken for the official
+Warcraft Legacies. Version = `MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json` (e.g. `v0.39.9`).
+Published file: `maps/published/ShatteredLegacies-BotifiedRealm-v<version>.w3x`. Bump it together with `AiSetup.Build`.
 
 ## Checking which units the bots build
 
@@ -130,34 +133,41 @@ and non-private static `readonly` fields are added uncounted; initialized static
 The files `AI_AGENTS_CONTEXT.md` (architecture, hard rules, workflow) and `TODO.md` let a fresh chat pick up the
 project. Example prompt:
 
-> I'm working on the Warcraft Legacies bot AI. Repo: https://github.com/lehmbein/WarcraftLegacies, branch
-> `4.8.2-ai` (latest tag: see `git tag`). First read `src/WarcraftLegacies.Source/Ai/AI_AGENTS_CONTEXT.md` and
+> I'm working on the Shattered Legacies bot AI. Repo: https://github.com/Unununiumwc3/Shattered-Legacies, branch
+> `botified-dev` (latest tag: see `git tag`). First read `src/WarcraftLegacies.Source/Ai/AI_AGENTS_CONTEXT.md` and
 > `TODO.md`. Task: [what you want]. Attached: the latest dump files and screenshots. Discuss first, don't code yet.
 
 ## Versions
 
-`0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags carry the WL base:
-`4.8.2-ai.0.39.9`. History: `CHANGELOG.md`.
+`0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags: `v0.39.9` (builds before
+0.39.9 were tagged `4.8.2-ai.<build>` in the deleted fork). History: `CHANGELOG.md`.
 
 ## Releasing
 
-On Ubuntu, in the repo, branch `4.8.2-ai`, after the map compiled (version = `AiSetup.Build` and
-`MapSettings.Version` in `src/WarcraftLegacies.CLI/appsettings.json`, both already bumped in the delivered files):
+Git runs on Ubuntu, the map is compiled in the Windows VM (Winboat). Repo:
+`https://github.com/Unununiumwc3/Shattered-Legacies`, branch `botified-dev`.
 
-```
-git checkout 4.8.2-ai && git pull
-unzip -o ~/Downloads/wl-ai-<build>.zip        # or: git apply ~/Downloads/ai-<build>.patch
-git status                                    # only the files listed in the drop should show up
-git add src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools/UserInterface \
-        src/Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs src/WarcraftLegacies.CLI/appsettings.json \
-        src/WarcraftLegacies.Source/Setup/ControlPointSetup.cs \
-        <the mapdata files listed in the drop>       # new files too: git status shows them as ??
-git commit -m "AI <build>: <one line>"
-git push origin 4.8.2-ai
-git tag -a 4.8.2-ai.<build> -m "WL AI <build>"   # after the playtest
-git push origin 4.8.2-ai.<build>
-```
-Never `git add -A` blindly: the build writes published maps and artifacts into the working tree.
+1. Bump the version in **both** places: `AiSetup.Build` (bottom of `AiSystem.cs`) and `MapSettings.Version` in
+   `src/WarcraftLegacies.CLI/appsettings.json` (with a leading `v`, e.g. `v0.39.9`). Add the `CHANGELOG.md` entry.
+2. Compile in Windows (paste into PowerShell):
+   ```powershell
+   $repo  = "C:\Users\leif\Desktop\Shared\WarcraftLegacies"
+   $start = Get-Date
+   dotnet build "$repo\src\WarcraftLegacies.CLI" -c Debug
+   cd "$repo\src\WarcraftLegacies.CLI\bin\Debug\net10.0"
+   dotnet WarcraftLegacies.CLI.dll json-to-w3x publish WarcraftLegacies
+   Get-ChildItem "$repo\maps\published\*.w3x" | Where-Object { $_.LastWriteTime -ge $start } | Copy-Item -Destination "C:\Users\leif\Desktop\Shared\" -Force -PassThru
+   cd $repo
+   ```
+3. Playtest. `-version` in chat must show the new build.
+4. Commit, push, tag (Ubuntu):
+   ```
+   git add <changed files>        # check with git status first
+   git commit -m "<version>: <one line>"
+   git push
+   git tag -a v<version> -m "Shattered Legacies: Botified Realm v<version>"
+   git push origin v<version>
+   ```
 
 ## Known WL bug fixed in this fork: `%` in quest/power text
 
