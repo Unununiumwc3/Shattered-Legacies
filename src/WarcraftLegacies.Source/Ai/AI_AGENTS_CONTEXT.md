@@ -45,7 +45,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 
 | File | Class(es) | Contents |
 |---|---|---|
-| `AiSystem.cs` | SimpleBot, QuestAutoComplete, Geography, AiState, AiSetup | core loop (combat round-robin 0.5 s, production 15 s, defense, heroes, graph targeting, logging), quest automation, landmass grid, shared runtime collections, setup + version |
+| `AiSystem.cs` | SimpleBot, QuestAutoComplete, Geography, AiState, AiSetup | core loop (combat round-robin 0.5 s, production tick 1 s -- one bot per tick, defense, heroes, graph targeting, logging), quest automation, landmass grid, shared runtime collections, setup + version |
 | `AiTech.cs` | AiTech | tech pools, building credits, free/event/quest upgrades, CP-capture counter |
 | `AiMissions.cs` | AiMissions | starter kit, Ragnaros, kill targets, area clears, one-shots, CP grants, Kul Tiras repair, palace handover, banned forms |
 | `AiLegion.cs` | AiLegion | Legion summon/betrayal, Argus start base, node events (Sunwell), demon portal fix, all AI portals |
@@ -56,6 +56,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
 | `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
+| `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
 | `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |
 | `AiHeroSkills.cs` | AiHeroSkills | bot heroes learn skills (level-up event + wave tick) |
 | `AiStats.cs` | AiStats | what bots train (train-finish event) -> dump section TRAINED (0.38) |
@@ -87,7 +88,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
    Run `tools/ai/check_refs.py` (refs + both limits) and, after building, `tools/ai/lua_check.py artifacts/war3map.lua`.
 4. Never `string.Replace` with user/game text that may contain `%` (Lua pattern). WL's `Loc.Format` is fixed.
 5. Avoid `GetHandleId` (key dictionaries by unit/player objects instead).
-6. Every periodic subtask runs through `SimpleBot.Safe(name, task)`; errors go to the pinned log once
+6. Every periodic task is registered in `AiScheduler` (0.40; no new periodic timers) and runs through
+   `SimpleBot.Safe(name, task)`; errors go to the pinned log once
    (`TICK ERROR in ...`), never abort the tick. Commands and dump sections are isolated the same way.
 7. `partial` classes do NOT help with the limits (still one Lua function). Split into separate classes.
 8. Class names must be unique in the namespace -- `dotnet build` of the CLI does not compile the AI code, only the

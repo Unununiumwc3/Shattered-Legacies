@@ -138,8 +138,12 @@ def summary(dumps, beats, note):
     out += ["", "LOAD at the checkpoints:", "```"]
     for d in picks:
         for ln in d["load"]:
-            out.append(f"{d['tag']:>7}  {ln}")
+            if not ln.startswith("task "):  # 0.40: per-task lines only for the last dump (below)
+                out.append(f"{d['tag']:>7}  {ln}")
     out.append("```")
+    tasks = [ln for ln in last["load"] if ln.startswith("task ")]
+    if tasks:
+        out += ["", f"Top tasks by total ops at {last['tag']} (of {len(tasks)}):", "```"] + tasks[:10] + ["```"]
     errs = []
     for d in dumps:
         for e in d["errors"]:

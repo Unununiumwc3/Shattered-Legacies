@@ -54,10 +54,9 @@ namespace WarcraftLegacies.Source.Ai
     {
       var t = CreateTimer();
       TimerStart(t, 120f, false, OnFire);
-      var tq = CreateTimer();
-      TimerStart(tq, 30f, true, OnTimedQuests); // v30
-      var te = CreateTimer();
-      TimerStart(te, 3f, true, OnEarlyQuestTick); // v32
+      // 0.40: periodic checks run in the scheduler (AiScheduler); phases chosen to avoid the production slots
+      AiScheduler.Add("timed quests", 120, 11, OnTimedQuests, true); // v30: every 30 s
+      AiScheduler.Add("early quests", 12, 7, OnEarlyQuestTick, true); // v32: every 3 s
     }
 
     // v30/v31: AiConfig.QuestRules -- force-complete a bot faction's quest once all its conditions hold.
@@ -381,7 +380,8 @@ namespace WarcraftLegacies.Source.Ai
     // Switch: -orders idle|all (AiDebug). Counters for the dump's UNITS section and the heartbeat file.
     internal static bool OrdersIdleOnly = true;
     internal static int OrdersIssued;          // all attack orders since game start (army + gather)
-    internal static string[] TaskRing = new string[12]; // last started periodic tasks (freeze diagnosis)
+    internal static string[] TaskRing = new string[48]; // last started periodic tasks (freeze diagnosis); 0.40: 12 -> 48
+                                                         // (combat and production run through Safe now)
     internal static int TaskRingPos;
     private const float ObjectiveRadius = 1500f;   // v14: scripted-doctrine step clear/capture radius
     private const int QueuePerBuilding = 2;
@@ -612,16 +612,15 @@ namespace WarcraftLegacies.Source.Ai
       AiTech.SetupCaptureCounting(); // v32
 
 
-      var combat = CreateTimer();
-      TimerStart(combat, Tick, true, OnCombatTick);
-      var prod = CreateTimer();
-      TimerStart(prod, ProdTick, true, OnProductionTick);
-      var rev = CreateTimer();
-      TimerStart(rev, ReviveEvery, true, OnHeroReviveTick);
-      var evt = CreateTimer();
-      TimerStart(evt, 2.0f, true, AiLegion.OnEventCheck);
-      var wave = CreateTimer();
-      TimerStart(wave, 15f, true, OnWaveTick);
+      // 0.40: one scheduler instead of five timers (refactor phase 1). Same periods as before: combat every 0.5 s
+      // (even slots), production every 1 s, the wave work every 15 s -- now spread over the odd slots of the cycle
+      // in the old order instead of all at once.
+      AiScheduler.Add("combat", R2I(Tick / AiScheduler.SlotSeconds + 0.5f), 0, OnCombatTick, false);
+      AiScheduler.Add("production", R2I(ProdTick / AiScheduler.SlotSeconds + 0.5f), 1, OnProductionTick, false);
+      AiScheduler.Add("legion events", 8, 3, AiLegion.OnEventCheck, true); // every 2 s
+      AiScheduler.Add("hero revive", R2I(ReviveEvery / AiScheduler.SlotSeconds + 0.5f), 15, OnHeroReviveTick, true);
+      RegisterWaveTasks();
+      AiScheduler.Start();
 
       // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
       // Northrend base is gone). Argus reaches Northrend through the portal until the summon.
@@ -2260,46 +2259,51 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static void OnWaveTick()
+    // 0.40: the old 15-s wave tick, split into scheduler tasks (one per odd slot of the 15-s cycle, same order).
+    // v34.2 still holds: every subtask runs isolated (SimpleBot.Safe via the scheduler) -- gates first; a failure is
+    // written once to the pinned log ("TICK ERROR in ...") and never stops the others. Skipped during -botbreak.
+    private static void RegisterWaveTasks()
     {
-      if (BotBreak)
-      {
-        return;
-      }
+      var k = 0;
+      AiScheduler.AddWave(k++, "wave cycle start", BeginWaveCycle);
+      AiScheduler.AddWave(k++, "destructible gates", AiGates.SweepDestructibleGates); // v27.1: destructible gates ONCE
+      AiScheduler.AddWave(k++, "gate sweep", AiGates.SweepBotGates);                  // v26: gate units
+      AiScheduler.AddWave(k++, "tempest reach", AiGates.WireTempestReach);            // v25
+      AiScheduler.AddWave(k++, "named gates", AiGates.OpenNamedGates);                // 0.36: "greymane", "tomb"
+      AiScheduler.AddWave(k++, "old gods rift", AiGates.OpenOldGodsRift);             // 0.37
+      AiScheduler.AddWave(k++, "sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37
+      AiScheduler.AddWave(k++, "yogg release", AiMissions.RunYogg);                   // 0.38.1
+      AiScheduler.AddWave(k++, "feathermoon", AiMissions.RunFeathermoon);             // 0.39
+      AiScheduler.AddWave(k++, "continental outpost", AiMissions.RunContinentalOutpost); // 0.39.5
+      AiScheduler.AddWave(k++, "emerald portals", AiGates.RunEmeraldPortals);         // 0.39.5
+      AiScheduler.AddWave(k++, "one-shots", AiMissions.RunOneShots);                  // v25: runestones
+      AiScheduler.AddWave(k++, "kill targets", AiMissions.AssignKillTargets);         // v31/v34.2
+      AiScheduler.AddWave(k++, "cp grants", AiMissions.RunCpGrants);                  // v31
+      AiScheduler.AddWave(k++, "starter kit", AiMissions.RunStarterKit);              // v32
+      AiScheduler.AddWave(k++, "starter production", AiMissions.RunStarterProduction); // 0.39.2
+      AiScheduler.AddWave(k++, "ragnaros", AiMissions.RunRagnarosMission);
+      AiScheduler.AddWave(k++, "hero visits", AiHeroVisits.Run);                      // 0.35.2
+      AiScheduler.AddWave(k++, "hero care", AiHeroCare.Run);                          // 0.36
+      AiScheduler.AddWave(k++, "hero skills", AiHeroSkills.Run);                      // 0.38
+      AiScheduler.AddWave(k++, "standings", AiStandings.Check);                       // 0.36
+      AiScheduler.AddWave(k++, "palace handover", AiMissions.LegionPalaceHandover);   // v32
+      AiScheduler.AddWave(k++, "banned forms", AiMissions.ScanBannedForms);           // v32
+      AiScheduler.AddWave(k++, "demon portal", () => AiLegion.FixDemonPortal());      // v31
+      AiScheduler.AddWave(k++, "legion check", AiLegion.CheckLegionSummoned);         // v34.1
+      AiScheduler.AddWave(k++, "portal watchdog", AiLegion.PortalWatchdog);           // v34.1
+      AiScheduler.AddWave(k++, "kul tiras repair", AiMissions.KulTirasRepair);        // v34.1
+      AiScheduler.AddWave(k++, "waves", RunWaves);
+      AiScheduler.AddWave(k, "wave cycle end", EndWaveCycle);                         // k = 28 (max 29)
+    }
 
-      WaveOps = 0;
-      _validCpIds = null;        // v27: rebuild the valid-CP set this tick so SafeCp sees CPs created at runtime
+    private static void BeginWaveCycle()
+    {
+      _validCpIds = null; // v27: rebuild the valid-CP set once per cycle so SafeCp sees CPs created at runtime
+      AiScheduler.TakeWaveCycleOps();
+    }
 
-      // v34.2: every subtask runs isolated. Before, one failing subtask aborted the whole tick every 15 s --
-      // which is why the gate sweeps (they ran LAST) stopped and the gates came back. Gates now go first, and a
-      // failure is written once to the pinned log ("TICK ERROR in ...") instead of killing everything after it.
-      Safe("destructible gates", AiGates.SweepDestructibleGates); // v27.1: destructible gates ONCE (not bridges/walls)
-      Safe("gate sweep", AiGates.SweepBotGates);                  // v26: gate units, at start then every ~5 min
-      Safe("tempest reach", AiGates.WireTempestReach);            // v25
-      Safe("named gates", AiGates.OpenNamedGates);                // 0.36: "greymane" (never opened before), "tomb"
-      Safe("old gods rift", AiGates.OpenOldGodsRift);             // 0.37: replaces the Old Gods wave
-      Safe("sulfuron barracks", AiMissions.RunSulfuronBarracks);  // 0.37: Old Gods barracks at Sulfuron Spire
-      Safe("yogg release", AiMissions.RunYogg);                   // 0.38.1: bot casts "Free Yogg-Saron"
-      Safe("feathermoon", AiMissions.RunFeathermoon);             // 0.39: Sentinels' buildings at Feathermoon
-      Safe("continental outpost", AiMissions.RunContinentalOutpost); // 0.39.5: Kul Tiras' Stranglethorn buildings
-      Safe("emerald portals", AiGates.RunEmeraldPortals);         // 0.39.5: activate WL's preplaced pair
-      Safe("one-shots", AiMissions.RunOneShots);                     // v25: runestones
-      Safe("kill targets", AiMissions.AssignKillTargets);            // v31/v34.2: Sapphiron, Murmur, area clears
-      Safe("cp grants", AiMissions.RunCpGrants);                     // v31
-      Safe("starter kit", AiMissions.RunStarterKit);                 // v32: barracks + altar (0:20 and 3:00)
-      Safe("starter production", AiMissions.RunStarterProduction);   // 0.39.2: one of each production building
-      Safe("ragnaros", AiMissions.RunRagnarosMission);
-      Safe("hero visits", AiHeroVisits.Run);              // 0.35.2: Yogg-Saron, Fel Horde Shadowmoon; 0.36: more
-      Safe("hero care", AiHeroCare.Run);                  // 0.36: stranded heroes walk back / go home
-      Safe("hero skills", AiHeroSkills.Run);              // 0.38: unspent skill points of bot heroes
-      Safe("standings", AiStandings.Check);               // 0.36: team CP counts, 80/90 pins
-      Safe("palace handover", AiMissions.LegionPalaceHandover);      // v32
-      Safe("banned forms", AiMissions.ScanBannedForms);              // v32: Cenarius stays dead for bots
-      Safe("demon portal", () => AiLegion.FixDemonPortal());       // v31: WL's caster-less portal off (0,0)
-      Safe("legion check", AiLegion.CheckLegionSummoned);          // v34.1: summon handling, whatever completed it
-      Safe("portal watchdog", AiLegion.PortalWatchdog);            // v34.1
-      Safe("kul tiras repair", AiMissions.KulTirasRepair);           // v34.1
-
+    private static void RunWaves()
+    {
       var waves = AiWaves.All;
       for (var w = 0; w < waves.Count; w++)
       {
@@ -2312,11 +2316,15 @@ namespace WarcraftLegacies.Source.Ai
           TickError("wave " + I2S(w), e);
         }
       }
+    }
 
-      LastWaveOps = WaveOps;
-      if (WaveOps > MaxWaveOps)
+    // LastWaveOps / MaxWaveOps keep their meaning: the whole cycle's wave work
+    private static void EndWaveCycle()
+    {
+      LastWaveOps = AiScheduler.TakeWaveCycleOps();
+      if (LastWaveOps > MaxWaveOps)
       {
-        MaxWaveOps = WaveOps;
+        MaxWaveOps = LastWaveOps;
       }
     }
 
@@ -2609,6 +2617,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           OpOrders++;
           OrdersIssued++;
+          AiScheduler.CountOrder(u, tx, ty); // 0.40: distance bucket, idle at target
           IssuePointOrder(u, "attack", tx, ty);
         }
       }
@@ -2629,6 +2638,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           OpOrders++;
           OrdersIssued++;
+          AiScheduler.CountOrder(u, ax, ay); // 0.40
           IssuePointOrder(u, "attack", ax, ay); // v12: fight to the rally point, not walk blindly
         }
       }
@@ -2715,7 +2725,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.39.10";
+    public const string Build = "0.40.0";
 
     public static void Setup()
     {

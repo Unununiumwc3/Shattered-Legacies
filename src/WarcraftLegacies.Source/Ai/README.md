@@ -65,6 +65,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
 | `-orders idle\|all` | control | Army heartbeat orders: only idle units (default) or all units (old behaviour) |
+| `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
 | `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
@@ -76,7 +77,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 
 `call Preload( "…" )` wraps every line — send the file as it is. Sections:
 **PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **UNITS** (units per player, orders), **TEAMS** (CPs per team), **TRAINED** (what each bot trained / never trained), **PORTALS**, **LOAD** (units touched per tick,
-the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
+the multiplayer lag indicator; since 0.40 also the scheduler, orders by distance and one line per periodic task), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
 ## Measuring a game

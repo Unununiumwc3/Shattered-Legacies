@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.39.10**. Next: **0.40** = refactor phase 1 (below).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.40.0**. Next: **0.41** = refactor phase 2 (army orders, below).
 
 ## Where we are
 
@@ -25,7 +25,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
 10/20/30/45 min). Compare with the phase before.
 
 0. **0.39.10 -- step 0** (done): fork code out of `Ai/`, `AiApi`, markers, `WORKAROUNDS.md`.
-1. [ai] **0.40 -- scheduler + load budget.** One 0.25-s timer; every periodic task has a period and a fixed phase
+1. **0.40 -- scheduler + load budget** (done; play one game with `-autodump` = the baseline for 0.41, calibrate the
+   budget from "max-slot" in LOAD). One 0.25-s timer; every periodic task has a period and a fixed phase
    (static, deterministic staggering): combat every 0.5 s and production every 1 s as today, the 15-s wave tick split
    into its subtasks spread over the cycle in today's order, plus revive, quest checks, Legion event check, debug
    output. One-shot delays stay as they are. Counters (deterministic only, never wall-clock time = desync): per task
@@ -117,9 +118,12 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
 - [ai] (low) Bot heroes die early (train a hero, attack creeps without an army). Probably fixed by 0.41.
 - Note: WL has no `-spectate`; the AI takes over a slot only when its human LEAVES.
 
-## Check in the next playtest (0.39.10 / 0.40)
+## Check in the next playtest (0.40)
 
 - `-version` shows the new build; no `SYSTEM ERROR`, no `TICK ERROR` in PINNED.
+- 0.40: bots behave as in 0.39.9 (attack, produce, gates disappear, quests, portals). `-debug2` shows a second line
+  (slot max, over, far orders, idle@target, top tasks); `-dump` LOAD has the scheduler, orders and task lines.
+  `-budget on` for a few minutes: "deferred" grows, nothing breaks. Then `dump_summary.py` into MEASUREMENTS.md.
 - Fallbacks work as before (trigger buildings at 62 s, Ironforge placeholder, Kul Tiras -> Kezan Enterprise).
   The Scarlet Crusade trigger building reads "Fallback: Scarlet Crusade (story event)".
 - Kezan Enterprise bot: Gallywix is its first hero (fixed in 0.39.10); Laboratory / Mercenary Den / Tank Factory

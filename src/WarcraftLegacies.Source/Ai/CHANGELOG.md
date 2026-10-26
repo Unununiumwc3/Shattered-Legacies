@@ -4,6 +4,25 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.40.0
+Refactor phase 1: scheduler + load budget. Same tasks, same periods, same order -- no gameplay change.
+- **One scheduler** (`AiScheduler.cs`) instead of seven periodic timers: a 0.25-s slot timer; every task has a period
+  and a fixed phase (deterministic, the same on every client). Combat every 0.5 s and production every 1 s as before;
+  the 15-s wave tick is split into its 29 subtasks, one per odd slot of the 15-s cycle, in the old order (gates first,
+  Legion check before the portal watchdog). Also in the scheduler: Legion events (2 s), early quests (3 s), timed
+  quests (30 s), hero revive (180 s). Before, every 30 s about 31 tasks ran in one frame; now at most 3 per slot.
+  Within a 15-s cycle a subtask may run up to 14 s later than before.
+- Debug output (`-debug`, `-autodump`, heartbeat) keeps its own timers: the heartbeat keeps writing even if the
+  scheduler breaks. The heartbeat's task list is longer (48 entries; combat and production are in it now).
+- **Load counters** (deterministic only): per task runs and ops (last / max / sum; ops = units enumerated +
+  production checks + wave work + orders), ops per slot, **orders by distance** (<2k / 2-8k / >8k) and **idle
+  re-orders of units already at their target** -- the two proxies for engine pathing cost (and the baseline for 0.41).
+  Shown in `-debug2` (second line) and in the dump's LOAD section (one line per task); `dump_summary.py` picks them up.
+- **Load budget** 400 ops per slot, report-only ("over", "would-defer"). `-budget on|off` (Control) lets deferrable
+  tasks (not combat / production) slide to the next slot after a busy slot -- a test switch, default off.
+- "wave cycle" in `-debug2` / LOAD now counts all work of the wave subtasks (before: only their unit loops).
+- Version v0.40.0.
+
 ## 0.39.10
 Refactor step 0: the bot and the fork's own content are separate layers. No gameplay change except the two fixes.
 - **Fallbacks moved** from `Ai/Fallbacks/` to `src/WarcraftLegacies.Source/ShatteredLegacies/` (namespace
