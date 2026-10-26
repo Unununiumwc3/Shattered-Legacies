@@ -28,7 +28,7 @@ public static class PlayerLeaves
         player.DisplayTextTo(message);
       }
 
-      // Bot AI fork (4.8.2-ai 0.39.2): the AI takes over the slot instead of defeating the faction -- the game stays
+      // [BOT] (0.39.2): the AI takes over the slot instead of defeating the faction -- the game stays
       // alive for the remaining players (Ai/AiAutopilot.cs). Falls back to WL's defeat if the AI declines.
       if (playerFaction != null && playerFaction.ScoreStatus != ScoreStatus.Defeated
           && WarcraftLegacies.Source.Ai.AiAutopilot.TakeOverLeaver(triggerPlayer))

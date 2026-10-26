@@ -1,11 +1,23 @@
-"""Cross-class reference audit for the WL Ai/ folder.
+"""Cross-class reference audit for the bot (Ai/) and the code that uses it (ShatteredLegacies/).
 Catches the slip that `dotnet build` may pass but json-to-w3x rejects: `AiConfig.X` where X lives in AiGraph,
-or a private member used from another class. Usage: python3 check_refs.py <dir-with-Ai*.cs>"""
+or a private member used from another class.
+Usage: python3 tools/ai/check_refs.py [dir ...]   (default: the Ai and ShatteredLegacies folders)
+0.39.10, layers: a file under a folder named "Ai" is bot code. LAYER = bot code uses a class from another folder
+(the bot must never depend on fork code); API = other code uses a bot class other than AiApi (go through AiApi)."""
 import sys, glob, os
 import tree_sitter_c_sharp as tscs, tree_sitter as ts
 
 parser = ts.Parser(ts.Language(tscs.language()))
-files = sorted(glob.glob(os.path.join(sys.argv[1] if len(sys.argv) > 1 else ".", "**", "*.cs"), recursive=True))  # 0.39.1: incl. Fallbacks/
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+dirs = sys.argv[1:] or [os.path.join(ROOT, "src", "WarcraftLegacies.Source", "Ai"),
+                        os.path.join(ROOT, "src", "WarcraftLegacies.Source", "ShatteredLegacies")]
+files = sorted({p for d in dirs for p in glob.glob(os.path.join(d, "**", "*.cs"), recursive=True)})
+API_CLASS = "AiApi"
+
+def is_bot(path):
+    return "Ai" in os.path.normpath(os.path.abspath(path)).split(os.sep)
+
+class_bot = {}  # class -> declared in bot code
 members = {}   # class -> {name: is_public}
 refs = []      # (file, line, from_class, cls, member)
 
@@ -14,13 +26,14 @@ def txt(n, src): return src[n.start_byte:n.end_byte].decode("utf-8")
 def mods(n, src):
     return {txt(c, src) for c in n.children if c.type == "modifier"}
 
-def collect(n, src, cls=None):
+def collect(n, src, cls=None, bot=False):
     if n.type == "class_declaration":
         name = txt(n.child_by_field_name("name"), src)
         members.setdefault(name, {})
+        class_bot[name] = bot
         if cls:
             members[cls][name] = bool(mods(n, src) & {"public", "internal"})
-        for c in n.children: collect(c, src, name)
+        for c in n.children: collect(c, src, name, bot)
         return
     # 0.36: nested enums / structs / interfaces are members of the enclosing class too (AiDebug.CommandAccess)
     if cls and n.type in ("enum_declaration", "struct_declaration", "interface_declaration"):
@@ -36,7 +49,7 @@ def collect(n, src, cls=None):
                             members[cls][txt(v.child_by_field_name("name") or v.children[0], src)] = pub
         else:
             members[cls][txt(n.child_by_field_name("name"), src)] = pub
-    for c in n.children: collect(c, src, cls)
+    for c in n.children: collect(c, src, cls, bot)
 
 unqualified = []  # 0.39.2: (file, line, class, name) of unqualified calls name(...)
 
@@ -58,8 +71,10 @@ for f in files:
     src = open(f, "rb").read()
     t = parser.parse(src)
     trees.append((f, src, t))
-    collect(t.root_node, src)
+    collect(t.root_node, src, None, is_bot(f))
+file_bot = {}
 for f, src, t in trees:
+    file_bot[os.path.basename(f)] = is_bot(f)
     find_refs(t.root_node, src, os.path.basename(f))
 
 # 0.34.3: CSharp.lua builds every static field that has a non-literal initializer ("= new()", a method call...)
@@ -160,6 +175,14 @@ for f, line, frm, cls, m in refs:
         print(f"MISSING  {f}:{line}  {cls}.{m}  (declared in: {owners or 'nowhere'})"); bad += 1
     elif frm != cls and not members[cls][m]:
         print(f"PRIVATE  {f}:{line}  {cls}.{m} used from {frm}"); bad += 1
+# 0.39.10: layers. The bot must not use fork code; fork code uses the bot only through AiApi.
+for f, line, frm, cls, m in refs:
+    if cls not in members or cls == frm:
+        continue
+    if file_bot.get(f) and not class_bot.get(cls):
+        print(f"LAYER  {f}:{line}  bot code uses {cls}.{m} (defined outside Ai/)"); bad += 1
+    elif not file_bot.get(f) and class_bot.get(cls) and cls != API_CLASS:
+        print(f"API  {f}:{line}  {cls}.{m} used outside Ai/ -- go through {API_CLASS}"); bad += 1
 # 0.39.2: an unqualified call to a method that is NOT in the calling class but IS a member of another of our
 # classes does not compile (CS0103, "name does not exist in the current context") -- the 0.39.2 build broke on
 # IsActive(...) used inside QuestAutoComplete. WC3 natives are global and never members of our classes.

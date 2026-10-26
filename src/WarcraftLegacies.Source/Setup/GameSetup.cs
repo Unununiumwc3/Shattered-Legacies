@@ -43,7 +43,8 @@ public static class GameSetup
     SetupControlPointDefenderManager();
     SoundLibrary.Setup();
     Artifacts.Setup();
-    WarcraftLegacies.Source.Ai.AiSetup.Setup();
+    WarcraftLegacies.Source.Ai.AiSetup.Setup(); // [BOT] bot AI (Ai/); must run before FactionChoiceDialogSetup
+    WarcraftLegacies.Source.ShatteredLegacies.ShatteredLegaciesSetup.Setup(); // [SL] fallbacks, Kezan Enterprise
     AllLegends.Setup();
     ShoreSetup.Setup();
     ControlPointSetup.Setup();
@@ -67,8 +68,8 @@ public static class GameSetup
     MapFlagSetup.Setup();
     InfoQuests.Setup();
     DestructibleSetup.Setup();
-    // Bot AI fork (4.8.2-ai 0.39.1): no game-mode vote -- Closed Alliance is forced, applied at 59 s, the moment the
-    // vote used to end. The vote's time slot (49 s) is used by the bot difficulty vote (Ai/AiGoldVote.cs).
+    // [SL] (0.39.1): no game-mode vote -- Closed Alliance is forced, applied at 59 s, the moment the vote used to end.
+    // The vote's time slot (49 s) is used by the bot strength vote (Ai/AiGoldVote.cs).
     timer.Create().Start(59, false, () => new ClosedAlliance().OnChoose());
     RockSetup.Setup();
     TurnResearchSetup.Setup();

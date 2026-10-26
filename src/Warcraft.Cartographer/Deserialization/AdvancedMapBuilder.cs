@@ -118,7 +118,7 @@ public sealed class AdvancedMapBuilder(AdvancedMapBuilderOptions options)
       return;
     }
 
-    // Use the titles from Info.json and append the version, instead of a hardcoded map name.
+    // [SL] (0.39.9): use the titles from Info.json and append the version, instead of a hardcoded map name.
     map.Info.MapName = WithVersion(map.Info.MapName, version);
     map.Info.LoadingScreenTitle = WithVersion(map.Info.LoadingScreenTitle, version);
   }

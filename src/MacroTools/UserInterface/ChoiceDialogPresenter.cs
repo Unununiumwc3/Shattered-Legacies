@@ -38,7 +38,7 @@ public abstract class ChoiceDialogPresenter<TChoice> where TChoice : IChoice
       return;
     }
 
-    // Bot AI hook: a computer player picks without a dialog (see BotChoicePolicy). Humans never get here.
+    // [BOT] a computer player picks without a dialog (see BotChoicePolicy). Humans never get here.
     if (TryBotPick(whichPlayer, activeChoices.ToList()))
     {
       return;
@@ -66,7 +66,7 @@ public abstract class ChoiceDialogPresenter<TChoice> where TChoice : IChoice
     });
   }
 
-  // Own method on purpose: Run() declares a local named "timer", which hides the timer TYPE in the whole of Run.
+  // [BOT] Own method on purpose: Run() declares a local named "timer", which hides the timer TYPE in the whole of Run.
   // The pick happens on the same 4 s delay as the human dialog, so the order of events stays the same.
   private bool TryBotPick(player whichPlayer, List<TChoice> active)
   {

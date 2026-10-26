@@ -10,10 +10,12 @@ Current version: see `AiSetup.Build` in `AiSystem.cs`, the `-version` chat comma
 1. Copy this `Ai/` folder to `src/WarcraftLegacies.Source/Ai/`.
 2. Add one line to `src/WarcraftLegacies.Source/Setup/GameSetup.cs`, directly after `Artifacts.Setup();`:
    ```csharp
-   WarcraftLegacies.Source.Ai.AiSetup.Setup();
+   WarcraftLegacies.Source.Ai.AiSetup.Setup(); // [BOT]
    ```
-3. Recommended: the `%` fix in `src/MacroTools/Localization/Loc.cs` (see "Known WL bug" below).
+3. The other hooks and what still ties the bot to this fork's map are listed in `WORKAROUNDS.md` (bot picks in click
+   menus, leaver takeover, the `%` fix in `Loc.cs`).
 4. Build as usual. Every computer slot in the lobby becomes a bot.
+5. Fork code talks to the bot only through `AiApi.cs` (this fork: `../ShatteredLegacies/`).
 
 ## Before you publish a build: the command switch
 
@@ -33,13 +35,13 @@ Heavy commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`, `-tp`) only work wh
 
 ## Playing with bots
 
-- **Bot strength vote** 70 s into the game: Recruit (no bonus gold), Soldier (half), Veteran (normal), Commander
+- **Bot strength vote** 49 s into the game: Recruit (no bonus gold), Soldier (half), Veteran (normal), Commander
   (1.5x), Warlord (2x, may lag). Majority wins; ties go toward Veteran; no votes = Veteran.
 - `-autopilot` hands your faction to the AI; type it again to take over. All players are told.
   - **Fair** (release build, `Access = Off`): the AI plays with your own resources — no bot bonuses, 60 s cooldown.
   - **Test** (`HostOnly`/`Everyone`): full bot treatment (gold subsidy, free techs, revives, missions, waves).
-- Bots get bonuses humans don't: gold subsidy, free techs and upgrades, free hero revives, a starter barracks +
-  altar, scripted missions (Ragnaros, Sapphiron, Murmur, area clears), invasion waves.
+- Bots get bonuses humans don't: gold subsidy, free techs, upgrades and heroes, free hero revives, starter production
+  buildings, scripted missions (Ragnaros, hero visits, kill targets, area clears).
 
 ## Chat commands
 
@@ -77,6 +79,11 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 the multiplayer lag indicator), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
+## Measuring a game
+
+`python3 tools/ai/dump_summary.py <the game's WLAI_*.txt files> --append "<note>"` writes a short summary (units,
+orders/min, LOAD, errors at 10/20/30/45 min) to `MEASUREMENTS.md`, so the numbers stay in the repo. Details there.
+
 ## Testing a build
 
 1. Lobby shows "Shattered Legacies: Botified Realm v<version>", `-version` the same bot build. 2. No `SYSTEM ERROR` text in
@@ -110,15 +117,16 @@ also happens without alt-tabbing and, in multiplayer, freezes every player.
 
 Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-packages`:
 
-- `python3 tools/ai/check_refs.py src/WarcraftLegacies.Source/Ai` — wrong-class/private references and the two
-  CSharp.lua limits (Lua locals per class, initialized static fields per class). **Run before every build.**
+- `python3 tools/ai/check_refs.py` — wrong-class/private references, the two CSharp.lua limits (Lua locals per
+  class, initialized static fields per class) and the layer rule (LAYER: the bot uses fork code; API: fork code
+  bypasses `AiApi`). Checks `Ai/` and `ShatteredLegacies/`. **Run before every build.**
 - `python3 tools/ai/lua_check.py artifacts/war3map.lua` — compiles the built script with Lua 5.3; catches what
   makes Warcraft III call the map "unavailable or corrupted".
 - `python3 tools/ai/scope_check.py src/WarcraftLegacies.Source/Ai <other changed .cs files>` — catches C# scope
   errors a syntax check misses (a local hiding a type name, e.g. `timer timer = ...`; a local re-declared in a nested
   block). Not a compiler, but it caught the 0.37.1 build break.
-- `python3 tools/ai/gen_ai_data.py` — regenerates `AiData.g.cs` (train lists, hero skills ...) from WL's data; run
-  after every WL update, then rebuild.
+- `python3 tools/ai/gen_ai_data.py` — regenerates `AiData.g.cs` (train lists, hero skills ...) from WL's data, and
+  `../ShatteredLegacies/SlAiData.g.cs` for the fork's own buildings; run after every WL update, then rebuild.
 - `python3 tools/ai/unit_scan.py [faction|--summary]` — which units/heroes each faction has and whether the AI can
   train them (with the reason / the unlocking quest). Compare with the dump's TRAINED section.
 - `python3 tools/ai/map_query.py walk X Y` (also `near`, `area`, `find`, `around`, `rect`) — checks coordinates
@@ -139,7 +147,8 @@ project. Example prompt:
 
 ## Versions
 
-`0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Git tags: `v0.39.9` (builds before
+`0.MINOR.PATCH` — a feature build raises MINOR, a fix/small build raises PATCH. Each part is a whole number, not a
+decimal: 0.39.9 -> 0.39.10 -> 0.39.11 (no leading zeros). `git tag --sort=v:refname` lists them in the right order. Git tags: `v0.39.9` (builds before
 0.39.9 were tagged `4.8.2-ai.<build>` in the deleted fork). History: `CHANGELOG.md`.
 
 ## Releasing
@@ -169,7 +178,7 @@ Git runs on Ubuntu, the map is compiled in the Windows VM (Winboat). Repo:
    git push origin v<version>
    ```
 
-## Known WL bug fixed in this fork: `%` in quest/power text
+## Known WL bug fixed in this fork: `%` in quest/power text (`[BOT]` in `Loc.cs`)
 
 `SYSTEM ERROR: … invalid use of '%' in replacement string` (Kul Tiras, Stormwind). WL's `Loc.Format` used
 `string.Replace`, which in the Lua build treats `%` in the replacement as a pattern character, so a power text

@@ -411,8 +411,7 @@ public static class AiConfig
     { "Sunfury", new List<int> { UNIT_H098_SUNFURY_MASTERMIND_QUELTHALAS, UNIT_HKAL_PRINCE_OF_QUEL_THALAS_QUELTHALAS, UNIT_U004_THE_DECEIVER_LEGION, UNIT_U02V_HIGH_ASTROMANCER_SUNFURY } },
     { "The Exodar", new List<int> { UNIT_E01I_AGELESS_ONE_DRUIDS, UNIT_E01J_HIGH_SHAMAN_DRUIDS, UNIT_H09M_THE_NAARU_DRAENEI, UNIT_H09S_HAMMER_OF_THE_LIGHT_DRAENEI } },
     { "Warsong", new List<int> { UNIT_MD25_DARKSPEAR_CHAMPION_WARSONG, UNIT_NMAN_MANNOROTH_THE_DESTROYER_WARSONG_BLOODPACT, UNIT_O005_WARSONG_BATTLEMASTER_WARSONG, UNIT_O06L_WARLORD_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OGRH_CHIEFTAIN_OF_THE_WARSONG_CLAN_WARSONG, UNIT_OPGH_CORRUPTOR_OF_THE_WARSONG_CLAN_WARSONG_BLOODPACT, UNIT_VSWS_HIGH_OVERLORD_OF_THE_KOR_KRON_WARSONG } },
-    // 0.39.6: Kul Tiras' fallback faction (FallbackSystem renames Kul'tiras to this) -- Gallywix first
-    { "The Kezan Enterprise", new List<int> { 1328559182 } }, // O04N Trade Prince of the Bilgewater Cartel
+    // Factions of forks register their own list through AiApi.RegisterHeroes (0.39.10).
   };
 
   // 0.37: a hero type counts as "alive" while one of its LATER forms is alive (same legend, new unit type), so the

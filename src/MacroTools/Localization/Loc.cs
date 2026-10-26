@@ -96,12 +96,13 @@ public static class Loc
     var template = Get(english, language);
     foreach (var (token, value) in args)
     {
-      template = ReplaceLiteral(template, token, Get(value, language));
+      template = ReplaceLiteral(template, token, Get(value, language)); // [BOT] (0.34.3) upstream bug fix, see below
     }
 
     return template;
   }
 
+  // [BOT] (0.34.3): WL 4.8.2 bug fix, not bot-specific -- send upstream separately (Ai/WORKAROUNDS.md).
   /// <summary>
   /// Replaces every occurrence of <paramref name="token"/> in <paramref name="text"/> with <paramref name="value"/>,
   /// treating both literally. <see cref="string.Replace(string, string)"/> is not safe here: in the Lua build a

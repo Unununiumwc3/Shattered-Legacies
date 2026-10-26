@@ -8,26 +8,33 @@ the **bots**, this file is about **AI assistants** working on the code.
 Computer-player bots for **Shattered Legacies: Botified Realm**, an unofficial fork of **Warcraft Legacies 4.8.2** (a
 Warcraft III Reforged map written in C# with WCSharp and transpiled to Lua by **CSharp.lua**). Kept on 4.8.2 because
 5.x removed the Old Gods. Repo: `https://github.com/Unununiumwc3/Shattered-Legacies`, branch `botified-dev`, tags
-`v0.MINOR.PATCH`. Never call it "Warcraft Legacies" or "WL" in anything players see (lobby, loading screen, chat): the
-original maintainer asked for that, and players mistook the fork for an official release. All bot code is
-in `src/WarcraftLegacies.Source/Ai/`. Changes outside it (keep them minimal and listed here): one hook line in
-`Setup/GameSetup.cs` (`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`); `Loc.cs` literal
-replace (0.34.3); the bot-pick hook `MacroTools/UserInterface/BotChoicePolicy.cs` + `ChoiceDialogPresenter.TryBotPick`
-(0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` (taken from `Info.json`, version appended) +
-version and published file name in `WarcraftLegacies.CLI/appsettings.json` and `Settings/` (0.39.9 rebrand; the
-rebrand also touched `Info.json`, `DisplayIntroText.cs`, `InfoQuests.cs`, `HintSetup.cs` and the root README); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); `Setup/GameSetup.cs`: no game-mode vote, Closed
-Alliance forced (0.39.1); `GameLogic/GameEnd/PlayerLeaves.cs`: the AI takes over leaving humans (0.39.2); map data `n0FB` / `AFB1` (fallback trigger building, 0.39.1); map data:
-CPs `n0JS` Jaina's Sanctum (0.37.2), `n0SA`/`n0TD`/`n0RF` + marker `A0ZG`/`B0ZG` (0.38).
+`v0.MINOR.PATCH`. Never present it as "Warcraft Legacies" or "WL" in anything players see (lobby, loading screen,
+chat): the original maintainer asked for that, and players mistook the fork for an official release. Attribution and
+the fork notice ("based on Warcraft Legacies", "not the official version") stay -- he asked for those too.
+
+**Two layers** (0.39.10):
+- `src/WarcraftLegacies.Source/Ai/` = the bot. Long-term goal: a pull request to the original Warcraft Legacies that
+  works on the original map without workarounds. The bot never uses fork code.
+- `src/WarcraftLegacies.Source/ShatteredLegacies/` = the fork's own content (fallbacks, Kezan Enterprise). It may use
+  the bot, but only through `Ai/AiApi.cs`. `tools/ai/check_refs.py` enforces both (LAYER, API).
+
+Changes outside these folders are marked in the code: `// [BOT]` (hook the bot needs), `// [SL]` (fork content),
+`// [WORKAROUND]` (temporary). Lists: `WORKAROUNDS.md` (what the bot needs outside `Ai/`, incl. map data and runtime
+map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
+`grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
 ## Getting the code (sandbox)
 
 ```
 GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch botified-dev \
     https://github.com/Unununiumwc3/Shattered-Legacies.git wl && cd wl
-git sparse-checkout set src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools \
+git sparse-checkout set src/WarcraftLegacies.Source/Ai src/WarcraftLegacies.Source/ShatteredLegacies tools/ai \
+    src/MacroTools src/WarcraftLegacies.Source/Setup src/WarcraftLegacies.Shared \
     mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData \
     src/WarcraftLegacies.CLI src/Warcraft.Cartographer
 ```
+(`WarcraftLegacies.Shared` is needed by `gen_ai_data.py`; `git sparse-checkout add src/WarcraftLegacies.Source/GameLogic`
+for the other marked files. `git mv` into a folder outside the sparse set fails -- add the folder first.)
 (Cone mode also brings the files directly in the parent folders: `mapdata/WarcraftLegacies/PathingMap.json` and
 `src/WarcraftLegacies.Source/Regions.g.cs` -- what `tools/ai/map_query.py` needs. Add `src/WarcraftLegacies.Source/Factions`
 to read quest classes.)
@@ -48,7 +55,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiGoldVote.cs` | AiGoldVote | bot strength vote at 49 s (the old game-mode vote slot) (sets `SimpleBot.BotGoldBonus`) |
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
-| `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order -- re-run after WL updates |
+| `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
+| `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |
 | `AiHeroSkills.cs` | AiHeroSkills | bot heroes learn skills (level-up event + wave tick) |
 | `AiStats.cs` | AiStats | what bots train (train-finish event) -> dump section TRAINED (0.38) |
 | `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |
@@ -56,12 +64,13 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
-| `Fallbacks/` | FallbackConfig, FallbackSystem, KezanEnterprise | fallback scenarios: trigger buildings, HQ watch, placeholder fallbacks, Kul Tiras -> Kezan Enterprise (oil income, creep market) |
-| `FACTION_UNITS.md` | | GENERATED (`unit_scan.py --md`): units / heroes per faction, for fallback keep/lose decisions |
-| `FALLBACKS.md` | | fallback scenarios: design, teams, per-faction work list (big project, after the load rework) |
+| `WORKAROUNDS.md` | | everything the bot needs outside `Ai/` (hooks, workarounds, runtime map changes, version-bound data) |
+| `MEASUREMENTS.md` | | load numbers per version (from `dump_summary.py`) |
+| `../ShatteredLegacies/` | ShatteredLegaciesSetup, FallbackConfig, FallbackSystem, KezanEnterprise, SlAiData | fork content: fallbacks, Kezan Enterprise; own `README.md`, `TODO.md`, `FALLBACKS.md`, `FACTION_UNITS.md` |
+| `tools/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
-| `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` from WL's ObjectInfo + map data (run after every WL update) |
+| `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) and `../ShatteredLegacies/SlAiData.g.cs` (fork buildings, `SL_BUILDINGS`) from WL's ObjectInfo + map data (run after every WL update) |
 | `tools/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
 | `tools/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
 
@@ -90,12 +99,19 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
    `tools/ai/scope_check.py` catches this and nested re-declarations (CS0136).
 10. **No compiler in the sandbox** (no dotnet, no nuget). Before every drop: `check_refs.py`, a tree-sitter syntax
     pass and `scope_check.py` on EVERY changed .cs file, including files outside `Ai/`; JSON files through `json.load`.
-12. **Unqualified calls across classes don't compile** (0.39.2 break, CS0103): a helper added to `SimpleBot` and
+11. **Unqualified calls across classes don't compile** (0.39.2 break, CS0103): a helper added to `SimpleBot` and
     called as `IsActive(...)` from `QuestAutoComplete` (same file, other class). `check_refs.py` reports these as
     UNQUALIFIED since 0.39.3.
-11. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM. Python: read `utf-8-sig`, write the BOM back
+12. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM (files in `Ai/` and `ShatteredLegacies/` don't).
+    Keep whatever the file had. Python: read `utf-8-sig`, write the BOM back
     if it was there; `/bin/sh` is dash -- `printf '\xef'` writes the text `\xef`, not the byte. Compare BOMs with
     `git show HEAD:<file> | head -c 3 | od -An -tx1` before delivering.
+13. **Layers** (0.39.10): nothing in `Ai/` may reference a class outside `Ai/` except WL's own code; fork code uses
+    the bot only through `AiApi` (add a method there instead of reaching into `SimpleBot`). `check_refs.py`: LAYER, API.
+14. **Markers**: every change in an original file gets `// [BOT]`, `// [SL]` or `// [WORKAROUND]` and an entry in
+    `WORKAROUNDS.md` or `../ShatteredLegacies/README.md` in the same drop.
+15. **Desync**: never base a decision on wall-clock time, local files or per-client text. Counters for budgets must
+    be deterministic (units enumerated, orders issued).
 
 ## How we work
 
@@ -103,14 +119,18 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
   and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; no GitHub Actions.
 - "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
 - At most one question per reply; propose defaults instead of asking many.
-- Deliver whole files (zip with repo paths) plus one `git diff` patch against the pushed branch, verified with
-  `git apply --check` on a clean worktree of `origin/botified-dev`.
+- Deliver one patch per version (`git diff --binary -M` against the pushed branch, or against the previous patch
+  of the same delivery), verified with `git apply --check` on a clean worktree of `origin/botified-dev`, plus a zip
+  of the whole files with repo paths. The maintainer downloads them to `~/Downloads/` and runs the commands given in
+  the reply (apply, commit, tag); he cannot run `.ps1` scripts in Windows, only paste PowerShell commands.
 - Version on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`) AND `MapSettings.Version` in
   `src/WarcraftLegacies.CLI/appsettings.json` (`v<build>`; also in the published file name), `CHANGELOG.md`.
   Map title: "Shattered Legacies: Botified Realm v<build>" (name in `Info.json`, version appended on publish).
   Docs-only drop: CHANGELOG only. Release = commit + push + tag `v<build>` (commands in `README.md`, "Releasing").
 - Keep `TODO.md` and `CHANGELOG.md` current in the same drop; TODO only holds open work.
-- Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`). Decode:
+- Measurements live in `MEASUREMENTS.md` (written by `tools/ai/dump_summary.py --append`), so a new chat sees them.
+- Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`). `dump_summary.py` condenses a whole
+  game; to read one dump in full, decode:
   ```
   python3 -c "import re,sys;[print(m.group(1)) for l in open(sys.argv[1],errors='replace') for m in [re.match(r'\s*call Preload\( \"(.*)\" \)',l)] if m]" dump.txt
   ```
@@ -246,4 +266,4 @@ Your setup
 - **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, `AiConfig.HeroVisits`),
   kill targets / area clears (`AiConfig.KillTargets`, `ClearAreas`, `RequireType`). Heroes on a mission are in
   `AiState.MissionUnits`. Stranded heroes: `AiHeroCare`. Bot menu picks: `AiChoices`.
-- **Bot strength vote** (`AiGoldVote`, 70 s) sets `SimpleBot.BotGoldBonus`; free hero revive needs a living altar.
+- **Bot strength vote** (`AiGoldVote`, 49 s) sets `SimpleBot.BotGoldBonus`; free hero revive needs a living altar.

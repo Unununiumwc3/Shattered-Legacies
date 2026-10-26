@@ -1,8 +1,31 @@
-# Changelog -- Warcraft Legacies bot AI
+# Changelog -- Shattered Legacies: Botified Realm (bot AI and fork content)
 
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags: `v0.39.9` and later (older
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
+
+## 0.39.10
+Refactor step 0: the bot and the fork's own content are separate layers. No gameplay change except the two fixes.
+- **Fallbacks moved** from `Ai/Fallbacks/` to `src/WarcraftLegacies.Source/ShatteredLegacies/` (namespace
+  `WarcraftLegacies.Source.ShatteredLegacies`), with `FALLBACKS.md` and `FACTION_UNITS.md`. New entry point
+  `ShatteredLegaciesSetup.Setup()`, called from `Setup/GameSetup.cs` right after the bot (same timing as before).
+- **`Ai/AiApi.cs`**: the bot's public surface for code outside `Ai/` (players, logging, `Safe`, build spots) and data
+  hooks (`RegisterHeroes`, `AddProductionData`). The fork code no longer reads `SimpleBot` internals.
+- **The bot no longer knows fork data**: the Kezan Enterprise hero list left `AiConfig`; `gen_ai_data.py` writes the
+  Kezan buildings' train lists to `ShatteredLegacies/SlAiData.g.cs` (merged at setup -- same tables as before).
+- `check_refs.py` checks both folders and the layer rule: LAYER (bot code uses fork code), API (fork code bypasses
+  `AiApi`).
+- **Markers** in original files: `// [BOT]` (hooks the bot needs), `// [SL]` (fork content), `// [WORKAROUND]`.
+- New docs: `Ai/WORKAROUNDS.md` (everything the bot needs outside `Ai/`, with "blocks PR"), `Ai/MEASUREMENTS.md`
+  + `tools/ai/dump_summary.py` (a game's dumps -> summary in the repo), `ShatteredLegacies/README.md` (all fork
+  changes to the original map / code, incl. the map data lists the context file had lost track of),
+  `ShatteredLegacies/TODO.md` (fork work and the known issues from the root README). `Ai/TODO.md` rewritten: refactor
+  phases 0.40 scheduler, 0.41 army orders, 0.42 route planner (+ waypoint orders, objective nodes); outdated facts
+  fixed (vote at 49 s, no invasion waves).
+- Fix: the Kezan Enterprise bot now trains Gallywix first -- the hero list was keyed "The Kezan Enterprise", but the
+  faction is named "Kezan Enterprise" since 0.39.7.
+- Fix: the Scarlet Crusade trigger building no longer says "WL event" ("story event").
+- Version v0.39.10.
 
 ## 0.39.9
 - **Book of Medivh** gets a third ability: **Guardian's Abjuration** -- WC3's Big Bad Voodoo (`AOvd`) as an item

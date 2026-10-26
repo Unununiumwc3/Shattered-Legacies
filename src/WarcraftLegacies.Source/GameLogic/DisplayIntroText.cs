@@ -41,6 +41,7 @@ public static class DisplayIntroText
     {
       foreach (var player in Util.EnumeratePlayers())
       {
+        // [SL] (0.39.9): fork title and notice instead of WL's intro (requested by the original maintainer)
         player.DisplayTimedTextTo(displayTime - 1, $@"|cffffcc00Shattered Legacies: Botified Realm|r
   |cffaaaaaaUnofficial prototype based on Warcraft Legacies. This is not the official version.|r
 

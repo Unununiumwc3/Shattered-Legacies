@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 
-namespace WarcraftLegacies.Source.Ai
+namespace WarcraftLegacies.Source.ShatteredLegacies
 {
-  // 0.39.1: fallback scenarios, first slice (design: Ai/FALLBACKS.md). One definition per faction that has a fallback.
+  // 0.39.1: fallback scenarios, first slice (design: ShatteredLegacies/FALLBACKS.md). One definition per faction
+  // that has a fallback.
   // Mode "wl"    = WL already does it (Theramore, Scarlet Crusade): only the trigger building shows it, no ability.
   // Mode "spawn" = this system does it: when the faction loses its HQ CP (after having held it), a bot falls back at
   //                once; a human gets the "Begin the Fallback" ability on its trigger building and decides when.
@@ -65,7 +66,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static readonly List<FallbackDef> All = new()
     {
       new FallbackDef("Dalaran", "Theramore (automatic when the Violet Citadel falls)", "wl"),
-      new FallbackDef("Lordaeron", "Scarlet Crusade (WL event)", "wl"),
+      new FallbackDef("Lordaeron", "Scarlet Crusade (story event)", "wl"),
       new FallbackDef("Quel'thalas", "Sunfury (placeholder)", "spawn")
       {
         Hq = new[] { 1747988531, 1848651825 }, // h003 Silvermoon Palace, n001 the Sunwell
