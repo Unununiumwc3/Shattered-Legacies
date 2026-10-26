@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
+using WarcraftLegacies.Source.Ai;
 
-namespace WarcraftLegacies.Source.Ai
+namespace WarcraftLegacies.Source.ShatteredLegacies
 {
   // 0.39.8: the Kezan Enterprise's special buildings (maintainer's design), started by the Kul Tiras fallback.
   // - Kezan Oil Supply (h04Z): +50 gold per minute each while it stands (WL's BonusIncome; cannot be captured).
@@ -37,9 +38,9 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var tick = CreateTimer();
-      TimerStart(tick, 10f, true, () => SimpleBot.Safe("kezan oil", UpdateOilIncome));
+      TimerStart(tick, 10f, true, () => AiApi.Safe("kezan oil", UpdateOilIncome));
       var restock = CreateTimer();
-      TimerStart(restock, RestockEvery, true, () => SimpleBot.Safe("kezan market", Restock));
+      TimerStart(restock, RestockEvery, true, () => AiApi.Safe("kezan market", Restock));
       var trained = CreateTrigger();
       TriggerRegisterPlayerUnitEvent(trained, p, EVENT_PLAYER_UNIT_TRAIN_FINISH, null);
       TriggerAddAction(trained, OnTrained);

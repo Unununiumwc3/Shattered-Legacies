@@ -13,6 +13,7 @@ public static class InfoQuests
     var creditsQuest = quest.Create();
     creditsQuest.SetTitle("Credits");
     creditsQuest.SetIcon(@"ReplaceableTextures\CommandButtons\BTNManual3.blp");
+    // [SL] (0.39.9): first paragraph = fork notice (requested by the original maintainer)
     creditsQuest.SetDescription(@"Shattered Legacies: Botified Realm is an unofficial exploration/prototype based on Warcraft Legacies. It is not the official version and is not affiliated with the Warcraft Legacies team. It experiments with a graph-based bot system built with the help of LLMs.
 
 The Warcraft Legacies team sends an enormous thank you to...

@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Legends;
+using WarcraftLegacies.Source.Ai;
 
-namespace WarcraftLegacies.Source.Ai
+namespace WarcraftLegacies.Source.ShatteredLegacies
 {
   // 0.39.1: fallback scenarios, first slice. Creates one trigger building per player slot whose faction has a fallback
   // (FallbackConfig), watches the HQ CPs, and runs the fallback: bots at once, humans through the building's
@@ -22,7 +23,7 @@ namespace WarcraftLegacies.Source.Ai
       var create = CreateTimer();
       TimerStart(create, FallbackConfig.CreateAt, false, CreateBuildings);
       var check = CreateTimer();
-      TimerStart(check, FallbackConfig.CheckEvery, true, () => SimpleBot.Safe("fallbacks", Check));
+      TimerStart(check, FallbackConfig.CheckEvery, true, () => AiApi.Safe("fallbacks", Check));
       var cast = CreateTrigger();
       for (var i = 0; i < 24; i++)
       {
@@ -96,7 +97,7 @@ namespace WarcraftLegacies.Source.Ai
         _def[pid] = def;
       }
 
-      SimpleBot.Log("fallbacks: " + I2S(_building.Count) + " trigger building(s) created");
+      AiApi.Log("fallbacks: " + I2S(_building.Count) + " trigger building(s) created");
     }
 
     // 0.39.4: the HQ units (buildings / CPs) of the given types -- one whole-map scan, once at creation
@@ -176,7 +177,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         _ready.Add(pid);
-        if (SimpleBot.IsBot(p) && SimpleBot.HasPerks(p))
+        if (AiApi.IsBot(p) && AiApi.HasPerks(p))
         {
           Execute(pid); // bots fall back at once
         }
@@ -185,7 +186,7 @@ namespace WarcraftLegacies.Source.Ai
           UnitAddAbility(_building[pid], FallbackConfig.AbilityId);
           DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00Your fallback is ready:|r " + def.Name + ". Use the Fallback "
             + "building in the north-east corner of the map when you want to start it.");
-          SimpleBot.LogPin("fallback ready for P" + I2S(pid) + " " + def.Faction + " (human decides)");
+          AiApi.LogPin("fallback ready for P" + I2S(pid) + " " + def.Faction + " (human decides)");
         }
       }
     }
@@ -212,7 +213,7 @@ namespace WarcraftLegacies.Source.Ai
       player stormwind = null;
       foreach (var f in FactionManager.GetAllFactions())
       {
-        if (f.Name == "Stormwind" && f.Player != null && SimpleBot.IsActive(f.Player))
+        if (f.Name == "Stormwind" && f.Player != null && AiApi.IsActive(f.Player))
         {
           stormwind = f.Player;
         }
@@ -257,12 +258,12 @@ namespace WarcraftLegacies.Source.Ai
         SetUnitPosition(katherine, def.X, def.Y);
       }
 
-      var kezan = SimpleBot.SafeCp(1848652890); // n04Z Kezan
+      var kezan = AiApi.SafeCp(1848652890); // n04Z Kezan
       unit kezanUnit = null;
       if (kezan != null && kezan.Unit != null)
       {
         kezanUnit = kezan.Unit;
-        SimpleBot.GiveUnit(kezanUnit, p);
+        AiApi.GiveUnit(kezanUnit, p);
       }
 
       // 0.39.7: everything neutral on Kezan (Regions.KezanAmbient) joins: the goblin buildings there (Scrapyard,
@@ -285,7 +286,7 @@ namespace WarcraftLegacies.Source.Ai
 
       DestroyGroup(g2);
       RemoveRect(area);
-      SimpleBot.LogPin("Kezan: " + I2S(taken) + " neutral buildings / units joined");
+      AiApi.LogPin("Kezan: " + I2S(taken) + " neutral buildings / units joined");
 
       // 0.39.6: the faction becomes "The Kezan Enterprise" -- renamed, goblin start buildings, its units allowed
       var fac = p.GetPlayerData().Faction;
@@ -311,17 +312,17 @@ namespace WarcraftLegacies.Source.Ai
       var placed = 0;
       for (var i = 0; i < FallbackConfig.KezanBuildings.Length; i++)
       {
-        if (AiLegion.FindBuildSpot(def.X, def.Y, usedX, usedY))
+        if (AiApi.FindBuildSpot(def.X, def.Y, usedX, usedY, out var sx, out var sy))
         {
-          CreateUnit(p, FallbackConfig.KezanBuildings[i], SimpleBot._spotX, SimpleBot._spotY, 270f);
-          usedX.Add(SimpleBot._spotX);
-          usedY.Add(SimpleBot._spotY);
+          CreateUnit(p, FallbackConfig.KezanBuildings[i], sx, sy, 270f);
+          usedX.Add(sx);
+          usedY.Add(sy);
           placed++;
         }
       }
 
-      SimpleBot.LogPin("Kul Tiras fallback -> The Kezan Enterprise: old army to " + (stormwind != null ? "Stormwind" : "removed")
-                       + ", " + I2S(placed) + " goblin buildings, own team (Pact)");
+      AiApi.LogPin("Kul Tiras fallback -> The Kezan Enterprise: old army to " + (stormwind != null ? "Stormwind" : "removed")
+                   + ", " + I2S(placed) + " goblin buildings, own team (Pact)");
     }
 
     private static void Execute(int pid)
@@ -355,7 +356,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       PingMinimap(def.X, def.Y, 5f);
-      SimpleBot.LogPin("FALLBACK P" + I2S(pid) + " " + def.Faction + " -> " + def.Name);
+      AiApi.LogPin("FALLBACK P" + I2S(pid) + " " + def.Faction + " -> " + def.Name);
     }
   }
 }

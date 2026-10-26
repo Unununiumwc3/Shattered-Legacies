@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace MacroTools.UserInterface;
 
+// [BOT] whole file (0.37.1): hook for the bot AI in WarcraftLegacies.Source/Ai.
 /// <summary>
 /// Hook for the bot AI (WarcraftLegacies.Source/Ai): lets computer-controlled players pick an option of a
 /// <see cref="ChoiceDialogPresenter{TChoice}"/> instead of always getting the default (option 1 after 24 s).

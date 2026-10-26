@@ -1,7 +1,7 @@
 # Fallback scenarios -- design and work list
 
-Big project of its own; comes AFTER the engine-load rework (see `TODO.md`). Everything fallback-related lives here;
-`TODO.md` only points to this file.
+Big project of its own; comes AFTER the engine-load rework (see `../Ai/TODO.md`). Shattered Legacies content: the
+code is in this folder (`ShatteredLegacies/`), open items in `TODO.md` next to this file.
 
 ## Idea
 
@@ -127,7 +127,7 @@ part of a WL rescue -> conflict check), other numbers = a player slot at start.
 
 ## HQ per faction (shared by fallbacks AND guardian summons)
 
-One HQ definition per faction, in ONE code file (planned: `Ai/Fallbacks/HqConfig.cs`) that both the fallback logic and
+One HQ definition per faction, in ONE code file (planned: `ShatteredLegacies/HqConfig.cs`, handed to the bot through `AiApi`) that both the fallback logic and
 the guardian summons read -- so they can never disagree. Candidates come from WL: legends marked **Essential** (WL
 eliminates a faction when ALL of them are gone). Proposal: HQ = the first one listed; "HQ falls" = that one dies /
 changes owner. **Input needed** per faction: confirm or pick another (several factions have more than one).
@@ -303,7 +303,7 @@ Risks and how to keep them small:
   after, unit list, announcement); start with a **generic remnant** for every faction (same faction, small base at its
   fallback place, team change) and replace it with the rich lore version faction by faction.
 - **Distance from upstream WL**: every WL update has to be merged. -> Keep fallbacks a separate layer like `Ai/`
-  (own folder, minimal hooks), reuse WL's rescue and quest mechanisms instead of changing them.
+  (own folder `ShatteredLegacies/` since 0.39.10, minimal hooks marked `[SL]`), reuse WL's rescue and quest mechanisms instead of changing them.
 - **Game length and load**: fallbacks keep factions alive and add CPs -> longer games, more units late. -> After the
   engine-load rework; small starts; later maybe adjust the victory condition.
 - **Understanding**: team changes confuse players. -> One announcement per fallback, the team wrappers on the
@@ -311,9 +311,11 @@ Risks and how to keep them small:
 - **Bots**: cheap, thanks to the table-driven production (0.38) -- a new faction mostly needs its data generated and
   a home-continent switch.
 
-## Implemented so far (up to 0.39.9)
+## Implemented so far (up to 0.39.10)
 
-- Folder `Ai/Fallbacks/`: `FallbackConfig.cs` (one definition per faction), `FallbackSystem.cs` (trigger buildings,
+- 0.39.10: moved from `Ai/Fallbacks/` to `ShatteredLegacies/` (namespace `WarcraftLegacies.Source.ShatteredLegacies`),
+  started from `ShatteredLegaciesSetup`; uses the bot only through `AiApi`.
+- Folder (then `Ai/Fallbacks/`): `FallbackConfig.cs` (one definition per faction), `FallbackSystem.cs` (trigger buildings,
   HQ watch, run). Map data: `n0FB` trigger building, `AFB1` "Begin the Fallback".
 - Trigger buildings in the corner grid (row = slot / 12, column = slot % 12), created at 62 s for every slot whose
   faction has a definition; bots run the fallback by code.
@@ -352,7 +354,7 @@ Risks and how to keep them small:
   `SetState(Observer)`) -- the player loses everything and could never use a fallback. The fallback must run BEFORE
   WL's defeat: a hook in `Faction.Defeat` (or where WL eliminates a faction) that runs an available fallback instead.
   Same for bots: an autopilot / bot that is defeated becomes an observer too.
-- Related concept in TODO.md: "Guardian summons" / HQ last stand.
+- Related concept in `../Ai/TODO.md`: "Guardian summons" / HQ last stand.
 
 ## Work order
 

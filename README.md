@@ -14,7 +14,13 @@ built on top of the Warcraft Legacies codebase.
 
 A more detailed README will follow.
 
-## Known issues (v0.39.9 playtesting)
+## Where things are
+
+- `src/WarcraftLegacies.Source/Ai/` -- the bot AI (README, TODO, CHANGELOG, measurements, `WORKAROUNDS.md`).
+- `src/WarcraftLegacies.Source/ShatteredLegacies/` -- this fork's own content: fallbacks, Kezan Enterprise (README
+  lists every change to the original map, TODO holds the open work).
+
+## Known issues (v0.39.9 playtesting; tracked in the two TODO files)
 
 - **Rift to Maw of Gorma does not work.** The target is around x 22545, y -4784; moving it about 100 units further north might fix it, or the cause is something else.
 - **Fallback messages are wrong.** When Kul Tiras loses its HQ, the game says the HQ was regained, although it was destroyed for good.

@@ -13,6 +13,7 @@ public static class HintConfig
     Hint.Register(() => Loc.Get("Artifacts are unique items that can grant major advantages. You can find out where Artifacts are using the Artifact Menu at the top-left of your screen."));
     Hint.Register(() => Loc.Get("Some heroes can't be revived, and some can only be revived if you control certain capitals when they die."));
     Hint.Register(() => Loc.Get("If you have low FPS, try turning off your health bars."));
+    // [SL] (0.39.9): the two hints below are the fork notice requested by the original maintainer.
     Hint.Register(() => Loc.Format("This map is an unofficial fork of Warcraft Legacies. You can find the original at {url}", ("{url}", "https://warcraftlegacies.com/")));
     Hint.Register(() => Loc.Format("You can support the original Warcraft Legacies team on Patreon at {url}", ("{url}", "https://www.patreon.com/cw/WarcraftLegacies")));
     Hint.Register(() => Loc.Get("When a player leaves, their units are refunded, then their gold and hero experience are spread among their remaining allies."));
