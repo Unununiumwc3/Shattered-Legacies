@@ -41,8 +41,8 @@ public static class DisplayIntroText
     {
       foreach (var player in Util.EnumeratePlayers())
       {
-        player.DisplayTimedTextTo(displayTime - 1, $@"|cffffcc00Warcraft Legacies|r
-  |cffaaaaaa{Loc.Get("Join our Discord:")}|r discord.gg/pnWZs69
+        player.DisplayTimedTextTo(displayTime - 1, $@"|cffffcc00Shattered Legacies: Botified Realm|r
+  |cffaaaaaaUnofficial prototype based on Warcraft Legacies. This is not the official version.|r
 
   {Loc.Get("If you are a new player, look at the Quest (F9) tab to see your objectives.")}
   ");

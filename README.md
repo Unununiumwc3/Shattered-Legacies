@@ -1,12 +1,34 @@
-# WarcraftLegacies
-Warcraft: Legacies was a Warcraft 3 macro-strategy map representing the events of the Warcraft story from Reign of Chaos through to World of Warcraft: Cataclysm.
+# Shattered Legacies: Botified Realm
 
-This project is a complete rewrite of Warcraft: Legacies in C#.
+> **This is not Warcraft Legacies.**
+> Shattered Legacies: Botified Realm is an unofficial exploration/prototype based on
+> [Warcraft Legacies](https://github.com/AzerothWarsLR/WarcraftLegacies). It is not the official
+> version and is not affiliated with or endorsed by the Warcraft Legacies team.
+>
+> Please do not report bugs or problems from this project to the Warcraft Legacies team.
 
-## Contributions
-We accept public contributions to the code-base in the form of Pull Requests. Feel free to work on any Issue in the Issues tab, or fix any bug that you're aware of. Please refer to the [Wiki](https://github.com/AzerothWarsLR/WarcraftLegacies/wiki) for a deeper understanding of how to contribute.
+## What is this?
 
-## Projects
+An experiment in making a graph-based bot system for Warcraft 3 work with the help of LLMs,
+built on top of the Warcraft Legacies codebase.
+
+A more detailed README will follow.
+
+## Credits
+
+All of the original map, game design and code comes from
+[Warcraft Legacies](https://github.com/AzerothWarsLR/WarcraftLegacies), created by its founders
+Lordsebas and YakaryBovine, its developers Technopig, Madsen and Vampirika, programmer alrun3,
+and all contributors and artists listed in the commit history and in the in-game credits.
+Thank you for building and open-sourcing it.
+
+The full commit history of the original project is preserved in this repository.
+
+## License
+
+MIT. The original copyright notice in [LICENSE](LICENSE) is kept unchanged.
+
+## Code structure (inherited from Warcraft Legacies)
 
 ### MacroTools
 Library containing tools intended for consumption by Warcraft 3 maps in the Macro Strategy genre.

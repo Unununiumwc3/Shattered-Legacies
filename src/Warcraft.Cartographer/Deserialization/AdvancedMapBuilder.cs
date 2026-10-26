@@ -118,9 +118,19 @@ public sealed class AdvancedMapBuilder(AdvancedMapBuilderOptions options)
       return;
     }
 
-    // Bot AI branch (4.8.2-ai): a different map name so it is never mistaken for the official map; "Botified" in red.
-    map.Info.MapName = $"Warcraft Legacies |cffff0000Botified|r {version}";
-    map.Info.LoadingScreenTitle = $"Warcraft Legacies |cffff0000Botified|r {version}";
+    // Use the titles from Info.json and append the version, instead of a hardcoded map name.
+    map.Info.MapName = WithVersion(map.Info.MapName, version);
+    map.Info.LoadingScreenTitle = WithVersion(map.Info.LoadingScreenTitle, version);
+  }
+
+  private static string WithVersion(string? title, string version)
+  {
+    if (string.IsNullOrEmpty(title))
+    {
+      return version;
+    }
+
+    return title.EndsWith(version, StringComparison.Ordinal) ? title : $"{title} {version}";
   }
 
   /// <summary>
