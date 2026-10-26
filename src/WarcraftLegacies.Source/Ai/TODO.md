@@ -1,8 +1,8 @@
 # TODO -- Warcraft Legacies bot AI
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.9** (map "Warcraft Legacies
-Botified 4.8.2-ai.0.39.9"). Next: **0.39.0** = refactor phase 1 + 2 (below).
+Move finished items to `CHANGELOG.md`. Keep this file short. Current build: **0.39.9** (map "Shattered Legacies:
+Botified Realm v0.39.9"). Next: **0.40** = the refactor (below).
 
 ## Where we are (handover, end of the 0.36-0.39 chat)
 

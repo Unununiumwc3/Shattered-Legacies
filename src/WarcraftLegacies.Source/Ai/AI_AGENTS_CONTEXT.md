@@ -5,22 +5,25 @@ the **bots**, this file is about **AI assistants** working on the code.
 
 ## The project in one paragraph
 
-Computer-player bots for **Warcraft Legacies 4.8.2** (a Warcraft III Reforged map written in C# with WCSharp and
-transpiled to Lua by **CSharp.lua**). Kept on 4.8.2 because 5.x removed the Old Gods. Fork:
-`https://github.com/lehmbein/WarcraftLegacies`, branch `4.8.2-ai`, tags `4.8.2-ai.0.MINOR.PATCH`. All bot code is
+Computer-player bots for **Shattered Legacies: Botified Realm**, an unofficial fork of **Warcraft Legacies 4.8.2** (a
+Warcraft III Reforged map written in C# with WCSharp and transpiled to Lua by **CSharp.lua**). Kept on 4.8.2 because
+5.x removed the Old Gods. Repo: `https://github.com/Unununiumwc3/Shattered-Legacies`, branch `botified-dev`, tags
+`v0.MINOR.PATCH`. Never call it "Warcraft Legacies" or "WL" in anything players see (lobby, loading screen, chat): the
+original maintainer asked for that, and players mistook the fork for an official release. All bot code is
 in `src/WarcraftLegacies.Source/Ai/`. Changes outside it (keep them minimal and listed here): one hook line in
 `Setup/GameSetup.cs` (`WarcraftLegacies.Source.Ai.AiSetup.Setup();` after `Artifacts.Setup();`); `Loc.cs` literal
 replace (0.34.3); the bot-pick hook `MacroTools/UserInterface/BotChoicePolicy.cs` + `ChoiceDialogPresenter.TryBotPick`
-(0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` + version in
-`WarcraftLegacies.CLI/appsettings.json` (0.37.1); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); `Setup/GameSetup.cs`: no game-mode vote, Closed
+(0.37.1); the map title in `Warcraft.Cartographer/.../AdvancedMapBuilder.cs` (taken from `Info.json`, version appended) +
+version and published file name in `WarcraftLegacies.CLI/appsettings.json` and `Settings/` (0.39.9 rebrand; the
+rebrand also touched `Info.json`, `DisplayIntroText.cs`, `InfoQuests.cs`, `HintSetup.cs` and the root README); `Setup/ControlPointSetup.cs`: the 1-gold CP marker (0.38); `Setup/GameSetup.cs`: no game-mode vote, Closed
 Alliance forced (0.39.1); `GameLogic/GameEnd/PlayerLeaves.cs`: the AI takes over leaving humans (0.39.2); map data `n0FB` / `AFB1` (fallback trigger building, 0.39.1); map data:
 CPs `n0JS` Jaina's Sanctum (0.37.2), `n0SA`/`n0TD`/`n0RF` + marker `A0ZG`/`B0ZG` (0.38).
 
 ## Getting the code (sandbox)
 
 ```
-GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch 4.8.2-ai \
-    https://github.com/lehmbein/WarcraftLegacies.git wl && cd wl
+GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch botified-dev \
+    https://github.com/Unununiumwc3/Shattered-Legacies.git wl && cd wl
 git sparse-checkout set src/WarcraftLegacies.Source/Ai tools/ai src/MacroTools \
     mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData \
     src/WarcraftLegacies.CLI src/Warcraft.Cartographer
@@ -101,11 +104,11 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
 - At most one question per reply; propose defaults instead of asking many.
 - Deliver whole files (zip with repo paths) plus one `git diff` patch against the pushed branch, verified with
-  `git apply --check` on a clean worktree of `origin/4.8.2-ai`.
+  `git apply --check` on a clean worktree of `origin/botified-dev`.
 - Version on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`) AND `MapSettings.Version` in
-  `src/WarcraftLegacies.CLI/appsettings.json` (`4.8.2-ai.<build>`; also the published file name), `CHANGELOG.md`.
-  Map title: "Warcraft Legacies Botified <version>" (`AdvancedMapBuilder.SetMapTitles`). Docs-only drop: CHANGELOG +
-  tag only. Release = commit + tag `4.8.2-ai.<build>` + push (commands in `README.md`, "Releasing").
+  `src/WarcraftLegacies.CLI/appsettings.json` (`v<build>`; also in the published file name), `CHANGELOG.md`.
+  Map title: "Shattered Legacies: Botified Realm v<build>" (name in `Info.json`, version appended on publish).
+  Docs-only drop: CHANGELOG only. Release = commit + push + tag `v<build>` (commands in `README.md`, "Releasing").
 - Keep `TODO.md` and `CHANGELOG.md` current in the same drop; TODO only holds open work.
 - Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`). Decode:
   ```
