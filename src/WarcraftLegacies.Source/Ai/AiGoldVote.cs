@@ -11,7 +11,10 @@ using WarcraftLegacies.Source.Factions.Legion.Quests;
 namespace WarcraftLegacies.Source.Ai
 {
   // 0.35.1: bot strength vote. 70 s into the game every human player gets a dialog; the choice sets the bonus gold
-  // every bot receives per production turn (SimpleBot.BotGoldBonus; 25 = the old default, about 100 gold/min).
+  // every bot receives per production turn (SimpleBot.BotGoldBonus; 25 = about 100 gold/min).
+  // 0.43.1: scale shifted down (maintainer): bots already get free techs, heroes and revives, so Veteran = no bonus,
+  // the two easy options TAKE gold, Warlord = the old Veteran (25). The old Veteran made 250-food armies and 4000+
+  // units -- orders took ~2 s to start (engine overloaded), which also spoiled the movement tests.
   // Majority wins; a tie goes to the option closest to "Veteran"; no vote = Veteran. Shown only if there are bots.
   // The debug commands -gold0 ... -gold200 still override it afterwards.
   internal static class AiGoldVote
@@ -22,15 +25,15 @@ namespace WarcraftLegacies.Source.Ai
 
     private static readonly string[] Names =
     {
-      "Recruit -- bots get no bonus gold",
-      "Soldier -- bots get half bonus gold",
-      "Veteran -- normal bonus gold (default)",
-      "Commander -- 1.5x bonus gold",
-      "Warlord -- 2x bonus gold, huge armies (may cause lag)",
+      "Recruit -- bots lose gold (about -50 per minute)",
+      "Soldier -- bots lose a little gold (about -25 per minute)",
+      "Veteran -- no bonus gold (default)",
+      "Commander -- bonus gold (about +50 per minute)",
+      "Warlord -- big bonus gold (about +100 per minute), huge armies (may cause lag)",
     };
 
     private static readonly string[] Short = { "Recruit", "Soldier", "Veteran", "Commander", "Warlord" };
-    private static readonly int[] Gold = { 0, 13, 25, 38, 50 };
+    private static readonly int[] Gold = { -13, -6, 0, 13, 25 }; // 0.43.1: was { 0, 13, 25, 38, 50 }
 
     private static readonly int[] Votes = new int[5];
     private static readonly button[] Buttons = new button[5];

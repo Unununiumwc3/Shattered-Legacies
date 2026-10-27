@@ -218,7 +218,7 @@ namespace WarcraftLegacies.Source.Ai
 
     private const float ReplanEvery = 30f;
     private const float QuestBias = 0.3f;   // a CP of an open quest objective counts this much of its cost
-    private const float ReachNode = 1200f;  // a waypoint node counts as reached within this distance
+    private const float WaypointReach = 8000f; // 0.43.1: order to the farthest route node within this distance
     private static List<int>[] _path = new List<int>[24];
     private static int[] _step = new int[24];
     private static float[] _planAt = new float[24];
@@ -238,9 +238,11 @@ namespace WarcraftLegacies.Source.Ai
 
       var t = _lastTarget[pid];
       var tu = t >= 0 ? Candidate(p, pid, fac, t, d) : null;
+      // 0.43.1: plan again only when the target is gone or every ReplanEvery seconds. 0.42.1/0.43.0 also planned
+      // whenever the group stood in an area that is not on the route -- which happens all the time while walking
+      // past other nodes (~1 plan per bot every 13 s, new routes, back and forth).
       var path = _path[pid];
-      var at = path != null ? path.IndexOf(here) : -1;
-      if (tu == null || path == null || at < 0 || SimpleBot.Clock - _planAt[pid] >= ReplanEvery)
+      if (tu == null || path == null || SimpleBot.Clock - _planAt[pid] >= ReplanEvery)
       {
         tu = Plan(p, pid, fac, here, t, tu, d);
         if (tu == null)
@@ -251,23 +253,52 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         path = _path[pid];
-        at = 0;
       }
 
-      // follow the route: the group's own area, or a node it has reached, moves the step forward -- never back
-      if (at + 1 > _step[pid])
+      // 0.43.1: the order goes to the FARTHEST node on the route within WaypointReach of the group (a CP before an
+      // area node), never to one behind the last. The point moves ahead while the units still walk -- 0.42.1/0.43.0
+      // ordered to the next node, units stopped there and waited until the group's centre came within 1200
+      // ("stop go stop go", ~950 waypoint orders/min).
+      var last = path.Count - 1;
+      var pick = -1;
+      var pickCp = -1;
+      for (var k = last; k >= _step[pid] && k >= 0; k--)
       {
-        _step[pid] = at + 1;
+        if (!Near(path[k], sx, sy, WaypointReach))
+        {
+          continue;
+        }
+
+        if (pick < 0)
+        {
+          pick = k;
+        }
+
+        if (AiRouteData.NodeType[path[k]] != 0)
+        {
+          pickCp = k;
+          break;
+        }
       }
 
-      while (_step[pid] < path.Count - 1 && Near(path[_step[pid]], sx, sy, ReachNode))
+      if (pick != last && pickCp >= 0 && pick - pickCp <= 2)
       {
-        _step[pid]++;
+        pick = pickCp; // a CP is a better gathering point than an area node, if it is at most 2 nodes back
       }
 
-      var wp = _step[pid] < path.Count ? path[_step[pid]] : path[path.Count - 1];
+      if (pick > _step[pid])
+      {
+        _step[pid] = pick;
+      }
+
+      if (_step[pid] > last)
+      {
+        _step[pid] = last;
+      }
+
+      var wp = path[_step[pid]];
       _lastWp[pid] = wp;
-      _lastHops[pid] = path.Count - 1 - _step[pid];
+      _lastHops[pid] = last - _step[pid];
       if (wp == path[path.Count - 1])
       {
         WpX[pid] = -1f;
@@ -411,26 +442,20 @@ namespace WarcraftLegacies.Source.Ai
       return cands[best];
     }
 
-    // own territory: CPs held by p or an ally, area nodes where p or an ally has a structure
+    // own territory: CPs held by p, area nodes where p has a structure. 0.43.1: NOT the allies' -- with them every bot
+    // of a team computed the same front (the team's cheapest) and the whole team marched there as one ball (Druids,
+    // Ahn'Qiraj and the Sentinels from Kalimdor to Arathi Highlands, 9 hops).
     private static bool IsOwnNode(player p, int pid, int i)
     {
       var t = AiRouteData.NodeType[i];
       if (t != 0)
       {
         var cp = SimpleBot.SafeCp(t);
-        return cp != null && cp.Unit != null && (GetOwningPlayer(cp.Unit) == p || IsUnitAlly(cp.Unit, p));
+        return cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) == p;
       }
 
-      for (var k = 0; k < 24; k++)
-      {
-        var s = _areaUnit[i * 24 + k];
-        if (s != null && (k == pid || IsPlayerAlly(Player(k), p)) && GetUnitState(s, UNIT_STATE_LIFE) > 0.405f)
-        {
-          return true;
-        }
-      }
-
-      return false;
+      var s = _areaUnit[i * 24 + pid];
+      return s != null && GetUnitState(s, UNIT_STATE_LIFE) > 0.405f;
     }
 
     private static float Score(int i, unit cand)

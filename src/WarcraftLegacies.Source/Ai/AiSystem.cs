@@ -390,7 +390,8 @@ namespace WarcraftLegacies.Source.Ai
     internal const float StickySwitch = 0.5f;       // 0.36: leave the current frontier only for one with < 0.5x its
                                                    // (squared) score, i.e. about 30 % closer
     private const int FoodFloor = 100;             // 0.36: bots' food cap never below this (humans kill farms)
-    public static int BotGoldBonus = 25;     // v13/v21/v24: flat gold per bot per production service; set live with -gold*
+    public static int BotGoldBonus = 0;      // v13/v21/v24: flat gold per bot per production service; set live with -gold*
+                                             // 0.43.1: default 0 (= Veteran); negative = bots lose gold (Recruit, Soldier)
     private const float ReviveEvery = 180.0f; // v13: free hero revival for bots every 3 min
     private const float DiagEvery = 3.0f;
     private const int DefendThreshold = 5;         // Rule 0: recall if >N enemies near an owned anchor
@@ -1018,8 +1019,8 @@ namespace WarcraftLegacies.Source.Ai
         var perks = HasPerks(p); // 0.35: false for a FAIR autopilot player -- no subsidy, no free techs/upgrades
         if (perks)
         {
-          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD,
-            GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + GoldBonusFor(p)); // v13: subsidy; v31: per faction
+          var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + GoldBonusFor(p); // v13: subsidy; v31: per faction
+          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold < 0 ? 0 : gold); // 0.43.1: may be negative (easy votes)
           var techLvl = R2I(_clock / 600f); // v21: 0 before 10 min, then +1 every 10 min
           if (techLvl > 5)
           {
@@ -2775,7 +2776,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.43.0";
+    public const string Build = "0.43.1";
 
     public static void Setup()
     {

@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.43.0**. Next: one game with 0.43.0 vs. game B; then waves (`CONCEPTS.md` 1).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.43.1**. Next: one game with 0.43.1 (new Veteran = no bonus gold); then waves (`CONCEPTS.md` 1).
 
 ## Where we are
 
@@ -134,6 +134,12 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.43.1** (Veteran = 0 bonus now -- not comparable with older games, start a new baseline): no team balls (ROUTES:
+  different targets per bot of a team)? Units walk on without stopping at every node? Fewer "advance" orders?
+  Druids take their neighbourhood (quest CPs)? Observations from the 0.43.0 game to re-check: Scourge had not cleared
+  Northrend at 20:00 (its army was in Lordaeron); bots walk to dead ends like Thunder Bluff (an enemy capital -- a
+  legal target, but check whether they fail there and come back: event log "stuck"); fights everywhere but few CPs
+  change hands.
 - **0.43.0**: Druids (and everybody) take the neutral CPs around their home first, then the front? ROUTES lines show
   "inside" / "front" / "quest". Plus the 0.42.1 checks below.
 - **0.42.1 (game C')**: same settings as game B (Veteran, 20-25 min). Watch: dwarves around Fuselight / Twilight
