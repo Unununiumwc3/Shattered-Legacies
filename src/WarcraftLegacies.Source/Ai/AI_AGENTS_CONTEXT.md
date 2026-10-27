@@ -68,6 +68,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
+| `CONCEPTS.md` | | ideas under discussion (waves, gold depot, production places, quest requirements, defence) -- decide together |
 | `WORKAROUNDS.md` | | everything the bot needs outside `Ai/` (hooks, workarounds, runtime map changes, version-bound data) |
 | `MEASUREMENTS.md` | | load numbers per version (from `dump_summary.py`) |
 | `../ShatteredLegacies/` | ShatteredLegaciesSetup, FallbackConfig, FallbackSystem, KezanEnterprise, SlAiData | fork content: fallbacks, Kezan Enterprise; own `README.md`, `TODO.md`, `FALLBACKS.md`, `FACTION_UNITS.md` |

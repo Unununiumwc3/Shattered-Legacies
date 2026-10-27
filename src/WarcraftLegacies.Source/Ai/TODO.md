@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.42.1**. Next: one game C' (0.42.1, default) vs. game B, then **0.43** (below).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.43.0**. Next: one game with 0.43.0 vs. game B; then waves (`CONCEPTS.md` 1).
 
 ## Where we are
 
@@ -53,7 +53,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
    Expected to make W1-W4 (`WORKAROUNDS.md`, the CPs added for bots) unnecessary -- through the objective nodes;
    Dijkstra over CPs alone would not. Data: `tools/ai/graph_weights.py` (feasibility: 176 of 187 edges, median 1.08x
    the straight line).
-4. [ai] **0.43 -- after game C**: if area nodes find the harbour / camp targets, remove the workaround CPs W1-W4
+4. [ai] **0.43** done: target by distance from the territory (CHANGELOG). Still open from the plan --
+   after a game with area targets: if area nodes find the harbour / camp targets, remove the workaround CPs W1-W4
    (map data; check with `gen_routes.py --without n0SA,n0TD,n0RF,n0JS,n0SP,n0NX` -- in 0.42 every one of these spots
    has an area node within 1800) and delete the old frontier picker, edge sets, merge and goals.
 5. [you/ai] **Economy** (after 1-3 are measured): bonus gold per minute via WL's `BonusIncome` (independent of the
@@ -133,6 +134,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.43.0**: Druids (and everybody) take the neutral CPs around their home first, then the front? ROUTES lines show
+  "inside" / "front" / "quest". Plus the 0.42.1 checks below.
 - **0.42.1 (game C')**: same settings as game B (Veteran, 20-25 min). Watch: dwarves around Fuselight / Twilight
   Shore, Thandol bridge while closed (no standoff at the banks?), Outland portals (groups go through?), Druids take
   their quest CPs first? Bots stop running to dead ends (Gnomeregan, Terrordale)? Send the last dump (ROUTES section).
