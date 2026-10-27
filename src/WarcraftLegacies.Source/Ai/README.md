@@ -35,8 +35,9 @@ Heavy commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`, `-tp`) only work wh
 
 ## Playing with bots
 
-- **Bot strength vote** 49 s into the game: Recruit (no bonus gold), Soldier (half), Veteran (normal), Commander
-  (1.5x), Warlord (2x, may lag). Majority wins; ties go toward Veteran; no votes = Veteran.
+- **Bot strength vote** 49 s into the game (0.43.1 scale): Recruit (bots lose ~50 gold/min), Soldier (lose ~25),
+  Veteran (no bonus gold), Commander (+~50), Warlord (+~100, the old Veteran; may lag). Majority wins; ties go toward
+  Veteran; no votes = Veteran. Bots still get free techs, heroes and revives.
 - `-autopilot` hands your faction to the AI; type it again to take over. All players are told.
   - **Fair** (release build, `Access = Off`): the AI plays with your own resources — no bot bonuses, 60 s cooldown.
   - **Test** (`HostOnly`/`Everyone`): full bot treatment (gold subsidy, free techs, revives, missions, waves).

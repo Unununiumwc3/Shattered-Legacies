@@ -4,6 +4,24 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.43.1
+Movement fixes from the first 0.43.0 game, and a weaker strength scale (maintainer).
+- **Territory = the bot's OWN nodes only.** With the allies' nodes every bot of a team computed the same front -- the
+  team's cheapest -- and the whole team marched there as one ball: at 20:00 three bots on Mulgore and three on
+  Drustvar, at 25:00 Druids, Black Empire and Sentinels from Kalimdor to Arathi Highlands (9 hops). This was also why
+  the Druids did not take their own neighbourhood.
+- **Far waypoints**: the order goes to the farthest node on the route within 8000 of the group (a CP rather than an
+  area node, if at most 2 nodes back), never to one behind. 0.42.1/0.43.0 ordered to the next node: units stopped
+  there and waited until the group's centre came within 1200 ("stop go stop go", ~950 waypoint orders/min).
+- **Re-plan only when the target is gone or every 30 s.** 0.42.1/0.43.0 also re-planned whenever the group stood in an
+  area that is not on its route -- all the time while walking past other nodes (1778 plans in 25 min, ~1 per bot every
+  13 s): new routes, back and forth.
+- **Strength vote shifted down**: Recruit -13, Soldier -6, Veteran 0 (default), Commander +13, Warlord +25 (the old
+  Veteran) per production turn. Bots already get free techs, heroes and revives; the old Veteran made 250-food armies
+  and 4000+ units, orders took ~2 s to start (engine overloaded) -- which also spoiled the movement tests. Negative
+  bonus = bots lose gold (never below 0).
+- Version v0.43.1.
+
 ## 0.43.0
 Natural expansion: the route planner chooses the TARGET by distance from the faction's territory, not from its attack
 group. Movement only -- waves, gold and production are in the new `CONCEPTS.md`.
