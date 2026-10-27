@@ -4,6 +4,24 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.43.0
+Natural expansion: the route planner chooses the TARGET by distance from the faction's territory, not from its attack
+group. Movement only -- waves, gold and production are in the new `CONCEPTS.md`.
+- **Target = nearest to the territory**: one Dijkstra from all own and allied nodes at once (CPs, and area nodes where
+  an own or allied structure stands -- no home region to configure). Neutral CPs in the own area come first, then the
+  front. 0.42 measured from the group: once it had marched off, the neutral CPs at home were "far" and the enemy
+  ahead "near" -- Druids went north and skipped their neighbourhood, new troops too. Offline check on the generated
+  graph (Druids own Nordrassil + Moonglade, group in Winterspring): from the group -> Winterspring, Ascendant's Rise,
+  Azshara Coast; from the territory -> Shrine to Malorne, Felwood, Auberdine.
+- The **route** is still planned from where the group stands (second Dijkstra); the best-scored target the group can
+  reach wins. Same rules: neutral half cost, enemy nodes on the way cost extra, stickiness, 30-s re-plan.
+- **Quest CPs count 0.3 only on the front** (bordering the territory): a far quest CP waits until the territory
+  reaches it (late-game quests no longer pull armies across the map).
+- Dump ROUTES per bot: "score", "front" / "inside", "quest", hops left, next node.
+- New `CONCEPTS.md`: waves to the front, gold depot / bursts, where bots produce, quest objectives beyond CPs,
+  defence -- open questions to decide together.
+- Version v0.43.0.
+
 ## 0.42.1
 Fixes for the route planner after the first game (0.42.0: groups ran back and forth, fought across the closed
 Thandol bridge and at the Outland portals, dwarves ran over a mountain, Druids skipped their quest CPs).

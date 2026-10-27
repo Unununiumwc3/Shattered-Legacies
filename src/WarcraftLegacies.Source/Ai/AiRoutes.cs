@@ -11,9 +11,9 @@ namespace WarcraftLegacies.Source.Ai
   // - Targets: CPs not held by the bot or an ally (same rules as before: 10-min lock on enemy CPs, uncapturable,
   //   Argus Legion-only before the summon, skip nodes, stuck blacklist) and AREA nodes where an enemy structure stands
   //   (every 15 s) -- harbours, camps, bases without a CP.
-  // - Dijkstra from the AREA the attack group stands in (region map, 0.42.1) over open edges; target = lowest
-  //   walking cost (neutral CPs count half, CPs of open quest objectives 0.3, entering an enemy-held node on the way
-  //   costs extra). The bot commits to the route and follows it node by node (see "planning").
+  // - Target (0.43): lowest walking cost from the faction's TERRITORY (own + allied nodes) -- neutral CPs count half,
+  //   a quest CP on the front 0.3, entering an enemy-held node costs extra. Route: Dijkstra from the AREA the attack
+  //   group stands in (region map, 0.42.1). The bot commits to the route and follows it node by node ("planning").
   // - Waypoint: the next node on the route (the engine walks through a waygate on its own).
   internal static class AiRoutes
   {
@@ -47,6 +47,8 @@ namespace WarcraftLegacies.Source.Ai
     private static int[] _lastWp = new int[24];
     private static int[] _lastHops = new int[24];
     private static float[] _lastCost = new float[24];
+    private static bool[] _lastFront = new bool[24];
+    private static bool[] _lastQuest = new bool[24];
     internal static int Runs;
     internal static int LastRelax;
 
@@ -280,17 +282,47 @@ namespace WarcraftLegacies.Source.Ai
       return tu;
     }
 
+    // 0.43: the TARGET is chosen by distance from the faction's TERRITORY (Dijkstra from all own and allied nodes at
+    // once, plus area nodes where its own buildings stand) -- natural expansion: neutral CPs in the own area first,
+    // then the front. 0.42 measured from the attack group: once a group had marched off, the neutral CPs at home were
+    // "far" and the enemy ahead "near" (Druids). The ROUTE is still planned from where the group stands.
+    private static float[] _score;
+    private static bool[] _source;
+    private static bool[] _front;
+
     private static unit Plan(player p, int pid, Faction fac, int here, int cur, unit curUnit, BotDiag d)
     {
       QuestNodes(fac);
-      Dijkstra(p, here);
-      var best = -1;
-      unit bestUnit = null;
-      var bestScore = 0f;
-      var curScore = -1f;
+      if (_score == null)
+      {
+        _score = new float[AiRouteData.Nodes];
+        _source = new bool[AiRouteData.Nodes];
+        _front = new bool[AiRouteData.Nodes];
+      }
+
+      // 1) distance from the territory: score every candidate
+      var sources = 0;
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
-        if (!_done[i])
+        _source[i] = IsOwnNode(p, pid, i);
+        if (_source[i])
+        {
+          sources++;
+        }
+      }
+
+      if (sources == 0)
+      {
+        _source[here] = true; // no territory left: from where the group stands
+      }
+
+      Dijkstra(p, -1);
+      unit[] cands = null;
+      for (var i = 0; i < AiRouteData.Nodes; i++)
+      {
+        _score[i] = -1f;
+        _front[i] = false;
+        if (!_done[i] || _source[i])
         {
           continue;
         }
@@ -301,17 +333,46 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        var score = Score(i, cand);
-        if (i == cur)
+        if (cands == null)
         {
-          curScore = score;
+          cands = new unit[AiRouteData.Nodes];
         }
 
-        if (best < 0 || score < bestScore)
+        cands[i] = cand;
+        _front[i] = _prev[i] >= 0 && _source[_prev[i]];
+        _score[i] = Score(i, cand);
+      }
+
+      if (cands == null)
+      {
+        return null;
+      }
+
+      // 2) the route from where the group stands: the best-scored candidate it can reach
+      for (var i = 0; i < AiRouteData.Nodes; i++)
+      {
+        _source[i] = false;
+      }
+
+      _source[here] = true;
+      Dijkstra(p, -1);
+      var best = -1;
+      var curOk = false;
+      for (var i = 0; i < AiRouteData.Nodes; i++)
+      {
+        if (_score[i] < 0f || !_done[i])
+        {
+          continue;
+        }
+
+        if (i == cur)
+        {
+          curOk = true;
+        }
+
+        if (best < 0 || _score[i] < _score[best])
         {
           best = i;
-          bestUnit = cand;
-          bestScore = score;
         }
       }
 
@@ -320,11 +381,10 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
-      if (curScore >= 0f && best != cur && bestScore >= curScore * SimpleBot.StickySwitch)
+      if (curOk && best != cur && _score[best] >= _score[cur] * SimpleBot.StickySwitch)
       {
         d.Sticky++;
         best = cur;
-        bestUnit = curUnit;
       }
 
       var path = new List<int>();
@@ -345,8 +405,32 @@ namespace WarcraftLegacies.Source.Ai
       _step[pid] = path.Count > 1 ? 1 : 0;
       _planAt[pid] = SimpleBot.Clock;
       _lastTarget[pid] = best;
-      _lastCost[pid] = _dist[best];
-      return bestUnit;
+      _lastCost[pid] = _score[best];
+      _lastFront[pid] = _front[best];
+      _lastQuest[pid] = _questNodes.Contains(best);
+      return cands[best];
+    }
+
+    // own territory: CPs held by p or an ally, area nodes where p or an ally has a structure
+    private static bool IsOwnNode(player p, int pid, int i)
+    {
+      var t = AiRouteData.NodeType[i];
+      if (t != 0)
+      {
+        var cp = SimpleBot.SafeCp(t);
+        return cp != null && cp.Unit != null && (GetOwningPlayer(cp.Unit) == p || IsUnitAlly(cp.Unit, p));
+      }
+
+      for (var k = 0; k < 24; k++)
+      {
+        var s = _areaUnit[i * 24 + k];
+        if (s != null && (k == pid || IsPlayerAlly(Player(k), p)) && GetUnitState(s, UNIT_STATE_LIFE) > 0.405f)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     private static float Score(int i, unit cand)
@@ -357,9 +441,9 @@ namespace WarcraftLegacies.Source.Ai
         s *= SimpleBot.NeutralBias;
       }
 
-      if (_questNodes.Contains(i))
+      if (_questNodes.Contains(i) && _front[i])
       {
-        s *= QuestBias;
+        s *= QuestBias; // 0.43: only on the front -- a far quest CP waits until the territory reaches it
       }
 
       return s;
@@ -583,6 +667,7 @@ namespace WarcraftLegacies.Source.Ai
       return cp != null && cp.Unit != null && SimpleBot.IsEnemyCp(cp.Unit, p) ? EnemyNodePenalty : 0f;
     }
 
+    // start < 0: from every node marked in _source (multi-source)
     private static void Dijkstra(player p, int start)
     {
       Runs++;
@@ -596,8 +681,22 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       _heapN = 0;
-      _dist[start] = 0f;
-      Push(start, 0f);
+      if (start >= 0)
+      {
+        _dist[start] = 0f;
+        Push(start, 0f);
+      }
+      else
+      {
+        for (var i = 0; i < AiRouteData.Nodes; i++)
+        {
+          if (_source[i])
+          {
+            _dist[i] = 0f;
+            Push(i, 0f);
+          }
+        }
+      }
       while (_heapN > 0)
       {
         var u = Pop();
@@ -845,8 +944,9 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        o.Add("P" + I2S(pid) + " -> " + NodeName(_lastTarget[pid]) + " cost " + I2S(R2I(_lastCost[pid])) + ", "
-              + I2S(_lastHops[pid]) + " hops, next " + NodeName(_lastWp[pid]));
+        o.Add("P" + I2S(pid) + " -> " + NodeName(_lastTarget[pid]) + " score " + I2S(R2I(_lastCost[pid]))
+              + (_lastFront[pid] ? " front" : " inside") + (_lastQuest[pid] ? " quest" : "") + ", "
+              + I2S(_lastHops[pid]) + " hops left, next " + NodeName(_lastWp[pid]));
       }
     }
 
