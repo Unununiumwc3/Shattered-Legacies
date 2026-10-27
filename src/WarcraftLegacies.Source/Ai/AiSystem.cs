@@ -387,7 +387,7 @@ namespace WarcraftLegacies.Source.Ai
     private const int QueuePerBuilding = 2;
     private const float CommitTimeout = 30.0f;
     private const int LmSlots = 27;                // 0.36: landmass ids -1..25 -> array slots 0..26
-    private const float StickySwitch = 0.5f;       // 0.36: leave the current frontier only for one with < 0.5x its
+    internal const float StickySwitch = 0.5f;       // 0.36: leave the current frontier only for one with < 0.5x its
                                                    // (squared) score, i.e. about 30 % closer
     private const int FoodFloor = 100;             // 0.36: bots' food cap never below this (humans kill farms)
     public static int BotGoldBonus = 25;     // v13/v21/v24: flat gold per bot per production service; set live with -gold*
@@ -396,7 +396,7 @@ namespace WarcraftLegacies.Source.Ai
     private const int DefendThreshold = 5;         // Rule 0: recall if >N enemies near an owned anchor
     private const float DefendRadius = 1500f;      // how close counts as "at my base/CP"
     private const float DamagedFraction = 0.97f;   // v29: anchor below this share of max HP = "being hit"
-    private const float NeutralBias = 0.5f;        // v31: a neutral frontier counts as this much of its distance
+    internal const float NeutralBias = 0.5f;        // v31: a neutral frontier counts as this much of its distance
                                                    // v34.2: 0.75 -> 0.5 (stronger pull to free CPs before players)
 
     // v8 control toggles (chat-driven -> evaluated in lockstep on every machine, so desync-safe)
@@ -620,6 +620,7 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.Add("legion events", 8, 3, AiLegion.OnEventCheck, true); // every 2 s
       AiScheduler.Add("hero revive", R2I(ReviveEvery / AiScheduler.SlotSeconds + 0.5f), 15, OnHeroReviveTick, true);
       RegisterWaveTasks();
+      AiRoutes.Setup(); // 0.42: rock / area / waygate checks for the route planner
       AiScheduler.Start();
 
       // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
@@ -1387,7 +1388,7 @@ namespace WarcraftLegacies.Source.Ai
           state = "def";
           NoteTarget(p, pid, defend, "defend(" + I2S(_defWorst) + " enemy units, " + I2S(_defCreeps) + " neutrals ignored)");
           TrackStuck(p, pid, null);
-          IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend), true);
+          IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend), true, GetUnitX(defend), GetUnitY(defend));
         }
         else
         {
@@ -1405,8 +1406,38 @@ namespace WarcraftLegacies.Source.Ai
             BotTargetName[pid] = "K:" + GetUnitName(kill);
             NoteTarget(p, pid, kill, "kill-target");
             TrackStuck(p, pid, null);
-            IssueAttackToPoint(p, pid, GetUnitX(kill), GetUnitY(kill), true);
+            IssueAttackToPoint(p, pid, GetUnitX(kill), GetUnitY(kill), true, GetUnitX(kill), GetUnitY(kill));
             handled = true;
+          }
+
+          // 0.42: route planner on the generated graph (-route on, default). From the attack group's centre (or the
+          // army's); orders go to the next waypoint. Nothing reachable -> the old frontier picker below.
+          if (!handled && fac != null && AiRoutes.On)
+          {
+            float sx = tx, sy = ty;
+            AiArmy.GroupCenter(pid, ref sx, ref sy);
+            var rt = AiRoutes.Pick(p, pid, fac, sx, sy, diag);
+            if (rt != null)
+            {
+              var enemyRt = GetPlayerId(GetOwningPlayer(rt)) < 24;
+              Committed[pid] = rt;
+              CommitTime[pid] = _clock;
+              state = "atk";
+              BotTargetName[pid] = (enemyRt ? "E:" : "N:") + GetUnitName(rt);
+              NoteTarget(p, pid, rt, enemyRt ? "route-enemy" : "route-neutral");
+              TrackStuck(p, pid, rt);
+              float rx = GetUnitX(rt), ry = GetUnitY(rt);
+              if (AiRoutes.HasWaypoint(pid))
+              {
+                IssueAttackToPoint(p, pid, AiRoutes.WpX[pid], AiRoutes.WpY[pid], false, rx, ry);
+              }
+              else
+              {
+                IssueAttackToPoint(p, pid, rx, ry, false, rx, ry);
+              }
+
+              handled = true;
+            }
           }
 
           // authored CP graph -- expand from my frontier to the nearest bordering CP I don't own.
@@ -1424,7 +1455,7 @@ namespace WarcraftLegacies.Source.Ai
               BotTargetName[pid] = (enemyCp ? "E:" : "N:") + GetUnitName(gnode);
               NoteTarget(p, pid, gnode, enemyCp ? "graph-enemy" : "graph-neutral");
               TrackStuck(p, pid, gnode);
-              IssueAttackToPoint(p, pid, GetUnitX(gnode), GetUnitY(gnode), false);
+              IssueAttackToPoint(p, pid, GetUnitX(gnode), GetUnitY(gnode), false, GetUnitX(gnode), GetUnitY(gnode));
               handled = true;
             }
           }
@@ -1444,7 +1475,7 @@ namespace WarcraftLegacies.Source.Ai
                 Committed[pid] = null;
                 state = "atk";
                 NoteTarget(p, pid, null, "doctrine-step-" + I2S(i));
-                IssueAttackToPoint(p, pid, st.X, st.Y, false);
+                IssueAttackToPoint(p, pid, st.X, st.Y, false, st.X, st.Y);
                 handled = true;
                 break;
               }
@@ -1467,7 +1498,7 @@ namespace WarcraftLegacies.Source.Ai
               BotTargetName[pid] = "F:" + GetUnitName(tgt);
               NoteTarget(p, pid, tgt, "fallback-nearest");
               TrackStuck(p, pid, tgt);
-              IssueAttackToPoint(p, pid, GetUnitX(tgt), GetUnitY(tgt), false);
+              IssueAttackToPoint(p, pid, GetUnitX(tgt), GetUnitY(tgt), false, GetUnitX(tgt), GetUnitY(tgt));
             }
             else
             {
@@ -1475,7 +1506,7 @@ namespace WarcraftLegacies.Source.Ai
               NoteTarget(p, pid, null, "hold-nothing-reachable");
               if (AiArmy.Smart)
               {
-                IssueAttackToPoint(p, pid, ax, ay, true); // 0.41: hold throttled like any target (was: every service)
+                IssueAttackToPoint(p, pid, ax, ay, true, ax, ay); // 0.41: hold throttled like any target (was: every service)
               }
               else
               {
@@ -1743,7 +1774,8 @@ namespace WarcraftLegacies.Source.Ai
     // Re-issue attack-move only when the destination moved a lot or the heartbeat elapsed -- avoids the
     // stop-and-go stutter from constant re-issuing. Works for a unit target (pass its x/y) or a waypoint.
     // 0.41: whole = defence / kill target / hold (every unit); otherwise AiArmy sends an attack group (smart mode).
-    private static void IssueAttackToPoint(player p, int pid, float x, float y, bool whole)
+    // 0.42: (x, y) = where to go now (a waypoint or the target), (fx, fy) = the final target (group size, staging).
+    private static void IssueAttackToPoint(player p, int pid, float x, float y, bool whole, float fx, float fy)
     {
       var moved = !LastPtX.ContainsKey(pid)
         || (x - LastPtX[pid]) * (x - LastPtX[pid]) + (y - LastPtY[pid]) * (y - LastPtY[pid]) > 300f * 300f;
@@ -1755,7 +1787,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (AiArmy.Smart)
       {
-        AiArmy.Attack(p, pid, x, y, moved, whole); // 0.41: attack group, rest at the staging CP, idle-and-away
+        AiArmy.Attack(p, pid, x, y, moved, whole, fx, fy); // 0.41: attack group, rest at the staging CP, idle-and-away
       }
       else
       {
@@ -2167,7 +2199,7 @@ namespace WarcraftLegacies.Source.Ai
           + I2S(R2I(StuckSec)) + "s, no progress -> skip it for " + I2S(R2I(skip)) + "s");
     }
 
-    private static bool IsBlacklisted(int pid, unit cp)
+    internal static bool IsBlacklisted(int pid, unit cp)
     {
       if (!AiState.BlackUnits.ContainsKey(pid))
       {
@@ -2204,7 +2236,7 @@ namespace WarcraftLegacies.Source.Ai
     // creep-held CP counted as an "enemy" frontier: locked before 10 min (the graph found nothing -> every bot
     // ran on the fallback picker) and pushed through the muster/clash yo-yo after 10 min in older builds.
     // An enemy CP must belong to a real player slot (0..23).
-    private static bool IsEnemyCp(unit cp, player p)
+    internal static bool IsEnemyCp(unit cp, player p)
     {
       var owner = GetOwningPlayer(cp);
       return owner != p
@@ -2736,7 +2768,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.41.0";
+    public const string Build = "0.42.0";
 
     public static void Setup()
     {
