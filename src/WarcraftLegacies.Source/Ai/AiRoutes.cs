@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MacroTools.Factions;
+using MacroTools.Quests;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -10,15 +11,13 @@ namespace WarcraftLegacies.Source.Ai
   // - Targets: CPs not held by the bot or an ally (same rules as before: 10-min lock on enemy CPs, uncapturable,
   //   Argus Legion-only before the summon, skip nodes, stuck blacklist) and AREA nodes where an enemy structure stands
   //   (every 15 s) -- harbours, camps, bases without a CP.
-  // - Dijkstra from the node nearest to the attack group (or the army) over open edges; target = lowest walking cost
-  //   (neutral CPs count half, entering an enemy-held node on the way costs extra); keep the current target unless
-  //   the new one costs less than half.
-  // - Waypoint: the first node on the route more than 2000 away from the group (or the node behind a waygate -- the
-  //   engine walks through it) instead of one cross-map order.
+  // - Dijkstra from the AREA the attack group stands in (region map, 0.42.1) over open edges; target = lowest
+  //   walking cost (neutral CPs count half, CPs of open quest objectives 0.3, entering an enemy-held node on the way
+  //   costs extra). The bot commits to the route and follows it node by node (see "planning").
+  // - Waypoint: the next node on the route (the engine walks through a waygate on its own).
   internal static class AiRoutes
   {
     internal static bool On = true;
-    private const float WaypointMin = 2000f;
     private const float EnemyNodePenalty = 2000f;
     private const float AreaRadius = 2000f;
     private const float PortalCost = 300f;
@@ -210,21 +209,81 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // ---- planning -----------------------------------------------------------------------------------------
+    // 0.42.1: a bot COMMITS to a route and follows it node by node (never backwards). It plans again only when the
+    // target is no longer valid, the group stands in an area that is not on the route, or every ReplanEvery seconds
+    // (and then switches only to a target that costs less than half). 0.42 planned every service from the node
+    // nearest in a straight line: groups ran back and forth, across the closed Thandol bridge and over mountains.
 
-    // Target for bot p from (sx, sy) -- the attack group's centre (or the army's). Null = nothing reachable (the
-    // caller falls back to the old frontier picker). Sets WpX/WpY[pid].
+    private const float ReplanEvery = 30f;
+    private const float QuestBias = 0.3f;   // a CP of an open quest objective counts this much of its cost
+    private const float ReachNode = 1200f;  // a waypoint node counts as reached within this distance
+    private static List<int>[] _path = new List<int>[24];
+    private static int[] _step = new int[24];
+    private static float[] _planAt = new float[24];
+    private static HashSet<int> _questNodes = new();
+
+    // Target for bot p; (sx, sy) = where its attack group (or army) stands. Null = nothing reachable (the caller falls
+    // back to the old frontier picker). Sets WpX/WpY[pid] (-1/-1 = go straight to the target).
     internal static unit Pick(player p, int pid, Faction fac, float sx, float sy, BotDiag d)
     {
       Ready();
       d.EdgeSet = "route";
-      var start = NearestSameLand(sx, sy);
-      if (start < 0)
+      var here = StartNode(sx, sy);
+      if (here < 0)
       {
         return null;
       }
 
-      Dijkstra(p, start);
-      var current = SimpleBot.Committed.ContainsKey(pid) ? SimpleBot.Committed[pid] : null;
+      var t = _lastTarget[pid];
+      var tu = t >= 0 ? Candidate(p, pid, fac, t, d) : null;
+      var path = _path[pid];
+      var at = path != null ? path.IndexOf(here) : -1;
+      if (tu == null || path == null || at < 0 || SimpleBot.Clock - _planAt[pid] >= ReplanEvery)
+      {
+        tu = Plan(p, pid, fac, here, t, tu, d);
+        if (tu == null)
+        {
+          _lastTarget[pid] = -1;
+          _path[pid] = null;
+          return null;
+        }
+
+        path = _path[pid];
+        at = 0;
+      }
+
+      // follow the route: the group's own area, or a node it has reached, moves the step forward -- never back
+      if (at + 1 > _step[pid])
+      {
+        _step[pid] = at + 1;
+      }
+
+      while (_step[pid] < path.Count - 1 && Near(path[_step[pid]], sx, sy, ReachNode))
+      {
+        _step[pid]++;
+      }
+
+      var wp = _step[pid] < path.Count ? path[_step[pid]] : path[path.Count - 1];
+      _lastWp[pid] = wp;
+      _lastHops[pid] = path.Count - 1 - _step[pid];
+      if (wp == path[path.Count - 1])
+      {
+        WpX[pid] = -1f;
+        WpY[pid] = -1f;
+      }
+      else
+      {
+        WpX[pid] = AiRouteData.NodeX[wp];
+        WpY[pid] = AiRouteData.NodeY[wp];
+      }
+
+      return tu;
+    }
+
+    private static unit Plan(player p, int pid, Faction fac, int here, int cur, unit curUnit, BotDiag d)
+    {
+      QuestNodes(fac);
+      Dijkstra(p, here);
       var best = -1;
       unit bestUnit = null;
       var bestScore = 0f;
@@ -236,14 +295,14 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        var tu = Candidate(p, pid, fac, i, d);
-        if (tu == null)
+        var cand = i == cur ? curUnit : Candidate(p, pid, fac, i, d);
+        if (cand == null)
         {
           continue;
         }
 
-        var score = _dist[i] * (IsNeutral(tu) ? SimpleBot.NeutralBias : 1f);
-        if (tu == current)
+        var score = Score(i, cand);
+        if (i == cur)
         {
           curScore = score;
         }
@@ -251,7 +310,7 @@ namespace WarcraftLegacies.Source.Ai
         if (best < 0 || score < bestScore)
         {
           best = i;
-          bestUnit = tu;
+          bestUnit = cand;
           bestScore = score;
         }
       }
@@ -261,36 +320,149 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
-      if (curScore >= 0f && bestUnit != current && bestScore >= curScore * SimpleBot.StickySwitch)
+      if (curScore >= 0f && best != cur && bestScore >= curScore * SimpleBot.StickySwitch)
       {
         d.Sticky++;
-        for (var i = 0; i < AiRouteData.Nodes; i++)
-        {
-          if (_done[i] && NodeUnitFor(p, i) == current)
-          {
-            best = i;
-            bestUnit = current;
-            break;
-          }
-        }
+        best = cur;
+        bestUnit = curUnit;
       }
 
-      SetWaypoint(pid, best, sx, sy, start);
+      var path = new List<int>();
+      var n = best;
+      while (n >= 0 && path.Count <= AiRouteData.Nodes)
+      {
+        path.Add(n);
+        if (n == here)
+        {
+          break;
+        }
+
+        n = _prev[n];
+      }
+
+      path.Reverse();
+      _path[pid] = path;
+      _step[pid] = path.Count > 1 ? 1 : 0;
+      _planAt[pid] = SimpleBot.Clock;
       _lastTarget[pid] = best;
       _lastCost[pid] = _dist[best];
       return bestUnit;
     }
 
-    private static unit NodeUnitFor(player p, int i)
+    private static float Score(int i, unit cand)
     {
-      var t = AiRouteData.NodeType[i];
-      if (t != 0)
+      var s = _dist[i];
+      if (IsNeutral(cand))
       {
-        var cp = SimpleBot.SafeCp(t);
-        return cp != null ? cp.Unit : null;
+        s *= SimpleBot.NeutralBias;
       }
 
-      return EnemyStructure(p, i);
+      if (_questNodes.Contains(i))
+      {
+        s *= QuestBias;
+      }
+
+      return s;
+    }
+
+    // CP nodes where an open objective of the faction's open quests lies (Objective.Position; any objective type)
+    private static void QuestNodes(Faction fac)
+    {
+      _questNodes.Clear();
+      var quests = fac.GetAllQuests();
+      for (var q = 0; q < quests.Count; q++)
+      {
+        var qd = quests[q];
+        if (qd.Progress != QuestProgress.Incomplete && qd.Progress != QuestProgress.Undiscovered)
+        {
+          continue;
+        }
+
+        var objs = qd.Objectives;
+        for (var k = 0; k < objs.Count; k++)
+        {
+          var pos = objs[k].Position;
+          if (objs[k].Progress == QuestProgress.Complete || pos == null)
+          {
+            continue;
+          }
+
+          var node = Region(pos.X, pos.Y);
+          if (node >= 0 && AiRouteData.NodeType[node] != 0 && Near(node, pos.X, pos.Y, 800f))
+          {
+            _questNodes.Add(node);
+          }
+        }
+      }
+    }
+
+    private static bool Near(int node, float x, float y, float r)
+    {
+      var dx = AiRouteData.NodeX[node] - x;
+      var dy = AiRouteData.NodeY[node] - y;
+      return dx * dx + dy * dy <= r * r;
+    }
+
+    // the area (node) the point stands in; the straight-line nearest node on the same landmass where the region map
+    // has no walkable ground
+    private static int StartNode(float x, float y)
+    {
+      var r = Region(x, y);
+      return r >= 0 ? r : NearestSameLand(x, y);
+    }
+
+    internal static int Region(float x, float y)
+    {
+      var col = (int)((x - AiRouteData.RegionMinX) / AiRouteData.RegionCell);
+      var row = (int)((y - AiRouteData.RegionMinY) / AiRouteData.RegionCell);
+      if (col < 0 || col >= AiRouteData.RegionW || row < 0 || row >= AiRouteData.RegionH)
+      {
+        return -1;
+      }
+
+      var i = (row * AiRouteData.RegionW + col) * 2;
+      var a = AiRouteData.Regions[i];
+      if (a == '.')
+      {
+        return -1;
+      }
+
+      var v = Letter(a) * 52 + Letter(AiRouteData.Regions[i + 1]);
+      return v < AiRouteData.Nodes ? v : -1;
+    }
+
+    private static int Letter(char c) => c <= 'Z' ? c - 'A' : c - 'a' + 26;
+
+    // 0.42.1: can a unit at (ux, uy) walk to (x, y) without a closed edge -- same area, or neighbouring areas joined
+    // by an open walking edge? Unknown ground counts as reachable (the old behaviour). Used by the defence scan: enemies
+    // across the closed Thandol bridge no longer pull an army to the bank.
+    internal static bool Reachable(float x, float y, float ux, float uy)
+    {
+      if (!On)
+      {
+        return true;
+      }
+
+      Ready();
+      var a = Region(x, y);
+      var b = Region(ux, uy);
+      if (a < 0 || b < 0 || a == b)
+      {
+        return true;
+      }
+
+      var adj = _adj[a];
+      for (var k = 0; k < adj.Count; k++)
+      {
+        var e = adj[k];
+        if ((AiRouteData.EdgeA[e] == b || AiRouteData.EdgeB[e] == b)
+            && (AiRouteData.EdgeRocks[e] < 0 || _rockOpen[AiRouteData.EdgeRocks[e]]))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     // the unit to attack at node i, or null when node i is no target for p
@@ -382,13 +554,14 @@ namespace WarcraftLegacies.Source.Ai
       return GetPlayerId(GetOwningPlayer(tu)) >= 24;
     }
 
+    // an enemy structure that can be attacked (alive, visible, not invulnerable) near area node i
     private static unit EnemyStructure(player p, int i)
     {
       for (var k = 0; k < 24; k++)
       {
         var s = _areaUnit[i * 24 + k];
         if (s != null && IsPlayerEnemy(Player(k), p) && GetUnitState(s, UNIT_STATE_LIFE) > 0.405f
-            && GetOwningPlayer(s) == Player(k))
+            && GetOwningPlayer(s) == Player(k) && !IsUnitHidden(s) && !BlzIsUnitInvulnerable(s))
         {
           return s;
         }
@@ -477,48 +650,6 @@ namespace WarcraftLegacies.Source.Ai
         _prev[v] = u;
         _prevEdge[v] = edge;
         Push(v, nd);
-      }
-    }
-
-    private static void SetWaypoint(int pid, int target, float sx, float sy, int start)
-    {
-      // path target -> start, then walk it from the start side
-      var path = new List<int>();
-      var n = target;
-      while (n >= 0 && path.Count <= AiRouteData.Nodes)
-      {
-        path.Add(n);
-        if (n == start)
-        {
-          break;
-        }
-
-        n = _prev[n];
-      }
-
-      path.Reverse();
-      var wp = target;
-      for (var i = 1; i < path.Count; i++)
-      {
-        var node = path[i];
-        if (_prevEdge[node] < 0 || Dist(AiRouteData.NodeX[node], AiRouteData.NodeY[node], sx, sy) > WaypointMin)
-        {
-          wp = node; // first far node, or the node behind a waygate (the engine walks through the waygate)
-          break;
-        }
-      }
-
-      _lastWp[pid] = wp;
-      _lastHops[pid] = path.Count - 1;
-      if (wp == target)
-      {
-        WpX[pid] = -1f; // caller orders straight to the target unit
-        WpY[pid] = -1f;
-      }
-      else
-      {
-        WpX[pid] = AiRouteData.NodeX[wp];
-        WpY[pid] = AiRouteData.NodeY[wp];
       }
     }
 

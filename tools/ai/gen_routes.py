@@ -17,6 +17,9 @@ Edges
   added at runtime from the live waygates).
   WL's removable rock blockers ('LTrc', Setup/RockSetup.cs) count as walkable, but every edge whose path crosses them
   remembers the rock group -> closed at runtime while those rocks stand.
+Region map (0.42.1): which node's area every 256 x 256 cell belongs to (majority of its walkable 32-unit cells),
+  two letters per cell -- the bot starts a route in the area its group STANDS in (not the nearest node in a straight
+  line, which can be across a chasm or a mountain) and ignores enemies it cannot walk to.
 Known gaps (v1): other doodads (archways, walls) and units (gates) are not in the grid.
 
   python3 tools/ai/gen_routes.py --without n0SA,n0TD,n0RF   report only (nothing written): the graph as if these CPs
@@ -44,6 +47,8 @@ ROCK_HALF = 64              # a rock doodad blocks 128 x 128
 GATE_ROCK_HALF = 96         # LTrc: marked as a removable blocker in this box
 GATE_GROUP = 700            # LTrc within this distance form one rock group
 AREA_GAP = 3000             # walking distance from the nearest node that gets an area node
+RC = 256                    # region map cell
+LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 
 def le(v):
@@ -266,8 +271,10 @@ def main():
             key = (min(a, b), max(a, b))
             rock = rk[cidx] if rk[cidx] >= 0 else (rk[n] if rk[n] >= 0 else rocktag[n])
             if key not in best or cost < best[key][0]:
-                best[key] = (cost, rock)
-    edges = sorted((a, b, round(cost), rock) for (a, b), (cost, rock) in best.items())
+                best[key] = (cost, rock, cidx)
+    edges = sorted((a, b, round(cost), rock) for (a, b), (cost, rock, _) in best.items())
+    via = {(a, b): (round(MINX + (v % gw + 0.5) * C), round(MINY + (v // gw + 0.5) * C))
+           for (a, b), (_, _, v) in best.items()}
     print(f"edges: {len(edges)} ({sum(1 for e in edges if e[3] >= 0)} behind rocks)")
 
     # compare with the hand-written graph
@@ -284,8 +291,9 @@ def main():
             if n[0] == 1:
                 print(f"  {n[4]} @ {n[2]},{n[3]}")
         return
-    write_cs(nodes, edges, groups)
-    write_report(nodes, edges, groups, hand, both, missing, idx, reach)
+    write_cs(nodes, edges, groups, regions(label, gw, gh))
+    write_report(nodes, edges, groups, hand, both, missing, idx, reach, via)
+    globals()["LAST"] = (nodes, edges, via, walk, gw, gh)
     print(f"hand-written edges: {len(hand)}, also generated: {len(both)}, not generated: {len(missing)}")
     print(f"wrote {os.path.relpath(OUT, ROOT)} and {os.path.relpath(REPORT, ROOT)}")
 
@@ -324,12 +332,33 @@ def check_reach(nodes, edges, missing, idx):
     return res
 
 
+def regions(label, gw, gh):
+    k = RC // C
+    rw, rh = gw // k, gh // k
+    out = []
+    for r in range(rh):
+        for c in range(rw):
+            cnt = {}
+            for rr in range(r * k, r * k + k):
+                base = rr * gw
+                for cc in range(c * k, c * k + k):
+                    lab = label[base + cc]
+                    if lab >= 0:
+                        cnt[lab] = cnt.get(lab, 0) + 1
+            if cnt:
+                lab = max(sorted(cnt), key=lambda v: cnt[v])
+                out.append(LETTERS[lab // 52] + LETTERS[lab % 52])
+            else:
+                out.append("..")
+    return rw, rh, "".join(out)
+
+
 def chunk(vals, per=16):
     vals = [str(v) for v in vals]
     return "\n".join("      " + ", ".join(vals[i:i + per]) + "," for i in range(0, len(vals), per))
 
 
-def write_cs(nodes, edges, groups):
+def write_cs(nodes, edges, groups, reg):
     gx = [round(sum(x for x, _ in g) / len(g)) for g in groups]
     gy = [round(sum(y for _, y in g) / len(g)) for g in groups]
     gr = [round(max(math.hypot(x - cx, y - cy) for x, y in g) + 200) for g, cx, cy in zip(groups, gx, gy)]
@@ -365,11 +394,21 @@ def write_cs(nodes, edges, groups):
             out.append(chunk(vals))
         out.append("    };")
         out.append("")
-    out[-1:] = ["  }", "}", ""]
+    rw, rh, text = reg
+    out += [f"    // region map: {RC}-unit cells, {rw} x {rh}, rows bottom-up from ({int(MINX)}, {int(MINY)}); per cell two letters",
+            "    // = node index (A-Z a-z, base 52), \"..\" = no walkable ground",
+            f"    internal const float RegionMinX = {MINX}f;",
+            f"    internal const float RegionMinY = {MINY}f;",
+            f"    internal const int RegionCell = {RC};",
+            f"    internal const int RegionW = {rw};",
+            f"    internal const int RegionH = {rh};",
+            "    internal const string Regions ="]
+    out.append(f'      "{text}";')  # ONE literal, like Geography.Grid: a long "+" chain can exceed Lua's parser limits
+    out += ["  }", "}", ""]
     open(OUT, "w", encoding="utf-8", newline="\n").write("\n".join(out))
 
 
-def write_report(nodes, edges, groups, hand, both, missing, idx, reach):
+def write_report(nodes, edges, groups, hand, both, missing, idx, reach, via):
     name = {be(n[1]): n[4] for n in nodes if n[0] == 0}
     lines = ["# Route graph (generated)", "",
              "Written by `python3 tools/ai/gen_routes.py` together with `AiRoutes.g.cs`. Review this after every run.", "",
@@ -391,6 +430,11 @@ def write_report(nodes, edges, groups, hand, both, missing, idx, reach):
     for i, n in enumerate(nodes):
         if n[0] == 1:
             lines.append(f"- #{i} {n[4]} @ {n[2]},{n[3]}")
+    lines += ["", "## All edges (A <-> B, walking cost, where the two areas touch)", "",
+              "Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountain the generator missed.", ""]
+    for a, b, cost, rock in edges:
+        vx, vy = via[(a, b)]
+        lines.append(f"- {nodes[a][4]} <-> {nodes[b][4]}: {cost} via {vx},{vy}" + (f" (rocks {rock})" if rock >= 0 else ""))
     lines += ["", "## Edges behind rocks", ""]
     for a, b, cost, rock in edges:
         if rock >= 0:

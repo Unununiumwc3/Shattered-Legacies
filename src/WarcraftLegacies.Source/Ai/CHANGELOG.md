@@ -4,6 +4,27 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.42.1
+Fixes for the route planner after the first game (0.42.0: groups ran back and forth, fought across the closed
+Thandol bridge and at the Outland portals, dwarves ran over a mountain, Druids skipped their quest CPs).
+- **Route start = the area the group stands in.** The generator now also writes a region map (which node's area each
+  256-unit cell belongs to, `AiRouteData.Regions`). 0.42.0 started at the node nearest in a STRAIGHT line -- across the
+  Thandol gorge or a mountain (a group behind Fuselight "stood at" Twilight Shore, 3267 away in a line, 10861 on
+  foot) -- and planned from the wrong side.
+- **Group centre on one landmass** (the biggest part, like the army anchor since 0.36). A group half through a waygate
+  had its centre between Azeroth and Outland and was sent back and forth at the portal.
+- **Committed routes**: a bot plans, then follows its route node by node and never goes back. It plans again only
+  when the target is no longer valid, the group stands in an area that is not on the route, or every 30 s (and then
+  switches only to a target that costs less than half). 0.42.0 planned on every service: back and forth to dead ends
+  (Gnomeregan, Terrordale), ~570 waypoint orders/min, and the planning ran in every combat slot.
+- **Quest CPs first**: a CP where an open objective of one of the faction's open quests lies counts 0.3 of its
+  walking cost (read from WL's `Objective.Position` -- works for every faction and quest, no names).
+- **Defence ignores enemies that cannot walk to the CP** (other area and no open edge, e.g. across the closed
+  Thandol bridge). Both armies stood at the banks and shot across.
+- Area targets must be visible and vulnerable (hidden / invulnerable structures were targets that could never fall).
+- `ROUTES.md` lists every edge with the point where the two areas touch ("via") -- check suspicious edges there.
+- Version v0.42.1.
+
 ## 0.42.0
 Refactor phase 3: route planner on one generated graph. New default `-route on`; `-route off` = 0.41's targeting
 (the hand-written frontier graph) for A/B tests.

@@ -179,7 +179,10 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    // 0.42: centre of the attack group (route start); unchanged when the bot has no group (whole army / none)
+    // 0.42: centre of the attack group (route start); unchanged when the bot has no group (whole army / none).
+    // 0.42.1: centre of the group's biggest part on ONE landmass (like the army anchor, 0.36) -- a group half through
+    // a waygate had its centre between the two worlds and was sent back and forth (Dark Portal).
+    private static int[] _lmCount = new int[64];
     internal static void GroupCenter(int pid, ref float x, ref float y)
     {
       var grp = pid >= 0 && pid < 24 ? _group[pid] : null;
@@ -188,11 +191,46 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
+      for (var k = 0; k < 64; k++)
+      {
+        _lmCount[k] = 0;
+      }
+
+      var best = -1;
+      for (var i = 0; i < Units.Count; i++)
+      {
+        if (grp.Contains(Units[i]))
+        {
+          var lm = Geography.Landmass(GetUnitX(Units[i]), GetUnitY(Units[i])) + 1;
+          if (lm < 0 || lm >= 64)
+          {
+            lm = 0;
+          }
+
+          _lmCount[lm]++;
+          if (best < 0 || _lmCount[lm] > _lmCount[best] || (best == 0 && lm > 0))
+          {
+            best = lm;
+          }
+        }
+      }
+
       float sx = 0f, sy = 0f;
       var n = 0;
       for (var i = 0; i < Units.Count; i++)
       {
-        if (grp.Contains(Units[i]))
+        if (!grp.Contains(Units[i]))
+        {
+          continue;
+        }
+
+        var lm = Geography.Landmass(GetUnitX(Units[i]), GetUnitY(Units[i])) + 1;
+        if (lm < 0 || lm >= 64)
+        {
+          lm = 0;
+        }
+
+        if (lm == best)
         {
           sx += GetUnitX(Units[i]);
           sy += GetUnitY(Units[i]);
