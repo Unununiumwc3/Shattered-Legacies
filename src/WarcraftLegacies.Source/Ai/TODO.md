@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.41.0**. Next: **0.42** = refactor phase 3 (route planner, below).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.42.0**. Next: measure A/B/C, then **0.43** = workaround CPs out + tuning (below).
 
 ## Where we are
 
@@ -42,7 +42,8 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
    (`AttackMove` enumerates everything a second time). **Attack group**: size from the target (towers and enemies
    near the node), 40-60 food as the floor -- small groups fail against upgraded CP towers. The rest holds at the
    owned node nearest the frontier (not at every node), and is not re-ordered while it holds.
-3. [ai] **0.42 -- route planner on one generated CP graph.** Graph generated from map data only (so it can run on
+3. **0.42 -- route planner** (done, see CHANGELOG). Open: the 7 detours in `ROUTES.md`; doodads other than trees /
+   rocks (archways, walls) and gate units are not in the grid. Original plan: Graph generated from map data only (so it can run on
    upstream 5.x): nodes = CPs + **objective nodes** (preplaced hostile structures, capitals like the Sunwell) +
    portal ends; edges with walking cost from the pathing data plus doodads / destructables (the pathing map has
    terrain only). Open / closed is read from the world at runtime (blocking rocks alive? portal exists?), no hand
@@ -52,11 +53,14 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
    Expected to make W1-W4 (`WORKAROUNDS.md`, the CPs added for bots) unnecessary -- through the objective nodes;
    Dijkstra over CPs alone would not. Data: `tools/ai/graph_weights.py` (feasibility: 176 of 187 edges, median 1.08x
    the straight line).
-4. [you/ai] **Economy** (after 1-3 are measured): bonus gold per minute via WL's `BonusIncome` (independent of the
+4. [ai] **0.43 -- after game C**: if area nodes find the harbour / camp targets, remove the workaround CPs W1-W4
+   (map data; check with `gen_routes.py --without n0SA,n0TD,n0RF,n0JS,n0SP,n0NX` -- in 0.42 every one of these spots
+   has an area node within 1800) and delete the old frontier picker, edge sets, merge and goals.
+5. [you/ai] **Economy** (after 1-3 are measured): bonus gold per minute via WL's `BonusIncome` (independent of the
    bot count; today's per-turn subsidy pays more the fewer bots there are), start 11:00, Recruit 0,
    `D x (20 % of WL StartingGold.Income + 10 % of CP income, counted up to 300)`, D 0 / 0.5 / 1 / 1.5 / 2.
    Food caps only as the last resort.
-5. [ai] **Cleanup / PR preparation**: wave runner, doctrine steps, `OpenThandolIfDue`, goals; version tags in
+6. [ai] **Cleanup / PR preparation**: wave runner, doctrine steps, `OpenThandolIfDue`, goals; version tags in
    comments -> CHANGELOG; split `AiSystem.cs`. Every hand-coded id and coordinate must skip silently when it is
    missing (5.x has no Old Gods); the strength vote must not depend on the removed game-mode vote (W5).
 
@@ -119,15 +123,19 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
 - [ai] (low) Bot heroes die early (train a hero, attack creeps without an army). Probably fixed by 0.41.
 - Note: WL has no `-spectate`; the AI takes over a slot only when its human LEAVES.
 
-## Check in the next playtest (0.41: A/B test)
+## Check in the next playtests (0.42: games A / B / C)
 
 - `-version` shows the new build; no `SYSTEM ERROR`, no `TICK ERROR` in PINNED.
-- **A/B test, same settings both games** (strength vote Veteran = normal gold, same factions, 20-25 min,
-  `-autodump` at the start, empty CustomMapData before each game): game A `-orders idle` right at the start (= 0.40),
-  game B default (smart). Summarize each with `dump_summary.py --append "A idle ..."` / `"B smart ..."`. Compare
+- **A/B/C test with the 0.42 build, same settings every game** (strength vote Veteran = normal gold, same
+  factions, 20-25 min, `-autodump` at the start, empty CustomMapData before each game):
+  game A `-orders idle` and `-route off` (= 0.40), game B `-route off` (= 0.41), game C nothing (= 0.42).
+  Summarize each with `dump_summary.py --append "A ..."` etc. Summarize each with `dump_summary.py --append "A idle ..."` / `"B smart ..."`. Compare
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- 0.42 (game C): dump ROUTES -- targets plausible? "next" nodes along the way? Rock groups closed early, open after
+  the turns? Waygate edges > 0 after 1 min? Bots attack harbours / camps (area targets show as "E:" with a building
+  name)? `-edges` still shows the OLD graph.
 - 0.40: bots behave as in 0.39.9 (attack, produce, gates disappear, quests, portals). `-debug2` shows a second line
   (slot max, over, far orders, idle@target, top tasks); `-dump` LOAD has the scheduler, orders and task lines.
   `-budget on` for a few minutes: "deferred" grows, nothing breaks. Then `dump_summary.py` into MEASUREMENTS.md.

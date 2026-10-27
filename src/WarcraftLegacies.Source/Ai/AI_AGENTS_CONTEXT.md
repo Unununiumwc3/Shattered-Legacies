@@ -56,6 +56,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
 | `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
+| `AiRoutes.cs` | AiRoutes | 0.42: route planner -- live edge state (rocks, waygates, enemy structures at area nodes), Dijkstra, target, waypoint (`-route on`) |
+| `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
 | `AiArmy.cs` | AiArmy | 0.41: army orders -- attack group sized from the target, rest at the staging CP, orders only for idle units away from their point (`-orders smart`) |
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
 | `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |

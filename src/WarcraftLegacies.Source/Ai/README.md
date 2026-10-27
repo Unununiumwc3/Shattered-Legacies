@@ -65,6 +65,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
 | `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
+| `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
@@ -128,6 +129,9 @@ Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-package
   block). Not a compiler, but it caught the 0.37.1 build break.
 - `python3 tools/ai/gen_ai_data.py` — regenerates `AiData.g.cs` (train lists, hero skills ...) from WL's data, and
   `../ShatteredLegacies/SlAiData.g.cs` for the fork's own buildings; run after every WL update, then rebuild.
+- `python3 tools/ai/gen_routes.py` — regenerates the route graph `AiRoutes.g.cs` from map data (CPs, pathing,
+  trees, rocks) and writes the report `ROUTES.md`; run after map changes. `--without <ids>` shows the graph as if
+  those CPs did not exist.
 - `python3 tools/ai/unit_scan.py [faction|--summary]` — which units/heroes each faction has and whether the AI can
   train them (with the reason / the unlocking quest). Compare with the dump's TRAINED section.
 - `python3 tools/ai/map_query.py walk X Y` (also `near`, `area`, `find`, `around`, `rect`) — checks coordinates

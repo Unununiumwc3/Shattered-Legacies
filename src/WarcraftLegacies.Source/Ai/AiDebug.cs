@@ -90,6 +90,7 @@ public static class AiDebug
     RegisterLoose("-icontest", OnIconTest, Level.Heavy); // 0.39: "-icontest N" = one variant on your unit
     RegisterLoose("-orders", OnOrders, Level.Control);   // 0.39: -orders idle|all (refactor lever 1)
     RegisterLoose("-budget", AiScheduler.OnBudgetCommand, Level.Control); // 0.40: -budget on|off (load budget)
+    RegisterLoose("-route", AiRoutes.OnRouteCommand, Level.Control);      // 0.42: -route on|off (route planner)
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -893,6 +894,7 @@ public static class AiDebug
     Section(o, "units", () => UnitLines(o));          // 0.39: refactor step 0 (measure)
     Section(o, "teams", () => AiStandings.Lines(o)); // 0.36
     Section(o, "trained", () => AiStats.Lines(o));   // 0.38
+    Section(o, "routes", () => AiRoutes.Lines(o));   // 0.42: route planner state, target and next waypoint per bot
 
     Section(o, "load", () =>
     {

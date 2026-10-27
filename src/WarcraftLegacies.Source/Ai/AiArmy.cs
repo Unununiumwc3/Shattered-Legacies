@@ -34,14 +34,19 @@ namespace WarcraftLegacies.Source.Ai
     private static int[] _need = new int[24];
     private static int[] _groupFood = new int[24];
     private static int[] _armyFood = new int[24];
+    private static bool[] _hasFinal = new bool[24]; // 0.42: final target (group size, staging) vs. waypoint (orders)
+    private static float[] _fx = new float[24];
+    private static float[] _fy = new float[24];
 
     internal static int OrdChange;  // target changed: group / whole army
     internal static int OrdRestMove; // target changed or heartbeat: rest to the staging point
     internal static int OrdIdleFar; // heartbeat: idle unit away from its point
     internal static int OrdRefill;  // heartbeat: new group members after losses
+    internal static int OrdAdvance; // 0.42: same target, next waypoint: the group moves on
 
-    // whole = defence / kill target / hold: every unit goes, no group
-    internal static void Attack(player p, int pid, float x, float y, bool changed, bool whole)
+    // whole = defence / kill target / hold: every unit goes, no group. (x, y) = where to go now (waypoint or target),
+    // (fx, fy) = the final target: a new final target picks a new group; a new waypoint only moves the group on.
+    internal static void Attack(player p, int pid, float x, float y, bool changed, bool whole, float fx, float fy)
     {
       if (pid < 0 || pid >= 24)
       {
@@ -50,6 +55,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (whole)
       {
+        _hasFinal[pid] = false;
         _whole[pid] = true;
         _hasStage[pid] = false;
         _group[pid]?.Clear();
@@ -83,10 +89,29 @@ namespace WarcraftLegacies.Source.Ai
         _group[pid] = grp;
       }
 
-      if (changed || _whole[pid])
+      var newTarget = !_hasFinal[pid] || _whole[pid]
+                      || (fx - _fx[pid]) * (fx - _fx[pid]) + (fy - _fy[pid]) * (fy - _fy[pid]) > 300f * 300f;
+      _hasFinal[pid] = true;
+      _fx[pid] = fx;
+      _fy[pid] = fy;
+      if (changed && !newTarget)
+      {
+        for (var i = 0; i < Units.Count; i++)
+        {
+          if (grp.Contains(Units[i]))
+          {
+            Issue(Units[i], x, y);
+            OrdAdvance++;
+          }
+        }
+
+        return;
+      }
+
+      if (newTarget)
       {
         _whole[pid] = false;
-        Select(p, pid, x, y, grp, true);
+        Select(p, pid, fx, fy, grp, true);
         for (var i = 0; i < Units.Count; i++)
         {
           var u = Units[i];
@@ -123,7 +148,7 @@ namespace WarcraftLegacies.Source.Ai
       if (groupFood * 2 < _need[pid] && groupFood < armyFood)
       {
         var before = new HashSet<unit>(grp);
-        Select(p, pid, x, y, grp, false);
+        Select(p, pid, fx, fy, grp, false);
         for (var i = 0; i < Units.Count; i++)
         {
           var u = Units[i];
@@ -151,6 +176,34 @@ namespace WarcraftLegacies.Source.Ai
           Issue(u, _stageX[pid], _stageY[pid]);
           OrdRestMove++;
         }
+      }
+    }
+
+    // 0.42: centre of the attack group (route start); unchanged when the bot has no group (whole army / none)
+    internal static void GroupCenter(int pid, ref float x, ref float y)
+    {
+      var grp = pid >= 0 && pid < 24 ? _group[pid] : null;
+      if (grp == null || grp.Count == 0 || _whole[pid])
+      {
+        return;
+      }
+
+      float sx = 0f, sy = 0f;
+      var n = 0;
+      for (var i = 0; i < Units.Count; i++)
+      {
+        if (grp.Contains(Units[i]))
+        {
+          sx += GetUnitX(Units[i]);
+          sy += GetUnitY(Units[i]);
+          n++;
+        }
+      }
+
+      if (n > 0)
+      {
+        x = sx / n;
+        y = sy / n;
       }
     }
 
@@ -318,7 +371,8 @@ namespace WarcraftLegacies.Source.Ai
     internal static string ShortLine()
     {
       return "army " + (Smart ? "smart" : "old") + " orders: change=" + I2S(OrdChange) + " idle-away="
-             + I2S(OrdIdleFar) + " rest=" + I2S(OrdRestMove) + " refill=" + I2S(OrdRefill);
+             + I2S(OrdIdleFar) + " rest=" + I2S(OrdRestMove) + " refill=" + I2S(OrdRefill) + " advance="
+             + I2S(OrdAdvance);
     }
 
     internal static void Lines(List<string> o)

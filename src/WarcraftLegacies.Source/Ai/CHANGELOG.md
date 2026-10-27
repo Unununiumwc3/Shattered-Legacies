@@ -4,6 +4,32 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.42.0
+Refactor phase 3: route planner on one generated graph. New default `-route on`; `-route off` = 0.41's targeting
+(the hand-written frontier graph) for A/B tests.
+- **Graph generated from map data only** (`tools/ai/gen_routes.py` -> `AiRoutes.g.cs`, report `ROUTES.md`), so it
+  can run on other WL versions: CPs = units with an income marker ability (the same rule WL uses); walkable grid =
+  WC3's 32-unit pathing cells + trees + rock doodads; two nodes are linked when their areas touch, cost = walking
+  distance. 187 CPs + 62 area nodes, 356 edges. 178 of the 220 hand-written edges come out directly; the rest walk
+  through another node, or are waygate / ship links (13), or detours to check (7, listed in `ROUTES.md`).
+- **Area nodes**: walkable ground farther than 3000 (walking) from every CP gets a node. It is a target only while an
+  enemy structure stands within 2000 (checked every 15 s) -- harbours, camps, bases without a CP.
+- **Live edge state**: edges through WL's removable rocks (`LTrc`, 9 groups, e.g. the Thandol Span) are closed while
+  the rocks stand (every 15 s); every active waygate of the neutral players (WL's and the AI's portals) is an edge
+  (every 30 s). The "frontier behind a barrier" problem (Ironforge -> Arathi through an ally node) is gone by
+  construction: with the rocks standing the route goes around through Stromgarde.
+- **Target**: Dijkstra from the node nearest to the attack group (or the army), over open edges; lowest walking cost
+  wins (neutral CPs count half, walking through an enemy-held node costs 2000 extra), current target kept unless the
+  new one costs less than half. Same rules as before: 10-min lock, uncapturable, Argus Legion-only before the summon,
+  skip nodes, stuck blacklist. Nothing reachable -> the old frontier picker.
+- **Waypoint orders**: the group goes to the first node on the route more than 2000 away (or the node behind a
+  waygate -- the engine walks through it), not across the map in one order. A new waypoint only moves the group on
+  ("advance" in the army orders line); a new target picks a new group.
+- New dump section ROUTES (graph state, per bot target / cost / hops / next node). `-route on|off` (Control).
+- Not replaced yet (only bypassed while the planner finds a target): the edge sets, graph merge, goals and doctrine
+  steps.
+- Version v0.42.0.
+
 ## 0.41.0
 Refactor phase 2: army orders (`AiArmy.cs`). New default `-orders smart`; the old modes stay for A/B tests
 (`-orders idle` = 0.39-0.40, `-orders all` = before 0.39).
