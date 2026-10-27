@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.42.0**. Next: measure A/B/C, then **0.43** = workaround CPs out + tuning (below).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.42.1**. Next: one game C' (0.42.1, default) vs. game B, then **0.43** (below).
 
 ## Where we are
 
@@ -133,6 +133,9 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.42.1 (game C')**: same settings as game B (Veteran, 20-25 min). Watch: dwarves around Fuselight / Twilight
+  Shore, Thandol bridge while closed (no standoff at the banks?), Outland portals (groups go through?), Druids take
+  their quest CPs first? Bots stop running to dead ends (Gnomeregan, Terrordale)? Send the last dump (ROUTES section).
 - 0.42 (game C): dump ROUTES -- targets plausible? "next" nodes along the way? Rock groups closed early, open after
   the turns? Waygate edges > 0 after 1 min? Bots attack harbours / camps (area targets show as "E:" with a building
   name)? `-edges` still shows the OLD graph.

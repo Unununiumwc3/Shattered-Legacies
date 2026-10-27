@@ -1729,6 +1729,13 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
+        // 0.42.1: enemies that cannot walk here (other area, no open edge -- e.g. across the closed Thandol bridge) are
+        // no reason to recall the army: both sides stood at the banks and shot across.
+        if (!AiRoutes.Reachable(x, y, GetUnitX(u), GetUnitY(u)))
+        {
+          continue;
+        }
+
         n++;
       }
 
@@ -2768,7 +2775,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.42.0";
+    public const string Build = "0.42.1";
 
     public static void Setup()
     {

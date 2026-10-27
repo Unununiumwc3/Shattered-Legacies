@@ -100,6 +100,9 @@ Heartbeat: WLAI heartbeat build=0.41.0 t=22m09s units-on-map=3014 orders/min=102
 
 ### v0.39.10 -- 3 dumps, 10:00 .. 20:00 -- A idle+route off, Veteran
 
+> Note (0.42.1): NOT a new game -- the same numbers as the first 0.39.10 entry (the too-much-gold game; probably the
+> old dumps folder again). Game A is missing; B (0.41) vs C (0.42) is the valid comparison.
+
 Skipped (other build or other game): WLAI_dump_25m00s.txt (v0.39.9, 25:00)
 
 Bots: 16, orders mode: idle.
@@ -126,6 +129,8 @@ Heartbeat: WLAI heartbeat build=0.39.10 t=22m49s units-on-map=5447 orders/min=43
   ...
 
 ### v0.41.0 -- 4 dumps, 5:00 .. 20:00 -- B route off, Veteran
+
+> Note (0.42.1): the same game as "B smart" above (identical numbers) -- appended twice.
 
 Bots: 16, orders mode: smart.
 
@@ -173,6 +178,9 @@ Heartbeat: WLAI heartbeat build=0.41.0 t=22m09s units-on-map=3014 orders/min=102
   ...
 
 ### v0.42.0 -- 4 dumps, 5:00 .. 20:00 -- C default, Veteran
+
+> Note (0.42.1): vs. B at 20 min -- orders/min 2327 vs 2198, of them "advance" (waypoints) 11483 in 20 min; slots over
+> budget 2114 vs 256 (route planning on every service, counted in combat). Fixed in 0.42.1 (committed routes).
 
 Bots: 16, orders mode: smart.
 
