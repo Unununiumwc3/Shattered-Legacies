@@ -394,7 +394,7 @@ namespace WarcraftLegacies.Source.Ai
                                              // 0.43.1: default 0 (= Veteran); negative = bots lose gold (Recruit, Soldier)
     private const float ReviveEvery = 180.0f; // v13: free hero revival for bots every 3 min
     private const float DiagEvery = 3.0f;
-    private const int DefendThreshold = 5;         // Rule 0: recall if >N enemies near an owned anchor
+    internal const int DefendThreshold = 5;         // Rule 0: recall if >N enemies near an owned anchor
     private const float DefendRadius = 1500f;      // how close counts as "at my base/CP"
     private const float DamagedFraction = 0.97f;   // v29: anchor below this share of max HP = "being hit"
     internal const float NeutralBias = 0.5f;        // v31: a neutral frontier counts as this much of its distance
@@ -1380,7 +1380,7 @@ namespace WarcraftLegacies.Source.Ai
         var homeLm = HomeLandmass(p, lm);
         diag.HomeLm = homeLm;
 
-        var defend = FindDefenseTarget(p);
+        var defend = AiDefense.Pick(p, pid, tx, ty); // 0.43.2: reach + hysteresis (was FindDefenseTarget(p): anywhere)
         if (defend != null)
         {
           // Rule 0: base/CP under attack -> recall, overriding whatever offense was committed.
@@ -1641,17 +1641,20 @@ namespace WarcraftLegacies.Source.Ai
     // Never counted: neutrals (creeps, critters, the ~1900 preplaced Neutral-Passive rescue units that sit next
     // to many CPs), allies, structures, and anything on unwalkable terrain (ships offshore, flyers over sea) --
     // an army attack-moved toward those can't reach them and just stands at the coast.
-    private static unit FindDefenseTarget(player p)
+    // 0.43.2: only what the army at (ax, ay) can reach -- its landmass, and within AiDefense.DefendReach (an own
+    // capital on that landmass at any distance). Before: any damaged own CP on the whole map.
+    internal static unit FindDefenseTarget(player p, float ax, float ay)
     {
       unit best = null;
       var worst = 0;
       _defCreeps = 0;
+      var armyLm = Geography.Landmass(ax, ay);
 
       var caps = CapitalManager.GetAll();
       for (var i = 0; i < caps.Count; i++)
       {
         var cu = caps[i].Unit;
-        if (cu == null || GetOwningPlayer(cu) != p || !IsDamaged(cu))
+        if (cu == null || GetOwningPlayer(cu) != p || !IsDamaged(cu) || !DefendableFrom(cu, ax, ay, armyLm, true))
         {
           continue;
         }
@@ -1669,7 +1672,7 @@ namespace WarcraftLegacies.Source.Ai
       for (var i = 0; i < mine.Count; i++)
       {
         var cu = mine[i].Unit;
-        if (cu == null || !IsDamaged(cu))
+        if (cu == null || !IsDamaged(cu) || !DefendableFrom(cu, ax, ay, armyLm, false))
         {
           continue;
         }
@@ -1687,6 +1690,21 @@ namespace WarcraftLegacies.Source.Ai
       return best;
     }
 
+    private static bool DefendableFrom(unit cu, float ax, float ay, int armyLm, bool capital)
+    {
+      var x = GetUnitX(cu);
+      var y = GetUnitY(cu);
+      var lm = Geography.Landmass(x, y);
+      if (armyLm >= 0 && lm >= 0 && lm != armyLm)
+      {
+        return false;
+      }
+
+      var dx = x - ax;
+      var dy = y - ay;
+      return capital || dx * dx + dy * dy <= AiDefense.DefendReach * AiDefense.DefendReach;
+    }
+
     private static bool IsDamaged(unit u)
     {
       var max = GetUnitState(u, UNIT_STATE_MAX_LIFE);
@@ -1695,7 +1713,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // Enemy-PLAYER ground units near (x,y). _lastCreepCount = neutral units that were seen and ignored
     // (diagnostics only: shows how often the old rule would have recalled the army for nothing).
-    private static int CountEnemiesNear(player p, float x, float y)
+    internal static int CountEnemiesNear(player p, float x, float y)
     {
       var n = 0;
       _lastCreepCount = 0;
@@ -2776,7 +2794,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.43.1";
+    public const string Build = "0.43.2";
 
     public static void Setup()
     {

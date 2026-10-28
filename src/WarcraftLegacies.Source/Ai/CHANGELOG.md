@@ -4,6 +4,28 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.43.2
+Fixes from the first 0.43.1 game: armies walked back and forth ("stop go stop go"), the Scourge shuttled between
+Lordaeron and Northrend, dwarves stood at the closed Thandol bridge.
+- **Defence with reach and hysteresis** (`AiDefense.cs`). The main cause of the back and forth: Rule 0 took any
+  damaged own CP on the WHOLE map, every service, without minimum times -- the army flipped attack <-> defence every
+  15-90 s and turned around each time (Scourge: attack Borean Tundra <-> defend Tirisfal / Deathknell, across the
+  sea; Druids: attack Feralas <-> defend Felwood / Nordrassil; up to 8 switches per bot in the log window). Now: only
+  CPs on the army's landmass within 9000 of it (an own capital there at any distance); a defence lasts at least 30 s
+  and as long as enemies stay; after it, no new defence for 45 s unless the threat is within 4000 of the army.
+- **Waypoints without detours**: the farthest route node within 8000 must also be walkable without a big detour (route
+  cost <= 1.35 x the straight line + 2000). 0.43.1 picked Arathi Highlands from the other side of the closed Thandol
+  bridge (near in a line, far on foot).
+- **Thandol bridge in the graph**: the generator marked only +-96 around each rock; the walk slipped past the first
+  rock at the west railing (Dun Modr <-> Stromgarde "via 15376,560" was not behind rocks). Now +-192: both bridge
+  edges are closed while the rocks stand -- Arathi is no target on foot from the Wetlands side until turn 30.
+- **Waygate ends by area** (region map), not by the nearest node in a straight line (the Emerald Portal at the Thandol
+  bridge was joined to the node across the gorge).
+- New tool `tools/ai/render_map.py`: draws the map as the bot sees it -- terrain (water, cliffs, map edge), trees,
+  WL's rocks, CPs (size = gold), area nodes, the route graph (closed and waygate links dashed); `--regions` tints each
+  node's area. Writes `tools/ai/out/route_map.png` (+ `_small`), never committed.
+- Version v0.43.2.
+
 ## 0.43.1
 Movement fixes from the first 0.43.0 game, and a weaker strength scale (maintainer).
 - **Territory = the bot's OWN nodes only.** With the allies' nodes every bot of a team computed the same front -- the

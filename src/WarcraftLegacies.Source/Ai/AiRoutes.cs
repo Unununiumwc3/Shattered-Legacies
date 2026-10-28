@@ -191,8 +191,8 @@ namespace WarcraftLegacies.Source.Ai
 
           float ux = GetUnitX(u), uy = GetUnitY(u);
           float dx = WaygateGetDestinationX(u), dy = WaygateGetDestinationY(u);
-          var a = Nearest(ux, uy);
-          var b = Nearest(dx, dy);
+          var a = StartNode(ux, uy); // 0.43.2: the AREA of each waygate end (was: nearest node in a straight line --
+          var b = StartNode(dx, dy); // the Emerald Portal at the Thandol bridge got the node across the gorge)
           if (a < 0 || b < 0 || a == b)
           {
             continue;
@@ -219,7 +219,10 @@ namespace WarcraftLegacies.Source.Ai
     private const float ReplanEvery = 30f;
     private const float QuestBias = 0.3f;   // a CP of an open quest objective counts this much of its cost
     private const float WaypointReach = 8000f; // 0.43.1: order to the farthest route node within this distance
+    private const float DetourFactor = 1.35f;  // 0.43.2: ... reachable without a detour (route cost vs straight line)
+    private const float DetourSlack = 2000f;
     private static List<int>[] _path = new List<int>[24];
+    private static List<float>[] _pathCost = new List<float>[24]; // 0.43.2: walking cost from the group, per route node
     private static int[] _step = new int[24];
     private static float[] _planAt = new float[24];
     private static HashSet<int> _questNodes = new();
@@ -259,12 +262,26 @@ namespace WarcraftLegacies.Source.Ai
       // area node), never to one behind the last. The point moves ahead while the units still walk -- 0.42.1/0.43.0
       // ordered to the next node, units stopped there and waited until the group's centre came within 1200
       // ("stop go stop go", ~950 waypoint orders/min).
+      // 0.43.2: ... and only a node the units can walk to WITHOUT a big detour: its route cost from where the group
+      // is may be at most DetourFactor x the straight line + DetourSlack. 0.43.1 chose Arathi Highlands from the other
+      // side of the closed Thandol bridge (close in a line, far on foot): the units stood at the bridge.
       var last = path.Count - 1;
+      var costs = _pathCost[pid];
+      var h = path.IndexOf(here);
+      var baseIdx = h > _step[pid] - 1 ? h : _step[pid] - 1;
+      var baseCost = costs != null && baseIdx >= 0 && baseIdx < costs.Count ? costs[baseIdx] : 0f;
       var pick = -1;
       var pickCp = -1;
       for (var k = last; k >= _step[pid] && k >= 0; k--)
       {
         if (!Near(path[k], sx, sy, WaypointReach))
+        {
+          continue;
+        }
+
+        if (costs != null && k < costs.Count && k > _step[pid]
+            && costs[k] - baseCost > DetourFactor * Dist(AiRouteData.NodeX[path[k]], AiRouteData.NodeY[path[k]], sx, sy)
+               + DetourSlack)
         {
           continue;
         }
@@ -432,7 +449,14 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       path.Reverse();
+      var costs = new List<float>();
+      for (var k = 0; k < path.Count; k++)
+      {
+        costs.Add(_dist[path[k]]);
+      }
+
       _path[pid] = path;
+      _pathCost[pid] = costs;
       _step[pid] = path.Count > 1 ? 1 : 0;
       _planAt[pid] = SimpleBot.Clock;
       _lastTarget[pid] = best;
@@ -786,25 +810,6 @@ namespace WarcraftLegacies.Source.Ai
       var dx = ax - bx;
       var dy = ay - by;
       return SquareRoot(dx * dx + dy * dy);
-    }
-
-    private static int Nearest(float x, float y)
-    {
-      var best = -1;
-      var bd = 0f;
-      for (var i = 0; i < AiRouteData.Nodes; i++)
-      {
-        var dx = AiRouteData.NodeX[i] - x;
-        var dy = AiRouteData.NodeY[i] - y;
-        var dd = dx * dx + dy * dy;
-        if (best < 0 || dd < bd)
-        {
-          best = i;
-          bd = dd;
-        }
-      }
-
-      return best;
     }
 
     // nearest node on the same landmass (Geography grid) when the point's landmass is known

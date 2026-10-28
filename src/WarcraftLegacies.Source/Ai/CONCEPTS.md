@@ -38,6 +38,9 @@ Options:
 - **Spend in intervals** (all gold every N minutes): hard to tune.
 - [you] Not wanted: bursts in the CP income itself (a step away from WL).
 
+Data (0.43.1, new Veteran = 0 bonus): at 20:00 armies of 2-50 food, gold ~0 for every bot, the map felt empty.
+Without any bonus a bot cannot hold an army -- the free techs / heroes do not make up for it.
+
 Open: [you] depot vs. bursts of the bonus only; [ai] measure first how the gold of a bot flows today (income per
 minute, spent per minute, gold on hand) -- a dump line per bot would show whether the trickle comes from income or
 from spending.
