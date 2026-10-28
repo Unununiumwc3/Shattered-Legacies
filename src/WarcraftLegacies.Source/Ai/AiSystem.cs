@@ -1428,7 +1428,7 @@ namespace WarcraftLegacies.Source.Ai
               NoteTarget(p, pid, rt, enemyRt ? "route-enemy" : "route-neutral");
               TrackStuck(p, pid, rt);
               float rx = GetUnitX(rt), ry = GetUnitY(rt);
-              if (AiRoutes.HasWaypoint(pid))
+              if (AiRoutes.HasWaypoint(pid) && !AiRoutes.Chains) // 0.44: chains carry the route themselves
               {
                 IssueAttackToPoint(p, pid, AiRoutes.WpX[pid], AiRoutes.WpY[pid], false, rx, ry);
               }
@@ -1535,6 +1535,10 @@ namespace WarcraftLegacies.Source.Ai
       if (old != state)
       {
         Log("P" + I2S(pid) + " " + FacName(p) + ": state " + old + " -> " + state);
+        if (pid >= 0 && pid < 24 && old != "-")
+        {
+          AiScheduler.StateSwitch[pid]++; // 0.44
+        }
       }
 
       BotState[pid] = state;
@@ -1548,6 +1552,10 @@ namespace WarcraftLegacies.Source.Ai
         var from = d.Target != null ? GetUnitName(d.Target) : "-";
         var to = tgt != null ? GetUnitName(tgt) : "-";
         Log("P" + I2S(pid) + " " + FacName(p) + ": target " + from + " -> " + to + " [" + reason + "]");
+        if (pid >= 0 && pid < 24)
+        {
+          AiScheduler.TargetSwitch[pid]++; // 0.44
+        }
         d.Target = tgt;
         d.TargetSince = _clock;
       }
@@ -2794,7 +2802,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.43.2";
+    public const string Build = "0.44.0";
 
     public static void Setup()
     {

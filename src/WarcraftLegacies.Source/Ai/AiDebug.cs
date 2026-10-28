@@ -91,6 +91,7 @@ public static class AiDebug
     RegisterLoose("-orders", OnOrders, Level.Control);   // 0.39: -orders idle|all (refactor lever 1)
     RegisterLoose("-budget", AiScheduler.OnBudgetCommand, Level.Control); // 0.40: -budget on|off (load budget)
     RegisterLoose("-route", AiRoutes.OnRouteCommand, Level.Control);      // 0.42: -route on|off (route planner)
+    RegisterLoose("-chain", AiRoutes.OnChainCommand, Level.Control);      // 0.44: -chain on|off (movement chains)
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);

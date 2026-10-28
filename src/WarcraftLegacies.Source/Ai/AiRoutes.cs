@@ -28,6 +28,9 @@ namespace WarcraftLegacies.Source.Ai
     private static List<int> _pFrom = new();
     private static List<int> _pTo = new();
     private static List<float> _pCost = new();
+    private static List<unit> _pUnit = new();  // 0.44: the waygate of each portal edge (chains click it)
+    private static List<float> _pExitX = new();
+    private static List<float> _pExitY = new();
     private static bool[] _rockOpen;
     private static unit[] _areaUnit;      // node * 24 + owner -> one alive structure of that owner near an area node
     private static float[] _dist;
@@ -175,6 +178,10 @@ namespace WarcraftLegacies.Source.Ai
       _pFrom.Clear();
       _pTo.Clear();
       _pCost.Clear();
+      _pUnit.Clear();
+      _pExitX.Clear();
+      _pExitY.Clear();
+      _cacheFrom = -1;
       var g = CreateGroup();
       for (var pl = 24; pl < 28; pl++)
       {
@@ -204,6 +211,9 @@ namespace WarcraftLegacies.Source.Ai
           _pFrom.Add(a);
           _pTo.Add(b);
           _pCost.Add(cost);
+          _pUnit.Add(u);
+          _pExitX.Add(dx);
+          _pExitY.Add(dy);
         }
       }
 
@@ -720,6 +730,9 @@ namespace WarcraftLegacies.Source.Ai
     private static void Dijkstra(player p, int start)
     {
       Runs++;
+      _cacheFrom = start; // 0.44: the chain cache is valid for single-source runs (start >= 0) of this player now
+      _cachePlayer = p;
+      _cacheAt = SimpleBot.Clock;
       var relax = 0;
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
@@ -802,6 +815,166 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     internal static bool HasWaypoint(int pid) => WpX[pid] != -1f || WpY[pid] != -1f;
+
+    // ---- 0.44: movement chains --------------------------------------------------------------------------------
+    // Every army order becomes a CHAIN: queued attack-moves along the route from the unit's own area -- like a player
+    // shift-clicking attack-move B, C, D. Each unit follows the graph node by node on its own (no waiting for the
+    // group, no "advance" orders) and fights what it meets. A waygate on the route: attack-move to a point in front of
+    // it, then a queued right-click ON the waygate (walk in), then onward from the exit. Never an attack-move onto the
+    // waygate itself: a unit teleported by it would then walk all the way back to "click" it.
+    // At most ChainMax points; a unit that used them up stands idle away from its target and gets the next chain at
+    // the heartbeat. "-chain off" = 0.43 (one order to the target, the engine finds the way).
+
+    internal static bool Chains = true;
+    private const int ChainMax = 8;
+    private const float GateApproach = 400f;
+    private const int OrderAttack = 851983;
+    private const int OrderSmart = 851971;
+    private static int _cacheFrom = -1;
+    private static player _cachePlayer;
+    private static float _cacheAt = -1f;
+    private static List<int> _chainNodes = new();
+    internal static int ChainsIssued;
+    internal static int ChainPoints;
+    internal static int ChainFallback;
+
+    // Orders unit u (owner p) to (x, y) as a chain. False = no chain possible (same area, unknown ground, unreachable):
+    // the caller gives the plain order.
+    internal static bool Chain(player p, unit u, float x, float y)
+    {
+      if (!On || !Chains)
+      {
+        return false;
+      }
+
+      Ready();
+      var from = StartNode(GetUnitX(u), GetUnitY(u));
+      var to = StartNode(x, y);
+      if (from < 0 || to < 0 || from == to)
+      {
+        return false;
+      }
+
+      if (_cacheFrom != from || _cachePlayer != p || _cacheAt != SimpleBot.Clock)
+      {
+        Dijkstra(p, from);
+      }
+
+      if (!_done[to])
+      {
+        ChainFallback++;
+        return false;
+      }
+
+      _chainNodes.Clear();
+      var n = to;
+      while (n >= 0 && n != from && _chainNodes.Count <= AiRouteData.Nodes)
+      {
+        _chainNodes.Add(n);
+        n = _prev[n];
+      }
+
+      if (n != from)
+      {
+        ChainFallback++;
+        return false;
+      }
+
+      var points = 0;
+      var prevNode = from;
+      for (var k = _chainNodes.Count - 1; k >= 0 && points < ChainMax; k--)
+      {
+        var node = _chainNodes[k];
+        var e = _prevEdge[node];
+        if (e < 0)
+        {
+          var pe = -e - 1;
+          var gate = _pUnit[pe];
+          if (gate == null || GetUnitState(gate, UNIT_STATE_LIFE) <= 0.405f)
+          {
+            break; // the waygate is gone: the chain ends here, the heartbeat re-plans
+          }
+
+          float gx = GetUnitX(gate), gy = GetUnitY(gate);
+          var bx = AiRouteData.NodeX[prevNode] - gx;
+          var by = AiRouteData.NodeY[prevNode] - gy;
+          var bl = SquareRoot(bx * bx + by * by);
+          if (bl > 1f)
+          {
+            ChainPoint(u, gx + bx / bl * GateApproach, gy + by / bl * GateApproach, points == 0);
+            points++;
+          }
+
+          if (points == 0)
+          {
+            IssueTargetOrderById(u, OrderSmart, gate);
+          }
+          else
+          {
+            BlzQueueTargetOrderById(u, OrderSmart, gate);
+          }
+
+          points++;
+          ChainPoint(u, _pExitX[pe], _pExitY[pe], false);
+          points++;
+        }
+
+        if (k == 0)
+        {
+          ChainPoint(u, x, y, points == 0);
+        }
+        else
+        {
+          ChainPoint(u, AiRouteData.NodeX[node], AiRouteData.NodeY[node], points == 0);
+        }
+
+        points++;
+        prevNode = node;
+      }
+
+      if (points == 0)
+      {
+        return false;
+      }
+
+      ChainsIssued++;
+      ChainPoints += points;
+      SimpleBot.OpOrders++;
+      SimpleBot.OrdersIssued++;
+      return true;
+    }
+
+    // first point replaces the unit's orders (and old queue), the others are queued (shift-click)
+    private static void ChainPoint(unit u, float x, float y, bool first)
+    {
+      if (first)
+      {
+        AiScheduler.CountOrder(u, x, y);
+        IssuePointOrderById(u, OrderAttack, x, y);
+      }
+      else
+      {
+        BlzQueuePointOrderById(u, OrderAttack, x, y);
+      }
+    }
+
+    // "-chain on" / "-chain off"
+    internal static void OnChainCommand()
+    {
+      var msg = GetEventPlayerChatString();
+      if (msg.Length >= 9 && msg.Substring(0, 9) == "-chain on")
+      {
+        Chains = true;
+      }
+      else if (msg.Length >= 10 && msg.Substring(0, 10) == "-chain off")
+      {
+        Chains = false;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "army movement: "
+        + (Chains ? "CHAINS (queued attack-moves along the graph, waygates clicked)" : "ONE ORDER to the target (0.43)")
+        + "  -- -chain on|off");
+    }
 
     // ---- helpers ------------------------------------------------------------------------------------------
 

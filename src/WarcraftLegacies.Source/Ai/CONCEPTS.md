@@ -7,7 +7,24 @@ move to `TODO.md`. `[you]` = maintainer decision, `[ai]` = implementation.
 Guiding rules (maintainer): natural movement first; stay close to the original Warcraft Legacies (no changes to WL's
 CP income); simple and not engine-heavy.
 
-## 1. Waves to the front (next candidate, 0.44)
+## 0. Movement rework (agreed with the maintainer after 0.43.2) -- steps
+
+| Step | Version | Content |
+|---|---|---|
+| 1 | 0.44 (done) | **Movement chains**: queued attack-moves along route nodes; waygate legs (attack-move in front, right-click on the waygate, onward from the exit); a new chain only when the target changes; units that used up their chain get the next one. Counters: switches per bot, stalled units. |
+| 2 | 0.45 | **Gather points (waves)** for chains longer than ~5 nodes: the chain ends at the own node right behind the front; wait until the group has enough food (the 0.41 need) or ~60 s, then the final chain. Short chains go without waiting. |
+| 2b | 0.45 | **Extend or re-order** when the target changes during a chain (an ally took D): continue from the chain's end (extend) if that costs at most ~1.2 x the direct route, else a new chain from where the group is. First version (0.44): units finish their leg, then get the new chain. |
+| 3 | 0.46 | **Several groups per bot** (2-3), only when the army is clearly bigger than one target needs. Newcomers get their own chain to the gather point and merge there. |
+| 4 | later | **Economy**: bonus gold in bursts, load governor (section 2) once the stalled-units counter shows the threshold. |
+| alongside | as needed | **Graph quality**: generated pass nodes (narrow passages), nodes on long edges, an exceptions file for what map data cannot know (listed in `WORKAROUNDS.md`); the maintainer can mark nodes / edges on `route_map.png` in a fixed colour (pixel -> map: x = -28672 + 16 px, y = -32256 + 16 (3584 - py)). |
+
+Decisions behind it:
+- Attack-move never attacks own / allied units: own CPs on the route are passed, enemy CPs and hostile neutrals fought.
+- "A falls behind us" is the defence rule's business (0.43.2: reach + minimum times), not the chain's.
+- Group stretching matters only for small groups -- hence gather points by chain length, not always.
+- Waygates need no hand-placed nodes: every live waygate gives its entry (the unit) and exit (its destination).
+
+## 1. Waves to the front (now step 2 of section 0)
 
 Model, building on 0.41 (attack group + staging) and 0.43 (target = distance from the territory):
 - **Front** = every node that is not ours but borders our land (neutral or enemy). The target is the cheapest front

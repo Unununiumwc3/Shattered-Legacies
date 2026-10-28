@@ -50,6 +50,10 @@ namespace WarcraftLegacies.Source.Ai
     internal static int OrdFar;
     internal static int OrdIdleAtTarget;
 
+    // 0.44: flapping per bot -- target changes and attack/defence state changes since the start
+    internal static int[] TargetSwitch = new int[24];
+    internal static int[] StateSwitch = new int[24];
+
     internal static AiTask Add(string name, int periodSlots, int phase, System.Action run, bool deferrable)
     {
       var t = new AiTask();

@@ -53,6 +53,8 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
+      SampleStall(pid); // 0.44
+
       if (whole)
       {
         _hasFinal[pid] = false;
@@ -396,12 +398,69 @@ namespace WarcraftLegacies.Source.Ai
       return GetUnitCurrentOrder(u) == 0 && !IsNear(u, x, y, r);
     }
 
+    // 0.44: a chain along the graph when possible (AiRoutes.Chain), else one attack-move
     internal static void Issue(unit u, float x, float y)
     {
+      if (AiRoutes.Chain(GetOwningPlayer(u), u, x, y))
+      {
+        return;
+      }
+
       SimpleBot.OpOrders++;
       SimpleBot.OrdersIssued++;
       AiScheduler.CountOrder(u, x, y);
       IssuePointOrder(u, "attack", x, y);
+    }
+
+    // ---- 0.44: stalled units (engine overload vs. target flapping) ------------------------------------------
+    // A unit that has an order, has not moved 100 since the bot's last army order round, and has not lost health is
+    // "stalled" -- the signature of an overloaded engine (orders wait in the pathing queue). Flapping instead shows as
+    // switches (AiScheduler.TargetSwitch / StateSwitch). Ranged units shooting without being hit count as stalled
+    // too, so compare the share between games, not as an absolute truth.
+    private static Dictionary<unit, float>[] _sx = new Dictionary<unit, float>[24];
+    private static Dictionary<unit, float>[] _sy = new Dictionary<unit, float>[24];
+    private static Dictionary<unit, float>[] _sl = new Dictionary<unit, float>[24];
+    internal static int StallSeen;
+    internal static int StallStalled;
+
+    private static void SampleStall(int pid)
+    {
+      if (_sx[pid] == null)
+      {
+        _sx[pid] = new Dictionary<unit, float>();
+        _sy[pid] = new Dictionary<unit, float>();
+        _sl[pid] = new Dictionary<unit, float>();
+      }
+
+      var sx = _sx[pid];
+      var sy = _sy[pid];
+      var sl = _sl[pid];
+      for (var i = 0; i < Units.Count; i++)
+      {
+        var u = Units[i];
+        float x = GetUnitX(u), y = GetUnitY(u), life = GetUnitState(u, UNIT_STATE_LIFE);
+        if (GetUnitCurrentOrder(u) != 0 && sx.ContainsKey(u))
+        {
+          StallSeen++;
+          var dx = x - sx[u];
+          var dy = y - sy[u];
+          if (dx * dx + dy * dy < 100f * 100f && life >= sl[u])
+          {
+            StallStalled++;
+          }
+        }
+
+        sx[u] = x;
+        sy[u] = y;
+        sl[u] = life;
+      }
+
+      if (sx.Count > Units.Count * 2 + 64)
+      {
+        sx.Clear(); // dead units pile up -- start over now and then (one round without samples)
+        sy.Clear();
+        sl.Clear();
+      }
     }
 
     // ---- readouts -------------------------------------------------------------------------------------------
@@ -410,7 +469,9 @@ namespace WarcraftLegacies.Source.Ai
     {
       return "army " + (Smart ? "smart" : "old") + " orders: change=" + I2S(OrdChange) + " idle-away="
              + I2S(OrdIdleFar) + " rest=" + I2S(OrdRestMove) + " refill=" + I2S(OrdRefill) + " advance="
-             + I2S(OrdAdvance);
+             + I2S(OrdAdvance) + " | chains " + (AiRoutes.Chains ? "on" : "off") + " issued=" + I2S(AiRoutes.ChainsIssued)
+             + " points=" + I2S(AiRoutes.ChainPoints) + " fallback=" + I2S(AiRoutes.ChainFallback) + " | stalled "
+             + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen);
     }
 
     internal static void Lines(List<string> o)
@@ -430,6 +491,16 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       o.Add(s);
+      var sw = "switches per bot (target/state, since start):";
+      for (var pid = 0; pid < 24; pid++)
+      {
+        if (AiScheduler.TargetSwitch[pid] + AiScheduler.StateSwitch[pid] > 0)
+        {
+          sw = sw + " P" + I2S(pid) + " " + I2S(AiScheduler.TargetSwitch[pid]) + "/" + I2S(AiScheduler.StateSwitch[pid]) + ";";
+        }
+      }
+
+      o.Add(sw);
     }
   }
 }

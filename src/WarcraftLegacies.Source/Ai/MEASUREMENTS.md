@@ -336,3 +336,108 @@ Heartbeat: WLAI heartbeat build=0.43.1 t=20m39s units-on-map=2379 orders/min=128
   task 20:32 timed quests
   task 20:32 legion events
   ...
+
+### v0.43.2 -- 6 dumps, 5:00 .. 25:00 -- 0.43.2 default, Commander (+13), maintainer -- no Thandol problems seen; orcs (Warsong) expanded along the Broken Isles
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 10:00 | 3653 | 966 | 1006 / 132 | - | North Alliance 31, South Alliance 30, Burning Legion 15, Outland 20, Old Gods 33, Kalimdor 28 |
+| 20:00 | 2635 | 1064 | 512 / 121 | - | North Alliance 34, South Alliance 24, Burning Legion 17, Outland 33, Old Gods 41, Kalimdor 31 |
+| 25:00 | 2519 | 802 | 523 / 144 | - | North Alliance 30, South Alliance 21, Burning Legion 22, Outland 39, Old Gods 36, Kalimdor 37 |
+
+LOAD at the checkpoints:
+```
+  10:00  combat 218/288 orders=1 | def-scan 0/179 | production peak 217 | wave-tick 456/3281 | last gate sweep 3118
+  10:00  army smart orders: change=4752 idle-away=224 rest=806 refill=498 advance=3375
+  10:00  groups (food group/need of army @staging): P0 83/77 of 83 @Ratchet (10 gold/min); P1 36/50 of 36 @Deadwind Pass (15 gold/min); P2 38/50 of 38 @Terrordale (1 gold/min); P3 50/50 of 120 @Storm Peaks (15 gold/min); P4 42/50 of 44 @Northern Badlands (10 gold/min); P6 49/50 of 122 @-; P7 50/50 of 70 @Deathknell (10 gold/min); P8 53/53 of 76 @Shimmering Flats (10 gold/min); P9 44/50 of 44 @Brill (15 gold/min); P11 43/50 of 114 @Sulfuron Spire (10 gold/min); P12 48/50 of 69 @Feralas (10 gold/min); P15 1/50 of 1 @Suramar (10 gold/min); P16 43/60 of 48 @Thunderbluff (20 gold/min); P18 all 7; P22 50/50 of 68 @Booty Bay (25 gold/min); P23 25/50 of 25 @-;
+  10:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=2400 max-slot=3275 over=364 would-defer=481 deferred=0
+  10:00  orders total=9655 near(<2k)=1089 mid(2-8k)=7527 far(>8k)=1039 idle-at-target(<300)=19
+  20:00  combat 239/596 orders=2 | def-scan 0/331 | production peak 312 | wave-tick 2213/5257 | last gate sweep 2676
+  20:00  army smart orders: change=9249 idle-away=581 rest=2562 refill=685 advance=7219
+  20:00  groups (food group/need of army @staging): P0 50/50 of 78 @Nazjatar (10 gold/min); P1 1/50 of 1 @Zul'Gurub (25 gold/min); P2 all 35; P3 43/50 of 128 @Sholazar Basin (15 gold/min); P4 12/50 of 12 @Gnomeregan (20 gold/min); P6 all 112; P7 1/50 of 1 @Alterac Mountains (20 gold/min); P8 6/50 of 6 @Eldarath (10 gold/min); P9 4/205 of 4 @Hearthglen (15 gold/min); P11 1/50 of 1 @Felwood (10 gold/min); P12 45/50 of 45 @Twilight Landing (15 gold/min); P15 7/50 of 7 @Stranglethorn (15 gold/min); P18 4/50 of 4 @Dire Maul (15 gold/min); P22 8/50 of 8 @Drustvar (10 gold/min); P23 3/104 of 3 @Tirisfal Glades (15 gold/min);
+  20:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=4800 max-slot=3429 over=755 would-defer=962 deferred=0
+  20:00  orders total=20296 near(<2k)=2491 mid(2-8k)=14492 far(>8k)=3313 idle-at-target(<300)=58
+  25:00  combat 101/596 orders=0 | def-scan 29/331 | production peak 312 | wave-tick 2314/5257 | last gate sweep 2209
+  25:00  army smart orders: change=10368 idle-away=707 rest=3691 refill=743 advance=8797
+  25:00  groups (food group/need of army @staging): P0 all 104; P1 4/50 of 4 @Arathi Highlands (15 gold/min); P2 2/50 of 2 @Storm Peaks (15 gold/min); P3 50/50 of 139 @Deathknell (10 gold/min); P4 all 1; P6 50/50 of 139 @Balor (15 gold/min); P7 3/50 of 3 @Alterac Mountains (20 gold/min); P8 5/50 of 5 @Sulfuron Spire (10 gold/min); P9 4/96 of 4 @Tirisfal Glades (15 gold/min); P11 2/50 of 2 @Shrine to Malorne (10 gold/min); P12 24/50 of 24 @Windshear Crossing (10 gold/min); P15 8/50 of 8 @Deadwind Pass (15 gold/min); P16 3/50 of 3 @Thunderbluff (20 gold/min); P18 3/50 of 3 @Feralas (10 gold/min); P22 4/50 of 4 @Highbank (10 gold/min); P23 3/50 of 3 @Alterac Mountains (20 gold/min);
+  25:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=6000 max-slot=3429 over=951 would-defer=1189 deferred=0
+  25:00  orders total=24306 near(<2k)=2763 mid(2-8k)=17061 far(>8k)=4482 idle-at-target(<300)=59
+```
+
+Top tasks by total ops at 25:00 (of 38):
+```
+task combat every=0.500s runs=3000 last=101 max=1691 sum=1001123
+task production every=1.000s runs=1499 last=72 max=312 sum=169647
+task hero visits every=15.000s runs=99 last=2001 max=2481 sum=91492
+task route areas every=15.000s runs=99 last=619 max=978 sum=72710
+task route portals every=30.000s runs=49 last=766 max=3275 sum=69613
+task gate sweep every=15.000s runs=99 last=0 max=3269 sum=14135
+task ragnaros every=15.000s runs=99 last=271 max=271 sum=13828
+task hero care every=15.000s runs=99 last=42 max=46 sum=3262
+task kul tiras repair every=15.000s runs=99 last=0 max=1418 sum=1418
+task starter kit every=15.000s runs=99 last=0 max=1077 sum=1300
+```
+
+Errors (TICK ERROR / FAILED / section errors): none
+
+Bots at 25:00: P1 Stormwind atk a8 f2; P2 Quel'thalas atk a2 f4; P3 Scourge atk a144 f95; P4 Ironforge def a3 f4; P6 Fel Horde atk a144 f142; P7 Gilneas atk a3 f3; P8 Skywall atk a5 f6; P9 Lordaeron atk a4 f1; P11 Druids atk a10 f1; P12 Black Empire atk a40 f20; P15 Illidan atk a12 f11; P16 Ahn'qiraj atk a26 f8; P18 The Exodar atk a3 f3; P22 Kul'tiras atk a5 f5; P23 Legion atk a3 f1; P0 Warsong def a111 f102
+
+### v0.44.0 -- 6 dumps, 5:00 .. 25:00 -- 0.44.0 default, Commander
+
+Skipped (other build or other game): WLAI_dump_21m25s.txt (v0.43.2, 21:25)
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 10:00 | 3595 | 771 | 1047 / 127 | - | North Alliance 32, South Alliance 31, Burning Legion 19, Outland 25, Old Gods 33, Kalimdor 23 |
+| 20:00 | 2480 | 723 | 443 / 97 | 73 | North Alliance 25, South Alliance 28, Burning Legion 27, Outland 32, Old Gods 58, Kalimdor 10 |
+| 25:00 | 2342 | 471 | 431 / 94 | 76 | North Alliance 22, South Alliance 18, Burning Legion 30, Outland 41, Old Gods 66, Kalimdor 8 |
+
+LOAD at the checkpoints:
+```
+  10:00  combat 216/486 orders=0 | def-scan 0/136 | production peak 228 | wave-tick 454/3308 | last gate sweep 3143
+  10:00  army smart orders: change=5611 idle-away=387 rest=1228 refill=483 advance=0 | chains on issued=7155 points=21676 fallback=307 | stalled 2% of 13126
+  10:00  groups (food group/need of army @staging): P0 2/50 of 2 @Durotar (10 gold/min); P1 all 28; P2 35/50 of 35 @Seradane (10 gold/min); P3 47/50 of 131 @Drak'Tharon Keep (30 gold/min); P4 46/50 of 47 @Northern Badlands (10 gold/min); P6 50/50 of 114 @Blasted Lands (15 gold/min); P7 50/50 of 70 @Jintha'Alor  (15 gold/min); P8 50/50 of 77 @Mulgore (10 gold/min); P9 57/50 of 57 @Strahnbrad (10 gold/min); P11 54/50 of 125 @Northern Ashenvale (10 gold/min); P12 all 63; P15 9/50 of 9 @-; P16 41/50 of 41 @Southern Barrens (10 gold/min); P18 15/50 of 15 @Stonetalon Peak (10 gold/min); P22 50/50 of 75 @Southern Highlands (10 gold/min); P23 50/50 of 74 @Howling Fjords (20 gold/min);
+  10:00  switches per bot (target/state, since start): P0 13/4; P1 5/1; P2 7/0; P3 11/2; P4 10/0; P6 16/2; P7 10/0; P8 14/2; P9 6/0; P11 13/2; P12 10/3; P15 7/0; P16 13/0; P18 10/0; P22 11/0; P23 12/0;
+  10:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=2400 max-slot=25710 over=557 would-defer=763 deferred=0
+  10:00  orders total=7709 near(<2k)=1674 mid(2-8k)=5730 far(>8k)=305 idle-at-target(<300)=9
+  20:00  combat 155/507 orders=0 | def-scan 8/245 | production peak 284 | wave-tick 2083/5338 | last gate sweep 2666
+  20:00  army smart orders: change=11002 idle-away=840 rest=2364 refill=731 advance=0 | chains on issued=13687 points=43524 fallback=508 | stalled 5% of 28307
+  20:00  groups (food group/need of army @staging): P0 3/50 of 3 @-; P1 5/50 of 5 @Westfall (10 gold/min); P2 1/50 of 1 @Seradane (10 gold/min); P3 all 76; P4 1/50 of 1 @Fuselight (10 gold/min); P6 41/76 of 41 @Elwynn Forest (20 gold/min); P7 2/50 of 2 @Strahnbrad (10 gold/min); P8 50/50 of 76 @Kezan (15 gold/min); P9 13/96 of 13 @Brill (15 gold/min); P11 1/50 of 1 @-; P12 37/50 of 37 @Twilight Landing (15 gold/min); P15 13/50 of 13 @-; P16 41/50 of 41 @Orgrimmar (25 gold/min); P22 1/50 of 1 @Twilight Shore (10 gold/min); P23 7/105 of 7 @Tirisfal Glades (15 gold/min);
+  20:00  switches per bot (target/state, since start): P0 27/16; P1 22/14; P2 12/2; P3 22/7; P4 21/6; P6 31/12; P7 17/4; P8 24/4; P9 21/12; P11 28/16; P12 18/5; P15 19/0; P16 23/0; P18 18/10; P22 20/6; P23 16/2;
+  20:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=4800 max-slot=34860 over=1141 would-defer=1515 deferred=0
+  20:00  orders total=14937 near(<2k)=3375 mid(2-8k)=11064 far(>8k)=498 idle-at-target(<300)=18
+  25:00  combat 86/507 orders=0 | def-scan 26/245 | production peak 284 | wave-tick 2044/5338 | last gate sweep 2074
+  25:00  army smart orders: change=12714 idle-away=1017 rest=2794 refill=769 advance=0 | chains on issued=15799 points=50765 fallback=625 | stalled 5% of 32933
+  25:00  groups (food group/need of army @staging): P0 3/50 of 3 @-; P1 2/50 of 2 @Stromgarde (25 gold/min); P2 1/136 of 1 @Arathi Highlands (15 gold/min); P3 76/136 of 76 @Durnholde (15 gold/min); P4 2/50 of 2 @Grim Batol (10 gold/min); P6 56/50 of 68 @Fuselight (10 gold/min); P7 3/50 of 3 @Hinterlands (10 gold/min); P8 54/56 of 91 @Northern Ashenvale (10 gold/min); P9 all 4; P11 2/50 of 2 @Moonglade (15 gold/min); P12 32/50 of 33 @Dragonmaw Port (10 gold/min); P15 18/50 of 18 @Boralus (25 gold/min); P16 50/50 of 52 @Spinebark Grove (10 gold/min); P22 3/50 of 3 @Northern Highlands (10 gold/min); P23 3/65 of 3 @Alterac Mountains (20 gold/min);
+  25:00  switches per bot (target/state, since start): P0 35/22; P1 28/18; P2 13/2; P3 29/12; P4 28/12; P6 37/12; P7 23/8; P8 31/4; P9 29/19; P11 32/18; P12 19/5; P15 25/2; P16 30/0; P18 23/14; P22 25/10; P23 20/4;
+  25:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=6000 max-slot=34860 over=1427 would-defer=1859 deferred=0
+  25:00  orders total=17294 near(<2k)=3968 mid(2-8k)=12711 far(>8k)=615 idle-at-target(<300)=27
+```
+
+Top tasks by total ops at 25:00 (of 38):
+```
+task combat every=0.500s runs=3000 last=988 max=34860 sum=3790994
+task production every=1.000s runs=1499 last=60 max=284 sum=167309
+task hero visits every=15.000s runs=99 last=1826 max=2476 sum=89320
+task route areas every=15.000s runs=99 last=513 max=1143 sum=73992
+task route portals every=30.000s runs=49 last=712 max=3255 sum=67159
+task gate sweep every=15.000s runs=99 last=0 max=3190 sum=13920
+task ragnaros every=15.000s runs=99 last=182 max=225 sum=11245
+task hero care every=15.000s runs=99 last=36 max=45 sum=3088
+task kul tiras repair every=15.000s runs=99 last=0 max=1407 sum=1407
+task starter kit every=15.000s runs=99 last=0 max=1105 sum=1328
+```
+
+Errors (TICK ERROR / FAILED / section errors): none
+
+Bots at 25:00: P1 Stormwind atk a4 f0; P2 Quel'thalas atk a2 f4; P3 Scourge atk a77 f77; P4 Ironforge atk a2 f2; P6 Fel Horde atk a69 f67; P7 Gilneas atk a3 f3; P8 Skywall atk a94 f87; P9 Lordaeron def a4 f2; P11 Druids atk a6 f1; P12 Black Empire atk a46 f35; P15 Illidan atk a16 f12; P16 Ahn'qiraj atk a94 f62; P18 The Exodar atk a3 f3; P22 Kul'tiras atk a3 f4; P23 Legion atk a3 f1; P0 Frostwolf atk a5 f2
+
+Heartbeat: WLAI heartbeat build=0.44.0 t=26m19s units-on-map=1973 orders/min=295 orders=smart
+  task 26:11 demon portal
+  task 26:11 combat
+  task 26:12 production
+  ...
