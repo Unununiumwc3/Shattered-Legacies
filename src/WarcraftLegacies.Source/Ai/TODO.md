@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.43.2**. Next: one game with 0.43.2 on **Commander** (+13 = half the old Veteran); then waves.
+in `../ShatteredLegacies/TODO.md`. Current build: **0.44.0**. Next: one game on Commander (chains); then gather points (`CONCEPTS.md` 0, step 2).
 
 ## Where we are
 
@@ -134,6 +134,15 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.44.0** on Commander: units follow the graph (no flyers over the ocean, no shortcuts over mountains)? Waygates:
+  do units walk in and continue on the other side (queue survives the teleport)? If they stop at the exit, the
+  heartbeat gives the rest of the chain (up to 20 s). LOAD line "army ...": chains / fallbacks / stalled %, and the
+  "switches per bot" line. A/B: `-chain off` in a second game.
+- [ai] **Cheap islands**: Warsong expanded along the Broken Isles chain (Azsuna -> ... -> Maelstrom) behind the AI ship
+  (0.43.2 game): a waygate hop costs only 300 in the planner. Raise the portal cost (a ship / portal trip is a
+  commitment) or value dead-end island chains lower. Decide after 0.44 (chains change how portals are used).
+- [ai] Flapping is lower in 0.43.2 but still up to 6 attack -> defence switches per bot in a log window -- the 0.44
+  counter measures it over the whole game.
 - **0.43.2** on Commander: no attack <-> defence flapping (event log: few "state atk -> def"; ROUTES)? Scourge stays
   in Lordaeron during the invasion? Dwarves away from the closed Thandol bridge? Units walk without turning around?
 - [you] **Gold scale**: on the new Veteran (0 bonus) the map felt empty at 20:00 -- armies of 2-50 food, gold ~0 for

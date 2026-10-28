@@ -4,6 +4,24 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.44.0
+Movement rework, step 1 (`CONCEPTS.md` 1): movement chains. `-chain off` = 0.43 for A/B tests.
+- **Every army order is a chain**: queued attack-moves along the route from the unit's own area, like a player
+  shift-clicking attack-move B, C, D (`BlzQueuePointOrderById`, patch 1.32.10). Units follow the graph node by node,
+  each on its own (nobody waits for the group's centre), and fight what they meet. Before, the order went straight
+  to the farthest node within 8000 -- ground units used WC3's pathing in between, flyers flew straight over water.
+- **Waygates on the route**: attack-move to a point 400 in front of the waygate, a queued right-click ON the waygate
+  (walk in, like a player), then onward from the exit. Never an attack-move onto the waygate itself (a unit teleported
+  by it would walk all the way back to click it).
+- At most 8 points per chain; a unit that used them up gets the next chain at the heartbeat. A chain is given only
+  when the target changes (plus to units standing idle away from their point) -- no "advance" orders any more.
+- Applies to attack groups, the rest moving to the staging CP, refills, defence, kill targets and "hold".
+- **Counters** (dump LOAD, `-debug2`): chains issued / points / fallbacks; **stalled units** (have an order, did not
+  move 100 since the bot's last army round, did not lose health -- the overload signature; ranged units shooting
+  unhurt count too, so compare between games); **switches per bot** (target / attack-defence state since the start --
+  the flapping signature).
+- Version v0.44.0.
+
 ## 0.43.2
 Fixes from the first 0.43.1 game: armies walked back and forth ("stop go stop go"), the Scourge shuttled between
 Lordaeron and Northrend, dwarves stood at the closed Thandol bridge.
