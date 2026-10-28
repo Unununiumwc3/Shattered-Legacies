@@ -3,7 +3,7 @@
 Written by `python3 tools/ai/gen_routes.py` together with `AiRoutes.g.cs`. Review this after every run.
 
 - Nodes: 187 CPs, 62 area nodes
-- Edges: 356, of them 8 behind rock groups (9 groups of `LTrc`)
+- Edges: 356, of them 9 behind rock groups (9 groups of `LTrc`)
 - Hand-written graph (`AiConfig`): 220 edges, 162 of them also generated.
 
 ## Hand-written edges NOT generated
@@ -18,7 +18,7 @@ walk is N times the straight line: check whether something blocks it that does n
 - ?n001 <-> Quel'Danas: not a CP in the map data
 - Borean Tundra <-> Dragonblight: ok, 1.1x
 - Tomb of Sargeras <-> Val'sharah: ok, 1.3x
-- Tunnels of Ahn'Qiraj <-> Ruins of Ahn'Qiraj: ok, 1.4x
+- Tunnels of Ahn'Qiraj <-> Ruins of Ahn'Qiraj: ok, 1.1x
 - The Abyss <-> Maelstrom: ok, 1.2x
 - The Abyss <-> Eldarath: unreachable on foot
 - Spinebark Grove <-> Southern Barrens: ok, 1.4x
@@ -189,7 +189,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Borean Tundra <-> En'Kilah: 4105 via -6288,16816
 - Borean Tundra <-> The Nexus: 3035 via -8880,16656
 - Borean Tundra <-> area 203: 4438 via -5744,15824
-- Zul'Drak <-> Drak'Tharon Keep: 4209 via 4304,20272 (rocks 8)
+- Zul'Drak <-> Drak'Tharon Keep: 4209 via 4368,20112 (rocks 8)
 - Nath'raxas Hold <-> Krokuun: 4339 via 20752,-30992
 - Krokuun <-> area 218: 4390 via 21584,-29232
 - Desolace <-> Feralas: 3092 via -19376,-5136
@@ -303,7 +303,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Caer Darrow <-> Strahnbrad: 4057 via 14384,5936
 - Deadwind Pass <-> Duskwood: 2770 via 13296,-16592
 - Deadwind Pass <-> Swamp of Sorrows: 3949 via 15792,-16496
-- Dun Modr <-> Stromgarde: 3092 via 15376,560
+- Dun Modr <-> Stromgarde: 3092 via 15376,560 (rocks 3)
 - Dun Modr <-> Wetlands: 2433 via 15184,-2000
 - Dun Modr <-> Arathi Highlands: 3134 via 15792,368 (rocks 3)
 - Dun Modr <-> Dragonmaw Gates: 3303 via 16656,-1104
@@ -447,7 +447,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Booty Bay <-> area 229: 3247 via 9712,-21712
 - Booty Bay <-> area 245: 3915 via 11504,-22992
 - Southern Highlands <-> Twilight Shore: 2329 via 19792,-5872
-- Venture Bay <-> area 247: 3131 via 4016,16112 (rocks 0)
+- Venture Bay <-> area 247: 3104 via 4016,16112 (rocks 0)
 - En'Kilah <-> area 203: 3764 via -4656,17008
 - Auberdine <-> Darkshore: 3662 via -17200,8432
 - Auberdine <-> area 195: 5602 via -18128,11728
@@ -475,7 +475,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Blasted Lands <-> area 244: 4772 via 17488,-19632
 - Terrordale <-> area 234: 3160 via 12560,13744
 - Runestone Falithas <-> area 231: 3172 via 20400,15536
-- Scarab Wall <-> Hive'Zora: 3601 via -18576,-18032 (rocks 6)
+- Scarab Wall <-> Hive'Zora: 2057 via -19344,-17808 (rocks 6)
 - Hive'Zora <-> Hive'Ashi: 2068 via -17584,-17104
 - Twilight Shore <-> area 214: 3485 via 18192,-5360
 - Twilight Shore <-> area 237: 2755 via 20400,-7408
@@ -504,7 +504,8 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Zul'Drak <-> Drak'Tharon Keep (cost 4209, rock group 8)
 - Crystalsong Forest <-> area 198 (cost 4220, rock group 7)
 - Stonemaul <-> area 243 (cost 3943, rock group 1)
+- Dun Modr <-> Stromgarde (cost 3092, rock group 3)
 - Dun Modr <-> Arathi Highlands (cost 3134, rock group 3)
 - Orgrimmar <-> Durotar (cost 4247, rock group 2)
-- Venture Bay <-> area 247 (cost 3131, rock group 0)
-- Scarab Wall <-> Hive'Zora (cost 3601, rock group 6)
+- Venture Bay <-> area 247 (cost 3104, rock group 0)
+- Scarab Wall <-> Hive'Zora (cost 2057, rock group 6)

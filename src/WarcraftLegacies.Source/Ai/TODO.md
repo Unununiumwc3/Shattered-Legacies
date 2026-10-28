@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.43.1**. Next: one game with 0.43.1 (new Veteran = no bonus gold); then waves (`CONCEPTS.md` 1).
+in `../ShatteredLegacies/TODO.md`. Current build: **0.43.2**. Next: one game with 0.43.2 on **Commander** (+13 = half the old Veteran); then waves.
 
 ## Where we are
 
@@ -134,6 +134,19 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.43.2** on Commander: no attack <-> defence flapping (event log: few "state atk -> def"; ROUTES)? Scourge stays
+  in Lordaeron during the invasion? Dwarves away from the closed Thandol bridge? Units walk without turning around?
+- [you] **Gold scale**: on the new Veteran (0 bonus) the map felt empty at 20:00 -- armies of 2-50 food, gold ~0 for
+  every bot. Commander (+13) for the next test; then decide Veteran (maybe +6 to +13).
+- [ai] **SYSTEM ERROR at the plague**: "Scourge failed to execute OnQuestProgressChanged: Tried to call DropAllItems
+  on a summoned hero" (0.43.1 game). Check whether a bot-made hero (free heroes, revives, banned-form handling) counts
+  as summoned -- if so it is the bot's fault; otherwise a WL bug.
+- [ai] **Lordaeron had a ship** (0.43.1 game) -- bots should not build ships. Find the source (production tables,
+  starter production, CP grants, a WL quest reward).
+- [you] **Gnomeregan and similar dead ends**: which faction goes there, and when? The 0.43.1 log window had no event
+  for it. A screenshot or the time helps; `-dump` right then is best.
+- [you] Emerald Portals: check again after 0.43.2 (waygate ends by area).
+- Mountain areas (dwarves) suffered most: re-check after the Thandol / detour fixes.
 - **0.43.1** (Veteran = 0 bonus now -- not comparable with older games, start a new baseline): no team balls (ROUTES:
   different targets per bot of a team)? Units walk on without stopping at every node? Fewer "advance" orders?
   Druids take their neighbourhood (quest CPs)? Observations from the 0.43.0 game to re-check: Scourge had not cleared

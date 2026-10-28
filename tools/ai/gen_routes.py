@@ -44,7 +44,8 @@ MINX, MINY = -28672.0, -32256.0
 C = 32                      # grid cell size = WC3's pathing cell (64 closed city entrances: trees fill whole cells)
 TREE_HALF = 32              # a tree blocks 64 x 64 (its pathing texture)
 ROCK_HALF = 64              # a rock doodad blocks 128 x 128
-GATE_ROCK_HALF = 96         # LTrc: marked as a removable blocker in this box
+GATE_ROCK_HALF = 192        # LTrc: marked as a removable blocker in this box (0.43.2: 96 left a gap at the
+                            # west railing of the Thandol bridge -- the walk "around" the closed bridge)
 GATE_GROUP = 700            # LTrc within this distance form one rock group
 AREA_GAP = 3000             # walking distance from the nearest node that gets an area node
 RC = 256                    # region map cell

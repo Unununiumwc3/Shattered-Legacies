@@ -286,6 +286,10 @@ Heartbeat: WLAI heartbeat build=0.43.0 t=25m29s units-on-map=3625 orders/min=193
 
 ### v0.43.1 -- 4 dumps, 5:00 .. 20:00 -- 0.43.1 default, Veteran (new scale: 0 bonus)
 
+> Note (0.43.2): the 25:00 dump was the old 0.43.0 game (same file name) -- skipped. Armies of 2-50 food at 20:00 and
+> gold ~0 for every bot: the new Veteran (0 bonus) is too weak. Main movement fault: attack <-> defence flapping (Rule 0
+> took any damaged own CP on the map) -- Scourge between Northrend and Lordaeron, Druids across Kalimdor. Fixed in 0.43.2.
+
 Skipped (other build or other game): WLAI_dump_25m00s.txt (v0.43.0, 25:00)
 
 Bots: 16, orders mode: smart.

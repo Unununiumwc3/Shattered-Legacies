@@ -130,6 +130,8 @@ Python, `pip install tree-sitter tree-sitter-c-sharp lupa --break-system-package
   block). Not a compiler, but it caught the 0.37.1 build break.
 - `python3 tools/ai/gen_ai_data.py` — regenerates `AiData.g.cs` (train lists, hero skills ...) from WL's data, and
   `../ShatteredLegacies/SlAiData.g.cs` for the fork's own buildings; run after every WL update, then rebuild.
+- `python3 tools/ai/render_map.py [--regions]` — draws terrain, CPs and the route graph to `tools/ai/out/route_map.png`
+  (for discussing the graph; run after `gen_routes.py`).
 - `python3 tools/ai/gen_routes.py` — regenerates the route graph `AiRoutes.g.cs` from map data (CPs, pathing,
   trees, rocks) and writes the report `ROUTES.md`; run after map changes. `--without <ids>` shows the graph as if
   those CPs did not exist.
