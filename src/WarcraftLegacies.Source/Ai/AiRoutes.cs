@@ -19,7 +19,6 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool On = true;
     private const float EnemyNodePenalty = 2000f;
-    private const float AreaRadius = 2000f;
     private const float PortalCost = 300f;
 
     private static bool _ready;
@@ -96,7 +95,11 @@ namespace WarcraftLegacies.Source.Ai
     internal static void Setup()
     {
       AiScheduler.Add("route rocks", 60, 30, CheckRocks, true);   // every 15 s
-      AiScheduler.Add("route areas", 60, 34, CheckAreas, true);   // every 15 s
+      // 0.44.1: enemy structures per node AREA (region map), 6 players per task, spread over the cycle
+      AiScheduler.Add("route structures 1", 60, 34, () => CheckStructures(0), true);
+      AiScheduler.Add("route structures 2", 60, 38, () => CheckStructures(6), true);
+      AiScheduler.Add("route structures 3", 60, 42, () => CheckStructures(12), true);
+      AiScheduler.Add("route structures 4", 60, 46, () => CheckStructures(18), true);
       AiScheduler.Add("route portals", 120, 19, CheckPortals, true); // every 30 s
     }
 
@@ -133,33 +136,35 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static void CheckAreas()
+    // 0.44.1: for players first .. first+5: one alive structure per node AREA and owner (region map). Before (0.42):
+    // only within 2000 of the 62 area nodes -- buildings elsewhere were never targets (Stratholme's city survived
+    // next to its captured CP).
+    private static void CheckStructures(int first)
     {
       Ready();
       var g = CreateGroup();
-      for (var i = 0; i < AiRouteData.Nodes; i++)
+      for (var k = first; k < first + 6 && k < 24; k++)
       {
-        if (AiRouteData.NodeType[i] != 0)
-        {
-          continue;
-        }
-
-        for (var k = 0; k < 24; k++)
+        for (var i = 0; i < AiRouteData.Nodes; i++)
         {
           _areaUnit[i * 24 + k] = null;
         }
 
-        GroupEnumUnitsInRange(g, AiRouteData.NodeX[i], AiRouteData.NodeY[i], AreaRadius, null);
+        GroupEnumUnitsOfPlayer(g, Player(k), null);
         unit u;
         while ((u = FirstOfGroup(g)) != null)
         {
           GroupRemoveUnit(g, u);
           SimpleBot.WaveOps++;
-          var oid = GetPlayerId(GetOwningPlayer(u));
-          if (oid < 24 && _areaUnit[i * 24 + oid] == null && IsUnitType(u, UNIT_TYPE_STRUCTURE)
-              && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+          if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
           {
-            _areaUnit[i * 24 + oid] = u;
+            continue;
+          }
+
+          var node = Region(GetUnitX(u), GetUnitY(u));
+          if (node >= 0 && _areaUnit[node * 24 + k] == null)
+          {
+            _areaUnit[node * 24 + k] = u;
           }
         }
       }
@@ -170,10 +175,22 @@ namespace WarcraftLegacies.Source.Ai
     private static void CheckPortals()
     {
       Ready();
+      if (_padjIn == null)
+      {
+        _padjIn = new List<int>[AiRouteData.Nodes];
+        for (var i = 0; i < AiRouteData.Nodes; i++)
+        {
+          _padjIn[i] = new List<int>();
+        }
+      }
+
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
         _padj[i].Clear();
+        _padjIn[i].Clear();
       }
+
+      _treeTo = -1;
 
       _pFrom.Clear();
       _pTo.Clear();
@@ -181,7 +198,6 @@ namespace WarcraftLegacies.Source.Ai
       _pUnit.Clear();
       _pExitX.Clear();
       _pExitY.Clear();
-      _cacheFrom = -1;
       var g = CreateGroup();
       for (var pl = 24; pl < 28; pl++)
       {
@@ -208,6 +224,7 @@ namespace WarcraftLegacies.Source.Ai
           var cost = Dist(AiRouteData.NodeX[a], AiRouteData.NodeY[a], ux, uy) + PortalCost
                      + Dist(dx, dy, AiRouteData.NodeX[b], AiRouteData.NodeY[b]);
           _padj[a].Add(_pFrom.Count);
+          _padjIn[b].Add(_pFrom.Count);
           _pFrom.Add(a);
           _pTo.Add(b);
           _pCost.Add(cost);
@@ -227,6 +244,7 @@ namespace WarcraftLegacies.Source.Ai
     // nearest in a straight line: groups ran back and forth, across the closed Thandol bridge and over mountains.
 
     private const float ReplanEvery = 30f;
+    private const float LeftoverCost = 2500f; // 0.44.1: score of an enemy building left in an own node's area
     private const float QuestBias = 0.3f;   // a CP of an open quest objective counts this much of its cost
     private const float WaypointReach = 8000f; // 0.43.1: order to the farthest route node within this distance
     private const float DetourFactor = 1.35f;  // 0.43.2: ... reachable without a detour (route cost vs straight line)
@@ -380,9 +398,9 @@ namespace WarcraftLegacies.Source.Ai
       {
         _score[i] = -1f;
         _front[i] = false;
-        if (!_done[i] || _source[i])
+        if (!_done[i])
         {
-          continue;
+          continue; // 0.44.1: own nodes too -- leftover enemy buildings in their area (Leftover)
         }
 
         var cand = i == cur ? curUnit : Candidate(p, pid, fac, i, d);
@@ -495,6 +513,11 @@ namespace WarcraftLegacies.Source.Ai
     private static float Score(int i, unit cand)
     {
       var s = _dist[i];
+      if (_source[i])
+      {
+        s += LeftoverCost; // 0.44.1: clearing leftovers inside the own land must not override everything else
+      }
+
       if (IsNeutral(cand))
       {
         s *= SimpleBot.NeutralBias;
@@ -646,7 +669,7 @@ namespace WarcraftLegacies.Source.Ai
       var cu = cp.Unit;
       if (GetOwningPlayer(cu) == p || IsUnitAlly(cu, p))
       {
-        return null;
+        return Leftover(p, pid, i, d); // 0.44.1: our CP -- enemy buildings left in its area?
       }
 
       if (fac.Name != "Legion" && !SimpleBot.GateOpen("legion") && AiGraph.ArgusNodes.Contains(t))
@@ -692,6 +715,24 @@ namespace WarcraftLegacies.Source.Ai
       return cu;
     }
 
+    // an enemy structure left in the area of a node the bot or an ally already holds (after the 10-min lock)
+    private static unit Leftover(player p, int pid, int i, BotDiag d)
+    {
+      if (SimpleBot.Clock < 600f)
+      {
+        return null;
+      }
+
+      var s = EnemyStructure(p, i);
+      if (s == null || SimpleBot.IsBlacklisted(pid, s))
+      {
+        return null;
+      }
+
+      d.Enemy++;
+      return s;
+    }
+
     private static bool IsNeutral(unit tu)
     {
       return GetPlayerId(GetOwningPlayer(tu)) >= 24;
@@ -730,9 +771,6 @@ namespace WarcraftLegacies.Source.Ai
     private static void Dijkstra(player p, int start)
     {
       Runs++;
-      _cacheFrom = start; // 0.44: the chain cache is valid for single-source runs (start >= 0) of this player now
-      _cachePlayer = p;
-      _cacheAt = SimpleBot.Clock;
       var relax = 0;
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
@@ -830,13 +868,108 @@ namespace WarcraftLegacies.Source.Ai
     private const float GateApproach = 400f;
     private const int OrderAttack = 851983;
     private const int OrderSmart = 851971;
-    private static int _cacheFrom = -1;
-    private static player _cachePlayer;
-    private static float _cacheAt = -1f;
-    private static List<int> _chainNodes = new();
     internal static int ChainsIssued;
     internal static int ChainPoints;
     internal static int ChainFallback;
+
+    // 0.44.1: ONE backward route tree per destination (Dijkstra from the destination over reversed edges): every unit
+    // heading there reads its way from it. 0.44.0 planned from each unit's own area and kept only the last result --
+    // a group spread over several areas recomputed again and again (9261 plans in 25 min, 34860 ops in one slot).
+    private static float[] _rdist;
+    private static int[] _rnext;      // next node toward the destination
+    private static int[] _rnextEdge;  // edge used for that step: >= 0 walking edge, < 0 portal edge -(i + 1)
+    private static bool[] _rdone;
+    private static List<int>[] _padjIn; // node -> portal edges ENDING there (for the backward search)
+    private static int _treeTo = -1;
+    private static player _treePlayer;
+    private static float _treeAt = -1f;
+    internal static int Trees;
+
+    private static void BackwardTree(player p, int to)
+    {
+      Trees++;
+      _treeTo = to;
+      _treePlayer = p;
+      _treeAt = SimpleBot.Clock;
+      var n = AiRouteData.Nodes;
+      if (_rdist == null)
+      {
+        _rdist = new float[n];
+        _rnext = new int[n];
+        _rnextEdge = new int[n];
+        _rdone = new bool[n];
+      }
+
+      for (var i = 0; i < n; i++)
+      {
+        _rdist[i] = -1f;
+        _rnext[i] = -1;
+        _rnextEdge[i] = 0;
+        _rdone[i] = false;
+      }
+
+      var relax = 0;
+      _heapN = 0;
+      _rdist[to] = 0f;
+      Push(to, 0f);
+      while (_heapN > 0)
+      {
+        var v = Pop();
+        if (_rdone[v])
+        {
+          continue;
+        }
+
+        _rdone[v] = true;
+        var dv = _rdist[v];
+        var adj = _adj[v];
+        for (var k = 0; k < adj.Count; k++)
+        {
+          var e = adj[k];
+          var rock = AiRouteData.EdgeRocks[e];
+          if (rock >= 0 && !_rockOpen[rock])
+          {
+            continue;
+          }
+
+          var u = AiRouteData.EdgeA[e] == v ? AiRouteData.EdgeB[e] : AiRouteData.EdgeA[e];
+          relax++;
+          BackRelax(p, u, v, dv + AiRouteData.EdgeCost[e], e);
+        }
+
+        var pin = _padjIn != null ? _padjIn[v] : null;
+        if (pin != null)
+        {
+          for (var k = 0; k < pin.Count; k++)
+          {
+            var pe = pin[k];
+            relax++;
+            BackRelax(p, _pFrom[pe], v, dv + _pCost[pe], -(pe + 1));
+          }
+        }
+      }
+
+      LastRelax = relax;
+      SimpleBot.WaveOps += relax;
+    }
+
+    // u -> v is the forward step; walking through v costs extra when v is enemy-held (as in the forward search)
+    private static void BackRelax(player p, int u, int v, float nd, int edge)
+    {
+      if (_rdone[u])
+      {
+        return;
+      }
+
+      nd += EnterCost(p, v);
+      if (_rdist[u] < 0f || nd < _rdist[u])
+      {
+        _rdist[u] = nd;
+        _rnext[u] = v;
+        _rnextEdge[u] = edge;
+        Push(u, nd);
+      }
+    }
 
     // Orders unit u (owner p) to (x, y) as a chain. False = no chain possible (same area, unknown ground, unreachable):
     // the caller gives the plain order.
@@ -855,37 +988,29 @@ namespace WarcraftLegacies.Source.Ai
         return false;
       }
 
-      if (_cacheFrom != from || _cachePlayer != p || _cacheAt != SimpleBot.Clock)
+      if (_treeTo != to || _treePlayer != p || _treeAt != SimpleBot.Clock)
       {
-        Dijkstra(p, from);
+        BackwardTree(p, to);
       }
 
-      if (!_done[to])
-      {
-        ChainFallback++;
-        return false;
-      }
-
-      _chainNodes.Clear();
-      var n = to;
-      while (n >= 0 && n != from && _chainNodes.Count <= AiRouteData.Nodes)
-      {
-        _chainNodes.Add(n);
-        n = _prev[n];
-      }
-
-      if (n != from)
+      if (!_rdone[from])
       {
         ChainFallback++;
         return false;
       }
 
       var points = 0;
-      var prevNode = from;
-      for (var k = _chainNodes.Count - 1; k >= 0 && points < ChainMax; k--)
+      var node = from;
+      var guard = 0;
+      while (node != to && node >= 0 && points < ChainMax && guard++ <= AiRouteData.Nodes)
       {
-        var node = _chainNodes[k];
-        var e = _prevEdge[node];
+        var next = _rnext[node];
+        var e = _rnextEdge[node];
+        if (next < 0)
+        {
+          break;
+        }
+
         if (e < 0)
         {
           var pe = -e - 1;
@@ -895,9 +1020,10 @@ namespace WarcraftLegacies.Source.Ai
             break; // the waygate is gone: the chain ends here, the heartbeat re-plans
           }
 
+          // c_01 in front of the waygate, c_02 = the click on it, c_03 = its exit
           float gx = GetUnitX(gate), gy = GetUnitY(gate);
-          var bx = AiRouteData.NodeX[prevNode] - gx;
-          var by = AiRouteData.NodeY[prevNode] - gy;
+          var bx = AiRouteData.NodeX[node] - gx;
+          var by = AiRouteData.NodeY[node] - gy;
           var bl = SquareRoot(bx * bx + by * by);
           if (bl > 1f)
           {
@@ -919,17 +1045,17 @@ namespace WarcraftLegacies.Source.Ai
           points++;
         }
 
-        if (k == 0)
+        if (next == to)
         {
           ChainPoint(u, x, y, points == 0);
         }
         else
         {
-          ChainPoint(u, AiRouteData.NodeX[node], AiRouteData.NodeY[node], points == 0);
+          ChainPoint(u, AiRouteData.NodeX[next], AiRouteData.NodeY[next], points == 0);
         }
 
         points++;
-        prevNode = node;
+        node = next;
       }
 
       if (points == 0)
@@ -1121,11 +1247,6 @@ namespace WarcraftLegacies.Source.Ai
       var areas = 0;
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
-        if (AiRouteData.NodeType[i] != 0)
-        {
-          continue;
-        }
-
         for (var k = 0; k < 24; k++)
         {
           if (_areaUnit[i * 24 + k] != null)
@@ -1138,7 +1259,7 @@ namespace WarcraftLegacies.Source.Ai
 
       o.Add("## ROUTES (0.42: generated graph, -route " + (On ? "on" : "off") + ")  nodes " + I2S(AiRouteData.Nodes)
             + ", edges " + I2S(AiRouteData.Edges) + " + " + I2S(_pFrom.Count) + " waygate edges; rock groups closed "
-            + I2S(closed) + "/" + I2S(AiRouteData.RockX.Length) + "; area nodes with structures " + I2S(areas)
+            + I2S(closed) + "/" + I2S(AiRouteData.RockX.Length) + "; nodes with enemy-able structures " + I2S(areas)
             + "; plans " + I2S(Runs) + ", last relaxations " + I2S(LastRelax));
       for (var pid = 0; pid < 24; pid++)
       {
@@ -1151,6 +1272,33 @@ namespace WarcraftLegacies.Source.Ai
               + (_lastFront[pid] ? " front" : " inside") + (_lastQuest[pid] ? " quest" : "") + ", "
               + I2S(_lastHops[pid]) + " hops left, next " + NodeName(_lastWp[pid]));
       }
+
+      // 0.44.1: the waygate edges (to see e.g. the Dark Portal pairs) and units found idle at a waygate exit
+      o.Add("waygates (" + I2S(_pFrom.Count) + "), units idle at an exit: " + I2S(ExitIdle) + ", chain trees "
+            + I2S(Trees));
+      for (var k = 0; k < _pFrom.Count; k++)
+      {
+        o.Add("  " + NodeName(_pFrom[k]) + " -> " + NodeName(_pTo[k]) + " cost " + I2S(R2I(_pCost[k])) + " exit "
+              + I2S(R2I(_pExitX[k])) + "," + I2S(R2I(_pExitY[k])));
+      }
+    }
+
+    internal static int ExitIdle;
+
+    // 0.44.1: is (x, y) within 800 of a waygate exit? (a unit idle there lost its queued chain in the teleport)
+    internal static bool NearWaygateExit(float x, float y)
+    {
+      for (var k = 0; k < _pExitX.Count; k++)
+      {
+        var dx = _pExitX[k] - x;
+        var dy = _pExitY[k] - y;
+        if (dx * dx + dy * dy < 800f * 800f)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     // "-route on" / "-route off"

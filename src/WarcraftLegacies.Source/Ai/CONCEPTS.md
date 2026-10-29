@@ -18,6 +18,20 @@ CP income); simple and not engine-heavy.
 | 4 | later | **Economy**: bonus gold in bursts, load governor (section 2) once the stalled-units counter shows the threshold. |
 | alongside | as needed | **Graph quality**: generated pass nodes (narrow passages), nodes on long edges, an exceptions file for what map data cannot know (listed in `WORKAROUNDS.md`); the maintainer can mark nodes / edges on `route_map.png` in a fixed colour (pixel -> map: x = -28672 + 16 px, y = -32256 + 16 (3584 - py)). |
 
+Next steps on the graph (maintainer, after 0.44.0):
+- **Graph independent of CPs** (for the upstream PR): nodes generated from terrain only (area nodes everywhere, like
+  today's 62 but as the whole graph); CPs are TARGETS located in a node's area (region map), not nodes. Shattered
+  Legacies CPs (`n1A0`-`n1B2`, 100-gold CPs) and the bot workaround CPs (W1-W4) then do not shape the graph -- CPs
+  can change without touching it. Effort: generator (terrain-only sampling) + runtime (targets per area instead of
+  NodeType). After the movement steps settle.
+- **Chains beyond the target** (step 2b, "extend"): after d continue to e. Saves little computing; mainly smoother.
+- **Waygate hop cost**: 300 today (one short walk). The Dark Portal "in and out" (3 waygate pairs) may be the planner
+  using Outland as a shortcut, or units losing their queued chain in the teleport -- 0.44.1 lists every waygate edge
+  and counts units idle at an exit. Decide with that data (maintainer unsure about extra hop cost).
+- **The map image** (`render_map.py`) is NOT committed: every graph change would add ~1-2 MB to the history for good.
+  Regenerate locally; for a version worth keeping, attach it to that GitHub release (release files do not grow the
+  repository).
+
 Decisions behind it:
 - Attack-move never attacks own / allied units: own CPs on the route are passed, enemy CPs and hostile neutrals fought.
 - "A falls behind us" is the defence rule's business (0.43.2: reach + minimum times), not the chain's.
