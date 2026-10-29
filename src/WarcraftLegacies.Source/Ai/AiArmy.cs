@@ -169,6 +169,11 @@ namespace WarcraftLegacies.Source.Ai
         {
           if (IsIdleAway(u, x, y, AtTarget))
           {
+            if (AiRoutes.NearWaygateExit(GetUnitX(u), GetUnitY(u)))
+            {
+              AiRoutes.ExitIdle++; // 0.44.1: queue lost in the teleport?
+            }
+
             Issue(u, x, y);
             OrdIdleFar++;
           }

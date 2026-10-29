@@ -4,6 +4,22 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.44.1
+Fixes after the first chain game (0.44.0: chains worked -- long orders 4482 -> 615, orders/min ~470-770, stalled units
+2-5 % -- but planning them was expensive).
+- **One backward route tree per destination**: every unit heading to the same point reads its way from one Dijkstra
+  run (from the destination over reversed edges, waygates included). 0.44.0 planned from each unit's own area and
+  kept only the last result -- 9261 plans in 25 min, up to 34860 ops in one slot (script work, not visible on screen).
+- **Leftover enemy buildings are targets**: every enemy structure counts for the AREA of the node it stands in
+  (region map) -- CP nodes included, not only within 2000 of an area node. A CP the bot or an ally already holds is a
+  target again while enemy buildings stand in its area (after the 10-min lock; inside the own land with +2500 cost so
+  it does not override everything). Stratholme's city survived next to its captured CP. The scan runs in four tasks
+  (6 players each) spread over the 15-s cycle.
+- Dump ROUTES: every waygate edge by name (from -> to, cost, exit), units found idle at a waygate exit (= the queued
+  chain was lost in the teleport), chain trees computed. Waygate hop cost unchanged (300) until the data shows what
+  the Dark Portal "in and out" is.
+- Version v0.44.1.
+
 ## 0.44.0
 Movement rework, step 1 (`CONCEPTS.md` 1): movement chains. `-chain off` = 0.43 for A/B tests.
 - **Every army order is a chain**: queued attack-moves along the route from the unit's own area, like a player

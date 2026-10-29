@@ -386,6 +386,13 @@ Bots at 25:00: P1 Stormwind atk a8 f2; P2 Quel'thalas atk a2 f4; P3 Scourge atk 
 
 ### v0.44.0 -- 6 dumps, 5:00 .. 25:00 -- 0.44.0 default, Commander
 
+> Note (0.44.1): chains work -- long orders (>8k) 615 (0.43.2: 4482), orders/min ~470-770, stalled units 2-5 % (no
+> overload at ~2500 units). But 9261 route plans and up to 34860 ops in one slot (per-unit planning; fixed in 0.44.1).
+> Switches (target/state): weak factions ~1 attack<->defence switch per minute (Frostwolf 35/22, Lordaeron 29/19,
+> Stormwind 28/18, Druids 32/18), strong ones almost none. Old Gods 66 CPs, Kalimdor 8; most bots 1-4 food at 25:00.
+> Maintainer: dwarves helped Stormwind; Outland portals a mess (in and out through 3 pairs); Stratholme's buildings
+> survived (fixed in 0.44.1: leftover buildings are targets).
+
 Skipped (other build or other game): WLAI_dump_21m25s.txt (v0.43.2, 21:25)
 
 Bots: 16, orders mode: smart.
@@ -440,4 +447,193 @@ Heartbeat: WLAI heartbeat build=0.44.0 t=26m19s units-on-map=1973 orders/min=295
   task 26:11 demon portal
   task 26:11 combat
   task 26:12 production
+  ...
+
+### v0.44.1 -- 8 dumps, 5:00 .. 40:00 -- 0.44.1 chain off, Commander
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 10:00 | 3756 | 1162 | 1126 / 255 | - | North Alliance 32, South Alliance 28, Burning Legion 13, Outland 26, Old Gods 32, Kalimdor 33 |
+| 20:00 | 2742 | 1244 | 576 / 249 | 61 | North Alliance 37, South Alliance 28, Burning Legion 14, Outland 28, Old Gods 48, Kalimdor 25 |
+| 30:00 | 2404 | 614 | 468 / 251 | 61 | North Alliance 46, South Alliance 23, Burning Legion 7, Outland 31, Old Gods 53, Kalimdor 22 |
+| 40:00 | 2268 | 497 | 406 / 251 | 60 | North Alliance 50, South Alliance 22, Burning Legion 4, Outland 34, Old Gods 49, Kalimdor 25 |
+
+LOAD at the checkpoints:
+```
+  10:00  combat 215/365 orders=58 | def-scan 0/162 | production peak 349 | wave-tick 567/3224 | last gate sweep 3055
+  10:00  army smart orders: change=5127 idle-away=317 rest=1381 refill=506 advance=4288 | chains off issued=0 points=0 fallback=0 | stalled 4% of 16108
+  10:00  groups (food group/need of army @staging): P0 50/50 of 72 @Thunderbluff (20 gold/min); P1 37/50 of 37 @Duskwood (10 gold/min); P2 39/50 of 39 @Terrordale (1 gold/min); P3 42/50 of 102 @Dragonblight (20 gold/min); P4 41/50 of 41 @Northern Badlands (10 gold/min); P6 44/50 of 249 @Burning Steppes (20 gold/min); P7 62/50 of 65 @Deathknell (10 gold/min); P8 50/50 of 113 @Spinebark Grove (10 gold/min); P9 57/50 of 57 @Brill (15 gold/min); P11 50/50 of 65 @Ascendant's Rise (10 gold/min); P12 44/50 of 54 @Feralas (10 gold/min); P15 1/50 of 1 @Azshara Coast (10 gold/min); P16 28/50 of 31 @Desolace (10 gold/min); P18 all 6; P22 50/50 of 63 @Southern Highlands (10 gold/min); P23 24/50 of 24 @-;
+  10:00  switches per bot (target/state, since start): P0 14/0; P1 5/0; P2 5/0; P3 9/2; P4 9/0; P6 13/2; P7 9/0; P8 14/2; P9 5/0; P11 9/2; P12 11/2; P15 9/0; P16 14/3; P18 11/1; P22 6/0; P23 6/0;
+  10:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=2400 max-slot=3256 over=402 would-defer=552 deferred=0
+  10:00  orders total=11619 near(<2k)=1401 mid(2-8k)=8459 far(>8k)=1759 idle-at-target(<300)=16
+  20:00  combat 198/511 orders=0 | def-scan 0/193 | production peak 386 | wave-tick 2177/5645 | last gate sweep 2748
+  20:00  army smart orders: change=10002 idle-away=582 rest=3723 refill=667 advance=9082 | chains off issued=0 points=0 fallback=0 | stalled 7% of 37572
+  20:00  groups (food group/need of army @staging): P0 all 39; P1 all 1; P2 2/80 of 2 @Tranquillien (15 gold/min); P3 7/50 of 7 @En'Kilah (10 gold/min); P4 1/60 of 1 @Searing Gorge (10 gold/min); P6 50/50 of 248 @Duskwood (10 gold/min); P7 31/88 of 31 @Grizzly Hills (20 gold/min); P8 40/50 of 40 @Moonglade (15 gold/min); P9 29/112 of 29 @Venture Bay (10 gold/min); P11 1/50 of 1 @Teldrassil (20 gold/min); P12 43/50 of 43 @Twilight Landing (15 gold/min); P15 19/50 of 19 @-; P16 21/65 of 21 @Ratchet (10 gold/min); P22 all 4; P23 1/50 of 1 @-;
+  20:00  switches per bot (target/state, since start): P0 25/3; P1 15/7; P2 10/0; P3 21/12; P4 15/0; P6 21/4; P7 14/0; P8 29/2; P9 14/8; P11 22/14; P12 16/2; P15 18/2; P16 27/5; P18 24/15; P22 10/1; P23 16/6;
+  20:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=4800 max-slot=3386 over=894 would-defer=1215 deferred=0
+  20:00  orders total=24056 near(<2k)=2905 mid(2-8k)=17193 far(>8k)=3958 idle-at-target(<300)=32
+  30:00  combat 184/511 orders=0 | def-scan 0/193 | production peak 386 | wave-tick 2282/5645 | last gate sweep 2100
+  30:00  army smart orders: change=12042 idle-away=781 rest=4478 refill=827 advance=12069 | chains off issued=0 points=0 fallback=0 | stalled 10% of 50635
+  30:00  groups (food group/need of army @staging): P0 5/50 of 5 @Northern Barrens (10 gold/min); P1 all 7; P2 2/50 of 2 @Seradane (10 gold/min); P3 1/50 of 1 @Icecrown Citadel (100 gold/min); P6 50/50 of 248 @Duskwood (10 gold/min); P7 18/72 of 18 @Mord’rethar (10 gold/min); P8 all 2; P9 58/50 of 58 @Borean Tundra (15 gold/min); P11 1/50 of 1 @Teldrassil (20 gold/min); P12 29/50 of 29 @Dragonmaw Port (10 gold/min); P15 2/56 of 2 @Western Stranglethorn (15 gold/min); P16 3/50 of 3 @Thunderbluff (20 gold/min); P22 3/50 of 3 @Southern Highlands (10 gold/min); P23 3/50 of 3 @-;
+  30:00  switches per bot (target/state, since start): P0 34/8; P1 23/13; P2 18/0; P3 29/16; P4 20/4; P6 26/6; P7 23/0; P8 40/5; P9 26/8; P11 25/14; P12 21/2; P15 28/4; P16 33/7; P18 31/20; P22 16/2; P23 19/6;
+  30:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=7200 max-slot=3386 over=1399 would-defer=1858 deferred=0
+  30:00  orders total=30197 near(<2k)=3811 mid(2-8k)=21499 far(>8k)=4887 idle-at-target(<300)=72
+  40:00  combat 212/572 orders=0 | def-scan 36/269 | production peak 386 | wave-tick 2184/5645 | last gate sweep 1887
+  40:00  army smart orders: change=13606 idle-away=1030 rest=5782 refill=900 advance=13851 | chains off issued=0 points=0 fallback=0 | stalled 10% of 59469
+  40:00  groups (food group/need of army @staging): P0 5/50 of 5 @Northern Ashenvale (10 gold/min); P1 2/50 of 2 @Stromgarde (25 gold/min); P2 4/72 of 4 @Seradane (10 gold/min); P3 1/50 of 1 @-; P4 1/50 of 1 @Ironforge (30 gold/min); P6 all 249; P7 12/126 of 12 @Arathi Highlands (15 gold/min); P8 3/50 of 3 @Azuremyst Isle (10 gold/min); P9 54/75 of 54 @Andorhal (15 gold/min); P11 1/50 of 1 @Teldrassil (20 gold/min); P12 3/50 of 3 @Dun Morogh (15 gold/min); P15 1/50 of 1 @Blasted Lands (15 gold/min); P22 7/185 of 7 @Twilight Shore (10 gold/min); P23 3/50 of 3 @-;
+  40:00  switches per bot (target/state, since start): P0 43/10; P1 35/22; P2 20/0; P3 34/18; P4 22/4; P6 37/9; P7 25/0; P8 43/6; P9 32/8; P11 27/14; P12 24/2; P15 34/6; P16 42/15; P18 34/20; P22 21/6; P23 21/6;
+  40:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=9600 max-slot=3386 over=1883 would-defer=2458 deferred=0
+  40:00  orders total=35169 near(<2k)=4498 mid(2-8k)=25133 far(>8k)=5538 idle-at-target(<300)=88
+```
+
+Top tasks by total ops at 40:00 (of 41):
+```
+task combat every=0.500s runs=4800 last=212 max=2200 sum=1750319
+task production every=1.000s runs=2399 last=26 max=386 sum=272566
+task hero visits every=15.000s runs=159 last=1777 max=2703 sum=213775
+task route structures 2 every=15.000s runs=159 last=876 max=1147 sum=135826
+task route portals every=30.000s runs=79 last=667 max=3256 sum=87961
+task route structures 1 every=15.000s runs=159 last=340 max=892 sum=81036
+task route structures 3 every=15.000s runs=159 last=293 max=400 sum=50466
+task ragnaros every=15.000s runs=159 last=370 max=383 sum=44460
+task route structures 4 every=15.000s runs=159 last=90 max=292 sum=23490
+task gate sweep every=15.000s runs=159 last=0 max=3296 sum=20233
+```
+
+Errors (TICK ERROR / FAILED / section errors): none
+
+Bots at 40:00: P0 Frostwolf atk a6 f6; P1 Stormwind atk a5 f0; P2 Quel'thalas atk a4 f4; P3 Scourge atk a3 f1; P4 Ironforge atk a2 f2; P7 Dalaran atk a14 f8; P8 Skywall atk a3 f3; P9 Lordaeron atk a54 f53; P11 Druids atk a4 f1; P12 Black Empire atk a12 f6; P15 Illidan atk a1 f5; P16 Ahn'qiraj atk a30 f7; P18 Sentinels atk a4 f0; P22 Kul'tiras atk a10 f5; P23 Legion atk a3 f1; P6 Fel Horde def a251 f250
+
+Heartbeat: WLAI heartbeat build=0.44.1 t=42m49s units-on-map=1836 orders/min=842 orders=smart
+  task 42:41 demon portal
+  task 42:41 combat
+  task 42:42 production
+  ...
+
+### v0.44.1 -- 114 dumps, 5:00 .. 570:00 -- 0.44.1 chains, Commander
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 10:00 | 3699 | 848 | 1158 / 239 | - | North Alliance 32, South Alliance 35, Burning Legion 19, Outland 25, Old Gods 32, Kalimdor 28 |
+| 20:00 | 2669 | 1004 | 506 / 256 | 61 | North Alliance 26, South Alliance 36, Burning Legion 27, Outland 22, Old Gods 34, Kalimdor 39 |
+| 30:00 | 2509 | 509 | 460 / 249 | 61 | North Alliance 15, South Alliance 29, Burning Legion 38, Outland 28, Old Gods 26, Kalimdor 48 |
+| 45:00 | 2234 | 516 | 426 / 262 | 60 | North Alliance 9, South Alliance 23, Burning Legion 43, Outland 36, Old Gods 34, Kalimdor 40 |
+| 60:00 | 2094 | 439 | 407 / 249 | 61 | North Alliance 7, South Alliance 4, Burning Legion 56, Outland 44, Old Gods 34, Kalimdor 39, Kezan Enterprise Pact 1 |
+| 90:00 | 1954 | 263 | 341 / 249 | 61 | North Alliance 7, South Alliance 1, Burning Legion 47, Outland 57, Old Gods 48, Kalimdor 24, Kezan Enterprise Pact 1 |
+| 120:00 | 1870 | 319 | 331 / 250 | 61 | North Alliance 7, South Alliance 1, Burning Legion 30, Outland 74, Old Gods 70, Kalimdor 2, Kezan Enterprise Pact 1 |
+| 180:00 | 1683 | 246 | 351 / 249 | 61 | North Alliance 7, South Alliance 0, Burning Legion 4, Outland 100, Old Gods 75, Kalimdor 0, Kezan Enterprise Pact 0 |
+| 240:00 | 1583 | 189 | 346 / 249 | 61 | North Alliance 0, South Alliance 0, Burning Legion 4, Outland 108, Old Gods 74, Kalimdor 0, Kezan Enterprise Pact 0 |
+| 300:00 | 1582 | 169 | 345 / 249 | 61 | North Alliance 0, South Alliance 0, Burning Legion 4, Outland 108, Old Gods 74, Kalimdor 0, Kezan Enterprise Pact 0 |
+| 400:00 | 1581 | 186 | 344 / 249 | 61 | North Alliance 0, South Alliance 0, Burning Legion 4, Outland 108, Old Gods 74, Kalimdor 0, Kezan Enterprise Pact 0 |
+| 500:00 | 1581 | 222 | 344 / 249 | 61 | North Alliance 0, South Alliance 0, Burning Legion 4, Outland 108, Old Gods 74, Kalimdor 0, Kezan Enterprise Pact 0 |
+| 570:00 | 1581 | 234 | 344 / 249 | 61 | North Alliance 0, South Alliance 0, Burning Legion 4, Outland 108, Old Gods 74, Kalimdor 0, Kezan Enterprise Pact 0 |
+
+LOAD at the checkpoints:
+```
+  10:00  combat 114/513 orders=0 | def-scan 0/212 | production peak 325 | wave-tick 561/3301 | last gate sweep 3129
+  10:00  army smart orders: change=6043 idle-away=312 rest=1624 refill=503 advance=0 | chains on issued=7594 points=24737 fallback=605 | stalled 3% of 14526
+  10:00  groups (food group/need of army @staging): P0 46/50 of 46 @Dustwallow Marsh (10 gold/min); P1 50/50 of 51 @Burning Steppes (20 gold/min); P2 44/50 of 44 @Seradane (10 gold/min); P3 50/50 of 126 @Crystalsong Forest (15 gold/min); P4 37/50 of 37 @Northern Badlands (10 gold/min); P6 49/50 of 237 @Netherstorm (10 gold/min); P7 53/53 of 69 @Arathi Highlands (15 gold/min); P8 50/50 of 84 @Shimmering Flats (10 gold/min); P9 56/56 of 56 @Strahnbrad (10 gold/min); P11 50/50 of 83 @Sulfuron Spire (10 gold/min); P12 58/50 of 58 @Dire Maul (15 gold/min); P15 24/50 of 24 @Southern Ashenvale (10 gold/min); P16 31/50 of 31 @Mulgore (10 gold/min); P18 all 45; P22 51/51 of 70 @Drustvar (10 gold/min); P23 53/54 of 70 @Howling Fjords (20 gold/min);
+  10:00  switches per bot (target/state, since start): P0 16/6; P1 8/0; P2 9/0; P3 13/2; P4 9/0; P6 11/2; P7 11/0; P8 16/2; P9 7/0; P11 12/4; P12 13/2; P15 9/0; P16 14/0; P18 12/1; P22 11/0; P23 13/0;
+  10:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=2400 max-slot=17945 over=575 would-defer=805 deferred=0
+  10:00  orders total=8482 near(<2k)=1893 mid(2-8k)=6024 far(>8k)=565 idle-at-target(<300)=12
+  20:00  combat 78/748 orders=0 | def-scan 0/343 | production peak 367 | wave-tick 2230/5380 | last gate sweep 2698
+  20:00  army smart orders: change=12529 idle-away=944 rest=4258 refill=794 advance=0 | chains on issued=15393 points=47733 fallback=1676 | stalled 6% of 34043
+  20:00  groups (food group/need of army @staging): P0 49/50 of 49 @Stonemaul (10 gold/min); P1 4/54 of 4 @Deadwind Pass (15 gold/min); P2 2/50 of 2 @Seradane (10 gold/min); P3 50/50 of 95 @Caer Darrow (15 gold/min); P4 1/99 of 1 @Northern Badlands (10 gold/min); P6 49/50 of 246 @Redridge Mountains (10 gold/min); P7 3/72 of 3 @Strahnbrad (10 gold/min); P8 all 18; P11 2/50 of 2 @Felwood (10 gold/min); P12 3/50 of 3 @Twilight Landing (15 gold/min); P15 4/50 of 4 @Blasted Lands (15 gold/min); P16 3/50 of 3 @Silithus (15 gold/min); P18 6/50 of 6 @Grove of the Ancients (10 gold/min); P22 2/50 of 2 @Drustvar (10 gold/min); P23 10/50 of 10 @Hinterlands (10 gold/min);
+  20:00  switches per bot (target/state, since start): P0 34/10; P1 21/8; P2 13/0; P3 26/4; P4 17/0; P6 24/8; P7 21/4; P8 32/5; P9 17/10; P11 30/18; P12 22/8; P15 21/4; P16 25/6; P18 21/3; P22 22/2; P23 25/2;
+  20:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=4800 max-slot=40190 over=1228 would-defer=1698 deferred=0
+  20:00  orders total=18525 near(<2k)=4853 mid(2-8k)=12039 far(>8k)=1633 idle-at-target(<300)=37
+  30:00  combat 80/748 orders=0 | def-scan 0/343 | production peak 367 | wave-tick 2080/5380 | last gate sweep 2186
+  30:00  army smart orders: change=15195 idle-away=1309 rest=6253 refill=856 advance=0 | chains on issued=19948 points=56483 fallback=1726 | stalled 7% of 43996
+  30:00  groups (food group/need of army @staging): P0 14/50 of 14 @Gadgetzan (20 gold/min); P1 8/50 of 8 @Elwynn Forest (20 gold/min); P2 2/50 of 2 @Tranquillien (15 gold/min); P3 107/105 of 107 @Corin's Crossing (15 gold/min); P6 all 248; P7 all 1; P8 5/50 of 5 @Sulfuron Spire (10 gold/min); P9 1/65 of 1 @Tyr's Hand (30 gold/min); P11 2/50 of 2 @Nordrassil (25 gold/min); P12 1/50 of 1 @Dragonmaw Port (10 gold/min); P15 4/72 of 4 @-; P18 3/50 of 3 @Winterspring (10 gold/min); P22 8/50 of 8 @Zul'Gurub (25 gold/min); P23 10/80 of 10 @Dalaran (30 gold/min);
+  30:00  switches per bot (target/state, since start): P0 53/18; P1 32/16; P2 19/4; P3 41/6; P4 25/4; P6 33/9; P7 32/13; P8 46/16; P9 28/18; P11 32/18; P12 25/10; P15 27/4; P16 36/12; P18 32/7; P22 26/4; P23 36/2;
+  30:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=7200 max-slot=40190 over=1843 would-defer=2477 deferred=0
+  30:00  orders total=23613 near(<2k)=6087 mid(2-8k)=15856 far(>8k)=1670 idle-at-target(<300)=50
+  45:00  combat 117/748 orders=1 | def-scan 31/363 | production peak 378 | wave-tick 1787/5380 | last gate sweep 1901
+  45:00  army smart orders: change=18356 idle-away=1746 rest=10215 refill=1041 advance=0 | chains on issued=25976 points=71372 fallback=2106 | stalled 9% of 58529
+  45:00  groups (food group/need of army @staging): P0 2/50 of 2 @Thunderbluff (20 gold/min); P1 4/50 of 4 @Arathi Highlands (15 gold/min); P2 2/50 of 2 @Tranquillien (15 gold/min); P3 50/50 of 74 @Blackwald (10 gold/min); P4 1/50 of 1 @Northern Badlands (10 gold/min); P6 47/50 of 250 @Boralus (25 gold/min); P7 1/50 of 1 @Tempest Reach (10 gold/min); P8 4/50 of 4 @Feralas (10 gold/min); P11 3/50 of 3 @Azshara Coast (10 gold/min); P12 1/50 of 1 @Dragonmaw Port (10 gold/min); P15 4/50 of 4 @Blasted Lands (15 gold/min); P16 2/88 of 2 @Mulgore (10 gold/min); P18 7/50 of 7 @Desolace (10 gold/min); P22 2/101 of 2 @Drustvar (10 gold/min);
+  45:00  switches per bot (target/state, since start): P0 73/32; P1 45/26; P2 23/4; P3 60/6; P4 36/10; P6 56/10; P7 45/28; P8 71/26; P9 39/24; P11 41/18; P12 27/12; P15 31/4; P16 49/14; P18 48/15; P22 34/6; P23 53/6;
+  45:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=10800 max-slot=78860 over=2831 would-defer=3785 deferred=0
+  45:00  orders total=31358 near(<2k)=9152 mid(2-8k)=20191 far(>8k)=2015 idle-at-target(<300)=90
+  60:00  combat 41/748 orders=0 | def-scan 0/363 | production peak 421 | wave-tick 2038/5380 | last gate sweep 1784
+  60:00  army smart orders: change=20757 idle-away=2303 rest=13650 refill=1230 advance=0 | chains on issued=31421 points=90595 fallback=2652 | stalled 10% of 72334
+  60:00  groups (food group/need of army @staging): P0 all 2; P1 2/50 of 2 @Thundermar (10 gold/min); P2 2/50 of 2 @Tranquillien (15 gold/min); P3 26/50 of 69 @Menethil Harbour (10 gold/min); P6 47/50 of 247 @Northern Badlands (10 gold/min); P7 1/50 of 1 @-; P8 11/50 of 11 @Echo Isles (15 gold/min); P11 2/50 of 2 @Feralas (10 gold/min); P12 3/50 of 3 @Dragonmaw Port (10 gold/min); P15 1/83 of 1 @Wetlands (10 gold/min); P16 3/50 of 3 @Thunderbluff (20 gold/min); P22 1/50 of 1 @Kezan (15 gold/min);
+  60:00  switches per bot (target/state, since start): P0 85/41; P1 55/30; P2 26/4; P3 75/10; P4 46/18; P6 71/12; P7 52/32; P8 88/32; P9 43/24; P11 42/18; P12 31/12; P15 41/6; P16 65/20; P18 58/19; P22 41/10; P23 71/6;
+  60:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=14400 max-slot=78860 over=3829 would-defer=5088 deferred=0
+  60:00  orders total=37940 near(<2k)=11252 mid(2-8k)=24127 far(>8k)=2561 idle-at-target(<300)=106
+  90:00  combat 5/748 orders=0 | def-scan 0/363 | production peak 421 | wave-tick 1870/5380 | last gate sweep 1579
+  90:00  army smart orders: change=22730 idle-away=3708 rest=17821 refill=1566 advance=0 | chains on issued=37551 points=112988 fallback=4072 | stalled 10% of 91882
+  90:00  groups (food group/need of army @staging): P0 2/50 of 2 @Durotar (10 gold/min); P1 2/50 of 2 @-; P2 2/50 of 2 @Tranquillien (15 gold/min); P3 3/50 of 3 @Stratholme (30 gold/min); P6 50/50 of 249 @Sylvanaar (10 gold/min); P7 1/50 of 1 @-; P8 4/50 of 4 @Ranazjar Isle (10 gold/min); P11 2/50 of 2 @Shrine to Malorne (10 gold/min); P12 2/50 of 2 @Twilight Landing (15 gold/min); P15 4/112 of 4 @Fuselight (10 gold/min); P16 2/50 of 2 @Nordrassil (25 gold/min); P22 1/50 of 1 @Kezan (15 gold/min); P23 2/50 of 2 @Durnholde (15 gold/min);
+  90:00  switches per bot (target/state, since start): P0 99/46; P1 58/30; P2 33/4; P3 94/14; P4 58/26; P6 91/12; P7 60/32; P8 132/44; P9 50/24; P11 51/18; P12 46/20; P15 55/6; P16 92/28; P18 96/43; P22 50/10; P23 87/12;
+  90:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=21600 max-slot=78860 over=5984 would-defer=7828 deferred=0
+  90:00  orders total=45825 near(<2k)=13333 mid(2-8k)=28511 far(>8k)=3981 idle-at-target(<300)=197
+ 120:00  combat 5/748 orders=0 | def-scan 0/363 | production peak 447 | wave-tick 1788/5380 | last gate sweep 1485
+ 120:00  army smart orders: change=25335 idle-away=5385 rest=22948 refill=1727 advance=0 | chains on issued=45675 points=142967 fallback=5191 | stalled 10% of 113193
+ 120:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @Tranquillien (15 gold/min); P3 all 3; P6 111/112 of 249 @Twilight Shore (10 gold/min); P7 1/50 of 1 @-; P8 4/50 of 4 @Ascendant's Rise (10 gold/min); P11 1/50 of 1 @Teldrassil (20 gold/min); P12 3/50 of 3 @Twilight Landing (15 gold/min); P15 4/112 of 4 @Fuselight (10 gold/min); P16 3/50 of 3 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @Kezan (15 gold/min); P23 2/50 of 2 @Dalaran (30 gold/min);
+ 120:00  switches per bot (target/state, since start): P0 115/54; P1 65/30; P2 40/4; P3 117/31; P4 67/26; P6 118/18; P7 68/32; P8 172/52; P9 57/24; P11 66/24; P12 54/20; P15 64/6; P16 107/36; P18 129/69; P22 57/10; P23 101/20;
+ 120:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=28800 max-slot=78860 over=8199 would-defer=10564 deferred=0
+ 120:00  orders total=55395 near(<2k)=15694 mid(2-8k)=34601 far(>8k)=5100 idle-at-target(<300)=226
+ 180:00  combat 5/756 orders=0 | def-scan 0/363 | production peak 504 | wave-tick 1021/5380 | last gate sweep 1330
+ 180:00  army smart orders: change=28275 idle-away=8890 rest=31136 refill=1862 advance=0 | chains on issued=57908 points=194352 fallback=7211 | stalled 10% of 154795
+ 180:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @Tranquillien (15 gold/min); P3 3/50 of 3 @-; P6 50/50 of 249 @Northern Highlands (10 gold/min); P7 1/50 of 1 @-; P8 22/50 of 22 @Dragonmaw Port (10 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 9/50 of 9 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 3/65 of 3 @-;
+ 180:00  switches per bot (target/state, since start): P0 131/54; P1 82/32; P2 53/4; P3 150/54; P4 81/26; P6 158/18; P7 82/32; P8 199/52; P9 72/24; P11 84/28; P12 69/20; P15 79/6; P16 123/36; P18 146/69; P22 74/12; P23 121/24;
+ 180:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=43200 max-slot=78860 over=12556 would-defer=15989 deferred=0
+ 180:00  orders total=70163 near(<2k)=18213 mid(2-8k)=44830 far(>8k)=7120 idle-at-target(<300)=238
+ 240:00  combat 5/768 orders=0 | def-scan 0/363 | production peak 522 | wave-tick 1059/5380 | last gate sweep 1212
+ 240:00  army smart orders: change=31063 idle-away=12448 rest=36119 refill=1878 advance=0 | chains on issued=67046 points=242005 fallback=8714 | stalled 9% of 192807
+ 240:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @-; P3 3/50 of 3 @-; P6 50/50 of 249 @-; P7 1/50 of 1 @-; P8 15/50 of 15 @Kezan (15 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 7/50 of 7 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 2/50 of 2 @-;
+ 240:00  switches per bot (target/state, since start): P0 146/54; P1 95/32; P2 79/18; P3 165/54; P4 96/26; P6 191/18; P7 97/32; P8 214/52; P9 87/24; P11 101/28; P12 84/20; P15 95/6; P16 137/36; P18 161/69; P22 89/12; P23 136/24;
+ 240:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=57600 max-slot=78860 over=16909 would-defer=21371 deferred=0
+ 240:00  orders total=81508 near(<2k)=20469 mid(2-8k)=52416 far(>8k)=8623 idle-at-target(<300)=256
+ 300:00  combat 5/768 orders=0 | def-scan 0/363 | production peak 522 | wave-tick 1056/5380 | last gate sweep 1211
+ 300:00  army smart orders: change=32665 idle-away=16138 rest=40986 refill=1883 advance=0 | chains on issued=72059 points=275746 fallback=13823 | stalled 9% of 217770
+ 300:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @-; P3 3/50 of 3 @-; P6 50/50 of 249 @-; P7 1/50 of 1 @-; P8 15/50 of 15 @Kezan (15 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 6/50 of 6 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 3/50 of 3 @-;
+ 300:00  switches per bot (target/state, since start): P0 161/54; P1 110/32; P2 94/18; P3 180/54; P4 111/26; P6 206/18; P7 112/32; P8 229/52; P9 101/24; P11 118/28; P12 99/20; P15 110/6; P16 151/36; P18 175/69; P22 104/12; P23 151/24;
+ 300:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=72000 max-slot=78860 over=21292 would-defer=26779 deferred=0
+ 300:00  orders total=91672 near(<2k)=21443 mid(2-8k)=56497 far(>8k)=13732 idle-at-target(<300)=320
+ 400:00  combat 5/768 orders=0 | def-scan 0/363 | production peak 522 | wave-tick 1059/5380 | last gate sweep 1210
+ 400:00  army smart orders: change=35455 idle-away=23398 rest=49558 refill=1888 advance=0 | chains on issued=80419 points=331923 fallback=24005 | stalled 11% of 254807
+ 400:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @-; P3 3/50 of 3 @-; P6 148/148 of 249 @Sylvanaar (10 gold/min); P7 1/50 of 1 @-; P8 14/50 of 14 @Kezan (15 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 6/50 of 6 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 2/50 of 2 @-;
+ 400:00  switches per bot (target/state, since start): P0 185/54; P1 134/32; P2 119/18; P3 205/54; P4 136/26; P6 231/18; P7 137/32; P8 253/52; P9 126/24; P11 147/28; P12 124/20; P15 134/6; P16 176/36; P18 200/69; P22 128/12; P23 176/24;
+ 400:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=96000 max-slot=78860 over=28557 would-defer=35740 deferred=0
+ 400:00  orders total=110299 near(<2k)=23556 mid(2-8k)=62829 far(>8k)=23914 idle-at-target(<300)=880
+ 500:00  combat 5/768 orders=0 | def-scan 0/363 | production peak 522 | wave-tick 1059/5380 | last gate sweep 1210
+ 500:00  army smart orders: change=38087 idle-away=32361 rest=60128 refill=1896 advance=0 | chains on issued=88512 points=385279 fallback=37998 | stalled 14% of 287626
+ 500:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @-; P3 3/50 of 3 @-; P6 148/148 of 249 @Sylvanaar (10 gold/min); P7 1/50 of 1 @-; P8 14/50 of 14 @Kezan (15 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 6/50 of 6 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 2/50 of 2 @-;
+ 500:00  switches per bot (target/state, since start): P0 210/54; P1 158/32; P2 143/18; P3 229/54; P4 160/26; P6 255/18; P7 161/32; P8 278/52; P9 150/24; P11 176/28; P12 148/20; P15 158/6; P16 200/36; P18 225/69; P22 153/12; P23 200/24;
+ 500:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=120000 max-slot=78860 over=35808 would-defer=44709 deferred=0
+ 500:00  orders total=132472 near(<2k)=25871 mid(2-8k)=68694 far(>8k)=37907 idle-at-target(<300)=1619
+ 570:00  combat 5/768 orders=0 | def-scan 0/363 | production peak 522 | wave-tick 1059/5380 | last gate sweep 1210
+ 570:00  army smart orders: change=39856 idle-away=39532 rest=67557 refill=1901 advance=0 | chains on issued=94083 points=420902 fallback=48753 | stalled 15% of 308166
+ 570:00  groups (food group/need of army @staging): P0 2/50 of 2 @-; P1 2/50 of 2 @-; P2 2/50 of 2 @-; P3 3/50 of 3 @-; P6 50/50 of 249 @-; P7 1/50 of 1 @-; P8 14/50 of 14 @Kezan (15 gold/min); P11 1/50 of 1 @-; P12 4/50 of 4 @Twilight Landing (15 gold/min); P15 4/50 of 4 @-; P16 6/50 of 6 @Spinebark Grove (10 gold/min); P22 1/50 of 1 @-; P23 2/50 of 2 @-;
+ 570:00  switches per bot (target/state, since start): P0 227/54; P1 175/32; P2 160/18; P3 246/54; P4 177/26; P6 272/18; P7 178/32; P8 295/52; P9 168/24; P11 196/28; P12 165/20; P15 175/6; P16 217/36; P18 242/69; P22 170/12; P23 217/24;
+ 570:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=136800 max-slot=78860 over=40907 would-defer=50983 deferred=0
+ 570:00  orders total=148846 near(<2k)=27595 mid(2-8k)=72589 far(>8k)=48662 idle-at-target(<300)=2256
+```
+
+Top tasks by total ops at 570:00 (of 41):
+```
+task combat every=0.500s runs=68400 last=5 max=78318 sum=47921851
+task production every=1.000s runs=34199 last=4 max=522 sum=2421544
+task hero visits every=15.000s runs=2279 last=521 max=2527 sum=1691825
+task route structures 2 every=15.000s runs=2279 last=686 max=1170 sum=1520090
+task ragnaros every=15.000s runs=2279 last=521 max=522 sum=1057298
+task route portals every=30.000s runs=1139 last=570 max=3275 sum=716172
+task route structures 3 every=15.000s runs=2279 last=267 max=411 sum=602444
+task route structures 1 every=15.000s runs=2279 last=25 max=870 sum=303044
+task gate sweep every=15.000s runs=2279 last=0 max=3319 sum=158331
+task route structures 4 every=15.000s runs=2279 last=33 max=418 sum=157614
+```
+
+Errors (TICK ERROR / FAILED / section errors): none
+
+Bots at 570:00: P0 Warsong atk a4 f0; P1 Stormwind atk a6 f0; P2 Quel'thalas atk a3 f0; P3 Scourge atk a3 f0; P4 Ironforge atk a4 f0; P7 Gilneas atk a4 f0; P8 Skywall atk a15 f13; P9 Lordaeron atk a2 f0; P11 Druids atk a3 f0; P12 Black Empire atk a13 f7; P15 Illidan atk a4 f7; P16 Ahn'qiraj atk a26 f9; P18 The Exodar atk a4 f0; P22 Kezan Enterprise atk a1 f20; P23 Legion atk a3 f0; P6 Fel Horde atk a249 f250
+
+Heartbeat: WLAI heartbeat build=0.44.1 t=571m59s units-on-map=1210 orders/min=192 orders=smart
+  task 571:52 route rocks
+  task 571:52 early quests
+  task 571:52 legion events
   ...
