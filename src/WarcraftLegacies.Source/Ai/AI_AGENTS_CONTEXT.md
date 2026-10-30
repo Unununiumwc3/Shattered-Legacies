@@ -23,24 +23,33 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.45.0) -- read this, then `TODO.md`
+## State of the work (0.45.0 build, 0.45.1 docs) -- read this, then `TODO.md`
 
-- **Focus: bot MOVEMENT.** The maintainer collects balance observations in `TODO.md`; balance is decided later.
-- **Refactor done so far** (details: `CHANGELOG.md`, plan: `CONCEPTS.md` section 0):
-  - 0.39.10 layers (`Ai/` vs `ShatteredLegacies/`, `AiApi`, markers) -- 0.40 one scheduler (`AiScheduler`) --
-    0.41 army orders (`AiArmy`: attack group sized from the target, rest at a staging CP, orders only for idle units
-    away from their point) -- 0.42 route planner on a graph GENERATED from map data (`AiRoutes`, `AiRoutes.g.cs`,
-    region map) -- 0.43 targets by distance from the bot's OWN territory, defence with reach + hysteresis
-    (`AiDefense`) -- 0.44 **movement chains** (queued attack-moves along the route, waygates clicked), leftover
-    buildings as targets, **CP income for bots** (`AiIncome`; WL pays human slots only -- every game before 0.44.2
-    had bots WITHOUT income), creep camps as targets (0.44.3) -- 0.45 gather points for long routes, rift east end
-    moved 100 north.
+- **Plan in three phases** (`TODO.md`): 1 movement "good enough" (0.46, 0.47, 0.48/0.49 as needed; ends at the exit
+  criteria in `TODO.md`, not at a version number) -> 2 restructure (~0.50: layout for the upstream PR, state in
+  objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
+  but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
+- **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
+- **Next build 0.46** (`TODO.md`): unit budget per CP, order-latency probe, guard positions, the maintainer's graph
+  edits, instant pseudo-portals, per-bot A/B switches, activity / flapping counters. 0.47: theatres, ferries.
+  Designs: `CONCEPTS.md` 6-9.
+- **Engine first**: the order delay players feel (1-2 s) is WC3's pathfinder queue; 5227 units at 14 min in 0.44.2.
+  The bot's op counters measure Lua spikes, not engine load (section "Engine (WC3) limits" below).
+- **Refactor done so far** (details: `CHANGELOG.md`; overview and history: `README.md` "How the bots move" and
+  "Already tried"): 0.39.10 layers -- 0.40 one scheduler -- 0.41 army orders -- 0.42 route planner on a generated
+  graph -- 0.43 targets from the bot's own territory, defence with reach + hysteresis -- 0.44 movement chains, leftover
+  buildings and creep camps as targets, **CP income for bots** (`AiIncome`; every game before 0.44.2 had bots WITHOUT
+  income) -- 0.45 gather points, rift east end moved 100 north.
   - Switches for A/B tests: `-orders smart|idle|all`, `-route on|off`, `-chain on|off`, `-creeps on|off`,
     `-gather on|off`, `-budget on|off`.
-- **Playtested**: up to 0.44.2 (table in `TODO.md`). **0.44.3 and 0.45.0 are NOT playtested.**
+- **Playtested**: up to 0.45.0 (table and the 0.45.0 results in `TODO.md`): the rift was never crossed (dead map
+  after ~45 min), creep camps never ran (a TICK ERROR nobody noticed), Fel Horde flapped between the route planner and
+  the old picker. **Read PINNED for `TICK ERROR` in every dump you get** -- `dump_summary.py` lists them.
+- **More changes per playtest** (maintainer): every change gets its own switch and counter; behaviour switches get a
+  per-bot A/B mode (0.46). Playtest protocol (stopwatch at turns) in `TODO.md`.
 - **West <-> east**: Kalimdor + its islands (ships) vs Eastern Kingdoms + Kul Tiras are linked ONLY by the Old Gods
-  rift (and the rare Legion portal). The rift's east end was reported broken in game; 0.45.0 moved it 100 north --
-  unconfirmed.
+  rift (and the rare Legion portal). Bots will use it through a pseudo-portal (0.46); for humans the east end's fix
+  (0.45.0) is unconfirmed.
 - Measurements per game: `MEASUREMENTS.md` (`tools/ai/dump_summary.py --append`). The maintainer often plays with
   `-autopilot` on one faction (a human slot -- say which in the note).
 
@@ -91,7 +100,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
 | `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
-| `CONCEPTS.md` | | ideas under discussion (waves, gold depot, production places, quest requirements, defence) -- decide together |
+| `CONCEPTS.md` | | designs: movement steps, theatres, pseudo-portals / ferries, unit budget, load measuring; gold, production places, quest requirements |
 | `WORKAROUNDS.md` | | everything the bot needs outside `Ai/` (hooks, workarounds, runtime map changes, version-bound data) |
 | `MEASUREMENTS.md` | | load numbers per version (from `dump_summary.py`) |
 | `../ShatteredLegacies/` | ShatteredLegaciesSetup, FallbackConfig, FallbackSystem, KezanEnterprise, SlAiData | fork content: fallbacks, Kezan Enterprise; own `README.md`, `TODO.md`, `FALLBACKS.md`, `FACTION_UNITS.md` |
@@ -150,6 +159,11 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - Session start: the maintainer pastes the repo/branch and a task; clone sparsely (command above), read this file
   and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; no GitHub Actions.
 - "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
+- Two TODO files: `Ai/TODO.md` = bot work only (what would go into the upstream PR); `../ShatteredLegacies/TODO.md` =
+  everything fork-only (fallbacks, Kezan, Thandol Treaty, map content, the fork's win rule, faction balance, the
+  maintainer's brainstorming). Put new items in the right one.
+- Before proposing a movement change, read `README.md` "Already tried"; add a row there when an approach is dropped
+  or replaced (same drop).
 - At most one question per reply; propose defaults instead of asking many.
 - Push only named tags (`git push origin v<build>`), never `--tags` (old tags drag Git LFS into history the clone
   never downloaded).
@@ -196,6 +210,29 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
   spots (`AiWorld.ArgusSpotX/Y`) were picked with a flood fill so the exits stay open. Same method for Sulfuron Spire.
 - `mapdata/WarcraftLegacies24p` ("1.18a", 24 slots) is an OLD layout: 20 of our graph nodes missing, 65 moved. Not
   supported.
+
+## Engine (WC3) limits -- the constraints behind the movement work
+
+- **Order delay = the pathfinder queue.** Every path request (each order; each queued chain point when it becomes
+  active) waits in one queue per game -- bots' and players' alike. Many units + many orders -> players' orders start
+  1-2 s late (0.43.1 with 4000+ units, 0.44.2 with 5227). The game clock can run on time meanwhile.
+- **Pathing is part of the synced simulation**: delays measured in GAME time are the same on every client
+  (desync-safe), unlike wall-clock time.
+- **Lua runs in the same frame as the simulation**: a Lua spike is a hitch for everything (0.44.1: 78k ops in one
+  slot). Average Lua work is small next to thousands of units; the bot's main engine cost is the orders it issues.
+  Op counters (0.40) = spike detector, not an engine-load measure.
+- **No group movement**: every unit paths on its own. Units sent to the same point compete for it (crowds at nodes,
+  bridges) -- 0.46 tests spreading the points.
+- **Waygate teleports drop the queued orders** (0.44.1: 1048 units idle at exits) -> pseudo-portals (0.46).
+- **Guard positions** (hypothesis, tested in 0.46): computer players' units walk back to a guard position after chasing
+  an enemy; nothing in the code removes it (`RemoveAllGuardPositions` / `RemoveGuardPosition`).
+- **Enter-region events fire only on entering**: a unit already inside the region when the trigger matters gets no
+  event -- handle that case when the decision is made.
+- **Hidden** (`ShowUnit` false) = out of the game world: no target, no collision, not revealed by true sight (not the
+  invisibility mechanic). Range searches skip hidden units, player enumerations do not. Pair it with `PauseUnit` when
+  units must not act at all (ferries).
+- **Game speed**: when the simulation cannot keep up, single player slows down (turn counter behind a stopwatch);
+  multiplayer shows lag screens.
 
 ## WL facts that bit us
 
