@@ -14,7 +14,10 @@ namespace WarcraftLegacies.Source.Ai
   internal static class AiPortals
   {
     internal static bool On = true;
-    private const float Area = 450f; // half side of the square entry area around a waygate (approach point: 400)
+    private const float Area = 220f;        // half side of the square entry area around a waygate (trigger)
+    private const float AreaIssue = 500f;   // on issue: a unit this close is teleported at once (stragglers, crowds)
+    internal const float Approach = 150f;   // the chain's last point, in front of the waygate (0.46 part 2: 400 --
+                                            // units vanished too far from the asset, maintainer's smoke test)
     private const int OrderAttack = 851983;
     private const string FxIn = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl";
     private const string FxOut = "Abilities\\Spells\\Human\\MassTeleport\\MassTeleportTarget.mdl";
@@ -60,11 +63,12 @@ namespace WarcraftLegacies.Source.Ai
       TriggerRegisterEnterRegion(_enter, reg, null);
     }
 
+    // on issue (AiRoutes.Chain): close enough to teleport now -- the enter event will not come
     internal static bool Inside(unit u, unit gate)
     {
       var dx = GetUnitX(u) - GetUnitX(gate);
       var dy = GetUnitY(u) - GetUnitY(gate);
-      return dx <= Area && dx >= -Area && dy <= Area && dy >= -Area;
+      return dx <= AreaIssue && dx >= -AreaIssue && dy <= AreaIssue && dy >= -AreaIssue;
     }
 
     // ---- tickets -----------------------------------------------------------------------------------------------
@@ -229,16 +233,20 @@ namespace WarcraftLegacies.Source.Ai
       DarkPortalState = "open (added by the bot: " + (a ? "EK->Outland " : "") + (b ? "Outland->EK" : "") + ")";
     }
 
+    // by owner, not by range: WL keeps the Dark Portal waygates HIDDEN until it opens them, and range searches skip
+    // hidden units (0.46 part 2 smoke test: "waygates not found")
     private static unit FindWaygate(float x, float y)
     {
       unit found = null;
       var g = CreateGroup();
-      GroupEnumUnitsInRange(g, x, y, 300f, null);
+      GroupEnumUnitsOfPlayer(g, Player(24), null);
       unit u;
       while ((u = FirstOfGroup(g)) != null)
       {
         GroupRemoveUnit(g, u);
-        if (found == null && GetUnitTypeId(u) == AiWorld.PortalUnitId)
+        var dx = GetUnitX(u) - x;
+        var dy = GetUnitY(u) - y;
+        if (found == null && GetUnitTypeId(u) == AiWorld.PortalUnitId && dx * dx + dy * dy < 300f * 300f)
         {
           found = u;
         }

@@ -8,7 +8,7 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.45.0** (played, 540 min). Docs: 0.45.1 (no map change). Next playable build: **0.46**.
+Current build: **0.46.0** (built from parts 1-3, not played yet).
 
 ## The plan: three phases
 
@@ -59,6 +59,8 @@ Rules for phase 1:
 | 0.44.2 | yes (14 min) | **first build with bot CP income**; max-slot 5207; rest churn; 5227 units at 14 min |
 | 0.44.3 | only inside 0.45.0 | creep targets, rest churn fix, exit re-chain |
 | 0.45.0 | yes (540 min, 16 bots) | rift: no crossing in 510 min -> dead map; creep camps never ran (TICK ERROR); laggy end |
+| 0.46 part 2 | smoke test, 5 min | 397 teleports, no errors; order latency already 1-2 s median at 5 min (3765 units) |
+| 0.46.0 | **next** | see "Next playtest" |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -71,6 +73,26 @@ observations from those games are void. Movement observations stay valid.
   It goes into the note (0.46: `dump_summary.py --real`). It shows whether the game falls behind real time.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
+
+## Next playtest (0.46.0)
+
+Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer, **stopwatch at turns 5, 10, 20, 30,
+40**. Then `dump_summary.py ... --real "t5=... t10=..." --append "<note>"`.
+- `-version` shows 0.46.0; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
+  `AiStyleCheck.cs`, rebuild, and tell the AI (the phase-2 style would not work).
+- Errors: the summary lists them at the top -- none expected.
+- **Rift / portals**: "pseudo-portals on: teleports N"; Old Gods units on the Eastern Kingdoms after the rift opens
+  (BOTS "army by landmass"); Fel Horde / Kalimdor no longer STUCK at the Maw. Units vanish close to the asset?
+- **Dark Portal**: "Dark Portal: ..." after turn 10 -- open (live / added by the bot) or closed? The WL waygate lines
+  show active / hidden.
+- **Load**: order latency windows over time vs. units on the map (0.45.0: 5221 at 10 min); stopwatch drift.
+- **Unit budget**: "army/budget, capped turns" -- do bots hit it; fewer units on the map than 0.45.0?
+- **Creep camps** (first time they run): ROUTES "creep camps N" > 0, bots clear camps in their areas.
+- **Planner**: "planner nulls" (kept valid target); Fel Horde target switches far below 608.
+- **A/B lines** (guard / gather / spread): which half did better? Next game: `-guard ab2`, `-gather ab2`,
+  `-spread ab2` at the start (swaps every half).
+- **Quel'thalas**: caster orders skipped (P2); "targets by owner" -- who attacks P2?
+- `-edges` in game: the generated graph -- wrong edges? (`route_map.png` shows the same graph.)
 
 ## 0.45.0 results (540-min game, `MEASUREMENTS.md`)
 
@@ -107,13 +129,13 @@ decided the whole late game).
 
 0.46 is built in parts; the maintainer builds once all parts are in. Done: **part 1** (creep fix, check, graph list
 review, docs), **part 2** (pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget,
-latency probe, guard positions A/B). Part 3: the rest of this list.
+latency probe, guard positions A/B), **part 3** (the rest of this list). 0.46.0 is complete.
 
 Fixes from 0.45.0:
 - [done, part 1] **Creep camps TICK ERROR**: confirmed in the built `war3map.lua` -- CSharp.lua emitted
   `_creepLevel:get(node) + (GetUnitLevel(u) > 0) and GetUnitLevel(u) or 1`. Rewritten with a local; hard rule 16;
   `check_refs.py` flags the pattern. Check the creep targets in the 0.46 game (first time they run).
-- [ai] **`-edges` draws the generated graph** (the one the planner uses); the old graph only behind `-edges old`.
+- [done, part 3] **`-edges` draws the generated graph** (the one the planner uses); the old graph only behind `-edges old`.
 - [done, part 2] **PORTALS section lists WL's own waygates** (Dark Portal n036, Emerald, Dun Modr ...): position, owner, active,
   hidden, destination -- why the Dark Portal was no graph edge at 540 min in 0.45.0.
 - [done, part 2] **No fallback to the old picker while the route target is valid**: if `Pick` returns null and the committed
@@ -123,11 +145,11 @@ Fixes from 0.45.0:
   waygates are active (WL quest, turn 8-10 -- `README.md` "Portals and passages"), so groups in Outland can plan.
 - [done, part 2] **Groups only from units that can reach the target** (same walking component, or through a portal edge): the
   Fel Horde's group for the Maw was its Outland units.
-- [ai] **Caster share cap** in production: at most ~25 % of a bot's trained units are casters (Quel'thalas: 94 %).
-- [ai] **Targets by owner** counter (per bot: how often it targeted each owner's CPs), so "who attacks whom" is
+- [done, part 3] **Caster share cap** in production: at most ~25 % of a bot's trained units are casters (Quel'thalas: 94 %).
+- [done, part 3] **Targets by owner** counter (per bot: how often it targeted each owner's CPs), so "who attacks whom" is
   visible without the event log.
-- [ai] **Gather diagnostics**: at a timeout, the share of the group that had arrived; `-gather ab` (per-bot A/B).
-- [ai] `dump_summary.py`: TICK ERRORs at the top of the summary, not at the end; the defence log shows the real enemy
+- [done, part 3] **Gather diagnostics**: at a timeout, the share of the group that had arrived; `-gather ab` (per-bot A/B).
+- [done, part 3] `dump_summary.py`: TICK ERRORs at the top of the summary, not at the end; the defence log shows the real enemy
   count while a defence is kept (now "0 enemy units").
 - [done, part 1] **Graph edits -- the maintainer's list** was made from the OLD graph (`-edges`). In the generated
   graph (the planner's) 12 of 13 items were already as wanted:
@@ -156,15 +178,15 @@ Fixes from 0.45.0:
   (rift, Argus / Legion, Emerald Portals, the AI ship waygates). `-pportal on|off` (off = 0.45 waygate click).
   Counters: teleports, stale tickets, units teleported on issue (already inside).
 - [ai] **Per-bot A/B**: switches accept `ab` (even player slots on, odd off) and `ab2` (swapped). [done, part 2:
-  `AiAb`, used by `-guard`; part 3: gather, spread.] For: guard,
+  `AiAb`; part 3: own bit per switch -- guard 0, gather 1, spread 2.] For: guard,
   gather, spread.
-- [ai] **Activity breakdown** (from the stall sampler, no new scans): per sample walking / idle / hurt (in a fight) /
+- [done, part 3] **Activity breakdown** (from the stall sampler, no new scans): per sample walking / idle / hurt (in a fight) /
   stalled, shares per 5 min. Ranged units shooting unhurt count as stalled -- compare between games.
-- [ai] **Flapping returns**: per bot, targets left and taken again within 5 min (A -> B -> A).
-- [ai] **Spread chain points** (test, not a certain gain): intermediate chain points get a per-unit offset (ring
+- [done, part 3] **Flapping returns**: per bot, targets left and taken again within 5 min (A -> B -> A).
+- [done, part 3] **Spread chain points** (test, not a certain gain): intermediate chain points get a per-unit offset (ring
   around the node, or the edge's "via" point) instead of every unit walking to the same spot. `-spread on|off|ab`.
-- [ai] `dump_summary.py --real "t5=5:02 t10=10:30 ..."` fills the "real s per game min" column.
-- [ai] **CSharp.lua check**: a throwaway class with ~300 instance fields (+ a static instance of it); the maintainer
+- [done, part 3] `dump_summary.py --real "t5=5:02 t10=10:30 ..."` fills the "real s per game min" column.
+- [done, part 3] **CSharp.lua check**: a throwaway class with ~300 instance fields (+ a static instance of it); the maintainer
   builds, `lua_check.py` must pass. Confirms that object state avoids hard rules 1, 2 and 7. Removed in 0.47.
 
 ## Phase 1 -- 0.47 (theatres, ferries)

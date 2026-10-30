@@ -96,7 +96,7 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Argus portals (Argus <-> Northrend before the summon, Felwood / Quel'Danas after) | always / at the Legion summon | bot (`AiLegion`) |
 | AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
 
-`-edges` in game draws the OLD hand-written graph, not the one the route planner uses (0.46: switched).
+`-edges` in game draws the route graph the bots use (0.46); `-edges old` the old hand-written one.
 
 Designs of the planned parts: `CONCEPTS.md` 6-9. The engine is the limit: with thousands of units and orders, WC3's
 pathfinder queue delays every order (players feel 1-2 s); see `CONCEPTS.md` 9.
@@ -131,6 +131,11 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.43.0 (old Veteran) | +25 gold per production turn | 250-food armies, 4000+ units, ~2-s order delay | 0.43.1 lower scale; 0.46 unit budget |
 | before 0.44.2 | (unnoticed) bots without CP income | empty map, 9.5-h stalemate | 0.44.2 `AiIncome` |
 
+**A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
+feature on for the bots whose player slot has a 0 in the switch's bit, `ab2` for those with a 1 -- guard bit 0, gather
+bit 1, spread bit 2, so the halves of different tests are independent. The dump names the slots of each half and
+compares them. Next game: `ab2` (swaps the halves; factions differ).
+
 ## Chat commands
 
 Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-changing** ⚠ (host only in `HostOnly`).
@@ -147,16 +152,17 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-id` | read | Type id, name, owner, position of your selected unit |
 | `-fac` | read | Each bot's faction and its unit/building types per category |
 | `-autodump` | heavy | Toggle: a dump every 5 minutes |
-| `-edges` | heavy | Toggle: draws every edge of the OLD hand-written graph (the route planner's generated graph: `tools/ai/render_map.py`) (green held, yellow neutral frontier, orange uncapturable, red contested, blue neutral↔neutral, magenta crosses landmass, grey closed) |
+| `-edges` / `-edges old` | heavy | Toggle: draws the ROUTE graph the bots use (0.46: white walking, grey closed by rocks, purple portals) / the OLD hand-written graph (fallback only) |
 | `-ids` | heavy | Every control point's id above it for 30 s |
 | `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
 | `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
 | `-creeps on\|off` | control | Creep camps in own areas as targets (default, 0.44.3; one-shots off) or the hand-placed one-shots (0.44.2) |
-| `-gather on\|off` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s) (default, 0.45) |
+| `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default ab (0.46, slot bit 1) |
+| `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default ab (0.46, slot bit 2) |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
-| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / even slots (default, 0.46) / odd slots |
+| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab (default) / ab2 (0.46, slot bit 0) |
 | `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 40 + 10, 0.46) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |

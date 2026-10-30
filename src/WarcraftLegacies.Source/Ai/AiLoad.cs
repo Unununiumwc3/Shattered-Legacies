@@ -8,16 +8,32 @@ namespace WarcraftLegacies.Source.Ai
   // the order-latency probe. All counters are deterministic (game time, synced unit state).
 
   // Per-bot A/B for behaviour switches: one game compares two halves of the bots. Swap the assignment next game.
+  // Every switch splits by its OWN bit of the player slot (guard: bit 0, gather: bit 1, spread: bit 2), so the halves
+  // of different tests are independent -- with one split for all, a difference could come from any of them.
   internal static class AiAb
   {
     internal const int Off = 0;
     internal const int OnAll = 1;
-    internal const int Ab = 2;  // even player slots on, odd off
-    internal const int Ab2 = 3; // odd player slots on, even off
+    internal const int Ab = 2;  // slots whose bit is 0 on
+    internal const int Ab2 = 3; // slots whose bit is 1 on
+    internal const int BitGuard = 0;
+    internal const int BitGather = 1;
+    internal const int BitSpread = 2;
 
-    internal static bool For(int mode, int pid)
+    internal static int Half(int pid, int bit)
     {
-      return mode == OnAll || (mode == Ab && pid % 2 == 0) || (mode == Ab2 && pid % 2 == 1);
+      var d = 1;
+      for (var k = 0; k < bit; k++)
+      {
+        d = d * 2;
+      }
+
+      return (pid / d) % 2;
+    }
+
+    internal static bool For(int mode, int pid, int bit)
+    {
+      return mode == OnAll || (mode == Ab && Half(pid, bit) == 0) || (mode == Ab2 && Half(pid, bit) == 1);
     }
 
     internal static string Name(int mode)
@@ -29,15 +45,61 @@ namespace WarcraftLegacies.Source.Ai
 
       if (mode == Ab)
       {
-        return "ab (even slots on)";
+        return "ab";
       }
 
       if (mode == Ab2)
       {
-        return "ab2 (odd slots on)";
+        return "ab2";
       }
 
       return "off";
+    }
+
+    // the slots a mode switches on, e.g. "P0 P1 P4 P5" -- for the dump
+    internal static string Slots(int mode, int bit)
+    {
+      var s = "";
+      var bots = SimpleBot.Bots;
+      for (var b = 0; b < bots.Count; b++)
+      {
+        var pid = GetPlayerId(bots[b]);
+        if (pid >= 0 && pid < 24 && For(mode, pid, bit))
+        {
+          s = s + " P" + I2S(pid);
+        }
+      }
+
+      return s == "" ? " none" : s;
+    }
+
+    // a per-bot value summed over each half: "on-half N bots avg X | off-half M bots avg Y"
+    internal static string Compare(int mode, int bit, int[] perBot)
+    {
+      int nOn = 0, nOff = 0, sumOn = 0, sumOff = 0;
+      var bots = SimpleBot.Bots;
+      for (var b = 0; b < bots.Count; b++)
+      {
+        var pid = GetPlayerId(bots[b]);
+        if (pid < 0 || pid >= 24)
+        {
+          continue;
+        }
+
+        if (For(mode, pid, bit))
+        {
+          nOn++;
+          sumOn += perBot[pid];
+        }
+        else
+        {
+          nOff++;
+          sumOff += perBot[pid];
+        }
+      }
+
+      return "on " + I2S(nOn) + " bots avg " + I2S(nOn > 0 ? sumOn / nOn : 0) + " | off " + I2S(nOff) + " bots avg "
+             + I2S(nOff > 0 ? sumOff / nOff : 0);
     }
 
     // "-cmd on|off|ab|ab2" -> mode, -1 = not understood
@@ -93,7 +155,7 @@ namespace WarcraftLegacies.Source.Ai
       for (var b = 0; b < bots.Count; b++)
       {
         var pid = GetPlayerId(bots[b]);
-        if (AiAb.For(Mode, pid))
+        if (AiAb.For(Mode, pid, AiAb.BitGuard))
         {
           RemoveAllGuardPositions(bots[b]);
         }
@@ -107,7 +169,7 @@ namespace WarcraftLegacies.Source.Ai
         var u = GetTriggerUnit();
         var p = GetOwningPlayer(u);
         var pid = GetPlayerId(p);
-        if (pid < 24 && AiAb.For(Mode, pid) && SimpleBot.IsBot(p) && !IsUnitType(u, UNIT_TYPE_STRUCTURE))
+        if (pid < 24 && AiAb.For(Mode, pid, AiAb.BitGuard) && SimpleBot.IsBot(p) && !IsUnitType(u, UNIT_TYPE_STRUCTURE))
         {
           RemoveGuardPosition(u);
           Removed++;
@@ -129,41 +191,15 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "guard positions removed for bots: " + AiAb.Name(Mode)
-        + "  -- -guard on|off|ab|ab2");
+        + " [slots" + AiAb.Slots(Mode, AiAb.BitGuard) + "]  -- -guard on|off|ab|ab2");
     }
 
-    // idle-away and rest orders per half, per bot of that half (the A/B comparison)
+    // idle-away and rest orders per bot of each half (the A/B comparison)
     internal static string Line()
     {
-      int nOn = 0, nOff = 0, idleOn = 0, idleOff = 0, restOn = 0, restOff = 0;
-      var bots = SimpleBot.Bots;
-      for (var b = 0; b < bots.Count; b++)
-      {
-        var pid = GetPlayerId(bots[b]);
-        if (pid < 0 || pid >= 24)
-        {
-          continue;
-        }
-
-        if (AiAb.For(Mode, pid))
-        {
-          nOn++;
-          idleOn += AiArmy.IdleBy[pid];
-          restOn += AiArmy.RestBy[pid];
-        }
-        else
-        {
-          nOff++;
-          idleOff += AiArmy.IdleBy[pid];
-          restOff += AiArmy.RestBy[pid];
-        }
-      }
-
-      return "guard positions " + AiAb.Name(Mode) + ", removed on " + I2S(Removed) + " units; per bot: removed-half "
-             + I2S(nOn) + " bots idle-away " + I2S(nOn > 0 ? idleOn / nOn : 0) + " rest "
-             + I2S(nOn > 0 ? restOn / nOn : 0)
-             + " | kept-half " + I2S(nOff) + " bots idle-away " + I2S(nOff > 0 ? idleOff / nOff : 0) + " rest "
-             + I2S(nOff > 0 ? restOff / nOff : 0);
+      return "guard positions removed: " + AiAb.Name(Mode) + " [slots" + AiAb.Slots(Mode, AiAb.BitGuard) + "], on "
+             + I2S(Removed) + " units; idle-away orders " + AiAb.Compare(Mode, AiAb.BitGuard, AiArmy.IdleBy)
+             + "; rest orders " + AiAb.Compare(Mode, AiAb.BitGuard, AiArmy.RestBy);
     }
   }
 
@@ -423,6 +459,147 @@ namespace WarcraftLegacies.Source.Ai
     }
   }
 
+  // 0.46: what the armies do and whom the bots attack (TODO 0.46, exit criteria 3-4).
+  // Activity: every sampled army unit (AiArmy.SampleStall, once per service) is walking (moved >= 100), hurt (lost
+  // life: in a fight), idle (no order) or stalled (an order, not moving, not hurt -- ranged units shooting unhurt count
+  // here).
+  // Returns: a bot takes a target again that it left less than 5 min ago (A -> B -> A) -- the flapping that matters;
+  // plain switches are expected early. Targets by owner: who attacks whom (0.45.0: who attacked Quel'thalas?).
+  internal static class AiObserve
+  {
+    internal static int ActWalk;
+    internal static int ActHurt;
+    internal static int ActIdle;
+    internal static int ActStall;
+    internal static int[] Returns = new int[24];
+    private const int Memory = 3;
+    private const float ReturnWindow = 300f;
+    private static unit[] _left = new unit[24 * Memory];
+    private static float[] _leftAt = new float[24 * Memory];
+    private static int[] _leftNext = new int[24];
+    private static int[] _byOwner = new int[24 * 26]; // [bot][owner 0..23, 24 = neutral, 25 = itself]
+
+    internal static void Target(int pid, unit from, unit to)
+    {
+      if (pid < 0 || pid >= 24 || to == null)
+      {
+        return;
+      }
+
+      var now = SimpleBot.Clock;
+      for (var k = 0; k < Memory; k++)
+      {
+        var i = pid * Memory + k;
+        if (_left[i] == to && now - _leftAt[i] < ReturnWindow)
+        {
+          Returns[pid]++;
+          _left[i] = null;
+          break;
+        }
+      }
+
+      if (from != null)
+      {
+        var slot = pid * Memory + _leftNext[pid];
+        _left[slot] = from;
+        _leftAt[slot] = now;
+        _leftNext[pid] = (_leftNext[pid] + 1) % Memory;
+      }
+
+      var oid = GetPlayerId(GetOwningPlayer(to));
+      var col = oid == pid ? 25 : (oid >= 24 ? 24 : oid);
+      _byOwner[pid * 26 + col] = _byOwner[pid * 26 + col] + 1;
+    }
+
+    internal static void Lines(List<string> o)
+    {
+      var total = ActWalk + ActHurt + ActIdle + ActStall;
+      o.Add("activity (0.46, sampled army units): walking " + Pct(ActWalk, total) + " fighting " + Pct(ActHurt, total)
+            + " idle " + Pct(ActIdle, total) + " stalled " + Pct(ActStall, total) + " of " + I2S(total));
+      var r = "target returns within 5 min (A->B->A) per bot:";
+      var t = "targets by owner (since start; N = neutral, own = defending itself):";
+      var bots = SimpleBot.Bots;
+      for (var b = 0; b < bots.Count; b++)
+      {
+        var pid = GetPlayerId(bots[b]);
+        if (pid < 0 || pid >= 24)
+        {
+          continue;
+        }
+
+        r = r + " P" + I2S(pid) + " " + I2S(Returns[pid]) + ";";
+        var row = "";
+        for (var col = 0; col < 26; col++)
+        {
+          var n = _byOwner[pid * 26 + col];
+          if (n > 0)
+          {
+            row = row + " " + (col == 25 ? "own" : (col == 24 ? "N" : "P" + I2S(col))) + "x" + I2S(n);
+          }
+        }
+
+        if (row != "")
+        {
+          t = t + " P" + I2S(pid) + ":" + row + ";";
+        }
+      }
+
+      o.Add(r);
+      o.Add(t);
+    }
+
+    private static string Pct(int a, int total)
+    {
+      return total > 0 ? I2S(R2I(100f * a / total)) + "%" : "-";
+    }
+  }
+
+  // 0.46: caster share cap. 0.45.0: 94 % of Quel'thalas' 5102 units were casters (Sorceress, Priest, Spell Breaker) --
+  // without autocast they are weak. A type is a caster when a trained unit of it has mana (learned from the units the
+  // production pass sees; heroes excluded). While casters are MaxShare or more of a bot's units, no caster is queued.
+  internal static class AiCaster
+  {
+    internal static bool On = true;
+    private const float MaxShare = 0.25f;
+    private static Dictionary<int, bool> _isCaster = new();
+    internal static int[] Skipped = new int[24];
+
+    // production pass, for every living non-hero unit of the bot; true = a caster
+    internal static bool Learn(unit u)
+    {
+      var t = GetUnitTypeId(u);
+      if (!_isCaster.ContainsKey(t))
+      {
+        _isCaster[t] = BlzGetUnitMaxMana(u) > 0;
+      }
+
+      return _isCaster[t];
+    }
+
+    internal static bool IsCaster(int typeId) => _isCaster.ContainsKey(typeId) && _isCaster[typeId];
+
+    internal static bool TooMany(int casters, int units)
+    {
+      return On && units >= 20 && casters >= units * MaxShare;
+    }
+
+    internal static string Line()
+    {
+      var s = "caster cap " + (On ? I2S(R2I(MaxShare * 100f)) + "%" : "off") + ", caster orders skipped per bot:";
+      var bots = SimpleBot.Bots;
+      for (var b = 0; b < bots.Count; b++)
+      {
+        var pid = GetPlayerId(bots[b]);
+        if (pid >= 0 && pid < 24 && Skipped[pid] > 0)
+        {
+          s = s + " P" + I2S(pid) + " " + I2S(Skipped[pid]) + ";";
+        }
+      }
+
+      return s;
+    }
+  }
+
   // dump: one block in LOAD
   internal static class AiLoad
   {
@@ -430,6 +607,7 @@ namespace WarcraftLegacies.Source.Ai
     {
       AiGuard.Setup();
       AiProbe.Setup();
+      AiStyleCheck.Run(); // 0.46: CSharp.lua check for the phase-2 style (removed in 0.47)
     }
 
     internal static void Lines(List<string> o)
@@ -438,6 +616,9 @@ namespace WarcraftLegacies.Source.Ai
       o.Add(AiBudget.Line());
       o.Add(AiGuard.Line());
       o.Add("attack groups: units left out (no way to the target) " + I2S(AiArmy.Unreachable));
+      o.Add(AiCaster.Line());
+      AiObserve.Lines(o);
+      o.Add("style check (0.46): " + AiStyleCheck.Result);
     }
   }
 }

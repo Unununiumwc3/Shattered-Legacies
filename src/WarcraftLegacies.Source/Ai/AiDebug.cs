@@ -97,6 +97,7 @@ public static class AiDebug
     RegisterLoose("-pportal", AiPortals.OnCommand, Level.Control);        // 0.46: -pportal on|off (pseudo-portals)
     RegisterLoose("-guard", AiGuard.OnCommand, Level.Control);            // 0.46: -guard on|off|ab|ab2
     RegisterLoose("-cap", AiBudget.OnCommand, Level.Control);             // 0.46: -cap on|off|<base> <perCp>
+    RegisterLoose("-spread", AiRoutes.OnSpreadCommand, Level.Control);    // 0.46: -spread on|off|ab|ab2
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -106,7 +107,7 @@ public static class AiDebug
     Register("-help", OnHelp, Level.Read);
     Register("-dump", () => WriteDump(GetTriggerPlayer(), "manual"), Level.Read);
     Register("-autodump", OnAutoDump, Level.Heavy);
-    Register("-edges", OnEdges, Level.Heavy);
+    RegisterLoose("-edges", OnEdges, Level.Heavy); // 0.46: "-edges" = generated graph, "-edges old" = old graph
     RegisterLoose("-why", OnWhy, Level.Read);
     Register("-ship", OnShipTest, Level.Control);
     Register("-botbreak", SimpleBot.OnBotBreak, Level.Control); // 0.35: moved here from SimpleBot (now switched)
@@ -1331,6 +1332,7 @@ public static class AiDebug
   // ---- -edges (lightning overlay) ---------------------------------------------------------------------
   private static readonly List<lightning> Bolts = new();
   private static readonly List<Edge> BoltEdges = new();
+  private static readonly List<int> BoltFixed = new(); // 0.46: -1 = old-graph edge (colour by state), else fixed colour
   private static player _edgesViewer;
   private static location _zLoc;
 
@@ -1346,17 +1348,66 @@ public static class AiDebug
 
       Bolts.Clear();
       BoltEdges.Clear();
+      BoltFixed.Clear();
       _edgesViewer = null;
       DisplayTimedTextToPlayer(p, 0, 0, 6, "edges OFF");
       return;
     }
 
     _edgesViewer = p;
-    DrawEdges(AiGraph.Combined);
-    DrawEdges(AiGraph.Kalimdor);
+    if (GetEventPlayerChatString() == "-edges old")
+    {
+      DrawEdges(AiGraph.Combined);
+      DrawEdges(AiGraph.Kalimdor);
+      RecolorBolts();
+      DisplayTimedTextToPlayer(p, 0, 0, 20, "OLD hand-written graph ON (" + I2S(Bolts.Count) + ", fallback only). "
+        + "green=held yellow=neutral frontier orange=uncapturable red=contested blue=neutral magenta=crosses landmass "
+        + "grey=closed");
+      return;
+    }
+
+    DrawRouteGraph();
     RecolorBolts();
-    DisplayTimedTextToPlayer(p, 0, 0, 20, "edges ON (" + I2S(Bolts.Count) + "). green=held yellow=neutral frontier "
-      + "orange=uncapturable red=contested blue=neutral magenta=crosses landmass grey=closed");
+    DisplayTimedTextToPlayer(p, 0, 0, 20, "ROUTE graph ON (" + I2S(Bolts.Count) + " edges, generated -- the one the "
+      + "bots use). white=walking grey=closed by rocks purple=portal. '-edges old' = the old hand-written graph");
+  }
+
+  // 0.46: the generated route graph (AiRouteData) and the live portal edges
+  private static void DrawRouteGraph()
+  {
+    for (var e = 0; e < AiRouteData.Edges; e++)
+    {
+      var a = AiRouteData.EdgeA[e];
+      var b = AiRouteData.EdgeB[e];
+      Bolt(AiRouteData.NodeX[a], AiRouteData.NodeY[a], AiRouteData.NodeX[b], AiRouteData.NodeY[b],
+        AiRoutes.WalkEdgeOpen(e) ? 7 : 0);
+    }
+
+    for (var k = 0; k < AiRoutes.PortalEdges; k++)
+    {
+      var gate = AiRoutes.PortalGate(k);
+      if (gate != null)
+      {
+        Bolt(GetUnitX(gate), GetUnitY(gate), AiRoutes.PortalExitX(k), AiRoutes.PortalExitY(k), 8);
+      }
+    }
+  }
+
+  private static void Bolt(float x1, float y1, float x2, float y2, int colour)
+  {
+    if (_zLoc == null)
+    {
+      _zLoc = Location(0f, 0f);
+    }
+
+    // GetLocationZ is client-local terrain height -> only ever used for visuals, never logic.
+    MoveLocation(_zLoc, x1, y1);
+    var z1 = GetLocationZ(_zLoc) + 90f;
+    MoveLocation(_zLoc, x2, y2);
+    var z2 = GetLocationZ(_zLoc) + 90f;
+    Bolts.Add(AddLightningEx("CLSB", false, x1, y1, z1, x2, y2, z2));
+    BoltEdges.Add(null);
+    BoltFixed.Add(colour);
   }
 
   private static void DrawEdges(List<Edge> edges)
@@ -1388,6 +1439,7 @@ public static class AiDebug
       // texture: tinted yellow looked green, red looked dark -> the "different greens" on the overlay.)
       Bolts.Add(AddLightningEx("CLSB", false, x1, y1, z1, x2, y2, z2));
       BoltEdges.Add(edges[i]);
+      BoltFixed.Add(-1);
     }
   }
 
@@ -1397,7 +1449,7 @@ public static class AiDebug
     var a = GetLocalPlayer() == _edgesViewer ? 1f : 0f;
     for (var i = 0; i < Bolts.Count; i++)
     {
-      var c = EdgeColor(BoltEdges[i]);
+      var c = BoltFixed[i] >= 0 ? BoltFixed[i] : EdgeColor(BoltEdges[i]);
       float r = 0.5f, gr = 0.5f, b = 0.5f;               // 0 grey: closed
       if (c == 1) { r = 1f; gr = 0f; b = 1f; }           // magenta: crosses landmass
       else if (c == 2) { r = 0.2f; gr = 1f; b = 0.2f; }  // green: held (same owner / allies)
@@ -1405,6 +1457,8 @@ public static class AiDebug
       else if (c == 4) { r = 1f; gr = 1f; b = 0.1f; }    // yellow: player -> capturable neutral
       else if (c == 5) { r = 1f; gr = 0.55f; b = 0f; }   // orange: player -> uncapturable neutral
       else if (c == 6) { r = 0.3f; gr = 0.45f; b = 1f; } // blue: neutral <-> neutral (faded: background)
+      else if (c == 7) { r = 0.95f; gr = 0.95f; b = 0.95f; } // 0.46 white: route graph, walking edge
+      else if (c == 8) { r = 0.75f; gr = 0.2f; b = 1f; }  // 0.46 purple: route graph, portal edge
       SetLightningColor(Bolts[i], r, gr, b, c == 6 ? a * 0.35f : a);
     }
   }

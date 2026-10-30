@@ -433,6 +433,18 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static bool IsPortalEdgeGate(unit u) => _pUnit.Contains(u);
 
+    // 0.46: for "-edges" (draws the generated graph)
+    internal static bool WalkEdgeOpen(int e)
+    {
+      var rock = AiRouteData.EdgeRocks[e];
+      return rock < 0 || _rockOpen == null || _rockOpen[rock];
+    }
+
+    internal static int PortalEdges => _pFrom.Count;
+    internal static unit PortalGate(int k) => _pUnit[k];
+    internal static float PortalExitX(int k) => _pExitX[k];
+    internal static float PortalExitY(int k) => _pExitY[k];
+
     // ---- planning -----------------------------------------------------------------------------------------
     // 0.42.1: a bot COMMITS to a route and follows it node by node (never backwards). It plans again only when the
     // target is no longer valid, the group stands in an area that is not on the route, or every ReplanEvery seconds
@@ -577,7 +589,8 @@ namespace WarcraftLegacies.Source.Ai
     // A route longer than GatherHops nodes ends first at the LAST OWN NODE before the frontier: the attack group
     // waits there until GatherShare of its food has arrived (within GatherRadius) or GatherMax seconds passed, then
     // it gets the chain to the target. Short routes go without waiting. Decided once per target. "-gather off" = 0.44.
-    internal static bool Gather = true;
+    internal static int GatherMode = AiAb.Ab; // 0.46: per-bot A/B (bit 1); was a plain on/off
+    internal static float GatherTimeoutShare;  // 0.46: sum of the arrived shares at timeouts (diagnostics)
     private const int GatherHops = 5;
     private const float GatherMax = 60f;
     private const float GatherRadius = 1500f;
@@ -608,7 +621,8 @@ namespace WarcraftLegacies.Source.Ai
       if (_gatherFor[pid] != target)
       {
         _gatherFor[pid] = target;
-        _gatherNode[pid] = Gather && path.Count - 1 > GatherHops ? GatherNodeOn(p, pid, path) : -1;
+        var gatherOn = AiAb.For(GatherMode, pid, AiAb.BitGather);
+        _gatherNode[pid] = gatherOn && path.Count - 1 > GatherHops ? GatherNodeOn(p, pid, path) : -1;
         _gatherStart[pid] = SimpleBot.Clock;
         if (_gatherNode[pid] >= 0)
         {
@@ -624,7 +638,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      if (!Gather)
+      if (!AiAb.For(GatherMode, pid, AiAb.BitGather))
       {
         _gatherNode[pid] = -1;
         return;
@@ -639,6 +653,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         _gatherNode[pid] = -1;
         GatherTimeout++;
+        GatherTimeoutShare += AiArmy.LastShare; // computed by GroupAssembled just above
       }
     }
 
@@ -674,19 +689,30 @@ namespace WarcraftLegacies.Source.Ai
     // "-gather on" / "-gather off"
     internal static void OnGatherCommand()
     {
-      var msg = GetEventPlayerChatString();
-      if (msg.Length >= 10 && msg.Substring(0, 10) == "-gather on")
+      var m = AiAb.Parse(GetEventPlayerChatString(), "-gather");
+      if (m >= 0)
       {
-        Gather = true;
-      }
-      else if (msg.Length >= 11 && msg.Substring(0, 11) == "-gather off")
-      {
-        Gather = false;
+        GatherMode = m;
       }
 
-      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "gather points: "
-        + (Gather ? "ON (routes > 5 nodes wait at the last own node: 80 % of the group or 60 s)" : "OFF (0.44)")
-        + "  -- -gather on|off");
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8,
+        "gather points (routes > 5 nodes wait at the last own node: 80 % of the group or 60 s): "
+        + AiAb.Name(GatherMode) + " [slots" + AiAb.Slots(GatherMode, AiAb.BitGather)
+        + "]  -- -gather on|off|ab|ab2");
+    }
+
+    // 0.46: "-spread on|off|ab|ab2"
+    internal static void OnSpreadCommand()
+    {
+      var m = AiAb.Parse(GetEventPlayerChatString(), "-spread");
+      if (m >= 0)
+      {
+        SpreadMode = m;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8,
+        "spread chain points (each unit its own spot around a node): " + AiAb.Name(SpreadMode) + " [slots"
+        + AiAb.Slots(SpreadMode, AiAb.BitSpread) + "]  -- -spread on|off|ab|ab2");
     }
 
     // 0.43: the TARGET is chosen by distance from the faction's TERRITORY (Dijkstra from all own and allied nodes at
@@ -1366,6 +1392,7 @@ namespace WarcraftLegacies.Source.Ai
       var points = 0;
       var node = from;
       var guard = 0;
+      var spread = AiAb.For(SpreadMode, GetPlayerId(p), AiAb.BitSpread); // 0.46
       while (node != to && node >= 0 && points < ChainMax && guard++ <= AiRouteData.Nodes)
       {
         var next = _rnext[_tb + node];
@@ -1404,11 +1431,11 @@ namespace WarcraftLegacies.Source.Ai
             AiPortals.SetTicket(u, gate, _pExitX[pe], _pExitY[pe], x, y);
             if (bl > 1f)
             {
-              ChainPoint(u, gx + bx / bl * GateApproach, gy + by / bl * GateApproach, points == 0);
+              ChainPoint(u, gx + bx / bl * AiPortals.Approach, gy + by / bl * AiPortals.Approach, points == 0);
             }
             else
             {
-              ChainPoint(u, gx + GateApproach, gy, points == 0);
+              ChainPoint(u, gx + AiPortals.Approach, gy, points == 0);
             }
 
             points++;
@@ -1438,6 +1465,10 @@ namespace WarcraftLegacies.Source.Ai
         if (next == to)
         {
           ChainPoint(u, x, y, points == 0);
+        }
+        else if (spread)
+        {
+          SpreadPoint(u, AiRouteData.NodeX[next], AiRouteData.NodeY[next], points == 0);
         }
         else
         {
@@ -1480,6 +1511,37 @@ namespace WarcraftLegacies.Source.Ai
 
       var tb = TreeFor(p, to) * AiRouteData.Nodes;
       return _rdone[tb + from];
+    }
+
+    // 0.46: SPREAD chain points (test, not a certain gain). Units sent to the same point compete for it -- crowds at
+    // nodes and bridges. An intermediate node point gets a per-unit offset: one of 8 directions (from the unit's
+    // handle id, the same on every client) at SpreadRadius, or half of it, if walkable; else the node itself. The final
+    // target and portal approach points are never moved. "-spread on|off|ab|ab2" (default ab, bit 2).
+    internal static int SpreadMode = AiAb.Ab;
+    internal static int SpreadPoints;
+    private const float SpreadRadius = 250f;
+
+    private static void SpreadPoint(unit u, float x, float y, bool first)
+    {
+      var dir = GetHandleId(u) % 8;
+      var ang = dir * 0.785398f;
+      var cx = Cos(ang);
+      var cy = Sin(ang);
+      var r = SpreadRadius;
+      for (var k = 0; k < 2; k++)
+      {
+        float px = x + cx * r, py = y + cy * r;
+        if (!IsTerrainPathable(px, py, PATHING_TYPE_WALKABILITY)) // true = NOT walkable
+        {
+          SpreadPoints++;
+          ChainPoint(u, px, py, first);
+          return;
+        }
+
+        r = r * 0.5f;
+      }
+
+      ChainPoint(u, x, y, first);
     }
 
     // first point replaces the unit's orders (and old queue), the others are queued (shift-click)
@@ -1689,8 +1751,25 @@ namespace WarcraftLegacies.Source.Ai
       // 0.44.1: the waygate edges (to see e.g. the Dark Portal pairs) and units found idle at a waygate exit
       o.Add("waygates (" + I2S(_pFrom.Count) + "), units idle at an exit: " + I2S(ExitIdle) + ", chain trees "
             + I2S(Trees) + "; creep camps " + I2S(CreepCamps) + " (creeps " + (Creeps ? "on" : "off") + "); gather "
-            + (Gather ? "on" : "off") + " started=" + I2S(GatherStarted) + " assembled=" + I2S(GatherAssembled)
-            + " timeout=" + I2S(GatherTimeout));
+            + AiAb.Name(GatherMode) + " started=" + I2S(GatherStarted) + " assembled=" + I2S(GatherAssembled)
+            + " timeout=" + I2S(GatherTimeout) + " (arrived at timeout avg "
+            + I2S(GatherTimeout > 0 ? R2I(100f * GatherTimeoutShare / GatherTimeout) : 0) + "%)");
+      var caps = new int[24];
+      for (var k = 0; k < 24; k++)
+      {
+        caps[k] = SimpleBot._cpCaptures.ContainsKey(k) ? SimpleBot._cpCaptures[k] : 0;
+      }
+
+      o.Add("A/B gather [slots" + AiAb.Slots(GatherMode, AiAb.BitGather) + "]: CP captures per bot "
+            + AiAb.Compare(GatherMode, AiAb.BitGather, caps));
+      var stallPct = new int[24];
+      for (var k = 0; k < 24; k++)
+      {
+        stallPct[k] = AiArmy.StallSeenBy[k] > 0 ? R2I(100f * AiArmy.StallBy[k] / AiArmy.StallSeenBy[k]) : 0;
+      }
+
+      o.Add("A/B spread [slots" + AiAb.Slots(SpreadMode, AiAb.BitSpread) + "]: stalled % per bot "
+            + AiAb.Compare(SpreadMode, AiAb.BitSpread, stallPct) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart));
       AiPortals.Lines(o);
