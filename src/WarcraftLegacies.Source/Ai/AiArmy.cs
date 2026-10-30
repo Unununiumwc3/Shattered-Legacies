@@ -44,6 +44,9 @@ namespace WarcraftLegacies.Source.Ai
     internal static int OrdRefill;  // heartbeat: new group members after losses
     internal static int OrdAdvance; // 0.42: same target, next waypoint: the group moves on
     internal static int OrdExit;    // 0.44.3: idle at a waygate exit, re-chained on the next service
+    internal static int[] IdleBy = new int[24]; // 0.46: idle-away orders per bot (guard-position A/B test)
+    internal static int[] RestBy = new int[24]; // 0.46: rest orders per bot
+    internal static int Unreachable; // 0.46: units left out of an attack group -- no way to the target
 
     internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[pid] : 0;
 
@@ -109,6 +112,7 @@ namespace WarcraftLegacies.Source.Ai
           {
             Issue(u, x, y);
             OrdIdleFar++;
+            IdleBy[pid]++;
           }
         }
 
@@ -162,6 +166,7 @@ namespace WarcraftLegacies.Source.Ai
             // staging CP: 12,913 "rest" orders in 14 min (0.44.2 game), units walking back and forth.
             Issue(u, _stageX[pid], _stageY[pid]);
             OrdRestMove++;
+            RestBy[pid]++;
           }
         }
 
@@ -207,12 +212,14 @@ namespace WarcraftLegacies.Source.Ai
           {
             Issue(u, x, y);
             OrdIdleFar++;
+            IdleBy[pid]++;
           }
         }
         else if (_hasStage[pid] && IsIdleAway(u, _stageX[pid], _stageY[pid], AtStage))
         {
           Issue(u, _stageX[pid], _stageY[pid]);
           OrdRestMove++;
+          RestBy[pid]++;
         }
       }
     }
@@ -342,6 +349,31 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       _armyFood[pid] = armyFood;
+
+      // 0.46: only units that have a way to the target (walking or a portal edge), unless none has
+      var reach = new bool[n];
+      var reachN = 0;
+      for (var i = 0; i < n; i++)
+      {
+        reach[i] = AiRoutes.Reachable(p, GetUnitX(Units[i]), GetUnitY(Units[i]), x, y);
+        if (reach[i])
+        {
+          reachN++;
+        }
+      }
+
+      if (reachN > 0 && reachN < n)
+      {
+        for (var i = 0; i < n; i++)
+        {
+          if (!reach[i])
+          {
+            taken[i] = true;
+            Unreachable++;
+          }
+        }
+      }
+
       var all = _need[pid] * 5 >= armyFood * 4; // need >= 80 % of the army -> everybody goes
       var food = 0;
       while (food < _need[pid] || all)

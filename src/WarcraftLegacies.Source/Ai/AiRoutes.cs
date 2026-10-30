@@ -392,30 +392,46 @@ namespace WarcraftLegacies.Source.Ai
             continue;
           }
 
-          float ux = GetUnitX(u), uy = GetUnitY(u);
-          float dx = WaygateGetDestinationX(u), dy = WaygateGetDestinationY(u);
-          var a = StartNode(ux, uy); // 0.43.2: the AREA of each waygate end (was: nearest node in a straight line --
-          var b = StartNode(dx, dy); // the Emerald Portal at the Thandol bridge got the node across the gorge)
-          if (a < 0 || b < 0 || a == b)
-          {
-            continue;
-          }
-
-          var cost = Dist(AiRouteData.NodeX[a], AiRouteData.NodeY[a], ux, uy) + PortalCost
-                     + Dist(dx, dy, AiRouteData.NodeX[b], AiRouteData.NodeY[b]);
-          _padj[a].Add(_pFrom.Count);
-          _padjIn[b].Add(_pFrom.Count);
-          _pFrom.Add(a);
-          _pTo.Add(b);
-          _pCost.Add(cost);
-          _pUnit.Add(u);
-          _pExitX.Add(dx);
-          _pExitY.Add(dy);
+          AddPortalEdge(u, WaygateGetDestinationX(u), WaygateGetDestinationY(u));
         }
       }
 
       DestroyGroup(g);
+      AiPortals.AddStatic(); // 0.46: the Dark Portal, if WL opened it but it is no live edge (0.45.0: none at 540 min)
+      AiPortals.Clean();     // 0.46: tickets of dead units
     }
+
+    // one portal edge: waygate u -> its exit (dx, dy). False = no edge (unknown ground, both ends in one area).
+    internal static bool AddPortalEdge(unit u, float dx, float dy)
+    {
+      if (u == null || _pUnit.Contains(u))
+      {
+        return false;
+      }
+
+      float ux = GetUnitX(u), uy = GetUnitY(u);
+      var a = StartNode(ux, uy); // 0.43.2: the AREA of each waygate end (was: nearest node in a straight line --
+      var b = StartNode(dx, dy); // the Emerald Portal at the Thandol bridge got the node across the gorge)
+      if (a < 0 || b < 0 || a == b)
+      {
+        return false;
+      }
+
+      var cost = Dist(AiRouteData.NodeX[a], AiRouteData.NodeY[a], ux, uy) + PortalCost
+                 + Dist(dx, dy, AiRouteData.NodeX[b], AiRouteData.NodeY[b]);
+      _padj[a].Add(_pFrom.Count);
+      _padjIn[b].Add(_pFrom.Count);
+      _pFrom.Add(a);
+      _pTo.Add(b);
+      _pCost.Add(cost);
+      _pUnit.Add(u);
+      _pExitX.Add(dx);
+      _pExitY.Add(dy);
+      AiPortals.Watch(u); // 0.46: entry area for the pseudo-portal trigger
+      return true;
+    }
+
+    internal static bool IsPortalEdgeGate(unit u) => _pUnit.Contains(u);
 
     // ---- planning -----------------------------------------------------------------------------------------
     // 0.42.1: a bot COMMITS to a route and follows it node by node (never backwards). It plans again only when the
@@ -424,6 +440,9 @@ namespace WarcraftLegacies.Source.Ai
     // nearest in a straight line: groups ran back and forth, across the closed Thandol bridge and over mountains.
 
     private const float ReplanEvery = 30f;
+    internal static int KeptOnNull;  // 0.46: re-plan found nothing, valid target kept (was: old picker)
+    internal static int NullNoRoute; // 0.46: Pick returned null -- nothing reachable / no candidate
+    internal static int NullNoStart; // 0.46: Pick returned null -- the group stands on no node area
     private const float LeftoverCost = 2500f; // 0.44.1: score of an enemy building left in an own node's area
     private const float QuestBias = 0.3f;   // a CP of an open quest objective counts this much of its cost
     private const float WaypointReach = 8000f; // 0.43.1: order to the farthest route node within this distance
@@ -444,6 +463,7 @@ namespace WarcraftLegacies.Source.Ai
       var here = StartNode(sx, sy);
       if (here < 0)
       {
+        NullNoStart++;
         return null;
       }
 
@@ -455,12 +475,26 @@ namespace WarcraftLegacies.Source.Ai
       var path = _path[pid];
       if (tu == null || path == null || SimpleBot.Clock - _planAt[pid] >= ReplanEvery)
       {
-        tu = Plan(p, pid, fac, here, t, tu, d);
-        if (tu == null)
+        var planned = Plan(p, pid, fac, here, t, tu, d);
+        if (planned == null && tu != null && path != null)
         {
+          // 0.46: the periodic re-plan found nothing reachable from where the group stands -- keep the target that is
+          // still valid. 0.45.0: the Fel Horde's group stood in Outland (no edge out), the re-plan returned null, the
+          // OLD picker took over, 8 s later the planner chose the Maw again: 608 target switches, each one re-ordering
+          // the whole group.
+          KeptOnNull++;
+          _planAt[pid] = SimpleBot.Clock;
+        }
+        else if (planned == null)
+        {
+          NullNoRoute++;
           _lastTarget[pid] = -1;
           _path[pid] = null;
           return null;
+        }
+        else
+        {
+          tu = planned;
         }
 
         path = _path[pid];
@@ -1355,6 +1389,32 @@ namespace WarcraftLegacies.Source.Ai
           var bx = AiRouteData.NodeX[node] - gx;
           var by = AiRouteData.NodeY[node] - gy;
           var bl = SquareRoot(bx * bx + by * by);
+          if (AiPortals.On)
+          {
+            // 0.46: PSEUDO-PORTAL. The chain ends in front of the waygate; the unit gets a ticket, and AiPortals'
+            // enter trigger teleports it when it walks into the waygate's area and gives it the rest of the way from
+            // the exit at once. No click on the waygate: the real teleport dropped the queue (1089 units idle at exits
+            // in 0.45.0) and no bot ever crossed the Old Gods rift.
+            if (points == 0 && AiPortals.Inside(u, gate)
+                && AiPortals.TeleportNow(u, gate, _pExitX[pe], _pExitY[pe], x, y))
+            {
+              return true; // already in the area (no enter event): teleported, the rest of the chain is issued
+            }
+
+            AiPortals.SetTicket(u, gate, _pExitX[pe], _pExitY[pe], x, y);
+            if (bl > 1f)
+            {
+              ChainPoint(u, gx + bx / bl * GateApproach, gy + by / bl * GateApproach, points == 0);
+            }
+            else
+            {
+              ChainPoint(u, gx + GateApproach, gy, points == 0);
+            }
+
+            points++;
+            break;
+          }
+
           if (bl > 1f)
           {
             ChainPoint(u, gx + bx / bl * GateApproach, gy + by / bl * GateApproach, points == 0);
@@ -1400,12 +1460,35 @@ namespace WarcraftLegacies.Source.Ai
       return true;
     }
 
+    // 0.46: can a unit at (ux, uy) walk (or take a portal) to (tx, ty)? Unknown ground counts as reachable.
+    // AiArmy.Select builds attack groups from these units only (0.45.0: the Fel Horde's group for the Maw of Gor'ma
+    // was its Outland army, which had no way out).
+    internal static bool Reachable(player p, float ux, float uy, float tx, float ty)
+    {
+      if (!On)
+      {
+        return true;
+      }
+
+      Ready();
+      var from = StartNode(ux, uy);
+      var to = StartNode(tx, ty);
+      if (from < 0 || to < 0 || from == to)
+      {
+        return true;
+      }
+
+      var tb = TreeFor(p, to) * AiRouteData.Nodes;
+      return _rdone[tb + from];
+    }
+
     // first point replaces the unit's orders (and old queue), the others are queued (shift-click)
     private static void ChainPoint(unit u, float x, float y, bool first)
     {
       if (first)
       {
         AiScheduler.CountOrder(u, x, y);
+        AiProbe.Sample(u, x, y); // 0.46: before the order -- only units that are idle now are sampled
         IssuePointOrderById(u, OrderAttack, x, y);
       }
       else
@@ -1608,6 +1691,9 @@ namespace WarcraftLegacies.Source.Ai
             + I2S(Trees) + "; creep camps " + I2S(CreepCamps) + " (creeps " + (Creeps ? "on" : "off") + "); gather "
             + (Gather ? "on" : "off") + " started=" + I2S(GatherStarted) + " assembled=" + I2S(GatherAssembled)
             + " timeout=" + I2S(GatherTimeout));
+      o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
+            + ", no start node " + I2S(NullNoStart));
+      AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)
       {
         o.Add("  " + NodeName(_pFrom[k]) + " -> " + NodeName(_pTo[k]) + " cost " + I2S(R2I(_pCost[k])) + " exit "

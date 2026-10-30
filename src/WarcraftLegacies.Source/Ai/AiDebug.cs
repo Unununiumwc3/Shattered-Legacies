@@ -94,6 +94,9 @@ public static class AiDebug
     RegisterLoose("-chain", AiRoutes.OnChainCommand, Level.Control);      // 0.44: -chain on|off (movement chains)
     RegisterLoose("-creeps", AiRoutes.OnCreepsCommand, Level.Control);    // 0.44.3: -creeps on|off (creep camps)
     RegisterLoose("-gather", AiRoutes.OnGatherCommand, Level.Control);    // 0.45.0: -gather on|off (gather points)
+    RegisterLoose("-pportal", AiPortals.OnCommand, Level.Control);        // 0.46: -pportal on|off (pseudo-portals)
+    RegisterLoose("-guard", AiGuard.OnCommand, Level.Control);            // 0.46: -guard on|off|ab|ab2
+    RegisterLoose("-cap", AiBudget.OnCommand, Level.Control);             // 0.46: -cap on|off|<base> <perCp>
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -940,6 +943,7 @@ public static class AiDebug
             + " | last gate sweep " + I2S(AiGates.LastSweepOps));
       AiArmy.Lines(o);      // 0.41: orders by reason, attack group per bot
       AiIncome.Lines(o);    // 0.44.2: CP income paid to computer slots
+      AiLoad.Lines(o);      // 0.46: order latency, unit budget, guard positions A/B
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
 

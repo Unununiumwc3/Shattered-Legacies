@@ -66,6 +66,13 @@ namespace WarcraftLegacies.Source.Ai
       Merge(AiData.HeroSkills, heroSkills);
     }
 
+    // 0.46: the bots' unit budget = base + perCp x held CPs (AiBudget). A different base per faction, e.g. to balance
+    // teams; default for all factions: AiBudget.Base (40).
+    public static void SetBudgetBase(string factionName, int baseFood)
+    {
+      AiBudget.SetBase(factionName, baseFood);
+    }
+
     private static void Merge(Dictionary<int, int[]> into, Dictionary<int, int[]> from)
     {
       foreach (var kv in from)

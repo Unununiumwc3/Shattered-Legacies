@@ -106,21 +106,22 @@ Each item: switch + counter. Designs: `CONCEPTS.md` sections 6-9. **Priority: ps
 decided the whole late game).
 
 0.46 is built in parts; the maintainer builds once all parts are in. Done: **part 1** (creep fix, check, graph list
-review, docs).
+review, docs), **part 2** (pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget,
+latency probe, guard positions A/B). Part 3: the rest of this list.
 
 Fixes from 0.45.0:
 - [done, part 1] **Creep camps TICK ERROR**: confirmed in the built `war3map.lua` -- CSharp.lua emitted
   `_creepLevel:get(node) + (GetUnitLevel(u) > 0) and GetUnitLevel(u) or 1`. Rewritten with a local; hard rule 16;
   `check_refs.py` flags the pattern. Check the creep targets in the 0.46 game (first time they run).
 - [ai] **`-edges` draws the generated graph** (the one the planner uses); the old graph only behind `-edges old`.
-- [ai] **PORTALS section lists WL's own waygates** (Dark Portal n036, Emerald, Dun Modr ...): position, owner, active,
+- [done, part 2] **PORTALS section lists WL's own waygates** (Dark Portal n036, Emerald, Dun Modr ...): position, owner, active,
   hidden, destination -- why the Dark Portal was no graph edge at 540 min in 0.45.0.
-- [ai] **No fallback to the old picker while the route target is valid**: if `Pick` returns null and the committed
+- [done, part 2] **No fallback to the old picker while the route target is valid**: if `Pick` returns null and the committed
   target came from the route planner and is still alive / not owned / reachable from the territory, keep it. Log WHY
   `Pick` returned null (no start node, no route, nothing scored) as a counter.
-- [ai] **Dark Portal / Outland**: a pseudo-portal edge Outland <-> Blasted Lands, open while WL's n036 Dark Portal
+- [done, part 2] **Dark Portal / Outland**: a pseudo-portal edge Outland <-> Blasted Lands, open while WL's n036 Dark Portal
   waygates are active (WL quest, turn 8-10 -- `README.md` "Portals and passages"), so groups in Outland can plan.
-- [ai] **Groups only from units that can reach the target** (same walking component, or through a portal edge): the
+- [done, part 2] **Groups only from units that can reach the target** (same walking component, or through a portal edge): the
   Fel Horde's group for the Maw was its Outland units.
 - [ai] **Caster share cap** in production: at most ~25 % of a bot's trained units are casters (Quel'thalas: 94 %).
 - [ai] **Targets by owner** counter (per bot: how often it targeted each owner's CPs), so "who attacks whom" is
@@ -140,21 +141,22 @@ Fixes from 0.45.0:
   - `[you]` re-check the generated graph on `route_map.png` (`render_map.py`, attached to the 0.46 delivery): the
     "~20 wrong connections" may have been the old graph. New findings -> the exceptions file below.
   - The old graph is not edited (fallback only, deleted in phase 2).
-- [ai] **Unit budget per CP** (`CONCEPTS.md` 8): production gate, `-cap off|<base> <perCp>`. Default 40 + 10 food per
+- [done, part 2] **Unit budget per CP** (`CONCEPTS.md` 8): production gate, `-cap off|<base> <perCp>`. Default 40 + 10 food per
   held CP (~150 for an average faction), never above the faction's food maximum; heroes not counted. Bots only.
   `AiApi` hook for a base per faction (set by Shattered Legacies; same for all until then).
-- [ai] **Order-latency probe**: on a sample of orders the bot gives anyway (idle units only, at most 8 tracked), the
+- [done, part 2] **Order-latency probe**: on a sample of orders the bot gives anyway (idle units only, at most 8 tracked), the
   game time until the unit has moved 32. Dump: median / 90 % / max per 5 min. Game time -> desync-safe. No extra
   orders.
-- [ai] **Guard positions** (hypothesis): units of computer players walk back to their "guard position" after
+- [done, part 2] **Guard positions** (hypothesis): units of computer players walk back to their "guard position" after
   chasing an enemy. Nothing in the code removes it. `RemoveAllGuardPositions` per bot at setup +
   `RemoveGuardPosition` on every unit a bot gets (train / enter map). `-guard on|off|ab`. Counter: idle-away and rest
   orders per bot (A/B halves compared).
-- [ai] **Pseudo-portals, instant** (`CONCEPTS.md` 7): bots no longer click waygates; a chain ends at the portal
+- [done, part 2] **Pseudo-portals, instant** (`CONCEPTS.md` 7): bots no longer click waygates; a chain ends at the portal
   entry, an enter-region trigger teleports units with a ticket and re-chains them at the exit. For every portal edge
   (rift, Argus / Legion, Emerald Portals, the AI ship waygates). `-pportal on|off` (off = 0.45 waygate click).
   Counters: teleports, stale tickets, units teleported on issue (already inside).
-- [ai] **Per-bot A/B**: switches accept `ab` (even player slots on, odd off) and `ab2` (swapped). For: guard,
+- [ai] **Per-bot A/B**: switches accept `ab` (even player slots on, odd off) and `ab2` (swapped). [done, part 2:
+  `AiAb`, used by `-guard`; part 3: gather, spread.] For: guard,
   gather, spread.
 - [ai] **Activity breakdown** (from the stall sampler, no new scans): per sample walking / idle / hurt (in a fight) /
   stalled, shares per 5 min. Ranged units shooting unhurt count as stalled -- compare between games.

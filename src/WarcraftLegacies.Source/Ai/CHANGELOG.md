@@ -15,6 +15,25 @@ Part 1:
   items as wanted (`TODO.md`). Docs: "Portals and passages -- how they open" (`README.md`), Dark Portal and "two
   graphs" facts (`AI_AGENTS_CONTEXT.md`).
 
+Part 2:
+- **Pseudo-portals** (new `AiPortals.cs`, `-pportal on|off`, default on): bots no longer click waygates. A chain
+  that crosses a portal ends in front of the waygate and the unit gets a ticket; an enter-region trigger per waygate
+  area teleports it (only a living unit whose ticket names THIS waygate) and gives it the rest of the way from the
+  exit at once. A unit already inside the area is teleported on issue. Effects at both ends (at most one per waygate
+  per second). Real waygates stay for humans. Dump: teleports, ignored, open tickets, "Dark Portal: ...".
+- **Dark Portal**: if WL opened it (its n036 waygates visible) but no live edge exists, the bot adds one pair in both
+  directions (0.45.0: no edge out of Outland at 540 min). The dump lists WL's own waygates (owner, active, hidden,
+  destination, edge yes/no) -- the 0.45.0 cause is still open.
+- **The planner keeps a valid target** when a periodic re-plan finds nothing reachable (was: old picker took over;
+  0.45.0 Fel Horde: 608 target switches). Dump: "planner nulls".
+- **Attack groups only from units with a way to the target** (walking or portal edge), unless none has one.
+- **Unit budget per CP** (`AiBudget`, `-cap on|off|<base> <perCp>`): bots train units only while their army food
+  (heroes not counted) is below 40 + 10 per held CP, at most the faction's food maximum. `AiApi.SetBudgetBase`
+  sets a base per faction. Dump: army/budget and capped turns per bot.
+- **Order-latency probe** (`AiProbe`): game time from an order to an idle unit until it moves; buckets per 5 min.
+- **Guard positions** (`AiGuard`, `-guard on|off|ab|ab2`, default ab): removed for half of the bots (even slots);
+  dump compares idle-away and rest orders per bot of both halves. Per-bot A/B helper `AiAb`.
+
 ## 0.45.1 (docs only -- the in-game banner stays 0.45.0)
 Plan and docs after the review of the movement approach (no map change).
 - **Phases** (`TODO.md`): 1 movement "good enough" (0.46-0.49, ends at exit criteria: load, graph, activity,
