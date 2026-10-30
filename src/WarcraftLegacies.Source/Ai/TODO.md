@@ -2,7 +2,7 @@
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
 Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.44.1**. Next: a game with `-chain off` (balance A/B) and one with chains; then gather points.
+in `../ShatteredLegacies/TODO.md`. Current build: **0.44.2**. Next: one game (chains, Veteran) to see the bots WITH income; then creeps (0.44.3).
 
 ## Where we are
 
@@ -134,6 +134,20 @@ Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md
   orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
   Do groups die at upgraded towers? Do units pile up at the staging CPs?
 - 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
+- **0.44.2 (bots get CP income now)**: armies grow over the whole game? TRAINED totals keep rising after 40:00?
+  LOAD "bot income paid" per bot; max-slot back to a few thousand? Then re-decide the strength scale -- every gold
+  observation before 0.44.2 was made with bots that had NO CP income (Veteran 0 may be right now).
+- [ai] **0.44.3: creep targets** (agreed): Neutral Hostile units (slot 24) in the area of a CP the bot holds (creeps in
+  an area node's patch: the nearest CP on foot), reachable, any time, invulnerable / hidden skipped, strength from
+  level not food, lower priority than CPs; same scan as the structures. Then remove `AiConfig.OneShots`; area clears
+  and kill targets one by one after checking them. Hero visits stay.
+- [ai] Waygates: queued chains are lost in the teleport (0.44.1 long game: 1048 units found idle at an exit) -- units
+  wait up to 20 s for the heartbeat. Re-chain units at an exit on every service instead.
+- [you] **Old Gods rift**: the map data puts both ends on walkable ground connected to the eastern continent, and the
+  rift was open in the long game (both directions live). What exactly fails in game -- units do not enter, or they
+  arrive and stop? Test: right-click your own unit onto the east end (22545,-4784).
+- [ai] Bots without an altar never revive heroes (the rule for players too). With income, bases should hold longer;
+  if not, rebuild an altar at a held CP (TODO "Rebuilding destroyed production buildings").
 - **0.44.1**: Stratholme-like leftovers get attacked? ROUTES "waygates" list + "units idle at an exit" (Dark
   Portal). LOAD max-slot back to a few thousand? Balance A/B: one game `-chain off` (Old Gods took Kalimdor in the
   0.44.0 game: Kalimdor 23 -> 8 CPs, most bots had armies of 1-4 food at 25:00 -- chains or production?).

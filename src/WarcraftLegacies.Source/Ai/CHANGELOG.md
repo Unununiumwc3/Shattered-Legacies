@@ -4,6 +4,22 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.44.2
+- **CP income for bots** (`AiIncome.cs`) -- the root cause of the empty games, tiny armies and the 9.5-hour
+  stalemate. WL pays control-point income only to HUMAN slots that are playing (`ControlPointManager`:
+  `EnumeratePlayers(Playing, User)`); computer slots never got any. The strength-vote bonus was the bots' whole
+  income -- since 0.43.1 Veteran pays 0, so they had none: in the 0.44.1 long game 15 bots trained almost nothing
+  after 40:00 (Warsong 92 units by 40:00, still 92 at 570:00), lost their bases and altars (dead heroes never
+  revived) and the map froze; only the maintainer's autopilot slot -- a human slot, paid by WL -- kept producing
+  (718,000 gold from 108 CPs). Now the bot pays every slot WL does not pay (computer slots, taken-over leavers)
+  exactly what WL would: `PlayerData.TotalIncome` per second from turn 1, with WL's fractional carry. Bot-side, no
+  WL change. Dump LOAD: "bot income paid since start" per bot.
+- **Chains: 4 route trees kept at once** (one destination each). With one tree (0.44.1) the loop alternated between
+  the attack group's target and the rest's staging CP and recomputed every time: up to 78,318 ops in one slot.
+- **`-heroes`**: pings only heroes you can see (WL parks some heroes hidden off the playable map -- they were pinged
+  as if alive), one line per bot instead of one per hero (did not fit on screen), dead heroes counted.
+- Version v0.44.2.
+
 ## 0.44.1
 Fixes after the first chain game (0.44.0: chains worked -- long orders 4482 -> 615, orders/min ~470-770, stalled units
 2-5 % -- but planning them was expensive).

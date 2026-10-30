@@ -451,6 +451,10 @@ Heartbeat: WLAI heartbeat build=0.44.0 t=26m19s units-on-map=1973 orders/min=295
 
 ### v0.44.1 -- 8 dumps, 5:00 .. 40:00 -- 0.44.1 chain off, Commander
 
+> Note (0.44.2): bots had NO CP income in every game before 0.44.2 (WL pays human slots only); header goldBonus=0
+> (Veteran). Fel Horde = the maintainer's autopilot -- a human slot, the only player paid CP income: its 250 food is
+> not a balance result.
+
 Bots: 16, orders mode: smart.
 
 | game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
@@ -513,6 +517,12 @@ Heartbeat: WLAI heartbeat build=0.44.1 t=42m49s units-on-map=1836 orders/min=842
   ...
 
 ### v0.44.1 -- 114 dumps, 5:00 .. 570:00 -- 0.44.1 chains, Commander
+
+> Note (0.44.2): goldBonus=0 (Veteran), and bots had NO CP income -- they trained almost nothing after 40:00
+> (Warsong 92 units at 40:00 and at 570:00), lost bases and altars; from 240:00 only Outland and Old Gods held CPs,
+> both without armies except the maintainer's autopilot Fel Horde (human slot, paid by WL: 718,000 gold). The
+> stalemate is the missing income, not portals. max-slot 78,318 (chain trees; fixed in 0.44.2). 1048 units idle at
+> waygate exits (queued chains lost in the teleport). The Old Gods rift was open (both directions live).
 
 Bots: 16, orders mode: smart.
 

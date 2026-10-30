@@ -190,7 +190,7 @@ namespace WarcraftLegacies.Source.Ai
         _padjIn[i].Clear();
       }
 
-      _treeTo = -1;
+      ClearTrees();
 
       _pFrom.Clear();
       _pTo.Clear();
@@ -875,53 +875,85 @@ namespace WarcraftLegacies.Source.Ai
     // 0.44.1: ONE backward route tree per destination (Dijkstra from the destination over reversed edges): every unit
     // heading there reads its way from it. 0.44.0 planned from each unit's own area and kept only the last result --
     // a group spread over several areas recomputed again and again (9261 plans in 25 min, 34860 ops in one slot).
+    // 0.44.2: TreeSlots trees kept at once (flat arrays, slot s at offset s * Nodes). One tree only (0.44.1) was
+    // recomputed whenever the loop alternated between destinations -- the attack group's target and the rest's
+    // staging CP: up to 78318 ops in one slot in the 9.5-hour game.
+    private const int TreeSlots = 4;
     private static float[] _rdist;
     private static int[] _rnext;      // next node toward the destination
     private static int[] _rnextEdge;  // edge used for that step: >= 0 walking edge, < 0 portal edge -(i + 1)
     private static bool[] _rdone;
     private static List<int>[] _padjIn; // node -> portal edges ENDING there (for the backward search)
-    private static int _treeTo = -1;
-    private static player _treePlayer;
-    private static float _treeAt = -1f;
+    private static int[] _treeTo = new int[TreeSlots];
+    private static player[] _treePlayer = new player[TreeSlots];
+    private static float[] _treeAt = new float[TreeSlots];
+    private static int _treeNext;
+    private static int _tb;           // offset of the slot in use
     internal static int Trees;
 
-    private static void BackwardTree(player p, int to)
+    private static void ClearTrees()
+    {
+      for (var k = 0; k < TreeSlots; k++)
+      {
+        _treeTo[k] = -1;
+      }
+    }
+
+    // the slot holding the tree for (p, to) at this moment -- computed if needed (round-robin replacement)
+    private static int TreeFor(player p, int to)
+    {
+      for (var k = 0; k < TreeSlots; k++)
+      {
+        if (_treeTo[k] == to && _treePlayer[k] == p && _treeAt[k] == SimpleBot.Clock)
+        {
+          return k;
+        }
+      }
+
+      var s = _treeNext;
+      _treeNext = (_treeNext + 1) % TreeSlots;
+      BackwardTree(p, to, s);
+      return s;
+    }
+
+    private static void BackwardTree(player p, int to, int slot)
     {
       Trees++;
-      _treeTo = to;
-      _treePlayer = p;
-      _treeAt = SimpleBot.Clock;
+      _treeTo[slot] = to;
+      _treePlayer[slot] = p;
+      _treeAt[slot] = SimpleBot.Clock;
       var n = AiRouteData.Nodes;
       if (_rdist == null)
       {
-        _rdist = new float[n];
-        _rnext = new int[n];
-        _rnextEdge = new int[n];
-        _rdone = new bool[n];
+        _rdist = new float[n * TreeSlots];
+        _rnext = new int[n * TreeSlots];
+        _rnextEdge = new int[n * TreeSlots];
+        _rdone = new bool[n * TreeSlots];
       }
 
+      _tb = slot * n;
       for (var i = 0; i < n; i++)
       {
-        _rdist[i] = -1f;
-        _rnext[i] = -1;
-        _rnextEdge[i] = 0;
-        _rdone[i] = false;
+        _rdist[_tb + i] = -1f;
+        _rnext[_tb + i] = -1;
+        _rnextEdge[_tb + i] = 0;
+        _rdone[_tb + i] = false;
       }
 
       var relax = 0;
       _heapN = 0;
-      _rdist[to] = 0f;
+      _rdist[_tb + to] = 0f;
       Push(to, 0f);
       while (_heapN > 0)
       {
         var v = Pop();
-        if (_rdone[v])
+        if (_rdone[_tb + v])
         {
           continue;
         }
 
-        _rdone[v] = true;
-        var dv = _rdist[v];
+        _rdone[_tb + v] = true;
+        var dv = _rdist[_tb + v];
         var adj = _adj[v];
         for (var k = 0; k < adj.Count; k++)
         {
@@ -956,17 +988,17 @@ namespace WarcraftLegacies.Source.Ai
     // u -> v is the forward step; walking through v costs extra when v is enemy-held (as in the forward search)
     private static void BackRelax(player p, int u, int v, float nd, int edge)
     {
-      if (_rdone[u])
+      if (_rdone[_tb + u])
       {
         return;
       }
 
       nd += EnterCost(p, v);
-      if (_rdist[u] < 0f || nd < _rdist[u])
+      if (_rdist[_tb + u] < 0f || nd < _rdist[_tb + u])
       {
-        _rdist[u] = nd;
-        _rnext[u] = v;
-        _rnextEdge[u] = edge;
+        _rdist[_tb + u] = nd;
+        _rnext[_tb + u] = v;
+        _rnextEdge[_tb + u] = edge;
         Push(u, nd);
       }
     }
@@ -988,12 +1020,8 @@ namespace WarcraftLegacies.Source.Ai
         return false;
       }
 
-      if (_treeTo != to || _treePlayer != p || _treeAt != SimpleBot.Clock)
-      {
-        BackwardTree(p, to);
-      }
-
-      if (!_rdone[from])
+      _tb = TreeFor(p, to) * AiRouteData.Nodes;
+      if (!_rdone[_tb + from])
       {
         ChainFallback++;
         return false;
@@ -1004,8 +1032,8 @@ namespace WarcraftLegacies.Source.Ai
       var guard = 0;
       while (node != to && node >= 0 && points < ChainMax && guard++ <= AiRouteData.Nodes)
       {
-        var next = _rnext[node];
-        var e = _rnextEdge[node];
+        var next = _rnext[_tb + node];
+        var e = _rnextEdge[_tb + node];
         if (next < 0)
         {
           break;

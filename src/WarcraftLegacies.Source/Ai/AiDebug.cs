@@ -478,29 +478,59 @@ public static class AiDebug
   }
 
   // 0.36: every bot hero -- label (name, level, owner, mission / stuck state) + ping for 30 s, and a chat list.
+  // 0.44.2: pings only heroes you can see on the map -- WL parks some heroes HIDDEN off the playable map ("lm-1"
+  // lines at -23657,-15923 etc.); they were listed and pinged as if alive. One line per bot (the one-line-per-hero
+  // list did not fit on screen with 16 bots); dead heroes are counted, not pinged.
   private static void OnHeroes()
   {
     var p = GetTriggerPlayer();
     var all = LegendaryHeroManager.GetAll();
+    var lines = new string[24];
+    var dead = new int[24];
     var n = 0;
     for (var i = 0; i < all.Count; i++)
     {
       var hu = all[i].Unit;
-      if (hu == null || GetUnitTypeId(hu) == 0 || GetUnitState(hu, UNIT_STATE_LIFE) <= 0.405f
-          || !SimpleBot.IsBot(GetOwningPlayer(hu)))
+      if (hu == null || GetUnitTypeId(hu) == 0 || !SimpleBot.IsBot(GetOwningPlayer(hu)))
       {
         continue;
       }
 
       var pid = GetPlayerId(GetOwningPlayer(hu));
+      if (pid < 0 || pid >= 24)
+      {
+        continue;
+      }
+
+      if (GetUnitState(hu, UNIT_STATE_LIFE) <= 0.405f)
+      {
+        dead[pid]++;
+        continue;
+      }
+
+      if (IsUnitHidden(hu))
+      {
+        continue;
+      }
+
       var st = AiState.MissionUnits.Contains(hu) ? "mission" : AiHeroCare.Status(hu);
       var x = GetUnitX(hu);
       var y = GetUnitY(hu);
       Mark(GetUnitName(hu) + " L" + I2S(GetHeroLevel(hu)) + " P" + I2S(pid) + (st != "" ? " [" + st + "]" : ""), x, y);
-      DisplayTimedTextToPlayer(p, 0, 0, 30, "P" + I2S(pid) + " " + FacOf(GetOwningPlayer(hu)) + ": " + GetUnitName(hu)
-        + " L" + I2S(GetHeroLevel(hu)) + " @" + I2S(R2I(x)) + "," + I2S(R2I(y)) + " lm" + I2S(Geography.Landmass(x, y))
-        + (st != "" ? " |cffffcc00" + st + "|r" : ""));
+      lines[pid] = (lines[pid] == null ? "" : lines[pid] + ", ") + GetUnitName(hu) + " L" + I2S(GetHeroLevel(hu))
+                   + (st != "" ? " |cffffcc00" + st + "|r" : "");
       n++;
+    }
+
+    for (var pid = 0; pid < 24; pid++)
+    {
+      if (lines[pid] == null && dead[pid] == 0)
+      {
+        continue;
+      }
+
+      DisplayTimedTextToPlayer(p, 0, 0, 30, "P" + I2S(pid) + " " + FacOf(Player(pid)) + ": "
+        + (lines[pid] ?? "-") + (dead[pid] > 0 ? "  |cffff4040dead " + I2S(dead[pid]) + "|r" : ""));
     }
 
     DisplayTimedTextToPlayer(p, 0, 0, 10, "|cffffcc00-heroes|r: " + I2S(n) + " living bot heroes marked for 30 s");
@@ -907,6 +937,7 @@ public static class AiDebug
             + " | wave-tick " + I2S(SimpleBot.LastWaveOps) + "/" + I2S(SimpleBot.MaxWaveOps)
             + " | last gate sweep " + I2S(AiGates.LastSweepOps));
       AiArmy.Lines(o);      // 0.41: orders by reason, attack group per bot
+      AiIncome.Lines(o);    // 0.44.2: CP income paid to computer slots
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
 
