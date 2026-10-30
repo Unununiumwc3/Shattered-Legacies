@@ -234,8 +234,10 @@ public static class AiConfig
   public const float RiftMawX = -27768f;                    // 0.39.5: landing ring fully clear (Highlands -> Maw failed)                    // Maw of Gor'ma end (Black Empire realm, west edge)
   public const float RiftMawY = -7864f;                     // 0.38: 530 south -- the old spot stood on a Silithid
                                                             // archway + obelisk (doodads block ground units)
-  public const float RiftHighlandsX = 22545f;               // Twilight Highlands end = the preplaced n07E
-  public const float RiftHighlandsY = -4784f;
+  public const float RiftHighlandsX = 22545f;               // Twilight Highlands end, beside the preplaced n07E
+  public const float RiftHighlandsY = -4684f;               // 0.45.0: 100 north of n07E (-4784) -- the maintainer
+                                                            // found this east end not working in game (the west end
+                                                            // works); the n07E removal (300 range) still finds it
   public const int RiftPreplacedPortalType = 1848653637;    // n07E -- removed when the real end is created there
 
   // 0.37: Sulfuron Spire -- when Skywall's "Fireland Invasion" completes, each Old Gods BOT faction gets one

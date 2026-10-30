@@ -12,6 +12,8 @@
 - [you/ai] **Auto-surrender interferes with fallbacks**: the rule that makes players surrender with too few CPs can
   stay, but 1 CP should be enough to survive.
 - [ai] **New Kezan units are invisible**: the unit count goes up during production, but nothing can be seen.
+  First check whether the models are only Git LFS pointers in the local checkout (`git lfs ls-files | awk '$2=="-"'`
+  lists them; `git lfs pull`, else fetch the assets from the original repository and `git lfs push origin`).
   Probably assets: models / textures reused from the 24-player map need adjusted paths or must be copied over
   (also seen with the builders in 0.39.6: `-id` on the goblin hall while it trains).
 - [you] **The Old Gods are still too weak.**

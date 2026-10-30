@@ -32,7 +32,8 @@ accept a change to his map / game.
 0.42 status of W1-W4: the route planner has **area nodes** (generated from map data; a target while enemy structures
 stand within 2000). Generated without these six CPs (`gen_routes.py --without ...`), every one of their spots has an
 area node within 1800 (Sunsail 661, Terrordale 634, Runestone 1817, Jaina's Sanctum 1519, Sulfuron 1232, Nexus 510).
-So they are expected to be unnecessary -- remove them in 0.43 if game C shows bots attacking area targets.
+So they are expected to be unnecessary. Since 0.44.1 enemy buildings anywhere in a node's area are targets and since
+0.44.3 creep camps too -- remove W1-W4 once a playtest shows bots attacking those areas without the extra CPs.
 | W5 | Strength vote at 49 s | `Ai/AiGoldVote.cs` | uses the time slot of WL's game-mode vote, which Shattered Legacies removed (`[SL]` in `GameSetup.cs`). On the original map both dialogs would collide | start the vote when WL's own vote has ended (event, not a fixed time) | yes |
 
 ## 3. Changes the bot makes to the map at runtime
@@ -48,6 +49,8 @@ They change the game for humans too, so the original maintainer has to agree to 
 | Emerald Portals activated, Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | `AiGates` | the Old Gods rift does not exist on 5.x | rift: no (4.8.2 only) |
 | CP handovers: Terrordale / Deathknell to the Scourge at "Plague of Undeath", Sulfuron Spire to Skywall, palace handover | `AiMissions`, `AiConfig` | bots would not get these areas otherwise | ask upstream |
 | Bot bonuses: gold subsidy, free techs / upgrades / heroes / revives, starter production buildings, Kul Tiras repair, Continental Outpost buildings | `AiTech`, `AiMissions`, `SimpleBot.HasPerks` | difficulty; humans never get them | design -- discuss upstream |
+| Old Gods rift east end moved 100 north of WL's preplaced `n07E` (0.45.0) | `AiConfig.RiftHighlandsY` | the end at `n07E` did not work in game (maintainer); unconfirmed fix | rift is 4.8.2 only |
+| One-shots (hand-placed creep clears) replaced by creep camps as route targets (0.44.3) | `AiRoutes.CreepAt`, `AiMissions.RunOneShots` | general logic, no coordinates | no |
 
 Also: **CP income for computer slots** (`AiIncome`, 0.44.2): WL pays CP income only to human slots
 (`ControlPointManager`). The bot pays its own slots the same amount -- no WL change. Upstream question: should WL pay

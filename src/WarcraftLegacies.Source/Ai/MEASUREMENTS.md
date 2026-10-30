@@ -647,3 +647,46 @@ Heartbeat: WLAI heartbeat build=0.44.1 t=571m59s units-on-map=1210 orders/min=19
   task 571:52 early quests
   task 571:52 legion events
   ...
+
+### v0.44.2 -- 1 dumps, 14:12 .. 14:12 -- 0.44.2 Veteran, chains, bots WITH CP income, autopilot Fel Horde (manual dump at 14:12)
+
+> Note (0.44.3): first game with CP income for bots -- 4920 units on the map at 14 min (heartbeat), income paid
+> 2400-4800 per bot. max-slot 5207 (0.44.1: 78,318 -- 4 route trees work), stalled 6 %. "rest" orders 12,913 vs
+> "change" 13,322 -- staging churn, fixed in 0.44.3. Maintainer: no distant creep camps cleared (creep targets came
+> only in 0.44.3). Corrections: west (Kalimdor + islands) and east (Eastern Kingdoms + Kul Tiras) are linked only by
+> the Old Gods rift; the ships link Kalimdor to its islands.
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 14:12 | 5227 | 1956 | 2986 / 288 | - | North Alliance 29, South Alliance 38, Burning Legion 23, Outland 20, Old Gods 37, Kalimdor 34 |
+
+LOAD at the checkpoints:
+```
+  14:12  combat 550/683 orders=5 | def-scan 268/340 | production peak 452 | wave-tick 701/5572 | last gate sweep 4878
+  14:12  army smart orders: change=13322 idle-away=823 rest=12913 refill=718 advance=0 | chains on issued=25325 points=79633 fallback=1134 | stalled 6% of 62099
+  14:12  groups (food group/need of army @staging): P0 50/50 of 83 @-; P1 50/50 of 154 @Elwynn Forest (20 gold/min); P2 87/104 of 169 @Seradane (10 gold/min); P3 75/89 of 269 @Terrordale (1 gold/min); P4 138/146 of 138 @Northern Badlands (10 gold/min); P6 all 181; P7 72/104 of 240 @Hinterlands (10 gold/min); P8 116/116 of 212 @Sulfuron Spire (10 gold/min); P9 all 140; P11 50/50 of 172 @Broken Shore (10 gold/min); P12 all 110; P15 53/50 of 56 @Nethergarde Keep (15 gold/min); P16 34/50 of 221 @Ratchet (10 gold/min); P18 76/147 of 85 @Desolace (10 gold/min); P22 50/50 of 190 @Blackrock Depths (20 gold/min); P23 all 171;
+  14:12  switches per bot (target/state, since start): P0 20/8; P1 17/4; P2 10/2; P3 13/2; P4 17/0; P6 20/3; P7 10/0; P8 16/2; P9 12/3; P11 16/2; P12 12/3; P15 15/0; P16 17/0; P18 18/4; P22 17/2; P23 13/1;
+  14:12  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 2372; P1 2467; P2 3121; P3 4505; P4 2868; P7 2840; P8 3757; P9 3673; P11 2894; P12 3430; P15 2498; P16 4836; P18 2861; P22 2804; P23 3775;
+  14:12  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=3411 max-slot=5207 over=971 would-defer=1340 deferred=0
+  14:12  orders total=27776 near(<2k)=6378 mid(2-8k)=20264 far(>8k)=1134 idle-at-target(<300)=19
+```
+
+Top tasks by total ops at 14:12 (of 42):
+```
+task combat every=0.500s runs=1705 last=1004 max=2628 sum=991692
+task production every=1.000s runs=852 last=340 max=452 sum=155116
+task route structures 2 every=15.000s runs=56 last=1606 max=1626 sum=60362
+task route structures 1 every=15.000s runs=56 last=1364 max=1445 sum=50438
+task route portals every=30.000s runs=28 last=798 max=3277 sum=48349
+task route structures 3 every=15.000s runs=56 last=750 max=773 sum=28357
+task route structures 4 every=15.000s runs=56 last=756 max=828 sum=27830
+task hero visits every=15.000s runs=56 last=395 max=518 sum=12422
+task gate sweep every=15.000s runs=56 last=0 max=4878 sum=11569
+task ragnaros every=15.000s runs=56 last=275 max=350 sum=6443
+```
+
+Errors (TICK ERROR / FAILED / section errors): none
+
+Bots at 14:12: P0 Warsong atk a84 f77; P1 Stormwind atk a159 f142; P2 Quel'thalas atk a182 f164; P3 Scourge atk a288 f250; P4 Ironforge atk a141 f142; P7 Gilneas atk a282 f188; P8 Skywall atk a214 f200; P9 Lordaeron def a165 f141; P11 Druids atk a183 f176; P12 Black Empire def a204 f107; P15 Illidan atk a62 f60; P16 Ahn'qiraj atk a263 f200; P18 Sentinels atk a108 f57; P22 Kul'tiras atk a185 f172; P23 Legion def a273 f139; P6 Fel Horde def a193 f186
