@@ -77,10 +77,11 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
    shift-clicking (at most 8 points; one backward route tree per destination, 4 kept). WC3 has no group movement:
    every unit walks on its own; the "group" is the bot's bookkeeping. Waygate legs today: a point in front of the
    waygate, a click on it, the exit; the teleport drops the rest of the queue, so idle units at exits are re-chained
-   on the next service. *Planned (0.46): **pseudo-portals** -- the chain ends at the entry, a trigger teleports the
-   unit and gives it the rest of the chain at once. (0.47): **ferries** -- sea links as boat trips with a delay.*
-7. **Production** (separate 1-s task): every building trains from its own list. *Planned (0.46): **unit budget** --
-   bots train only while their army is below 40 + 10 food per held CP.*
+   on the next service. **0.46: pseudo-portals** (`AiPortals`) -- the chain ends at the entry, a trigger teleports
+   the unit and gives it the rest of the chain at once; no waygate clicks. *Planned (0.47): **ferries** -- sea links
+   as boat trips with a delay.*
+7. **Production** (separate 1-s task): every building trains from its own list. **0.46: unit budget** (`AiBudget`)
+   -- bots train only while their army is below 40 + 10 food per held CP.
 
 **Portals and passages -- how they open** (each open waygate of a neutral owner is a one-way graph edge, read every
 30 s; rocks every 15 s):
@@ -154,6 +155,9 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
 | `-creeps on\|off` | control | Creep camps in own areas as targets (default, 0.44.3; one-shots off) or the hand-placed one-shots (0.44.2) |
 | `-gather on\|off` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s) (default, 0.45) |
+| `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
+| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / even slots (default, 0.46) / odd slots |
+| `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 40 + 10, 0.46) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |

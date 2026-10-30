@@ -623,6 +623,7 @@ namespace WarcraftLegacies.Source.Ai
       RegisterWaveTasks();
       AiRoutes.Setup(); // 0.42: rock / area / waygate checks for the route planner
       AiIncome.Setup(); // 0.44.2: CP income for computer slots (WL pays only human slots)
+      AiLoad.Setup();   // 0.46: guard positions, order-latency probe
       AiScheduler.Start();
 
       // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
@@ -1102,6 +1103,7 @@ namespace WarcraftLegacies.Source.Ai
 
         var altarUnits = new List<unit>();
         var trainers = new List<unit>();
+        var armyFood = 0; // 0.46: for the unit budget (heroes not counted)
         var g = CreateGroup();
         GroupEnumUnitsOfPlayer(g, p, null);
         unit u;
@@ -1111,6 +1113,11 @@ namespace WarcraftLegacies.Source.Ai
           ProdOps++;
           if (!IsUnitType(u, UNIT_TYPE_STRUCTURE))
           {
+            if (!IsUnitType(u, UNIT_TYPE_HERO) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+            {
+              armyFood = armyFood + GetUnitFoodUsed(u);
+            }
+
             continue;
           }
 
@@ -1163,7 +1170,9 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         GetDiag(pid0).Saving = saving;
-        for (var ti = 0; ti < trainers.Count && !saving; ti++)
+        // 0.46: unit budget per CP (AiBudget) -- bots only; heroes above are not affected
+        var capped = perks && !AiBudget.Allows(p, pid0, faction, armyFood);
+        for (var ti = 0; ti < trainers.Count && !saving && !capped; ti++)
         {
           var tu = trainers[ti];
           var ttid = GetUnitTypeId(tu);
