@@ -105,15 +105,21 @@ observations from those games are void. Movement observations stay valid.
 Each item: switch + counter. Designs: `CONCEPTS.md` sections 6-9. **Priority: pseudo-portals** (0.45.0: the rift
 decided the whole late game).
 
+0.46 is built in parts; the maintainer builds once all parts are in. Done: **part 1** (creep fix, check, graph list
+review, docs).
+
 Fixes from 0.45.0:
-- [ai] **Creep camps TICK ERROR** (`AiRoutes.CheckCreeps`, war3map.lua:29279). Find the line in the built
-  `war3map.lua`; suspect: CSharp.lua's translation of `_creepLevel[node] += cond ? a : b` (rewrite with a local). Then
-  the creep targets of 0.44.3 run for the first time -- check them in the 0.46 game.
+- [done, part 1] **Creep camps TICK ERROR**: confirmed in the built `war3map.lua` -- CSharp.lua emitted
+  `_creepLevel:get(node) + (GetUnitLevel(u) > 0) and GetUnitLevel(u) or 1`. Rewritten with a local; hard rule 16;
+  `check_refs.py` flags the pattern. Check the creep targets in the 0.46 game (first time they run).
+- [ai] **`-edges` draws the generated graph** (the one the planner uses); the old graph only behind `-edges old`.
+- [ai] **PORTALS section lists WL's own waygates** (Dark Portal n036, Emerald, Dun Modr ...): position, owner, active,
+  hidden, destination -- why the Dark Portal was no graph edge at 540 min in 0.45.0.
 - [ai] **No fallback to the old picker while the route target is valid**: if `Pick` returns null and the committed
   target came from the route planner and is still alive / not owned / reachable from the territory, keep it. Log WHY
   `Pick` returned null (no start node, no route, nothing scored) as a counter.
-- [ai] **Dark Portal / Outland**: a portal edge Outland <-> Blasted Lands (pseudo-portal list), so groups in Outland
-  can plan. `[you]` is WL's Dark Portal open all game, or opened by a quest?
+- [ai] **Dark Portal / Outland**: a pseudo-portal edge Outland <-> Blasted Lands, open while WL's n036 Dark Portal
+  waygates are active (WL quest, turn 8-10 -- `README.md` "Portals and passages"), so groups in Outland can plan.
 - [ai] **Groups only from units that can reach the target** (same walking component, or through a portal edge): the
   Fel Horde's group for the Maw was its Outland units.
 - [ai] **Caster share cap** in production: at most ~25 % of a bot's trained units are casters (Quel'thalas: 94 %).
@@ -122,8 +128,18 @@ Fixes from 0.45.0:
 - [ai] **Gather diagnostics**: at a timeout, the share of the group that had arrived; `-gather ab` (per-bot A/B).
 - [ai] `dump_summary.py`: TICK ERRORs at the top of the summary, not at the end; the defence log shows the real enemy
   count while a defence is kept (now "0 enemy units").
-- [you] **Graph edits**: the maintainer's list of edges to remove / add -> `gen_routes.py` (exceptions list in the
-  generator, so a regeneration keeps them), `ROUTES.md`, `render_map.py` check. Needs the list.
+- [done, part 1] **Graph edits -- the maintainer's list** was made from the OLD graph (`-edges`). In the generated
+  graph (the planner's) 12 of 13 items were already as wanted:
+  - add Blackrock Depths - Burning Steppes, Moonglade - Auberdine, Windshear Crossing - Desolace, Gadgetzan - Tanaris,
+    Crystalsong Forest - Dragonblight, Drak'Tharon Keep - Venture Bay: all generated edges; Wetlands - Tol Barad: the
+    AI ship waygate (live edge, both ways).
+  - remove Searing Gorge - Burning Steppes, Menethil Harbour - Tol Barad, Ruins - Tunnels of Ahn'Qiraj, Uldum -
+    Throne of the Four Winds, Twilight Shore - Fuselight: no direct generated edge (connected through other nodes or
+    not at all).
+  - `[you]` remove Windshear Crossing - Feralas: in NEITHER graph -- where was it seen? (Desolace - Feralas exists.)
+  - `[you]` re-check the generated graph on `route_map.png` (`render_map.py`, attached to the 0.46 delivery): the
+    "~20 wrong connections" may have been the old graph. New findings -> the exceptions file below.
+  - The old graph is not edited (fallback only, deleted in phase 2).
 - [ai] **Unit budget per CP** (`CONCEPTS.md` 8): production gate, `-cap off|<base> <perCp>`. Default 40 + 10 food per
   held CP (~150 for an average faction), never above the faction's food maximum; heroes not counted. Bots only.
   `AiApi` hook for a base per faction (set by Shattered Legacies; same for all until then).

@@ -4,6 +4,17 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.46.0 (in progress -- built when all parts are in)
+Part 1:
+- **Creep camps finally run**: `AiRoutes.CheckCreeps` failed on every run since 0.44.3 (TICK ERROR "arithmetic on a
+  boolean value", war3map.lua:29279): CSharp.lua translated `_creepLevel[node] += lv > 0 ? lv : 1` without the
+  parentheses. With `-creeps on` (default) the one-shots were skipped too, so bots cleared no creep camps at all.
+- `check_refs.py` flags compound assignments to array elements with a ternary / comparison / logic on the right
+  (hard rule 16).
+- Graph list review: the maintainer's add/remove list matches the OLD graph; the generated graph already had 12 of 13
+  items as wanted (`TODO.md`). Docs: "Portals and passages -- how they open" (`README.md`), Dark Portal and "two
+  graphs" facts (`AI_AGENTS_CONTEXT.md`).
+
 ## 0.45.1 (docs only -- the in-game banner stays 0.45.0)
 Plan and docs after the review of the movement approach (no map change).
 - **Phases** (`TODO.md`): 1 movement "good enough" (0.46-0.49, ends at exit criteria: load, graph, activity,
