@@ -555,12 +555,12 @@ namespace WarcraftLegacies.Source.Ai
   }
 
   // 0.46: caster share cap. 0.45.0: 94 % of Quel'thalas' 5102 units were casters (Sorceress, Priest, Spell Breaker) --
-  // without autocast they are weak. A type is a caster when a trained unit of it has mana (learned from the units the
+  // without autocast they are weak. 0.46.1: 35 % (was 25 %) -- Quel'thalas is a caster faction (maintainer). A type is a caster when a trained unit of it has mana (learned from the units the
   // production pass sees; heroes excluded). While casters are MaxShare or more of a bot's units, no caster is queued.
   internal static class AiCaster
   {
     internal static bool On = true;
-    private const float MaxShare = 0.25f;
+    private const float MaxShare = 0.35f;
     private static Dictionary<int, bool> _isCaster = new();
     internal static int[] Skipped = new int[24];
 

@@ -30,7 +30,8 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
   but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **0.46.0 is complete** (parts 1-3, not played yet; checklist "Next playtest" in `TODO.md`): creep fix,
+- **0.46.1** = 0.46.0 + naval waygates skipped + caster cap 35 %. **0.46.0 is complete** (parts 1-3; checklist
+  "Next playtest" in `TODO.md`): creep fix,
   pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget, latency probe, per-bot A/B
   (guard / gather / spread, independent slot bits), caster cap, activity / returns / targets-by-owner counters,
   `-edges` on the generated graph, CSharp.lua style check (`AiStyleCheck.cs`, delete in 0.47). 0.47: theatres,
@@ -284,6 +285,8 @@ Map mechanics
   activates three preplaced waygate pairs (n036, owner Neutral Hostile, hidden until then). The route graph reads
   active neutral waygates every 30 s -- yet the 0.45.0 dump at 540 min had no Dark Portal edge (cause open, 0.46
   lists WL's own waygates in the dump).
+- **Naval waygates**: WL's "Water Passageway" pairs (n03Q / n03S, Neutral Passive) stand on deep water for SHIPS
+  (Thandol Span; Highbank <-> western Kalimdor). Not army edges (0.46.1 skips waygates on / to unwalkable ground).
 - The Sunwell (`n001`) and Sunwell Corrupted (`n079`) are **capitals**, not CPs. Win threshold: 90 CPs per team.
 - Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
   added to every faction -- completing it for one completes it for all.

@@ -95,6 +95,7 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Emerald Portals (Shrine of Malorne <-> Feralas) | as soon as WL's preplaced pair is visible | bot activates WL's pair |
 | Argus portals (Argus <-> Northrend before the summon, Felwood / Quel'Danas after) | always / at the Legion summon | bot (`AiLegion`) |
 | AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
+| Water Passageways (Thandol Span; Highbank <-> western Kalimdor) -- SHIPS only, on deep water | always | WL (n03Q / n03S, Neutral Passive); no army edge since 0.46.1 |
 
 `-edges` in game draws the route graph the bots use (0.46); `-edges old` the old hand-written one.
 
@@ -130,6 +131,7 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.44.2 | every target change re-sent all rest units | 12,913 rest orders in 14 min | 0.44.3: only idle rest units |
 | 0.43.0 (old Veteran) | +25 gold per production turn | 250-food armies, 4000+ units, ~2-s order delay | 0.43.1 lower scale; 0.46 unit budget |
 | before 0.44.2 | (unnoticed) bots without CP income | empty map, 9.5-h stalemate | 0.44.2 `AiIncome` |
+| 0.42-0.46.0 | every active neutral waygate = graph edge | WL's naval Water Passageways became army routes (Thandol, Highbank <-> Kalimdor); 0.46 teleported dwarves onto the shore | 0.46.1: waygates on / to water skipped |
 
 **A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
 feature on for the bots whose player slot has a 0 in the switch's bit, `ab2` for those with a 1 -- guard bit 0, gather

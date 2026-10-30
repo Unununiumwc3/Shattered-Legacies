@@ -410,6 +410,16 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       float ux = GetUnitX(u), uy = GetUnitY(u);
+      // 0.46.1: NAVAL waygates are no edge for armies. WL's "Water Passageway" pairs (n03Q / n03S, Neutral Passive) stand
+      // on deep water and exit onto water: ships pass the Thandol Span and sail Highbank <-> western Kalimdor through
+      // them. Since 0.42 they were graph edges (Dun Modr -> Dragonmaw Gates, Highbank <-> Feralas coast); units could
+      // not reach them, and with the 0.46 pseudo-portals they were teleported -- dwarves landed beside the bridge.
+      if (IsTerrainPathable(ux, uy, PATHING_TYPE_WALKABILITY) || IsTerrainPathable(dx, dy, PATHING_TYPE_WALKABILITY))
+      {
+        NavalSkipped++; // IsTerrainPathable is true when the spot is NOT walkable
+        return false;
+      }
+
       var a = StartNode(ux, uy); // 0.43.2: the AREA of each waygate end (was: nearest node in a straight line --
       var b = StartNode(dx, dy); // the Emerald Portal at the Thandol bridge got the node across the gorge)
       if (a < 0 || b < 0 || a == b)
@@ -432,6 +442,7 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     internal static bool IsPortalEdgeGate(unit u) => _pUnit.Contains(u);
+    internal static int NavalSkipped; // 0.46.1: waygate checks skipped because an end is on water (ships only)
 
     // 0.46: for "-edges" (draws the generated graph)
     internal static bool WalkEdgeOpen(int e)
@@ -1771,7 +1782,7 @@ namespace WarcraftLegacies.Source.Ai
       o.Add("A/B spread [slots" + AiAb.Slots(SpreadMode, AiAb.BitSpread) + "]: stalled % per bot "
             + AiAb.Compare(SpreadMode, AiAb.BitSpread, stallPct) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
-            + ", no start node " + I2S(NullNoStart));
+            + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped));
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)
       {
