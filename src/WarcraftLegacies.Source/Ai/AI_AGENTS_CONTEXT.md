@@ -23,6 +23,27 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
+## State of the work (0.45.0) -- read this, then `TODO.md`
+
+- **Focus: bot MOVEMENT.** The maintainer collects balance observations in `TODO.md`; balance is decided later.
+- **Refactor done so far** (details: `CHANGELOG.md`, plan: `CONCEPTS.md` section 0):
+  - 0.39.10 layers (`Ai/` vs `ShatteredLegacies/`, `AiApi`, markers) -- 0.40 one scheduler (`AiScheduler`) --
+    0.41 army orders (`AiArmy`: attack group sized from the target, rest at a staging CP, orders only for idle units
+    away from their point) -- 0.42 route planner on a graph GENERATED from map data (`AiRoutes`, `AiRoutes.g.cs`,
+    region map) -- 0.43 targets by distance from the bot's OWN territory, defence with reach + hysteresis
+    (`AiDefense`) -- 0.44 **movement chains** (queued attack-moves along the route, waygates clicked), leftover
+    buildings as targets, **CP income for bots** (`AiIncome`; WL pays human slots only -- every game before 0.44.2
+    had bots WITHOUT income), creep camps as targets (0.44.3) -- 0.45 gather points for long routes, rift east end
+    moved 100 north.
+  - Switches for A/B tests: `-orders smart|idle|all`, `-route on|off`, `-chain on|off`, `-creeps on|off`,
+    `-gather on|off`, `-budget on|off`.
+- **Playtested**: up to 0.44.2 (table in `TODO.md`). **0.44.3 and 0.45.0 are NOT playtested.**
+- **West <-> east**: Kalimdor + its islands (ships) vs Eastern Kingdoms + Kul Tiras are linked ONLY by the Old Gods
+  rift (and the rare Legion portal). The rift's east end was reported broken in game; 0.45.0 moved it 100 north --
+  unconfirmed.
+- Measurements per game: `MEASUREMENTS.md` (`tools/ai/dump_summary.py --append`). The maintainer often plays with
+  `-autopilot` on one faction (a human slot -- say which in the note).
+
 ## Getting the code (sandbox)
 
 ```
@@ -56,7 +77,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
 | `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
-| `AiRoutes.cs` | AiRoutes | 0.42: route planner -- live edge state (rocks, waygates, enemy structures at area nodes), Dijkstra, target; 0.44: movement chains (`Chain`: queued attack-moves along the route, waygate legs; `-chain on`) |
+| `AiRoutes.cs` | AiRoutes | route planner (0.42): live edge state (rocks every 15 s, waygates every 30 s, enemy structures / creeps per node area), territory Dijkstra -> target, route from the group's area, commit + 30-s re-plan; movement chains (0.44, backward route trees, 4 kept); leftover / creep targets (0.44.1/0.44.3); gather points (0.45) |
+| `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
+| `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
 | `AiArmy.cs` | AiArmy | 0.41: army orders -- attack group sized from the target, rest at the staging CP, orders only for idle units away from their point (`-orders smart`) |
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
@@ -72,6 +95,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `WORKAROUNDS.md` | | everything the bot needs outside `Ai/` (hooks, workarounds, runtime map changes, version-bound data) |
 | `MEASUREMENTS.md` | | load numbers per version (from `dump_summary.py`) |
 | `../ShatteredLegacies/` | ShatteredLegaciesSetup, FallbackConfig, FallbackSystem, KezanEnterprise, SlAiData | fork content: fallbacks, Kezan Enterprise; own `README.md`, `TODO.md`, `FALLBACKS.md`, `FACTION_UNITS.md` |
+| `tools/ai/gen_routes.py` | | generates `AiRoutes.g.cs` (nodes, edges, rock groups, region map) + report `ROUTES.md` from map data only; `--without <ids>` |
+| `tools/ai/render_map.py` | | draws terrain, CPs, area nodes and the route graph to `tools/ai/out/route_map.png` (never committed); `--regions` |
+| `ROUTES.md` | | generated report: every edge with its "via" point, detours, edges behind rocks |
 | `tools/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
@@ -125,6 +151,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
   and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; no GitHub Actions.
 - "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
 - At most one question per reply; propose defaults instead of asking many.
+- Push only named tags (`git push origin v<build>`), never `--tags` (old tags drag Git LFS into history the clone
+  never downloaded).
 - Deliver one patch per version (`git diff --binary -M` against the pushed branch, or against the previous patch
   of the same delivery), verified with `git apply --check` on a clean worktree of `origin/botified-dev`, plus a zip
   of the whole files with repo paths. The maintainer downloads them to `~/Downloads/` and runs the commands given in
@@ -146,8 +174,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 ## Map data (offline, no game needed)
 
 - `mapdata/WarcraftLegacies/PathingMap.json`: 32-unit cells, rows bottom-up from (-28672, -32256), flag 0x02 not
-  walkable / 0x08 not buildable. **Terrain only** -- doodads, destructables (rocks, bridges, trees) and units are NOT
-  in it. `tools/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
+  walkable / 0x04 not flyable / 0x08 not buildable / 0x40 NOT water. Destructables (trees, WL's `LTrc` rocks) and
+  units are NOT in it -- `gen_routes.py` adds trees (64 x 64) and rock doodads; `LTrc` marks removable edges (+-192:
+  +-96 left a gap at the Thandol bridge railing). `tools/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
 - Preplaced units: `Units/<x>_<y>.json`, grouped by area. The names follow NO simple rounding rule (checked in
   0.38) -- append a new unit to the file that already holds its nearest neighbours; never create new files. `TypeId`/`SkinId` **little-endian** (`struct.unpack('<I', b'n0JS')`), unique
   `CreationNumber` (max + 1). Doodads/destructables: `Doodads/*.json`. Object data: `UnitData/<id>.json` (`OldId`
@@ -187,13 +216,14 @@ Map mechanics
   AQ by quests. The Thandol bridge itself is only made invulnerable (walkable); the rocks are what blocks it. Not in
   the pathing data. The AI's "thandol" gate follows the real rocks since 0.37.2 (before: guessed 20:00 -> dwarves
   stood at the rocks for 10 min).
-- **Edge list membership defines a node's continent**: `ResolveEdgeSet` counts a faction's CPs per list (Combined /
+- (OLD frontier picker only, `-route off` / fallback:) **Edge list membership defines a node's continent**: `ResolveEdgeSet` counts a faction's CPs per list (Combined /
   Kalimdor). An edge in the WRONG list turns its end node into a node of that continent (0.37.1: the rift edge in
   Combined made the Maw an EK node -> Black Empire walked the EK graph all game). Cross-continent edges belong in
   ONE list (the home side of the factions that use them) or are gated and handled by the edge-set logic.
 - Graph gate flags (`Edge.Gate`) must be opened by code: `legion`/`prelegion` (AiLegion), `greymane`/`tomb`/`thandol`/
   `oldgods` (AiGates). `greymane` was never opened from v25 to 0.35.4 -- a new flag needs its opener.
-- A frontier can come from an ALLY's node on the far side of a barrier (Ironforge got Arathi through an ally node
+- (OLD frontier picker only; the route planner walks the generated graph with closed rock edges:) A frontier can come
+  from an ALLY's node on the far side of a barrier (Ironforge got Arathi through an ally node
   north of the closed bridge): the graph says reachable, the army can't get there. The stuck blacklist (4 min, then
   5/10/20 min skip since 0.37.2) limits the damage; real fix = walking costs (TODO, CP graph weights).
 - Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep portal
@@ -218,10 +248,12 @@ Units and production
   available heroes (Rommath after "The Blood Elves") were never bought.
 
 Economy
-- Income/min = CP values (10-50 each) + `PlayerData.BonusIncome`, paid continuously. Every faction's `StartingGold`
-  adds `Income` to `BonusIncome` for 10 turns (turn = 60 s) -> WL's early bonus ends at 11:00.
-- The AI subsidy is a per-production-turn `SetPlayerState` -> it pays MORE the fewer bots there are (TODO: move to
-  `BonusIncome`). With the vote on "Recruit" (0) bots had 0-12 gold and 1-5 units from minute 30 on.
+- Income/min = CP values (10-50 each) + `PlayerData.BonusIncome`, paid every second by `ControlPointManager` -- **to
+  HUMAN slots only** (`EnumeratePlayers(Playing, User)`). Computer slots got nothing until 0.44.2 (`AiIncome` now pays
+  them the same). Every faction's `StartingGold` adds `Income` to `BonusIncome` for 10 turns -> WL's early bonus ends
+  at 11:00.
+- The strength-vote bonus is a per-production-turn `SetPlayerState` (pays more the fewer bots there are). Scale since
+  0.43.1: Recruit -13, Soldier -6, Veteran 0, Commander +13, Warlord +25. Before 0.44.2 it was the bots' ONLY income.
 
 Quests and story
 - **Click menus**: every WL dialog is a `ChoiceDialogPresenter`. Since 0.37.1 computer players pick through
@@ -242,8 +274,8 @@ Quests and story
 - Hero-visit quests are `ObjectiveHeroWithLevelInRect` / `...ReachRect` / `ObjectiveLegendInRect`; read level and
   `Regions.X` rectangle from the quest class (Ragnaros 10 in WL, our rule 12; Yogg-Saron 14; Tomb of Sargeras 10).
 - Ramzes the Horror = `h0BD` (-20185,-4704, carries an artifact); Ysondre `n04X` (-8240,9090); Taerar `n04S`
-  (-17908,-6308). Old Gods rift ends: Maw of Gor'ma (-28049,-7701 since 0.38) and the preplaced `n07E`
-  (22545,-4784, replaced at opening).
+  (-17908,-6308). Old Gods rift ends: Maw of Gor'ma (`AiConfig.RiftMawX/Y`, -27768,-7864) and the Twilight Highlands
+  end 100 north of the preplaced `n07E` (22545,-4684 since 0.45.0; `n07E` at -4784 is removed at opening).
 - Computer players' units use some abilities on their own (e.g. Blink) -- that is WC3's built-in unit AI, not ours.
 - Yogg-Saron: after "The Beast With a Thousand Maws" the completing player owns the prison (`yLL4`, 4160,23424),
   which must cast "Free Yogg-Saron" (`LLLN`, channel, order `selfdestruct`); Yogg (`U02C`) then appears as a Neutral
@@ -262,9 +294,14 @@ Your setup
 
 ## Key mechanisms (where to look)
 
-- **Targeting** ("frontier picker"): CP graph (`AiGraph.Combined`, `AiGraph.Kalimdor`, merged at the Legion summon),
-  frontiers, home graph first, neutral bias 0.5, 10-min lock on player-owned CPs, stuck blacklist (4 min, back-off
-  5/10/20 min), stickiness `SimpleBot.StickySwitch`, army anchor = biggest same-landmass group. `SimpleBot.PickGraphTarget`.
+- **Targeting** (default, `-route on`): `AiRoutes.Pick` -- Dijkstra from the bot's own nodes (territory) over the
+  generated graph; candidates = CPs (neutral half cost, quest CPs on the front 0.3), enemy buildings in node areas,
+  leftovers in own areas (+2500), creep camps (+3000); 10-min lock on player-owned targets, stuck blacklist, stickiness.
+  Fallback / `-route off`: the old frontier picker `SimpleBot.PickGraphTarget` on the hand-written graph
+  (`AiGraph.Combined` / `Kalimdor`, merged at the Legion summon) -- to be deleted once the planner is proven.
+- **Movement** (`-chain on`): `AiArmy.Issue` -> `AiRoutes.Chain` (queued attack-moves along the route, waygate legs);
+  the attack group / rest / staging logic in `AiArmy.Attack`; gather points `AiRoutes.UpdateGather`; defence
+  `AiDefense.Pick` before targeting.
 - **Bot bonuses**: `SimpleBot.HasPerks(p)` -- real bots and test-mode autopilot only.
 - **Command switch**: `AiDebug.Access` (`Off` release / `HostOnly` / `Everyone`); levels Read / Heavy / Control.
 - **Portals**: `AiGraph.Portals` (phases always / prelegion / legion / oldgods), created by `AiLegion`, watchdog

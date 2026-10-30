@@ -60,12 +60,14 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-id` | read | Type id, name, owner, position of your selected unit |
 | `-fac` | read | Each bot's faction and its unit/building types per category |
 | `-autodump` | heavy | Toggle: a dump every 5 minutes |
-| `-edges` | heavy | Toggle: draws every graph edge (green held, yellow neutral frontier, orange uncapturable, red contested, blue neutral↔neutral, magenta crosses landmass, grey closed) |
+| `-edges` | heavy | Toggle: draws every edge of the OLD hand-written graph (the route planner's generated graph: `tools/ai/render_map.py`) (green held, yellow neutral frontier, orange uncapturable, red contested, blue neutral↔neutral, magenta crosses landmass, grey closed) |
 | `-ids` | heavy | Every control point's id above it for 30 s |
 | `-debug1` … `-debug4` | heavy | Repeating readouts: state / load / decisions / economy |
 | `-tp x y` | heavy | Moves your selected units to x, y (testing) |
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
 | `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
+| `-creeps on\|off` | control | Creep camps in own areas as targets (default, 0.44.3; one-shots off) or the hand-placed one-shots (0.44.2) |
+| `-gather on\|off` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s) (default, 0.45) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |
@@ -80,7 +82,10 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 
 `call Preload( "…" )` wraps every line — send the file as it is. Sections:
 **PINNED** (one-off events, `TICK ERROR`/`FAILED` lines — read first), **UNITS** (units per player, orders), **TEAMS** (CPs per team), **TRAINED** (what each bot trained / never trained), **PORTALS**, **LOAD** (units touched per tick,
-the multiplayer lag indicator; since 0.40 also the scheduler, orders by distance and one line per periodic task), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
+the multiplayer lag indicator; since 0.40 also the scheduler, orders by distance and one line per periodic task; since
+0.41-0.44 the army orders line (change / idle-away / rest / refill / exit, chains, stalled %), switches per bot, bot
+income paid), **ROUTES** (0.42+: per bot target / score / front / next node; waygates, creep camps, gather counters),
+**BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
 ## Measuring a game

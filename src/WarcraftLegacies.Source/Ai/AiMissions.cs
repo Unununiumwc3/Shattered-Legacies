@@ -1177,6 +1177,11 @@ namespace WarcraftLegacies.Source.Ai
     // the point once, then mark it consumed. Evaluated on the 15s wave tick -> no scanning loop.
     internal static void RunOneShots()
     {
+      if (AiRoutes.Creeps)
+      {
+        return; // 0.44.3: creep camps are route targets now (AiRoutes.CreepAt); "-creeps off" brings the one-shots back
+      }
+
       for (var i = 0; i < AiGraph.OneShots.Count; i++)
       {
         if (_oneShotDone.Contains(i))

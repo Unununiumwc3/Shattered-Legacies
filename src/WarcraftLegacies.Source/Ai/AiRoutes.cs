@@ -100,6 +100,7 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.Add("route structures 2", 60, 38, () => CheckStructures(6), true);
       AiScheduler.Add("route structures 3", 60, 42, () => CheckStructures(12), true);
       AiScheduler.Add("route structures 4", 60, 46, () => CheckStructures(18), true);
+      AiScheduler.Add("route creeps", 60, 50, CheckCreeps, true); // 0.44.3: Neutral Hostile per node area
       AiScheduler.Add("route portals", 120, 19, CheckPortals, true); // every 30 s
     }
 
@@ -170,6 +171,177 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       DestroyGroup(g);
+    }
+
+    // ---- 0.44.3: creep targets ---------------------------------------------------------------------------------
+    // Neutral Hostile (slot 24) units per node AREA (region map), like the structures: one creep to attack and the
+    // camp's strength (sum of levels -- bosses often use 0 food). A camp is a target for a bot that holds the CP the
+    // area belongs to (an area node's patch: the nearest CP on foot), when the bot's army is strong enough
+    // (CreepFoodPerLevel x levels), at any time; invulnerable / hidden creeps are skipped (a boss that becomes
+    // attackable through a quest appears by itself). Lower priority than CPs (+CreepCost). Replaces the hand-placed
+    // one-shots (AiConfig.OneShots, skipped while Creeps is on). "-creeps off" = 0.44.2.
+    internal static bool Creeps = true;
+    private const float CreepCost = 3000f;
+    private const float CreepFoodPerLevel = 1.5f;
+    private static unit[] _creep;
+    private static int[] _creepLevel;
+    private static int[] _ownerCp;    // node -> the CP node its area belongs to (itself for CP nodes), -1 = none
+    internal static int CreepCamps;
+
+    private static void CheckCreeps()
+    {
+      Ready();
+      var n = AiRouteData.Nodes;
+      if (_creep == null)
+      {
+        _creep = new unit[n];
+        _creepLevel = new int[n];
+        OwnerCps();
+      }
+
+      for (var i = 0; i < n; i++)
+      {
+        _creep[i] = null;
+        _creepLevel[i] = 0;
+      }
+
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, Player(24), null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        SimpleBot.WaveOps++;
+        if (IsUnitType(u, UNIT_TYPE_STRUCTURE) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || IsUnitHidden(u)
+            || BlzIsUnitInvulnerable(u) || SimpleBot.SafeCp(GetUnitTypeId(u)) != null)
+        {
+          continue; // not a CP itself (neutral CPs can belong to Neutral Hostile)
+        }
+
+        var node = Region(GetUnitX(u), GetUnitY(u));
+        if (node < 0)
+        {
+          continue;
+        }
+
+        _creepLevel[node] += GetUnitLevel(u) > 0 ? GetUnitLevel(u) : 1;
+        if (_creep[node] == null)
+        {
+          _creep[node] = u;
+        }
+      }
+
+      DestroyGroup(g);
+      CreepCamps = 0;
+      for (var i = 0; i < n; i++)
+      {
+        if (_creep[i] != null)
+        {
+          CreepCamps++;
+        }
+      }
+    }
+
+    // once: every node's CP -- CP nodes themselves, area nodes the nearest CP node on foot (walking edges, O(n^2))
+    private static void OwnerCps()
+    {
+      var n = AiRouteData.Nodes;
+      _ownerCp = new int[n];
+      var dist = new float[n];
+      var done = new bool[n];
+      for (var i = 0; i < n; i++)
+      {
+        _ownerCp[i] = AiRouteData.NodeType[i] != 0 ? i : -1;
+        dist[i] = AiRouteData.NodeType[i] != 0 ? 0f : -1f;
+      }
+
+      for (var round = 0; round < n; round++)
+      {
+        var u = -1;
+        for (var i = 0; i < n; i++)
+        {
+          if (!done[i] && dist[i] >= 0f && (u < 0 || dist[i] < dist[u]))
+          {
+            u = i;
+          }
+        }
+
+        if (u < 0)
+        {
+          break;
+        }
+
+        done[u] = true;
+        var adj = _adj[u];
+        for (var k = 0; k < adj.Count; k++)
+        {
+          var e = adj[k];
+          var v = AiRouteData.EdgeA[e] == u ? AiRouteData.EdgeB[e] : AiRouteData.EdgeA[e];
+          var nd = dist[u] + AiRouteData.EdgeCost[e];
+          if (!done[v] && (dist[v] < 0f || nd < dist[v]))
+          {
+            dist[v] = nd;
+            _ownerCp[v] = _ownerCp[u];
+          }
+        }
+      }
+    }
+
+    // the creep to attack at node i for bot p, or null
+    private static unit CreepAt(player p, int pid, int i, BotDiag d)
+    {
+      if (!Creeps || _creep == null || _creep[i] == null || _ownerCp[i] < 0)
+      {
+        return null;
+      }
+
+      var cu = _creep[i];
+      if (GetUnitState(cu, UNIT_STATE_LIFE) <= 0.405f || GetOwningPlayer(cu) != Player(24) || IsUnitHidden(cu)
+          || BlzIsUnitInvulnerable(cu))
+      {
+        return null;
+      }
+
+      var cp = SimpleBot.SafeCp(AiRouteData.NodeType[_ownerCp[i]]);
+      if (cp == null || cp.Unit == null || GetOwningPlayer(cp.Unit) != p)
+      {
+        return null; // only in the area of a CP the bot holds
+      }
+
+      if (AiArmy.ArmyFood(pid) < _creepLevel[i] * CreepFoodPerLevel || SimpleBot.IsBlacklisted(pid, cu))
+      {
+        return null;
+      }
+
+      d.Neutral++;
+      return cu;
+    }
+
+    // a target at node i: a CP / enemy building / leftover (Candidate), else a creep camp
+    private static unit NodeTarget(player p, int pid, Faction fac, int i, BotDiag d)
+    {
+      var c = Candidate(p, pid, fac, i, d);
+      return c ?? CreepAt(p, pid, i, d);
+    }
+
+    private static bool IsCreep(unit u) => GetOwningPlayer(u) == Player(24) && !IsUnitType(u, UNIT_TYPE_STRUCTURE)
+                                           && SimpleBot.SafeCp(GetUnitTypeId(u)) == null;
+
+    // "-creeps on" / "-creeps off"
+    internal static void OnCreepsCommand()
+    {
+      var msg = GetEventPlayerChatString();
+      if (msg.Length >= 10 && msg.Substring(0, 10) == "-creeps on")
+      {
+        Creeps = true;
+      }
+      else if (msg.Length >= 11 && msg.Substring(0, 11) == "-creeps off")
+      {
+        Creeps = false;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "creep camps as targets: "
+        + (Creeps ? "ON (one-shots off)" : "OFF (one-shots on, 0.44.2)") + "  -- -creeps on|off");
     }
 
     private static void CheckPortals()
@@ -268,7 +440,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var t = _lastTarget[pid];
-      var tu = t >= 0 ? Candidate(p, pid, fac, t, d) : null;
+      var tu = t >= 0 ? NodeTarget(p, pid, fac, t, d) : null;
       // 0.43.1: plan again only when the target is gone or every ReplanEvery seconds. 0.42.1/0.43.0 also planned
       // whenever the group stood in an area that is not on the route -- which happens all the time while walking
       // past other nodes (~1 plan per bot every 13 s, new routes, back and forth).
@@ -355,7 +527,124 @@ namespace WarcraftLegacies.Source.Ai
         WpY[pid] = AiRouteData.NodeY[wp];
       }
 
+      UpdateGather(p, pid, path);
       return tu;
+    }
+
+    // ---- 0.45.0: gather points (waves) -- CONCEPTS.md section 0, step 2 -----------------------------------------
+    // A route longer than GatherHops nodes ends first at the LAST OWN NODE before the frontier: the attack group
+    // waits there until GatherShare of its food has arrived (within GatherRadius) or GatherMax seconds passed, then
+    // it gets the chain to the target. Short routes go without waiting. Decided once per target. "-gather off" = 0.44.
+    internal static bool Gather = true;
+    private const int GatherHops = 5;
+    private const float GatherMax = 60f;
+    private const float GatherRadius = 1500f;
+    private const float GatherShare = 0.8f;
+    private static int[] _gatherFor = new int[24];     // target node the decision belongs to (-1 = none yet)
+    private static int[] _gatherNode = new int[24];    // -1 = no gathering for this target
+    private static float[] _gatherStart = new float[24];
+    private static bool[] _gatherInit = new bool[24];
+    internal static int GatherStarted;
+    internal static int GatherAssembled;
+    internal static int GatherTimeout;
+
+    private static void UpdateGather(player p, int pid, List<int> path)
+    {
+      if (pid < 0 || pid >= 24)
+      {
+        return;
+      }
+
+      if (!_gatherInit[pid])
+      {
+        _gatherInit[pid] = true;
+        _gatherFor[pid] = -1;
+        _gatherNode[pid] = -1;
+      }
+
+      var target = path[path.Count - 1];
+      if (_gatherFor[pid] != target)
+      {
+        _gatherFor[pid] = target;
+        _gatherNode[pid] = Gather && path.Count - 1 > GatherHops ? GatherNodeOn(p, pid, path) : -1;
+        _gatherStart[pid] = SimpleBot.Clock;
+        if (_gatherNode[pid] >= 0)
+        {
+          GatherStarted++;
+        }
+
+        return;
+      }
+
+      var gn = _gatherNode[pid];
+      if (gn < 0)
+      {
+        return;
+      }
+
+      if (!Gather)
+      {
+        _gatherNode[pid] = -1;
+        return;
+      }
+
+      if (AiArmy.GroupAssembled(pid, AiRouteData.NodeX[gn], AiRouteData.NodeY[gn], GatherRadius, GatherShare))
+      {
+        _gatherNode[pid] = -1;
+        GatherAssembled++;
+      }
+      else if (SimpleBot.Clock - _gatherStart[pid] >= GatherMax)
+      {
+        _gatherNode[pid] = -1;
+        GatherTimeout++;
+      }
+    }
+
+    // the last own node on the path before the first node that is not the bot's -- not the group's own start node
+    private static int GatherNodeOn(player p, int pid, List<int> path)
+    {
+      for (var j = 1; j < path.Count; j++)
+      {
+        if (!IsOwnNode(p, pid, path[j]))
+        {
+          return j - 1 >= 1 ? path[j - 1] : -1;
+        }
+      }
+
+      return -1;
+    }
+
+    // true while the bot's attack group should go to its gather point (x, y) instead of the target
+    internal static bool Gathering(int pid, out float x, out float y)
+    {
+      x = 0f;
+      y = 0f;
+      if (pid < 0 || pid >= 24 || !_gatherInit[pid] || _gatherNode[pid] < 0)
+      {
+        return false;
+      }
+
+      x = AiRouteData.NodeX[_gatherNode[pid]];
+      y = AiRouteData.NodeY[_gatherNode[pid]];
+      return true;
+    }
+
+    // "-gather on" / "-gather off"
+    internal static void OnGatherCommand()
+    {
+      var msg = GetEventPlayerChatString();
+      if (msg.Length >= 10 && msg.Substring(0, 10) == "-gather on")
+      {
+        Gather = true;
+      }
+      else if (msg.Length >= 11 && msg.Substring(0, 11) == "-gather off")
+      {
+        Gather = false;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "gather points: "
+        + (Gather ? "ON (routes > 5 nodes wait at the last own node: 80 % of the group or 60 s)" : "OFF (0.44)")
+        + "  -- -gather on|off");
     }
 
     // 0.43: the TARGET is chosen by distance from the faction's TERRITORY (Dijkstra from all own and allied nodes at
@@ -403,7 +692,7 @@ namespace WarcraftLegacies.Source.Ai
           continue; // 0.44.1: own nodes too -- leftover enemy buildings in their area (Leftover)
         }
 
-        var cand = i == cur ? curUnit : Candidate(p, pid, fac, i, d);
+        var cand = i == cur ? curUnit : NodeTarget(p, pid, fac, i, d);
         if (cand == null)
         {
           continue;
@@ -513,6 +802,11 @@ namespace WarcraftLegacies.Source.Ai
     private static float Score(int i, unit cand)
     {
       var s = _dist[i];
+      if (IsCreep(cand))
+      {
+        return s + CreepCost; // 0.44.3: creeps after CPs (neutral CP 4000 away = 2000, a camp at home = 3000)
+      }
+
       if (_source[i])
       {
         s += LeftoverCost; // 0.44.1: clearing leftovers inside the own land must not override everything else
@@ -1303,7 +1597,9 @@ namespace WarcraftLegacies.Source.Ai
 
       // 0.44.1: the waygate edges (to see e.g. the Dark Portal pairs) and units found idle at a waygate exit
       o.Add("waygates (" + I2S(_pFrom.Count) + "), units idle at an exit: " + I2S(ExitIdle) + ", chain trees "
-            + I2S(Trees));
+            + I2S(Trees) + "; creep camps " + I2S(CreepCamps) + " (creeps " + (Creeps ? "on" : "off") + "); gather "
+            + (Gather ? "on" : "off") + " started=" + I2S(GatherStarted) + " assembled=" + I2S(GatherAssembled)
+            + " timeout=" + I2S(GatherTimeout));
       for (var k = 0; k < _pFrom.Count; k++)
       {
         o.Add("  " + NodeName(_pFrom[k]) + " -> " + NodeName(_pTo[k]) + " cost " + I2S(R2I(_pCost[k])) + " exit "

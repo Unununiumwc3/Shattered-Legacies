@@ -4,6 +4,38 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.45.0
+Movement step 2 and handover docs (a new chat starts from here). NOT playtested.
+- **Gather points (waves)** (`CONCEPTS.md` 0, step 2): a route longer than 5 nodes first goes to the last own node
+  before the frontier; the attack group waits there until 80 % of its food is within 1500 or 60 s passed, then gets
+  the chain to the target. Short routes go without waiting. Decided once per target. ROUTES line: "gather on
+  started / assembled / timeout". `-gather off` = 0.44.
+- **Old Gods rift east end moved 100 north** (22545,-4684), beside WL's preplaced `n07E` (-4784, still removed at
+  opening). The maintainer found the east end not working in game; the west end (Maw) works. Map data around both
+  spots is open ground -- in-game confirmation pending.
+- Docs: `AI_AGENTS_CONTEXT.md` (state of the work, playtest status, targeting / movement / economy facts that were
+  outdated: route planner is the default, bots had no CP income before 0.44.2, the rift and continents, PathingMap
+  flags, push only named tags), `TODO.md` rewritten (playtest table per version, next test, movement / graph /
+  mission / bug / balance lists with everything discussed), `CONCEPTS.md` step status, `WORKAROUNDS.md` (W1-W4
+  status, one-shots replaced, rift move), `README.md` commands, Shattered Legacies TODO (LFS check for the invisible
+  Kezan units).
+- Version v0.45.0.
+
+## 0.44.3
+Movement focus (maintainer: balance later).
+- **Creep camps are targets** (agreed spec): Neutral Hostile units per node AREA (region map, the same scan as the
+  buildings, every 15 s). A camp is a target for a bot that holds the CP the area belongs to (an area node's patch:
+  the nearest CP on foot, computed once), when its army has at least 1.5 food per creep level (bosses often use 0
+  food -- level counts), at any time; invulnerable / hidden creeps are skipped; reachable on foot like every target.
+  Score = walking distance + 3000: a neutral CP 4000 away (2000) comes first, a camp at home (3000) before an enemy
+  CP 4000 away. The attack group's size counts creeps by level too. The hand-placed one-shots (`AiConfig.OneShots`)
+  are skipped while this is on; `-creeps off` = 0.44.2 (one-shots back). Area clears and kill targets unchanged.
+- **Rest churn**: on a target change only IDLE rest units get the new staging CP; the busy ones keep walking. Every
+  target change used to re-send all rest units: 12,913 "rest" orders in 14 min (0.44.2 game).
+- **Waygate exits**: units standing idle at an exit (their queued chain was lost in the teleport) continue on the
+  next service (~7 s), not after the 20-s heartbeat ("exit" in the army orders line).
+- Version v0.44.3.
+
 ## 0.44.2
 - **CP income for bots** (`AiIncome.cs`) -- the root cause of the empty games, tiny armies and the 9.5-hour
   stalemate. WL pays control-point income only to HUMAN slots that are playing (`ControlPointManager`:

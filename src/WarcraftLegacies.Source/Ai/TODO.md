@@ -1,205 +1,144 @@
 # TODO -- bot AI
 
-`[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work.
-Move finished items to `CHANGELOG.md`. Keep this file short. Fork content (fallbacks, Kezan, balance, map design) is
-in `../ShatteredLegacies/TODO.md`. Current build: **0.44.2**. Next: one game (chains, Veteran) to see the bots WITH income; then creeps (0.44.3).
+`[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work. Finished items go to
+`CHANGELOG.md`; ideas still under discussion live in `CONCEPTS.md`; fork content (fallbacks, Kezan, map design) in
+`../ShatteredLegacies/TODO.md`.
 
-## Where we are
+Current build: **0.45.0** (not playtested). **Focus: MOVEMENT.** Balance observations are collected below and decided
+later (other changes will shift balance anyway).
 
-- **0.39.10 (step 0 of the refactor)**: the fallback code moved to `ShatteredLegacies/`; the bot has no reference to
-  it and offers `AiApi` instead. Markers `[BOT]` / `[SL]` / `[WORKAROUND]` in original files, `WORKAROUNDS.md` lists
-  what blocks a pull request to the original map, `MEASUREMENTS.md` keeps load numbers per version
-  (`tools/ai/dump_summary.py`).
-- **Engine load**: UNITS dump section, heartbeat file and `-orders idle` are in (0.39.0). A 520-min game ran without a
-  freeze. The refactor below is the next lever.
-- **Production** trains from real train lists (0.38); bot heroes are free and learn skills; starter production
-  buildings; bots take over leaving humans.
+## Playtest status
 
-## Refactor (agreed, one version per phase, each playable on its own)
+| Version | Played? | What it showed |
+|---|---|---|
+| 0.39.10 | yes (20 min, too much gold by mistake) | baseline; old 0.39.9 dumps mixed in |
+| 0.40.0 | no (only inside later builds) | -- |
+| 0.41.0 | yes (game B, 20 min) | attack group + staging work; "hold" order flood found |
+| 0.42.0 | yes (game C) | routes from the straight-line nearest node, re-plans every service: back and forth |
+| 0.42.1 | no (shipped with 0.43.0) | -- |
+| 0.43.0 | yes | whole teams marched to one front (allied land counted as territory) |
+| 0.43.1 | yes (Veteran = 0) | attack/defence flapping across continents; map "empty" |
+| 0.43.2 | yes (Commander) | Thandol fixed; orcs along the Broken Isles |
+| 0.44.0 | yes | chains work (long orders 4482 -> 615, stalled 2-5 %); planning spikes |
+| 0.44.1 | yes (chain off 40 min; chains 9.5 h) | 78k-op spikes; 1048 units idle at waygate exits; stalemate |
+| 0.44.2 | yes (14 min) | **first build with CP income for bots**; spikes gone (max-slot 5207); rest churn |
+| 0.44.3 | **no** | creep targets, rest churn fix, exit re-chain |
+| 0.45.0 | **no** | gather points, rift east end moved 100 north |
 
-Vision: bots replace human players and challenge them -- mostly through **many troops on the map**. So the engine
-budget must go to units, not to AI overhead. Long-term goal: a pull request to the original Warcraft Legacies that
-works on the original map without workarounds (`WORKAROUNDS.md`).
+**Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
+observations from those games are void. Movement observations stay valid.
 
-Measure every phase with one game and `-autodump`, summary into `MEASUREMENTS.md` (units, orders/min, LOAD at
-10/20/30/45 min). Compare with the phase before.
+## Next playtest (0.45.0)
 
-0. **0.39.10 -- step 0** (done): fork code out of `Ai/`, `AiApi`, markers, `WORKAROUNDS.md`.
-1. **0.40 -- scheduler + load budget** (done; not measured yet -- the A/B test of 0.41 covers it: `-orders idle`
-   in 0.41 = 0.40's army behaviour. Calibrate the budget from "max-slot" in LOAD). One 0.25-s timer; every periodic task has a period and a fixed phase
-   (static, deterministic staggering): combat every 0.5 s and production every 1 s as today, the 15-s wave tick split
-   into its subtasks spread over the cycle in today's order, plus revive, quest checks, Legion event check, debug
-   output. One-shot delays stay as they are. Counters (deterministic only, never wall-clock time = desync): per task
-   runs / ops (last, max, sum), ops per slot, orders/min, **orders by distance** and **re-orders of idle units
-   already at their target** (proxies for engine pathing cost, which the script cannot see). Budget report-only;
-   `-budget on` tests enforcement. Shown in `-debug2` and the dump's LOAD section. No behaviour change beyond the
-   phase within a 15-s cycle. Note: this measures and smooths; it is not expected to cure a freeze by itself (the
-   0.38.1 freeze had flat script load).
-2. **0.41 -- army orders** (done, see CHANGELOG; tune after the A/B test: floor 50 food, factor 1.5, structures x 8,
-   radii 600 / 1500). Original plan: Fix lever 1's hole: "idle" (order 0) is also true for units standing at the target,
-   so they are re-ordered every 20-s heartbeat (~3700 orders/min at 538 min). New rule: re-order only idle units far
-   from their assigned point, never units that cannot move (move speed <= 1), one shared unit pass with `Process`
-   (`AttackMove` enumerates everything a second time). **Attack group**: size from the target (towers and enemies
-   near the node), 40-60 food as the floor -- small groups fail against upgraded CP towers. The rest holds at the
-   owned node nearest the frontier (not at every node), and is not re-ordered while it holds.
-3. **0.42 -- route planner** (done, see CHANGELOG). Open: the 7 detours in `ROUTES.md`; doodads other than trees /
-   rocks (archways, walls) and gate units are not in the grid. Original plan: Graph generated from map data only (so it can run on
-   upstream 5.x): nodes = CPs + **objective nodes** (preplaced hostile structures, capitals like the Sunwell) +
-   portal ends; edges with walking cost from the pathing data plus doodads / destructables (the pathing map has
-   terrain only). Open / closed is read from the world at runtime (blocking rocks alive? portal exists?), no hand
-   flags. Dijkstra from the army's own node over open edges -> cheapest target; retarget only on events.
-   **Waypoint orders** (next node on the route instead of one cross-map order) move here -- they need routes.
-   Replaces: Combined / Kalimdor sets and the merge, portal-aware distance, stickiness, most stuck special cases.
-   Expected to make W1-W4 (`WORKAROUNDS.md`, the CPs added for bots) unnecessary -- through the objective nodes;
-   Dijkstra over CPs alone would not. Data: `tools/ai/graph_weights.py` (feasibility: 176 of 187 edges, median 1.08x
-   the straight line).
-4. [ai] **0.43** done: target by distance from the territory (CHANGELOG). Still open from the plan --
-   after a game with area targets: if area nodes find the harbour / camp targets, remove the workaround CPs W1-W4
-   (map data; check with `gen_routes.py --without n0SA,n0TD,n0RF,n0JS,n0SP,n0NX` -- in 0.42 every one of these spots
-   has an area node within 1800) and delete the old frontier picker, edge sets, merge and goals.
-5. [you/ai] **Economy** (after 1-3 are measured): bonus gold per minute via WL's `BonusIncome` (independent of the
-   bot count; today's per-turn subsidy pays more the fewer bots there are), start 11:00, Recruit 0,
-   `D x (20 % of WL StartingGold.Income + 10 % of CP income, counted up to 300)`, D 0 / 0.5 / 1 / 1.5 / 2.
-   Food caps only as the last resort.
-6. [ai] **Cleanup / PR preparation**: wave runner, doctrine steps, `OpenThandolIfDue`, goals; version tags in
-   comments -> CHANGELOG; split `AiSystem.cs`. Every hand-coded id and coordinate must skip silently when it is
-   missing (5.x has no Old Gods); the strength vote must not depend on the removed game-mode vote (W5).
+Veteran, chains on, autopilot allowed (say which faction), `-autodump`, 30-40 min, empty `CustomMapData` first.
+- **Rift**: `-ogrift`, then a unit of yours through the EAST end (Twilight Highlands, now 22545,-4684) and back. Does
+  it work now? The west end (Maw) worked.
+- **Gather points**: long routes wait at the last own node (ROUTES line "gather ... started / assembled / timeout")?
+  Do waves look better than single units arriving? `-gather off` for comparison.
+- **Creeps**: bots clear camps in their own areas (ROUTES "creep camps N")? Not before neutral CPs?
+- **Rest churn**: army line "rest=" much lower than "change="?
+- **Waygate exits**: army line "exit=" counts units continuing after a teleport; no crowds at exits.
+- Flapping: "switches per bot" (target / state) -- weak factions switched ~1/min in 0.44.0.
 
-## Freeze check (still open -- also WITHOUT alt-tabbing)
+## Movement (next steps -- `CONCEPTS.md` section 0)
 
-- 0.36.0 minute 1 and 0.37.1 turn 17 froze while alt-tabbing (sound kept playing). **0.38.1 froze at ~34 min without
-  alt-tabbing.** The dumps up to 30:00 showed nothing unusual (no errors, armies 1753 -> 914, load flat).
-- After a freeze, send the heartbeat file `CustomMapData\WLAI_heartbeat.txt` with the dumps (time = when it stopped,
-  task list = what ran last). `dump_summary.py` shows real seconds per game minute from the file times.
-- Still open: does a freeze also happen without computer players? On Windows?
+- [ai] **Step 2b, extend or re-order**: when the target changes during a chain (an ally took it), continue from the
+  chain's end if that costs <= ~1.2 x the direct route, else a new chain. Today: a new chain at once. Decide after
+  watching 0.45.0.
+- [ai] **Step 3, several groups per bot** (2-3), only when the army is clearly bigger than one target needs;
+  newcomers chain to the gather point and merge there.
+- [you/ai] **Waygate hop cost** (300 = one short walk): keep, or raise so ship trips to dead-end island chains are a
+  commitment (Warsong along the Broken Isles, 0.43.2). Maintainer unsure; decide with ROUTES waygate data.
+- [ai] Queued chains are lost in the teleport (WC3) -- 0.44.3 re-chains at the exit; if units still crowd there, give
+  the post-portal part as a separate chain right after the click.
+- [ai] Defence still flaps for weak factions under pressure (~1 attack <-> defence switch per minute, 0.44.0).
+  Options: longer hold, defence only for CPs worth more than the current target, or "defend" = the rest at staging.
+
+## Graph (generated from map data -- `tools/ai/gen_routes.py`, check with `tools/ai/render_map.py`)
+
+- [ai] **Graph independent of CPs** (for the upstream PR): nodes from terrain only, CPs as targets inside node areas;
+  Shattered Legacies CPs and the workaround CPs then do not shape the graph.
+- [ai] **Pass nodes**: generate nodes at narrow passages (mountain passes) and on long edges.
+- [ai] **Exceptions file** for what map data cannot know (invisible blockers, gate units, quest-only passages), listed
+  in `WORKAROUNDS.md`. Maintainer can mark nodes / edges on `route_map.png` in a fixed colour (pixel -> map:
+  x = -28672 + 16 px, y = -32256 + 16 (3584 - py)); read by program, not by eye.
+- [you] **Gnomeregan / Ironforge / Blackrock Depths** sit inside "no walk, no fly" rings (black on the map image) with
+  one gap: dwarves walked into Gnomeregan repeatedly (0.43.1). Check in game whether the gap is real.
+- [you] The 7 detours in `ROUTES.md` ("detour Nx"): blocked in game or a real way around?
+- [ai] Remove the workaround CPs W1-W4 (`WORKAROUNDS.md`) once area nodes + creep / leftover targets show the bots
+  attack those areas anyway (every W1-W4 spot has an area node within 1800).
+- [ai] Delete the old frontier picker, edge sets, merge, goals, doctrine steps once the route planner has run a few
+  games without falling back (`-route off` keeps it for A/B until then).
+
+## Missions -> general logic
+
+- [ai] **Area clears and kill targets** (`AiConfig.ClearAreas`, `KillTargets`): check each in a game with creep
+  targets on (0.44.3), then remove the ones the general logic covers. Sapphiron / Murmur timing = design: keep until
+  the maintainer decides. One-shots are already skipped (`-creeps off` brings them back).
+- Hero visits stay (quests).
+- [ai] **Quest requirements** (`CONCEPTS.md` 4): a small `[BOT]` hook so WL objectives expose their requirements
+  read-only; one bot handler per objective type (CP, hero + level + place, build in area, research). Would replace the
+  Kul Tiras workaround (buildings placed, quest given).
+
+## Bugs and checks
+
+- [ai] **SYSTEM ERROR at the plague**: "Scourge failed to execute OnQuestProgressChanged: Tried to call DropAllItems
+  on a summoned hero" (0.43.1). Check whether a bot-made hero counts as summoned.
+- [ai] **Lordaeron had a ship** (0.43.1) -- bots should not build ships. Find the source.
+- [ai] Bots without an altar never revive heroes (same rule as players). With income bases should hold; otherwise
+  rebuild an altar at a held CP (see production follow-ups).
+- [ai] Orcs never take the Warsong path (0.39.9): check the orc choice in `AiChoices`.
+- [ai] Legion summoned while the plague support had moved its army to Alterac (0.38); Argus not taken in 520 min;
+  Eye of Sargeras never picked up. Re-check after the movement work.
+- [you] Free heroes for a human? (0.38: the human Lordaeron got heroes for free.)
 
 ## Production follow-ups
 
-- [ai] **Units of buildings a bot doesn't have** stay "never" (Quel'thalas' Academy and Consortium, Kul Tiras' and
-  Stormwind's special units). Proposal: the starter kit also gives each bot its "Specialist" building(s).
-- [ai] **Quest-locked heroes and units**: `unit_scan.py` lists which quest unlocks what; decide which quests bots
-  should drive.
-- [ai] Hero care teleports often (~40 in 65 min; Warsong's Chieftain 6x from -9952,1944). Check that spot first.
+- [ai] Units of buildings a bot doesn't have stay "never" (Quel'thalas' Academy / Consortium, Kul Tiras', Stormwind's
+  special units). Proposal: the starter kit also gives each bot its "Specialist" building(s).
+- [ai] Quest-locked heroes and units: `unit_scan.py` lists which quest unlocks what.
 - [ai] Rebuilding destroyed production buildings + HQ safety net (no barracks -> HQ trains basics).
-- Ships and builders are left out of production on purpose; naval play is not planned.
+- [ai] Hero care teleports often (~40 in 65 min; Warsong's Chieftain 6x from -9952,1944).
+- [ai] Autocast for bot units / heroes.
+
+## Balance and economy (collected -- decide later, `CONCEPTS.md` 2-3)
+
+- [you] **Strength scale**: re-decide with bots that have income (0.44.2+). Veteran 0 may be right now.
+- [you/ai] Bonus gold in bursts / gold depot (~1000 gold, dynamic) / load governor on the bonus once the stalled-units
+  counter shows an overload threshold (0.44.1: stalled 2-10 % at ~2500 units -- no overload yet).
+- [you] Where bots produce (starting region vs near the front).
+- Observations from games WITHOUT bot income (void for balance, kept for reference): Old Gods took Kalimdor (0.44.0),
+  most bots had armies of 1-10 food (0.43.x-0.44.1).
+- [you/ai] CP towers vs bots: fully upgraded CP towers beat small bot armies.
+- [you] The South Alliance / Naga balance, Old Gods strength -> `../ShatteredLegacies/TODO.md`.
+
+## Freeze check (still open)
+
+- Freezes so far only with alt-tabbing on Linux/Proton (0.36.0, 0.37.1); 0.38.1 froze at ~34 min without alt-tabbing.
+  After a freeze send `CustomMapData\WLAI_heartbeat.txt` with the dumps.
 
 ## Decisions needed
 
-- [ai] **Guardian summons (decided, not built)**: bots only. A channelling quest hero that gets attacked pulls the
-  24 nearest army units of its owner to it (Mass Teleport look, ping, one announcement per channel), at most once per
-  minute. **HQ last stand**: the same when a bot's HQ is attacked, at most once per 5 min, HQ invulnerable during the
-  teleport. The HQ list must come from WL's essential legends inside the bot, or from a fork through `AiApi` -- not
-  from `ShatteredLegacies/`.
-- **Archimonde's channel: ON HOLD** (maintainer); the guardian summons cover the remaining risk.
-- [you] **Defend range / flapping**: the Legion "defended" a shrine 26 km away and switched defend/attack every 15 s.
-  Proposal: defend only within ~8000 of the army, keep a defend target at least 60 s. (Part of 0.42: defense = nodes
-  within a few hops of the army.)
-- [you] Kul Tiras Highbank last stand (`QuestRule` with `CapitalLost` = Boralus Keep)?
-- [you] **Free heroes for a human?** In the 0.38 test the human Lordaeron got heroes for free. The bot only trains
-  heroes for bots. Check whether gold goes down when you queue a hero.
+- [ai] Guardian summons (decided, not built): a channelling quest hero that gets attacked pulls the 24 nearest army
+  units (once per minute); HQ last stand the same (once per 5 min, HQ invulnerable during the teleport).
+- [you] Kul Tiras Highbank last stand?
+- [you] Argus with mixed owners: the pre-summon portal stays open for everyone without a summon. Keep it?
+- [you] Broken Isles reached only by the AI ship Azshara Coast <-> Azsuna -- a real waygate humans use too.
 
-## Smaller implementation work
+## Smaller work
 
-- [ai] **Rift to the Maw of Gor'ma does not work** (0.39.9 playtest): the target end is around (22545,-4784), the
-  preplaced `n07E`. Check doodads there offline (`map_query.py around`); maybe ~100 further north.
-- [ai] **Orcs never take the Warsong path** (0.39.9 playtest): the random pick in `AiChoices` works for the Sentinels
-  and the Exodar. Check the orc choice (bad luck vs a bug).
-- [ai] **Warsong as a bot**: goals for its subdue quests -- Echo Isles, Thunder Bluff, Stonemaul; each needs Grom.
-- [ai] **Legion still on the Sunwell side**: summoned at 17:39, but the plague support had already teleported its
-  army to Alterac. Proposal: at the summon, move a bot Legion's army through to Felwood, or stop the plague support
-  once the Legion is summoned. [you] decide.
-- [ai] **Argus not taken by the winners** after 520 min: probably the pre-summon edge weight (15). Re-check.
-- [you] **Argus with mixed owners**: without a summon the pre-summon portal stays open for everyone. Keep it, or only
-  for the Legion's team?
-- [ai] **Eye of Sargeras**: nobody picked it up in 520 min. Find it and whether bots can reach it.
-- [ai] **Orc air units fly over the ocean**: flyers take the straight line to a target that ground units reach by
-  portal. Idea: flyers follow the army anchor (see also pseudo-flyers in `../ShatteredLegacies/TODO.md`).
-- [you/ai] **CP towers vs bots**: fully upgraded CP towers beat bot armies -> the map felt empty after the start.
-  Partly 0.41 (group size from the target); ideas: weaker towers on bot-owned CPs, bots focusing towers.
-- [ai] Autocast for bot units / heroes (heal, inner fire, ...).
-- [ai] Gate sweep stays; the maintainer checks in playtests which gates survive (`-id`, then `AiGraph.GateTypes`).
-- [ai] `map_query.py` -> `map_audit.py`: check every coordinate in `AiConfig.cs` in one run (incl. doodads near
-  portal ends).
-- [ai] Debug: `-scout` (define first), winner record when WL declares victory.
-- [ai] (low) Bot heroes die early (train a hero, attack creeps without an army). Probably fixed by 0.41.
-- Note: WL has no `-spectate`; the AI takes over a slot only when its human LEAVES.
+- [ai] `map_query.py` -> `map_audit.py`: check every coordinate in `AiConfig.cs` in one run.
+- [ai] Debug: `-scout`, winner record when WL declares victory.
+- [ai] Gate sweep stays; check in playtests which gates survive (`-id`, then `AiGraph.GateTypes`).
+- [ai] Cleanup / PR preparation: wave runner, doctrine steps, `OpenThandolIfDue`, goals; version tags in comments ->
+  CHANGELOG; split `AiSystem.cs`; every hand-coded id must skip silently when missing (5.x has no Old Gods).
 
-## Check in the next playtests (0.42: games A / B / C)
+## Repository
 
-- `-version` shows the new build; no `SYSTEM ERROR`, no `TICK ERROR` in PINNED.
-- **A/B/C test with the 0.42 build, same settings every game** (strength vote Veteran = normal gold, same
-  factions, 20-25 min, `-autodump` at the start, empty CustomMapData before each game):
-  game A `-orders idle` and `-route off` (= 0.40), game B `-route off` (= 0.41), game C nothing (= 0.42).
-  Summarize each with `dump_summary.py --append "A ..."` etc. Summarize each with `dump_summary.py --append "A idle ..."` / `"B smart ..."`. Compare
-  orders/min, orders far / idle-at-target, units on the map, CPs per team, and the feel: do bots still take CPs?
-  Do groups die at upgraded towers? Do units pile up at the staging CPs?
-- 0.41: `-debug2` third line (army orders by reason); dump LOAD "groups" line per bot.
-- **0.44.2 (bots get CP income now)**: armies grow over the whole game? TRAINED totals keep rising after 40:00?
-  LOAD "bot income paid" per bot; max-slot back to a few thousand? Then re-decide the strength scale -- every gold
-  observation before 0.44.2 was made with bots that had NO CP income (Veteran 0 may be right now).
-- [ai] **0.44.3: creep targets** (agreed): Neutral Hostile units (slot 24) in the area of a CP the bot holds (creeps in
-  an area node's patch: the nearest CP on foot), reachable, any time, invulnerable / hidden skipped, strength from
-  level not food, lower priority than CPs; same scan as the structures. Then remove `AiConfig.OneShots`; area clears
-  and kill targets one by one after checking them. Hero visits stay.
-- [ai] Waygates: queued chains are lost in the teleport (0.44.1 long game: 1048 units found idle at an exit) -- units
-  wait up to 20 s for the heartbeat. Re-chain units at an exit on every service instead.
-- [you] **Old Gods rift**: the map data puts both ends on walkable ground connected to the eastern continent, and the
-  rift was open in the long game (both directions live). What exactly fails in game -- units do not enter, or they
-  arrive and stop? Test: right-click your own unit onto the east end (22545,-4784).
-- [ai] Bots without an altar never revive heroes (the rule for players too). With income, bases should hold longer;
-  if not, rebuild an altar at a held CP (TODO "Rebuilding destroyed production buildings").
-- **0.44.1**: Stratholme-like leftovers get attacked? ROUTES "waygates" list + "units idle at an exit" (Dark
-  Portal). LOAD max-slot back to a few thousand? Balance A/B: one game `-chain off` (Old Gods took Kalimdor in the
-  0.44.0 game: Kalimdor 23 -> 8 CPs, most bots had armies of 1-4 food at 25:00 -- chains or production?).
-- **0.44.0** on Commander: units follow the graph (no flyers over the ocean, no shortcuts over mountains)? Waygates:
-  do units walk in and continue on the other side (queue survives the teleport)? If they stop at the exit, the
-  heartbeat gives the rest of the chain (up to 20 s). LOAD line "army ...": chains / fallbacks / stalled %, and the
-  "switches per bot" line. A/B: `-chain off` in a second game.
-- [ai] **Cheap islands**: Warsong expanded along the Broken Isles chain (Azsuna -> ... -> Maelstrom) behind the AI ship
-  (0.43.2 game): a waygate hop costs only 300 in the planner. Raise the portal cost (a ship / portal trip is a
-  commitment) or value dead-end island chains lower. Decide after 0.44 (chains change how portals are used).
-- [ai] Flapping is lower in 0.43.2 but still up to 6 attack -> defence switches per bot in a log window -- the 0.44
-  counter measures it over the whole game.
-- **0.43.2** on Commander: no attack <-> defence flapping (event log: few "state atk -> def"; ROUTES)? Scourge stays
-  in Lordaeron during the invasion? Dwarves away from the closed Thandol bridge? Units walk without turning around?
-- [you] **Gold scale**: on the new Veteran (0 bonus) the map felt empty at 20:00 -- armies of 2-50 food, gold ~0 for
-  every bot. Commander (+13) for the next test; then decide Veteran (maybe +6 to +13).
-- [ai] **SYSTEM ERROR at the plague**: "Scourge failed to execute OnQuestProgressChanged: Tried to call DropAllItems
-  on a summoned hero" (0.43.1 game). Check whether a bot-made hero (free heroes, revives, banned-form handling) counts
-  as summoned -- if so it is the bot's fault; otherwise a WL bug.
-- [ai] **Lordaeron had a ship** (0.43.1 game) -- bots should not build ships. Find the source (production tables,
-  starter production, CP grants, a WL quest reward).
-- [you] **Gnomeregan and similar dead ends**: which faction goes there, and when? The 0.43.1 log window had no event
-  for it. A screenshot or the time helps; `-dump` right then is best.
-- [you] Emerald Portals: check again after 0.43.2 (waygate ends by area).
-- Mountain areas (dwarves) suffered most: re-check after the Thandol / detour fixes.
-- **0.43.1** (Veteran = 0 bonus now -- not comparable with older games, start a new baseline): no team balls (ROUTES:
-  different targets per bot of a team)? Units walk on without stopping at every node? Fewer "advance" orders?
-  Druids take their neighbourhood (quest CPs)? Observations from the 0.43.0 game to re-check: Scourge had not cleared
-  Northrend at 20:00 (its army was in Lordaeron); bots walk to dead ends like Thunder Bluff (an enemy capital -- a
-  legal target, but check whether they fail there and come back: event log "stuck"); fights everywhere but few CPs
-  change hands.
-- **0.43.0**: Druids (and everybody) take the neutral CPs around their home first, then the front? ROUTES lines show
-  "inside" / "front" / "quest". Plus the 0.42.1 checks below.
-- **0.42.1 (game C')**: same settings as game B (Veteran, 20-25 min). Watch: dwarves around Fuselight / Twilight
-  Shore, Thandol bridge while closed (no standoff at the banks?), Outland portals (groups go through?), Druids take
-  their quest CPs first? Bots stop running to dead ends (Gnomeregan, Terrordale)? Send the last dump (ROUTES section).
-- 0.42 (game C): dump ROUTES -- targets plausible? "next" nodes along the way? Rock groups closed early, open after
-  the turns? Waygate edges > 0 after 1 min? Bots attack harbours / camps (area targets show as "E:" with a building
-  name)? `-edges` still shows the OLD graph.
-- 0.40: bots behave as in 0.39.9 (attack, produce, gates disappear, quests, portals). `-debug2` shows a second line
-  (slot max, over, far orders, idle@target, top tasks); `-dump` LOAD has the scheduler, orders and task lines.
-  `-budget on` for a few minutes: "deferred" grows, nothing breaks. Then `dump_summary.py` into MEASUREMENTS.md.
-- Fallbacks work as before (trigger buildings at 62 s, Ironforge placeholder, Kul Tiras -> Kezan Enterprise).
-  The Scarlet Crusade trigger building reads "Fallback: Scarlet Crusade (story event)".
-- Kezan Enterprise bot: Gallywix is its first hero (fixed in 0.39.10); Laboratory / Mercenary Den / Tank Factory
-  units are trained (dump TRAINED).
-- Older checks still open: new CPs reachable (`-edges`), 100-gold CPs show "(100 gold/min)", Emerald Portals and the
-  Old Gods rift both ways, hero visits (Gul'dans Legacy with army escort), Book of Medivh "Guardian's Abjuration",
-  starter production pins at 0:35.
-
-## Open questions
-
-- [you] Thandol bridge: opening sooner is not needed as long as bots don't try to cross before it opens.
-- [you] Broken Isles are reached only by the AI ship Azshara Coast <-> Azsuna -- a real waygate humans use too. Is a
-  ship from Kalimdor the right connection?
+- Push only named tags (`git push origin v0.45.0`), never `--tags`: old tags drag Git LFS into history the local
+  clone never downloaded ("Git LFS upload failed"). Missing tags on GitHub so far: v0.42.1, v0.43.0, v0.43.1 (push if
+  they exist locally).
+- [you] `git lfs ls-files | awk '$2=="-"'` lists current files that are only LFS pointers -- if any, the built map
+  lacks those assets (possible cause of the invisible Kezan units). Fix: `git lfs pull`, else fetch from the original
+  repository (`../ShatteredLegacies/TODO.md`).
+- The route map image (`tools/ai/out/`) is never committed; attach it to a GitHub release when worth keeping.

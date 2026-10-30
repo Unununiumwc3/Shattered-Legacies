@@ -1429,7 +1429,11 @@ namespace WarcraftLegacies.Source.Ai
               NoteTarget(p, pid, rt, enemyRt ? "route-enemy" : "route-neutral");
               TrackStuck(p, pid, rt);
               float rx = GetUnitX(rt), ry = GetUnitY(rt);
-              if (AiRoutes.HasWaypoint(pid) && !AiRoutes.Chains) // 0.44: chains carry the route themselves
+              if (AiRoutes.Gathering(pid, out var gx, out var gy)) // 0.45.0: long route -- gather first
+              {
+                IssueAttackToPoint(p, pid, gx, gy, false, rx, ry);
+              }
+              else if (AiRoutes.HasWaypoint(pid) && !AiRoutes.Chains) // 0.44: chains carry the route themselves
               {
                 IssueAttackToPoint(p, pid, AiRoutes.WpX[pid], AiRoutes.WpY[pid], false, rx, ry);
               }
@@ -1540,6 +1544,11 @@ namespace WarcraftLegacies.Source.Ai
         {
           AiScheduler.StateSwitch[pid]++; // 0.44
         }
+      }
+
+      if (AiArmy.Smart && AiRoutes.Chains)
+      {
+        AiArmy.ExitPass(pid); // 0.44.3: units idle at a waygate exit continue now
       }
 
       BotState[pid] = state;
@@ -2803,7 +2812,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.44.2";
+    public const string Build = "0.45.0";
 
     public static void Setup()
     {

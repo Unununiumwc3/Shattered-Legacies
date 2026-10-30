@@ -43,6 +43,39 @@ namespace WarcraftLegacies.Source.Ai
     internal static int OrdIdleFar; // heartbeat: idle unit away from its point
     internal static int OrdRefill;  // heartbeat: new group members after losses
     internal static int OrdAdvance; // 0.42: same target, next waypoint: the group moves on
+    internal static int OrdExit;    // 0.44.3: idle at a waygate exit, re-chained on the next service
+
+    internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[pid] : 0;
+
+    // 0.45.0: has share of the attack group's food arrived within r of (x, y)? (gather points)
+    internal static bool GroupAssembled(int pid, float x, float y, float r, float share)
+    {
+      var grp = pid >= 0 && pid < 24 ? _group[pid] : null;
+      if (grp == null || grp.Count == 0)
+      {
+        return true;
+      }
+
+      var total = 0;
+      var near = 0;
+      for (var i = 0; i < Units.Count; i++)
+      {
+        var u = Units[i];
+        if (!grp.Contains(u))
+        {
+          continue;
+        }
+
+        var f = Food(u);
+        total += f;
+        if (IsNear(u, x, y, r))
+        {
+          near += f;
+        }
+      }
+
+      return total == 0 || near >= total * share;
+    }
 
     // whole = defence / kill target / hold: every unit goes, no group. (x, y) = where to go now (waypoint or target),
     // (fx, fy) = the final target: a new final target picks a new group; a new waypoint only moves the group on.
@@ -122,8 +155,11 @@ namespace WarcraftLegacies.Source.Ai
             Issue(u, x, y);
             OrdChange++;
           }
-          else if (_hasStage[pid] && !IsNear(u, _stageX[pid], _stageY[pid], AtStage))
+          else if (_hasStage[pid] && IsIdleAway(u, _stageX[pid], _stageY[pid], AtStage))
           {
+            // 0.44.3: only IDLE rest units -- the busy ones keep walking (to the old staging CP or a fight) and get
+            // the new one when they stand idle. Before, every target change re-sent all rest units away from the new
+            // staging CP: 12,913 "rest" orders in 14 min (0.44.2 game), units walking back and forth.
             Issue(u, _stageX[pid], _stageY[pid]);
             OrdRestMove++;
           }
@@ -169,11 +205,6 @@ namespace WarcraftLegacies.Source.Ai
         {
           if (IsIdleAway(u, x, y, AtTarget))
           {
-            if (AiRoutes.NearWaygateExit(GetUnitX(u), GetUnitY(u)))
-            {
-              AiRoutes.ExitIdle++; // 0.44.1: queue lost in the teleport?
-            }
-
             Issue(u, x, y);
             OrdIdleFar++;
           }
@@ -183,6 +214,42 @@ namespace WarcraftLegacies.Source.Ai
           Issue(u, _stageX[pid], _stageY[pid]);
           OrdRestMove++;
         }
+      }
+    }
+
+    // 0.44.3: units standing idle at a waygate exit lost their queued chain in the teleport -- give them the rest of
+    // the way NOW (every service), not after the 20-s heartbeat (0.44.1 long game: 1048 found at exits).
+    internal static void ExitPass(int pid)
+    {
+      if (pid < 0 || pid >= 24 || !_hasFinal[pid])
+      {
+        return;
+      }
+
+      var grp = _group[pid];
+      for (var i = 0; i < Units.Count; i++)
+      {
+        var u = Units[i];
+        if (GetUnitCurrentOrder(u) != 0 || !AiRoutes.NearWaygateExit(GetUnitX(u), GetUnitY(u)))
+        {
+          continue;
+        }
+
+        if (grp != null && grp.Contains(u) || _whole[pid])
+        {
+          Issue(u, _fx[pid], _fy[pid]);
+        }
+        else if (_hasStage[pid])
+        {
+          Issue(u, _stageX[pid], _stageY[pid]);
+        }
+        else
+        {
+          continue;
+        }
+
+        AiRoutes.ExitIdle++;
+        OrdExit++;
       }
     }
 
@@ -331,6 +398,12 @@ namespace WarcraftLegacies.Source.Ai
         {
           structures++;
         }
+        else if (oid == 24)
+        {
+          var f = Food(u);
+          var lv = GetUnitLevel(u);
+          food += lv > f ? lv : f; // 0.44.3: creeps / bosses often use 0 food -- their level counts
+        }
         else
         {
           food += Food(u);
@@ -474,7 +547,7 @@ namespace WarcraftLegacies.Source.Ai
     {
       return "army " + (Smart ? "smart" : "old") + " orders: change=" + I2S(OrdChange) + " idle-away="
              + I2S(OrdIdleFar) + " rest=" + I2S(OrdRestMove) + " refill=" + I2S(OrdRefill) + " advance="
-             + I2S(OrdAdvance) + " | chains " + (AiRoutes.Chains ? "on" : "off") + " issued=" + I2S(AiRoutes.ChainsIssued)
+             + I2S(OrdAdvance) + " exit=" + I2S(OrdExit) + " | chains " + (AiRoutes.Chains ? "on" : "off") + " issued=" + I2S(AiRoutes.ChainsIssued)
              + " points=" + I2S(AiRoutes.ChainPoints) + " fallback=" + I2S(AiRoutes.ChainFallback) + " | stalled "
              + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen);
     }
