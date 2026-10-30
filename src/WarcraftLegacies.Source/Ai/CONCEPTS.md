@@ -69,6 +69,9 @@ Options:
 - **Spend in intervals** (all gold every N minutes): hard to tune.
 - [you] Not wanted: bursts in the CP income itself (a step away from WL).
 
+**0.44.2 correction**: bots never received CP income (WL pays human slots only) -- every gold observation before
+0.44.2 is void; the bonus WAS their whole income. Re-measure before deciding depot / bursts / scale.
+
 Data (0.43.1, new Veteran = 0 bonus): at 20:00 armies of 2-50 food, gold ~0 for every bot, the map felt empty.
 Without any bonus a bot cannot hold an army -- the free techs / heroes do not make up for it.
 

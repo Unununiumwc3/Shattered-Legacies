@@ -49,6 +49,10 @@ They change the game for humans too, so the original maintainer has to agree to 
 | CP handovers: Terrordale / Deathknell to the Scourge at "Plague of Undeath", Sulfuron Spire to Skywall, palace handover | `AiMissions`, `AiConfig` | bots would not get these areas otherwise | ask upstream |
 | Bot bonuses: gold subsidy, free techs / upgrades / heroes / revives, starter production buildings, Kul Tiras repair, Continental Outpost buildings | `AiTech`, `AiMissions`, `SimpleBot.HasPerks` | difficulty; humans never get them | design -- discuss upstream |
 
+Also: **CP income for computer slots** (`AiIncome`, 0.44.2): WL pays CP income only to human slots
+(`ControlPointManager`). The bot pays its own slots the same amount -- no WL change. Upstream question: should WL pay
+computer slots itself (one condition in `ControlPointManager`)? Then `AiIncome` goes away. Blocks PR: no.
+
 ## 4. Bot data tied to this map version or to Shattered Legacies content
 
 | What | Where | Proper solution | Blocks PR |
