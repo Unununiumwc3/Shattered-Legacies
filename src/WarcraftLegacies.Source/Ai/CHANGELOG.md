@@ -4,6 +4,29 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.45.1 (docs only -- the in-game banner stays 0.45.0)
+Plan and docs after the review of the movement approach (no map change).
+- **Phases** (`TODO.md`): 1 movement "good enough" (0.46-0.49, ends at exit criteria: load, graph, activity,
+  flapping returns, no dead map, maintainer's call) -> 2 restructure (~0.50) -> 3 fine-tuning. Upstream PR = `Ai/`
+  copied into a fresh upstream branch. Playtest protocol (stopwatch at turns, per-bot A/B swap).
+- **0.46 planned**: unit budget per CP (40 + 10 per CP, ~150 food on average), order-latency probe, guard
+  positions (hypothesis), the maintainer's graph edits, instant pseudo-portals, per-bot A/B switches, activity /
+  flapping-return counters, spread chain points (test), CSharp.lua instance-field check. **0.47**: theatres, ferries.
+- `CONCEPTS.md`: new designs 6 theatres, 7 pseudo-portals + ferries, 8 unit budget per CP, 9 measuring engine load;
+  step table updated; old "step 3" (groups by army size) replaced by theatres.
+- `README.md`: "How the bots move" (the pipeline today, planned parts marked), "Already tried" (every movement /
+  targeting / load approach since v6, what happened, what replaced it), list of the documents.
+- **TODO split**: `TODO.md` = bot work only (what would go into the upstream PR); everything fork-only (fallbacks,
+  Kezan, map content, the fork's win rule and game length, faction balance, brainstorming) in
+  `../ShatteredLegacies/TODO.md`. New there: the Thandol Treaty (start vote, Great Alliance, Imperial Tax, Defias),
+  the fork's win rule and game length (100-140 min), the per-faction base of the bots' unit budget.
+- **0.45.0 played (540 min)**, results in `TODO.md` and `MEASUREMENTS.md`: no rift crossing in 510 min (dead map);
+  creep camps never ran (TICK ERROR in route creeps every run); Fel Horde flapped between route planner and old
+  picker (no graph edge out of Outland); gather points 12 of 149 assembled; lag at the end with fewer units than at
+  10 min. 0.46 gets the fixes, pseudo-portals first.
+- `AI_AGENTS_CONTEXT.md`: state of the work and plan, new section "Engine (WC3) limits", workflow rule (read / extend
+  "Already tried").
+
 ## 0.45.0
 Movement step 2 and handover docs (a new chat starts from here). NOT playtested.
 - **Gather points (waves)** (`CONCEPTS.md` 0, step 2): a route longer than 5 nodes first goes to the last own node
