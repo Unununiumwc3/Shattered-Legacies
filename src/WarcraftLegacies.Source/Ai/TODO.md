@@ -8,7 +8,7 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.46.0** (built from parts 1-3, not played yet).
+Current build: **0.46.1** (0.46.0 + naval waygates skipped + caster cap 35 %).
 
 ## The plan: three phases
 
@@ -60,7 +60,8 @@ Rules for phase 1:
 | 0.44.3 | only inside 0.45.0 | creep targets, rest churn fix, exit re-chain |
 | 0.45.0 | yes (540 min, 16 bots) | rift: no crossing in 510 min -> dead map; creep camps never ran (TICK ERROR); laggy end |
 | 0.46 part 2 | smoke test, 5 min | 397 teleports, no errors; order latency already 1-2 s median at 5 min (3765 units) |
-| 0.46.0 | **next** | see "Next playtest" |
+| 0.46.0 | started | dwarves teleported through WL's naval Water Passageway at the Thandol Span -> 0.46.1 |
+| 0.46.1 | **next** | see "Next playtest" (same checklist) |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -74,11 +75,11 @@ observations from those games are void. Movement observations stay valid.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
 
-## Next playtest (0.46.0)
+## Next playtest (0.46.1)
 
 Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer, **stopwatch at turns 5, 10, 20, 30,
 40**. Then `dump_summary.py ... --real "t5=... t10=..." --append "<note>"`.
-- `-version` shows 0.46.0; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
+- `-version` shows 0.46.1; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
   `AiStyleCheck.cs`, rebuild, and tell the AI (the phase-2 style would not work).
 - Errors: the summary lists them at the top -- none expected.
 - **Rift / portals**: "pseudo-portals on: teleports N"; Old Gods units on the Eastern Kingdoms after the rift opens
@@ -89,8 +90,10 @@ Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer
 - **Unit budget**: "army/budget, capped turns" -- do bots hit it; fewer units on the map than 0.45.0?
 - **Creep camps** (first time they run): ROUTES "creep camps N" > 0, bots clear camps in their areas.
 - **Planner**: "planner nulls" (kept valid target); Fel Horde target switches far below 608.
-- **A/B lines** (guard / gather / spread): which half did better? Next game: `-guard ab2`, `-gather ab2`,
-  `-spread ab2` at the start (swaps every half).
+- **A/B lines** (guard / gather / spread): nothing to type -- one game tests all three at once. Only big differences
+  count (factions differ). Optional later game with `-guard ab2 -gather ab2 -spread ab2` (one line each) swaps every
+  half; no extra games per switch.
+- No unit should use the Water Passageways at the Thandol Span ("naval waygates ignored" > 0).
 - **Quel'thalas**: caster orders skipped (P2); "targets by owner" -- who attacks P2?
 - `-edges` in game: the generated graph -- wrong edges? (`route_map.png` shows the same graph.)
 

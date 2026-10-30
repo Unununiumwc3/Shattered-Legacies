@@ -4,6 +4,20 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.46.1
+Fix from the first 0.46.0 game (maintainer: dwarves ran into a teleport at the Thandol Span and came out in a weird
+spot).
+- **Naval waygates are no army edges.** WL's "Water Passageway" pairs (n03Q / n03S, Neutral Passive) stand on deep
+  water and exit onto water -- they let SHIPS pass the Thandol Span (15040,0 <-> 16384,128) and sail between Highbank
+  and western Kalimdor (22720,-9664 <-> -20800,4864). The route graph took every active neutral waygate as an edge
+  since 0.42, so the planner believed in a Dun Modr -> Dragonmaw Gates passage and a Highbank <-> Feralas coast
+  shortcut. Units could not reach them (0.42-0.45: stuck at the shore); the 0.46 pseudo-portals teleported them, and
+  the engine set them down at the nearest dry spot. Now a waygate whose position or exit is not walkable is skipped
+  (all other portals checked: AI pairs, rift, Argus, Emerald Portals, Dark Portal stand and land on walkable ground).
+  Dump: "naval waygates ignored".
+- **Caster cap 35 %** (was 25 %): Quel'thalas is a caster faction.
+- Version v0.46.1.
+
 ## 0.46.0
 Fixes from the 0.45.0 game, pseudo-portals, engine-load measuring and the first per-bot A/B tests. Built in three
 parts (smoke test of part 2: 397 teleports in 5 min, no errors). Version v0.46.0.

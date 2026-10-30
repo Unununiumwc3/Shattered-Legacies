@@ -1195,7 +1195,7 @@ namespace WarcraftLegacies.Source.Ai
           var ttid = GetUnitTypeId(tu);
           if (AiData.Trains.ContainsKey(ttid))
           {
-            // 0.38: the building's REAL train list; 0.46: no casters while they are 25 % or more of the units
+            // 0.38: the building's REAL train list; 0.46: no casters while they are 35 % or more of the units
             TrainFromTable(tu, AiData.Trains[ttid], p, perks && AiCaster.TooMany(casterUnits, armyUnits));
           }
           else if (fighters.Count > 0 && ListHas(barracks, ttid))
@@ -2847,7 +2847,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.46.0";
+    public const string Build = "0.46.1";
 
     public static void Setup()
     {
