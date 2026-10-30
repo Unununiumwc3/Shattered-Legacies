@@ -224,7 +224,15 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        _creepLevel[node] += GetUnitLevel(u) > 0 ? GetUnitLevel(u) : 1;
+        // 0.46: no ternary in a compound assignment to an array element -- CSharp.lua emitted
+        // "a:get(i) + (lv > 0) and lv or 1" (arithmetic on a boolean, TICK ERROR on every run in 0.44.3-0.45.0)
+        var lvl = GetUnitLevel(u);
+        if (lvl < 1)
+        {
+          lvl = 1;
+        }
+
+        _creepLevel[node] = _creepLevel[node] + lvl;
         if (_creep[node] == null)
         {
           _creep[node] = u;

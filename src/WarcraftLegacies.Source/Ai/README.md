@@ -82,6 +82,21 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 7. **Production** (separate 1-s task): every building trains from its own list. *Planned (0.46): **unit budget** --
    bots train only while their army is below 40 + 10 food per held CP.*
 
+**Portals and passages -- how they open** (each open waygate of a neutral owner is a one-way graph edge, read every
+30 s; rocks every 15 s):
+
+| Passage | Opens | Made by |
+|---|---|---|
+| Dark Portal (Blasted Lands <-> Outland, 3 waygate pairs) | Fel Horde quest "The Dark Portal": turn 10, or earlier by research R02C at Hellfire Citadel, never before turn 8 | WL (preplaced n036, Neutral Hostile, hidden until then) |
+| Thandol Span rocks (Arathi <-> Dun Modr) | turn 30 (WL removes the rocks) | WL |
+| Other WL rocks (`LTrc`, 9 groups) | quests / events; the edges are closed while the rocks stand | WL |
+| Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | an Old Gods faction takes Nordrassil, or the Maw is taken from outside the Old Gods (details: `AiGates`); `-ogrift` | bot (`AiGates`) |
+| Emerald Portals (Shrine of Malorne <-> Feralas) | as soon as WL's preplaced pair is visible | bot activates WL's pair |
+| Argus portals (Argus <-> Northrend before the summon, Felwood / Quel'Danas after) | always / at the Legion summon | bot (`AiLegion`) |
+| AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
+
+`-edges` in game draws the OLD hand-written graph, not the one the route planner uses (0.46: switched).
+
 Designs of the planned parts: `CONCEPTS.md` 6-9. The engine is the limit: with thousands of units and orders, WC3's
 pathfinder queue delays every order (players feel 1-2 s); see `CONCEPTS.md` 9.
 

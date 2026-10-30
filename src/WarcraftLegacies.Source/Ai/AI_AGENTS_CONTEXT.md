@@ -153,6 +153,10 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
     `WORKAROUNDS.md` or `../ShatteredLegacies/README.md` in the same drop.
 15. **Desync**: never base a decision on wall-clock time, local files or per-client text. Counters for budgets must
     be deterministic (units enumerated, orders issued).
+16. **CSharp.lua: no compound assignment to an ARRAY element with a ternary / comparison / logic on the right**
+    (0.44.3-0.45.0, silent TICK ERROR on every run): `a[i] += c ? x : y` became `a:get(i) + (c) and x or y` --
+    arithmetic on a boolean. A plain variable (`food += c ? x : y`) was translated correctly. Compute the value into a
+    local first. `check_refs.py` flags it ("INDEXER COMPOUND").
 
 ## How we work
 
@@ -266,6 +270,15 @@ Map mechanics
 - Waygates: a landing spot on/near a building or preplaced unit lets flyers through but not ground units. Keep portal
   ends on open ground (`LandBeside` keeps 250 from buildings). Waygate n036 carries A01M/A023 "Anti Portal Blocking"
   (1000-range immolation); AI portals shrink it to 250.
+- **Two graphs** (until phase 2): the route planner uses the GENERATED graph (`AiRoutes.g.cs`, drawn by
+  `tools/ai/render_map.py`); the OLD hand-written graph (`AiConfig` edges) is only the fallback picker's -- but it is
+  what `-edges` draws in game and what the dump's EDGES sections list. The maintainer's 0.46 edge list was made from
+  the old graph; the generated one already matched 12 of its 13 items. Always say which graph you mean.
+- **Dark Portal** (Outland <-> Blasted Lands): WL's Fel Horde quest "The Dark Portal" (`QuestDarkPortal`, global)
+  completes at turn 10, or earlier by research R02C at Hellfire Citadel, never before turn 8. It then shows and
+  activates three preplaced waygate pairs (n036, owner Neutral Hostile, hidden until then). The route graph reads
+  active neutral waygates every 30 s -- yet the 0.45.0 dump at 540 min had no Dark Portal edge (cause open, 0.46
+  lists WL's own waygates in the dump).
 - The Sunwell (`n001`) and Sunwell Corrupted (`n079`) are **capitals**, not CPs. Win threshold: 90 CPs per team.
 - Shared quests (`SharedQuestRepository.RegisterQuest`: Tomb of Sargeras, Yogg-Saron, Ragnaros, ...) are ONE instance
   added to every faction -- completing it for one completes it for all.

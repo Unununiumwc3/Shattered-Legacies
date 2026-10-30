@@ -4,7 +4,7 @@ or a private member used from another class.
 Usage: python3 tools/ai/check_refs.py [dir ...]   (default: the Ai and ShatteredLegacies folders)
 0.39.10, layers: a file under a folder named "Ai" is bot code. LAYER = bot code uses a class from another folder
 (the bot must never depend on fork code); API = other code uses a bot class other than AiApi (go through AiApi)."""
-import sys, glob, os
+import sys, glob, os, re
 import tree_sitter_c_sharp as tscs, tree_sitter as ts
 
 parser = ts.Parser(ts.Language(tscs.language()))
@@ -191,6 +191,16 @@ for f, line, frm, name in unqualified:
         owners = [c for c, ms in members.items() if name in ms and c != frm]
         if owners:
             print(f"UNQUALIFIED  {f}:{line}  {name}(...) in {frm} -- belongs to {owners} (write {owners[0]}.{name})"); bad += 1
+# 0.46: CSharp.lua drops the parentheses when a compound assignment to an ARRAY/INDEXER element has an operator of
+# lower precedence on its right side: "a[i] += c ? x : y" became "a:get(i) + (c) and x or y" -- arithmetic on a
+# boolean, a TICK ERROR on every run (route creeps, 0.44.3-0.45.0). Plain variables were translated correctly.
+INDEXER_COMPOUND = re.compile(r"\]\s*(?:\+|-|\*|/|%)=\s*[^;]*?(?:\?|&&|\|\||==|!=|<=|>=|<(?![A-Za-z_][\w.]*>)|>)")
+for f, src, t in trees:
+    for i, raw in enumerate(src.decode("utf-8").splitlines(), 1):
+        code = raw.split("//", 1)[0]
+        if INDEXER_COMPOUND.search(code):
+            print(f"INDEXER COMPOUND  {f}:{i}  compound assignment to an array element with a ternary / comparison / "
+                  f"logic on the right -- compute the value into a local first"); bad += 1
 print(f"checked {sum(1 for r in refs if r[3] in members)} cross-class references in {len(files)} files: "
       + ("OK" if bad == 0 else f"{bad} problem(s)"))
 sys.exit(1 if bad else 0)
