@@ -4,7 +4,10 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
-## 0.46.0 (in progress -- built when all parts are in)
+## 0.46.0
+Fixes from the 0.45.0 game, pseudo-portals, engine-load measuring and the first per-bot A/B tests. Built in three
+parts (smoke test of part 2: 397 teleports in 5 min, no errors). Version v0.46.0.
+
 Part 1:
 - **Creep camps finally run**: `AiRoutes.CheckCreeps` failed on every run since 0.44.3 (TICK ERROR "arithmetic on a
   boolean value", war3map.lua:29279): CSharp.lua translated `_creepLevel[node] += lv > 0 ? lv : 1` without the
@@ -33,6 +36,31 @@ Part 2:
 - **Order-latency probe** (`AiProbe`): game time from an order to an idle unit until it moves; buckets per 5 min.
 - **Guard positions** (`AiGuard`, `-guard on|off|ab|ab2`, default ab): removed for half of the bots (even slots);
   dump compares idle-away and rest orders per bot of both halves. Per-bot A/B helper `AiAb`.
+
+Part 3:
+- **Pseudo-portals closer to the asset** (maintainer's smoke test): the chain's last point is 150 in front of the
+  waygate (was 400), the trigger area 220 (was 450); a unit within 500 when it gets its ticket is teleported at once
+  (stragglers in a crowd).
+- **Dark Portal finder fixed**: WL keeps those waygates hidden until it opens them, and range searches skip hidden
+  units ("waygates not found" in the smoke test) -- now found by owner.
+- **Per-bot A/B with independent halves**: every switch splits by its own bit of the player slot (guard bit 0,
+  gather bit 1, spread bit 2), so the tests do not confound each other. The dump names the slots of each half.
+- **Gather points A/B** (`-gather on|off|ab|ab2`, default ab): dump compares CP captures per bot of both halves and
+  shows the share of the group that had arrived at timeouts.
+- **Spread chain points** (`-spread on|off|ab|ab2`, default ab, a test): intermediate node points get a per-unit
+  offset (8 directions from the unit's handle id, 250 or 125 if walkable). Dump compares the stalled share per bot.
+- **Caster cap**: while casters (types whose units have mana; heroes excluded) are 25 % or more of a bot's units, no
+  caster is queued (0.45.0: Quel'thalas 94 % casters). Dump: caster orders skipped per bot.
+- **Observation counters**: activity of sampled army units (walking / fighting / idle / stalled), target RETURNS
+  within 5 min (A -> B -> A) per bot, targets by owner per bot (who attacks whom).
+- **`-edges` draws the generated route graph** (white walking, grey closed by rocks, purple portal edges); `-edges
+  old` the old hand-written one.
+- Defence log shows the real enemy count while a defence is kept (was "0 enemy units").
+- **CSharp.lua style check** (`AiStyleCheck.cs`, removed in 0.47): a class with 300 instance fields and a static
+  instance; dump line "style check (0.46)". The built 0.45.0 Lua already shows instance fields as table entries
+  (`BotDiag`), so the phase-2 style should work.
+- `dump_summary.py`: errors at the TOP of the summary; `--real "t5=5:02 t10=10:30"` (stopwatch -> real s per game
+  min); the 5-min latency windows only once.
 
 ## 0.45.1 (docs only -- the in-game banner stays 0.45.0)
 Plan and docs after the review of the movement approach (no map change).

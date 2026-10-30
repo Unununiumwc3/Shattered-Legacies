@@ -4,6 +4,9 @@ src/WarcraftLegacies.Source/Ai/MEASUREMENTS.md, so measurements stay in the repo
 Usage (from the repo root, on the copied CustomMapData files):
   python3 tools/ai/dump_summary.py ~/Downloads/game1/WLAI_dump_*.txt                 # print the block
   python3 tools/ai/dump_summary.py ~/Downloads/game1/WLAI_*.txt --append "1 human, 12 bots, Veteran"
+  python3 tools/ai/dump_summary.py ... --real "t5=5:02 t10=10:30 t20=21:40"
+     --real (0.46): the maintainer's stopwatch -- real time (m:ss) when the turn counter showed turn N. Gives the
+     real seconds per game minute between the readings (the game falling behind real time).
      --append writes the block (with your note) to the end of MEASUREMENTS.md. The heartbeat file
      (WLAI_heartbeat.txt) may be passed too; it is shown separately (last game time, last tasks).
 
@@ -117,7 +120,28 @@ def one_game(dumps):
     return keep, skipped
 
 
-def summary(dumps, beats, note):
+LATENCY_WINDOW = re.compile(r"^\s*\d+-\d+m <0\.5s")
+
+
+def stopwatch(real):
+    """'t5=5:02 t10=10:30' -> 't5 5:02, t10 10:30 (68 s/min)' -- turn N = game minute N (WL turns are 1 min)."""
+    pts = []
+    for part in real.split():
+        m = re.match(r"t(\d+)=(\d+):(\d{1,2})$", part)
+        if m:
+            pts.append((int(m.group(1)), int(m.group(2)) * 60 + int(m.group(3)), part))
+    pts.sort()
+    out, prev = [], None
+    for turn, secs, raw in pts:
+        txt = f"t{turn} {raw.split('=')[1]}"
+        if prev and turn > prev[0]:
+            txt += f" ({(secs - prev[1]) / (turn - prev[0]):.0f} s/min)"
+        out.append(txt)
+        prev = (turn, secs)
+    return ", ".join(out) if out else "(could not read " + real + ")"
+
+
+def summary(dumps, beats, note, real=None):
     dumps, skipped = one_game(dumps)
     first, last = dumps[0], dumps[-1]
     out = [f"### v{first['build']} -- {len(dumps)} dumps, {first['tag']} .. {last['tag']}"
@@ -126,6 +150,18 @@ def summary(dumps, beats, note):
         out += ["Skipped (other build or other game): " + ", ".join(
             f"{os.path.basename(d['path'])} (v{d['build']}, {d['tag']})" for d in skipped), ""]
     beats = [b for b in beats if f"build={first['build']} " in b[0]]
+    # 0.46: errors FIRST -- the 0.44.3-0.45.0 creep TICK ERROR went unnoticed at the end of the summary
+    errs = []
+    for d in dumps:
+        for e in d["errors"]:
+            key = re.sub(r"^\S+\s", "", e)
+            if key not in [re.sub(r"^\S+\s", "", x) for x in errs]:
+                errs.append(e)
+    out += ["**Errors (TICK ERROR / FAILED / section errors): " + ("none" if not errs else str(len(errs))) + "**"]
+    out += [f"- {e}" for e in errs[:15]]
+    out.append("")
+    if real:
+        out += ["Stopwatch (real time at game turn N; real s per game min between readings): " + stopwatch(real), ""]
     out.append(f"Bots: {len(last['states'])}, orders mode: {last['mode']}.")
     out.append("")
     picks = []
@@ -156,20 +192,15 @@ def summary(dumps, beats, note):
     out += ["", "LOAD at the checkpoints:", "```"]
     for d in picks:
         for ln in d["load"]:
-            if not ln.startswith("task "):  # 0.40: per-task lines only for the last dump (below)
-                out.append(f"{d['tag']:>7}  {ln}")
+            if ln.startswith("task "):  # 0.40: per-task lines only for the last dump (below)
+                continue
+            if LATENCY_WINDOW.match(ln) and d is not last:  # 0.46: 5-min latency windows only once (last dump)
+                continue
+            out.append(f"{d['tag']:>7}  {ln}")
     out.append("```")
     tasks = [ln for ln in last["load"] if ln.startswith("task ")]
     if tasks:
         out += ["", f"Top tasks by total ops at {last['tag']} (of {len(tasks)}):", "```"] + tasks[:10] + ["```"]
-    errs = []
-    for d in dumps:
-        for e in d["errors"]:
-            key = re.sub(r"^\S+\s", "", e)
-            if key not in [re.sub(r"^\S+\s", "", x) for x in errs]:
-                errs.append(e)
-    out += ["", "Errors (TICK ERROR / FAILED / section errors): " + ("none" if not errs else str(len(errs)))]
-    out += [f"- {e}" for e in errs[:15]]
     out += ["", f"Bots at {last['tag']}: " + "; ".join(last["states"])]
     for b in beats:
         out += ["", f"Heartbeat: {b[0]}"] + [f"  {x}" for x in b[1:4]] + (["  ..."] if len(b) > 4 else [])
@@ -179,6 +210,11 @@ def summary(dumps, beats, note):
 def main():
     args = sys.argv[1:]
     note = None
+    real = None
+    if "--real" in args:
+        i = args.index("--real")
+        real = args[i + 1] if i + 1 < len(args) else ""
+        args = args[:i] + args[i + 2:]
     if "--append" in args:
         i = args.index("--append")
         note = args[i + 1] if i + 1 < len(args) else ""
@@ -200,7 +236,7 @@ def main():
     if not dumps:
         print("no dump files found", file=sys.stderr)
         sys.exit(1)
-    text = summary(dumps, beats, note)
+    text = summary(dumps, beats, note, real)
     if note is not None:
         with open(MEASUREMENTS, "a", encoding="utf-8") as f:
             f.write("\n" + text)

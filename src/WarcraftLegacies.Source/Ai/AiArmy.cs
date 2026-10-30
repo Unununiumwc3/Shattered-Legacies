@@ -47,6 +47,9 @@ namespace WarcraftLegacies.Source.Ai
     internal static int[] IdleBy = new int[24]; // 0.46: idle-away orders per bot (guard-position A/B test)
     internal static int[] RestBy = new int[24]; // 0.46: rest orders per bot
     internal static int Unreachable; // 0.46: units left out of an attack group -- no way to the target
+    internal static int[] StallSeenBy = new int[24]; // 0.46: per bot, for the spread A/B test
+    internal static int[] StallBy = new int[24];
+    internal static float LastShare; // 0.46: share of the group's food at the gather point (GroupAssembled)
 
     internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[pid] : 0;
 
@@ -77,6 +80,7 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
+      LastShare = total > 0 ? (float)near / total : 1f;
       return total == 0 || near >= total * share;
     }
 
@@ -549,14 +553,40 @@ namespace WarcraftLegacies.Source.Ai
       {
         var u = Units[i];
         float x = GetUnitX(u), y = GetUnitY(u), life = GetUnitState(u, UNIT_STATE_LIFE);
-        if (GetUnitCurrentOrder(u) != 0 && sx.ContainsKey(u))
+        var ordered = GetUnitCurrentOrder(u) != 0;
+        if (sx.ContainsKey(u))
         {
-          StallSeen++;
           var dx = x - sx[u];
           var dy = y - sy[u];
-          if (dx * dx + dy * dy < 100f * 100f && life >= sl[u])
+          var moved = dx * dx + dy * dy >= 100f * 100f;
+          var hurt = life < sl[u];
+          if (ordered)
           {
-            StallStalled++;
+            StallSeen++;
+            StallSeenBy[pid]++;
+            if (!moved && !hurt)
+            {
+              StallStalled++;
+              StallBy[pid]++;
+            }
+          }
+
+          // 0.46: activity breakdown (AiObserve)
+          if (hurt)
+          {
+            AiObserve.ActHurt++;
+          }
+          else if (moved)
+          {
+            AiObserve.ActWalk++;
+          }
+          else if (!ordered)
+          {
+            AiObserve.ActIdle++;
+          }
+          else
+          {
+            AiObserve.ActStall++;
           }
         }
 

@@ -30,11 +30,11 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
   but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **Next build 0.46** (`TODO.md`), built once all parts are in. Part 1 (creep fix, graph list review) and part 2
-  (pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget, latency probe, guard A/B)
-  are done; part 3 (activity / flapping / targets-by-owner counters, spread points, caster cap, gather A/B, `-edges`
-  on the generated graph, dump_summary, CSharp.lua check class) is open. 0.47: theatres, ferries. Designs:
-  `CONCEPTS.md` 6-9.
+- **0.46.0 is complete** (parts 1-3, not played yet; checklist "Next playtest" in `TODO.md`): creep fix,
+  pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget, latency probe, per-bot A/B
+  (guard / gather / spread, independent slot bits), caster cap, activity / returns / targets-by-owner counters,
+  `-edges` on the generated graph, CSharp.lua style check (`AiStyleCheck.cs`, delete in 0.47). 0.47: theatres,
+  ferries. Designs: `CONCEPTS.md` 6-9.
 - **Engine first**: the order delay players feel (1-2 s) is WC3's pathfinder queue; 5227 units at 14 min in 0.44.2.
   The bot's op counters measure Lua spikes, not engine load (section "Engine (WC3) limits" below).
 - **Refactor done so far** (details: `CHANGELOG.md`; overview and history: `README.md` "How the bots move" and
@@ -92,7 +92,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
-| `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiLoad | 0.46: per-bot A/B modes, guard positions, unit budget per CP, order-latency probe |
+| `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiObserve, AiCaster, AiLoad | 0.46: per-bot A/B (slot bits), guard positions, unit budget per CP, order-latency probe, activity / returns / targets by owner, caster cap |
+| `AiStyleCheck.cs` | AiStyleCheck | 0.46 only: CSharp.lua check for state in objects (300 instance fields); delete in 0.47 |
 | `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
 | `AiArmy.cs` | AiArmy | 0.41: army orders -- attack group sized from the target, rest at the staging CP, orders only for idle units away from their point (`-orders smart`) |
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |

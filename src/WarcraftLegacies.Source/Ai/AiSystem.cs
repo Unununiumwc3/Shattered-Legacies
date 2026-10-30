@@ -783,12 +783,22 @@ namespace WarcraftLegacies.Source.Ai
 
     // 0.38: train from the building's REAL list (AiData.Trains): only types whose requirements are met, the type
     // this bot has trained least first (random among equals) -> an even mix instead of random category pools.
-    private static void TrainFromTable(unit building, int[] list, player p)
+    private static void TrainFromTable(unit building, int[] list, player p, bool noCasters)
     {
       var pid = GetPlayerId(p);
       var avail = new List<int>();
       for (var i = 0; i < list.Length; i++)
       {
+        if (noCasters && AiCaster.IsCaster(list[i]))
+        {
+          if (pid >= 0 && pid < 24)
+          {
+            AiCaster.Skipped[pid]++;
+          }
+
+          continue;
+        }
+
         if (RequirementsMet(p, list[i]))
         {
           avail.Add(list[i]);
@@ -1104,6 +1114,8 @@ namespace WarcraftLegacies.Source.Ai
         var altarUnits = new List<unit>();
         var trainers = new List<unit>();
         var armyFood = 0; // 0.46: for the unit budget (heroes not counted)
+        var armyUnits = 0; // 0.46: for the caster cap
+        var casterUnits = 0;
         var g = CreateGroup();
         GroupEnumUnitsOfPlayer(g, p, null);
         unit u;
@@ -1116,6 +1128,11 @@ namespace WarcraftLegacies.Source.Ai
             if (!IsUnitType(u, UNIT_TYPE_HERO) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
             {
               armyFood = armyFood + GetUnitFoodUsed(u);
+              armyUnits++;
+              if (AiCaster.Learn(u))
+              {
+                casterUnits++;
+              }
             }
 
             continue;
@@ -1178,7 +1195,8 @@ namespace WarcraftLegacies.Source.Ai
           var ttid = GetUnitTypeId(tu);
           if (AiData.Trains.ContainsKey(ttid))
           {
-            TrainFromTable(tu, AiData.Trains[ttid], p); // 0.38: the building's REAL train list
+            // 0.38: the building's REAL train list; 0.46: no casters while they are 25 % or more of the units
+            TrainFromTable(tu, AiData.Trains[ttid], p, perks && AiCaster.TooMany(casterUnits, armyUnits));
           }
           else if (fighters.Count > 0 && ListHas(barracks, ttid))
           {
@@ -1575,6 +1593,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           AiScheduler.TargetSwitch[pid]++; // 0.44
         }
+        AiObserve.Target(pid, d.Target, tgt); // 0.46: returns (A -> B -> A), targets by owner
         d.Target = tgt;
         d.TargetSince = _clock;
       }
@@ -1740,6 +1759,13 @@ namespace WarcraftLegacies.Source.Ai
 
     // Enemy-PLAYER ground units near (x,y). _lastCreepCount = neutral units that were seen and ignored
     // (diagnostics only: shows how often the old rule would have recalled the army for nothing).
+    // 0.46: the defence log shows the real enemy count while a defence is kept (AiDefense; was "0 enemy units")
+    internal static void NoteDefCount(int enemies)
+    {
+      _defWorst = enemies;
+      _defCreeps = 0;
+    }
+
     internal static int CountEnemiesNear(player p, float x, float y)
     {
       var n = 0;
@@ -2821,7 +2847,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.45.0";
+    public const string Build = "0.46.0";
 
     public static void Setup()
     {

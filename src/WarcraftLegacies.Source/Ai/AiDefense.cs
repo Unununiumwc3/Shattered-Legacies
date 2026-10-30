@@ -33,9 +33,10 @@ namespace WarcraftLegacies.Source.Ai
       if (cur != null)
       {
         var alive = GetUnitTypeId(cur) != 0 && GetUnitState(cur, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(cur) == p;
-        if (alive && (now - _since[pid] < DefendMinHold
-                      || SimpleBot.CountEnemiesNear(p, GetUnitX(cur), GetUnitY(cur)) > SimpleBot.DefendThreshold))
+        var enemies = alive ? SimpleBot.CountEnemiesNear(p, GetUnitX(cur), GetUnitY(cur)) : 0;
+        if (alive && (now - _since[pid] < DefendMinHold || enemies > SimpleBot.DefendThreshold))
         {
+          SimpleBot.NoteDefCount(enemies); // 0.46: for the log (was "0 enemy units" while kept)
           Kept++;
           return cur;
         }
