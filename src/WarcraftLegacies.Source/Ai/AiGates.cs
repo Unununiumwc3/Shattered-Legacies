@@ -372,8 +372,8 @@ namespace WarcraftLegacies.Source.Ai
 
       _riftOpen = true;
       MergeGraphs("Old Gods rift open"); // 0.39.3: every faction may now target the other continent
-      RemovePreplacedRiftPortal();
-      AiLegion.OpenPortalPhase("oldgods");
+      // 0.48: no bot waygates, and WL's preplaced portal in the Twilight Highlands stays -- the rift is a bot-only
+      // pseudo-portal (AiPortals.AddBotPortals) from the next portal check (<= 30 s)
       SimpleBot._gateOpen["oldgods"] = true;
       for (var i = 0; i < 24; i++)
       {

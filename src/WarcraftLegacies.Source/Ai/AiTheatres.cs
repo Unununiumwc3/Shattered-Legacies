@@ -20,8 +20,12 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal const int MaxTheatres = 3;
     internal const int Agents = 24 * MaxTheatres;
-    private const int OpenFood = 30;
-    private const int KeepFood = 15;
+    // 0.48: relative to the bot's whole army (0.47.0: 30 / 15 food split strong armies early -- Scourge, Legion and
+    // the Old Gods were weaker): open at max(40, 25 %), keep down to max(20, 10 %)
+    private const int OpenFood = 40;
+    private const int KeepFood = 20;
+    private const int OpenShare = 4;   // 1/4 of the army
+    private const int KeepShare = 10;  // 1/10 of the army
     internal static bool On = true;
 
     internal static int Offset;          // 24 x theatre while a secondary theatre is serviced, else 0
@@ -127,6 +131,15 @@ namespace WarcraftLegacies.Source.Ai
         food[comp[i]] = prev + f; // no ternary in an indexer assignment (hard rule 16)
       }
 
+      var total = 0;
+      foreach (var kv in food)
+      {
+        total += kv.Value;
+      }
+
+      var openAt = total / OpenShare > OpenFood ? total / OpenShare : OpenFood;
+      var keepAt = total / KeepShare > KeepFood ? total / KeepShare : KeepFood;
+
       // main theatre: keep its component while it holds KeepFood; follow a component with twice the food
       var main = _slotComp[pid];
       var mainFood = main >= 0 && food.ContainsKey(main) ? food[main] : 0;
@@ -193,7 +206,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         var s = pid + 24 * t;
         var c = _slotComp[s];
-        if (c >= 0 && (c == main || !food.ContainsKey(c) || food[c] < KeepFood))
+        if (c >= 0 && (c == main || !food.ContainsKey(c) || food[c] < keepAt))
         {
           Release(pid, t);
         }
@@ -211,7 +224,7 @@ namespace WarcraftLegacies.Source.Ai
         var pickFood = 0;
         foreach (var kv in food)
         {
-          if (kv.Key == main || kv.Value < OpenFood || kv.Value < pickFood || Taken(pid, kv.Key)
+          if (kv.Key == main || kv.Value < openAt || kv.Value < pickFood || Taken(pid, kv.Key)
               || (_doneUntil[pid] > SimpleBot.Clock && kv.Key == _doneComp[pid]))
           {
             continue;
@@ -428,8 +441,8 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void Lines(List<string> o)
     {
-      var s = "theatres (0.47; opened " + I2S(Opened) + ", closed " + I2S(Closed) + ", main moved " + I2S(MainSwitches)
-              + "):";
+      o.Add("theatres (0.47; opened " + I2S(Opened) + ", closed " + I2S(Closed) + ", main moved " + I2S(MainSwitches)
+            + "; one line per bot):");
       for (var pid = 0; pid < 24; pid++)
       {
         if (!_init || _slotComp[pid] < 0)
@@ -437,7 +450,7 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        s = s + " P" + I2S(pid) + " main " + AiRoutes.CompName(_slotComp[pid]) + " " + I2S(_slotFood[pid]) + "f";
+        var s = "  P" + I2S(pid) + " main " + AiRoutes.CompName(_slotComp[pid]) + " " + I2S(_slotFood[pid]) + "f";
         for (var t = 1; t < MaxTheatres; t++)
         {
           var k = pid + 24 * t;
@@ -448,10 +461,8 @@ namespace WarcraftLegacies.Source.Ai
           }
         }
 
-        s = s + ";";
+        o.Add(s);
       }
-
-      o.Add(s);
     }
   }
 }

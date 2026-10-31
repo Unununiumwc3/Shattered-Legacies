@@ -4,6 +4,26 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.0
+Portals aligned with WL (part 1 -- ferries and the Book of Medivh follow), "nothing reachable" fixed, theatre
+tuning. From the 0.47.0 game (18 min: back and forth much reduced). Version v0.48.0.
+- **Player-owned waygates are portal edges for their owner and allies**: the route graph reads the waygates of ALL
+  players (was: neutral ones only). WL's Deeprun Tram (Ironforge / Stormwind after the tram research) and WL's
+  Legion Teleporters (Argus -> Northrend landing / Alterac landing, after the Legion's "Argus" quest; one-way, like
+  for humans) are used now -- found by the building, so a moved building keeps working, and the edge closes when it
+  dies or is deactivated.
+- **No visible bot waygates for Argus and the rift**: the bot's Argus <-> Northrend / Felwood waygates are gone.
+  Tomb of Sargeras -> Argus is a ONE-WAY bot-only pseudo-portal, closed until the Tomb is open (gate "tomb"). The Old
+  Gods rift is a bot-only pseudo-portal both ways (gate "oldgods"); WL's preplaced portal in the Twilight Highlands is
+  no longer removed. Hidden inactive markers serve as their gates (no human can use them, nothing shows). The ship
+  waygates stay until the ferries.
+- **Nothing reachable -> wait in front of the rocks**: when the planner finds no target, the army waits at the own
+  end of the nearest closed rock edge that separates its land from another (Northrend rocks, whirlpools, Thandol) --
+  maintainer's rule; else it holds. The old pickers (old graph, nearest objective) no longer run while the route
+  planner is on: they ignored rocks and sent the North Alliance to the Brill coast towards Northrend (0.47.0).
+- **Theatres**: a second front opens at max(40 food, 25 % of the army) and stays down to max(20, 10 %) (0.47.0: 30
+  / 15 split strong armies early -- Scourge, Legion and the Old Gods were weaker). The dump lists one line per bot.
+
 ## 0.47.0
 **Theatres and "only forward"** (maintainer: "not going forward" is the main problem). Includes 0.46.4 (not played).
 Version v0.47.0.

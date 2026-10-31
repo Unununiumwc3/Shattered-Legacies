@@ -8,7 +8,7 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.47.0** (theatres, only forward) -- before: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
+Current build: **0.48.0** (portals part 1, wait at rocks, theatre tuning) -- before: **0.47.0** (theatres, only forward) -- before: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
 exception; Scarlet Crusade after Arthas turns).
 
 ## The plan: three phases
@@ -66,7 +66,8 @@ Rules for phase 1:
 | 0.46.2 | yes (81 min, A/B per phase) | evil won without the 100-gold CPs; first Eye of Sargeras by bots; guard / spread / gather decided; beaten factions not finished off |
 | 0.46.3 | 15 min (GitHub build without the regroup fix) | regroup held 11 bots at the start; Druids' back and forth (defence across the sea, creeps at home); Kul Tiras via the dwarf mountains; Lordaeron no longer tries Northrend early |
 | 0.46.4 | not played (merged into 0.47.0) |
-| 0.47.0 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
+| 0.47.0 | yes (18 min) | back and forth much reduced; North Alliance ran to the Brill coast once nothing was reachable (old pickers); Scourge / Legion / Old Gods weaker (fronts opened too early); Druids still seen heading to Exodar / Teldrassil |
+| 0.48.0 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -277,7 +278,23 @@ Fixes from 0.45.0:
 - Secondary theatres: their targets in the event log ("[theatre 2]: target ..."); do they hold their land?
 - Errors (summary top), order latency vs. 0.46.2.
 
-## Phase 1 -- 0.48 (portals aligned with WL, ferries; tuning of 0.47)
+## Next playtest (0.48.0)
+
+- **Portals**: ROUTES "bot portals: tomb->Argus / rift->Highlands / rift->Maw" once open; the Legion leaves Argus
+  through WL's teleporters (one-way to Northrend / Alterac); Deeprun Tram used by Ironforge / Stormwind after its
+  research; nobody else uses another player's waygate. No bot waygates on Argus or at the rift any more.
+- **Nothing reachable**: event log "wait-at-rocks" -- the North Alliance waits at the Northrend rocks / whirlpools
+  instead of the Brill coast. "waits at closed rocks" counter.
+- **Theatres**: fewer early second fronts for strong factions; Scourge / Legion / Old Gods stronger again?
+- `[you]` Druids heading to Exodar / Teldrassil after the area is cleared: `-xy` on such a unit (node) and the
+  Druids' ROUTES line -- reinforcements walking from production, the staging point, or a target?
+
+## Phase 1 -- 0.48 / 0.49 (portals aligned with WL, ferries; tuning of 0.47)
+
+- [done 0.48.0] Player-owned waygates (Deeprun Tram, Legion Teleporters) for owner + allies; Tomb -> Argus one-way
+  and the rift as bot-only pseudo-portals; no visible bot waygates for Argus / the rift; wait at closed rocks.
+- [ai] **Ferries** (next): the 8 ship waygate pairs -> harbour-to-harbour trips (`CONCEPTS.md` 7).
+- [ai] **Book of Medivh** (next): the bot casts the item's channel spell; the hero invulnerable while channelling.
 
 - [done 0.47] **Theatres** (`CONCEPTS.md` 6) and **only forward** (targets scored with the walk from the army;
   defence of far CPs by the rest).

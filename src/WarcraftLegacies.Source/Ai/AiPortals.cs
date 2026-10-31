@@ -201,8 +201,73 @@ namespace WarcraftLegacies.Source.Ai
     private static bool _dpSearched;
     internal static string DarkPortalState = "not checked";
 
+    // ---- 0.48: bot-only portals at WL's spots (no visible waygates; maintainer's spec) ---------------------------
+    // A HIDDEN, inactive marker (n036 without its blocking aura) is the "gate" of each one: the pseudo-portal trigger
+    // works on its area like on any waygate; no human can use it, nothing shows. Open conditions follow WL's gates.
+    //  - Tomb of Sargeras -> Argus: ONE-WAY, closed until the Tomb is open (shared quest, gate "tomb").
+    //  - Old Gods rift, both ways: Maw of Gor'ma <-> Twilight Highlands (gate "oldgods", AiGates). Replaces the bot's
+    //    visible rift waygates; WL's preplaced portal in the Twilight Highlands stays.
+    private const float TombX = -736f;   // Regions.Sargeras_Entrance (the Tomb visit spot)
+    private const float TombY = 8336f;
+    private const float ArgusX = AiWorld.LegionArgusPortalX; // Argus landing (open ground)
+    private const float ArgusY = AiWorld.LegionArgusPortalY;
+    private static unit _tombMarker;
+    private static unit _riftMaw;
+    private static unit _riftHigh;
+    internal static string BotPortals = "-";
+
+    private static unit Marker(unit m, float x, float y)
+    {
+      if (m != null && GetUnitTypeId(m) != 0 && GetUnitState(m, UNIT_STATE_LIFE) > 0.405f)
+      {
+        return m;
+      }
+
+      m = CreateUnit(Player(27), AiWorld.PortalUnitId, x, y, 0f);
+      UnitRemoveAbility(m, 1093677389); // A01M "Anti Portal Blocking" (1000-range immolation)
+      UnitRemoveAbility(m, 1093677619); // A023
+      WaygateActivate(m, false);          // not a live waygate: CheckPortals skips it
+      SetUnitInvulnerable(m, true);
+      ShowUnit(m, false);
+      return m;
+    }
+
+    private static void AddBotPortals()
+    {
+      BotPortals = "";
+      if (SimpleBot.GateOpen("tomb"))
+      {
+        _tombMarker = Marker(_tombMarker, TombX, TombY);
+        if (AiRoutes.AddPortalEdge(_tombMarker, ArgusX, ArgusY))
+        {
+          BotPortals = BotPortals + " tomb->Argus";
+        }
+      }
+
+      if (SimpleBot.GateOpen("oldgods"))
+      {
+        _riftMaw = Marker(_riftMaw, AiConfig.RiftMawX, AiConfig.RiftMawY);
+        _riftHigh = Marker(_riftHigh, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY);
+        if (AiRoutes.AddPortalEdge(_riftMaw, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY))
+        {
+          BotPortals = BotPortals + " rift->Highlands";
+        }
+
+        if (AiRoutes.AddPortalEdge(_riftHigh, AiConfig.RiftMawX, AiConfig.RiftMawY))
+        {
+          BotPortals = BotPortals + " rift->Maw";
+        }
+      }
+
+      if (BotPortals == "")
+      {
+        BotPortals = " none open";
+      }
+    }
+
     internal static void AddStatic()
     {
+      AddBotPortals();
       if (!_dpSearched)
       {
         _dpSearched = true;
@@ -279,7 +344,8 @@ namespace WarcraftLegacies.Source.Ai
     {
       o.Add("pseudo-portals " + (On ? "on" : "off") + ": teleports " + I2S(Teleports) + " (on issue " + I2S(OnIssue)
             + "), ignored " + I2S(Ignored) + ", open tickets " + I2S(_ticket.Count) + ", cleaned " + I2S(Cleaned)
-            + ", watched waygates " + I2S(_watched.Count) + "; Dark Portal: " + DarkPortalState);
+            + ", watched waygates " + I2S(_watched.Count) + "; Dark Portal: " + DarkPortalState
+            + "; bot portals:" + BotPortals);
 
       // WL's own waygates (not the AI pairs of Neutral Extra): where, owner, active, hidden, destination
       var g = CreateGroup();
