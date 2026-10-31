@@ -153,6 +153,11 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
+        if (ev.When != null && !ev.When())
+        {
+          continue; // 0.46.2: e.g. The Scarlet Crusade only after Stratholme fell
+        }
+
         var key = GetPlayerId(p) * 100 + i;
         if (_eventTried.ContainsKey(key) && SimpleBot._clock - _eventTried[key] < 60f)
         {

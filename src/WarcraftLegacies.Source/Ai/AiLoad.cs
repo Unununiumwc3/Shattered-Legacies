@@ -19,6 +19,7 @@ namespace WarcraftLegacies.Source.Ai
     internal const int BitGuard = 0;
     internal const int BitGather = 1;
     internal const int BitSpread = 2;
+    internal const int BitRegroup = 3;
 
     internal static int Half(int pid, int bit)
     {
@@ -135,7 +136,7 @@ namespace WarcraftLegacies.Source.Ai
   // removed positions back -- it only stops removing.
   internal static class AiGuard
   {
-    internal static int Mode = AiAb.Ab;
+    internal static int Mode = AiAb.Ab2; // 0.46.2: swapped -- 0.46.1 had all three Old Gods in the removed half
     internal static int Removed;
     private static trigger _enter;
 
@@ -210,7 +211,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool On = true;
     internal static int Base = 40;
-    internal static int PerCp = 10;
+    internal static int PerCp = 8; // 0.46.2: was 10 -- order delay ~2 s at 10-15 min (0.46.1 game)
     internal static int[] Budget = new int[24];
     internal static int[] Army = new int[24];
     internal static int[] CappedTurns = new int[24];
@@ -600,6 +601,83 @@ namespace WarcraftLegacies.Source.Ai
     }
   }
 
+  // 0.46.2: REGROUP. A bot whose army has melted down stops sending it at the target: no attack group, every unit
+  // gathers at the staging CP (production goes on), and the attack resumes as one wave once the army is back.
+  // Enter below max(20, budget / 5) food, leave at max(50, budget / 2) (never above the budget). Maintainer's idea
+  // ("under 15 food: stop and collect money first") -- but banking gold adds no units faster (buildings train at
+  // their pace) and an army that stops training cannot defend; what hurt was the trickle of single units into the
+  // enemy. "-regroup on|off|ab|ab2" (default ab, slot bit 3).
+  internal static class AiRegroup
+  {
+    internal static int Mode = AiAb.Ab;
+    internal static bool[] Active = new bool[24];
+    internal static int[] Entered = new int[24];
+
+    // AiArmy.Select: true = take nobody into the attack group (everyone rests at the staging CP)
+    internal static bool Holding(player p, int pid, int armyFood)
+    {
+      if (pid < 0 || pid >= 24 || !AiAb.For(Mode, pid, AiAb.BitRegroup))
+      {
+        if (pid >= 0 && pid < 24)
+        {
+          Active[pid] = false;
+        }
+
+        return false;
+      }
+
+      var budget = AiBudget.On ? AiBudget.Budget[pid] : 0;
+      var low = budget / 5 > 20 ? budget / 5 : 20;
+      var high = budget / 2 > 50 ? budget / 2 : 50;
+      if (budget > 0 && high > budget)
+      {
+        high = budget;
+      }
+
+      if (!Active[pid] && armyFood < low)
+      {
+        Active[pid] = true;
+        Entered[pid]++;
+        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": REGROUP (army " + I2S(armyFood) + " < "
+                      + I2S(low) + " food) -- gathering until " + I2S(high));
+      }
+      else if (Active[pid] && armyFood >= high)
+      {
+        Active[pid] = false;
+        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": regroup done (army " + I2S(armyFood)
+                      + " food) -- attacking");
+      }
+
+      return Active[pid];
+    }
+
+    internal static void OnCommand()
+    {
+      var m = AiAb.Parse(GetEventPlayerChatString(), "-regroup");
+      if (m >= 0)
+      {
+        Mode = m;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "regroup (army below max(20, budget/5) food: gather, "
+        + "attack again at max(50, budget/2)): " + AiAb.Name(Mode) + " [slots" + AiAb.Slots(Mode, AiAb.BitRegroup)
+        + "]  -- -regroup on|off|ab|ab2");
+    }
+
+    internal static string Line()
+    {
+      var caps = new int[24];
+      for (var k = 0; k < 24; k++)
+      {
+        caps[k] = SimpleBot._cpCaptures.ContainsKey(k) ? SimpleBot._cpCaptures[k] : 0;
+      }
+
+      return "regroup " + AiAb.Name(Mode) + " [slots" + AiAb.Slots(Mode, AiAb.BitRegroup) + "]: times entered "
+             + AiAb.Compare(Mode, AiAb.BitRegroup, Entered) + "; CP captures per bot "
+             + AiAb.Compare(Mode, AiAb.BitRegroup, caps);
+    }
+  }
+
   // dump: one block in LOAD
   internal static class AiLoad
   {
@@ -617,6 +695,7 @@ namespace WarcraftLegacies.Source.Ai
       o.Add(AiGuard.Line());
       o.Add("attack groups: units left out (no way to the target) " + I2S(AiArmy.Unreachable));
       o.Add(AiCaster.Line());
+      o.Add(AiRegroup.Line());
       AiObserve.Lines(o);
       o.Add("style check (0.46): " + AiStyleCheck.Result);
     }

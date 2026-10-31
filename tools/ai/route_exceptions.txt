@@ -1,0 +1,9 @@
+# Route graph exceptions -- what the map files cannot tell (standard doodads' built-in pathing, walls known from
+# playing). Read by gen_routes.py; rerun it after a change. One per line:
+#   remove A | B        A, B = CP name, or @x,y for the node nearest to that point (area nodes are renumbered!)
+# Every line names who found it and when.
+
+# 0.46.3 maintainer: Lordaeron is cut off from Northrend until the Northrend rocks fall (the shallow-water path at
+# Venture Bay). The generator found walkable land from Howling Fjords to Grizzly Hills (via 5808,16496); in game it
+# is blocked (probably a standard doodad's built-in pathing, which the map files do not contain).
+remove Howling Fjords | Grizzly Hills

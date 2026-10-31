@@ -88,6 +88,7 @@ def parse(path):
     d["armies"], d["states"] = armies, states
     d["teams"] = [ln for ln in d["sec"].get("TEAMS", [])[1:] if ":" in ln]
     d["load"] = d["sec"].get("LOAD", [])[1:]
+    d["ab"] = ab_values(lines)  # 0.46.2
     d["errors"] = [ln for ln in d["sec"].get("PINNED", []) if "TICK ERROR" in ln or "FAILED" in ln]
     d["errors"] += [ln for ln in lines if ln.startswith("## ERROR in")]
     return d
@@ -141,6 +142,48 @@ def stopwatch(real):
     return ", ".join(out) if out else "(could not read " + real + ")"
 
 
+AB_LINE = re.compile(r"^(A/B \w+|guard positions removed|regroup)")
+AB_PAIR = re.compile(r"([A-Za-z][A-Za-z %/-]*?) on (\d+) bots avg (-?\d+) \| off (\d+) bots avg (-?\d+)")
+
+
+def ab_values(lines):
+    """0.46.2: {(test, metric): (on_avg, off_avg)} from the per-bot A/B lines (cumulative since game start)."""
+    out = {}
+    for ln in lines:
+        m = AB_LINE.match(ln.strip())
+        if not m:
+            continue
+        test = m.group(1).replace("A/B ", "").replace("guard positions removed", "guard")
+        for mm in AB_PAIR.finditer(ln):
+            metric = mm.group(1).strip().rstrip(":;").split(":")[-1].split(";")[-1].strip()
+            out[(test, metric)] = (int(mm.group(3)), int(mm.group(5)))
+    return out
+
+
+def ab_phases(dumps):
+    """0.46.2: A/B per game phase -- the difference of the cumulative per-bot averages between two dumps, so early, mid
+    and late game can be told apart (maintainer: a feature may help in one phase only). Spread: stalled % per phase."""
+    pts = [(d["tag"], d["ab"]) for d in dumps if d.get("ab")]
+    if len(pts) < 2:
+        return []
+    out = ["A/B per game phase (per bot of each half; on | off). Phases between the dumps listed:", ""]
+    keys = sorted({k for _, ab in pts for k in ab})
+    out.append("| phase | " + " | ".join(f"{t}: {m}" for t, m in keys) + " |")
+    out.append("|---|" + "---|" * len(keys))
+    prev_tag, prev = "0", {}
+    for tag, ab in pts:
+        cells = []
+        for k in keys:
+            if k not in ab:
+                cells.append("-")
+                continue
+            a0, b0 = prev.get(k, (0, 0))
+            cells.append(f"{ab[k][0] - a0} \\| {ab[k][1] - b0}")
+        out.append(f"| {prev_tag}-{tag} | " + " | ".join(cells) + " |")
+        prev_tag, prev = tag, ab
+    return out + [""]
+
+
 def summary(dumps, beats, note, real=None):
     dumps, skipped = one_game(dumps)
     first, last = dumps[0], dumps[-1]
@@ -162,6 +205,7 @@ def summary(dumps, beats, note, real=None):
     out.append("")
     if real:
         out += ["Stopwatch (real time at game turn N; real s per game min between readings): " + stopwatch(real), ""]
+    out += ab_phases(dumps)
     out.append(f"Bots: {len(last['states'])}, orders mode: {last['mode']}.")
     out.append("")
     picks = []

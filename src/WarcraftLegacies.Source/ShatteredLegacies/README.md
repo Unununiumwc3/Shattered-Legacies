@@ -31,7 +31,6 @@ NOT needed by the bot. What the bot needs is in `../Ai/WORKAROUNDS.md`.
 |---|---|---|
 | `Setup/GameSetup.cs` | `ShatteredLegaciesSetup.Setup()` call | 0.39.10 |
 | `Setup/GameSetup.cs` | no game-mode vote: Closed Alliance forced at 59 s (the bot's strength vote uses the freed slot, see W5 in `../Ai/WORKAROUNDS.md`) | 0.39.1 |
-| `Setup/ControlPointSetup.cs` | marker `B1HG` = 100-gold CPs (evil buff) | 0.39.5 |
 | `Warcraft.Cartographer/Deserialization/AdvancedMapBuilder.cs` | map title from `Info.json` + version | 0.39.9 |
 | `GameLogic/DisplayIntroText.cs`, `GameLogic/InfoQuests.cs`, `Setup/HintSetup.cs` | fork title and notice | 0.39.9 |
 | `WarcraftLegacies.CLI/appsettings.json` (no comments possible) | version, published file name `ShatteredLegacies-BotifiedRealm` | 0.39.9 |
@@ -42,11 +41,9 @@ NOT needed by the bot. What the bot needs is in `../Ai/WORKAROUNDS.md`.
 |---|---|---|
 | `Info.json` | map name, author, description, loading screen texts | 0.39.9 |
 | `n0FB`, `AFB1` | fallback trigger building, "Begin the Fallback" | 0.39.1 |
-| `n1A0`-`n1B1` | 11 new 10-gold CPs (Scarab Wall, Hive'Zora, Hive'Ashi, Ramkahen, Hive'Regal, Seradane, Broken Shore, Dragonmaw Gates, Thundermar, Sporeggar, Sylvanaar) | 0.39.4 |
-| `n1A8`, `n1B2` | Twilight Shore, Deathknell CPs | 0.39.5 |
-| `A1HG`, `B1HG` + 4 CPs | 100 gold/min: Ny'alotha, Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown Citadel | 0.39.5 |
+| ~~`n1A0`-`n1B2`, `A1HG` / `B1HG`~~ | the fork's 13 extra CPs and the four 100-gold CPs -- **removed in 0.46.2**: WL's CPs again (preplaced units identical to WL 4.8.2) | 0.39.4-0.46.2 |
 | goblin buildings and units (`o03L`, `o03O`, `o03P`, `o03S`, `o05T`, `o04M`, `h04Z`, ...) | Kezan Enterprise buildings: train lists, oil supply, trading center | 0.39.6-0.39.8 |
 | `AGAB`, `I006` | Book of Medivh: third ability "Guardian's Abjuration" | 0.39.9 |
 
-CPs the bot needs (`n0SA`, `n0TD`, `n0RF`, `n0JS`, `n0SP`, `n0NX`, marker `A0ZG`/`B0ZG`) are listed in
-`../Ai/WORKAROUNDS.md`.
+The bot's former workaround CPs (`n0SA`, `n0TD`, `n0RF`, `n0JS`, `n0SP`, `n0NX`) are removed too (0.46.2): the route
+graph's area nodes (bot data in `../Ai/`) cover their spots without changing gameplay.

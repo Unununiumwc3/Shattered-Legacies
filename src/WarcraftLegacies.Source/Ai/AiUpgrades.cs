@@ -563,7 +563,7 @@ public static class AiUpgrades
   {
     // v34: Escape to Theramore and The Scarlet Crusade are FALLBACK paths (Dalaran leaves, Lordaeron becomes
     // the Scarlet Crusade). Fired "as soon as possible" they dismantled the North Alliance at 10-14 min, so
-    // bots no longer order them -- WL/humans still can. Re-add with a losing condition later.
+    // bots no longer order them -- WL/humans still can. 0.46.2: Scarlet Crusade back with a losing condition (below).
     //   1378894135 Escape to Theramore @ h002,  1378900058 The Scarlet Crusade @ h030
     new EventResearch(1378892080, 1865429048, 0f),   // Activate the Blackrock Clan @ Hellfire Citadel (o008)
     new EventResearch(1378890307, 1865429048, 0f),   // The Dark Portal          @ Hellfire Citadel (o008)
@@ -574,7 +574,23 @@ public static class AiUpgrades
     new EventResearch(1378891087, 1868984948, 0f),   // Build Orgrimmar          @ ofrt
     new EventResearch(1378891087, 1865429587, 0f),   // Build Orgrimmar          @ o02S
     new EventResearch(1381193525, 1850035267, 900f), // Fireland Invasion (Sulfuron Spire) @ Vortex Pinnacle -- 15 min
+    // 0.46.2: The Scarlet Crusade (Lordaeron's fallback path) @ Tyr's Hand Citadel (h030) -- only after the LOSING
+    // condition: Stratholme (Lordaeron's capital) has fallen. WC3 itself needs "The Fortified City" first (turn 14
+    // or Stratholme dead); turn 14 alone was too early (v34: it dismantled the North Alliance at 10-14 min).
+    new EventResearch(1378900058, 1747989296, 0f, StratholmeLost),
   };
+
+  private static bool StratholmeLost()
+  {
+    var legends = WarcraftLegacies.Source.Shared.AllLegends.Lordaeron;
+    var u = legends?.Stratholme?.Unit;
+    if (u == null)
+    {
+      return false; // unknown -> never early
+    }
+
+    return GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f;
+  }
 
   // Never granted by the AI at all: WL triggers it itself (Plague of Undeath: turn 8 by research, turn 11 auto).
   public static readonly HashSet<int> NeverGrant = new()
@@ -588,12 +604,22 @@ public sealed class EventResearch
   public readonly int ResearchId;
   public readonly int BuildingId;
   public readonly float NotBefore;
+  public readonly System.Func<bool> When; // 0.46.2: extra condition (null = none)
 
   public EventResearch(int researchId, int buildingId, float notBefore)
   {
     ResearchId = researchId;
     BuildingId = buildingId;
     NotBefore = notBefore;
+    When = null;
+  }
+
+  public EventResearch(int researchId, int buildingId, float notBefore, System.Func<bool> when)
+  {
+    ResearchId = researchId;
+    BuildingId = buildingId;
+    NotBefore = notBefore;
+    When = when;
   }
 }
 

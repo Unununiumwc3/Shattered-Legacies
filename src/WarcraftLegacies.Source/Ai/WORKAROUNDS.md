@@ -34,6 +34,7 @@ stand within 2000). Generated without these six CPs (`gen_routes.py --without ..
 area node within 1800 (Sunsail 661, Terrordale 634, Runestone 1817, Jaina's Sanctum 1519, Sulfuron 1232, Nexus 510).
 So they are expected to be unnecessary. Since 0.44.1 enemy buildings anywhere in a node's area are targets and since
 0.44.3 creep camps too -- remove W1-W4 once a playtest shows bots attacking those areas without the extra CPs.
+**0.46.2: W1-W4 removed** (map data back to WL 4.8.2's CPs, maintainer's decision) -- the rows above are history.
 | W5 | Strength vote at 49 s | `Ai/AiGoldVote.cs` | uses the time slot of WL's game-mode vote, which Shattered Legacies removed (`[SL]` in `GameSetup.cs`). On the original map both dialogs would collide | start the vote when WL's own vote has ended (event, not a fixed time) | yes |
 
 ## 3. Changes the bot makes to the map at runtime
