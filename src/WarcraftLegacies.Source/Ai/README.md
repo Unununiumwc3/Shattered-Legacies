@@ -69,8 +69,10 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
    (enemy food near the target x 1.5 + enemy structures x 8, at least 50); the whole army if that is 80 % of it. The
    **rest** waits at the staging CP (the bot's own CP nearest to the target, same landmass). Orders only on a target
    change, and on the 20-s heartbeat only to IDLE units AWAY from their point; refill when the group lost half its
-   food. *Planned (0.47): up to 3 groups per bot, one per **theatre** (walking component of the graph: a continent, an
-   island group) -- each with its own target, staging and defence. One front = one big group.*
+   food. **0.47: theatres** (`AiTheatres`) -- up to 3 fronts per bot, one per walking component of the graph (a
+   continent, an island group), each with its own target, staging, attack group and defence. One front = one big
+   group. **Only forward**: a target's score adds half the walk from the army; a CP far behind the group is defended
+   by the rest, the group keeps its front.
 5. **Gather point**: a route longer than 5 nodes first goes to the last own node before the frontier; the group waits
    until 80 % of its food is within 1500 or 60 s passed (0.45).
 6. **Movement chain** (`AiRoutes.Chain`): every unit gets queued attack-moves along the route's nodes, like a player

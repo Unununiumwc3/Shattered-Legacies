@@ -14,9 +14,9 @@ namespace WarcraftLegacies.Source.Ai
     private const float DefendCooldown = 45f;
     private const float CloseThreat = 4000f;
 
-    private static unit[] _current = new unit[24];
-    private static float[] _since = new float[24];
-    private static float[] _ended = new float[24];
+    private static unit[] _current = new unit[AiTheatres.Agents];
+    private static float[] _since = new float[AiTheatres.Agents];
+    private static float[] _ended = new float[AiTheatres.Agents];
     internal static int Kept;
     internal static int Skipped;
 
@@ -29,20 +29,20 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var now = SimpleBot.Clock;
-      var cur = _current[pid];
+      var cur = _current[AiTheatres.S(pid)];
       if (cur != null)
       {
         var alive = GetUnitTypeId(cur) != 0 && GetUnitState(cur, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(cur) == p;
         var enemies = alive ? SimpleBot.CountEnemiesNear(p, GetUnitX(cur), GetUnitY(cur)) : 0;
-        if (alive && (now - _since[pid] < DefendMinHold || enemies > SimpleBot.DefendThreshold))
+        if (alive && (now - _since[AiTheatres.S(pid)] < DefendMinHold || enemies > SimpleBot.DefendThreshold))
         {
           SimpleBot.NoteDefCount(enemies); // 0.46: for the log (was "0 enemy units" while kept)
           Kept++;
           return cur;
         }
 
-        _current[pid] = null;
-        _ended[pid] = now;
+        _current[AiTheatres.S(pid)] = null;
+        _ended[AiTheatres.S(pid)] = now;
       }
 
       var cand = SimpleBot.FindDefenseTarget(p, ax, ay);
@@ -51,14 +51,20 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
-      if (_ended[pid] > 0f && now - _ended[pid] < DefendCooldown && !Near(cand, ax, ay, CloseThreat))
+      if (!AiTheatres.Allowed(AiRoutes.CompAt(GetUnitX(cand), GetUnitY(cand))))
+      {
+        Skipped++;
+        return null; // 0.47: another theatre's land -- that theatre defends it
+      }
+
+      if (_ended[AiTheatres.S(pid)] > 0f && now - _ended[AiTheatres.S(pid)] < DefendCooldown && !Near(cand, ax, ay, CloseThreat))
       {
         Skipped++;
         return null; // just left a defence: finish the attack first unless the threat is close
       }
 
-      _current[pid] = cand;
-      _since[pid] = now;
+      _current[AiTheatres.S(pid)] = cand;
+      _since[AiTheatres.S(pid)] = now;
       return cand;
     }
 

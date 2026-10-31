@@ -105,7 +105,14 @@ the whole army defends a CP on its landmass within 9000, at least 30 s, 45-s coo
 weak factions under pressure. With theatres (6) the decision is per theatre: a defence in one theatre never pulls the
 group of another. A cheaper trigger than scanning: `EVENT_PLAYER_UNIT_ATTACKED` on CPs / bases (events are synced).
 
-## 6. Theatres (0.47, agreed)
+## 6. Theatres (built in 0.47.0)
+
+As built: `AiTheatres.cs`; state slots `pid + 24 x theatre` for AiRoutes / AiArmy / AiDefense / the order throttle;
+open at 30 food, keep down to 15, main follows 2x the food or moves when its land is done; secondary theatres plan
+without portals inside their land; plus "only forward" (target score + 0.5 x walk from the army; far defence by the
+rest). The design notes below are the original plan.
+
+## 6 (plan). Theatres
 
 Problem: one attack group and one staging CP per bot for an empire on several continents. Every decision is global:
 attack <-> defence flapping, rest units sent across the map, new units from far production buildings funnelled to one

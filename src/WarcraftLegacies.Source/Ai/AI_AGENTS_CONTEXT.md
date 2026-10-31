@@ -30,7 +30,8 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
   but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **0.46.4** = regroup in units per phase (10 / 15 / 40), defence does not pull units from other landmasses, creep /
+- **0.47.0** = theatres (`AiTheatres`, state slots) + only forward (target score with the walk from the army; far
+  defence by the rest). Big step without a playtest of 0.46.4. **0.46.4** = regroup in units per phase (10 / 15 / 40), defence does not pull units from other landmasses, creep /
   leftover targets scored from the army ("only forward"). **0.46.3** = A/B results (guard / spread / gather off), finish-off bias, Tirisfal - Howling Fjords exception,
   Scarlet Crusade after Arthas turns. **0.46.2** = WL's CPs restored (map data = WL 4.8.2 for CPs), graph with pathing blockers + exceptions file,
   staging on the route, regroup (A/B bit 3), A/B per game phase (gather ab, spread ab, guard ab2, regroup ab),
@@ -100,7 +101,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
 | `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiObserve, AiCaster, AiLoad | 0.46: per-bot A/B (slot bits), guard positions, unit budget per CP, order-latency probe, activity / returns / targets by owner, caster cap |
-| `AiStyleCheck.cs` | AiStyleCheck | 0.46 only: CSharp.lua check for state in objects (300 instance fields); delete in 0.47 |
+| `AiTheatres.cs` | AiTheatres | 0.47: theatres per bot (walking components), state slots, restrictions, dump |
 | `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
 | `AiArmy.cs` | AiArmy | 0.41: army orders -- attack group sized from the target, rest at the staging CP, orders only for idle units away from their point (`-orders smart`) |
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
@@ -169,6 +170,10 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
     (0.44.3-0.45.0, silent TICK ERROR on every run): `a[i] += c ? x : y` became `a:get(i) + (c) and x or y` --
     arithmetic on a boolean. A plain variable (`food += c ? x : y`) was translated correctly. Compute the value into a
     local first. `check_refs.py` flags it ("INDEXER COMPOUND").
+17. **State slots (0.47)**: per-bot STATE of the planner, army, defence and order throttle is indexed by
+    `AiTheatres.S(pid)` (= pid + 24 x theatre while a secondary theatre is serviced, else pid). Player facts (CPs,
+    area units, blacklist, counters per bot) stay indexed by the real pid. New per-bot state in those classes: size
+    `AiTheatres.Agents`, index `S(pid)`.
 
 ## How we work
 

@@ -25,18 +25,18 @@ namespace WarcraftLegacies.Source.Ai
     internal static bool Smart = true;
     internal static List<unit> Units = new();
 
-    private static HashSet<unit>[] _group = new HashSet<unit>[24];
-    private static bool[] _whole = new bool[24];
-    private static bool[] _hasStage = new bool[24];
-    private static float[] _stageX = new float[24];
-    private static float[] _stageY = new float[24];
-    private static string[] _stageName = new string[24];
-    private static int[] _need = new int[24];
-    private static int[] _groupFood = new int[24];
-    private static int[] _armyFood = new int[24];
-    private static bool[] _hasFinal = new bool[24]; // 0.42: final target (group size, staging) vs. waypoint (orders)
-    private static float[] _fx = new float[24];
-    private static float[] _fy = new float[24];
+    private static HashSet<unit>[] _group = new HashSet<unit>[AiTheatres.Agents];
+    private static bool[] _whole = new bool[AiTheatres.Agents];
+    private static bool[] _hasStage = new bool[AiTheatres.Agents];
+    private static float[] _stageX = new float[AiTheatres.Agents];
+    private static float[] _stageY = new float[AiTheatres.Agents];
+    private static string[] _stageName = new string[AiTheatres.Agents];
+    private static int[] _need = new int[AiTheatres.Agents];
+    private static int[] _groupFood = new int[AiTheatres.Agents];
+    private static int[] _armyFood = new int[AiTheatres.Agents];
+    private static bool[] _hasFinal = new bool[AiTheatres.Agents]; // 0.42: final target (group size, staging) vs. waypoint (orders)
+    private static float[] _fx = new float[AiTheatres.Agents];
+    private static float[] _fy = new float[AiTheatres.Agents];
 
     internal static int OrdChange;  // target changed: group / whole army
     internal static int OrdRestMove; // target changed or heartbeat: rest to the staging point
@@ -56,12 +56,12 @@ namespace WarcraftLegacies.Source.Ai
     internal static int StageKept;         // 0.46.2: staging kept (new one close), set on the route
     internal static int StageRoute;
 
-    internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[pid] : 0;
+    internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[AiTheatres.S(pid)] : 0;
 
     // 0.45.0: has share of the attack group's food arrived within r of (x, y)? (gather points)
     internal static bool GroupAssembled(int pid, float x, float y, float r, float share)
     {
-      var grp = pid >= 0 && pid < 24 ? _group[pid] : null;
+      var grp = pid >= 0 && pid < 24 ? _group[AiTheatres.S(pid)] : null;
       if (grp == null || grp.Count == 0)
       {
         return true;
@@ -100,13 +100,19 @@ namespace WarcraftLegacies.Source.Ai
 
       SampleStall(pid); // 0.44
 
+      if (whole && DefendCall && GroupFarFrom(pid, x, y))
+      {
+        DefendWithRest(pid, x, y, changed); // 0.47: the attack group keeps its front
+        return;
+      }
+
       if (whole)
       {
-        _hasFinal[pid] = false;
-        _whole[pid] = true;
-        _hasStage[pid] = false;
-        _group[pid]?.Clear();
-        _need[pid] = 0;
+        _hasFinal[AiTheatres.S(pid)] = false;
+        _whole[AiTheatres.S(pid)] = true;
+        _hasStage[AiTheatres.S(pid)] = false;
+        _group[AiTheatres.S(pid)]?.Clear();
+        _need[AiTheatres.S(pid)] = 0;
         var food = 0;
         var defLm = DefendCall ? Geography.Landmass(x, y) : -1;
         for (var i = 0; i < Units.Count; i++)
@@ -136,23 +142,23 @@ namespace WarcraftLegacies.Source.Ai
           }
         }
 
-        _armyFood[pid] = food;
-        _groupFood[pid] = food;
+        _armyFood[AiTheatres.S(pid)] = food;
+        _groupFood[AiTheatres.S(pid)] = food;
         return;
       }
 
-      var grp = _group[pid];
+      var grp = _group[AiTheatres.S(pid)];
       if (grp == null)
       {
         grp = new HashSet<unit>();
-        _group[pid] = grp;
+        _group[AiTheatres.S(pid)] = grp;
       }
 
-      var newTarget = !_hasFinal[pid] || _whole[pid]
-                      || (fx - _fx[pid]) * (fx - _fx[pid]) + (fy - _fy[pid]) * (fy - _fy[pid]) > 300f * 300f;
-      _hasFinal[pid] = true;
-      _fx[pid] = fx;
-      _fy[pid] = fy;
+      var newTarget = !_hasFinal[AiTheatres.S(pid)] || _whole[AiTheatres.S(pid)]
+                      || (fx - _fx[AiTheatres.S(pid)]) * (fx - _fx[AiTheatres.S(pid)]) + (fy - _fy[AiTheatres.S(pid)]) * (fy - _fy[AiTheatres.S(pid)]) > 300f * 300f;
+      _hasFinal[AiTheatres.S(pid)] = true;
+      _fx[AiTheatres.S(pid)] = fx;
+      _fy[AiTheatres.S(pid)] = fy;
       if (changed && !newTarget)
       {
         for (var i = 0; i < Units.Count; i++)
@@ -169,7 +175,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (newTarget)
       {
-        _whole[pid] = false;
+        _whole[AiTheatres.S(pid)] = false;
         Select(p, pid, fx, fy, grp, true);
         for (var i = 0; i < Units.Count; i++)
         {
@@ -179,12 +185,12 @@ namespace WarcraftLegacies.Source.Ai
             Issue(u, x, y);
             OrdChange++;
           }
-          else if (_hasStage[pid] && IsIdleAway(u, _stageX[pid], _stageY[pid], AtStage))
+          else if (_hasStage[AiTheatres.S(pid)] && IsIdleAway(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AtStage))
           {
             // 0.44.3: only IDLE rest units -- the busy ones keep walking (to the old staging CP or a fight) and get
             // the new one when they stand idle. Before, every target change re-sent all rest units away from the new
             // staging CP: 12,913 "rest" orders in 14 min (0.44.2 game), units walking back and forth.
-            Issue(u, _stageX[pid], _stageY[pid]);
+            Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
             OrdRestMove++;
             RestBy[pid]++;
           }
@@ -206,9 +212,9 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      _armyFood[pid] = armyFood;
-      _groupFood[pid] = groupFood;
-      if (groupFood * 2 < _need[pid] && groupFood < armyFood)
+      _armyFood[AiTheatres.S(pid)] = armyFood;
+      _groupFood[AiTheatres.S(pid)] = groupFood;
+      if (groupFood * 2 < _need[AiTheatres.S(pid)] && groupFood < armyFood)
       {
         var before = new HashSet<unit>(grp);
         Select(p, pid, fx, fy, grp, false);
@@ -235,9 +241,9 @@ namespace WarcraftLegacies.Source.Ai
             IdleBy[pid]++;
           }
         }
-        else if (_hasStage[pid] && IsIdleAway(u, _stageX[pid], _stageY[pid], AtStage))
+        else if (_hasStage[AiTheatres.S(pid)] && IsIdleAway(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AtStage))
         {
-          Issue(u, _stageX[pid], _stageY[pid]);
+          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
           OrdRestMove++;
           RestBy[pid]++;
         }
@@ -248,12 +254,12 @@ namespace WarcraftLegacies.Source.Ai
     // the way NOW (every service), not after the 20-s heartbeat (0.44.1 long game: 1048 found at exits).
     internal static void ExitPass(int pid)
     {
-      if (pid < 0 || pid >= 24 || !_hasFinal[pid])
+      if (pid < 0 || pid >= 24 || !_hasFinal[AiTheatres.S(pid)])
       {
         return;
       }
 
-      var grp = _group[pid];
+      var grp = _group[AiTheatres.S(pid)];
       for (var i = 0; i < Units.Count; i++)
       {
         var u = Units[i];
@@ -262,13 +268,13 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        if (grp != null && grp.Contains(u) || _whole[pid])
+        if (grp != null && grp.Contains(u) || _whole[AiTheatres.S(pid)])
         {
-          Issue(u, _fx[pid], _fy[pid]);
+          Issue(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)]);
         }
-        else if (_hasStage[pid])
+        else if (_hasStage[AiTheatres.S(pid)])
         {
-          Issue(u, _stageX[pid], _stageY[pid]);
+          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
         }
         else
         {
@@ -284,10 +290,56 @@ namespace WarcraftLegacies.Source.Ai
     // 0.42.1: centre of the group's biggest part on ONE landmass (like the army anchor, 0.36) -- a group half through
     // a waygate had its centre between the two worlds and was sent back and forth (Dark Portal).
     private static int[] _lmCount = new int[64];
+    // 0.47: ONLY FORWARD in defence -- a CP more than DefendFar behind the attack group is defended by the units NOT in
+    // the group (the rest at the staging point, new units); the group keeps its front. Before, every defence pulled
+    // the whole army back (Druids: Broken Isles -> Ashenvale; North Alliance between its own CPs).
+    private const float DefendFar = 6000f;
+    internal static int DefendByRest;
+
+    private static bool GroupFarFrom(int pid, float x, float y)
+    {
+      var s = AiTheatres.S(pid);
+      var grp = pid >= 0 && pid < 24 ? _group[s] : null;
+      if (grp == null || grp.Count == 0 || _whole[s])
+      {
+        return false;
+      }
+
+      float cx = x, cy = y;
+      GroupCenter(pid, ref cx, ref cy);
+      return (cx - x) * (cx - x) + (cy - y) * (cy - y) > DefendFar * DefendFar;
+    }
+
+    private static void DefendWithRest(int pid, float x, float y, bool changed)
+    {
+      var grp = _group[AiTheatres.S(pid)];
+      DefendByRest++;
+      for (var i = 0; i < Units.Count; i++)
+      {
+        var u = Units[i];
+        if (grp.Contains(u))
+        {
+          continue;
+        }
+
+        if (changed)
+        {
+          Issue(u, x, y);
+          OrdChange++;
+        }
+        else if (IsIdleAway(u, x, y, AtTarget))
+        {
+          Issue(u, x, y);
+          OrdIdleFar++;
+          IdleBy[pid]++;
+        }
+      }
+    }
+
     internal static void GroupCenter(int pid, ref float x, ref float y)
     {
-      var grp = pid >= 0 && pid < 24 ? _group[pid] : null;
-      if (grp == null || grp.Count == 0 || _whole[pid])
+      var grp = pid >= 0 && pid < 24 ? _group[AiTheatres.S(pid)] : null;
+      if (grp == null || grp.Count == 0 || _whole[AiTheatres.S(pid)])
       {
         return;
       }
@@ -351,7 +403,7 @@ namespace WarcraftLegacies.Source.Ai
     {
       if (fresh)
       {
-        _need[pid] = Need(p, x, y);
+        _need[AiTheatres.S(pid)] = Need(p, x, y);
         PickStage(p, pid, x, y);
       }
 
@@ -368,7 +420,7 @@ namespace WarcraftLegacies.Source.Ai
         armyFood += Food(Units[i]);
       }
 
-      _armyFood[pid] = armyFood;
+      _armyFood[AiTheatres.S(pid)] = armyFood;
 
       // 0.46: only units that have a way to the target (walking or a portal edge), unless none has
       var reach = new bool[n];
@@ -394,16 +446,16 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      if (AiRegroup.Holding(p, pid, n))
+      if (!AiTheatres.Secondary && AiRegroup.Holding(p, pid, n)) // 0.47: regroup is the main theatre's
       {
         grp.Clear(); // 0.46.2: regroup -- nobody attacks, every unit rests at the staging CP
-        _groupFood[pid] = 0;
+        _groupFood[AiTheatres.S(pid)] = 0;
         return;
       }
 
-      var all = _need[pid] * 5 >= armyFood * 4; // need >= 80 % of the army -> everybody goes
+      var all = _need[AiTheatres.S(pid)] * 5 >= armyFood * 4; // need >= 80 % of the army -> everybody goes
       var food = 0;
-      while (food < _need[pid] || all)
+      while (food < _need[AiTheatres.S(pid)] || all)
       {
         var best = -1;
         for (var i = 0; i < n; i++)
@@ -424,7 +476,7 @@ namespace WarcraftLegacies.Source.Ai
         food += Food(Units[best]);
       }
 
-      _groupFood[pid] = food;
+      _groupFood[AiTheatres.S(pid)] = food;
     }
 
     // enemy food near the target x 1.5 + enemy structures there x 8 (towers, the CP's defenders), at least FloorFood.
@@ -477,10 +529,10 @@ namespace WarcraftLegacies.Source.Ai
     // the bot's own CP nearest to the target (not the target itself), on the target's landmass when both are known
     private static void PickStage(player p, int pid, float x, float y)
     {
-      var had = _hasStage[pid];
-      var oldX = _stageX[pid];
-      var oldY = _stageY[pid];
-      var oldName = _stageName[pid];
+      var had = _hasStage[AiTheatres.S(pid)];
+      var oldX = _stageX[AiTheatres.S(pid)];
+      var oldY = _stageY[AiTheatres.S(pid)];
+      var oldName = _stageName[AiTheatres.S(pid)];
 
       // 0.46.2: on the route (AiRoutes.StagePoint), and kept when the new one is within StageKeep of the old --
       // the rest of the army stops walking between own CPs at every target change
@@ -492,16 +544,16 @@ namespace WarcraftLegacies.Source.Ai
           return;
         }
 
-        _hasStage[pid] = true;
-        _stageX[pid] = rx;
-        _stageY[pid] = ry;
-        _stageName[pid] = "route node";
+        _hasStage[AiTheatres.S(pid)] = true;
+        _stageX[AiTheatres.S(pid)] = rx;
+        _stageY[AiTheatres.S(pid)] = ry;
+        _stageName[AiTheatres.S(pid)] = "route node";
         StageRoute++;
         return;
       }
 
-      _hasStage[pid] = false;
-      _stageName[pid] = "-";
+      _hasStage[AiTheatres.S(pid)] = false;
+      _stageName[AiTheatres.S(pid)] = "-";
       var targetLm = Geography.Landmass(x, y);
       var best = -1f;
       var mine = p.GetPlayerData().ControlPoints;
@@ -532,20 +584,20 @@ namespace WarcraftLegacies.Source.Ai
         if (best < 0f || dd < best)
         {
           best = dd;
-          _hasStage[pid] = true;
-          _stageX[pid] = cx;
-          _stageY[pid] = cy;
-          _stageName[pid] = GetUnitName(cu);
+          _hasStage[AiTheatres.S(pid)] = true;
+          _stageX[AiTheatres.S(pid)] = cx;
+          _stageY[AiTheatres.S(pid)] = cy;
+          _stageName[AiTheatres.S(pid)] = GetUnitName(cu);
         }
       }
 
-      if (had && _hasStage[pid]
-          && (_stageX[pid] - oldX) * (_stageX[pid] - oldX) + (_stageY[pid] - oldY) * (_stageY[pid] - oldY)
+      if (had && _hasStage[AiTheatres.S(pid)]
+          && (_stageX[AiTheatres.S(pid)] - oldX) * (_stageX[AiTheatres.S(pid)] - oldX) + (_stageY[AiTheatres.S(pid)] - oldY) * (_stageY[AiTheatres.S(pid)] - oldY)
              < StageKeep * StageKeep)
       {
-        _stageX[pid] = oldX; // 0.46.2: fallback (no route) -- keep the old one too when close
-        _stageY[pid] = oldY;
-        _stageName[pid] = oldName;
+        _stageX[AiTheatres.S(pid)] = oldX; // 0.46.2: fallback (no route) -- keep the old one too when close
+        _stageY[AiTheatres.S(pid)] = oldY;
+        _stageName[AiTheatres.S(pid)] = oldName;
         StageKept++;
       }
     }
@@ -587,24 +639,24 @@ namespace WarcraftLegacies.Source.Ai
     // "stalled" -- the signature of an overloaded engine (orders wait in the pathing queue). Flapping instead shows as
     // switches (AiScheduler.TargetSwitch / StateSwitch). Ranged units shooting without being hit count as stalled
     // too, so compare the share between games, not as an absolute truth.
-    private static Dictionary<unit, float>[] _sx = new Dictionary<unit, float>[24];
-    private static Dictionary<unit, float>[] _sy = new Dictionary<unit, float>[24];
-    private static Dictionary<unit, float>[] _sl = new Dictionary<unit, float>[24];
+    private static Dictionary<unit, float>[] _sx = new Dictionary<unit, float>[AiTheatres.Agents];
+    private static Dictionary<unit, float>[] _sy = new Dictionary<unit, float>[AiTheatres.Agents];
+    private static Dictionary<unit, float>[] _sl = new Dictionary<unit, float>[AiTheatres.Agents];
     internal static int StallSeen;
     internal static int StallStalled;
 
     private static void SampleStall(int pid)
     {
-      if (_sx[pid] == null)
+      if (_sx[AiTheatres.S(pid)] == null)
       {
-        _sx[pid] = new Dictionary<unit, float>();
-        _sy[pid] = new Dictionary<unit, float>();
-        _sl[pid] = new Dictionary<unit, float>();
+        _sx[AiTheatres.S(pid)] = new Dictionary<unit, float>();
+        _sy[AiTheatres.S(pid)] = new Dictionary<unit, float>();
+        _sl[AiTheatres.S(pid)] = new Dictionary<unit, float>();
       }
 
-      var sx = _sx[pid];
-      var sy = _sy[pid];
-      var sl = _sl[pid];
+      var sx = _sx[AiTheatres.S(pid)];
+      var sy = _sy[AiTheatres.S(pid)];
+      var sl = _sl[AiTheatres.S(pid)];
       for (var i = 0; i < Units.Count; i++)
       {
         var u = Units[i];
@@ -669,7 +721,8 @@ namespace WarcraftLegacies.Source.Ai
              + " points=" + I2S(AiRoutes.ChainPoints) + " fallback=" + I2S(AiRoutes.ChainFallback) + " | stalled "
              + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen)
              + " | staging on route " + I2S(StageRoute) + ", kept " + I2S(StageKept) // 0.46.2
-             + " | defence kept away (other landmass) " + I2S(DefendKept); // 0.46.4
+             + " | defence kept away (other landmass) " + I2S(DefendKept) // 0.46.4
+             + " | defended by the rest (group kept its front) " + I2S(DefendByRest); // 0.47
     }
 
     internal static void Lines(List<string> o)
@@ -678,14 +731,14 @@ namespace WarcraftLegacies.Source.Ai
       var s = "groups (food group/need of army @staging):";
       for (var pid = 0; pid < 24; pid++)
       {
-        if (_armyFood[pid] == 0)
+        if (_armyFood[AiTheatres.S(pid)] == 0)
         {
           continue;
         }
 
-        s = s + " P" + I2S(pid) + " " + (_whole[pid] ? "all " + I2S(_armyFood[pid])
-          : I2S(_groupFood[pid]) + "/" + I2S(_need[pid]) + " of " + I2S(_armyFood[pid]) + " @"
-            + (_hasStage[pid] ? _stageName[pid] : "-")) + ";";
+        s = s + " P" + I2S(pid) + " " + (_whole[AiTheatres.S(pid)] ? "all " + I2S(_armyFood[AiTheatres.S(pid)])
+          : I2S(_groupFood[AiTheatres.S(pid)]) + "/" + I2S(_need[AiTheatres.S(pid)]) + " of " + I2S(_armyFood[AiTheatres.S(pid)]) + " @"
+            + (_hasStage[AiTheatres.S(pid)] ? _stageName[AiTheatres.S(pid)] : "-")) + ";";
       }
 
       o.Add(s);

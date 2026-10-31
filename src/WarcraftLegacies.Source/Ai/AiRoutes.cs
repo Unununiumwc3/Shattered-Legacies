@@ -44,14 +44,14 @@ namespace WarcraftLegacies.Source.Ai
     private static int _rockCount;
 
     // last result per bot (diagnostics + orders)
-    internal static float[] WpX = new float[24];
-    internal static float[] WpY = new float[24];
-    private static int[] _lastTarget = new int[24];
-    private static int[] _lastWp = new int[24];
-    private static int[] _lastHops = new int[24];
-    private static float[] _lastCost = new float[24];
-    private static bool[] _lastFront = new bool[24];
-    private static bool[] _lastQuest = new bool[24];
+    internal static float[] WpX = new float[AiTheatres.Agents];
+    internal static float[] WpY = new float[AiTheatres.Agents];
+    private static int[] _lastTarget = new int[AiTheatres.Agents];
+    private static int[] _lastWp = new int[AiTheatres.Agents];
+    private static int[] _lastHops = new int[AiTheatres.Agents];
+    private static float[] _lastCost = new float[AiTheatres.Agents];
+    private static bool[] _lastFront = new bool[AiTheatres.Agents];
+    private static bool[] _lastQuest = new bool[AiTheatres.Agents];
     internal static int Runs;
     internal static int LastRelax;
 
@@ -86,7 +86,7 @@ namespace WarcraftLegacies.Source.Ai
       _done = new bool[n];
       _heapNode = new int[AiRouteData.Edges * 2 + 512];
       _heapKey = new float[AiRouteData.Edges * 2 + 512];
-      for (var i = 0; i < 24; i++)
+      for (var i = 0; i < AiTheatres.Agents; i++)
       {
         _lastTarget[i] = -1;
         _lastWp[i] = -1;
@@ -126,7 +126,13 @@ namespace WarcraftLegacies.Source.Ai
         _rockCount = 0;
         _rockType = AiRouteData.RockType[gidx]; // 0.46.3: LTrc or a type based on it (B013 Whirlpool Blockers)
         EnumDestructablesInRect(_rockRect, null, CountRock);
-        _rockOpen[gidx] = _rockCount == 0;
+        var open = _rockCount == 0;
+        if (open != _rockOpen[gidx])
+        {
+          _compDirty = true; // 0.47: theatres follow the rocks
+        }
+
+        _rockOpen[gidx] = open;
         SimpleBot.WaveOps++;
       }
     }
@@ -185,6 +191,8 @@ namespace WarcraftLegacies.Source.Ai
     // one-shots (AiConfig.OneShots, skipped while Creeps is on). "-creeps off" = 0.44.2.
     internal static bool Creeps = true;
     private const float CreepCost = 3000f;
+    private const float ForwardWeight = 0.5f; // 0.47: weight of the walk from the army in a target's score
+    internal static int SecondaryPlans;       // 0.47: plans for secondary theatres
     private static float _armyX;     // 0.46.4: where the army (group centre) stands while Plan scores
     private static float _armyY;
     private static bool _armyKnown;
@@ -474,6 +482,94 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     internal static bool IsPortalEdgeGate(unit u) => _pUnit.Contains(u);
+
+    // 0.47: WALKING COMPONENTS (theatres): nodes joined by open walking edges (live rock state), no portals. Rebuilt
+    // when a rock group opens (CheckRocks).
+    private static int[] _comp;
+    private static bool _compDirty = true;
+
+    private static void Components()
+    {
+      var n = AiRouteData.Nodes;
+      if (_comp == null)
+      {
+        _comp = new int[n];
+      }
+
+      for (var i = 0; i < n; i++)
+      {
+        _comp[i] = i;
+      }
+
+      for (var e = 0; e < AiRouteData.Edges; e++)
+      {
+        if (!WalkEdgeOpen(e))
+        {
+          continue;
+        }
+
+        var a = Root(AiRouteData.EdgeA[e]);
+        var b = Root(AiRouteData.EdgeB[e]);
+        if (a > b)
+        {
+          _comp[a] = b; // the smaller index is the root: the same on every client
+        }
+        else if (b > a)
+        {
+          _comp[b] = a;
+        }
+      }
+
+      for (var i = 0; i < n; i++)
+      {
+        _comp[i] = Root(i);
+      }
+
+      _compDirty = false;
+    }
+
+    private static int Root(int i)
+    {
+      var guard = 0;
+      while (_comp[i] != i && guard < 10000)
+      {
+        i = _comp[i];
+        guard++;
+      }
+
+      return i;
+    }
+
+    internal static int CompOfNode(int i)
+    {
+      if (_comp == null || _compDirty)
+      {
+        Components();
+      }
+
+      return i >= 0 && i < AiRouteData.Nodes ? _comp[i] : -1;
+    }
+
+    internal static int CompAt(float x, float y) => CompOfNode(StartNode(x, y));
+
+    // a readable name: the first CP of the component
+    internal static string CompName(int c)
+    {
+      if (c < 0)
+      {
+        return "-";
+      }
+
+      for (var i = 0; i < AiRouteData.Nodes; i++)
+      {
+        if (CompOfNode(i) == c && AiRouteData.NodeType[i] != 0)
+        {
+          return GetObjectName(AiRouteData.NodeType[i]);
+        }
+      }
+
+      return "area " + I2S(c);
+    }
     internal static int NavalSkipped; // 0.46.1: waygate checks skipped because an end is on water (ships only)
 
     // 0.46: for "-edges" (draws the generated graph)
@@ -503,14 +599,14 @@ namespace WarcraftLegacies.Source.Ai
     private const float WaypointReach = 8000f; // 0.43.1: order to the farthest route node within this distance
     private const float DetourFactor = 1.35f;  // 0.43.2: ... reachable without a detour (route cost vs straight line)
     private const float DetourSlack = 2000f;
-    private static List<int>[] _path = new List<int>[24];
-    private static List<float>[] _pathCost = new List<float>[24]; // 0.43.2: walking cost from the group, per route node
-    private static int[] _step = new int[24];
-    private static float[] _planAt = new float[24];
+    private static List<int>[] _path = new List<int>[AiTheatres.Agents];
+    private static List<float>[] _pathCost = new List<float>[AiTheatres.Agents]; // 0.43.2: walking cost from the group, per route node
+    private static int[] _step = new int[AiTheatres.Agents];
+    private static float[] _planAt = new float[AiTheatres.Agents];
     private static HashSet<int> _questNodes = new();
 
     // Target for bot p; (sx, sy) = where its attack group (or army) stands. Null = nothing reachable (the caller falls
-    // back to the old frontier picker). Sets WpX/WpY[pid] (-1/-1 = go straight to the target).
+    // back to the old frontier picker). Sets WpX/WpY[AiTheatres.S(pid)] (-1/-1 = go straight to the target).
     internal static unit Pick(player p, int pid, Faction fac, float sx, float sy, BotDiag d)
     {
       Ready();
@@ -526,13 +622,13 @@ namespace WarcraftLegacies.Source.Ai
       _armyY = sy;
       _armyKnown = true;
 
-      var t = _lastTarget[pid];
+      var t = _lastTarget[AiTheatres.S(pid)];
       var tu = t >= 0 ? NodeTarget(p, pid, fac, t, d) : null;
       // 0.43.1: plan again only when the target is gone or every ReplanEvery seconds. 0.42.1/0.43.0 also planned
       // whenever the group stood in an area that is not on the route -- which happens all the time while walking
       // past other nodes (~1 plan per bot every 13 s, new routes, back and forth).
-      var path = _path[pid];
-      if (tu == null || path == null || SimpleBot.Clock - _planAt[pid] >= ReplanEvery)
+      var path = _path[AiTheatres.S(pid)];
+      if (tu == null || path == null || SimpleBot.Clock - _planAt[AiTheatres.S(pid)] >= ReplanEvery)
       {
         var planned = Plan(p, pid, fac, here, t, tu, d);
         if (planned == null && tu != null && path != null)
@@ -542,13 +638,13 @@ namespace WarcraftLegacies.Source.Ai
           // OLD picker took over, 8 s later the planner chose the Maw again: 608 target switches, each one re-ordering
           // the whole group.
           KeptOnNull++;
-          _planAt[pid] = SimpleBot.Clock;
+          _planAt[AiTheatres.S(pid)] = SimpleBot.Clock;
         }
         else if (planned == null)
         {
           NullNoRoute++;
-          _lastTarget[pid] = -1;
-          _path[pid] = null;
+          _lastTarget[AiTheatres.S(pid)] = -1;
+          _path[AiTheatres.S(pid)] = null;
           return null;
         }
         else
@@ -556,7 +652,7 @@ namespace WarcraftLegacies.Source.Ai
           tu = planned;
         }
 
-        path = _path[pid];
+        path = _path[AiTheatres.S(pid)];
       }
 
       // 0.43.1: the order goes to the FARTHEST node on the route within WaypointReach of the group (a CP before an
@@ -567,20 +663,20 @@ namespace WarcraftLegacies.Source.Ai
       // is may be at most DetourFactor x the straight line + DetourSlack. 0.43.1 chose Arathi Highlands from the other
       // side of the closed Thandol bridge (close in a line, far on foot): the units stood at the bridge.
       var last = path.Count - 1;
-      var costs = _pathCost[pid];
+      var costs = _pathCost[AiTheatres.S(pid)];
       var h = path.IndexOf(here);
-      var baseIdx = h > _step[pid] - 1 ? h : _step[pid] - 1;
+      var baseIdx = h > _step[AiTheatres.S(pid)] - 1 ? h : _step[AiTheatres.S(pid)] - 1;
       var baseCost = costs != null && baseIdx >= 0 && baseIdx < costs.Count ? costs[baseIdx] : 0f;
       var pick = -1;
       var pickCp = -1;
-      for (var k = last; k >= _step[pid] && k >= 0; k--)
+      for (var k = last; k >= _step[AiTheatres.S(pid)] && k >= 0; k--)
       {
         if (!Near(path[k], sx, sy, WaypointReach))
         {
           continue;
         }
 
-        if (costs != null && k < costs.Count && k > _step[pid]
+        if (costs != null && k < costs.Count && k > _step[AiTheatres.S(pid)]
             && costs[k] - baseCost > DetourFactor * Dist(AiRouteData.NodeX[path[k]], AiRouteData.NodeY[path[k]], sx, sy)
                + DetourSlack)
         {
@@ -604,28 +700,28 @@ namespace WarcraftLegacies.Source.Ai
         pick = pickCp; // a CP is a better gathering point than an area node, if it is at most 2 nodes back
       }
 
-      if (pick > _step[pid])
+      if (pick > _step[AiTheatres.S(pid)])
       {
-        _step[pid] = pick;
+        _step[AiTheatres.S(pid)] = pick;
       }
 
-      if (_step[pid] > last)
+      if (_step[AiTheatres.S(pid)] > last)
       {
-        _step[pid] = last;
+        _step[AiTheatres.S(pid)] = last;
       }
 
-      var wp = path[_step[pid]];
-      _lastWp[pid] = wp;
-      _lastHops[pid] = last - _step[pid];
+      var wp = path[_step[AiTheatres.S(pid)]];
+      _lastWp[AiTheatres.S(pid)] = wp;
+      _lastHops[AiTheatres.S(pid)] = last - _step[AiTheatres.S(pid)];
       if (wp == path[path.Count - 1])
       {
-        WpX[pid] = -1f;
-        WpY[pid] = -1f;
+        WpX[AiTheatres.S(pid)] = -1f;
+        WpY[AiTheatres.S(pid)] = -1f;
       }
       else
       {
-        WpX[pid] = AiRouteData.NodeX[wp];
-        WpY[pid] = AiRouteData.NodeY[wp];
+        WpX[AiTheatres.S(pid)] = AiRouteData.NodeX[wp];
+        WpY[AiTheatres.S(pid)] = AiRouteData.NodeY[wp];
       }
 
       UpdateGather(p, pid, path);
@@ -642,10 +738,10 @@ namespace WarcraftLegacies.Source.Ai
     private const float GatherMax = 60f;
     private const float GatherRadius = 1500f;
     private const float GatherShare = 0.8f;
-    private static int[] _gatherFor = new int[24];     // target node the decision belongs to (-1 = none yet)
-    private static int[] _gatherNode = new int[24];    // -1 = no gathering for this target
-    private static float[] _gatherStart = new float[24];
-    private static bool[] _gatherInit = new bool[24];
+    private static int[] _gatherFor = new int[AiTheatres.Agents];     // target node the decision belongs to (-1 = none yet)
+    private static int[] _gatherNode = new int[AiTheatres.Agents];    // -1 = no gathering for this target
+    private static float[] _gatherStart = new float[AiTheatres.Agents];
+    private static bool[] _gatherInit = new bool[AiTheatres.Agents];
     internal static int GatherStarted;
     internal static int GatherAssembled;
     internal static int GatherTimeout;
@@ -657,21 +753,21 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      if (!_gatherInit[pid])
+      if (!_gatherInit[AiTheatres.S(pid)])
       {
-        _gatherInit[pid] = true;
-        _gatherFor[pid] = -1;
-        _gatherNode[pid] = -1;
+        _gatherInit[AiTheatres.S(pid)] = true;
+        _gatherFor[AiTheatres.S(pid)] = -1;
+        _gatherNode[AiTheatres.S(pid)] = -1;
       }
 
       var target = path[path.Count - 1];
-      if (_gatherFor[pid] != target)
+      if (_gatherFor[AiTheatres.S(pid)] != target)
       {
-        _gatherFor[pid] = target;
+        _gatherFor[AiTheatres.S(pid)] = target;
         var gatherOn = AiAb.For(GatherMode, pid, AiAb.BitGather);
-        _gatherNode[pid] = gatherOn && path.Count - 1 > GatherHops ? GatherNodeOn(p, pid, path) : -1;
-        _gatherStart[pid] = SimpleBot.Clock;
-        if (_gatherNode[pid] >= 0)
+        _gatherNode[AiTheatres.S(pid)] = gatherOn && path.Count - 1 > GatherHops ? GatherNodeOn(p, pid, path) : -1;
+        _gatherStart[AiTheatres.S(pid)] = SimpleBot.Clock;
+        if (_gatherNode[AiTheatres.S(pid)] >= 0)
         {
           GatherStarted++;
         }
@@ -679,7 +775,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      var gn = _gatherNode[pid];
+      var gn = _gatherNode[AiTheatres.S(pid)];
       if (gn < 0)
       {
         return;
@@ -687,18 +783,18 @@ namespace WarcraftLegacies.Source.Ai
 
       if (!AiAb.For(GatherMode, pid, AiAb.BitGather))
       {
-        _gatherNode[pid] = -1;
+        _gatherNode[AiTheatres.S(pid)] = -1;
         return;
       }
 
       if (AiArmy.GroupAssembled(pid, AiRouteData.NodeX[gn], AiRouteData.NodeY[gn], GatherRadius, GatherShare))
       {
-        _gatherNode[pid] = -1;
+        _gatherNode[AiTheatres.S(pid)] = -1;
         GatherAssembled++;
       }
-      else if (SimpleBot.Clock - _gatherStart[pid] >= GatherMax)
+      else if (SimpleBot.Clock - _gatherStart[AiTheatres.S(pid)] >= GatherMax)
       {
-        _gatherNode[pid] = -1;
+        _gatherNode[AiTheatres.S(pid)] = -1;
         GatherTimeout++;
         GatherTimeoutShare += AiArmy.LastShare; // computed by GroupAssembled just above
       }
@@ -723,13 +819,13 @@ namespace WarcraftLegacies.Source.Ai
     {
       x = 0f;
       y = 0f;
-      if (pid < 0 || pid >= 24 || !_gatherInit[pid] || _gatherNode[pid] < 0)
+      if (pid < 0 || pid >= 24 || !_gatherInit[AiTheatres.S(pid)] || _gatherNode[AiTheatres.S(pid)] < 0)
       {
         return false;
       }
 
-      x = AiRouteData.NodeX[_gatherNode[pid]];
-      y = AiRouteData.NodeY[_gatherNode[pid]];
+      x = AiRouteData.NodeX[_gatherNode[AiTheatres.S(pid)]];
+      y = AiRouteData.NodeY[_gatherNode[AiTheatres.S(pid)]];
       return true;
     }
 
@@ -773,6 +869,11 @@ namespace WarcraftLegacies.Source.Ai
     private static unit Plan(player p, int pid, Faction fac, int here, int cur, unit curUnit, BotDiag d)
     {
       QuestNodes(fac);
+      if (AiTheatres.Secondary)
+      {
+        SecondaryPlans++;
+      }
+
       if (_score == null)
       {
         _score = new float[AiRouteData.Nodes];
@@ -784,7 +885,7 @@ namespace WarcraftLegacies.Source.Ai
       var sources = 0;
       for (var i = 0; i < AiRouteData.Nodes; i++)
       {
-        _source[i] = IsOwnNode(p, pid, i);
+        _source[i] = IsOwnNode(p, pid, i) && (!AiTheatres.Secondary || AiTheatres.Allowed(CompOfNode(i)));
         if (_source[i])
         {
           sources++;
@@ -805,6 +906,11 @@ namespace WarcraftLegacies.Source.Ai
         if (!_done[i])
         {
           continue; // 0.44.1: own nodes too -- leftover enemy buildings in their area (Leftover)
+        }
+
+        if (!AiTheatres.Allowed(CompOfNode(i)))
+        {
+          continue; // 0.47: another theatre's front (main) or outside this theatre (secondary)
         }
 
         var cand = i == cur ? curUnit : NodeTarget(p, pid, fac, i, d);
@@ -850,6 +956,10 @@ namespace WarcraftLegacies.Source.Ai
           curOk = true;
         }
 
+        // 0.47: ONLY FORWARD -- a target also costs the walk from where the army stands (ForwardWeight of it). The
+        // territory distance alone let any point of a long border win: the army turned back to a CP behind it
+        // whenever its target fell (North Alliance, Kul Tiras, Druids -- 0.46 games).
+        _score[i] = _score[i] + ForwardWeight * _dist[i];
         if (best < 0 || _score[i] < _score[best])
         {
           best = i;
@@ -887,14 +997,14 @@ namespace WarcraftLegacies.Source.Ai
         costs.Add(_dist[path[k]]);
       }
 
-      _path[pid] = path;
-      _pathCost[pid] = costs;
-      _step[pid] = path.Count > 1 ? 1 : 0;
-      _planAt[pid] = SimpleBot.Clock;
-      _lastTarget[pid] = best;
-      _lastCost[pid] = _score[best];
-      _lastFront[pid] = _front[best];
-      _lastQuest[pid] = _questNodes.Contains(best);
+      _path[AiTheatres.S(pid)] = path;
+      _pathCost[AiTheatres.S(pid)] = costs;
+      _step[AiTheatres.S(pid)] = path.Count > 1 ? 1 : 0;
+      _planAt[AiTheatres.S(pid)] = SimpleBot.Clock;
+      _lastTarget[AiTheatres.S(pid)] = best;
+      _lastCost[AiTheatres.S(pid)] = _score[best];
+      _lastFront[AiTheatres.S(pid)] = _front[best];
+      _lastQuest[AiTheatres.S(pid)] = _questNodes.Contains(best);
       return cands[best];
     }
 
@@ -1243,7 +1353,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         var padj = _padj[u];
-        for (var k = 0; k < padj.Count; k++)
+        for (var k = 0; k < padj.Count && !AiTheatres.Secondary; k++) // 0.47: a secondary theatre stays on its land
         {
           var pe = padj[k];
           relax++;
@@ -1272,7 +1382,7 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    internal static bool HasWaypoint(int pid) => WpX[pid] != -1f || WpY[pid] != -1f;
+    internal static bool HasWaypoint(int pid) => WpX[AiTheatres.S(pid)] != -1f || WpY[AiTheatres.S(pid)] != -1f;
 
     // ---- 0.44: movement chains --------------------------------------------------------------------------------
     // Every army order becomes a CHAIN: queued attack-moves along the route from the unit's own area -- like a player
@@ -1611,12 +1721,12 @@ namespace WarcraftLegacies.Source.Ai
     {
       x = 0f;
       y = 0f;
-      if (!On || pid < 0 || pid >= 24 || _path == null || _path[pid] == null)
+      if (!On || pid < 0 || pid >= 24 || _path == null || _path[AiTheatres.S(pid)] == null)
       {
         return false;
       }
 
-      var path = _path[pid];
+      var path = _path[AiTheatres.S(pid)];
       for (var j = path.Count - 2; j >= 0; j--)
       {
         if (IsOwnNode(p, pid, path[j]))
@@ -1838,14 +1948,14 @@ namespace WarcraftLegacies.Source.Ai
             + "; plans " + I2S(Runs) + ", last relaxations " + I2S(LastRelax));
       for (var pid = 0; pid < 24; pid++)
       {
-        if (_lastTarget[pid] < 0)
+        if (_lastTarget[AiTheatres.S(pid)] < 0)
         {
           continue;
         }
 
-        o.Add("P" + I2S(pid) + " -> " + NodeName(_lastTarget[pid]) + " score " + I2S(R2I(_lastCost[pid]))
-              + (_lastFront[pid] ? " front" : " inside") + (_lastQuest[pid] ? " quest" : "") + ", "
-              + I2S(_lastHops[pid]) + " hops left, next " + NodeName(_lastWp[pid]));
+        o.Add("P" + I2S(pid) + " -> " + NodeName(_lastTarget[AiTheatres.S(pid)]) + " score " + I2S(R2I(_lastCost[AiTheatres.S(pid)]))
+              + (_lastFront[AiTheatres.S(pid)] ? " front" : " inside") + (_lastQuest[AiTheatres.S(pid)] ? " quest" : "") + ", "
+              + I2S(_lastHops[AiTheatres.S(pid)]) + " hops left, next " + NodeName(_lastWp[AiTheatres.S(pid)]));
       }
 
       // 0.44.1: the waygate edges (to see e.g. the Dark Portal pairs) and units found idle at a waygate exit
@@ -1868,7 +1978,8 @@ namespace WarcraftLegacies.Source.Ai
             + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallSeenBy) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped)
-            + "; finish-off scores " + I2S(FinishTargets));
+            + "; finish-off scores " + I2S(FinishTargets) + "; secondary-theatre plans " + I2S(SecondaryPlans));
+      AiTheatres.Lines(o); // 0.47
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)
       {
