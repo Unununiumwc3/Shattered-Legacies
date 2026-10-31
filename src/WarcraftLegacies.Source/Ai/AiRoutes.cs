@@ -600,7 +600,7 @@ namespace WarcraftLegacies.Source.Ai
     // A route longer than GatherHops nodes ends first at the LAST OWN NODE before the frontier: the attack group
     // waits there until GatherShare of its food has arrived (within GatherRadius) or GatherMax seconds passed, then
     // it gets the chain to the target. Short routes go without waiting. Decided once per target. "-gather off" = 0.44.
-    internal static int GatherMode = AiAb.Ab; // 0.46: per-bot A/B (bit 1); was a plain on/off
+    internal static int GatherMode = AiAb.Ab; // 0.46: per-bot A/B (bit 1); 0.46.2: ab again -- judged per game phase
     internal static float GatherTimeoutShare;  // 0.46: sum of the arrived shares at timeouts (diagnostics)
     private const int GatherHops = 5;
     private const float GatherMax = 60f;
@@ -895,6 +895,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         s *= SimpleBot.NeutralBias;
       }
+
 
       if (_questNodes.Contains(i) && _front[i])
       {
@@ -1528,7 +1529,7 @@ namespace WarcraftLegacies.Source.Ai
     // nodes and bridges. An intermediate node point gets a per-unit offset: one of 8 directions (from the unit's
     // handle id, the same on every client) at SpreadRadius, or half of it, if walkable; else the node itself. The final
     // target and portal approach points are never moved. "-spread on|off|ab|ab2" (default ab, bit 2).
-    internal static int SpreadMode = AiAb.Ab;
+    internal static int SpreadMode = AiAb.Ab; // 0.46.2: ab again -- judged per game phase (early / mid / late)
     internal static int SpreadPoints;
     private const float SpreadRadius = 250f;
 
@@ -1553,6 +1554,47 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       ChainPoint(u, x, y, first);
+    }
+
+    // 0.46.2: STAGING on the route. The own node closest to the target ALONG the planned route (where the route leaves
+    // the bot's land) -- the rest of the army waits there. Was: the own CP nearest in a straight line, often a dead end
+    // across a gorge (Terrordale) that jumped with every target change: rest units walked back and forth between the
+    // bot's own CPs (maintainer, 0.46.1 game; 10,416 rest orders in 30 min).
+    internal static bool StagePoint(player p, int pid, out float x, out float y)
+    {
+      x = 0f;
+      y = 0f;
+      if (!On || pid < 0 || pid >= 24 || _path == null || _path[pid] == null)
+      {
+        return false;
+      }
+
+      var path = _path[pid];
+      for (var j = path.Count - 2; j >= 0; j--)
+      {
+        if (IsOwnNode(p, pid, path[j]))
+        {
+          x = AiRouteData.NodeX[path[j]];
+          y = AiRouteData.NodeY[path[j]];
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // 0.46.2: "-xy" shows the route node under the selected unit (the numbers of route_map.png / ROUTES.md)
+    internal static string NodeLabel(float x, float y)
+    {
+      var n = StartNode(x, y);
+      if (n < 0)
+      {
+        return "no route node";
+      }
+
+      var t = AiRouteData.NodeType[n];
+      var name = t != 0 ? GetObjectName(t) : "area " + I2S(n);
+      return "route node #" + I2S(n) + " " + name + " @" + I2S(AiRouteData.NodeX[n]) + "," + I2S(AiRouteData.NodeY[n]);
     }
 
     // first point replaces the unit's orders (and old queue), the others are queued (shift-click)
@@ -1773,14 +1815,10 @@ namespace WarcraftLegacies.Source.Ai
 
       o.Add("A/B gather [slots" + AiAb.Slots(GatherMode, AiAb.BitGather) + "]: CP captures per bot "
             + AiAb.Compare(GatherMode, AiAb.BitGather, caps));
-      var stallPct = new int[24];
-      for (var k = 0; k < 24; k++)
-      {
-        stallPct[k] = AiArmy.StallSeenBy[k] > 0 ? R2I(100f * AiArmy.StallBy[k] / AiArmy.StallSeenBy[k]) : 0;
-      }
-
-      o.Add("A/B spread [slots" + AiAb.Slots(SpreadMode, AiAb.BitSpread) + "]: stalled % per bot "
-            + AiAb.Compare(SpreadMode, AiAb.BitSpread, stallPct) + "; spread points " + I2S(SpreadPoints));
+      // 0.46.2: raw counts per bot (not a %), so dump_summary can compute every game phase from dump differences
+      o.Add("A/B spread [slots" + AiAb.Slots(SpreadMode, AiAb.BitSpread) + "]: stalled samples per bot "
+            + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallBy) + "; sampled per bot "
+            + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallSeenBy) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped));
       AiPortals.Lines(o);

@@ -15,12 +15,7 @@ public static class ControlPointSetup
     new(BUFF_B052_COMMAND_POINT_25_GOLD_PER_MINUTE, 25, true),
     new(BUFF_B053_COMMAND_POINT_30_GOLD_PER_MINUTE, 30, true),
     new(BUFF_B054_COMMAND_POINT_50_GOLD_PER_MINUTE, 50, true),
-    new(BUFF_B06A_TRADING_POST_10_GOLD_PER_MINUTE, 10, false),
-    // [WORKAROUND] (0.38): 1-gold CPs (map data B0ZG/A0ZG) that only make bots attack areas they skipped
-    // (Ai/WORKAROUNDS.md)
-    new(FourCC("B0ZG"), 1, true),
-    // [SL] (0.39.5): 100-gold CPs (Ny'alotha, Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown Citadel) -- evil buff
-    new(FourCC("B1HG"), 100, true)
+    new(BUFF_B06A_TRADING_POST_10_GOLD_PER_MINUTE, 10, false)
   };
 
   public static void Setup()

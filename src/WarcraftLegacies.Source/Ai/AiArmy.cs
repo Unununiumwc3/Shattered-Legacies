@@ -50,6 +50,9 @@ namespace WarcraftLegacies.Source.Ai
     internal static int[] StallSeenBy = new int[24]; // 0.46: per bot, for the spread A/B test
     internal static int[] StallBy = new int[24];
     internal static float LastShare; // 0.46: share of the group's food at the gather point (GroupAssembled)
+    private const float StageKeep = 2500f; // 0.46.2: keep the staging point if the new one is this close
+    internal static int StageKept;         // 0.46.2: staging kept (new one close), set on the route
+    internal static int StageRoute;
 
     internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[pid] : 0;
 
@@ -378,6 +381,13 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
+      if (AiRegroup.Holding(p, pid, armyFood))
+      {
+        grp.Clear(); // 0.46.2: regroup -- nobody attacks, every unit rests at the staging CP
+        _groupFood[pid] = 0;
+        return;
+      }
+
       var all = _need[pid] * 5 >= armyFood * 4; // need >= 80 % of the army -> everybody goes
       var food = 0;
       while (food < _need[pid] || all)
@@ -454,6 +464,29 @@ namespace WarcraftLegacies.Source.Ai
     // the bot's own CP nearest to the target (not the target itself), on the target's landmass when both are known
     private static void PickStage(player p, int pid, float x, float y)
     {
+      var had = _hasStage[pid];
+      var oldX = _stageX[pid];
+      var oldY = _stageY[pid];
+      var oldName = _stageName[pid];
+
+      // 0.46.2: on the route (AiRoutes.StagePoint), and kept when the new one is within StageKeep of the old --
+      // the rest of the army stops walking between own CPs at every target change
+      if (AiRoutes.StagePoint(p, pid, out var rx, out var ry))
+      {
+        if (had && (rx - oldX) * (rx - oldX) + (ry - oldY) * (ry - oldY) < StageKeep * StageKeep)
+        {
+          StageKept++;
+          return;
+        }
+
+        _hasStage[pid] = true;
+        _stageX[pid] = rx;
+        _stageY[pid] = ry;
+        _stageName[pid] = "route node";
+        StageRoute++;
+        return;
+      }
+
       _hasStage[pid] = false;
       _stageName[pid] = "-";
       var targetLm = Geography.Landmass(x, y);
@@ -491,6 +524,16 @@ namespace WarcraftLegacies.Source.Ai
           _stageY[pid] = cy;
           _stageName[pid] = GetUnitName(cu);
         }
+      }
+
+      if (had && _hasStage[pid]
+          && (_stageX[pid] - oldX) * (_stageX[pid] - oldX) + (_stageY[pid] - oldY) * (_stageY[pid] - oldY)
+             < StageKeep * StageKeep)
+      {
+        _stageX[pid] = oldX; // 0.46.2: fallback (no route) -- keep the old one too when close
+        _stageY[pid] = oldY;
+        _stageName[pid] = oldName;
+        StageKept++;
       }
     }
 
@@ -611,7 +654,8 @@ namespace WarcraftLegacies.Source.Ai
              + I2S(OrdIdleFar) + " rest=" + I2S(OrdRestMove) + " refill=" + I2S(OrdRefill) + " advance="
              + I2S(OrdAdvance) + " exit=" + I2S(OrdExit) + " | chains " + (AiRoutes.Chains ? "on" : "off") + " issued=" + I2S(AiRoutes.ChainsIssued)
              + " points=" + I2S(AiRoutes.ChainPoints) + " fallback=" + I2S(AiRoutes.ChainFallback) + " | stalled "
-             + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen);
+             + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen)
+             + " | staging on route " + I2S(StageRoute) + ", kept " + I2S(StageKept); // 0.46.2
     }
 
     internal static void Lines(List<string> o)

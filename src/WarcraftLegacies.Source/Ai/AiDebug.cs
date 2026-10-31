@@ -98,6 +98,7 @@ public static class AiDebug
     RegisterLoose("-guard", AiGuard.OnCommand, Level.Control);            // 0.46: -guard on|off|ab|ab2
     RegisterLoose("-cap", AiBudget.OnCommand, Level.Control);             // 0.46: -cap on|off|<base> <perCp>
     RegisterLoose("-spread", AiRoutes.OnSpreadCommand, Level.Control);    // 0.46: -spread on|off|ab|ab2
+    RegisterLoose("-regroup", AiRegroup.OnCommand, Level.Control);        // 0.46.2: -regroup on|off|ab|ab2
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -730,7 +731,8 @@ public static class AiDebug
     var x = GetUnitX(u);
     var y = GetUnitY(u);
     DisplayTimedTextToPlayer(p, 0, 0, 30,
-      "|cffffcc00X=" + I2S(R2I(x)) + " Y=" + I2S(R2I(y)) + "|r landmass=" + I2S(Geography.Landmass(x, y)));
+      "|cffffcc00X=" + I2S(R2I(x)) + " Y=" + I2S(R2I(y)) + "|r landmass=" + I2S(Geography.Landmass(x, y))
+      + " | " + AiRoutes.NodeLabel(x, y)); // 0.46.2: the route node (numbers as in route_map.png)
   }
 
   private static int CatCount(Faction f, UnitCategory cat)

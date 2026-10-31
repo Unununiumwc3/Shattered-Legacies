@@ -346,9 +346,9 @@ public static class AiConfig
     // while there, see AtTarget)
     new HeroVisit("Vault of the Wardens", "Sentinels", 0, 0, -2272f, 4000f) { Hero = "Maiev Shadowsong" },
     // 0.39.6: Fel Horde "Gul'dans Legacy": a level-12 hero to Gul'dan's corpse in the Tomb of Sargeras
-    // (Regions.GuldansCorpse) -- only once the Tomb is open, the Fel Horde holds Broken Shore (n1A6) and its army is
-    // near; the army escorts the hero (the Tomb's guards kill a lone hero).
-    new HeroVisit("Gul'dans Legacy", "Fel Horde", 12, 1848721718, -672f, 9936f) { WithArmy = true, RequireGate = "tomb" },
+    // (Regions.GuldansCorpse) -- only once the Tomb is open; the army escorts the hero (the Tomb's guards kill a lone
+    // hero). 0.46.2: no CP requirement any more -- Broken Shore (n1A6) was a fork CP, removed with the WL CP restore.
+    new HeroVisit("Gul'dans Legacy", "Fel Horde", 12, 0, -672f, 9936f) { WithArmy = true, RequireGate = "tomb" },
   };
 
   // v34.2: AREA CLEARS (one-shot): the bot that owns TriggerCpId sends its army to kill every Neutral Hostile

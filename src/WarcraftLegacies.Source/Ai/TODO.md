@@ -8,7 +8,8 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.46.1** (0.46.0 + naval waygates skipped + caster cap 35 %).
+Current build: **0.46.2** (WL CPs restored, graph with pathing blockers, staging on the route, regroup, A/B per game
+phase, budget 40 + 8, Scarlet Crusade after Stratholme).
 
 ## The plan: three phases
 
@@ -61,7 +62,8 @@ Rules for phase 1:
 | 0.45.0 | yes (540 min, 16 bots) | rift: no crossing in 510 min -> dead map; creep camps never ran (TICK ERROR); laggy end |
 | 0.46 part 2 | smoke test, 5 min | 397 teleports, no errors; order latency already 1-2 s median at 5 min (3765 units) |
 | 0.46.0 | started | dwarves teleported through WL's naval Water Passageway at the Thandol Span -> 0.46.1 |
-| 0.46.1 | **next** | see "Next playtest" (same checklist) |
+| 0.46.1 | yes (44 min, maintainer as Lordaeron on autopilot) | rift crossed (Black Empire in Dun Modr); Dark Portal open turn 8-10; creeps cleared; latency median ~2 s at 10-15 min; stopwatch +4 s at 20 min |
+| 0.46.2 | **next** | regroup A/B, guard ab2; same checklist |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -75,11 +77,32 @@ observations from those games are void. Movement observations stay valid.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
 
-## Next playtest (0.46.1)
+## 0.46.1 results (44 min)
+
+- **Engine**: the game clock keeps real time (turn 20 at 20:04, +0.3 %) -- the lag is the ORDER DELAY (pathfinder
+  queue), not a slow simulation. Probe: 10-15 min window median ~2 s, 40 % of orders >= 2 s; better after 30 min
+  (fewer units: 4679 at 10 min -> 2940 at 40).
+- **Portals**: 5080 teleports in 40 min; the Old Gods crossed the rift (Black Empire army at Dun Modr), South Alliance
+  fell to 13 CPs. Dark Portal open from turn 8-10 (live edges; later re-added by the bot).
+- **Creep camps**: 26 at 10 min -> 1 at 40 -- creeping works.
+- **Activity**: armies walk 74-85 % of the sampled time, fight 7-13 %.
+- **A/B**: gather no difference; spread no gain; guard confounded (all Old Gods in one half) -> applied in 0.46.2.
+- **Unit budget**: most bots capped at 10-20 min; the maintainer's autopilot Lordaeron sat at its budget (140 food,
+  1500 gold) -- that was the budget, not missing bonus gold. Autopilot in test mode gets the bot perks but NOT double
+  CP income (`AiIncome` skips human slots).
+- **Lordaeron to Northrend before the rocks**: the graph had Howling Fjords <-> Grizzly Hills without rocks; in
+  game Lordaeron is cut off until the rocks fall (maintainer) -> exceptions file (0.46.2). Root cause found:
+  pathing blockers and custom doodads were not (or wrongly) in the generator (0.46.2).
+- **Bots walking back and forth between own CPs / to own dead ends (Terrordale)**: the staging point was the own
+  CP nearest in a straight line -> on the route since 0.46.2.
+- `[you]` "weird non-CP nodes": `-xy` on a unit standing there shows the node number (0.46.2); add bad edges to
+  `tools/ai/route_exceptions.txt` (or tell the AI the two node numbers + build).
+
+## Next playtest (0.46.2)
 
 Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer, **stopwatch at turns 5, 10, 20, 30,
 40**. Then `dump_summary.py ... --real "t5=... t10=..." --append "<note>"`.
-- `-version` shows 0.46.1; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
+- `-version` shows 0.46.2; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
   `AiStyleCheck.cs`, rebuild, and tell the AI (the phase-2 style would not work).
 - Errors: the summary lists them at the top -- none expected.
 - **Rift / portals**: "pseudo-portals on: teleports N"; Old Gods units on the Eastern Kingdoms after the rift opens
@@ -90,7 +113,16 @@ Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer
 - **Unit budget**: "army/budget, capped turns" -- do bots hit it; fewer units on the map than 0.45.0?
 - **Creep camps** (first time they run): ROUTES "creep camps N" > 0, bots clear camps in their areas.
 - **Planner**: "planner nulls" (kept valid target); Fel Horde target switches far below 608.
-- **A/B lines** (guard / gather / spread): nothing to type -- one game tests all three at once. Only big differences
+- **A LONG game (2 h+)** -- the A/B tests are judged per phase: `dump_summary.py` prints "A/B per game phase"
+  (gather ab, spread ab, guard ab2, regroup ab). Decide per feature: on, off, or on from minute N.
+- **WL CPs only** (0.46.2): 168 CPs; bots still find targets in the former workaround areas (Terrordale, Sunsail
+  Anchorage, Runestone Falithas, Jaina's Sanctum, Sulfuron Spire, the Nexus) through area nodes and creep camps?
+- **Regroup** (new): "regroup ab" line -- the regrouping half: fewer single units fed to the enemy, more CPs?
+- **Staging**: "staging on route N, kept N"; rest orders per 10 min far below 0.46.1 (3711 at 10 min)? Bots no longer
+  walk between their own CPs?
+- **Graph**: Lordaeron reaches Northrend only after the rocks; Lordaeron City reachable from Tirisfal in game? (The
+  new graph goes around -- pathing blockers there.)
+- **A/B lines** (guard ab2 now / regroup ab): nothing to type -- one game tests both at once. Only big differences
   count (factions differ). Optional later game with `-guard ab2 -gather ab2 -spread ab2` (one line each) swaps every
   half; no extra games per switch.
 - No unit should use the Water Passageways at the Thandol Span ("naval waygates ignored" > 0).

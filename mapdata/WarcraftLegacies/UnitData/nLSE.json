@@ -8,7 +8,7 @@
     {
       "Id": "uabi",
       "Type": 3,
-      "Value": "A1HG"
+      "Value": "A0NT"
     },
     {
       "Id": "ucol",
@@ -76,7 +76,7 @@
     {
       "Id": "unam",
       "Type": 3,
-      "Value": "Temple of Ahn'Qiraj"
+      "Value": "Temple of Ahn\u0027Qiraj"
     },
     {
       "Id": "ussc",

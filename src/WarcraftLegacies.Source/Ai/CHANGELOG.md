@@ -4,6 +4,35 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.46.2
+From the 0.46.1 game (44 min, maintainer as Lordaeron on autopilot). Version v0.46.2.
+- **WL's control points restored** (maintainer): the 19 CPs the fork added are gone from the map data -- 13 Shattered
+  Legacies CPs (`n1A0`-`n1B2`, 10 gold) and the bot's 6 workaround CPs W1-W4 (`n0SA`, `n0TD`, `n0RF`, `n0JS`,
+  `n0SP`, `n0NX`, 1 gold) -- and the four 100-gold CPs (Ny'alotha, Vortex Pinnacle, Temple of Ahn'Qiraj, Icecrown
+  Citadel) have WL's income markers again (`A0NS` / `A0NT`; `A1HG` / `B1HG` / `A0ZG` / `B0ZG` deleted). Preplaced
+  units and `ControlPointSetup.cs` are byte-identical to upstream WL 4.8.2 again. The route graph regenerated: 168 CPs
+  + 72 area nodes (the generator puts area nodes where the CPs stood -- bot data in `Ai/`, no effect on gameplay);
+  no connection between the remaining CPs lost. Gul'dan's Legacy visit no longer needs Broken Shore (`n1A6`).
+- **Route graph: pathing blockers and custom doodads** (`gen_routes.py`): WC3's invisible pathing blockers (YTpb /
+  YTlb 64 x 64, YTpc / Ytlc 128 x 128 -- sizes from their 64 / 128 spacing on the map) were sized as trees (the
+  large ones at half size: gaps in every wall) or ignored (Ytlc, 1568); air-only blockers wrongly blocked ground.
+  Custom doodads with their own pathing texture (`dptx`, e.g. 128 x 128 snowy trees) were ignored entirely.
+- **Route exceptions file** (`tools/ai/route_exceptions.txt`, `remove A | B`, CP names or @x,y): what the map files
+  cannot tell. First entry (maintainer): Howling Fjords | Grizzly Hills -- Lordaeron is cut off from Northrend until
+  the Northrend rocks fall.
+- **Staging on the route**: the rest of the army waits at the own node closest to the target along the planned route,
+  kept while the new one is within 2500. Was: the own CP nearest in a straight line -- often a dead end across a
+  gorge (Terrordale), jumping with every target change: units walked back and forth between the bot's own CPs.
+- `-xy` shows the route node under the selected unit (number = `route_map.png` / `ROUTES.md`, same build).
+- **Regroup** (`AiRegroup`, `-regroup on|off|ab|ab2`, default ab = slot bit 3): an army below max(20, budget / 5)
+  food stops attacking, gathers at the staging point (production goes on), attacks again as one wave at
+  max(50, budget / 2).
+- **A/B per game phase** (maintainer: a feature may help early, mid or late only): gather (ab), spread (ab), guard
+  (ab2, swapped) and regroup (ab) all run in one long game; `dump_summary.py` prints a table per phase (difference
+  between two dumps, per bot of each half). The spread line gives raw stalled / sampled counts for that.
+- **Unit budget 40 + 8 per CP** (was + 10): order delay ~2 s at 10-15 min.
+- **The Scarlet Crusade** is ordered by bots again -- only after Stratholme has fallen (`EventResearch.When`).
+
 ## 0.46.1
 Fix from the first 0.46.0 game (maintainer: dwarves ran into a teleport at the Thandol Span and came out in a weird
 spot).

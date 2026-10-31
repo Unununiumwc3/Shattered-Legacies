@@ -44,6 +44,11 @@ MINX, MINY = -28672.0, -32256.0
 C = 32                      # grid cell size = WC3's pathing cell (64 closed city entrances: trees fill whole cells)
 TREE_HALF = 32              # a tree blocks 64 x 64 (its pathing texture)
 ROCK_HALF = 64              # a rock doodad blocks 128 x 128
+# 0.46.3: WC3's invisible PATHING BLOCKERS (destructables) block ground units too. Ignored before: ~6600 on the map,
+# behind most of the maintainer's "wrong connections" (e.g. Howling Fjords <-> Grizzly Hills past the Northrend
+# rocks). Footprints from the map itself: small ones stand on a 64 grid (nearest neighbour 64), large ones on 128.
+BLOCKER_HALF = {"YTpb": 32, "YTlb": 32, "YTpc": 64, "Ytlc": 64, "YTlc": 64}  # both / ground
+AIR_BLOCKERS = {"YTfb", "YTfc", "YTab", "YTac"}  # air only: no ground blocker
 GATE_ROCK_HALF = 192        # LTrc: marked as a removable blocker in this box (0.43.2: 96 left a gap at the
                             # west railing of the Thandol bridge -- the walk "around" the closed bridge)
 GATE_GROUP = 700            # LTrc within this distance form one rock group
@@ -104,6 +109,61 @@ def tree_like():
     return custom
 
 
+def custom_paths():
+    """0.46.3: custom doodads / destructables with their OWN pathing texture ('dptx' / 'bptx', e.g.
+    'PathTextures\\4x4SimpleSolid.tga' = 4 x 4 cells of 32 = 128 x 128). Custom doodads (D0..) were ignored entirely:
+    29 snowy trees with 128 x 128 pathing seal the land between Howling Fjords and Grizzly Hills. Value = half size;
+    0 = the type sets NO pathing (skip it, even if it looks like a tree)."""
+    out = {}
+    # doodads only: custom DESTRUCTABLES with a pathing texture are mostly bridges (B0..), which make ground WALKABLE
+    # -- marking them sealed Stormwind City and split Outland (0.46.3 test run)
+    for sub, field in (("DoodadData", "dptx"),):
+        for f in glob.glob(os.path.join(MAP, sub, "*.json")):
+            d = load(f)
+            for m in d.get("Modifications") or []:
+                if m.get("Id") == field and m.get("Variation") in (None, 0):
+                    v = str(m.get("Value") or "")
+                    mm = re.search(r"(\d+)x(\d+)", v)
+                    out[os.path.basename(f)[:4]] = (int(mm.group(1)) * C // 2) if mm else 0
+    return out
+
+
+EXCEPTIONS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "route_exceptions.txt")
+
+
+def apply_exceptions(edges, nodes):
+    """0.46.3: what the map files cannot tell (standard doodads' built-in pathing, invisible walls the maintainer
+    knows from playing). route_exceptions.txt, one per line:  remove A | B   (A, B = CP name or @x,y for the node
+    nearest to that point). Unknown names stop the generator -- a typo must not silently keep a wrong edge."""
+    if not os.path.exists(EXCEPTIONS):
+        return edges
+
+    def node_of(ref):
+        ref = ref.strip()
+        m = re.match(r"@\s*(-?\d+)\s*,\s*(-?\d+)$", ref)
+        if m:
+            x, y = int(m.group(1)), int(m.group(2))
+            return min(range(len(nodes)), key=lambda i: (nodes[i][2] - x) ** 2 + (nodes[i][3] - y) ** 2)
+        hits = [i for i, n in enumerate(nodes) if n[4] == ref]
+        if not hits:
+            sys.exit(f"route_exceptions.txt: unknown node '{ref}'")
+        return hits[0]
+
+    remove = set()
+    for line in open(EXCEPTIONS, encoding="utf-8"):
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        verb, _, rest = line.partition(" ")
+        if verb != "remove" or "|" not in rest:
+            sys.exit(f"route_exceptions.txt: cannot read '{line}'")
+        a, b = (node_of(r) for r in rest.split("|", 1))
+        remove.add((min(a, b), max(a, b)))
+    kept = [e for e in edges if (min(e[0], e[1]), max(e[0], e[1])) not in remove]
+    print(f"exceptions: {len(edges) - len(kept)} of {len(remove)} edges removed")
+    return kept
+
+
 def grid():
     d = load(os.path.join(MAP, "PathingMap.json"))
     w, h, cells = d["Width"], d["Height"], d["Cells"]
@@ -154,19 +214,29 @@ def main():
     cps -= without
     units = preplaced()
     tree_custom = tree_like()
+    own_path = custom_paths()
     gw, gh, walk = grid()
     print(f"grid {gw}x{gh} ({C}-unit cells), walkable {sum(walk)}; CP buffs {sorted(buffs)}, markers {len(markers)}, "
           f"CP types {len(cps)}")
 
     # blockers
     gate_rocks = []
-    ntrees = nrocks = 0
+    ntrees = nrocks = nblock = ncustom = 0
     for f in glob.glob(os.path.join(MAP, "Doodads", "*.json")):
         for d in load(f):
             code = le(d["TypeId"])
             x, y = d["Position"]["X"], d["Position"]["Y"]
             if code == "LTrc":
                 gate_rocks.append((x, y))
+            elif code in BLOCKER_HALF:  # 0.46.3: before the tree rule -- "YT.." matched it (large ones at tree size)
+                mark(walk, gw, gh, x, y, BLOCKER_HALF[code], 0)
+                nblock += 1
+            elif code in AIR_BLOCKERS:
+                continue  # air-only pathing blockers: ground units pass (were marked as trees)
+            elif code in own_path:  # 0.46.3: custom doodad / destructable with its own pathing texture
+                if own_path[code] > 0:
+                    mark(walk, gw, gh, x, y, own_path[code], 0)
+                    ncustom += 1
             elif (len(code) == 4 and code[1] == "T") or code in tree_custom:
                 mark(walk, gw, gh, x, y, TREE_HALF, 0)
                 ntrees += 1
@@ -187,7 +257,9 @@ def main():
         for x, y in g:
             mark(walk, gw, gh, x, y, GATE_ROCK_HALF, 1)  # the rocks themselves: walkable for generation
             mark(walk, gw, gh, x, y, GATE_ROCK_HALF, None, gidx, rocktag)
-    print(f"blockers: {ntrees} trees, {nrocks} rock doodads, {len(gate_rocks)} LTrc in {len(groups)} groups")
+    print(f"blockers: {ntrees} trees, {nrocks} rock doodads, {nblock} pathing blockers, {ncustom} custom doodads with "
+          f"own pathing ({sum(1 for v in own_path.values() if v)} types), {len(gate_rocks)} LTrc in "
+          f"{len(groups)} groups")
 
     # nodes
     nodes = []  # (kind, code, x, y, name)
@@ -274,6 +346,7 @@ def main():
             if key not in best or cost < best[key][0]:
                 best[key] = (cost, rock, cidx)
     edges = sorted((a, b, round(cost), rock) for (a, b), (cost, rock, _) in best.items())
+    edges = apply_exceptions(edges, nodes)
     via = {(a, b): (round(MINX + (v % gw + 0.5) * C), round(MINY + (v // gw + 0.5) * C))
            for (a, b), (_, _, v) in best.items()}
     print(f"edges: {len(edges)} ({sum(1 for e in edges if e[3] >= 0)} behind rocks)")

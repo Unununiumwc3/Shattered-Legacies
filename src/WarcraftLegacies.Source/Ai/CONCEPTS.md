@@ -31,9 +31,9 @@ Decisions behind it:
   waiting (gather points, ferry boarding), never from the engine.
 
 Graph notes:
-- **Graph independent of CPs** (phase 3, also good for upstream): nodes generated from terrain only; CPs are TARGETS
-  inside a node's area (region map). Shattered Legacies CPs (`n1A0`-`n1B2`) and the workaround CPs (W1-W4) then do not
-  shape the graph; W1-W4 become non-CP nodes at the same spots.
+- **Graph independent of CPs** (phase 3, optional): nodes generated from terrain only; CPs are TARGETS inside a node's
+  area (region map). Since 0.46.2 the map has WL's CPs only (fork and workaround CPs removed); the graph is CP nodes +
+  generated area nodes, all bot data in `Ai/`.
 - **The map image** (`render_map.py`) is NOT committed (~1-2 MB per graph change, for good). Regenerate locally; attach
   a version worth keeping to its GitHub release.
 
