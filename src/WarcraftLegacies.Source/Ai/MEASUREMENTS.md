@@ -893,3 +893,179 @@ Heartbeat: WLAI heartbeat build=0.46.1 t=43m49s units-on-map=2554 orders/min=163
   task 43:45 latency probe
   task 43:45 destructible gates
   ...
+
+### v0.46.2 -- 16 dumps, 5:00 .. 80:00 -- 0.46.2, 16 bots (maintainer watching), Veteran, 81 min. A/B per phase: gather ab, spread ab, guard ab2, regroup ab. Evil factions won without the 100-gold CPs; first Eye of Sargeras by bots.
+
+**Errors (TICK ERROR / FAILED / section errors): none**
+
+A/B per game phase (per bot of each half; on | off). Phases between the dumps listed:
+
+| phase | gather: CP captures per bot | guard: idle-away orders | guard: rest orders | regroup: CP captures per bot | regroup: times entered | spread: sampled per bot | spread: stalled samples per bot |
+|---|---|---|---|---|---|---|---|
+| 0-5:00 | 2 \| 3 | 8 \| 1 | 25 \| 44 | 2 \| 4 | 1 \| 0 | 211 \| 144 | 2 \| 2 |
+| 5:00-10:00 | 5 \| 3 | 13 \| 6 | 148 \| 123 | 4 \| 3 | 0 \| 0 | 1240 \| 650 | 46 \| 10 |
+| 10:00-15:00 | 3 \| 5 | 76 \| 11 | 197 \| 135 | 4 \| 5 | 0 \| 0 | 1434 \| 1303 | 108 \| 59 |
+| 15:00-20:00 | 2 \| 2 | 66 \| 16 | 89 \| 95 | 2 \| 1 | 0 \| 0 | 831 \| 939 | 47 \| 53 |
+| 20:00-25:00 | 2 \| 2 | 27 \| 9 | 131 \| 90 | 2 \| 3 | 0 \| 0 | 765 \| 1019 | 45 \| 44 |
+| 25:00-30:00 | 3 \| 1 | 28 \| 6 | 146 \| 77 | 1 \| 3 | 0 \| 0 | 890 \| 1357 | 35 \| 118 |
+| 30:00-35:00 | 0 \| 1 | 29 \| 8 | 137 \| 97 | 1 \| 1 | 0 \| 0 | 887 \| 1119 | 75 \| 69 |
+| 35:00-40:00 | 1 \| 1 | 41 \| 10 | 101 \| 56 | 0 \| 0 | 0 \| 0 | 879 \| 1005 | 86 \| 45 |
+| 40:00-45:00 | 0 \| 0 | 27 \| 11 | 122 \| 83 | 1 \| 1 | 0 \| 0 | 829 \| 979 | 110 \| 75 |
+| 45:00-50:00 | 0 \| 1 | 35 \| 11 | 96 \| 76 | 0 \| 0 | 0 \| 0 | 884 \| 1234 | 133 \| 136 |
+| 50:00-55:00 | 1 \| 0 | 73 \| 14 | 93 \| 51 | 1 \| 1 | 0 \| 0 | 1002 \| 1127 | 175 \| 148 |
+| 55:00-60:00 | 1 \| 1 | 26 \| 7 | 96 \| 36 | 0 \| 1 | 1 \| 0 | 992 \| 770 | 198 \| 68 |
+| 60:00-65:00 | 0 \| 1 | 27 \| 4 | 116 \| 42 | 1 \| 1 | 0 \| 0 | 783 \| 893 | 123 \| 79 |
+| 65:00-70:00 | 0 \| 1 | 35 \| 3 | 70 \| 43 | 1 \| 1 | 0 \| 0 | 716 \| 1022 | 130 \| 78 |
+| 70:00-75:00 | 1 \| 1 | 40 \| 3 | 46 \| 42 | 0 \| 0 | 0 \| 0 | 717 \| 815 | 170 \| 27 |
+| 75:00-80:00 | 1 \| 0 | 16 \| 2 | 69 \| 25 | 1 \| 1 | 0 \| 0 | 686 \| 901 | 106 \| 40 |
+
+Bots: 16, orders mode: smart.
+
+| game min | units on map | orders/min | bot armies (sum / max) | real s per game min | teams (CPs) |
+|---|---|---|---|---|---|
+| 10:00 | 4455 | 1156 | 1823 / 160 | - | North Alliance 18, South Alliance 27, Burning Legion 14, Outland 13, Old Gods 27, Kalimdor 29 |
+| 20:00 | 3447 | 1809 | 1428 / 208 | - | North Alliance 22, South Alliance 30, Burning Legion 25, Outland 23, Old Gods 35, Kalimdor 30 |
+| 30:00 | 3218 | 1312 | 1546 / 247 | - | North Alliance 14, South Alliance 9, Burning Legion 34, Outland 36, Old Gods 62, Kalimdor 11, Kezan Enterprise Pact 1 |
+| 45:00 | 3078 | 894 | 1550 / 252 | - | North Alliance 8, South Alliance 2, Burning Legion 44, Outland 42, Old Gods 62, Kalimdor 7, Kezan Enterprise Pact 2 |
+| 60:00 | 2767 | 885 | 1484 / 286 | - | North Alliance 2, South Alliance 1, Burning Legion 6, Outland 51, Old Gods 68, Kalimdor 2, Kezan Enterprise Pact 0, Scourge Pact 37 |
+| 80:00 | 2290 | 653 | 1119 / 259 | - | North Alliance 2, South Alliance 0, Burning Legion 1, Outland 60, Old Gods 78, Kalimdor 1, Kezan Enterprise Pact 0, Scourge Pact 25 |
+
+LOAD at the checkpoints:
+```
+  10:00  combat 296/473 orders=66 | def-scan 0/117 | production peak 289 | wave-tick 571/3665 | last gate sweep 3637
+  10:00  army smart orders: change=7294 idle-away=215 rest=2719 refill=551 advance=50 exit=117 | chains on issued=9939 points=21884 fallback=34 | stalled 2% of 18624 | staging on route 75, kept 62
+  10:00  groups (food group/need of army @staging): P0 50/50 of 140 @Dustwallow Marsh (10 gold/min); P1 all 106; P2 57/57 of 95 @Hinterlands (10 gold/min); P3 56/56 of 160 @En'Kilah (10 gold/min); P4 49/50 of 97 @route node; P6 68/68 of 99 @route node; P7 0/50 of 21 @route node; P8 61/61 of 153 @route node; P9 50/50 of 115 @route node; P11 50/50 of 106 @Northern Ashenvale (10 gold/min); P12 30/50 of 93 @Feathermoon (20 gold/min); P15 50/50 of 93 @route node; P16 67/67 of 113 @Desolace (10 gold/min); P18 all 94; P22 47/50 of 132 @route node; P23 50/50 of 112 @Dragonblight (20 gold/min);
+  10:00  switches per bot (target/state, since start): P0 15/0; P1 9/1; P2 9/0; P3 11/2; P4 6/0; P6 6/2; P7 6/0; P8 21/2; P9 7/0; P11 16/2; P12 13/0; P15 13/0; P16 19/4; P18 10/1; P22 10/0; P23 9/0;
+  10:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 1743; P1 1272; P2 2199; P3 2588; P4 1579; P6 2026; P7 1095; P8 1975; P11 2299; P12 2033; P15 1979; P16 2821; P18 1744; P22 1611; P23 2438;
+  10:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 57 <1s 43 <2s 41 <5s 35 <10s 18 stuck 9
+  10:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 137/136 c13; P1 108/104 c11; P2 97/104 c13; P3 146/112 c20; P4 99/96 c4; P6 97/72 c22; P7 23/48 c0; P8 153/152 c13; P11 117/112 c12; P12 91/88 c20; P15 96/104 c0; P16 111/96 c20; P18 95/104 c1; P22 133/128 c6; P23 83/80 c15; P9 116/112 c16;
+  10:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 985 units; idle-away orders on 7 bots avg 21 | off 9 bots avg 7; rest orders on 7 bots avg 173 | off 9 bots avg 167
+  10:00  attack groups: units left out (no way to the target) 34
+  10:00  caster cap 35%, caster orders skipped per bot: P0 80; P1 44; P2 248; P3 53; P4 2; P7 261; P8 178; P11 75; P12 4; P15 164; P16 2; P18 76; P22 186; P23 22;
+  10:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 1 | off 5 bots avg 0; CP captures per bot on 11 bots avg 6 | off 5 bots avg 7
+  10:00  activity (0.46, sampled army units): walking 75% fighting 9% idle 13% stalled 2% of 24391
+  10:00  target returns within 5 min (A->B->A) per bot: P0 0; P1 0; P2 0; P3 0; P4 0; P6 1; P7 1; P8 0; P11 0; P12 0; P15 0; P16 1; P18 1; P22 0; P23 0; P9 0;
+  10:00  targets by owner (since start; N = neutral, own = defending itself): P0: Nx15; P1: Nx8 ownx1; P2: Nx9; P3: Nx11; P4: Nx6; P6: Nx6; P7: Nx6; P8: Nx21; P11: P12x1 Nx15; P12: Nx13; P15: Nx13; P16: P0x1 Nx18; P18: Nx9 ownx1; P22: Nx10; P23: Nx9; P9: Nx7;
+  10:00  style check (0.46): OK (300 instance fields, separate objects)
+  10:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=2400 max-slot=3734 over=492 would-defer=703 deferred=0
+  10:00  orders total=11557 near(<2k)=3189 mid(2-8k)=8509 far(>8k)=34 idle-at-target(<300)=19
+  20:00  combat 283/697 orders=0 | def-scan 13/346 | production peak 342 | wave-tick 485/7635 | last gate sweep 3776
+  20:00  army smart orders: change=17618 idle-away=1448 rest=6788 refill=1323 advance=50 exit=225 | chains on issued=26043 points=73640 fallback=139 | stalled 4% of 54700 | staging on route 145, kept 115
+  20:00  groups (food group/need of army @staging): P0 35/50 of 72 @route node; P1 0/50 of 11 @route node; P2 0/50 of 20 @route node; P3 50/50 of 199 @Tirisfal Glades (15 gold/min); P4 54/81 of 55 @route node; P6 48/50 of 160 @route node; P7 28/81 of 28 @route node; P8 50/50 of 177 @route node; P9 8/50 of 8 @Corin's Crossing (15 gold/min); P11 9/50 of 9 @Moonglade (15 gold/min); P12 23/50 of 23 @route node; P15 50/50 of 124 @route node; P16 65/74 of 104 @route node; P18 0/50 of 30 @Grove of the Ancients (10 gold/min); P22 all 18; P23 68/68 of 171 @route node;
+  20:00  switches per bot (target/state, since start): P0 26/0; P1 18/8; P2 14/2; P3 23/10; P4 21/2; P6 22/10; P7 16/4; P8 29/2; P9 21/10; P11 33/10; P12 27/8; P15 26/2; P16 28/4; P18 18/6; P22 19/7; P23 19/4;
+  20:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 3720; P1 2598; P2 4039; P3 4725; P4 3263; P6 3691; P7 2592; P8 4314; P11 3819; P12 3640; P15 3371; P16 4528; P18 2528; P22 3558; P23 4026;
+  20:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 132 <1s 144 <2s 83 <5s 69 <10s 36 stuck 22
+  20:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 77/192 c17; P1 12/80 c20; P2 21/112 c17; P3 179/144 c53; P4 55/136 c23; P6 160/152 c49; P7 33/104 c0; P8 169/184 c30; P11 6/88 c22; P12 27/88 c30; P15 122/112 c31; P16 105/128 c42; P18 25/80 c1; P22 20/144 c24; P23 130/136 c28; P9 7/80 c31;
+  20:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 3459 units; idle-away orders on 7 bots avg 163 | off 9 bots avg 34; rest orders on 7 bots avg 459 | off 9 bots avg 397
+  20:00  attack groups: units left out (no way to the target) 34
+  20:00  caster cap 35%, caster orders skipped per bot: P0 346; P1 86; P2 794; P3 53; P4 74; P6 33; P7 1436; P8 578; P11 195; P12 4; P15 216; P16 2; P18 96; P22 416; P23 90; P9 75;
+  20:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 1 | off 5 bots avg 0; CP captures per bot on 11 bots avg 12 | off 5 bots avg 13
+  20:00  activity (0.46, sampled army units): walking 74% fighting 14% idle 7% stalled 4% of 65182
+  20:00  target returns within 5 min (A->B->A) per bot: P0 0; P1 3; P2 0; P3 3; P4 4; P6 4; P7 5; P8 0; P11 5; P12 6; P15 1; P16 1; P18 3; P22 0; P23 2; P9 4;
+  20:00  targets by owner (since start; N = neutral, own = defending itself): P0: P8x1 P12x5 P15x1 Nx19; P1: P6x2 Nx11 ownx5; P2: P3x1 P23x1 Nx11 ownx1; P3: P9x2 Nx17 ownx4; P4: P6x7 Nx13 ownx1; P6: Nx18 ownx4; P7: P3x4 Nx10 ownx2; P8: P11x8 Nx21; P11: P8x1 P12x1 P15x2 P16x4 Nx21 ownx4; P12: P11x2 P18x6 P22x1 Nx14 ownx4; P15: P0x1 P22x1 Nx23 ownx1; P16: P0x1 P11x7 P18x2 Nx18; P18: P12x4 P16x1 Nx10 ownx3; P22: Nx15 ownx4; P23: P9x3 Nx14 ownx2; P9: P3x2 P23x3 Nx11 ownx5;
+  20:00  style check (0.46): OK (300 instance fields, separate objects)
+  20:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=4800 max-slot=4144 over=1284 would-defer=1782 deferred=0
+  20:00  orders total=29648 near(<2k)=7745 mid(2-8k)=22228 far(>8k)=139 idle-at-target(<300)=32
+  30:00  combat 317/697 orders=0 | def-scan 0/346 | production peak 369 | wave-tick 435/7635 | last gate sweep 2975
+  30:00  army smart orders: change=25711 idle-away=1974 rest=10233 refill=1500 advance=97 exit=279 | chains on issued=36591 points=103676 fallback=167 | stalled 5% of 86234 | staging on route 213, kept 167
+  30:00  groups (food group/need of army @staging): P0 all 1; P1 all 1; P2 0/50 of 30 @Tranquillien (15 gold/min); P3 57/57 of 197 @route node; P4 all 19; P6 50/50 of 221 @route node; P7 all 26; P8 64/73 of 208 @route node; P9 4/213 of 4 @route node; P11 12/50 of 12 @route node; P12 50/50 of 72 @route node; P15 50/50 of 161 @route node; P16 50/50 of 206 @route node; P18 0/50 of 21 @Silvermyst Island (10 gold/min); P22 0/50 of 13 @Kezan (15 gold/min); P23 47/50 of 226 @route node;
+  30:00  switches per bot (target/state, since start): P0 43/15; P1 30/17; P2 20/6; P3 37/10; P4 28/7; P6 38/12; P7 25/13; P8 41/6; P9 28/18; P11 40/12; P12 39/12; P15 46/2; P16 41/4; P18 23/10; P22 32/20; P23 36/6;
+  30:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 5245; P1 2950; P2 5314; P3 7330; P4 4949; P6 6203; P7 3648; P8 7431; P11 4357; P12 5351; P15 5756; P16 7111; P18 2915; P22 4420; P23 6720;
+  30:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 202 <1s 203 <2s 126 <5s 110 <10s 46 stuck 60
+  30:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 0/72 c17; P1 0/40 c20; P2 32/80 c17; P3 173/160 c89; P4 17/112 c23; P6 220/200 c82; P7 21/88 c0; P8 208/200 c39; P11 11/72 c22; P12 74/152 c30; P15 163/160 c62; P16 200/200 c49; P18 21/64 c1; P22 14/48 c24; P23 188/192 c32; P9 4/64 c31;
+  30:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 4853 units; idle-away orders on 7 bots avg 218 | off 9 bots avg 49; rest orders on 7 bots avg 736 | off 9 bots avg 564
+  30:00  attack groups: units left out (no way to the target) 55
+  30:00  caster cap 35%, caster orders skipped per bot: P0 385; P1 86; P2 1223; P3 71; P4 85; P6 63; P7 2420; P8 1103; P11 195; P12 4; P15 311; P16 2; P18 96; P22 477; P23 170; P9 75;
+  30:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 1 | off 5 bots avg 0; CP captures per bot on 11 bots avg 15 | off 5 bots avg 19
+  30:00  activity (0.46, sampled army units): walking 74% fighting 13% idle 6% stalled 4% of 101365
+  30:00  target returns within 5 min (A->B->A) per bot: P0 7; P1 6; P2 3; P3 5; P4 6; P6 6; P7 10; P8 4; P11 6; P12 10; P15 3; P16 2; P18 6; P22 5; P23 3; P9 7;
+  30:00  targets by owner (since start; N = neutral, own = defending itself): P0: P8x9 P12x5 P15x1 Nx19 ownx9; P1: P6x4 P12x1 Nx13 ownx12; P2: P3x1 P23x5 Nx11 ownx3; P3: P7x2 P9x13 Nx18 ownx4; P4: P6x10 Nx13 ownx5; P6: P1x11 P4x2 Nx20 ownx5; P7: P3x5 P23x3 Nx10 ownx7; P8: P0x7 P11x9 Nx23 ownx2; P11: P8x4 P12x1 P15x2 P16x6 Nx22 ownx5; P12: P4x5 P11x2 P18x6 P22x6 Nx14 ownx6; P15: P0x1 P1x7 P4x3 P22x8 Nx26 ownx1; P16: P0x10 P11x8 P18x5 Nx18; P18: P12x4 P16x4 Nx10 ownx5; P22: P8x1 P12x1 P15x5 Nx15 ownx10; P23: P1x2 P2x5 P7x9 P9x3 Nx14 ownx3; P9: P3x3 P23x5 Nx11 ownx9;
+  30:00  style check (0.46): OK (300 instance fields, separate objects)
+  30:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=7200 max-slot=4144 over=1992 would-defer=2766 deferred=0
+  30:00  orders total=42769 near(<2k)=12295 mid(2-8k)=31076 far(>8k)=167 idle-at-target(<300)=81
+  45:00  combat 3/697 orders=0 | def-scan 0/346 | production peak 403 | wave-tick 33/7635 | last gate sweep 2684
+  45:00  army smart orders: change=31260 idle-away=2921 rest=14878 refill=2164 advance=343 exit=286 | chains on issued=48718 points=145273 fallback=181 | stalled 6% of 131307 | staging on route 260, kept 209
+  45:00  groups (food group/need of army @staging): P0 all 2; P1 0/64 of 1 @-; P2 all 22; P3 all 219; P4 0/137 of 3 @Ironforge (30 gold/min); P6 50/50 of 238 @route node; P7 all 3; P8 50/50 of 204 @route node; P11 3/50 of 3 @Teldrassil (20 gold/min); P12 12/50 of 12 @route node; P15 72/72 of 199 @route node; P16 49/50 of 204 @route node; P18 0/50 of 33 @Silvermyst Island (10 gold/min); P22 0/50 of 29 @route node; P23 96/96 of 226 @route node;
+  45:00  switches per bot (target/state, since start): P0 50/19; P1 35/18; P2 25/9; P3 48/15; P4 45/22; P6 49/14; P7 32/19; P8 48/8; P9 37/24; P11 52/20; P12 45/16; P15 57/2; P16 50/4; P18 27/10; P22 40/24; P23 51/6;
+  45:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 5708; P1 2950; P2 6920; P3 12232; P4 6222; P6 10830; P7 4968; P8 12975; P11 5266; P12 8234; P15 10437; P16 11624; P18 3440; P22 7019; P23 12032;
+  45:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 259 <1s 239 <2s 254 <5s 205 <10s 67 stuck 121
+  45:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 0/64 c17; P1 0/40 c20; P2 22/72 c17; P3 191/192 c141; P4 1/56 c23; P6 237/232 c135; P7 0/72 c0; P8 202/200 c88; P11 1/48 c22; P12 17/128 c30; P15 192/184 c111; P16 200/200 c86; P18 33/64 c1; P22 31/56 c28; P23 174/232 c49; P9 0/40 c31;
+  45:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 7054 units; idle-away orders on 7 bots avg 315 | off 9 bots avg 78; rest orders on 7 bots avg 1096 | off 9 bots avg 800
+  45:00  attack groups: units left out (no way to the target) 55
+  45:00  caster cap 35%, caster orders skipped per bot: P0 385; P1 86; P2 1709; P3 89; P4 120; P6 99; P7 2893; P8 1247; P11 269; P12 4; P15 425; P16 2; P18 124; P22 477; P23 238; P9 75;
+  45:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 1 | off 5 bots avg 0; CP captures per bot on 11 bots avg 17 | off 5 bots avg 21
+  45:00  activity (0.46, sampled army units): walking 75% fighting 11% idle 7% stalled 5% of 154980
+  45:00  target returns within 5 min (A->B->A) per bot: P0 8; P1 6; P2 3; P3 6; P4 15; P6 7; P7 13; P8 5; P11 11; P12 11; P15 3; P16 2; P18 6; P22 8; P23 5; P9 10;
+  45:00  targets by owner (since start; N = neutral, own = defending itself): P0: P7x2 P8x9 P12x5 P15x1 P16x3 Nx19 ownx11; P1: P6x4 P7x5 P12x1 Nx13 ownx12; P2: P3x4 P23x5 Nx11 ownx5; P3: P2x2 P7x2 P9x19 Nx19 ownx6; P4: P6x15 P15x3 Nx13 ownx14; P6: P1x11 P4x9 P12x1 P23x1 Nx21 ownx6; P7: P3x5 P23x6 Nx10 ownx11; P8: P0x7 P11x12 P22x2 Nx24 ownx3; P11: P8x5 P12x1 P15x2 P16x13 Nx22 ownx9; P12: P4x5 P6x2 P11x2 P18x6 P22x6 P23x2 Nx14 ownx8; P15: P0x1 P1x8 P4x12 P22x8 P23x1 Nx26 ownx1; P16: P0x11 P7x1 P11x14 P18x6 Nx18; P18: P12x4 P16x8 Nx10 ownx5; P22: P8x7 P12x1 P15x5 Nx15 ownx12; P23: P1x2 P2x5 P4x1 P7x15 P9x3 P12x6 Nx16 ownx3; P9: P3x7 P23x5 Nx11 ownx14;
+  45:00  style check (0.46): OK (300 instance fields, separate objects)
+  45:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=10800 max-slot=4193 over=3059 would-defer=4269 deferred=0
+  45:00  orders total=56184 near(<2k)=15676 mid(2-8k)=41435 far(>8k)=181 idle-at-target(<300)=139
+  60:00  combat 321/804 orders=0 | def-scan 0/433 | production peak 430 | wave-tick 31/7635 | last gate sweep 2392
+  60:00  army smart orders: change=37483 idle-away=4143 rest=18345 refill=2663 advance=453 exit=439 | chains on issued=60408 points=185097 fallback=181 | stalled 8% of 179124 | staging on route 305, kept 245
+  60:00  groups (food group/need of army @staging): P0 0/50 of 2 @Maelstrom (10 gold/min); P1 0/50 of 1 @-; P2 0/50 of 3 @-; P3 50/50 of 272 @route node; P4 0/50 of 16 @Gnomeregan (20 gold/min); P6 102/102 of 249 @route node; P7 0/50 of 2 @route node; P8 67/67 of 209 @Kezan (15 gold/min); P11 4/50 of 4 @Teldrassil (20 gold/min); P12 21/50 of 21 @route node; P15 50/50 of 252 @route node; P16 50/50 of 213 @route node; P23 35/64 of 102 @-;
+  60:00  switches per bot (target/state, since start): P0 54/20; P1 39/18; P2 34/18; P3 67/18; P4 50/24; P6 58/14; P7 38/24; P8 59/12; P9 42/24; P11 56/20; P12 48/16; P15 63/4; P16 63/4; P18 35/16; P22 50/32; P23 67/18;
+  60:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 6011; P1 2950; P2 7731; P3 18380; P4 6593; P6 15914; P7 5396; P8 18554; P11 5603; P12 10859; P15 16122; P16 17055; P18 3662; P22 9474; P23 17662;
+  60:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 311 <1s 268 <2s 326 <5s 380 <10s 84 stuck 179
+  60:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 0/48 c17; P1 0/40 c20; P2 0/40 c17; P3 247/250 c194; P4 15/48 c23; P6 248/248 c186; P7 0/56 c0; P8 200/200 c135; P11 2/48 c22; P12 29/128 c30; P15 230/240 c160; P16 199/200 c130; P18 0/40 c1; P22 0/40 c29; P23 88/88 c52; P9 0/40 c31;
+  60:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 8786 units; idle-away orders on 7 bots avg 449 | off 9 bots avg 110; rest orders on 7 bots avg 1381 | off 9 bots avg 963
+  60:00  attack groups: units left out (no way to the target) 55
+  60:00  caster cap 35%, caster orders skipped per bot: P0 385; P1 86; P2 1858; P3 89; P4 120; P6 138; P7 2893; P8 1443; P11 269; P12 4; P15 520; P16 2; P18 132; P22 477; P23 395; P9 75;
+  60:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 2 | off 5 bots avg 0; CP captures per bot on 11 bots avg 18 | off 5 bots avg 23
+  60:00  activity (0.46, sampled army units): walking 73% fighting 10% idle 7% stalled 7% of 211104
+  60:00  target returns within 5 min (A->B->A) per bot: P0 9; P1 6; P2 7; P3 8; P4 16; P6 7; P7 15; P8 8; P11 11; P12 11; P15 3; P16 3; P18 7; P22 11; P23 10; P9 10;
+  60:00  targets by owner (since start; N = neutral, own = defending itself): P0: P7x2 P8x10 P12x5 P15x1 P16x6 Nx19 ownx11; P1: P6x4 P7x6 P12x1 P23x3 Nx13 ownx12; P2: P3x8 P23x5 Nx11 ownx10; P3: P2x17 P7x2 P9x19 P15x1 P23x2 Nx19 ownx7; P4: P6x16 P15x6 Nx13 ownx15; P6: P1x11 P3x1 P4x10 P12x2 P23x7 Nx21 ownx6; P7: P3x6 P23x9 Nx10 ownx13; P8: P0x8 P11x12 P22x8 Nx26 ownx5; P11: P8x5 P12x1 P15x2 P16x17 Nx22 ownx9; P12: P4x5 P6x4 P11x2 P18x6 P22x6 P23x3 Nx14 ownx8; P15: P0x1 P1x8 P3x2 P4x12 P22x8 P23x5 Nx26 ownx1; P16: P0x14 P7x1 P11x15 P18x14 P23x1 Nx18; P18: P12x4 P16x12 Nx10 ownx9; P22: P8x11 P12x1 P15x5 P16x2 Nx15 ownx16; P23: P1x2 P2x5 P3x1 P4x1 P7x20 P9x3 P12x6 P15x4 Nx16 ownx9; P9: P3x11 P23x6 Nx11 ownx14;
+  60:00  style check (0.46): OK (300 instance fields, separate objects)
+  60:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=14400 max-slot=4193 over=4151 would-defer=5737 deferred=0
+  60:00  orders total=69465 near(<2k)=19880 mid(2-8k)=50815 far(>8k)=181 idle-at-target(<300)=278
+  80:00  combat 327/804 orders=0 | def-scan 0/433 | production peak 539 | wave-tick 30/7635 | last gate sweep 1916
+  80:00  army smart orders: change=43084 idle-away=5072 rest=21817 refill=3102 advance=502 exit=728 | chains on issued=72650 points=235286 fallback=181 | stalled 9% of 230662 | staging on route 363, kept 271
+  80:00  groups (food group/need of army @staging): P0 0/50 of 2 @-; P1 0/50 of 1 @-; P2 0/50 of 3 @-; P3 0/50 of 62 @route node; P4 0/50 of 1 @-; P6 48/50 of 257 @route node; P7 0/50 of 2 @route node; P8 50/50 of 216 @route node; P11 3/50 of 3 @route node; P12 19/50 of 19 @route node; P15 27/50 of 235 @Andorhal (15 gold/min); P16 50/50 of 207 @route node; P23 0/81 of 4 @Nath'raxas Hold (10 gold/min);
+  80:00  switches per bot (target/state, since start): P0 60/20; P1 45/18; P2 39/18; P3 86/34; P4 58/26; P6 66/14; P7 45/24; P8 75/12; P9 43/25; P11 59/22; P12 61/26; P15 81/10; P16 80/4; P18 41/16; P22 55/32; P23 92/34;
+  80:00  bot income paid since start (0.44.2, CP income WL pays only to human slots): P0 6098; P1 2950; P2 7731; P3 29053; P4 6650; P6 23672; P7 5796; P8 26897; P9 1; P11 6003; P12 14044; P15 26658; P16 25829; P18 3662; P22 9482; P23 19548;
+  80:00  order latency (0.46, game time from order to moving, idle units): all <0.5s 357 <1s 316 <2s 463 <5s 594 <10s 118 stuck 247
+  80:00    20-25m <0.5s 40 <1s 35 <2s 19 <5s 22 <10s 4 stuck 13
+  80:00    25-30m <0.5s 31 <1s 24 <2s 24 <5s 19 <10s 6 stuck 25
+  80:00    30-35m <0.5s 17 <1s 11 <2s 39 <5s 38 <10s 2 stuck 23
+  80:00    35-40m <0.5s 18 <1s 13 <2s 44 <5s 37 <10s 12 stuck 14
+  80:00    40-45m <0.5s 21 <1s 12 <2s 45 <5s 20 <10s 7 stuck 24
+  80:00    45-50m <0.5s 25 <1s 6 <2s 39 <5s 48 <10s 6 stuck 15
+  80:00    50-55m <0.5s 15 <1s 16 <2s 26 <5s 42 <10s 2 stuck 27
+  80:00    55-60m <0.5s 12 <1s 7 <2s 7 <5s 85 <10s 9 stuck 16
+  80:00    60-65m <0.5s 15 <1s 10 <2s 22 <5s 50 <10s 12 stuck 28
+  80:00    65-70m <0.5s 12 <1s 18 <2s 58 <5s 35 <10s 2 stuck 14
+  80:00    70-75m <0.5s 13 <1s 17 <2s 34 <5s 47 <10s 8 stuck 15
+  80:00    75-80m <0.5s 7 <1s 3 <2s 23 <5s 81 <10s 12 stuck 11
+  80:00  unit budget 40 + 8/CP (army/budget, capped turns): P0 0/40 c17; P1 0/40 c20; P2 0/40 c17; P3 57/240 c195; P4 0/40 c23; P6 257/250 c243; P7 0/56 c0; P8 205/200 c206; P11 1/48 c22; P12 24/112 c30; P15 241/250 c186; P16 200/200 c193; P18 0/40 c1; P22 0/40 c29; P23 1/48 c63; P9 0/40 c31;
+  80:00  guard positions removed: ab2 [slots P1 P3 P7 P11 P15 P23 P9], on 11673 units; idle-away orders on 7 bots avg 567 | off 9 bots avg 122; rest orders on 7 bots avg 1682 | off 9 bots avg 1115
+  80:00  attack groups: units left out (no way to the target) 55
+  80:00  caster cap 35%, caster orders skipped per bot: P0 385; P1 86; P2 1858; P3 1043; P4 120; P6 180; P7 2893; P8 1511; P11 269; P12 4; P15 1185; P16 2; P18 132; P22 477; P23 833; P9 75;
+  80:00  regroup ab [slots P0 P1 P2 P3 P4 P6 P7 P16 P18 P22 P23]: times entered on 11 bots avg 2 | off 5 bots avg 0; CP captures per bot on 11 bots avg 21 | off 5 bots avg 26
+  80:00  activity (0.46, sampled army units): walking 74% fighting 10% idle 7% stalled 8% of 267794
+  80:00  target returns within 5 min (A->B->A) per bot: P0 9; P1 6; P2 7; P3 18; P4 17; P6 9; P7 17; P8 8; P11 12; P12 16; P15 9; P16 4; P18 7; P22 12; P23 17; P9 10;
+  80:00  targets by owner (since start; N = neutral, own = defending itself): P0: P7x2 P8x14 P12x5 P15x1 P16x8 Nx19 ownx11; P1: P3x4 P6x4 P7x8 P12x1 P23x3 Nx13 ownx12; P2: P3x8 P8x1 P23x9 Nx11 ownx10; P3: P2x17 P7x9 P9x19 P15x1 P23x6 Nx19 ownx15; P4: P6x18 P7x1 P15x10 Nx13 ownx16; P6: P1x11 P3x1 P4x11 P12x9 P23x7 Nx21 ownx6; P7: P3x13 P23x9 Nx10 ownx13; P8: P0x9 P3x2 P11x13 P22x8 P23x12 Nx26 ownx5; P11: P8x5 P12x1 P15x2 P16x19 Nx22 ownx10; P12: P4x5 P6x9 P11x2 P15x2 P18x6 P22x6 P23x4 Nx14 ownx13; P15: P0x1 P1x8 P3x15 P4x12 P22x8 P23x7 Nx26 ownx4; P16: P0x14 P3x1 P7x1 P11x16 P18x14 P23x15 Nx19; P18: P12x4 P16x18 Nx10 ownx9; P22: P8x16 P12x1 P15x5 P16x2 Nx15 ownx16; P23: P1x2 P2x5 P3x10 P4x1 P7x20 P8x1 P9x3 P12x6 P15x4 P16x7 Nx16 ownx17; P9: P3x11 P23x6 Nx11 ownx14;
+  80:00  style check (0.46): OK (300 instance fields, separate objects)
+  80:00  scheduler slot=0.25s cycle=15s budget=400 enforce=off slots=19200 max-slot=4235 over=5457 would-defer=7569 deferred=0
+  80:00  orders total=82529 near(<2k)=23282 mid(2-8k)=60631 far(>8k)=181 idle-at-target(<300)=312
+```
+
+Top tasks by total ops at 80:00 (of 44):
+```
+task combat every=0.500s runs=9600 last=327 max=4047 sum=6746463
+task production every=1.000s runs=4799 last=7 max=539 sum=717067
+task route structures 2 every=15.000s runs=319 last=747 max=1214 sum=258721
+task route structures 3 every=15.000s runs=319 last=857 max=872 sum=222486
+task route structures 1 every=15.000s runs=319 last=212 max=1331 sum=178062
+task route portals every=30.000s runs=159 last=447 max=3241 sum=123755
+task route structures 4 every=15.000s runs=319 last=24 max=600 sum=107699
+task hero visits every=15.000s runs=319 last=0 max=3671 sum=86824
+task route creeps every=15.000s runs=319 last=36 max=1448 sum=65041
+task gate sweep every=15.000s runs=319 last=0 max=4002 sum=44538
+```
+
+Bots at 80:00: P0 Frostwolf atk a5 f0; P1 Stormwind atk a6 f0; P2 Quel'thalas atk a3 f0; P3 Scourge atk a83 f57; P4 Ironforge atk a4 f0; P6 Fel Horde atk a259 f250; P7 Dalaran atk a3 f0; P8 Skywall atk a218 f192; P11 Druids atk a6 f0; P12 Black Empire atk a30 f27; P15 Illidan atk a249 f246; P16 Ahn'qiraj atk a244 f199; P18 The Exodar atk a4 f0; P22 Kezan Enterprise atk a1 f20; P23 Legion atk a4 f2; P9 Lordaeron idle a0 f0
+
+Heartbeat: WLAI heartbeat build=0.46.2 t=81m29s units-on-map=1913 orders/min=325 orders=smart
+  task 81:25 latency probe
+  task 81:25 early quests
+  task 81:25 palace handover
+  ...

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Quests;
 
@@ -106,6 +107,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // ---- live edge state ----------------------------------------------------------------------------------
 
+    private static int _rockType; // 0.46.3: destructable type of the group being counted
     private static void CheckRocks()
     {
       Ready();
@@ -122,6 +124,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         _rockCount = 0;
+        _rockType = AiRouteData.RockType[gidx]; // 0.46.3: LTrc or a type based on it (B013 Whirlpool Blockers)
         EnumDestructablesInRect(_rockRect, null, CountRock);
         _rockOpen[gidx] = _rockCount == 0;
         SimpleBot.WaveOps++;
@@ -131,7 +134,7 @@ namespace WarcraftLegacies.Source.Ai
     private static void CountRock()
     {
       var d = GetEnumDestructable();
-      if (GetDestructableTypeId(d) == 1280602723 && GetDestructableLife(d) > 0f) // 'LTrc'
+      if (GetDestructableTypeId(d) == _rockType && GetDestructableLife(d) > 0f)
       {
         _rockCount++;
       }
@@ -182,6 +185,32 @@ namespace WarcraftLegacies.Source.Ai
     // one-shots (AiConfig.OneShots, skipped while Creeps is on). "-creeps off" = 0.44.2.
     internal static bool Creeps = true;
     private const float CreepCost = 3000f;
+
+    // 0.46.3: FINISH OFF. A target of a faction that is nearly beaten (at most FinishCps control points left) counts
+    // FinishBias of its distance -- dynamic, no per-faction lists. 0.46.2 game: Druids, Frostwolf, Exodar, Stormwind
+    // kept a few CPs and units for 50+ minutes while the winners fought each other elsewhere.
+    private const float FinishBias = 0.5f;
+    private const int FinishCps = 3;
+    internal static int FinishTargets;
+
+    private static bool FinishOff(unit cand)
+    {
+      var owner = GetOwningPlayer(cand);
+      var oid = GetPlayerId(owner);
+      if (oid < 0 || oid >= 24)
+      {
+        return false;
+      }
+
+      var pd = owner.GetPlayerData();
+      if (pd == null || pd.ControlPoints.Count > FinishCps)
+      {
+        return false;
+      }
+
+      FinishTargets++;
+      return true;
+    }
     private const float CreepFoodPerLevel = 1.5f;
     private static unit[] _creep;
     private static int[] _creepLevel;
@@ -600,7 +629,7 @@ namespace WarcraftLegacies.Source.Ai
     // A route longer than GatherHops nodes ends first at the LAST OWN NODE before the frontier: the attack group
     // waits there until GatherShare of its food has arrived (within GatherRadius) or GatherMax seconds passed, then
     // it gets the chain to the target. Short routes go without waiting. Decided once per target. "-gather off" = 0.44.
-    internal static int GatherMode = AiAb.Ab; // 0.46: per-bot A/B (bit 1); 0.46.2: ab again -- judged per game phase
+    internal static int GatherMode = AiAb.Off; // 0.46.2 A/B per phase (80 min): no difference in any phase -> off
     internal static float GatherTimeoutShare;  // 0.46: sum of the arrived shares at timeouts (diagnostics)
     private const int GatherHops = 5;
     private const float GatherMax = 60f;
@@ -894,6 +923,10 @@ namespace WarcraftLegacies.Source.Ai
       if (IsNeutral(cand))
       {
         s *= SimpleBot.NeutralBias;
+      }
+      else if (FinishOff(cand))
+      {
+        s *= FinishBias; // 0.46.3: finish off a beaten faction (maintainer: crippled factions lived for ever)
       }
 
 
@@ -1529,7 +1562,8 @@ namespace WarcraftLegacies.Source.Ai
     // nodes and bridges. An intermediate node point gets a per-unit offset: one of 8 directions (from the unit's
     // handle id, the same on every client) at SpreadRadius, or half of it, if walkable; else the node itself. The final
     // target and portal approach points are never moved. "-spread on|off|ab|ab2" (default ab, bit 2).
-    internal static int SpreadMode = AiAb.Ab; // 0.46.2: ab again -- judged per game phase (early / mid / late)
+    // 0.46.2 A/B per phase: MORE stalled from 50 min on (17-24 % vs 3-13 %) -> off
+    internal static int SpreadMode = AiAb.Off;
     internal static int SpreadPoints;
     private const float SpreadRadius = 250f;
 
@@ -1820,7 +1854,8 @@ namespace WarcraftLegacies.Source.Ai
             + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallBy) + "; sampled per bot "
             + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallSeenBy) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
-            + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped));
+            + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped)
+            + "; finish-off scores " + I2S(FinishTargets));
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)
       {

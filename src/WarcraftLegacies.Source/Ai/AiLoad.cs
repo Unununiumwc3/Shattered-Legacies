@@ -136,7 +136,10 @@ namespace WarcraftLegacies.Source.Ai
   // removed positions back -- it only stops removing.
   internal static class AiGuard
   {
-    internal static int Mode = AiAb.Ab2; // 0.46.2: swapped -- 0.46.1 had all three Old Gods in the removed half
+    // 0.46.3: OFF. In both splits (0.46.1 ab, 0.46.2 ab2) the half without guard positions issued 3-10 x the idle-away
+    // orders and more rest orders in EVERY game phase: units stay where a chase ended and the bot has to send them
+    // back -- the engine's guard position did that for free.
+    internal static int Mode = AiAb.Off;
     internal static int Removed;
     private static trigger _enter;
 

@@ -8,8 +8,8 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.46.2** (WL CPs restored, graph with pathing blockers, staging on the route, regroup, A/B per game
-phase, budget 40 + 8, Scarlet Crusade after Stratholme).
+Current build: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
+exception; Scarlet Crusade after Arthas turns).
 
 ## The plan: three phases
 
@@ -63,7 +63,8 @@ Rules for phase 1:
 | 0.46 part 2 | smoke test, 5 min | 397 teleports, no errors; order latency already 1-2 s median at 5 min (3765 units) |
 | 0.46.0 | started | dwarves teleported through WL's naval Water Passageway at the Thandol Span -> 0.46.1 |
 | 0.46.1 | yes (44 min, maintainer as Lordaeron on autopilot) | rift crossed (Black Empire in Dun Modr); Dark Portal open turn 8-10; creeps cleared; latency median ~2 s at 10-15 min; stopwatch +4 s at 20 min |
-| 0.46.2 | **next** | regroup A/B, guard ab2; same checklist |
+| 0.46.2 | yes (81 min, A/B per phase) | evil won without the 100-gold CPs; first Eye of Sargeras by bots; guard / spread / gather decided; beaten factions not finished off |
+| 0.46.3 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -76,6 +77,26 @@ observations from those games are void. Movement observations stay valid.
   It goes into the note (0.46: `dump_summary.py --real`). It shows whether the game falls behind real time.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
+
+## 0.46.2 results (81 min)
+
+- **A/B per phase** decided guard positions (removal costs orders in every phase), spread (more stalled late) and
+  gather (no difference) -> all off in 0.46.3. Regroup entered too rarely to judge.
+- **Evil factions won without the four 100-gold CPs** -- the earlier "Old Gods too weak" / "evil buff" was the
+  movement system holding them back.
+- **Eye of Sargeras** taken by bots for the first time.
+- **Not finished off**: Druids (Teldrassil), Frostwolf, Exodar, Stormwind, Quel'thalas lived on with 3-6 units and
+  1-3 CPs while the winners fought each other -> finish-off bias (0.46.3).
+- **Flapping**: target returns within 5 min up to 17-18 per bot in 80 min (Scourge, Ironforge, Dalaran, Legion,
+  Black Empire); Old Gods vs Frostwolf "dancing" without a clash -> theatres + target commitment (0.47).
+- **Lordaeron at the Brill coast**: route to Howling Fjords through the channel while WL's Whirlpool Blockers
+  stood -- the generator read them as trees (permanent walls was wrong, open water was wrong too): rock edges with a
+  channel node (0.46.3).
+- `[you]` **Kul Tiras around Dun Morogh (9417,-8499)**: that spot is Dun Morogh's area, whose only graph links are
+  Ironforge, Gnomeregan and the area node north-east -- no link south (Elwynn). Next time: `-xy` on such a unit
+  (shows the node) and the bot's ROUTES line.
+- Dead-end area nodes kept for now: both reported spots were CP areas, not dead ends; area nodes let bots find and
+  finish enemy buildings and creeps away from CPs. Revisit with a concrete case (`-xy`).
 
 ## 0.46.1 results (44 min)
 
@@ -98,11 +119,11 @@ observations from those games are void. Movement observations stay valid.
 - `[you]` "weird non-CP nodes": `-xy` on a unit standing there shows the node number (0.46.2); add bad edges to
   `tools/ai/route_exceptions.txt` (or tell the AI the two node numbers + build).
 
-## Next playtest (0.46.2)
+## Next playtest (0.46.3)
 
 Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer, **stopwatch at turns 5, 10, 20, 30,
 40**. Then `dump_summary.py ... --real "t5=... t10=..." --append "<note>"`.
-- `-version` shows 0.46.2; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
+- `-version` shows 0.46.3; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
   `AiStyleCheck.cs`, rebuild, and tell the AI (the phase-2 style would not work).
 - Errors: the summary lists them at the top -- none expected.
 - **Rift / portals**: "pseudo-portals on: teleports N"; Old Gods units on the Eastern Kingdoms after the rift opens
@@ -224,13 +245,31 @@ Fixes from 0.45.0:
 - [done, part 3] **CSharp.lua check**: a throwaway class with ~300 instance fields (+ a static instance of it); the maintainer
   builds, `lua_check.py` must pass. Confirms that object state avoids hard rules 1, 2 and 7. Removed in 0.47.
 
-## Phase 1 -- 0.47 (theatres, ferries)
+## Phase 1 -- 0.47 (theatres, portals aligned with WL, ferries)
 
 - [ai] **Theatres** (`CONCEPTS.md` 6): up to 3 groups per bot, one per theatre (walking component of the route
-  graph); own target, own staging, own defence decision. One front = one big group. Replaces "step 3" and the
-  defence flapping work.
-- [ai] **Ferries** (`CONCEPTS.md` 7): harbour-to-harbour edges, units hidden on board, visible boat, delay. Replaces
-  the instant pseudo-portals on sea links. Open decisions in `CONCEPTS.md` 7.
+  graph); own target, own staging, own defence decision. One front = one big group. Also the answer to "dancing
+  around without a clash" (Old Gods vs Frostwolf) and the many target returns.
+- [ai] **Target commitment** (with theatres): a target is kept until taken, lost or blocked -- a new one only when it
+  is much better (today: half the cost) or the old one stuck; measured by "target returns".
+- **Portals aligned with WL** (pseudo-portals from a data list instead of the bot's own waygates; maintainer 0.46.2):
+  - [ai] **Ships -> ferries** (`CONCEPTS.md` 7): the AI ship waygates go; sea links become ferry trips.
+  - [ai] **Old Gods rift**: no bot-made waygates -- pseudo-portal edges between WL's existing assets at both ends.
+    0.46.2: only one Old Gods faction used it; Fel Horde / Illidan barely -- check why (route cost, theatre).
+  - [ai] **Argus / Legion** (maintainer's spec, 0.46.3): remove the bot's Argus portals. WL's Legion portal BUILDING
+    (23072,-29344; not the portal usable after the summon) lets the Legion choose "go Northrend" or "go Alterac" --
+    two one-way pseudo-portal edges Argus -> Drak'Tharon Keep and Argus -> Alterac Mountains (the same exits a
+    human gets). Argus cannot be entered from outside at that stage. **Tomb of Sargeras -> Argus**: one-way, closed
+    until the Tomb is opened (the level-12 hero quest that opens the Tomb, `AiGates` "tomb"). One-way preferred.
+  - [ai] **Deeprun Tram** (Ironforge <-> Stormwind): exists in the map as in WL -- only the bot's pseudo-portal edge is
+    missing. Its ends are the two tram BUILDINGS (found by unit type, not coordinates -- moved buildings keep
+    working); the edge closes when either building is destroyed.
+  - [ai] **Book of Medivh** taken by the Scourge or the Legion: the bot casts the item's ability (the channel that
+    summons the portal) on the spot; the channelling hero is made invulnerable for the channel -- bots do not defend
+    a channelling hero.
+  - Data list for pseudo-portals: each entry = entry unit / point, exit unit / point, one-way or both, "open while"
+    condition (building alive, gate opened, quest done) -- replaces live waygate reading for bot-made portals.
+- [ai] **Ferries** (`CONCEPTS.md` 7): harbour-to-harbour edges, units hidden on board, visible boat, delay.
 - [ai] Remove the CSharp.lua check class.
 
 ## Phase 1 -- 0.48 / 0.49 (as needed)
@@ -274,6 +313,13 @@ This code base is not the PR.
 
 ## Missions -> general logic
 
+- [ai] **Ragnaros / Yogg-Saron instant death**: in 0.46.2 the Scourge fought Yogg-Saron as a creep after the first
+  death and killed him -- the creep-camp logic handles bosses well. Remove the instant-death handling for Ragnaros too
+  (and Yogg's, if it is one). Phase 2/3.
+- [ai] **Fallback paths as one table** (Scarlet Crusade, Theramore; Shattered Legacies fallbacks added from the fork
+  side): research + building read from the WL quest's `ObjectiveResearch`; a small table per quest title for WHEN
+  (capital lost, legend turned, CPs below N, not before turn N). Phase 2.
+
 - [ai] **Area clears and kill targets** (`AiConfig.ClearAreas`, `KillTargets`): check each in a game with creep
   targets on (0.44.3), then remove the ones the general logic covers. Sapphiron / Murmur timing = design: keep until
   the maintainer decides. One-shots are already skipped (`-creeps off` brings them back).
@@ -296,6 +342,9 @@ This code base is not the PR.
 - [you] Free heroes for a human? (0.38: the human Lordaeron got heroes for free.)
 
 ## Production follow-ups
+
+- [you/ai] Gold mainly for "limited" units (elite / capped units), without a hard focus -- armies must stay mixed
+  (maintainer, 0.46.2). Phase 3.
 
 - [ai] Units of buildings a bot doesn't have stay "never" (Quel'thalas' Academy / Consortium, Kul Tiras', Stormwind's
   special units). Proposal: the starter kit also gives each bot its "Specialist" building(s).

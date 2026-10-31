@@ -134,6 +134,10 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.42-0.46.1 | graph generator: trees, rock doodads and LTrc only | ~6600 invisible pathing blockers missing or half-size, custom doodads ignored: phantom edges (Howling Fjords - Grizzly Hills) | 0.46.2: blockers + custom doodad pathing + `route_exceptions.txt` |
 | 0.41-0.46.1 | staging = own CP nearest the target in a straight line | dead ends across gorges, jumping with every target: rest units walked between own CPs | 0.46.2: own node on the route, kept within 2500 |
 | 0.39.4-0.46.1 | extra CPs on the map for the bot (W1-W4) and the fork (13 CPs, four at 100 gold) | changed WL's economy; bot needs covered by area nodes since 0.42 | 0.46.2: WL's CPs restored |
+| 0.46-0.46.2 | guard positions removed for bot units (hypothesis: units walk back after chases) | the removed half issued 3-10 x the idle-away orders in every phase, both splits | 0.46.3: off (engine guard positions kept) |
+| 0.45-0.46.2 | gather points (wait at the last own node) | 81 % timeouts (0.45.0); no difference in any phase (0.46.2 A/B) | 0.46.3: off |
+| 0.46-0.46.2 | spread chain points (per-unit offset at nodes) | more stalled units from 50 min on (0.46.2 A/B) | 0.46.3: off |
+| 0.42-0.46.2 | rocks = LTrc only; LTrc-based custom destructables counted as trees | WL's Whirlpool Blockers (B013, removed after the Plague) were permanent; other blockades sized as trees | 0.46.3: removable types read from WL's `RockGroup` code, others walls |
 | 0.42-0.46.0 | every active neutral waygate = graph edge | WL's naval Water Passageways became army routes (Thandol, Highbank <-> Kalimdor); 0.46 teleported dwarves onto the shore | 0.46.1: waygates on / to water skipped |
 
 **A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
@@ -164,10 +168,10 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-icontest N` | heavy | Minimap icon variant N (1-6) on your selected unit (which one shows?) |
 | `-orders smart\|idle\|all` | control | Army orders: smart = attack group + rest at the staging CP (default, 0.41); idle = 0.39-0.40 (whole army, idle units re-ordered); all = before 0.39 |
 | `-creeps on\|off` | control | Creep camps in own areas as targets (default, 0.44.3; one-shots off) or the hand-placed one-shots (0.44.2) |
-| `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default ab (slot bit 1) |
-| `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default ab (slot bit 2) |
+| `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default off (0.46.3: no difference in any game phase) |
+| `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
-| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab (default) / ab2 (0.46, slot bit 0) |
+| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default off (0.46.3: removal costs orders) |
 | `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 40 + 8, 0.46.2) |
 | `-regroup on\|off\|ab\|ab2` | control | Regroup: a melted-down army gathers at the staging CP and attacks again as one wave; default ab (0.46.2, slot bit 3) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |

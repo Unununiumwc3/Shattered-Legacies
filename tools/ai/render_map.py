@@ -8,9 +8,9 @@ CPs, area nodes, and the generated route graph. For discussing whether the graph
 
 Legend (also drawn on the image): beige = walkable land, darker beige = walkable but not buildable, grey-brown =
 cliffs / mountains / doodads you cannot walk, light blue = shallow water (walkable), dark blue = deep water, black = map
-edge. Green dots = trees. Red squares = WL's removable rocks (LTrc). Gold circles = CPs (size by income), white rings =
-area nodes. White lines = walking edges, red dashed = edges closed while rocks stand, purple dashed = hand-written
-links the generator cannot walk (waygates, ships, portals -- added at runtime from live waygates).
+edge. Green dots = trees. Red squares = WL's removable rocks (LTrc and types WL's RockGroups remove, e.g. whirlpools). Gold circles = CPs (size by income), white rings =
+area nodes. White lines = walking edges, red dashed = edges closed while rocks stand, portal / ship
+links are runtime-only (not drawn; "-edges" in game).
 """
 import glob
 import math
@@ -138,11 +138,12 @@ def main():
 
     # trees and rocks
     tree_custom = g.tree_like()
+    rocks_of, _walls = g.rock_types()  # 0.46.3: every removable type (LTrc, B013 whirlpools, ...)
     for f in glob.glob(os.path.join(g.MAP, "Doodads", "*.json")):
         for d in g.load(f):
             code = g.le(d["TypeId"])
             x, y = to_px(d["Position"]["X"], d["Position"]["Y"], h)
-            if code == "LTrc":
+            if code in rocks_of:
                 draw.rectangle([x - 5, y - 5, x + 5, y + 5], fill=ROCK, outline=(0, 0, 0))
             elif (len(code) == 4 and code[1] == "T") or code in tree_custom:
                 draw.point((x, y), fill=TREE)
@@ -157,14 +158,8 @@ def main():
         else:
             draw.line([pos[a], pos[b]], fill=EDGE + (210,), width=2)
 
-    # hand-written links the generator cannot walk (portals, ships)
-    idx = {t: i for i, t in enumerate(T) if t}
-    gen = {(min(T[a], T[b]), max(T[a], T[b])) for a, b in zip(data["EdgeA"], data["EdgeB"]) if T[a] and T[b]}
-    for a, b in sorted(g.hand_edges() - gen):
-        if a in idx and b in idx:
-            i, j = idx[a], idx[b]
-            if math.hypot(X[i] - X[j], Y[i] - Y[j]) > 4500:  # long ones are the portal / ship links
-                dashed(draw, pos[i], pos[j], PORTAL + (220,), 3, 18)
+    # 0.46.3: no purple "hand-written" links any more -- they came from the OLD graph (e.g. Tirisfal <-> Howling Fjords)
+    # and misled map reviews. Portal edges exist only at runtime: "-edges" in game shows them.
 
     # nodes
     info = cp_info()
@@ -186,8 +181,8 @@ def main():
     # legend
     lg = [("walkable land", LAND), ("walkable, no building", LAND_NOBUILD), ("cliff / mountain / blocked", BLOCKED),
           ("shallow water (walkable)", SHALLOW), ("deep water", DEEP), ("map edge", EDGE_OF_MAP), ("trees", TREE),
-          ("WL rocks (LTrc, removable)", ROCK), ("CP (size = gold)", CP), ("walking edge", EDGE),
-          ("edge closed while rocks stand", ROCK_EDGE), ("waygate / ship link (runtime)", PORTAL)]
+          ("WL rocks / blockers (removable)", ROCK), ("CP (size = gold)", CP), ("walking edge", EDGE),
+          ("edge closed while rocks stand", ROCK_EDGE)]
     bx, by = 20, 20
     big = font(26, True)
     draw.rectangle([bx, by, bx + 560, by + 60 + 40 * len(lg)], fill=(255, 255, 255, 230), outline=(0, 0, 0), width=2)
