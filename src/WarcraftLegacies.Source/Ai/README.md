@@ -93,9 +93,11 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Dark Portal (Blasted Lands <-> Outland, 3 waygate pairs) | Fel Horde quest "The Dark Portal": turn 10, or earlier by research R02C at Hellfire Citadel, never before turn 8 | WL (preplaced n036, Neutral Hostile, hidden until then) |
 | Thandol Span rocks (Arathi <-> Dun Modr) | turn 30 (WL removes the rocks) | WL |
 | Other WL rocks (`LTrc`, 9 groups) | quests / events; the edges are closed while the rocks stand | WL |
-| Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | an Old Gods faction takes Nordrassil, or the Maw is taken from outside the Old Gods (details: `AiGates`); `-ogrift` | bot (`AiGates`) |
+| Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | an Old Gods faction takes Nordrassil, or the Maw is taken from outside the Old Gods (details: `AiGates`); `-ogrift` | bot-only pseudo-portal (hidden markers, 0.48; WL's portal at the Highlands stays) |
 | Emerald Portals (Shrine of Malorne <-> Feralas) | as soon as WL's preplaced pair is visible | bot activates WL's pair |
-| Argus portals (Argus <-> Northrend before the summon, Felwood / Quel'Danas after) | always / at the Legion summon | bot (`AiLegion`) |
+| Legion Teleporters (Argus -> Northrend landing / Alterac landing, one-way) | after the Legion's "Argus" quest | WL (player-owned waygates `n0BE`; bot edge for the Legion + allies since 0.48) |
+| Tomb of Sargeras -> Argus (one-way) | when the Tomb is open | bot-only pseudo-portal (hidden marker, 0.48) |
+| Deeprun Tram (Ironforge <-> Stormwind) | after the tram research | WL (player-owned `n03B`; bot edge for owner + allies since 0.48) |
 | AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
 | Water Passageways (Thandol Span; Highbank <-> western Kalimdor) -- SHIPS only, on deep water | always | WL (n03Q / n03S, Neutral Passive); no army edge since 0.46.1 |
 

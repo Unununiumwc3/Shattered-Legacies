@@ -418,8 +418,12 @@ namespace WarcraftLegacies.Source.Ai
       _pUnit.Clear();
       _pExitX.Clear();
       _pExitY.Clear();
+      _pOwner.Clear();
       var g = CreateGroup();
-      for (var pl = 24; pl < 28; pl++)
+      // 0.48: ALL players' waygates, not only the neutral ones. A player-owned waygate (WL's Deeprun Tram for
+      // Ironforge / Stormwind, the Legion Teleporters to Northrend / Alterac) is an edge for its owner and allies only
+      // (PortalAllowed); it closes when the building dies or is deactivated -- found by the unit, not by coordinates.
+      for (var pl = 0; pl < 28; pl++)
       {
         GroupEnumUnitsOfPlayer(g, Player(pl), null);
         unit u;
@@ -477,11 +481,27 @@ namespace WarcraftLegacies.Source.Ai
       _pUnit.Add(u);
       _pExitX.Add(dx);
       _pExitY.Add(dy);
+      var oid = GetPlayerId(GetOwningPlayer(u));
+      _pOwner.Add(oid < 24 ? oid : -1);
       AiPortals.Watch(u); // 0.46: entry area for the pseudo-portal trigger
       return true;
     }
 
     internal static bool IsPortalEdgeGate(unit u) => _pUnit.Contains(u);
+
+    // 0.48: who may use portal edge pe -- everyone (neutral / bot pseudo-portals) or the owner and its allies
+    private static List<int> _pOwner = new();
+
+    private static bool PortalAllowed(player p, int pe)
+    {
+      var owner = _pOwner[pe];
+      if (owner < 0 || p == null)
+      {
+        return true;
+      }
+
+      return GetPlayerId(p) == owner || IsPlayerAlly(p, Player(owner));
+    }
 
     // 0.47: WALKING COMPONENTS (theatres): nodes joined by open walking edges (live rock state), no portals. Rebuilt
     // when a rock group opens (CheckRocks).
@@ -1356,6 +1376,11 @@ namespace WarcraftLegacies.Source.Ai
         for (var k = 0; k < padj.Count && !AiTheatres.Secondary; k++) // 0.47: a secondary theatre stays on its land
         {
           var pe = padj[k];
+          if (!PortalAllowed(p, pe))
+          {
+            continue; // 0.48: another player's waygate
+          }
+
           relax++;
           Relax(p, u, _pTo[pe], du + _pCost[pe], -(pe + 1));
         }
@@ -1505,6 +1530,11 @@ namespace WarcraftLegacies.Source.Ai
           for (var k = 0; k < pin.Count; k++)
           {
             var pe = pin[k];
+            if (!PortalAllowed(p, pe))
+            {
+              continue; // 0.48: another player's waygate
+            }
+
             relax++;
             BackRelax(p, _pFrom[pe], v, dv + _pCost[pe], -(pe + 1));
           }
@@ -1739,6 +1769,58 @@ namespace WarcraftLegacies.Source.Ai
 
       return false;
     }
+
+    // 0.48: where to wait when nothing is reachable: the own-land end of the closed rock edge nearest to (sx, sy),
+    // on the same land (walking component). False = no closed rock edge on this land.
+    internal static bool WaitPoint(player p, float sx, float sy, out float x, out float y)
+    {
+      x = 0f;
+      y = 0f;
+      if (!On)
+      {
+        return false;
+      }
+
+      Ready();
+      var comp = CompAt(sx, sy);
+      var best = -1f;
+      for (var e = 0; e < AiRouteData.Edges; e++)
+      {
+        if (WalkEdgeOpen(e))
+        {
+          continue;
+        }
+
+        for (var k = 0; k < 2; k++)
+        {
+          var nd = k == 0 ? AiRouteData.EdgeA[e] : AiRouteData.EdgeB[e];
+          var other = k == 0 ? AiRouteData.EdgeB[e] : AiRouteData.EdgeA[e];
+          if ((comp >= 0 && CompOfNode(nd) != comp) || CompOfNode(other) == CompOfNode(nd))
+          {
+            continue; // only rocks that separate this land from another one
+          }
+
+          float nx = AiRouteData.NodeX[nd], ny = AiRouteData.NodeY[nd];
+          var d = (nx - sx) * (nx - sx) + (ny - sy) * (ny - sy);
+          if (best < 0f || d < best)
+          {
+            best = d;
+            x = nx;
+            y = ny;
+          }
+        }
+      }
+
+      if (best >= 0f)
+      {
+        WaitPoints++;
+        return true;
+      }
+
+      return false;
+    }
+
+    internal static int WaitPoints;
 
     // 0.46.2: "-xy" shows the route node under the selected unit (the numbers of route_map.png / ROUTES.md)
     internal static string NodeLabel(float x, float y)
@@ -1978,7 +2060,8 @@ namespace WarcraftLegacies.Source.Ai
             + AiAb.Compare(SpreadMode, AiAb.BitSpread, AiArmy.StallSeenBy) + "; spread points " + I2S(SpreadPoints));
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped)
-            + "; finish-off scores " + I2S(FinishTargets) + "; secondary-theatre plans " + I2S(SecondaryPlans));
+            + "; finish-off scores " + I2S(FinishTargets) + "; secondary-theatre plans " + I2S(SecondaryPlans)
+            + "; waits at closed rocks " + I2S(WaitPoints));
       AiTheatres.Lines(o); // 0.47
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)

@@ -1492,6 +1492,23 @@ namespace WarcraftLegacies.Source.Ai
             else
             {
               AiTheatres.MainFoundNothing(pid); // 0.47: the main theatre moves to the bot's next front
+              // 0.48: nothing reachable -- wait IN FRONT of the nearest closed rock edge of this land (Northrend
+              // rocks, whirlpools, Thandol), not the old pickers: they ignore rocks and sent the North Alliance to the
+              // Brill coast towards Northrend (0.47.0)
+              if (AiRoutes.WaitPoint(p, sx, sy, out var wx, out var wy))
+              {
+                state = "wait";
+                NoteTarget(p, pid, null, "wait-at-rocks");
+                IssueAttackToPoint(p, pid, wx, wy, true, wx, wy);
+              }
+              else
+              {
+                state = "hold";
+                NoteTarget(p, pid, null, "hold-nothing-reachable");
+                IssueAttackToPoint(p, pid, ax, ay, true, ax, ay);
+              }
+
+              handled = true; // the old pickers below only run with -route off
             }
           }
 
@@ -2940,7 +2957,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.47.0";
+    public const string Build = "0.48.0";
 
     public static void Setup()
     {
