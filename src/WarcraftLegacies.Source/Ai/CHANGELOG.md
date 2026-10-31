@@ -4,6 +4,34 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.46.3
+From the 0.46.2 game (81 min, A/B per game phase). Version v0.46.3.
+- **A/B results applied** (`dump_summary.py` "A/B per game phase", 16 phases of 5 min):
+  - guard positions: removal OFF -- the half without guard positions issued 3-10 x the idle-away orders and more rest
+    orders in every phase, in both splits (0.46.1 ab, 0.46.2 ab2): units stay where a chase ended and the bot sends
+    them back; the engine did that for free.
+  - spread points: OFF -- more stalled units from 50 min on (17-24 % vs 3-13 %).
+  - gather points: OFF -- no difference in any phase.
+  - regroup: stays ab (entered rarely; no verdict yet).
+- **Route graph corrections** (maintainer's map review, `route_exceptions.txt` + generator):
+  - **Removable rocks are read from WL's code**: every destructable type WL puts into a `RockGroup` (LTrc; B013
+    "Whirlpool Blockers", removed 2 turns after the Scourge's Plague) closes its edges until WL removes it; the bot's
+    runtime check counts each group's own type. The whirlpools were trees before (OldId LTrc, 'T' as 2nd letter).
+    Other LTrc-based blockades nobody removes (B008 Ashenvale tree blockade, B01L outside-Kalimdor/Northrend blockade)
+    are walls; B000 has no pathing. 12 rock groups (was 9). B01L closes Loch Modan - Searing Gorge and Alterac -
+    Andorhal (check in game); no CP lost its connection.
+  - **Tirisfal - Howling Fjords channel**: a fixed node in the shallow water; Tirisfal <-> channel and channel <->
+    Howling Fjords are rock edges (whirlpools) -- Lordaeron units gathered on the Brill coast while the channel was
+    blocked (0.46.2).
+  - Teldrassil only to the area node west of it (-> Auberdine); Ruins of Ahn'Qiraj no longer to the Tunnels' node
+    (exit 216 -> 222 only); Barrens: a fixed hub at the corridor's south entrance (-13220,-8800), Southern Barrens at
+    the other end; no hub link through the cliffs east (the "Dire Maul -> Ratchet" route).
+  - `route_exceptions.txt` gains `node @x,y` (fixed area node) and `add A | B`.
+- **Finish off beaten factions**: targets of a faction with at most 3 CPs count half their distance (dynamic, no
+  lists). 0.46.2: Druids, Frostwolf, Exodar, Stormwind kept a few CPs for 50+ min. Dump: "finish-off scores".
+- **The Scarlet Crusade**: condition is now "Arthas has joined the Scourge" (the Scourge's Arthas legend exists) --
+  maintainer; Stratholme's fall comes before that anyway.
+
 ## 0.46.2
 From the 0.46.1 game (44 min, maintainer as Lordaeron on autopilot). Version v0.46.2.
 - **WL's control points restored** (maintainer): the 19 CPs the fork added are gone from the map data -- 13 Shattered

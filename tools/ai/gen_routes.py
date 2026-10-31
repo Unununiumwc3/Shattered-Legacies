@@ -104,9 +104,42 @@ def tree_like():
     for f in glob.glob(os.path.join(MAP, "DestructableData", "*.json")):
         d = load(f)
         old = d.get("OldId") or ""
-        if len(old) == 4 and old[1] == "T":
+        if len(old) == 4 and old[1] == "T" and old != "LTrc":  # 0.46.3: LTrc ("rock chunks") is no tree
             custom.add(os.path.basename(f)[:4])
     return custom
+
+
+def rock_types():
+    """0.46.3: (removable, walls). REMOVABLE = destructable types WL's code puts into a RockGroup (LTrc via
+    RockSetup, B013 "Whirlpool Blockers" in the Scourge's Plague quest, ...) -- read from the source, so new groups are
+    picked up. WALLS = other custom destructables based on LTrc (never removed, e.g. B008 Ashenvale tree blockade,
+    B01L outside-Kalimdor blockade): {code: half size}, from their pathing texture; none = no pathing (B000).
+    Before 0.46.3 all LTrc-based customs counted as trees (OldId 'LTrc' has 'T' as second letter)."""
+    removable = {"LTrc"}
+    files = []
+    for base, dirs, names in os.walk(os.path.join(ROOT, "src", "WarcraftLegacies.Source")):
+        dirs[:] = [d for d in dirs if d not in ("bin", "obj")]
+        files += [os.path.join(base, n) for n in names if n.endswith(".cs")]
+    for f in files:
+        txt = open(f, encoding="utf-8", errors="replace").read()
+        if "RockGroup(" not in txt:
+            continue
+        for line in txt.splitlines():
+            if "RockGroup(" in line:
+                removable.update(re.findall(r'FourCC\("(\w{4})"\)', line))
+    walls = {}
+    for f in glob.glob(os.path.join(MAP, "DestructableData", "*.json")):
+        d = load(f)
+        code = os.path.basename(f)[:4]
+        if (d.get("OldId") or "") != "LTrc" or code in removable:
+            continue
+        tex = None
+        for m in d.get("Modifications") or []:
+            if m.get("Id") == "bptx" and m.get("Variation") in (None, 0):
+                tex = str(m.get("Value") or "")
+        mm = re.search(r"(\d+)x(\d+)", tex) if tex else None
+        walls[code] = (int(mm.group(1)) * C // 2) if mm else (0 if tex == "" else GATE_ROCK_HALF)
+    return removable, walls
 
 
 def custom_paths():
@@ -149,19 +182,40 @@ def apply_exceptions(edges, nodes):
             sys.exit(f"route_exceptions.txt: unknown node '{ref}'")
         return hits[0]
 
-    remove = set()
+    remove, add = set(), []
+    for verb, rest in read_exceptions():
+        if verb == "node":
+            continue
+        a, b = (node_of(r) for r in rest.split("|", 1))
+        if verb == "remove":
+            remove.add((min(a, b), max(a, b)))
+        else:
+            add.append((min(a, b), max(a, b)))
+    kept = [e for e in edges if (min(e[0], e[1]), max(e[0], e[1])) not in remove]
+    have = {(e[0], e[1]) for e in kept}
+    added = 0
+    for a, b in add:
+        if (a, b) not in have:  # cost: straight line x 1.3 (a walking detour); no rocks
+            kept.append((a, b, round(1.3 * math.hypot(nodes[a][2] - nodes[b][2], nodes[a][3] - nodes[b][3])), -1))
+            added += 1
+    print(f"exceptions: {len(edges) - len(kept) + added} of {len(remove)} edges removed, {added} of {len(add)} added")
+    return sorted(kept)
+
+
+def read_exceptions():
+    """[(verb, rest)] -- verbs: remove A | B, add A | B, node @x,y"""
+    out = []
+    if not os.path.exists(EXCEPTIONS):
+        return out
     for line in open(EXCEPTIONS, encoding="utf-8"):
         line = line.split("#", 1)[0].strip()
         if not line:
             continue
         verb, _, rest = line.partition(" ")
-        if verb != "remove" or "|" not in rest:
+        if verb not in ("remove", "add", "node") or (verb != "node" and "|" not in rest):
             sys.exit(f"route_exceptions.txt: cannot read '{line}'")
-        a, b = (node_of(r) for r in rest.split("|", 1))
-        remove.add((min(a, b), max(a, b)))
-    kept = [e for e in edges if (min(e[0], e[1]), max(e[0], e[1])) not in remove]
-    print(f"exceptions: {len(edges) - len(kept)} of {len(remove)} edges removed")
-    return kept
+        out.append((verb, rest))
+    return out
 
 
 def grid():
@@ -215,6 +269,7 @@ def main():
     units = preplaced()
     tree_custom = tree_like()
     own_path = custom_paths()
+    rocks_of, rock_walls = rock_types()
     gw, gh, walk = grid()
     print(f"grid {gw}x{gh} ({C}-unit cells), walkable {sum(walk)}; CP buffs {sorted(buffs)}, markers {len(markers)}, "
           f"CP types {len(cps)}")
@@ -226,8 +281,12 @@ def main():
         for d in load(f):
             code = le(d["TypeId"])
             x, y = d["Position"]["X"], d["Position"]["Y"]
-            if code == "LTrc":
-                gate_rocks.append((x, y))
+            if code in rocks_of:
+                gate_rocks.append((x, y, code))
+            elif code in rock_walls:  # 0.46.3: LTrc-based blockade nobody removes -- a wall
+                if rock_walls[code] > 0:
+                    mark(walk, gw, gh, x, y, rock_walls[code], 0)
+                    nblock += 1
             elif code in BLOCKER_HALF:  # 0.46.3: before the tree rule -- "YT.." matched it (large ones at tree size)
                 mark(walk, gw, gh, x, y, BLOCKER_HALF[code], 0)
                 nblock += 1
@@ -244,21 +303,24 @@ def main():
                 mark(walk, gw, gh, x, y, ROCK_HALF, 0)
                 nrocks += 1
     # rock groups
-    groups = []
-    for x, y in gate_rocks:
+    groups = []        # lists of (x, y); one destructable type per group (the runtime check counts that type)
+    group_type = []
+    for x, y, code in gate_rocks:
         for gidx, g in enumerate(groups):
-            if any((x - a) ** 2 + (y - b) ** 2 <= GATE_GROUP ** 2 for a, b in g):
+            if group_type[gidx] == code and any((x - a) ** 2 + (y - b) ** 2 <= GATE_GROUP ** 2 for a, b in g):
                 g.append((x, y))
                 break
         else:
             groups.append([(x, y)])
+            group_type.append(code)
     rocktag = [-1] * (gw * gh)
     for gidx, g in enumerate(groups):
         for x, y in g:
             mark(walk, gw, gh, x, y, GATE_ROCK_HALF, 1)  # the rocks themselves: walkable for generation
             mark(walk, gw, gh, x, y, GATE_ROCK_HALF, None, gidx, rocktag)
     print(f"blockers: {ntrees} trees, {nrocks} rock doodads, {nblock} pathing blockers, {ncustom} custom doodads with "
-          f"own pathing ({sum(1 for v in own_path.values() if v)} types), {len(gate_rocks)} LTrc in "
+          f"own pathing ({sum(1 for v in own_path.values() if v)} types), {len(gate_rocks)} rocks "
+          f"({', '.join(sorted(set(c for _, _, c in gate_rocks)))}) in "
           f"{len(groups)} groups")
 
     # nodes
@@ -312,6 +374,17 @@ def main():
         if cidx is not None:
             seeds.append((i, cidx))
     grow(seeds)
+    forced = [r for v, r in read_exceptions() if v == "node"]  # 0.46.3: fixed area nodes (route_exceptions.txt)
+    for ref in forced:
+        m = re.match(r"@\s*(-?\d+)\s*,\s*(-?\d+)$", ref.strip())
+        if not m:
+            sys.exit(f"route_exceptions.txt: 'node' needs @x,y, got '{ref}'")
+        cidx = nearest_walkable(walk, gw, gh, int(m.group(1)), int(m.group(2)))
+        if cidx is None:
+            sys.exit(f"route_exceptions.txt: no walkable cell near {ref}")
+        r, c = divmod(cidx, gw)
+        nodes.append((1, "", round(MINX + (c + 0.5) * C), round(MINY + (r + 0.5) * C), f"area {len(nodes)}"))
+        grow([(len(nodes) - 1, cidx)])
     while True:
         far, at = 0.0, -1
         for cidx in range(gw * gh):
@@ -365,7 +438,7 @@ def main():
             if n[0] == 1:
                 print(f"  {n[4]} @ {n[2]},{n[3]}")
         return
-    write_cs(nodes, edges, groups, regions(label, gw, gh))
+    write_cs(nodes, edges, groups, regions(label, gw, gh), group_type)
     write_report(nodes, edges, groups, hand, both, missing, idx, reach, via)
     globals()["LAST"] = (nodes, edges, via, walk, gw, gh)
     print(f"hand-written edges: {len(hand)}, also generated: {len(both)}, not generated: {len(missing)}")
@@ -432,7 +505,7 @@ def chunk(vals, per=16):
     return "\n".join("      " + ", ".join(vals[i:i + per]) + "," for i in range(0, len(vals), per))
 
 
-def write_cs(nodes, edges, groups, reg):
+def write_cs(nodes, edges, groups, reg, group_type):
     gx = [round(sum(x for x, _ in g) / len(g)) for g in groups]
     gy = [round(sum(y for _, y in g) / len(g)) for g in groups]
     gr = [round(max(math.hypot(x - cx, y - cy) for x, y in g) + 200) for g, cx, cy in zip(groups, gx, gy)]
@@ -446,7 +519,8 @@ def write_cs(nodes, edges, groups, reg):
         ("EdgeRocks", "rock group that closes the edge while it stands, -1 = none", [e[3] for e in edges]),
         ("RockX", "rock group centre", gx),
         ("RockY", "", gy),
-        ("RockR", "radius that holds all LTrc rocks of the group", gr),
+        ("RockR", "radius that holds all rocks of the group", gr),
+        ("RockType", "destructable type of the group (big-endian id): LTrc or a custom one based on it", [be(t) for t in group_type]),
     ]
     out = ["// <auto-generated>",
            "// Generated by tools/ai/gen_routes.py from map data only (PathingMap, Units, Doodads, UnitData,",
@@ -507,7 +581,7 @@ def write_report(nodes, edges, groups, hand, both, missing, idx, reach, via):
     lines += ["", "## All edges (A <-> B, walking cost, where the two areas touch)", "",
               "Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountain the generator missed.", ""]
     for a, b, cost, rock in edges:
-        vx, vy = via[(a, b)]
+        vx, vy = via.get((a, b), (round((nodes[a][2] + nodes[b][2]) / 2), round((nodes[a][3] + nodes[b][3]) / 2)))
         lines.append(f"- {nodes[a][4]} <-> {nodes[b][4]}: {cost} via {vx},{vy}" + (f" (rocks {rock})" if rock >= 0 else ""))
     lines += ["", "## Edges behind rocks", ""]
     for a, b, cost, rock in edges:

@@ -575,21 +575,16 @@ public static class AiUpgrades
     new EventResearch(1378891087, 1865429587, 0f),   // Build Orgrimmar          @ o02S
     new EventResearch(1381193525, 1850035267, 900f), // Fireland Invasion (Sulfuron Spire) @ Vortex Pinnacle -- 15 min
     // 0.46.2: The Scarlet Crusade (Lordaeron's fallback path) @ Tyr's Hand Citadel (h030) -- only after the LOSING
-    // condition: Stratholme (Lordaeron's capital) has fallen. WC3 itself needs "The Fortified City" first (turn 14
-    // or Stratholme dead); turn 14 alone was too early (v34: it dismantled the North Alliance at 10-14 min).
-    new EventResearch(1378900058, 1747989296, 0f, StratholmeLost),
+    // condition. 0.46.3 (maintainer): Arthas has joined the Scourge (WL spawns the Scourge's Arthas legend) -- that
+    // needs Stratholme's fall anyway. WC3 itself needs "The Fortified City" first (turn 14 or Stratholme dead).
+    new EventResearch(1378900058, 1747989296, 0f, ArthasTurned),
   };
 
-  private static bool StratholmeLost()
+  // the Scourge's Arthas (a separate WL legend, spawned when Arthas turns) exists
+  private static bool ArthasTurned()
   {
-    var legends = WarcraftLegacies.Source.Shared.AllLegends.Lordaeron;
-    var u = legends?.Stratholme?.Unit;
-    if (u == null)
-    {
-      return false; // unknown -> never early
-    }
-
-    return GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f;
+    var legends = WarcraftLegacies.Source.Shared.AllLegends.Scourge;
+    return legends?.Arthas?.Unit != null;
   }
 
   // Never granted by the AI at all: WL triggers it itself (Plague of Undeath: turn 8 by research, turn 11 auto).

@@ -30,7 +30,8 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
   but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **0.46.2** = WL's CPs restored (map data = WL 4.8.2 for CPs), graph with pathing blockers + exceptions file,
+- **0.46.3** = A/B results (guard / spread / gather off), finish-off bias, Tirisfal - Howling Fjords exception,
+  Scarlet Crusade after Arthas turns. **0.46.2** = WL's CPs restored (map data = WL 4.8.2 for CPs), graph with pathing blockers + exceptions file,
   staging on the route, regroup (A/B bit 3), A/B per game phase (gather ab, spread ab, guard ab2, regroup ab),
   budget 40 + 8, Scarlet Crusade after Stratholme.
 - **Graph = bot data only**: CP nodes + generated area nodes live in `Ai/AiRoutes.g.cs`; they never change gameplay.
@@ -292,6 +293,8 @@ Map mechanics
 - **Graph generator inputs** (0.46.2): terrain (PathingMap), trees, LTrc rocks, WC3 pathing blockers (YTpb / YTlb
   64, YTpc / Ytlc 128; air-only YTfb / YTfc / YTab / YTac ignored), custom doodads with their own `dptx` pathing.
   NOT known: standard doodads' built-in pathing (no game data in the repo) -> `tools/ai/route_exceptions.txt`.
+  Rocks (0.46.3): removable = types WL's code registers in a `RockGroup` (LTrc, B013 whirlpools -- read from the
+  source by the generator); other LTrc-based customs are walls. `route_exceptions.txt`: `remove`, `add`, `node @x,y`.
   Custom DESTRUCTABLE pathing is mostly bridges (walkable) -- never mark it as blocking (that split Outland).
 - **Naval waygates**: WL's "Water Passageway" pairs (n03Q / n03S, Neutral Passive) stand on deep water for SHIPS
   (Thandol Span; Highbank <-> western Kalimdor). Not army edges (0.46.1 skips waygates on / to unwalkable ground).
