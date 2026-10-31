@@ -8,7 +8,7 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
+Current build: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
 exception; Scarlet Crusade after Arthas turns).
 
 ## The plan: three phases
@@ -64,7 +64,8 @@ Rules for phase 1:
 | 0.46.0 | started | dwarves teleported through WL's naval Water Passageway at the Thandol Span -> 0.46.1 |
 | 0.46.1 | yes (44 min, maintainer as Lordaeron on autopilot) | rift crossed (Black Empire in Dun Modr); Dark Portal open turn 8-10; creeps cleared; latency median ~2 s at 10-15 min; stopwatch +4 s at 20 min |
 | 0.46.2 | yes (81 min, A/B per phase) | evil won without the 100-gold CPs; first Eye of Sargeras by bots; guard / spread / gather decided; beaten factions not finished off |
-| 0.46.3 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
+| 0.46.3 | 15 min (GitHub build without the regroup fix) | regroup held 11 bots at the start; Druids' back and forth (defence across the sea, creeps at home); Kul Tiras via the dwarf mountains; Lordaeron no longer tries Northrend early |
+| 0.46.4 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -77,6 +78,22 @@ observations from those games are void. Movement observations stay valid.
   It goes into the note (0.46: `dump_summary.py --real`). It shows whether the game falls behind real time.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
+
+## 0.46.3 results (15 min)
+
+- **Regroup at the start** (GitHub's 0.46.3 lacked the fix): 11 bots idled until 3:21-7:03 -> 0.46.4 thresholds in
+  units per phase (maintainer: 10 / 15 / 40, tune by playtest).
+- **Back and forth -- causes found** (Druids): (1) a defence pulls the whole army home, even across the sea
+  (Broken Isles -> Ashenvale twice for 8 / 62 enemy units); (2) creep camps and leftovers at home scored from the
+  territory, not from the army. Both fixed in 0.46.4 (first steps of "only forward"); theatres (0.47) finish it.
+- **Kul Tiras near Gnomeregan**: it got far-east targets (Southern / Northern Highlands, Dragonmaw Port, Grim Batol,
+  about one per minute -- allies took them first), and the walk east goes through the dwarf mountains since Loch
+  Modan - Searing Gorge is a wall (B01L stones). Real fix: target commitment + theatres (0.47); attackable stones.
+- **North Alliance** takes its CPs fast, then walks between them; it creeps a bit. Fine-tuning: "all reachable CPs
+  held -> creep camps -> a new CP reachable -> back to normal".
+- Lordaeron no longer tries to reach Northrend early -- the channel fix works.
+- `[you]` The 0.46.2 game crashed at turn 8: no dumps of it reached the AI -- if it happens again, send
+  `WLAI_heartbeat.txt` right after the crash (it is overwritten by the next game).
 
 ## 0.46.2 results (81 min)
 
@@ -95,6 +112,10 @@ observations from those games are void. Movement observations stay valid.
 - `[you]` **Kul Tiras around Dun Morogh (9417,-8499)**: that spot is Dun Morogh's area, whose only graph links are
   Ironforge, Gnomeregan and the area node north-east -- no link south (Elwynn). Next time: `-xy` on such a unit
   (shows the node) and the bot's ROUTES line.
+- 0.46.2 second game (7:36): the regroup half did not attack at all early (regroup at 0:03) -> fixed in 0.46.3.
+- [ai] low priority (maintainer): **attackable stones** -- between nodes 188 and 203 (0.46.3 map) and at Searing Gorge
+  / Alterac (B01L, now walls) units could destroy the stones; an edge "attackable": bots attack the stones when
+  their route needs the passage. Only if it disturbs the movement.
 - Dead-end area nodes kept for now: both reported spots were CP areas, not dead ends; area nodes let bots find and
   finish enemy buildings and creeps away from CPs. Revisit with a concrete case (`-xy`).
 
@@ -342,6 +363,9 @@ This code base is not the PR.
 - [you] Free heroes for a human? (0.38: the human Lordaeron got heroes for free.)
 
 ## Production follow-ups
+
+- [ai] **Autocast** (maintainer, 0.46.3): turn autocast ON for bot units whose ability supports it but starts off
+  (Blood Knight Squire); heroes with autocast abilities (Kael's magic spheres) should skill them first. Phase 3.
 
 - [you/ai] Gold mainly for "limited" units (elite / capped units), without a hard focus -- armies must stay mixed
   (maintainer, 0.46.2). Phase 3.

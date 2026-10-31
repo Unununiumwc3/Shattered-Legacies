@@ -185,6 +185,9 @@ namespace WarcraftLegacies.Source.Ai
     // one-shots (AiConfig.OneShots, skipped while Creeps is on). "-creeps off" = 0.44.2.
     internal static bool Creeps = true;
     private const float CreepCost = 3000f;
+    private static float _armyX;     // 0.46.4: where the army (group centre) stands while Plan scores
+    private static float _armyY;
+    private static bool _armyKnown;
 
     // 0.46.3: FINISH OFF. A target of a faction that is nearly beaten (at most FinishCps control points left) counts
     // FinishBias of its distance -- dynamic, no per-faction lists. 0.46.2 game: Druids, Frostwolf, Exodar, Stormwind
@@ -518,6 +521,10 @@ namespace WarcraftLegacies.Source.Ai
         NullNoStart++;
         return null;
       }
+
+      _armyX = sx; // 0.46.4: creep / leftover targets are scored from here (Score)
+      _armyY = sy;
+      _armyKnown = true;
 
       var t = _lastTarget[pid];
       var tu = t >= 0 ? NodeTarget(p, pid, fac, t, d) : null;
@@ -910,14 +917,20 @@ namespace WarcraftLegacies.Source.Ai
     private static float Score(int i, unit cand)
     {
       var s = _dist[i];
-      if (IsCreep(cand))
+      if (IsCreep(cand) || _source[i])
       {
-        return s + CreepCost; // 0.44.3: creeps after CPs (neutral CP 4000 away = 2000, a camp at home = 3000)
-      }
+        // 0.46.4: ONLY FORWARD -- creep camps and leftovers inside the own land are measured from where the army
+        // stands, not from the territory: a camp at home looked cheap while the army fought far ahead (Druids went
+        // back from the Broken Isles, 0.46.3). The straight line from the army is a lower bound of the walk.
+        var gx = GetUnitX(cand) - _armyX;
+        var gy = GetUnitY(cand) - _armyY;
+        var fromArmy = SquareRoot(gx * gx + gy * gy);
+        if (_armyKnown && fromArmy > s)
+        {
+          s = fromArmy;
+        }
 
-      if (_source[i])
-      {
-        s += LeftoverCost; // 0.44.1: clearing leftovers inside the own land must not override everything else
+        return s + (IsCreep(cand) ? CreepCost : LeftoverCost); // 0.44.3 / 0.44.1
       }
 
       if (IsNeutral(cand))

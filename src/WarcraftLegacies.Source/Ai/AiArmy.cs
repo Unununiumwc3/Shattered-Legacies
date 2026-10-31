@@ -50,6 +50,8 @@ namespace WarcraftLegacies.Source.Ai
     internal static int[] StallSeenBy = new int[24]; // 0.46: per bot, for the spread A/B test
     internal static int[] StallBy = new int[24];
     internal static float LastShare; // 0.46: share of the group's food at the gather point (GroupAssembled)
+    internal static bool DefendCall;   // 0.46.4: set around a defence order (AiSystem)
+    internal static int DefendKept;    // 0.46.4: unit orders skipped -- other landmass than the defended CP
     private const float StageKeep = 2500f; // 0.46.2: keep the staging point if the new one is this close
     internal static int StageKept;         // 0.46.2: staging kept (new one close), set on the route
     internal static int StageRoute;
@@ -106,10 +108,21 @@ namespace WarcraftLegacies.Source.Ai
         _group[pid]?.Clear();
         _need[pid] = 0;
         var food = 0;
+        var defLm = DefendCall ? Geography.Landmass(x, y) : -1;
         for (var i = 0; i < Units.Count; i++)
         {
           var u = Units[i];
           food += Food(u);
+          if (defLm >= 0)
+          {
+            var ulm = Geography.Landmass(GetUnitX(u), GetUnitY(u));
+            if (ulm >= 0 && ulm != defLm)
+            {
+              DefendKept++; // 0.46.4: fighting on another landmass -- the defence does not pull it across the sea
+              continue;
+            }
+          }
+
           if (changed)
           {
             Issue(u, x, y);
@@ -381,7 +394,7 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      if (AiRegroup.Holding(p, pid, armyFood))
+      if (AiRegroup.Holding(p, pid, n))
       {
         grp.Clear(); // 0.46.2: regroup -- nobody attacks, every unit rests at the staging CP
         _groupFood[pid] = 0;
@@ -655,7 +668,8 @@ namespace WarcraftLegacies.Source.Ai
              + I2S(OrdAdvance) + " exit=" + I2S(OrdExit) + " | chains " + (AiRoutes.Chains ? "on" : "off") + " issued=" + I2S(AiRoutes.ChainsIssued)
              + " points=" + I2S(AiRoutes.ChainPoints) + " fallback=" + I2S(AiRoutes.ChainFallback) + " | stalled "
              + I2S(StallSeen > 0 ? StallStalled * 100 / StallSeen : 0) + "% of " + I2S(StallSeen)
-             + " | staging on route " + I2S(StageRoute) + ", kept " + I2S(StageKept); // 0.46.2
+             + " | staging on route " + I2S(StageRoute) + ", kept " + I2S(StageKept) // 0.46.2
+             + " | defence kept away (other landmass) " + I2S(DefendKept); // 0.46.4
     }
 
     internal static void Lines(List<string> o)
