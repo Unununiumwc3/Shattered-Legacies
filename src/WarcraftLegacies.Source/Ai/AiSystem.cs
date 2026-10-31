@@ -1417,7 +1417,9 @@ namespace WarcraftLegacies.Source.Ai
           state = "def";
           NoteTarget(p, pid, defend, "defend(" + I2S(_defWorst) + " enemy units, " + I2S(_defCreeps) + " neutrals ignored)");
           TrackStuck(p, pid, null);
+          AiArmy.DefendCall = true; // 0.46.4: units on another landmass are not pulled back (Druids, 0.46.3)
           IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend), true, GetUnitX(defend), GetUnitY(defend));
+          AiArmy.DefendCall = false;
         }
         else
         {
@@ -2847,7 +2849,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.46.3";
+    public const string Build = "0.46.4";
 
     public static void Setup()
     {

@@ -4,6 +4,19 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.46.4
+From the 0.46.3 game (15 min, maintainer). Version v0.46.4. Note: the 0.46.3 on GitHub is the FIRST 0.46.3 delivery
+(without the regroup fix below) -- both deliveries had the same version number.
+- **Regroup in units by game phase** (maintainer): resume at 10 units before 15 min, 15 until 45 min, 40 later;
+  regroup below half of that, and only after the army had reached the resume size once. 0.46.3 (GitHub) still held 11
+  bots at 0:00 -- they attacked between 3:21 and 7:03.
+- **Defence does not pull units across the sea**: a defence order skips units on another landmass than the defended
+  CP -- they keep fighting where they are. 0.46.3: the Druids' whole army came back from the Broken Isles twice for
+  a few enemy units in Ashenvale. Dump: "defence kept away (other landmass)". A first step towards theatres (0.47).
+- **Only forward -- creep camps and leftovers measured from the army**: their score is at least the straight line
+  from where the army stands (was: the distance from the territory only, so a camp at home looked cheap while the
+  army fought far ahead).
+
 ## 0.46.3
 From the 0.46.2 game (81 min, A/B per game phase). Version v0.46.3.
 - **A/B results applied** (`dump_summary.py` "A/B per game phase", 16 phases of 5 min):
@@ -27,6 +40,9 @@ From the 0.46.2 game (81 min, A/B per game phase). Version v0.46.3.
     (exit 216 -> 222 only); Barrens: a fixed hub at the corridor's south entrance (-13220,-8800), Southern Barrens at
     the other end; no hub link through the cliffs east (the "Dire Maul -> Ratchet" route).
   - `route_exceptions.txt` gains `node @x,y` (fixed area node) and `add A | B`.
+- **Regroup fixed**: only an army that had once reached the "attack again" size can regroup. 0.46.2 regrouped every
+  bot of its half at 0:03 (army 0 < 20 food): they stood until 40-50 food (Fel Horde attacked at 7:18, Gilneas not
+  by 7:36; the maintainer's autopilot units were held back) -- the 0.46.2 regroup A/B was void.
 - **Finish off beaten factions**: targets of a faction with at most 3 CPs count half their distance (dynamic, no
   lists). 0.46.2: Druids, Frostwolf, Exodar, Stormwind kept a few CPs for 50+ min. Dump: "finish-off scores".
 - **The Scarlet Crusade**: condition is now "Arthas has joined the Scourge" (the Scourge's Arthas legend exists) --

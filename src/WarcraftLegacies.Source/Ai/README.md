@@ -173,7 +173,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default off (0.46.3: removal costs orders) |
 | `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 40 + 8, 0.46.2) |
-| `-regroup on\|off\|ab\|ab2` | control | Regroup: a melted-down army gathers at the staging CP and attacks again as one wave; default ab (0.46.2, slot bit 3) |
+| `-regroup on\|off\|ab\|ab2` | control | Regroup: an army that fell below half of 10 / 15 / 40 units (early / mid / late) gathers at the staging point and attacks again as one wave at 10 / 15 / 40; default ab (slot bit 3) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |

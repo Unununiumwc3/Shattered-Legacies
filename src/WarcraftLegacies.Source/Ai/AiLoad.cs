@@ -606,18 +606,30 @@ namespace WarcraftLegacies.Source.Ai
 
   // 0.46.2: REGROUP. A bot whose army has melted down stops sending it at the target: no attack group, every unit
   // gathers at the staging CP (production goes on), and the attack resumes as one wave once the army is back.
-  // Enter below max(20, budget / 5) food, leave at max(50, budget / 2) (never above the budget). Maintainer's idea
-  // ("under 15 food: stop and collect money first") -- but banking gold adds no units faster (buildings train at
-  // their pace) and an army that stops training cannot defend; what hurt was the trickle of single units into the
-  // enemy. "-regroup on|off|ab|ab2" (default ab, slot bit 3).
+  // 0.46.4 (maintainer): thresholds in UNITS by game phase -- resume at 10 units early (< 15 min), 15 mid (< 45 min),
+  // 40 late; regroup below half of that. Only an army that had reached the resume size can melt down (0.46.3: not at
+  // game start -- 0.46.2/first 0.46.3 build held every bot of its half at 0:00). "-regroup on|off|ab|ab2"
+  // (default ab, slot bit 3).
   internal static class AiRegroup
   {
     internal static int Mode = AiAb.Ab;
+    internal const int EarlyUnits = 10;
+    internal const int MidUnits = 15;
+    internal const int LateUnits = 40;
+    internal const float MidFrom = 900f;   // 15 min
+    internal const float LateFrom = 2700f; // 45 min
     internal static bool[] Active = new bool[24];
+    internal static bool[] Peaked = new bool[24];
     internal static int[] Entered = new int[24];
 
+    internal static int ResumeUnits()
+    {
+      var t = SimpleBot.Clock;
+      return t < MidFrom ? EarlyUnits : (t < LateFrom ? MidUnits : LateUnits);
+    }
+
     // AiArmy.Select: true = take nobody into the attack group (everyone rests at the staging CP)
-    internal static bool Holding(player p, int pid, int armyFood)
+    internal static bool Holding(player p, int pid, int armyUnits)
     {
       if (pid < 0 || pid >= 24 || !AiAb.For(Mode, pid, AiAb.BitRegroup))
       {
@@ -629,26 +641,26 @@ namespace WarcraftLegacies.Source.Ai
         return false;
       }
 
-      var budget = AiBudget.On ? AiBudget.Budget[pid] : 0;
-      var low = budget / 5 > 20 ? budget / 5 : 20;
-      var high = budget / 2 > 50 ? budget / 2 : 50;
-      if (budget > 0 && high > budget)
+      var high = ResumeUnits();
+      var low = high / 2;
+      if (armyUnits >= high)
       {
-        high = budget;
+        Peaked[pid] = true;
       }
 
-      if (!Active[pid] && armyFood < low)
+      if (!Active[pid] && Peaked[pid] && armyUnits < low)
       {
         Active[pid] = true;
+        Peaked[pid] = false;
         Entered[pid]++;
-        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": REGROUP (army " + I2S(armyFood) + " < "
-                      + I2S(low) + " food) -- gathering until " + I2S(high));
+        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": REGROUP (army " + I2S(armyUnits) + " < "
+                      + I2S(low) + " units) -- gathering until " + I2S(high));
       }
-      else if (Active[pid] && armyFood >= high)
+      else if (Active[pid] && armyUnits >= high)
       {
         Active[pid] = false;
-        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": regroup done (army " + I2S(armyFood)
-                      + " food) -- attacking");
+        SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + ": regroup done (army " + I2S(armyUnits)
+                      + " units) -- attacking");
       }
 
       return Active[pid];
@@ -662,8 +674,9 @@ namespace WarcraftLegacies.Source.Ai
         Mode = m;
       }
 
-      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "regroup (army below max(20, budget/5) food: gather, "
-        + "attack again at max(50, budget/2)): " + AiAb.Name(Mode) + " [slots" + AiAb.Slots(Mode, AiAb.BitRegroup)
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8, "regroup (army below half of 10 / 15 / 40 units "
+        + "early / mid / late: gather, attack again at 10 / 15 / 40): " + AiAb.Name(Mode) + " [slots"
+        + AiAb.Slots(Mode, AiAb.BitRegroup)
         + "]  -- -regroup on|off|ab|ab2");
     }
 
