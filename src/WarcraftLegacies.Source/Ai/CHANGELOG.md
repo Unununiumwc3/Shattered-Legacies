@@ -4,6 +4,28 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.47.0
+**Theatres and "only forward"** (maintainer: "not going forward" is the main problem). Includes 0.46.4 (not played).
+Version v0.47.0.
+- **Theatres** (`AiTheatres.cs`, design `CONCEPTS.md` 6): a theatre is a walking component of the route graph (live
+  rock state, no portals) -- Kalimdor, the Eastern Kingdoms (+ Northrend after its rocks), Outland, island groups.
+  Up to 3 per bot, each with its own target, route, staging point, attack group and defence -- the same planner and
+  army code with its own STATE SLOT (slot = player + 24 x theatre; `AiTheatres.S(pid)`). A land becomes a theatre at
+  30 food of army and stays one down to 15; the main theatre follows the biggest army (switch at 2x); units on land
+  without a theatre belong to the main one. The main theatre does not target lands with their own theatre; a
+  secondary theatre targets only its own land and uses no portals. When the main theatre's land has no target left,
+  the main theatre moves to the bot's next front (the old land is "done" for 3 min) and its units follow.
+- **Only forward -- targets**: a target's score adds half the walk from where the army stands to the territory
+  distance. Before, any point of a long border could win, so the army turned back whenever its target fell (North
+  Alliance between its own CPs, Kul Tiras east-west, Druids back from the Broken Isles).
+- **Only forward -- defence**: a CP more than 6000 behind the attack group is defended by the units not in the group
+  (staging rest, new units); the group keeps its front. Defences are per theatre: a theatre defends only its land.
+- Regroup counts only for the main theatre. Order throttle per theatre.
+- `AiStyleCheck.cs` removed -- the in-game check passed ("OK, 300 instance fields"): state in objects works with
+  CSharp.lua (phase 2 can use it).
+- Dump: "theatres (0.47; opened, closed, main moved): P.. main <land> <food> | T2 <land> <food> -> <target>",
+  "secondary-theatre plans", "defended by the rest (group kept its front)".
+
 ## 0.46.4
 From the 0.46.3 game (15 min, maintainer). Version v0.46.4. Note: the 0.46.3 on GitHub is the FIRST 0.46.3 delivery
 (without the regroup fix below) -- both deliveries had the same version number.

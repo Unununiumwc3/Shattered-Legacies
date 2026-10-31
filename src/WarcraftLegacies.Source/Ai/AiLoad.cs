@@ -701,7 +701,6 @@ namespace WarcraftLegacies.Source.Ai
     {
       AiGuard.Setup();
       AiProbe.Setup();
-      AiStyleCheck.Run(); // 0.46: CSharp.lua check for the phase-2 style (removed in 0.47)
     }
 
     internal static void Lines(List<string> o)
@@ -713,7 +712,6 @@ namespace WarcraftLegacies.Source.Ai
       o.Add(AiCaster.Line());
       o.Add(AiRegroup.Line());
       AiObserve.Lines(o);
-      o.Add("style check (0.46): " + AiStyleCheck.Result);
     }
   }
 }

@@ -8,7 +8,7 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
+Current build: **0.47.0** (theatres, only forward) -- before: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
 exception; Scarlet Crusade after Arthas turns).
 
 ## The plan: three phases
@@ -65,7 +65,8 @@ Rules for phase 1:
 | 0.46.1 | yes (44 min, maintainer as Lordaeron on autopilot) | rift crossed (Black Empire in Dun Modr); Dark Portal open turn 8-10; creeps cleared; latency median ~2 s at 10-15 min; stopwatch +4 s at 20 min |
 | 0.46.2 | yes (81 min, A/B per phase) | evil won without the 100-gold CPs; first Eye of Sargeras by bots; guard / spread / gather decided; beaten factions not finished off |
 | 0.46.3 | 15 min (GitHub build without the regroup fix) | regroup held 11 bots at the start; Druids' back and forth (defence across the sea, creeps at home); Kul Tiras via the dwarf mountains; Lordaeron no longer tries Northrend early |
-| 0.46.4 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
+| 0.46.4 | not played (merged into 0.47.0) |
+| 0.47.0 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.
@@ -266,13 +267,21 @@ Fixes from 0.45.0:
 - [done, part 3] **CSharp.lua check**: a throwaway class with ~300 instance fields (+ a static instance of it); the maintainer
   builds, `lua_check.py` must pass. Confirms that object state avoids hard rules 1, 2 and 7. Removed in 0.47.
 
-## Phase 1 -- 0.47 (theatres, portals aligned with WL, ferries)
+## Next playtest (0.47.0) -- the theatre build
 
-- [ai] **Theatres** (`CONCEPTS.md` 6): up to 3 groups per bot, one per theatre (walking component of the route
-  graph); own target, own staging, own defence decision. One front = one big group. Also the answer to "dancing
-  around without a clash" (Old Gods vs Frostwolf) and the many target returns.
-- [ai] **Target commitment** (with theatres): a target is kept until taken, lost or blocked -- a new one only when it
-  is much better (today: half the cost) or the old one stuck; measured by "target returns".
+- Dump "theatres": which bots open a second / third theatre (Druids on the Broken Isles, Fel Horde in Outland + the
+  Eastern Kingdoms, Old Gods after the rift)? Does the main theatre move when its land is done ("main theatre done")?
+- **Back and forth**: does it stop? "target returns" per bot far below 0.46.2 (up to 17-18 in 80 min), "defended by
+  the rest" > 0 (the group kept its front).
+- Kul Tiras: no more east-west walking? North Alliance: forward or creeping instead of walking between its CPs?
+- Secondary theatres: their targets in the event log ("[theatre 2]: target ..."); do they hold their land?
+- Errors (summary top), order latency vs. 0.46.2.
+
+## Phase 1 -- 0.48 (portals aligned with WL, ferries; tuning of 0.47)
+
+- [done 0.47] **Theatres** (`CONCEPTS.md` 6) and **only forward** (targets scored with the walk from the army;
+  defence of far CPs by the rest).
+- [ai] **Target commitment**, if returns stay high after 0.47: keep a target until taken, lost or blocked.
 - **Portals aligned with WL** (pseudo-portals from a data list instead of the bot's own waygates; maintainer 0.46.2):
   - [ai] **Ships -> ferries** (`CONCEPTS.md` 7): the AI ship waygates go; sea links become ferry trips.
   - [ai] **Old Gods rift**: no bot-made waygates -- pseudo-portal edges between WL's existing assets at both ends.

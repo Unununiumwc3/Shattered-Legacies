@@ -1248,7 +1248,15 @@ namespace WarcraftLegacies.Source.Ai
       OpUnits = 0;
       OpOrders = 0;
       DefOps = 0;
-      Process(p);
+      try
+      {
+        Process(p);
+      }
+      finally
+      {
+        AiTheatres.Done(); // 0.47: no theatre restriction outside a bot's service
+      }
+
       LastOpUnits = OpUnits;
       LastOpOrders = OpOrders;
       LastDefOps = DefOps;
@@ -1333,6 +1341,8 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       DestroyGroup(g);
+      // 0.47: theatres -- AiArmy.Units keeps the main theatre's units; the others are serviced in ProcessTheatres
+      var theatres = AiTheatres.Split(pid, out var mainX, out var mainY);
 
       float ax, ay;
       if (haveBase)
@@ -1376,6 +1386,12 @@ namespace WarcraftLegacies.Source.Ai
         anchorUnits = lmCount[bestSlot];
         tx = lmX[bestSlot] / anchorUnits;
         ty = lmY[bestSlot] / anchorUnits;
+      }
+
+      if (theatres)
+      {
+        tx = mainX; // 0.47: the main theatre's centre
+        ty = mainY;
       }
 
       var diag = GetDiag(pid);
@@ -1473,6 +1489,10 @@ namespace WarcraftLegacies.Source.Ai
 
               handled = true;
             }
+            else
+            {
+              AiTheatres.MainFoundNothing(pid); // 0.47: the main theatre moves to the bot's next front
+            }
           }
 
           // authored CP graph -- expand from my frontier to the nearest bordering CP I don't own.
@@ -1550,6 +1570,8 @@ namespace WarcraftLegacies.Source.Ai
             }
           }
         }
+
+        ProcessTheatres(p, pid); // 0.47: the bot's other fronts
       }
       else
       {
@@ -1858,9 +1880,10 @@ namespace WarcraftLegacies.Source.Ai
     // 0.42: (x, y) = where to go now (a waypoint or the target), (fx, fy) = the final target (group size, staging).
     private static void IssueAttackToPoint(player p, int pid, float x, float y, bool whole, float fx, float fy)
     {
-      var moved = !LastPtX.ContainsKey(pid)
-        || (x - LastPtX[pid]) * (x - LastPtX[pid]) + (y - LastPtY[pid]) * (y - LastPtY[pid]) > 300f * 300f;
-      var recent = LastIssueTime.ContainsKey(pid) && _clock - LastIssueTime[pid] <= HeartbeatEvery;
+      var key = pid + AiTheatres.Offset; // 0.47: one throttle per theatre
+      var moved = !LastPtX.ContainsKey(key)
+        || (x - LastPtX[key]) * (x - LastPtX[key]) + (y - LastPtY[key]) * (y - LastPtY[key]) > 300f * 300f;
+      var recent = LastIssueTime.ContainsKey(key) && _clock - LastIssueTime[key] <= HeartbeatEvery;
       if (!moved && recent)
       {
         return;
@@ -1875,9 +1898,77 @@ namespace WarcraftLegacies.Source.Ai
         AttackMove(p, x, y, !moved && OrdersIdleOnly); // 0.39: same target -> only idle units
       }
 
-      LastPtX[pid] = x;
-      LastPtY[pid] = y;
-      LastIssueTime[pid] = _clock;
+      LastPtX[key] = x;
+      LastPtY[key] = y;
+      LastIssueTime[key] = _clock;
+    }
+
+    private static void ServiceTheatreTarget(player p, int pid, int t, Faction fac, float cx, float cy)
+    {
+      float sx = cx, sy = cy;
+      AiArmy.GroupCenter(pid, ref sx, ref sy);
+      var rt = AiRoutes.Pick(p, pid, fac, sx, sy, AiTheatres.Diag(pid, t));
+      if (rt != null)
+      {
+        AiTheatres.Note(p, pid, t, rt, GetPlayerId(GetOwningPlayer(rt)) < 24 ? "route-enemy" : "route-neutral");
+        IssueAttackToPoint(p, pid, GetUnitX(rt), GetUnitY(rt), false, GetUnitX(rt), GetUnitY(rt));
+      }
+      else
+      {
+        AiTheatres.Note(p, pid, t, null, "hold-nothing-in-theatre");
+      }
+    }
+
+    // 0.47: the bot's secondary theatres -- same planner and army code, each with its own state slot (AiTheatres):
+    // defence of its own land first, else the best target of its land (no portals), else hold.
+    private static void ProcessTheatres(player p, int pid)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (fac == null || !AiRoutes.On)
+      {
+        return;
+      }
+
+      var mainUnits = new List<unit>(); // restored afterwards: ExitPass etc. work on the main theatre
+      mainUnits.AddRange(AiArmy.Units);
+      for (var t = 1; t < AiTheatres.MaxTheatres; t++)
+      {
+        if (!AiTheatres.Has(pid, t))
+        {
+          continue;
+        }
+
+        AiTheatres.Begin(pid, t);
+        try
+        {
+          float cx = AiTheatres.X(pid, t), cy = AiTheatres.Y(pid, t);
+          var defend = AiDefense.Pick(p, pid, cx, cy);
+          if (defend != null)
+          {
+            AiTheatres.Note(p, pid, t, defend, "defend");
+            AiArmy.DefendCall = true;
+            IssueAttackToPoint(p, pid, GetUnitX(defend), GetUnitY(defend), true, GetUnitX(defend), GetUnitY(defend));
+            AiArmy.DefendCall = false;
+          }
+          else
+          {
+            ServiceTheatreTarget(p, pid, t, fac, cx, cy); // no "continue" inside try (CSharp.lua: closure)
+          }
+
+          if (AiArmy.Smart && AiRoutes.Chains)
+          {
+            AiArmy.ExitPass(pid); // 0.44.3 / 0.47: per theatre (its own slot)
+          }
+        }
+        finally
+        {
+          AiArmy.DefendCall = false;
+          AiTheatres.End();
+        }
+      }
+
+      AiArmy.Units.Clear();
+      AiArmy.Units.AddRange(mainUnits);
     }
 
     // v15: walk the authored graph. Return the CP where I own one end of an edge but not the other
@@ -2849,7 +2940,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.46.4";
+    public const string Build = "0.47.0";
 
     public static void Setup()
     {
