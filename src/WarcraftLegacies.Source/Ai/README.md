@@ -97,7 +97,7 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Emerald Portals (Shrine of Malorne <-> Feralas) | as soon as WL's preplaced pair is visible | bot activates WL's pair |
 | Legion Teleporters (Argus -> Northrend landing / Alterac landing, one-way) | after the Legion's "Argus" quest | WL (player-owned waygates `n0BE`; bot edge for the Legion + allies since 0.48) |
 | Tomb of Sargeras <-> Argus (both ways; Argus end beside WL's interior Demon Portal) | when the Legion is summoned OR the Tomb of Sargeras CP is held by any player | bot-only pseudo-portal (hidden markers, 0.49) |
-| Demon Portal (WL: where the ritual's caster stood <-> Antoran) | WL's "Under the Burning Sky": a hero with the Book of Medivh casts the ritual (bot Legion / Scourge heroes do it since 0.49, invulnerable while channelling) | WL |
+| Demon Portal (where the ritual was performed <-> Antoran) | WL's "Under the Burning Sky": a hero with the Book of Medivh casts the ritual; a bot Legion / Scourge hero with the Book performs it itself (0.51: 180-s channel with timer, invulnerable), the bot then puts WL's portal on the spot | WL (bot ritual: `AiRitual`) |
 | Deeprun Tram (Ironforge <-> Stormwind) | after the tram research | WL (player-owned `n03B`; bot edge for owner + allies since 0.48) |
 | Ferries (8 sea links: Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor; replace the AI ship waygates) | from the start; a pier is no entry while an enemy holds its CP | bot-only (`AiFerries`, 0.50): units board hidden, a boat sails the lane (`tools/ai/gen_lanes.py`), they land at the far pier |
 | Water Passageways (Thandol Span; Highbank <-> western Kalimdor) -- SHIPS only, on deep water | always | WL (n03Q / n03S, Neutral Passive); no army edge since 0.46.1 |

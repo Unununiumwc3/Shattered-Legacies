@@ -202,7 +202,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      AiRitual.Tick(); // 0.49: a bot hero with the Book of Medivh casts WL's ritual (the ONLY summon path)
+      // 0.51: the Book of Medivh ritual runs in its own 1-s task (AiRitual, scheduler "legion ritual")
       AiMissions.RunTerrordale(); // 0.38.1: every 2 s, so the hand-over comes right after the plague
 
       var evs = AiGraph.Events;

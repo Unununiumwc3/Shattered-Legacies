@@ -4,6 +4,21 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.51.0
+From the 0.50.1 game (maintainer gave a bot the Book; ferries look good). Version v0.51.0.
+- **The bot performs the Legion ritual itself** (maintainer's choice): every cast order was refused in 0.50.0 / 0.50.1
+  ("volcano" and "deathanddecay"; Scourge and Legion heroes, also Tichondrius with the maintainer's Book). Same
+  requirements as WL's spell: a bot Legion / Scourge hero with the Book in its inventory, the Legion exists (R04T),
+  not inside an instance, 410 mana (spent; raised for a bot hero that has less). The hero channels on its spot for
+  180 s: hold position, channel animation, invulnerable, a rain of fire without damage (radius 750), a timer for
+  everyone at the top ("Legion Summon (bot channelling)"), a minimap ping and a message. Moving off the spot, dying,
+  losing the Book or changing owner cancels it (retry after 30 s). At the end the bot completes WL's "Under the
+  Burning Sky" (WL's whole reward) and moves WL's Demon Portal from (0,0) -- a completion without a caster -- to the
+  ritual spot, Antoran's portal pointed at it. Runs in its own 1-s task ("legion ritual"). Dump LOAD: "legion ritual
+  (0.51, bot ritual)". A human hero uses WL's real spell as always.
+- **Ferry boats at 150** (maintainer asked for half of 200; WC3 clamps move speeds to the map's minimum, 150 by
+  default -- the map does not change it).
+
 ## 0.50.1
 From the 0.50.0 game (maintainer: Dark Portal works, ferries work, "enter boat" good). Version v0.50.1.
 - **Legion ritual order fixed**: the Book carrier (Arthas) stood without casting -- "volcano" (A00J's order string
