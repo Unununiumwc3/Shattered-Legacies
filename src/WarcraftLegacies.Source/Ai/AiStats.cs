@@ -44,6 +44,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       var pid = GetPlayerId(p);
+      AiTrack.Trained(u, GetTriggerUnit()); // 0.48.3: unit trail -- follow new units from their building
       if (!_trained.ContainsKey(pid))
       {
         _trained[pid] = new Dictionary<int, int>();

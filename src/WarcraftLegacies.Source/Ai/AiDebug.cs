@@ -110,6 +110,7 @@ public static class AiDebug
     Register("-autodump", OnAutoDump, Level.Heavy);
     RegisterLoose("-edges", OnEdges, Level.Heavy); // 0.46: "-edges" = generated graph, "-edges old" = old graph
     RegisterLoose("-why", OnWhy, Level.Read);
+    RegisterLoose("-track", AiTrack.OnCommand, Level.Read); // 0.48.3: -track <pid>|off -- unit trail (dump TRAIL)
     Register("-ship", OnShipTest, Level.Control);
     Register("-botbreak", SimpleBot.OnBotBreak, Level.Control); // 0.35: moved here from SimpleBot (now switched)
     Register("-prod", SimpleBot.OnProd, Level.Control);
@@ -794,7 +795,7 @@ public static class AiDebug
     var p = GetTriggerPlayer();
     DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00Bot AI|r " + AiSetup.Build + " (commands: " + (Access == CommandAccess.HostOnly ? "host only" : "everyone")
       + ") -- full list: README.md."
-      + " Most used: -dump  -autodump  -why  -portals  -heroes  -edges  -xy  -id  -autopilot  -version");
+      + " Most used: -dump  -autodump  -why  -track  -portals  -heroes  -edges  -xy  -id  -autopilot  -version");
   }
 
   // 0.39.9: replaces the chat banner at game start.
@@ -991,6 +992,7 @@ public static class AiDebug
       }
     });
 
+    Section(o, "track", () => AiTrack.Lines(o)); // 0.48.3: turnarounds (all bots) + unit trail (one bot)
     Section(o, "nodes", () => NodeLines(o));
     Section(o, "edges C", () => EdgeLines(o, "C", AiGraph.Combined));
     Section(o, "edges K", () => EdgeLines(o, "K", AiGraph.Kalimdor));

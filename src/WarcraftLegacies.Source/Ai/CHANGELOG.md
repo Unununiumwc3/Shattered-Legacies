@@ -4,6 +4,28 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.3
+Measurement build for the back-and-forth movement (`TODO.md` "Open problems" 1). **No behaviour change.** Version v0.48.3.
+- **Turnarounds** (`AiTrack`, all bots): every army unit is sampled on its bot's service; two walks of >= 300 in a
+  row that differ by more than 120 deg = a turnaround, attributed to the last bot order since the first walk began
+  (change, rest, idle-away, refill, advance, exit, defend, whole, def-rest, portal, hero) or "engine" (no bot order:
+  chases, creep leash, rally points, crowding). Dump section TURNAROUNDS: per bot and per 5-min phase; plus group
+  swaps (units dropped from the attack group while still walking at a target change, and how many were later sent
+  back to the staging point) and rest orders that point backwards.
+- **Unit trail** (`-track <pid>|off`, default P11 Druids; `-track` alone lists and pings the followed units): up to 8
+  units of one bot followed from the building that trained them (4 slots may adopt existing units at the start). Every
+  bot order (kind, destination, distance of the destination from the unit's spawn point, BACK when it points against
+  its current walk, the bot's reason and target), turnaround, teleport, drop from the group and death is a line; one
+  position line per service. Dump section TRAIL, ~700 lines (with `-autodump` nothing is lost).
+- Event log: every target change carries where the army stood and the angle between old and new target
+  (` | army @x,y new 4100 old 3200 at 160deg`).
+- `AiArmy.Issue` takes the order kind; hooks in `AiStats` (trained), `AiPortals` (rest of the chain after a
+  teleport), `AiHeroCare` (stranded heroes).
+- Tools: `tools/ai/back_forth.py` stitches one game's dumps (event log + trail): target turn-backs by cause and phase,
+  defence ping-pong, followed units, `--unit U3` = one unit's whole trail, `--bot 11` = one bot's changes.
+  `dump_summary.py` adds the turnaround totals.
+- `MEASUREMENTS.md`: the 0.48.2 game (5 dumps), with the first back-and-forth numbers.
+
 ## 0.48.2
 From the 0.48.1 game (25 min; "felt mostly good", tram worked). Version v0.48.2. Handover build for a new chat.
 - **Legion Teleporters as pseudo-portals** (maintainer: no spell casts): once the Legion's "Argus" quest is complete,

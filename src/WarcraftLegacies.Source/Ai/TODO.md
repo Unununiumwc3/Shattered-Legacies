@@ -26,6 +26,21 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
      (re-select only when the new target is in another direction or the group is too small).
    - Maintainer: Sentinels and Druids do it most at the start; later Dalaran, Scourge. A wave system to the front is
      the goal (units d -> e -> f, not back to c).
+   - **0.48.2 game, measured from the event log** (`tools/ai/back_forth.py`, target-to-target geometry, CP targets
+     only): turn-backs > 120 deg are (1) neutral hops in the first 10 min -- the next neutral CP behind the army
+     (territory distance; Sentinels, Druids, Legion in Northrend, Ironforge); (2) defence in/out after 10 min -- 42
+     defence episodes, 24 ended at the 30-s minimum, 15 of 31 re-entries within 60 s (`AiDefense.CloseThreat` skips
+     the cooldown, and the army that just left is always within 4000); (3) route re-picks between enemy targets.
+   - **Suspects below the target level** (not visible in 0.48.2 dumps): attack group re-selected on every new target
+     -- dropped units still walking keep their OLD chain, arrive, then the heartbeat sends them to the staging point
+     (streams crossing); defence / hold / wait use the whole army and force a re-selection afterwards; hold =
+     attack-move of the whole army to its own centre; staging point jumps with the route.
+     Maintainer's hypothesis (0.48.3): the target resolves before the units reach it, then they walk back to where
+     they were produced.
+   - **0.48.3 measures it** (no behaviour change): TURNAROUNDS (per unit, cause = last bot order or engine), group
+     swaps, TRAIL of 8 Druid units from their building. Decide the fix from the next game's numbers -- candidates:
+     (d) keep the group across a target change; a defence hysteresis that does not skip the cooldown for the army
+     that just left; (b)/(c) for the early neutral hops.
 2. **Portals, rest of the WL alignment**: ferries for the 8 ship pairs (`CONCEPTS.md` 7); Book of Medivh (bot casts
    the channel, hero invulnerable -- WL's real Legion event); check the Legion leaves Argus via the 0.48.2 teleporter
    pseudo-portals.
@@ -35,6 +50,14 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.48.3) -- the measurement build
+
+- `-autodump` on from the start (TRAIL and EVENT LOG are ring buffers; dumps every 5 min lose nothing). 30-40 min.
+- Druids (P11) must be a BOT (the trail follows P11 by default). Autopilot on another faction is fine -- say which.
+- When you see back and forth: note the game time and the faction, `-xy` on one of the units, and a `-dump`. If it
+  is the Druids, `-track` pings the followed units -- note the U-number of one that is in it.
+- Dump section TURNAROUNDS: the causes per bot; TRAIL: the Druid units' orders. `tools/ai/back_forth.py` on all dumps.
 
 ## Next playtest (0.48.2)
 
@@ -101,7 +124,8 @@ Rules for phase 1:
 | 0.47.0 | (second game) | froze ~3 min after the 18-min dump -- no data (send `WLAI_heartbeat.txt` after a freeze) |
 | 0.48.0 | yes (25 min) | Legion stuck on Argus (teleporters are spells, not cast); armies walked back to their base on empty plans; fronts moved 36 times; South Alliance "nothing reachable" 15-20 min |
 | 0.48.1 | yes (25 min) | "felt mostly good"; tram worked; Legion did not leave Argus; North Alliance patrolled at Tirisfal; back and forth still (Sentinels, Druids early; Dalaran, Scourge later); a bit laggy |
-| 0.48.2 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
+| 0.48.2 | yes (26 min, Ironforge on autopilot) | (built: finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)?) turn-backs measured from the event log: neutral hops early, defence ping-pong (24 of 42 defences ended at the 30-s minimum) and enemy re-picks later; unit movement not in the dumps -> 0.48.3 |
+| 0.48.3 | **next** | measurement only: TURNAROUNDS (all bots, cause per turn), TRAIL (8 Druid units from their building), angle in target-change lines |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

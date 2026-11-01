@@ -1341,6 +1341,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       DestroyGroup(g);
+      AiTrack.Sample(p, pid, AiArmy.Units); // 0.48.3: turnarounds + unit trail (measurement only), all army units
       // 0.47: theatres -- AiArmy.Units keeps the main theatre's units; the others are serviced in ProcessTheatres
       var theatres = AiTheatres.Split(pid, out var mainX, out var mainY);
 
@@ -1632,7 +1633,8 @@ namespace WarcraftLegacies.Source.Ai
       {
         var from = d.Target != null ? GetUnitName(d.Target) : "-";
         var to = tgt != null ? GetUnitName(tgt) : "-";
-        Log("P" + I2S(pid) + " " + FacName(p) + ": target " + from + " -> " + to + " [" + reason + "]");
+        Log("P" + I2S(pid) + " " + FacName(p) + ": target " + from + " -> " + to + " [" + reason + "]"
+            + TurnNote(d, tgt)); // 0.48.3: where the army stood, and how far the new target turns away from the old
         if (pid >= 0 && pid < 24)
         {
           AiScheduler.TargetSwitch[pid]++; // 0.44
@@ -1643,6 +1645,49 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       d.Reason = reason;
+    }
+
+    // 0.48.3: " | army @x,y new 4100 at 160deg" -- the angle between old and new target as seen from the army anchor
+    // (d.AnchorX/Y, set before the decision). 0.48.2's target-to-target estimate found 114 turns of > 120 deg in 25 min.
+    private static string TurnNote(BotDiag d, unit tgt)
+    {
+      var ax = d.AnchorX;
+      var ay = d.AnchorY;
+      var s = " | army @" + I2S(R2I(ax)) + "," + I2S(R2I(ay));
+      if (tgt == null)
+      {
+        return s;
+      }
+
+      var nx = GetUnitX(tgt) - ax;
+      var ny = GetUnitY(tgt) - ay;
+      var nl = SquareRoot(nx * nx + ny * ny);
+      s = s + " new " + I2S(R2I(nl));
+      if (d.Target == null || nl < 1f)
+      {
+        return s;
+      }
+
+      var ox = GetUnitX(d.Target) - ax;
+      var oy = GetUnitY(d.Target) - ay;
+      var ol = SquareRoot(ox * ox + oy * oy);
+      if (ol < 1f)
+      {
+        return s;
+      }
+
+      var c = (ox * nx + oy * ny) / (ol * nl);
+      if (c > 1f)
+      {
+        c = 1f;
+      }
+
+      if (c < -1f)
+      {
+        c = -1f;
+      }
+
+      return s + " old " + I2S(R2I(ol)) + " at " + I2S(R2I(Acos(c) * 57.29578f + 0.5f)) + "deg";
     }
 
     // nearest reachable enemy/unowned capital (Scourge only) -- attack-move clears the yard
@@ -2960,7 +3005,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.48.2";
+    public const string Build = "0.48.3";
 
     public static void Setup()
     {

@@ -23,7 +23,11 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.48.2) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.48.3) -- read this, then `TODO.md` ("Open problems" first)
+
+- **0.48.3 is a measurement build** for the back-and-forth (no behaviour change): dump sections TURNAROUNDS (all
+  bots, cause per turn) and TRAIL (8 units of P11 from their building, `-track`); `tools/ai/back_forth.py`. The
+  next fix is picked from its game -- see `TODO.md` "Open problems" 1.
 
 - **Phase 1 (movement "good enough") is nearly done.** Maintainer after 0.48.1: "the game felt mostly good" -- the
   remaining show stopper is **back-and-forth movement** (`TODO.md` "Open problems", with what is known about it),
@@ -95,6 +99,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
+| `AiTrack.cs` | AiTrack, AiTrackUnit | 0.48.3, measurement only: turnarounds of every army unit with their cause (last bot order or engine), group swaps; unit trail of one bot (`-track`, default P11) -> dump TURNAROUNDS / TRAIL |
 | `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiObserve, AiCaster, AiLoad | 0.46: per-bot A/B (slot bits), guard positions, unit budget per CP, order-latency probe, activity / returns / targets by owner, caster cap |
 | `AiTheatres.cs` | AiTheatres | 0.47: theatres per bot (walking components), state slots, restrictions, dump |
 | `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
@@ -116,6 +121,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `tools/ai/render_map.py` | | draws terrain, CPs, area nodes and the route graph to `tools/ai/out/route_map.png` (never committed); `--regions` |
 | `ROUTES.md` | | generated report: every edge with its "via" point, detours, edges behind rocks |
 | `tools/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
+| `tools/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
 | `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) and `../ShatteredLegacies/SlAiData.g.cs` (fork buildings, `SL_BUILDINGS`) from WL's ObjectInfo + map data (run after every WL update) |

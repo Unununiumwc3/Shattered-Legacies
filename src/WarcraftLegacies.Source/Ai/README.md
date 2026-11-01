@@ -164,6 +164,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-help` | read | Version, command access and the most used commands |
 | `-dump` | read | Full snapshot to `Documents\Warcraft III\CustomMapData\WLAI_dump_<time>.txt` |
 | `-why` / `-why <pid>` | read | One line per bot (state, target, reason) / detailed trace for one bot |
+| `-track` / `-track <pid>` / `-track off` | read | Unit trail (0.48.3): lists and pings the followed units / follows up to 8 units of that bot (default P11 Druids) / off. The dump's TRAIL section has every order, turnaround and death of them |
 | `-portals` | read | Labels and pings every AI portal for 30 s; says whether the graphs are merged |
 | `-heroes` | read | Labels and pings every living bot hero for 30 s (level, owner, mission / stranded state) |
 | `-xy` | read | Position and landmass of your selected unit |
