@@ -142,6 +142,11 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.45-0.46.2 | gather points (wait at the last own node) | 81 % timeouts (0.45.0); no difference in any phase (0.46.2 A/B) | 0.46.3: off |
 | 0.46-0.46.2 | spread chain points (per-unit offset at nodes) | more stalled units from 50 min on (0.46.2 A/B) | 0.46.3: off |
 | 0.42-0.46.2 | rocks = LTrc only; LTrc-based custom destructables counted as trees | WL's Whirlpool Blockers (B013, removed after the Plague) were permanent; other blockades sized as trees | 0.46.3: removable types read from WL's `RockGroup` code, others walls |
+| 0.46.2-0.46.3 | regroup below N food with no start condition | every regroup-half bot regrouped at 0:00 and idled for minutes | 0.46.3 only after a meltdown; 0.46.4 in units per phase |
+| 0.47.0 | old target pickers as fallback when the planner found nothing | they ignore rocks: North Alliance ran to the Brill coast towards Northrend | 0.48.0: wait at closed rocks / hold |
+| 0.48.0 | hold at the BASE when nothing was found | armies walked back to their production buildings on every empty plan | 0.48.1: hold where the army stands |
+| 0.47.0-0.48.1 | main front follows the biggest army at once (2x) / on every empty plan | "main moved" 36-47 times per 25 min, armies between fronts | 0.48.1 streak, 0.48.2 60 s hold |
+| 0.48.1 | bot Legion casts WL's teleporter spells | never left Argus | 0.48.2: teleporters as pseudo-portals after the "Argus" quest |
 | 0.42-0.46.0 | every active neutral waygate = graph edge | WL's naval Water Passageways became army routes (Thandol, Highbank <-> Kalimdor); 0.46 teleported dwarves onto the shore | 0.46.1: waygates on / to water skipped |
 
 **A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
@@ -176,7 +181,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default off (0.46.3: removal costs orders) |
-| `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 40 + 8, 0.46.2) |
+| `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 30 + 7, 0.48.2) |
 | `-regroup on\|off\|ab\|ab2` | control | Regroup: an army that fell below half of 10 / 15 / 40 units (early / mid / late) gathers at the staging point and attacks again as one wave at 10 / 15 / 40; default ab (slot bit 3) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |

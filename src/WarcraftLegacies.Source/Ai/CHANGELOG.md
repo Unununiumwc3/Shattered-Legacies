@@ -4,6 +4,20 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.2
+From the 0.48.1 game (25 min; "felt mostly good", tram worked). Version v0.48.2. Handover build for a new chat.
+- **Legion Teleporters as pseudo-portals** (maintainer: no spell casts): once the Legion's "Argus" quest is complete,
+  each WL teleporter building is a one-way pseudo-portal -- the one near 22939,-29345 to Northrend (3587,20680), the
+  other to Alterac (11000,6424), for the Legion and its allies. The 0.48.1 spell casts are removed (the Legion never
+  left Argus that way).
+- **Main-front switches need 60 s**: "twice the food elsewhere" must hold 60 s before the main theatre moves (0.48.1:
+  "main moved" 47 times in 25 min -- armies walking through portals shift the food for a moment).
+- **Sticky wait point**: an army waiting at closed rocks keeps its wait point while it stays blocked (0.48.1: the North
+  Alliance patrolled between two rock edges at Tirisfal).
+- **Unit budget 30 + 7 per CP** (was 40 + 8; maintainer: a bit laggy).
+- Dump: portal states and empty-plan reasons on their own lines -- the dump cuts long lines (both were lost in 0.48.1).
+- Docs: `AI_AGENTS_CONTEXT.md` state rewritten for a new chat; `TODO.md` "Open problems" (back and forth first).
+
 ## 0.48.1
 From the 0.48.0 game (25 min). Version v0.48.1.
 - **Hold where the army stands**: when the planner finds nothing, the army holds at its own position. 0.48.0 held at

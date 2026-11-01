@@ -23,48 +23,40 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.45.0 build, 0.45.1 docs) -- read this, then `TODO.md`
+## State of the work (0.48.2) -- read this, then `TODO.md` ("Open problems" first)
 
-- **Plan in three phases** (`TODO.md`): 1 movement "good enough" (0.46, 0.47, 0.48/0.49 as needed; ends at the exit
-  criteria in `TODO.md`, not at a version number) -> 2 restructure (~0.50: layout for the upstream PR, state in
-  objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
-  but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
+- **Phase 1 (movement "good enough") is nearly done.** Maintainer after 0.48.1: "the game felt mostly good" -- the
+  remaining show stopper is **back-and-forth movement** (`TODO.md` "Open problems", with what is known about it),
+  then the rest of the portal work (ferries, Book of Medivh). Then phase 2 (restructure for the upstream PR) and
+  phase 3 (fine-tuning, balance). Phases end at their criteria (`TODO.md`), not at version numbers.
+- **How the bots move today** -- `README.md` "How the bots move" (pipeline) and "Already tried" (every approach that was
+  dropped and why -- read it before proposing a movement change). Key pieces:
+  - Generated route graph (`tools/ai/gen_routes.py` -> `AiRoutes.g.cs`): WL's CPs + area nodes; terrain, trees,
+    pathing blockers, custom doodad pathing; removable rocks = types WL's code puts into a `RockGroup`;
+    `tools/ai/route_exceptions.txt` for what the map files cannot tell (`remove`, `add`, `node @x,y`).
+  - Target planner (`AiRoutes.Pick/Plan`): territory distance + 0.5 x walk from the army ("only forward"), finish-off
+    bias, creep camps / leftovers, stickiness; nothing reachable -> wait at the nearest land-separating closed rock
+    edge (sticky), else hold in place. The old pickers run only with `-route off`.
+  - Theatres (`AiTheatres`): up to 3 fronts per bot (walking components), each with its own state slot
+    (`S(pid) = pid + 24 x theatre`, hard rule 17).
+  - Army (`AiArmy`): attack group sized to the need, rest at a staging point on the route, movement chains (queued
+    attack-moves), regroup (A/B), defence of far CPs by the rest.
+  - Portals (`AiPortals`): pseudo-portals (tickets + enter-region trigger) for every portal edge; all players'
+    waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb -> Argus
+    and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
+    pairs are still visible bot waygates (-> ferries).
+  - Load: unit budget per CP (`AiBudget`, 30 + 7 since 0.48.2), order-latency probe, caster cap.
+- **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append` (errors at the top, A/B per game phase,
+  stopwatch with `--real`). **The dump cuts long lines** (~250+ characters): put new information on its own line.
+- **WL facts that matter for the portals**: the Legion leaves Argus through WL's teleporter buildings (spells for
+  humans), the Deeprun Tram is a pair of WL waygates given to Ironforge / Stormwind, the Dark Portal opens by the Fel
+  Horde quest (turn 8-10), WL's Water Passageways are for ships only (never army edges).
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **0.48.1** = hold in place on empty plans, main theatre moves after ~30 s of empty plans, bot Legion casts WL's
-  teleporter spells. **0.48.0** = all players' waygates as edges (owner + allies: Deeprun Tram, Legion Teleporters), Tomb -> Argus and
-  the rift as hidden bot-only pseudo-portals, no visible bot Argus / rift waygates, wait at closed rocks instead of the
-  old pickers, theatres open at max(40, 25 %). **0.47.0** = theatres (`AiTheatres`, state slots) + only forward (target score with the walk from the army; far
-  defence by the rest). Big step without a playtest of 0.46.4. **0.46.4** = regroup in units per phase (10 / 15 / 40), defence does not pull units from other landmasses, creep /
-  leftover targets scored from the army ("only forward"). **0.46.3** = A/B results (guard / spread / gather off), finish-off bias, Tirisfal - Howling Fjords exception,
-  Scarlet Crusade after Arthas turns. **0.46.2** = WL's CPs restored (map data = WL 4.8.2 for CPs), graph with pathing blockers + exceptions file,
-  staging on the route, regroup (A/B bit 3), A/B per game phase (gather ab, spread ab, guard ab2, regroup ab),
-  budget 40 + 8, Scarlet Crusade after Stratholme.
-- **Graph = bot data only**: CP nodes + generated area nodes live in `Ai/AiRoutes.g.cs`; they never change gameplay.
-  The map's CPs are WL's -- do not add CPs to the map for the bot. **0.46.1** = 0.46.0 + naval waygates skipped + caster cap 35 %. **0.46.0 is complete** (parts 1-3; checklist
-  "Next playtest" in `TODO.md`): creep fix,
-  pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget, latency probe, per-bot A/B
-  (guard / gather / spread, independent slot bits), caster cap, activity / returns / targets-by-owner counters,
-  `-edges` on the generated graph, CSharp.lua style check (`AiStyleCheck.cs`, delete in 0.47). 0.47: theatres,
-  ferries. Designs: `CONCEPTS.md` 6-9.
-- **Engine first**: the order delay players feel (1-2 s) is WC3's pathfinder queue; 5227 units at 14 min in 0.44.2.
-  The bot's op counters measure Lua spikes, not engine load (section "Engine (WC3) limits" below).
-- **Refactor done so far** (details: `CHANGELOG.md`; overview and history: `README.md` "How the bots move" and
-  "Already tried"): 0.39.10 layers -- 0.40 one scheduler -- 0.41 army orders -- 0.42 route planner on a generated
-  graph -- 0.43 targets from the bot's own territory, defence with reach + hysteresis -- 0.44 movement chains, leftover
-  buildings and creep camps as targets, **CP income for bots** (`AiIncome`; every game before 0.44.2 had bots WITHOUT
-  income) -- 0.45 gather points, rift east end moved 100 north.
-  - Switches for A/B tests: `-orders smart|idle|all`, `-route on|off`, `-chain on|off`, `-creeps on|off`,
-    `-gather on|off`, `-budget on|off`.
-- **Playtested**: up to 0.45.0 (table and the 0.45.0 results in `TODO.md`): the rift was never crossed (dead map
-  after ~45 min), creep camps never ran (a TICK ERROR nobody noticed), Fel Horde flapped between the route planner and
-  the old picker. **Read PINNED for `TICK ERROR` in every dump you get** -- `dump_summary.py` lists them.
-- **More changes per playtest** (maintainer): every change gets its own switch and counter; behaviour switches get a
-  per-bot A/B mode (0.46). Playtest protocol (stopwatch at turns) in `TODO.md`.
-- **West <-> east**: Kalimdor + its islands (ships) vs Eastern Kingdoms + Kul Tiras are linked ONLY by the Old Gods
-  rift (and the rare Legion portal). Bots will use it through a pseudo-portal (0.46); for humans the east end's fix
-  (0.45.0) is unconfirmed.
-- Measurements per game: `MEASUREMENTS.md` (`tools/ai/dump_summary.py --append`). The maintainer often plays with
-  `-autopilot` on one faction (a human slot -- say which in the note).
+  The map's CPs are WL's again (0.46.2): never add CPs to the map for the bot -- area nodes are bot data.
+- **Phase-2 style is proven**: state in objects works with CSharp.lua (0.46 in-game check). New subsystems: own class,
+  state in an object or in `S(pid)`-indexed arrays.
+- The maintainer plays mostly 25-80 min test games, often with `-autopilot` on one faction; he reports what he SEES
+  (screenshots, `-xy` coordinates) -- map them to nodes with `-xy` (shows the route node) and the dumps.
 
 ## Getting the code (sandbox)
 
