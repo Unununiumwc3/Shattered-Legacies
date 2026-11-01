@@ -23,7 +23,11 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.50.1)
+## State of the work (0.51.0)
+
+- **0.51.0**: the bot performs the Legion ritual itself (`AiRitual`); ferry boats at 150 (the engine's minimum).
+  Waiting for a playtest: Maiev by ferry, Tomb of Sargeras <-> Argus (both rare).
+
 
 - **0.50.1**: the Book ritual is ordered with "deathanddecay" (A00J is a Death and Decay; "volcano" was refused),
   ferry boat owned by the bot / smooth / half speed, missions travel by route (`AiRoutes.MoveVia`).
@@ -367,8 +371,10 @@ Quests and story
   A00J natively. The quest completes on the cast; WL opens the exterior Demon Portal (n037) WHERE THE CASTER STANDS
   and points Antoran's n03C at it; WL gives the caster spell immunity while channelling. "Book of Medivh" quest (one
   per faction): Dalaran's capital dead + a unit at the pedestal (Legion: any unit; others a level-12 hero). Since 0.49
-  this is the ONLY summon: a bot Legion / Scourge hero with the Book casts (`AiRitual`); no Sunwell event, no
-  `-legion`, no forced quest completion, no Felwood teleport.
+  this is the ONLY summon: a bot Legion / Scourge hero with the Book -> since 0.51 the bot performs the ritual itself
+  (`AiRitual`: 180-s channel, timer, then WL's quest completed and WL's portal moved from (0,0) to the spot) -- every
+  bot cast ORDER of A00J was refused (0.50.0 / 0.50.1, "volcano" and "deathanddecay"); no Sunwell event, no
+  `-legion`, no Felwood teleport. `ObjectiveCastSpell.Caster` has a private setter -- no caster for a bot completion.
 - "Twilight of the Gods" = Archimonde ENTERS `Regions.ArchimondeChannel` -> 420 s channel (any order breaks it).
 - "Fireland Invasion" (Skywall) rescues the Sulfuron Spire base. Skywall's own Ragnaros hero ("Lord of the
   Firelands", U02K) comes from its quest "Emissary of the Firelands" -- not the neutral boss.

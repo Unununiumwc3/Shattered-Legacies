@@ -39,7 +39,9 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool On = true;
     private const float BoardWait = 12f;     // the boat leaves this long after its first passenger
-    private const float ShipSpeed = 200f;    // per second (0.50.1: half of 0.50.0's 400 -- maintainer)
+    // per second. 0.50.1: 200 (half of 0.50.0's 400). 0.51: the maintainer asked for half again (100), but WC3 clamps
+    // move speeds to the map's minimum (MinUnitSpeed, default 150 -- not set in war3mapMisc.txt): 150 is the slowest.
+    private const float ShipSpeed = 150f;
     private const float PointReach = 200f;   // a lane point counts as reached within this
     private const float StuckAfter = 4f;     // no progress this long -> the boat is put on its next point
     private const float Slot = 0.25f;        // scheduler slot

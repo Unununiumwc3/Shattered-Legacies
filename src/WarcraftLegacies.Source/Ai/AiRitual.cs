@@ -1,57 +1,72 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
+using MacroTools.Instances;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Factions.Legion.Quests;
 using WarcraftLegacies.Source.Objectives.UnitBased;
 using WarcraftLegacies.Source.Setup;
+using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.Ai
 {
-  // 0.49.0: the Legion is summoned ONLY the way WL does it -- a hero holding the Book of Medivh casts WL's ritual
-  // "Summon the Burning Legion" (A00J, in the Book's spellbook; a 180-s channel at the hero's feet). WL's quest
-  // "Under the Burning Sky" completes when the cast finishes and opens the Demon Portal WHERE THE CASTER STANDS.
-  // Before (0.38-0.48): the bot completed the quest itself (Sunwell event, Book quest done, -legion), the portal came
-  // up at (0,0) and was moved, and the Legion's army was teleported to Felwood.
-  // - Who: a bot hero (real bot or test autopilot) of the Legion or the Scourge that carries the Book (item I006).
-  //   It gets the Book through WL's "Book of Medivh" quest (AiConfig.HeroVisits sends a hero to the pedestal).
-  // - The hero is kept out of army orders (AiState.MissionUnits) until the summon is done -- an order breaks the
-  //   channel. Not enough mana for the ritual (410): the bot hero gets it (a bot perk, logged once).
-  // - While it CHANNELS the ritual the hero is invulnerable (maintainer: only then). WL itself gives the caster spell
-  //   immunity for the channel; the invulnerability is the bot's, for bot casters of the Legion / the Scourge only.
+  // 0.49.0 / 0.51.0: the Legion is summoned ONLY through the Book of Medivh (maintainer). WL's way for humans: a hero
+  // carrying the Book casts "Summon the Burning Legion" (A00J, in the Book's spellbook; 180-s channel), the quest
+  // "Under the Burning Sky" completes and WL opens the Demon Portal where the caster stands.
+  // 0.51.0: the BOT PERFORMS THE RITUAL ITSELF instead of ordering the spell (maintainer's choice): 0.50.0 / 0.50.1 --
+  // every cast order was refused ("volcano" and "deathanddecay", heroes of both factions), the heroes stood.
+  // Same requirements as the spell, same result:
+  // - a bot hero (real bot or test autopilot) of the Legion or the Scourge with the Book (item I006) in its inventory;
+  //   the Legion still exists (WL's research R04T, the spell's requirement); not inside an instance (Argus, Outland --
+  //   WL's spell stops there too); 410 mana (spent; a bot hero that has less gets it -- logged once);
+  // - it channels on the spot where it stands: hold position, channel animation, invulnerable (maintainer: only while
+  //   channelling), a rain of fire that deals no damage, a 180-s timer for everyone ("Legion Summon (bot channelling)"),
+  //   a minimap ping and a message. Moving off the spot, dying, losing the Book or changing owner cancels it.
+  // - at the end the bot completes WL's quest (rescued units, Archimonde, music, limits -- WL's own reward) and puts
+  //   WL's Demon Portal on the ritual spot: WL makes it at the caster, but a bot completion has no caster, so WL leaves
+  //   it at (0,0); the bot moves it and points Antoran's portal (n03C) at it.
+  // A human hero (any faction) uses WL's real spell as always; a bot that really casts A00J is made invulnerable too.
   internal static class AiRitual
   {
+    private const float Duration = 180f;     // A00J adur
+    private const float ManaCost = 410f;     // A00J amcs
+    private const float Area = 750f;         // A00J aare -- the rain of fire
+    private const float SpotLeave = 150f;    // moved further than this: cancelled
+    private const float CancelPause = 30f;
+    private const string FxRain = "Abilities\\Spells\\Demon\\RainOfFire\\RainOfFireTarget.mdl";
+    private const string FxStart = "Abilities\\Spells\\Undead\\AntiMagicShell\\AntiMagicShell.mdl";
+
     private static int _ritualId;
     private static int _bookId;
-    private static int _orderId;
-    private static int _altOrderId;    // 0.50.1: "deathanddecay" -- A00J is based on Death and Decay
-    private static int _refused;
-    private static float _pauseUntil;
-    private const float ManaCost = 410f;
-    private const float RetryEvery = 10f;
-
+    private static int _techId;
+    private static int _holdId;
     private static trigger _start;
     private static trigger _end;
     private static float _lastSearch = -100f;
-    private static unit _caster;       // the hero we made invulnerable (channel running)
+    private static float _pauseUntil;
+    private static unit _caster;       // a bot hero that REALLY casts A00J (made invulnerable)
     private static bool _wasInvulnerable;
-    private static unit _hero;         // the bot hero that holds the Book and is to cast
-    private static float _lastOrder = -100f;
+    private static unit _hero;         // the bot hero with the Book
+    private static bool _channel;      // the bot's ritual runs
+    private static float _chanStart;
+    private static float _chanX;
+    private static float _chanY;
+    private static bool _heroWasInvulnerable;
+    private static timer _timer;
+    private static timerdialog _dialog;
     private static bool _manaGiven;
     private static bool _done;
     private static QuestData _summonQuest;
-    internal static int Casts;         // ritual orders given
-    internal static int Channels;      // channels started by bot casters (invulnerable)
+    internal static int Channels;      // bot rituals started
+    internal static int Cancelled;
     internal static string State = "waiting for the Book";
 
     internal static void Setup()
     {
       _ritualId = FourCC("A00J");
       _bookId = FourCC("I006");
-      _orderId = OrderId("volcano"); // A00J's order string in the object data (aord)
-      // 0.50.1: WC3 uses the order string of the object data only for Channel-based abilities; A00J is a Death and Decay
-      // (AUdd), so its real order is very likely "deathanddecay". 0.50.0 game: "volcano" refused 4 times, Arthas stood.
-      _altOrderId = OrderId("deathanddecay");
+      _techId = FourCC("R04T"); // "Legion exists" -- A00J's requirement
+      _holdId = OrderId("holdposition");
       _start = CreateTrigger();
       _end = CreateTrigger();
       for (var i = 0; i < 24; i++)
@@ -62,11 +77,12 @@ namespace WarcraftLegacies.Source.Ai
 
       TriggerAddAction(_start, () => OnSpell(true));
       TriggerAddAction(_end, () => OnSpell(false));
+      AiScheduler.Add("legion ritual", 4, 2, Tick, false); // every second
     }
 
     internal static bool Owns(unit u) => u != null && (u == _hero || u == _caster);
 
-    // channel start: invulnerable (bot caster of the Legion / the Scourge); end / interrupt: back to how it was
+    // a bot hero that really casts A00J (should a cast ever go through): invulnerable while it channels
     private static void OnSpell(bool start)
     {
       try
@@ -87,33 +103,18 @@ namespace WarcraftLegacies.Source.Ai
           _caster = u;
           _wasInvulnerable = BlzIsUnitInvulnerable(u);
           SetUnitInvulnerable(u, true);
-          Channels++;
-          State = "channelling";
-          SimpleBot.LogPin("P" + I2S(GetPlayerId(GetOwningPlayer(u))) + " " + SimpleBot.FacName(GetOwningPlayer(u))
-                           + ": " + GetUnitName(u) + " channels the Legion ritual @" + I2S(R2I(GetUnitX(u))) + ","
-                           + I2S(R2I(GetUnitY(u))) + " -- invulnerable while channelling");
+          SimpleBot.LogPin(GetUnitName(u) + " casts WL's Legion ritual -- invulnerable while channelling");
         }
         else if (u == _caster)
         {
-          EndInvulnerable("channel ended");
+          SetUnitInvulnerable(_caster, _wasInvulnerable);
+          _caster = null;
         }
       }
       catch (System.Exception e)
       {
         SimpleBot.LogPin("TICK ERROR in legion ritual: " + e.Message);
       }
-    }
-
-    private static void EndInvulnerable(string why)
-    {
-      if (_caster == null)
-      {
-        return;
-      }
-
-      SetUnitInvulnerable(_caster, _wasInvulnerable);
-      SimpleBot.Log(GetUnitName(_caster) + ": ritual " + why + " -- invulnerability removed");
-      _caster = null;
     }
 
     private static bool Eligible(player p)
@@ -127,10 +128,10 @@ namespace WarcraftLegacies.Source.Ai
       return f != null && (f.Name == "Legion" || f.Name == "Scourge");
     }
 
-    // every 2 s (AiLegion.OnEventCheck): find the bot hero with the Book and let it cast
-    internal static void Tick()
+    // every second (scheduler)
+    private static void Tick()
     {
-      if (_done)
+      if (_done || SimpleBot.BotBreak)
       {
         return;
       }
@@ -138,16 +139,20 @@ namespace WarcraftLegacies.Source.Ai
       if (Summoned())
       {
         _done = true;
-        EndInvulnerable("done (Legion summoned)");
+        if (_channel)
+        {
+          EndChannel("the Legion was summoned (another way)");
+        }
+
         Release();
         State = "done";
         return;
       }
 
-      // safety: the channel stopped without an end event (unit removed, order replaced)
-      if (_caster != null && (GetUnitTypeId(_caster) == 0 || !IsRitualOrder(GetUnitCurrentOrder(_caster))))
+      if (_channel)
       {
-        EndInvulnerable("stopped");
+        Channel();
+        return;
       }
 
       if (_hero != null && (GetUnitTypeId(_hero) == 0 || GetUnitState(_hero, UNIT_STATE_LIFE) <= 0.405f
@@ -172,14 +177,30 @@ namespace WarcraftLegacies.Source.Ai
           return;
         }
 
-        AiState.MissionUnits.Add(_hero);
         SimpleBot.LogPin("P" + I2S(GetPlayerId(GetOwningPlayer(_hero))) + " " + SimpleBot.FacName(GetOwningPlayer(_hero))
                          + ": " + GetUnitName(_hero) + " holds the Book of Medivh -> Legion ritual");
       }
 
       AiState.MissionUnits.Add(_hero); // kept every tick (hero visits release their own heroes)
-      if (_caster == _hero || IsRitualOrder(GetUnitCurrentOrder(_hero)) || SimpleBot.Clock - _lastOrder < RetryEvery)
+      TryStart();
+    }
+
+    private static void TryStart()
+    {
+      var p = GetOwningPlayer(_hero);
+      float x = GetUnitX(_hero), y = GetUnitY(_hero);
+      if (GetPlayerTechCount(p, _techId, true) < 1)
       {
+        State = "waiting: the Legion does not exist (R04T)";
+        return;
+      }
+
+      if (InstanceSystem.GetPointInstance(new Point(x, y)) != null)
+      {
+        // WL's spell is stopped inside an instance (Argus, Outland): let the hero go with the army until it is out
+        State = "waiting: the hero is inside an instance";
+        Release();
+        _pauseUntil = SimpleBot.Clock + CancelPause;
         return;
       }
 
@@ -193,33 +214,207 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      _lastOrder = SimpleBot.Clock;
-      Casts++;
-      State = "casting";
-      float x = GetUnitX(_hero), y = GetUnitY(_hero);
-      // "deathanddecay" first -- but never for a hero with a real Death and Decay (Kel'Thuzad): it would cast that
-      var alt = GetUnitAbilityLevel(_hero, FourCC("AUdd")) == 0;
-      var ok = (alt && IssuePointOrderById(_hero, _altOrderId, x, y)) || IssuePointOrderById(_hero, _orderId, x, y);
-      if (ok)
+      SetUnitState(_hero, UNIT_STATE_MANA, GetUnitState(_hero, UNIT_STATE_MANA) - ManaCost);
+      _channel = true;
+      _chanStart = SimpleBot.Clock;
+      _chanX = x;
+      _chanY = y;
+      _heroWasInvulnerable = BlzIsUnitInvulnerable(_hero);
+      SetUnitInvulnerable(_hero, true);
+      IssueImmediateOrderById(_hero, _holdId);
+      SetUnitAnimation(_hero, "spell channel");
+      DestroyEffect(AddSpecialEffectTarget(FxStart, _hero, "overhead"));
+      _timer = CreateTimer();
+      TimerStart(_timer, Duration, false, null);
+      _dialog = CreateTimerDialog(_timer);
+      TimerDialogSetTitle(_dialog, "Legion Summon (bot channelling)");
+      TimerDialogDisplay(_dialog, true);
+      PingMinimap(x, y, 8f);
+      for (var i = 0; i < 24; i++)
       {
-        _refused = 0;
+        DisplayTimedTextToPlayer(Player(i), 0, 0, 10, "|cffff5555The Burning Legion is being summoned! ("
+                                 + SimpleBot.FacName(p) + ", bot)|r");
+      }
+
+      Channels++;
+      State = "channelling";
+      SimpleBot.LogPin("P" + I2S(GetPlayerId(p)) + " " + SimpleBot.FacName(p) + ": " + GetUnitName(_hero)
+                       + " channels the Legion ritual @" + I2S(R2I(x)) + "," + I2S(R2I(y))
+                       + " -- invulnerable while channelling (bot ritual, 180 s)");
+    }
+
+    // every second while the bot ritual runs
+    private static void Channel()
+    {
+      var gone = _hero == null || GetUnitTypeId(_hero) == 0 || GetUnitState(_hero, UNIT_STATE_LIFE) <= 0.405f;
+      if (gone || !HasBook(_hero) || !Eligible(GetOwningPlayer(_hero)))
+      {
+        Cancel(gone ? "hero gone" : (!HasBook(_hero) ? "Book lost" : "owner changed"));
         return;
       }
 
-      _refused++;
-      State = "order refused x" + I2S(_refused) + " (cooldown, Argus, or the ritual is not available yet)";
-      if (_refused >= 3)
+      var dx = GetUnitX(_hero) - _chanX;
+      var dy = GetUnitY(_hero) - _chanY;
+      if (dx * dx + dy * dy > SpotLeave * SpotLeave)
       {
-        // 0.50.1: do not keep the hero frozen out of the army -- back to it for a minute, then try again
-        SimpleBot.LogPin(GetUnitName(_hero) + ": ritual order refused 3 times -- back to the army, retry in 60 s");
-        _refused = 0;
-        _pauseUntil = SimpleBot.Clock + 60f;
-        Release();
-        State = "paused after refused orders";
+        Cancel("hero moved off the spot");
+        return;
+      }
+
+      AiState.MissionUnits.Add(_hero);
+      if (GetUnitCurrentOrder(_hero) != _holdId)
+      {
+        IssueImmediateOrderById(_hero, _holdId);
+      }
+
+      SetUnitAnimation(_hero, "spell channel");
+      for (var k = 0; k < 4; k++)
+      {
+        var a = GetRandomReal(0f, 6.2832f);
+        var r = GetRandomReal(100f, Area);
+        DestroyEffect(AddSpecialEffect(FxRain, _chanX + r * Cos(a), _chanY + r * Sin(a)));
+      }
+
+      if (SimpleBot.Clock - _chanStart < Duration)
+      {
+        State = "channelling, " + I2S(R2I(Duration - (SimpleBot.Clock - _chanStart))) + " s left";
+        return;
+      }
+
+      Complete();
+    }
+
+    private static void Complete()
+    {
+      if (_summonQuest == null)
+      {
+        Summoned(); // finds the quest
+      }
+
+      if (_summonQuest == null)
+      {
+        Cancel("WL's summon quest not found");
+        return;
+      }
+
+      try
+      {
+        _summonQuest.Progress = QuestProgress.Complete; // WL's reward; the portal comes up at (0,0) -- no caster
+      }
+      catch (System.Exception e)
+      {
+        SimpleBot.LogPin("Legion ritual: WL error while completing the summon quest -- " + e.Message);
+      }
+
+      SimpleBot.Safe("legion ritual: portal", () => PlacePortal(_chanX, _chanY));
+      EndChannel("summoned");
+      _done = true;
+      Release();
+      State = "done";
+    }
+
+    // WL's exterior Demon Portal (n037) from (0,0) to the ritual spot, Antoran's n03C pointed at it
+    private static void PlacePortal(float x, float y)
+    {
+      var type = FourCC("n037");
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, 0f, 0f, 900f, null);
+      unit stranded = null;
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (stranded == null && GetUnitTypeId(u) == type)
+        {
+          stranded = u;
+        }
+      }
+
+      DestroyGroup(g);
+      if (stranded == null)
+      {
+        SimpleBot.LogPin("Legion ritual: no Demon Portal at (0,0) after the summon -- left as WL made it");
+        return;
+      }
+
+      var fresh = CreateUnit(GetOwningPlayer(stranded), type, x, y, 0f);
+      var interior = SimpleBot.FindUnitOfType(FourCC("n03C"), AiWorld.LegionInteriorX, AiWorld.LegionInteriorY, 1500f);
+      if (interior != null)
+      {
+        // land BESIDE the other end (landing on a waygate can bounce the unit straight back)
+        WaygateSetDestination(fresh, GetUnitX(interior) - 400f, GetUnitY(interior));
+        Beside(x, y);
+        WaygateSetDestination(interior, _bx, _by);
+        WaygateActivate(interior, true);
+      }
+      else
+      {
+        WaygateSetDestination(fresh, WaygateGetDestinationX(stranded), WaygateGetDestinationY(stranded));
+      }
+
+      WaygateActivate(fresh, true);
+      RemoveUnit(stranded);
+      PingMinimap(x, y, 8f);
+      SimpleBot.LogPin("Legion ritual: Demon Portal placed at the ritual spot @" + I2S(R2I(x)) + "," + I2S(R2I(y))
+                       + (interior != null ? ", Antoran portal pointed at it" : ", Antoran portal NOT found"));
+    }
+
+    private static float _bx;
+    private static float _by;
+
+    // a walkable point ~350 from (x, y) -> _bx/_by (the spot itself when none is)
+    private static void Beside(float x, float y)
+    {
+      _bx = x;
+      _by = y;
+      for (var i = 0; i < 8; i++)
+      {
+        var a = i * 0.785398f;
+        var px = x + 350f * Cos(a);
+        var py = y + 350f * Sin(a);
+        if (!IsTerrainPathable(px, py, PATHING_TYPE_WALKABILITY)) // TRUE = not walkable (WC3's inverted API)
+        {
+          _bx = px;
+          _by = py;
+          return;
+        }
       }
     }
 
-    private static bool IsRitualOrder(int id) => id != 0 && (id == _orderId || id == _altOrderId);
+    private static void Cancel(string why)
+    {
+      Cancelled++;
+      SimpleBot.LogPin("Legion ritual cancelled: " + why);
+      EndChannel(why);
+      Release();
+      _pauseUntil = SimpleBot.Clock + CancelPause;
+      State = "cancelled (" + why + "), retry in " + I2S(R2I(CancelPause)) + " s";
+    }
+
+    private static void EndChannel(string why)
+    {
+      _channel = false;
+      if (_hero != null && GetUnitTypeId(_hero) != 0)
+      {
+        SetUnitInvulnerable(_hero, _heroWasInvulnerable);
+        SetUnitAnimation(_hero, "stand");
+      }
+
+      if (_dialog != null)
+      {
+        TimerDialogDisplay(_dialog, false);
+        DestroyTimerDialog(_dialog);
+        _dialog = null;
+      }
+
+      if (_timer != null)
+      {
+        DestroyTimer(_timer);
+        _timer = null;
+      }
+
+      SimpleBot.Log("Legion ritual: channel ended (" + why + ")");
+    }
 
     private static void Release()
     {
@@ -423,9 +618,10 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void Lines(List<string> o)
     {
-      o.Add("legion ritual (0.49): " + State + (_hero != null ? " -- " + GetUnitName(_hero) + " of " + SimpleBot.FacName(GetOwningPlayer(_hero)) : "")
-            + "; orders " + I2S(Casts) + ", channels " + I2S(Channels) + ", Book given at the pedestal (bot, no level 12) "
-            + I2S(BookGiven) + (_pedestalKnown ? " -- pedestal @" + I2S(R2I(_pedX)) + "," + I2S(R2I(_pedY)) : ""));
+      o.Add("legion ritual (0.51, bot ritual): " + State + (_hero != null ? " -- " + GetUnitName(_hero) + " of "
+            + SimpleBot.FacName(GetOwningPlayer(_hero)) : "") + "; started " + I2S(Channels) + ", cancelled "
+            + I2S(Cancelled) + ", Book given at the pedestal (bot, no level 12) " + I2S(BookGiven)
+            + (_pedestalKnown ? " -- pedestal @" + I2S(R2I(_pedX)) + "," + I2S(R2I(_pedY)) : ""));
     }
   }
 }

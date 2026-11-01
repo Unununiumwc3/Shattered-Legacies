@@ -66,6 +66,15 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
 
+## Next playtest (0.51.0)
+
+- Give a bot (Legion / Scourge hero) the Book, or wait for it: the hero stops, channels 180 s (rain of fire, timer
+  "Legion Summon (bot channelling)" at the top for everyone), then WL's summon happens and the Demon Portal stands on
+  the ritual spot. PINNED: "channels the Legion ritual @x,y", "Demon Portal placed at the ritual spot".
+- Ferries at speed 150 (the engine's minimum).
+- **Check via playtest when it happens (rare)**: Maiev's "Vault of the Wardens" by ferry (0.50.1), Tomb of Sargeras <->
+  Argus both ways (0.49.0).
+
 ## Next playtest (0.50.1)
 
 - The Book carrier casts: PINNED "channels the Legion ritual @x,y -- invulnerable while channelling", then "Legion:
@@ -188,7 +197,8 @@ Rules for phase 1:
 | 0.48.4 | yes (15 min, Ahn'Qiraj on autopilot) | "improved a lot", no back and forth seen; engine walks 4.5 % -> 1.0 % of walks; Scourge army 4 min at a sleeping Mammut camp; some stutter (dwarves, turn 15) |
 | 0.48.5 | yes (22 min, multiplayer, maintainer as Kul Tiras / South Alliance) | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit. Stopwatch: ~5 s behind at 20 min (fine). Dark Portal unused: its waygates became player-owned (~10 min) -> 0.50 |
 | 0.49.0 | no (portal work continues without playtests) | Legion: Book of Medivh ritual only (bot hero invulnerable while channelling), Tomb <-> Argus both ways |
-| 0.50.1 | **next** | ritual order fix; boat owned by the bot, smooth, half speed; missions travel by route (ferries) |
+| 0.51.0 | **next** | bot performs the Legion ritual itself (timer, rain of fire, portal at the spot); ferries at 150 |
+| 0.50.1 | yes (20 min) | (built: ritual order fix; boat owned by the bot, smooth, half speed; missions travel by route (ferries)) ferries look good (make them slower); the bot with the Book still did not cast (orders refused) |
 | 0.50.0 | yes (24 min) | (built: ferries replace the AI ship waygates; Dark Portal open to all bots whoever owns its waygates; Book without level 12 for bots; Book pedestal Dalaran or Gilneas) Dark Portal works; ferries work ("enter boat" good, boat stuttered, not on the minimap, too fast); Arthas held the Book but did not cast; Maiev stood at the coast |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
