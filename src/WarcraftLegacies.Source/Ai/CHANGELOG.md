@@ -4,6 +4,26 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.4
+From the 0.48.3 measurement game (8.5 min, Druids followed). Version v0.48.4. Two behaviour changes, each with a switch.
+- **Guard positions removed for all bots** (`-guard on`, was off since 0.46.3). The unit trail found the back and
+  forth: a bot unit that runs out of orders (end of its chain, or dropped from the attack group at a target change)
+  walks back to the spot where it was TRAINED 15-25 s later -- the engine's guard position. It walks with an attack
+  order, so the bot sees it as busy and never re-orders it. Every followed Druid unit walked 28,000-52,000 and stood
+  within 80 of its spawn point at 8:25; "engine" turnarounds were 38 % of all (1,747 of 4,600 in 8 min, all bots).
+  0.46 judged the removal by order counts (3-10 x idle-away orders) -- those orders are the bot sending the units to
+  the target / the staging point instead of the engine sending them home. Now also applied on every service to each
+  army unit (revived heroes, units the enter trigger missed).
+- **Commit on re-plan** (`-commit on|off|ab|ab2`, default on): the 30-s re-plan keeps the current, still valid target
+  when the new best one is farther from the attack group on foot. Druids: 1500 before Northern Ashenvale the re-plan
+  chose Felwood (cheaper from the territory), the group turned north, then walked back to Northern Ashenvale. Dump:
+  "commit ... re-plan switches blocked" per bot.
+- Event log: route target changes say why -- `[route-neutral:gone]` (the old target was taken / died / became
+  unreachable), `:switch` (re-plan found a better one), `:first`. The angle (` | army @x,y ... at Ndeg`) is now
+  measured from the attack group's centre (0.48.3: the whole army's, incl. units at home).
+- `tools/ai/back_forth.py`: changes by why; turn-backs split by gone / switch.
+- `MEASUREMENTS.md`: the 0.48.3 game.
+
 ## 0.48.3
 Measurement build for the back-and-forth movement (`TODO.md` "Open problems" 1). **No behaviour change.** Version v0.48.3.
 - **Turnarounds** (`AiTrack`, all bots): every army unit is sampled on its bot's service; two walks of >= 300 in a

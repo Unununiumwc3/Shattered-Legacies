@@ -479,7 +479,8 @@ namespace WarcraftLegacies.Source.Ai
       if (_slotTarget[s] != name)
       {
         SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(p) + " [theatre " + I2S(t + 1) + "]: target "
-                      + _slotTarget[s] + " -> " + name + " [" + why + "]");
+                      + _slotTarget[s] + " -> " + name + " [" + why + (why.Length > 6 && why.Substring(0, 6) == "route-"
+                        ? ":" + AiRoutes.Why(pid) : "") + "]"); // 0.48.4: why (gone / switch / first)
         _slotTarget[s] = name;
       }
     }

@@ -20,6 +20,7 @@ namespace WarcraftLegacies.Source.Ai
     internal const int BitGather = 1;
     internal const int BitSpread = 2;
     internal const int BitRegroup = 3;
+    internal const int BitCommit = 4; // 0.48.4
 
     internal static int Half(int pid, int bit)
     {
@@ -139,7 +140,13 @@ namespace WarcraftLegacies.Source.Ai
     // 0.46.3: OFF. In both splits (0.46.1 ab, 0.46.2 ab2) the half without guard positions issued 3-10 x the idle-away
     // orders and more rest orders in EVERY game phase: units stay where a chase ended and the bot has to send them
     // back -- the engine's guard position did that for free.
-    internal static int Mode = AiAb.Off;
+    // 0.48.4: ON for every bot. The 0.48.3 unit trail showed what the guard position does "for free": a unit that runs
+    // out of orders (end of its chain, dropped from the attack group at a target change) walks back to the spot where
+    // it was TRAINED, ~15-25 s later, with an attack order -- so the bot sees it as busy and never re-orders it. Druid
+    // units walked 28,000-52,000 and stood within 80 of their spawn at 8:25; "engine" turnarounds were 38 % of all
+    // (1,747 in 8 min). That is the back and forth the maintainer saw. The extra idle-away / rest orders of 0.46 are the
+    // bot doing the right thing instead (to the target / the staging point on the route).
+    internal static int Mode = AiAb.OnAll;
     internal static int Removed;
     private static trigger _enter;
 
@@ -163,6 +170,16 @@ namespace WarcraftLegacies.Source.Ai
         {
           RemoveAllGuardPositions(bots[b]);
         }
+      }
+    }
+
+    // 0.48.4: every service, for each orderable army unit (SimpleBot.Process) -- also covers units the enter trigger
+    // never sees (revived heroes, units given to the bot, units that existed before the mode was switched on)
+    internal static void Apply(int pid, unit u)
+    {
+      if (Mode != AiAb.Off && AiAb.For(Mode, pid, AiAb.BitGuard))
+      {
+        RemoveGuardPosition(u);
       }
     }
 

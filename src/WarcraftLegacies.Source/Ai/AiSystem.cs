@@ -1331,6 +1331,7 @@ namespace WarcraftLegacies.Source.Ai
               && GetUnitMoveSpeed(u) > 1f)
           {
             AiArmy.Units.Add(u); // 0.41: alive, can move, not on a mission
+            AiGuard.Apply(pid, u); // 0.48.4: no walk back to the spot where it was trained
           }
 
           if (IsUnitType(u, UNIT_TYPE_HERO))
@@ -1400,6 +1401,8 @@ namespace WarcraftLegacies.Source.Ai
       diag.AnchorY = ty;
       diag.AnchorIsBase = army == 0;
       diag.AnchorUnits = anchorUnits;
+      diag.TurnX = tx; // 0.48.4: reference point of the target-change angle (the group centre on the route branch)
+      diag.TurnY = ty;
 
       var lm = Geography.Landmass(ax, ay);
       var state = "off";
@@ -1464,6 +1467,8 @@ namespace WarcraftLegacies.Source.Ai
           {
             float sx = tx, sy = ty;
             AiArmy.GroupCenter(pid, ref sx, ref sy);
+            diag.TurnX = sx;
+            diag.TurnY = sy;
             var rt = AiRoutes.Pick(p, pid, fac, sx, sy, diag);
             if (rt != null)
             {
@@ -1473,7 +1478,7 @@ namespace WarcraftLegacies.Source.Ai
               CommitTime[pid] = _clock;
               state = "atk";
               BotTargetName[pid] = (enemyRt ? "E:" : "N:") + GetUnitName(rt);
-              NoteTarget(p, pid, rt, enemyRt ? "route-enemy" : "route-neutral");
+              NoteTarget(p, pid, rt, (enemyRt ? "route-enemy:" : "route-neutral:") + AiRoutes.Why(pid)); // 0.48.4: why
               TrackStuck(p, pid, rt);
               float rx = GetUnitX(rt), ry = GetUnitY(rt);
               if (AiRoutes.Gathering(pid, out var gx, out var gy)) // 0.45.0: long route -- gather first
@@ -1649,10 +1654,12 @@ namespace WarcraftLegacies.Source.Ai
 
     // 0.48.3: " | army @x,y new 4100 at 160deg" -- the angle between old and new target as seen from the army anchor
     // (d.AnchorX/Y, set before the decision). 0.48.2's target-to-target estimate found 114 turns of > 120 deg in 25 min.
+    // 0.48.4: measured from d.TurnX/Y -- the attack group's centre on the route branch (0.48.3 used the whole army's
+    // centre, which includes the units at home and was often far from the walking group)
     private static string TurnNote(BotDiag d, unit tgt)
     {
-      var ax = d.AnchorX;
-      var ay = d.AnchorY;
+      var ax = d.TurnX;
+      var ay = d.TurnY;
       var s = " | army @" + I2S(R2I(ax)) + "," + I2S(R2I(ay));
       if (tgt == null)
       {
@@ -2947,6 +2954,8 @@ namespace WarcraftLegacies.Source.Ai
     public float TargetSince;
     public float AnchorX;
     public float AnchorY;
+    public float TurnX; // 0.48.4: where the target-change angle is measured from
+    public float TurnY;
     public bool AnchorIsBase;
     public int HomeLm = -999;
   }
@@ -3005,7 +3014,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.48.3";
+    public const string Build = "0.48.4";
 
     public static void Setup()
     {

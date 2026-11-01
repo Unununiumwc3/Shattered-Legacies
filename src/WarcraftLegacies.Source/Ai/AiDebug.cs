@@ -99,6 +99,7 @@ public static class AiDebug
     RegisterLoose("-cap", AiBudget.OnCommand, Level.Control);             // 0.46: -cap on|off|<base> <perCp>
     RegisterLoose("-spread", AiRoutes.OnSpreadCommand, Level.Control);    // 0.46: -spread on|off|ab|ab2
     RegisterLoose("-regroup", AiRegroup.OnCommand, Level.Control);        // 0.46.2: -regroup on|off|ab|ab2
+    RegisterLoose("-commit", AiRoutes.OnCommitCommand, Level.Control);    // 0.48.4: -commit on|off|ab|ab2
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);

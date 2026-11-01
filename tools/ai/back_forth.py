@@ -96,19 +96,23 @@ def overview(paths, bot=None):
     for ln in ev:
         m = TARGET.match(ln)
         if m:
-            reason = re.sub(r"\(.*", "", m.group(8))
+            full = re.sub(r"\(.*", "", m.group(8))
+            reason, _, why = full.partition(":")  # 0.48.4: "route-neutral:switch" (gone / switch / first)
             ang = int(m.group(14)) if m.group(14) else None
-            changes[(int(m.group(2)), m.group(5) or "1")].append((secs(m.group(1)), m.group(6), m.group(7), reason, ang))
+            changes[(int(m.group(2)), m.group(5) or "1")].append((secs(m.group(1)), m.group(6), m.group(7), reason, ang, why))
     total = sum(len(v) for v in changes.values())
     print(f"stitched event log: {len(ev)} lines, {total} target changes")
     print("by reason:", dict(collections.Counter(c[3] for v in changes.values() for c in v).most_common()))
+    whys = collections.Counter(c[5] for v in changes.values() for c in v if c[5])
+    if whys:
+        print("route changes by why (0.48.4: gone = target taken/lost, switch = re-plan found a better one):", dict(whys))
 
     turns, measured, how = collections.Counter(), 0, collections.Counter()
     for (pid, th), seq in sorted(changes.items()):
         if th != "1":
             continue
         for i in range(1, len(seq)):
-            t, old, new, reason, ang = seq[i]
+            t, old, new, reason, ang, why = seq[i]
             if ang is None:  # pre-0.48.3: target-to-target geometry, CP targets only
                 if i < 2:
                     continue
@@ -124,13 +128,16 @@ def overview(paths, bot=None):
                 how["from the army"] += 1
             measured += 1
             if ang is not None and ang > 120:
-                key = (cause(seq[i - 1][3], reason), "0-10m" if t < 600 else "10m+")
+                c = cause(seq[i - 1][3], reason)
+                if why and c in ("neutral hop", "route re-pick"):
+                    c = c + " (" + why + ")"
+                key = (c, "0-10m" if t < 600 else "10m+")
                 turns[key] += 1
                 if bot is not None and pid == bot:
                     print(f"  P{pid} {t // 60}:{t % 60:02d} {old[:24]} -> {new[:24]} {ang:.0f}deg [{reason}]")
     print(f"turn-backs (>120 deg) of {measured} measured changes ({dict(how)}):")
     for k, n in sorted(turns.items()):
-        print(f"  {k[0]:<16} {k[1]:<6} {n}")
+        print(f"  {k[0]:<26} {k[1]:<6} {n}")
 
     starts, durations, regaps, last_end = {}, [], [], {}
     for ln in ev:
