@@ -52,9 +52,11 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
      swaps, TRAIL of 8 Druid units from their building. Decide the fix from the next game's numbers -- candidates:
      (d) keep the group across a target change; a defence hysteresis that does not skip the cooldown for the army
      that just left; (b)/(c) for the early neutral hops.
-2. **Portals, rest of the WL alignment**: ferries for the 8 ship pairs (`CONCEPTS.md` 7). Done in 0.49.0: Book of
-   Medivh ritual (bot Legion / Scourge hero, invulnerable while channelling) as the only summon; Tomb of Sargeras <->
-   Argus both ways. Check: the Legion leaves Argus (Demon Portal, Tomb portal, 0.48.2 teleporters).
+2. **Portals, rest of the WL alignment**. Done in 0.49.0: Book of Medivh ritual (bot Legion / Scourge hero,
+   invulnerable while channelling) as the only summon; Tomb of Sargeras <-> Argus both ways. Done in 0.50.0: ferries
+   for the 8 ship pairs (`AiFerries`, `CONCEPTS.md` 7); Dark Portal usable by all bots whoever owns the waygates; Book
+   without level 12 for bots. Still to check with the maintainer: are other portals left (Old Gods rift, Emerald
+   Portals, WL's Water Passageways for ships -- `README.md` table)? Check: the Legion leaves Argus (Demon Portal, Tomb portal, 0.48.2 teleporters).
    Left as is (not WL, decide later): `AiLegion.MoveLegionArmyToAlterac` teleports a bot Legion's army to Alterac
    when the Scourge's plague lands; the summon bonus (3000 gold) and the betrayal (Scourge leaves the Legion's team).
 3. **Kul Tiras: its islands first** (not strict -- in 0.48.1 Stormwind took a CP of Kul Tiras' islands): prefer the own
@@ -63,6 +65,16 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.50.0) -- after the portal rework (maintainer: playtest when all problem portals are done)
+
+- Ferries: PINNED/LOAD "ferries (0.50) on: 8 links; boarded N, landed N, voyages N". In game: units vanish at a pier,
+  a boat in team colour sails, they appear at the far pier and walk on. Kul Tiras leaves its islands, the Broken
+  Isles / Kezan / Tol Barad / Echo Isles / Nazmir get visitors. No AI ship waygates visible any more.
+- Dark Portal: Outland bots attack the Eastern Kingdoms and back once it opens (turn 8-10). The dump lists every
+  waygate with its owner ("WL waygate Dark Portal ... P<owner>") -- tell me who took them.
+- Book of Medivh: a Scourge hero of any level fetches the Book once Dalaran's (or Gilneas') capital is dead; PINNED
+  "took the Book of Medivh at the pedestal (bot: no level 12)", then the ritual (0.49.0 checks below).
 
 ## Next playtest (0.49.0) -- Legion portals
 
@@ -166,8 +178,9 @@ Rules for phase 1:
 | 0.48.2 | yes (26 min, Ironforge on autopilot) | (built: finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)?) turn-backs measured from the event log: neutral hops early, defence ping-pong (24 of 42 defences ended at the 30-s minimum) and enemy re-picks later; unit movement not in the dumps -> 0.48.3 |
 | 0.48.3 | yes (8.5 min, Black Empire on autopilot, Druids watched) | measurement build: units out of orders walk back to the spot where they were TRAINED (guard position) -- the back and forth; plus re-plan switches backwards |
 | 0.48.4 | yes (15 min, Ahn'Qiraj on autopilot) | "improved a lot", no back and forth seen; engine walks 4.5 % -> 1.0 % of walks; Scourge army 4 min at a sleeping Mammut camp; some stutter (dwarves, turn 15) |
-| 0.48.5 | not played separately (inside 0.49.0) |
-| 0.49.0 | **next** | Legion: Book of Medivh ritual only (bot hero invulnerable while channelling), Tomb <-> Argus both ways; plus 0.48.5 (creeps woken, 30 + 5) | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit |
+| 0.48.5 | yes (22 min, multiplayer, maintainer as Kul Tiras / South Alliance) | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit. Stopwatch: ~5 s behind at 20 min (fine). Dark Portal unused: its waygates became player-owned (~10 min) -> 0.50 |
+| 0.49.0 | no (portal work continues without playtests) | Legion: Book of Medivh ritual only (bot hero invulnerable while channelling), Tomb <-> Argus both ways |
+| 0.50.0 | **next** (after all portals are reworked) | ferries replace the AI ship waygates; Dark Portal open to all bots whoever owns its waygates; Book without level 12 for bots; Book pedestal Dalaran or Gilneas |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

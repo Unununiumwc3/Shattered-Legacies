@@ -44,7 +44,7 @@ They change the game for humans too, so the original maintainer has to agree to 
 | What | Where | Note | Blocks PR |
 |---|---|---|---|
 | Gate sweep: bots' gates are removed (also new gates entering the map) | `AiGates` | bots cannot use the gate mechanic (maintainer's decision) | ask upstream |
-| AI waygates (always / prelegion / legion / oldgods), incl. the Broken Isles ship, Kezan, Tol Barad, Argus | `AiLegion`, `AiGraph.Portals` | real waygates -- humans use them too; owned by Neutral Extra (26) | ask upstream |
+| Bot ferries (8 sea links, 0.50; replace the AI ship waygates) and bot-only hidden portal markers (Tomb <-> Argus, rift) | `AiFerries`, `AiPortals` | nothing for humans; the ferry boat is a Neutral Extra (26) unit, Locust, invulnerable, in the bot's colour | no |
 | Waygate `n036` "Anti Portal Blocking" shrunk to 250 for AI portals | `AiLegion` | the 1000-range aura killed units at the landing spot | ask upstream |
 | Demon Portal check after the summon (activates WL's pair if inactive, logs it) | `AiLegion.CheckDemonPortal` | 0.49: replaces the v31 FixDemonPortal -- the (0,0) portal came from the bot's own caster-less summons, which are gone | no |
 | Bot Legion / Scourge hero invulnerable while channelling the Book ritual; mana raised to 410 | `AiRitual` | bot perk (maintainer's spec) -- WL itself gives spell immunity | yes (balance), bot-only |

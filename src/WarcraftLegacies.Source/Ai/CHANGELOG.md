@@ -4,6 +4,30 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.50.0
+Portal rework, part 2 (maintainer: playtest once all problem portals are done). Version v0.50.0.
+- **Ferries replace the 8 AI ship waygates** (`AiFerries`, design `CONCEPTS.md` 7). No visible bot waygates any more.
+  Each harbour pier is a hidden pseudo-portal gate with a one-way edge to the other pier (cost = walk + sailing +
+  boarding time). A bot unit with a ticket that reaches the pier boards: hidden, paused, out of the army logic and
+  hero care. The boat of that direction and player leaves 12 s after its first passenger: a transport-ship model in
+  the bot's team colour (Neutral Extra, Locust, invulnerable) that sails a lane over water at 400/s; the passengers
+  land beside the far pier and get the rest of their way at once. A pier is no entry while an enemy holds its CP.
+  `-ferry on|off` (off = instant crossing). Dump LOAD: "ferries" line.
+- **Sea lanes generated from the map** (`tools/ai/gen_lanes.py` -> `AiLanes.g.cs`): A* over 128-unit water cells,
+  smoothed; all 8 lanes found (1,700-5,700 long; Tol Barad needed the narrow-channel fallback).
+- **Dark Portal fixed** (0.48.5 game: Fel Horde 119 units and Illidan 63 held in Outland for 10 min, Stormwind /
+  Ironforge waited at the rocks). Its six waygates (Neutral Hostile at 5:00) belonged to a player from ~10:00 on, and
+  since 0.48 a player-owned waygate was an edge only for the owner and allies -- here neither side. Offline replay of
+  the planner with the game's data: 36 EK targets for the Fel Horde and 16 Outland targets for Stormwind, all through
+  the portal. Now only the Deeprun Tram, the Legion Teleporters and the exterior Demon Portal are owner-only; every
+  other waygate is open to all bots. The dump lists every waygate with its owner (to find who takes them).
+- **Book of Medivh without level 12 for bots** (maintainer): the Scourge's visit sends any hero once only the hero
+  objective is open; a bot Legion / Scourge hero at the pedestal then completes the bot's own Book quest and gets the
+  Book (`AiRitual`). WL's objective is unchanged -- humans still need level 12.
+- **Book pedestal where WL put it**: Dalaran or Gilneas (whichever faction is in the game) -- the visits went to
+  Dalaran only.
+- `MEASUREMENTS.md`: the 0.48.5 multiplayer game.
+
 ## 0.49.0
 Portal rework, part 1: the Legion (maintainer's spec). Version v0.49.0.
 - **The Book of Medivh is the only way to summon the Legion**, as in WL: a hero carrying the Book casts WL's ritual

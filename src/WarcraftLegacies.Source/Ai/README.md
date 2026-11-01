@@ -99,7 +99,7 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Tomb of Sargeras <-> Argus (both ways; Argus end beside WL's interior Demon Portal) | when the Legion is summoned OR the Tomb of Sargeras CP is held by any player | bot-only pseudo-portal (hidden markers, 0.49) |
 | Demon Portal (WL: where the ritual's caster stood <-> Antoran) | WL's "Under the Burning Sky": a hero with the Book of Medivh casts the ritual (bot Legion / Scourge heroes do it since 0.49, invulnerable while channelling) | WL |
 | Deeprun Tram (Ironforge <-> Stormwind) | after the tram research | WL (player-owned `n03B`; bot edge for owner + allies since 0.48) |
-| AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
+| Ferries (8 sea links: Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor; replace the AI ship waygates) | from the start; a pier is no entry while an enemy holds its CP | bot-only (`AiFerries`, 0.50): units board hidden, a boat sails the lane (`tools/ai/gen_lanes.py`), they land at the far pier |
 | Water Passageways (Thandol Span; Highbank <-> western Kalimdor) -- SHIPS only, on deep water | always | WL (n03Q / n03S, Neutral Passive); no army edge since 0.46.1 |
 
 `-edges` in game draws the route graph the bots use (0.46); `-edges old` the old hand-written one.
@@ -150,6 +150,8 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.47.0-0.48.1 | main front follows the biggest army at once (2x) / on every empty plan | "main moved" 36-47 times per 25 min, armies between fronts | 0.48.1 streak, 0.48.2 60 s hold |
 | 0.48.1 | bot Legion casts WL's teleporter spells | never left Argus | 0.48.2: teleporters as pseudo-portals after the "Argus" quest |
 | v24-0.48.5 | bot completes WL's summon quest itself (Sunwell event, Book quest done, `-legion`); Demon Portal moved from (0,0); Legion army teleported to Felwood | not WL; the portal had no caster | 0.49: only WL's Book of Medivh ritual (`AiRitual`), portal where it was cast |
+| 0.48-0.49 | player-owned waygate = edge for owner + allies only (for the tram / Legion teleporters) | the Dark Portal's waygates became player-owned mid-game (0.48.5): both sides lost the Dark Portal for 10+ min | 0.50: owner rule only for the tram, Legion teleporters and the exterior Demon Portal |
+| v34-0.49 | AI ship waygates (real waygates, also for humans) | not WL; chains broke at each teleport (fixed by pseudo-portals) | 0.50: bot-only ferries with a visible boat |
 | 0.42-0.46.0 | every active neutral waygate = graph edge | WL's naval Water Passageways became army routes (Thandol, Highbank <-> Kalimdor); 0.46 teleported dwarves onto the shore | 0.46.1: waygates on / to water skipped |
 
 **A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
@@ -183,6 +185,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-creeps on\|off` | control | Creep camps in own areas as targets (default, 0.44.3; one-shots off) or the hand-placed one-shots (0.44.2) |
 | `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default off (0.46.3: no difference in any game phase) |
 | `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
+| `-ferry on\|off` | control | Bot ferries: board, sail, land (default, 0.50) / instant crossing |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default ON (0.48.4: with them, units out of orders walk back to where they were trained) |
 | `-commit on\|off\|ab\|ab2` | control | Commit on re-plan: keep the valid target when the new best one is farther from the group on foot (slot bit 4); default on (0.48.4) |
@@ -216,8 +219,8 @@ orders/min, LOAD, errors at 10/20/30/45 min) to `MEASUREMENTS.md`, so the number
 ## Testing a build
 
 1. Lobby shows "Shattered Legacies: Botified Realm v<version>", `-version` the same bot build. 2. No `SYSTEM ERROR` text in
-the first turns. 3. `-autodump` at the start; afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 8
-pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs;
+the first turns. 3. `-autodump` at the start; afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 0
+pair(s) created (always)" (0.50: no AI waygates any more; LOAD shows "ferries (0.50) on: 8 links"). 4. BOTS: states like `atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs;
 after a summon the Demon Portal stands where the ritual was cast. The release-specific checks are in `TODO.md` ("Check in the next playtest").
 
 ## Map name

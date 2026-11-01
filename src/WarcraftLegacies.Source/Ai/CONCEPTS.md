@@ -181,8 +181,11 @@ complex.
 - **Landing**: passengers shown beside the landing point (`SetUnitPosition`), re-chained at once; boat removed.
 - Hidden passengers keep HP, mana, items and food. They must be kept OUT of the army logic and the samplers
   (in-transit set): player enumerations still return hidden units.
-- [you] Boat invulnerable (simple) or killable (passengers die with it)? Warning ping at departure? Do humans keep the
-  AI ship waygates (today the Broken Isles are reached only through one)?
+- Decided (0.50, built): boat invulnerable; no warning ping; humans lose the AI ship waygates (no visible bot
+  waygates -- maintainer, 0.48). Boat leaves 12 s after its first passenger (per direction and player); speed 400;
+  a pier is no ENTRY while an enemy holds its CP (neutral or own / allied: yes); landing anywhere. Lanes: A* over
+  128-unit water cells (all water, else half for narrow channels), smoothed -- `tools/ai/gen_lanes.py`.
+  Harbours = the 8 former ship pairs (`AiConfig` PortalLink phase "ship").
 - [ai] Check WL's defeat handling for hidden units (a bot defeated during a trip): land them or remove them.
 - Later idea, not planned: shipyards a bot builds as extra entries. Bots build no ships today and every landmass
   would still need a harbour.

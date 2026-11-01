@@ -1311,7 +1311,7 @@ namespace WarcraftLegacies.Source.Ai
             haveBase = true;
           }
         }
-        else if (!IsUnitType(u, UNIT_TYPE_PEON))
+        else if (!IsUnitType(u, UNIT_TYPE_PEON) && !AiFerries.InTransit(u)) // 0.50: passengers at sea are no army
         {
           army++;
           var ux = GetUnitX(u);
@@ -3016,7 +3016,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.49.0";
+    public const string Build = "0.50.0";
 
     public static void Setup()
     {
@@ -3028,6 +3028,7 @@ namespace WarcraftLegacies.Source.Ai
       AiChoices.Setup();   // 0.37: bots pick in WL's click menus (before FactionChoiceDialogSetup runs)
       AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
       AiRitual.Setup();    // 0.49: the Book of Medivh ritual (bot casters, invulnerable while channelling)
+      AiFerries.Setup();   // 0.50: bot ferries (replace the AI ship waygates)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
       // 0.39.10: the fallbacks moved to ShatteredLegacies/ and are set up from GameSetup.cs ([SL] line).
     }

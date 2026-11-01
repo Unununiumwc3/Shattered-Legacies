@@ -23,7 +23,12 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.49.0)
+## State of the work (0.50.0)
+
+- **0.50.0 = portal rework, part 2**: ferries replace the AI ship waygates (`AiFerries`), Dark Portal open to all bots
+  (owner rule only for tram / Legion teleporters / exterior Demon Portal), Book without level 12 for bots. The
+  maintainer playtests when all problem portals are done.
+
 
 - **0.49.0 = portal rework, part 1 (Legion)**: summon only by the Book of Medivh ritual (`AiRitual`), WL's Demon
   Portal where it was cast, Tomb of Sargeras <-> Argus both ways. Next: ferries (`TODO.md` "Open problems" 2).
@@ -51,6 +56,7 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
     (`S(pid) = pid + 24 x theatre`, hard rule 17).
   - Army (`AiArmy`): attack group sized to the need, rest at a staging point on the route, movement chains (queued
     attack-moves), regroup (A/B), defence of far CPs by the rest.
+  - Ferries (`AiFerries`, 0.50): the 8 sea links as boat trips (bot-only).
   - Portals (`AiPortals`): pseudo-portals (tickets + enter-region trigger) for every portal edge; all players'
     waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb <-> Argus
     (0.49: both ways, open at the summon or when anyone holds the Tomb CP) and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
@@ -105,6 +111,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
+| `AiFerries.cs` | AiFerries, AiVoyage | 0.50: bot ferries -- piers as pseudo-portal gates, boarding (hidden + paused, `InTransit`), a boat sails the lane, landing + rest of the chain |
+| `AiLanes.g.cs` | AiLaneData | GENERATED (`tools/ai/gen_lanes.py`): sea lanes of the ferries, one per ship link |
 | `AiRitual.cs` | AiRitual | 0.49: a bot Legion / Scourge hero with the Book of Medivh casts WL's ritual (the only summon path); invulnerable only while channelling |
 | `AiWake.cs` | AiWake | 0.48.5: wakes sleeping creeps at the bot's target once its army stands there (no orders) |
 | `AiTrack.cs` | AiTrack, AiTrackUnit | 0.48.3, measurement only: turnarounds of every army unit with their cause (last bot order or engine), group swaps; unit trail of one bot (`-track`, default P11) -> dump TURNAROUNDS / TRAIL |
@@ -129,6 +137,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `tools/ai/render_map.py` | | draws terrain, CPs, area nodes and the route graph to `tools/ai/out/route_map.png` (never committed); `--regions` |
 | `ROUTES.md` | | generated report: every edge with its "via" point, detours, edges behind rocks |
 | `tools/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
+| `tools/ai/gen_lanes.py` | | 0.50: sea lanes for the ferries from `PathingMap.json` -> `AiLanes.g.cs` (re-run after moving a pier) |
 | `tools/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
 | `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
