@@ -1458,6 +1458,7 @@ namespace WarcraftLegacies.Source.Ai
             NoteTarget(p, pid, kill, "kill-target");
             TrackStuck(p, pid, null);
             IssueAttackToPoint(p, pid, GetUnitX(kill), GetUnitY(kill), true, GetUnitX(kill), GetUnitY(kill));
+            AiWake.Near(p, pid, GetUnitX(kill), GetUnitY(kill)); // 0.48.5: a sleeping boss is never attacked
             handled = true;
           }
 
@@ -1494,6 +1495,7 @@ namespace WarcraftLegacies.Source.Ai
                 IssueAttackToPoint(p, pid, rx, ry, false, rx, ry);
               }
 
+              AiWake.Near(p, pid, rx, ry); // 0.48.5: wake sleeping creeps once the army stands at the target
               handled = true;
             }
             else
@@ -1984,6 +1986,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         AiTheatres.Note(p, pid, t, rt, GetPlayerId(GetOwningPlayer(rt)) < 24 ? "route-enemy" : "route-neutral");
         IssueAttackToPoint(p, pid, GetUnitX(rt), GetUnitY(rt), false, GetUnitX(rt), GetUnitY(rt));
+        AiWake.Near(p, pid, GetUnitX(rt), GetUnitY(rt)); // 0.48.5
       }
       else
       {
@@ -3014,7 +3017,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.48.4";
+    public const string Build = "0.48.5";
 
     public static void Setup()
     {

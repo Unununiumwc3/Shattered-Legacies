@@ -4,6 +4,23 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.5
+From the 0.48.4 game (15 min, Ahn'Qiraj on autopilot; maintainer: "improved a lot", no back and forth seen). Version
+v0.48.5.
+- **Sleeping creeps are woken** (`AiWake`, `-wake on|off`, default on): at night creeps sleep and units never attack a
+  sleeping unit on their own -- the Scourge's 85 units stood at a Mammut camp in Borean Tundra from 6:06 to 10:06
+  (screenshot at En'Kilah). Once 3 units of the bot's army (the theatre being serviced) stand within 900 of its target
+  (route target or kill target), every sleeping Neutral Hostile unit within 900 is woken (`UnitWakeUp`). No orders:
+  movement is unchanged. Dump (LOAD): "wake ... sleeping creeps woken"; event log: "woke N sleeping creep(s)".
+- **Unit budget 30 + 5 per CP** (was 30 + 7; maintainer: stutter, e.g. the dwarves at turn 15). 0.48.4 had 3852 units
+  at 15 min (0.48.2: 3536) although the bots gave fewer orders (22,965 vs 25,178). Test other values in game with
+  `-cap 30 <n>`.
+- Guard positions: removed once per unit (0.48.4 called the native for every army unit on every service).
+- `MEASUREMENTS.md`: the 0.48.4 game. Back and forth: engine walks 4.5 % -> 1.0 % of all walks (first 10 min), followed
+  Druid units end 11,000-19,000 from their spawn (0.48.3: < 80); re-plan switches 14 of 252 route changes (commit
+  blocked 4). Order-latency windows look worse, but the probe samples IDLE units -- without guard positions those are
+  units standing in crowds at targets, so the windows are not comparable with 0.48.3 and older.
+
 ## 0.48.4
 From the 0.48.3 measurement game (8.5 min, Druids followed). Version v0.48.4. Two behaviour changes, each with a switch.
 - **Guard positions removed for all bots** (`-guard on`, was off since 0.46.3). The unit trail found the back and

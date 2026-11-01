@@ -184,7 +184,8 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default ON (0.48.4: with them, units out of orders walk back to where they were trained) |
 | `-commit on\|off\|ab\|ab2` | control | Commit on re-plan: keep the valid target when the new best one is farther from the group on foot (slot bit 4); default on (0.48.4) |
-| `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 30 + 7, 0.48.2) |
+| `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 30 + 5, 0.48.5) |
+| `-wake on\|off` | control | Wake sleeping creeps (night) at the bot's target once 3 of its units stand within 900 -- units never attack sleeping creeps on their own (default on, 0.48.5) |
 | `-regroup on\|off\|ab\|ab2` | control | Regroup: an army that fell below half of 10 / 15 / 40 units (early / mid / late) gathers at the staging point and attacks again as one wave at 10 / 15 / 40; default ab (slot bit 3) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |
 | `-route on\|off` | control | Targeting: route planner on the generated graph with waypoints (default, 0.42) or the old frontier graph (0.41) |

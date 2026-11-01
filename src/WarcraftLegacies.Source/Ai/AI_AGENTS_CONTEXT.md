@@ -23,11 +23,13 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.48.4) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.48.5) -- read this, then `TODO.md` ("Open problems" first)
 
 - **0.48.3 measured the back-and-forth** (dump sections TURNAROUNDS and TRAIL, `tools/ai/back_forth.py`): main
   cause = the engine's guard position (units walk home to where they were trained). **0.48.4** removes guard positions
-  for all bots and adds commit on re-plan; check its game -- `TODO.md` "Open problems" 1.
+  for all bots and adds commit on re-plan -- the 0.48.4 game confirmed it (engine walks 4.5 % -> 1.0 % of walks, followed
+  units no longer end at their spawn; maintainer: "improved a lot"). **0.48.5**: sleeping creeps woken at the target
+  (`AiWake`), budget 30 + 5 per CP, guard removal once per unit.
 
 - **Phase 1 (movement "good enough") is nearly done.** Maintainer after 0.48.1: "the game felt mostly good" -- the
   remaining show stopper is **back-and-forth movement** (`TODO.md` "Open problems", with what is known about it),
@@ -49,7 +51,7 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
     waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb -> Argus
     and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
     pairs are still visible bot waygates (-> ferries).
-  - Load: unit budget per CP (`AiBudget`, 30 + 7 since 0.48.2), order-latency probe, caster cap.
+  - Load: unit budget per CP (`AiBudget`, 30 + 5 since 0.48.5), order-latency probe, caster cap.
 - **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append` (errors at the top, A/B per game phase,
   stopwatch with `--real`). **The dump cuts long lines** (~250+ characters): put new information on its own line.
 - **WL facts that matter for the portals**: the Legion leaves Argus through WL's teleporter buildings (spells for
@@ -249,6 +251,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - **Guard positions** (CONFIRMED 0.48.3): a computer player's unit that runs out of orders walks back to the spot
   where it was TRAINED, ~15-25 s later, with an attack order (so "busy" for every idle check). This was the
   back-and-forth movement. `AiGuard` removes them for all bots since 0.48.4 (`RemoveGuardPosition`, every service).
+- **Sleeping creeps** (0.48.5): at night WC3 creeps sleep and units never auto-acquire a sleeping unit -- an
+  attack-move army stands next to the camp until day. `AiWake` wakes them (`UnitWakeUp`) once the army is there.
 - **Enter-region events fire only on entering**: a unit already inside the region when the trigger matters gets no
   event -- handle that case when the decision is made.
 - **Hidden** (`ShowUnit` false) = out of the game world: no target, no collision, not revealed by true sight (not the
