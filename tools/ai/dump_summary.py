@@ -245,10 +245,32 @@ def summary(dumps, beats, note, real=None):
     tasks = [ln for ln in last["load"] if ln.startswith("task ")]
     if tasks:
         out += ["", f"Top tasks by total ops at {last['tag']} (of {len(tasks)}):", "```"] + tasks[:10] + ["```"]
+    turns = turnaround_lines(last)  # 0.48.3: back-and-forth measurement
+    if turns:
+        out += ["", f"Turnarounds at {last['tag']} (0.48.3; per cause, all bots; P lines: turns / walks):", "```"] + turns + ["```"]
     out += ["", f"Bots at {last['tag']}: " + "; ".join(last["states"])]
     for b in beats:
         out += ["", f"Heartbeat: {b[0]}"] + [f"  {x}" for x in b[1:4]] + (["  ..."] if len(b) > 4 else [])
     return "\n".join(out) + "\n"
+
+
+def turnaround_lines(d):
+    """0.48.3: TURNAROUNDS section -> totals per cause, the 5-min phases and one short line per bot."""
+    sec = d["sec"].get("TURNAROUNDS", [])
+    if not sec:
+        return []
+    totals, bots = {}, []
+    for ln in sec:
+        m = re.match(r"P(\d+) turns (\d+) of (\d+) walks:(.*?) \| group swaps (\d+), sent back (\d+) \| rest orders backwards (\d+)", ln)
+        if not m:
+            continue
+        for kind, n in re.findall(r"([a-z-]+) (\d+)", m.group(4)):
+            totals[kind] = totals.get(kind, 0) + int(n)
+        bots.append(f"P{m.group(1)} {m.group(2)}/{m.group(3)} swaps {m.group(5)}>{m.group(6)} rest-back {m.group(7)}")
+    out = ["total: " + " ".join(f"{k} {v}" for k, v in sorted(totals.items(), key=lambda kv: -kv[1]))]
+    out += [ln for ln in sec if ln.startswith("phase ")]
+    out += ["; ".join(bots[i:i + 4]) for i in range(0, len(bots), 4)]
+    return out
 
 
 def main():

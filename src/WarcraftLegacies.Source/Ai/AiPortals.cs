@@ -175,6 +175,7 @@ namespace WarcraftLegacies.Source.Ai
       SetUnitPosition(u, ex, ey); // the engine picks the nearest free spot
       Teleports++;
       _depth++;
+      AiTrack.Ordered(u, dx, dy, AiTrack.KPortal); // 0.48.3: measurement (rest of the chain after the teleport)
       if (!AiRoutes.Chain(GetOwningPlayer(u), u, dx, dy))
       {
         AiScheduler.CountOrder(u, dx, dy);

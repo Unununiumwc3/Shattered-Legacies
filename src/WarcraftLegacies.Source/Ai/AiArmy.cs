@@ -56,6 +56,27 @@ namespace WarcraftLegacies.Source.Ai
     internal static int StageKept;         // 0.46.2: staging kept (new one close), set on the route
     internal static int StageRoute;
 
+    // 0.48.3 (AiTrack trail): g = in an attack group of one of the bot's theatres, w = that theatre sends the whole
+    // army, r = rest
+    internal static string RoleOf(int pid, unit u)
+    {
+      if (pid < 0 || pid >= 24)
+      {
+        return "?";
+      }
+
+      for (var t = 0; t < AiTheatres.MaxTheatres; t++)
+      {
+        var grp = _group[pid + 24 * t];
+        if (grp != null && grp.Contains(u))
+        {
+          return "g";
+        }
+      }
+
+      return _whole[pid] ? "w" : "r";
+    }
+
     internal static int ArmyFood(int pid) => pid >= 0 && pid < 24 ? _armyFood[AiTheatres.S(pid)] : 0;
 
     // 0.45.0: has share of the attack group's food arrived within r of (x, y)? (gather points)
@@ -131,12 +152,12 @@ namespace WarcraftLegacies.Source.Ai
 
           if (changed)
           {
-            Issue(u, x, y);
+            Issue(u, x, y, DefendCall ? AiTrack.KDefend : AiTrack.KWhole);
             OrdChange++;
           }
           else if (IsIdleAway(u, x, y, AtTarget))
           {
-            Issue(u, x, y);
+            Issue(u, x, y, AiTrack.KIdle);
             OrdIdleFar++;
             IdleBy[pid]++;
           }
@@ -165,7 +186,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           if (grp.Contains(Units[i]))
           {
-            Issue(Units[i], x, y);
+            Issue(Units[i], x, y, AiTrack.KAdvance);
             OrdAdvance++;
           }
         }
@@ -175,14 +196,20 @@ namespace WarcraftLegacies.Source.Ai
 
       if (newTarget)
       {
+        var oldGroup = grp.Count > 0 ? new HashSet<unit>(grp) : null; // 0.48.3: measure group swaps (AiTrack)
         _whole[AiTheatres.S(pid)] = false;
         Select(p, pid, fx, fy, grp, true);
         for (var i = 0; i < Units.Count; i++)
         {
           var u = Units[i];
+          if (oldGroup != null && oldGroup.Contains(u) && !grp.Contains(u) && GetUnitCurrentOrder(u) != 0)
+          {
+            AiTrack.Dropped(pid, u); // still walking its old chain to the old target -- nobody re-orders it now
+          }
+
           if (grp.Contains(u))
           {
-            Issue(u, x, y);
+            Issue(u, x, y, AiTrack.KChange);
             OrdChange++;
           }
           else if (_hasStage[AiTheatres.S(pid)] && IsIdleAway(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AtStage))
@@ -190,7 +217,7 @@ namespace WarcraftLegacies.Source.Ai
             // 0.44.3: only IDLE rest units -- the busy ones keep walking (to the old staging CP or a fight) and get
             // the new one when they stand idle. Before, every target change re-sent all rest units away from the new
             // staging CP: 12,913 "rest" orders in 14 min (0.44.2 game), units walking back and forth.
-            Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
+            Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AiTrack.KRest);
             OrdRestMove++;
             RestBy[pid]++;
           }
@@ -223,7 +250,7 @@ namespace WarcraftLegacies.Source.Ai
           var u = Units[i];
           if (grp.Contains(u) && !before.Contains(u))
           {
-            Issue(u, x, y);
+            Issue(u, x, y, AiTrack.KRefill);
             OrdRefill++;
           }
         }
@@ -236,14 +263,14 @@ namespace WarcraftLegacies.Source.Ai
         {
           if (IsIdleAway(u, x, y, AtTarget))
           {
-            Issue(u, x, y);
+            Issue(u, x, y, AiTrack.KIdle);
             OrdIdleFar++;
             IdleBy[pid]++;
           }
         }
         else if (_hasStage[AiTheatres.S(pid)] && IsIdleAway(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AtStage))
         {
-          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
+          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AiTrack.KRest);
           OrdRestMove++;
           RestBy[pid]++;
         }
@@ -270,11 +297,11 @@ namespace WarcraftLegacies.Source.Ai
 
         if (grp != null && grp.Contains(u) || _whole[AiTheatres.S(pid)])
         {
-          Issue(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)]);
+          Issue(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)], AiTrack.KExit);
         }
         else if (_hasStage[AiTheatres.S(pid)])
         {
-          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)]);
+          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AiTrack.KExit);
         }
         else
         {
@@ -324,12 +351,12 @@ namespace WarcraftLegacies.Source.Ai
 
         if (changed)
         {
-          Issue(u, x, y);
+          Issue(u, x, y, AiTrack.KDefRest);
           OrdChange++;
         }
         else if (IsIdleAway(u, x, y, AtTarget))
         {
-          Issue(u, x, y);
+          Issue(u, x, y, AiTrack.KDefRest);
           OrdIdleFar++;
           IdleBy[pid]++;
         }
@@ -621,8 +648,10 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // 0.44: a chain along the graph when possible (AiRoutes.Chain), else one attack-move
-    internal static void Issue(unit u, float x, float y)
+    // 0.48.3: kind = why the order was given (AiTrack.K...; measurement only)
+    internal static void Issue(unit u, float x, float y, int kind)
     {
+      AiTrack.Ordered(u, x, y, kind);
       if (AiRoutes.Chain(GetOwningPlayer(u), u, x, y))
       {
         return;
