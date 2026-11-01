@@ -21,7 +21,8 @@ namespace WarcraftLegacies.Source.Ai
   //   WL's spell stops there too); 410 mana (spent; a bot hero that has less gets it -- logged once);
   // - it channels on the spot where it stands: hold position, channel animation, invulnerable (maintainer: only while
   //   channelling), a rain of fire that deals no damage, a 180-s timer for everyone ("Legion Summon (bot channelling)"),
-  //   a minimap ping and a message. Moving off the spot, dying, losing the Book or changing owner cancels it.
+  //   a minimap ping and a message. 0.51.1 (maintainer: bots must not be stopped): invulnerability is set again every
+  //   second, a hero pushed off the spot is put back; only losing the Book, changing owner or a removed hero ends it.
   // - at the end the bot completes WL's quest (rescued units, Archimonde, music, limits -- WL's own reward) and puts
   //   WL's Demon Portal on the ritual spot: WL makes it at the caster, but a bot completion has no caster, so WL leaves
   //   it at (0,0); the bot moves it and points Antoran's portal (n03C) at it.
@@ -31,7 +32,7 @@ namespace WarcraftLegacies.Source.Ai
     private const float Duration = 180f;     // A00J adur
     private const float ManaCost = 410f;     // A00J amcs
     private const float Area = 750f;         // A00J aare -- the rain of fire
-    private const float SpotLeave = 150f;    // moved further than this: cancelled
+    private const float SpotLeave = 150f;    // 0.51.1: moved further than this (knockback, a stray order): put back
     private const float CancelPause = 30f;
     private const string FxRain = "Abilities\\Spells\\Demon\\RainOfFire\\RainOfFireTarget.mdl";
     private const string FxStart = "Abilities\\Spells\\Undead\\AntiMagicShell\\AntiMagicShell.mdl";
@@ -257,10 +258,11 @@ namespace WarcraftLegacies.Source.Ai
       var dy = GetUnitY(_hero) - _chanY;
       if (dx * dx + dy * dy > SpotLeave * SpotLeave)
       {
-        Cancel("hero moved off the spot");
-        return;
+        SetUnitX(_hero, _chanX); // 0.51.1: back on the spot -- nothing stops a bot's ritual
+        SetUnitY(_hero, _chanY);
       }
 
+      SetUnitInvulnerable(_hero, true); // 0.51.1: every second -- other code may reset it
       AiState.MissionUnits.Add(_hero);
       if (GetUnitCurrentOrder(_hero) != _holdId)
       {
