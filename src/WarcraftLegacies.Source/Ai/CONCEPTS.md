@@ -181,6 +181,7 @@ complex.
 - **Landing**: passengers shown beside the landing point (`SetUnitPosition`), re-chained at once; boat removed.
 - Hidden passengers keep HP, mana, items and food. They must be kept OUT of the army logic and the samplers
   (in-transit set): player enumerations still return hidden units.
+- 0.50.1: the boat is owned by the bot (minimap), sails by move orders between lane points, speed 200.
 - Decided (0.50, built): boat invulnerable; no warning ping; humans lose the AI ship waygates (no visible bot
   waygates -- maintainer, 0.48). Boat leaves 12 s after its first passenger (per direction and player); speed 400;
   a pier is no ENTRY while an enemy holds its CP (neutral or own / allied: yes); landing anywhere. Lanes: A* over

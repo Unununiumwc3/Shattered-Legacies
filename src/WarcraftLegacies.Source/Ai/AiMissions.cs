@@ -416,7 +416,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      IssuePointOrder(SimpleBot._ragHero, "move", AiConfig.RagnarosX, AiConfig.RagnarosY);
+      AiRoutes.MoveVia(SimpleBot._ragHero, AiConfig.RagnarosX, AiConfig.RagnarosY); // 0.50.1: by route
     }
 
     // phase 3: find the summoned boss (hostile hero at WL's spawn point) and kill him with the standing-by hero

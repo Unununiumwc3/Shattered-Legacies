@@ -1311,7 +1311,7 @@ namespace WarcraftLegacies.Source.Ai
             haveBase = true;
           }
         }
-        else if (!IsUnitType(u, UNIT_TYPE_PEON) && !AiFerries.InTransit(u)) // 0.50: passengers at sea are no army
+        else if (!IsUnitType(u, UNIT_TYPE_PEON) && !AiFerries.InTransit(u) && !AiFerries.IsBoat(u)) // 0.50: at sea
         {
           army++;
           var ux = GetUnitX(u);
@@ -3016,7 +3016,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.50.0";
+    public const string Build = "0.50.1";
 
     public static void Setup()
     {

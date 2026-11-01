@@ -4,6 +4,24 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.50.1
+From the 0.50.0 game (maintainer: Dark Portal works, ferries work, "enter boat" good). Version v0.50.1.
+- **Legion ritual order fixed**: the Book carrier (Arthas) stood without casting -- "volcano" (A00J's order string
+  in the object data) was refused 4 times. A00J is based on Death and Decay, and WC3 uses a changed order string only
+  for Channel-based abilities, so the bot now orders "deathanddecay" first (never for a hero with a real Death and
+  Decay, i.e. Kel'Thuzad), then "volcano". After 3 refused orders the hero goes back to the army for 60 s instead of
+  standing frozen.
+- **Ferry boat**: owned by the bot (shows on the minimap; was Neutral Extra + Locust), sails with move orders from
+  lane point to lane point (smooth; 0.50.0 jumped every 0.25 s and stuttered), half the speed (200), removed at the
+  landing (timed life as a safety net), kept out of the bot's army logic. A stuck boat is put on its next point
+  after 4 s.
+- **Missions travel by route**: hero visits, stranded heroes and the Ragnaros hero walk along the route graph (chains)
+  instead of one plain move order, so they take ferries and portals (`AiRoutes.MoveVia`). Maiev ("Vault of the
+  Wardens") stood at the coast in 0.50.0 -- a plain move cannot cross the sea since the AI ship waygates are gone.
+- Dump: "route checks refused (enemy pier)" (was "entries refused" -- it counts route checks, not units).
+- Found (0.48.5 game, 38-min dump): the Dark Portal waygates belong to whoever holds WL's "Dark Portal Aura Control
+  Nexus"; the Outland bots crossed at 31:35, right after Stormwind took it. Since 0.50 the owner does not matter.
+
 ## 0.50.0
 Portal rework, part 2 (maintainer: playtest once all problem portals are done). Version v0.50.0.
 - **Ferries replace the 8 AI ship waygates** (`AiFerries`, design `CONCEPTS.md` 7). No visible bot waygates any more.

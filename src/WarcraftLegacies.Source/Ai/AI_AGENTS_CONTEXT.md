@@ -23,7 +23,11 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.50.0)
+## State of the work (0.50.1)
+
+- **0.50.1**: the Book ritual is ordered with "deathanddecay" (A00J is a Death and Decay; "volcano" was refused),
+  ferry boat owned by the bot / smooth / half speed, missions travel by route (`AiRoutes.MoveVia`).
+
 
 - **0.50.0 = portal rework, part 2**: ferries replace the AI ship waygates (`AiFerries`), Dark Portal open to all bots
   (owner rule only for tram / Legion teleporters / exterior Demon Portal), Book without level 12 for bots. The

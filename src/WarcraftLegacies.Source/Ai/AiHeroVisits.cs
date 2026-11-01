@@ -73,7 +73,7 @@ namespace WarcraftLegacies.Source.Ai
 
             if (!there)
             {
-              IssuePointOrder(hero, "move", hx, hy); // 0.37: not when there -- an order breaks a channel
+              AiRoutes.MoveVia(hero, hx, hy); // 0.37: not when there -- an order breaks a channel (0.50.1: by route)
             }
 
             if (hv.WithArmy)
@@ -134,7 +134,7 @@ namespace WarcraftLegacies.Source.Ai
           _since[key] = SimpleBot.Clock;
           AiState.MissionUnits.Add(best);
 
-          IssuePointOrder(best, "move", hx, hy);
+          AiRoutes.MoveVia(best, hx, hy); // 0.50.1: by route (ferries, portals)
           SimpleBot.LogPin(SimpleBot.FacName(p) + ": hero visit '" + hv.Quest + "' -- sends " + GetUnitName(best)
                            + " (lvl " + I2S(GetHeroLevel(best)) + ")");
         }

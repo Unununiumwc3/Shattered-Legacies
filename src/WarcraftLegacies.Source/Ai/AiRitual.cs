@@ -24,6 +24,9 @@ namespace WarcraftLegacies.Source.Ai
     private static int _ritualId;
     private static int _bookId;
     private static int _orderId;
+    private static int _altOrderId;    // 0.50.1: "deathanddecay" -- A00J is based on Death and Decay
+    private static int _refused;
+    private static float _pauseUntil;
     private const float ManaCost = 410f;
     private const float RetryEvery = 10f;
 
@@ -45,7 +48,10 @@ namespace WarcraftLegacies.Source.Ai
     {
       _ritualId = FourCC("A00J");
       _bookId = FourCC("I006");
-      _orderId = OrderId("volcano"); // A00J's order string (AbilityData A00J aord)
+      _orderId = OrderId("volcano"); // A00J's order string in the object data (aord)
+      // 0.50.1: WC3 uses the order string of the object data only for Channel-based abilities; A00J is a Death and Decay
+      // (AUdd), so its real order is very likely "deathanddecay". 0.50.0 game: "volcano" refused 4 times, Arthas stood.
+      _altOrderId = OrderId("deathanddecay");
       _start = CreateTrigger();
       _end = CreateTrigger();
       for (var i = 0; i < 24; i++)
@@ -139,7 +145,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       // safety: the channel stopped without an end event (unit removed, order replaced)
-      if (_caster != null && (GetUnitTypeId(_caster) == 0 || GetUnitCurrentOrder(_caster) != _orderId))
+      if (_caster != null && (GetUnitTypeId(_caster) == 0 || !IsRitualOrder(GetUnitCurrentOrder(_caster))))
       {
         EndInvulnerable("stopped");
       }
@@ -152,7 +158,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (_hero == null)
       {
-        if (SimpleBot.Clock - _lastSearch < 6f)
+        if (SimpleBot.Clock - _lastSearch < 6f || SimpleBot.Clock < _pauseUntil)
         {
           return;
         }
@@ -172,7 +178,7 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       AiState.MissionUnits.Add(_hero); // kept every tick (hero visits release their own heroes)
-      if (_caster == _hero || GetUnitCurrentOrder(_hero) == _orderId || SimpleBot.Clock - _lastOrder < RetryEvery)
+      if (_caster == _hero || IsRitualOrder(GetUnitCurrentOrder(_hero)) || SimpleBot.Clock - _lastOrder < RetryEvery)
       {
         return;
       }
@@ -190,11 +196,30 @@ namespace WarcraftLegacies.Source.Ai
       _lastOrder = SimpleBot.Clock;
       Casts++;
       State = "casting";
-      if (!IssuePointOrderById(_hero, _orderId, GetUnitX(_hero), GetUnitY(_hero)))
+      float x = GetUnitX(_hero), y = GetUnitY(_hero);
+      // "deathanddecay" first -- but never for a hero with a real Death and Decay (Kel'Thuzad): it would cast that
+      var alt = GetUnitAbilityLevel(_hero, FourCC("AUdd")) == 0;
+      var ok = (alt && IssuePointOrderById(_hero, _altOrderId, x, y)) || IssuePointOrderById(_hero, _orderId, x, y);
+      if (ok)
       {
-        State = "order refused (cooldown, Argus, or the ritual is not available yet)";
+        _refused = 0;
+        return;
+      }
+
+      _refused++;
+      State = "order refused x" + I2S(_refused) + " (cooldown, Argus, or the ritual is not available yet)";
+      if (_refused >= 3)
+      {
+        // 0.50.1: do not keep the hero frozen out of the army -- back to it for a minute, then try again
+        SimpleBot.LogPin(GetUnitName(_hero) + ": ritual order refused 3 times -- back to the army, retry in 60 s");
+        _refused = 0;
+        _pauseUntil = SimpleBot.Clock + 60f;
+        Release();
+        State = "paused after refused orders";
       }
     }
+
+    private static bool IsRitualOrder(int id) => id != 0 && (id == _orderId || id == _altOrderId);
 
     private static void Release()
     {
