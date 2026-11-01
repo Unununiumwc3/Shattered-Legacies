@@ -8,136 +8,38 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.md`; playtest results below.
+Current build: **0.51.1** -- end of phase 1, handover for the phase-2 chat. History: `CHANGELOG.md`; measurements:
+`MEASUREMENTS.md`; what was learned: `AI_AGENTS_CONTEXT.md` "Movement: hard-learned facts".
 
-## Open problems -- start here (phase 1)
+## Open problems -- start here
 
-1. **Back-and-forth movement** -- the show stopper (maintainer, 0.48.1). Known so far:
-   - **0.48.4 game (15 min): fixed in the main.** Engine walks 4.5 % -> 1.0 % of walks (first 10 min); followed Druid
-     units no longer end at their spawn; re-plan switches 14 of 252 route changes. Remaining turn-backs are
-     decision-level: after a capture ("gone") the next target lies behind (neutral 48, enemy 18 in 15 min) and
-     defence in/out (11) -- phase-3 tuning unless the maintainer sees them. Activity "idle" 1 % -> 15 % (rest at the
-     staging point, groups at their target, sleeping creeps -> 0.48.5).
-   - **0.48.3 FOUND IT (main part)**: the engine's guard position. A bot unit out of orders walks back to the spot
-     where it was trained (attack order, so the bot thinks it is busy). Trail: every followed Druid unit back at its
-     spawn (within 80) after 28,000-52,000 walked; "engine" = 38 % of all turnarounds. 0.48.4 removes guard positions
-     for all bots. Second part: target changes that re-route the group backwards ("change" = 47 % of turnarounds) --
-     0.48.4 commit on re-plan; the event log now says gone / switch. Check both in the 0.48.4 game: engine turns per
-     walk should drop sharply; idle-away / rest orders will rise (that is the bot taking over -- watch the load).
-   - 0.48.1 game, 25 min, 16 bots: ~580 target changes (route-neutral 269, route-enemy 187, defend 51, theatre 44,
-     wait/hold 30) = ~1.5 per bot per minute; each one re-chains the attack group ("change" orders 22,679, rest
-     5,285). Target RETURNS (A -> B -> A within 5 min) are down to max 9 per bot (0.46.2: 17-18), so most of it is
-     A -> B -> C hopping in different directions -- largely creep camps / neutral CPs one after another.
-   - Already fixed: hold at the base on empty plans (0.48.1), main-front flips (0.48.1 streak, 0.48.2 60 s),
-     defence pulling the group back (0.47), creeps / leftovers scored from the territory (0.46.4 / 0.47).
-   - Next ideas (pick after measuring): (a) a per-unit TURNAROUND counter (heading reverses > 120 degrees between
-     samples), attributed to the cause (target change, group re-selection, staging move, defence) -- measure first;
-     (b) direction commitment: targets behind the army's current front cost more (the vector territory -> army);
-     (c) creep camps only near the route / front unless nothing else; (d) keep the attack group across a target change
-     (re-select only when the new target is in another direction or the group is too small).
-   - Maintainer: Sentinels and Druids do it most at the start; later Dalaran, Scourge. A wave system to the front is
-     the goal (units d -> e -> f, not back to c).
-   - **0.48.2 game, measured from the event log** (`tools/ai/back_forth.py`, target-to-target geometry, CP targets
-     only): turn-backs > 120 deg are (1) neutral hops in the first 10 min -- the next neutral CP behind the army
-     (territory distance; Sentinels, Druids, Legion in Northrend, Ironforge); (2) defence in/out after 10 min -- 42
-     defence episodes, 24 ended at the 30-s minimum, 15 of 31 re-entries within 60 s (`AiDefense.CloseThreat` skips
-     the cooldown, and the army that just left is always within 4000); (3) route re-picks between enemy targets.
-   - **Suspects below the target level** (not visible in 0.48.2 dumps): attack group re-selected on every new target
-     -- dropped units still walking keep their OLD chain, arrive, then the heartbeat sends them to the staging point
-     (streams crossing); defence / hold / wait use the whole army and force a re-selection afterwards; hold =
-     attack-move of the whole army to its own centre; staging point jumps with the route.
-     Maintainer's hypothesis (0.48.3): the target resolves before the units reach it, then they walk back to where
-     they were produced.
-   - **0.48.3 measures it** (no behaviour change): TURNAROUNDS (per unit, cause = last bot order or engine), group
-     swaps, TRAIL of 8 Druid units from their building. Decide the fix from the next game's numbers -- candidates:
-     (d) keep the group across a target change; a defence hysteresis that does not skip the cooldown for the army
-     that just left; (b)/(c) for the early neutral hops.
-2. **Portals, rest of the WL alignment**. Done in 0.49.0: Book of Medivh ritual (bot Legion / Scourge hero,
-   invulnerable while channelling) as the only summon; Tomb of Sargeras <-> Argus both ways. Done in 0.50.0: ferries
-   for the 8 ship pairs (`AiFerries`, `CONCEPTS.md` 7); Dark Portal usable by all bots whoever owns the waygates; Book
-   without level 12 for bots. Still to check with the maintainer: are other portals left (Old Gods rift, Emerald
-   Portals, WL's Water Passageways for ships -- `README.md` table)? Check: the Legion leaves Argus (Demon Portal, Tomb portal, 0.48.2 teleporters).
-   Left as is (not WL, decide later): `AiLegion.MoveLegionArmyToAlterac` teleports a bot Legion's army to Alterac
-   when the Scourge's plague lands; the summon bonus (3000 gold) and the betrayal (Scourge leaves the Legion's team).
-3. **Kul Tiras: its islands first** (not strict -- in 0.48.1 Stormwind took a CP of Kul Tiras' islands): prefer the own
-   home land's targets early (a bonus for targets on the bot's home land / theatre while any are left).
-4. **Scourge creeps Northrend too slowly** (did better before; also the Legion does not support it yet).
-5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
-   elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
-6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+Phase 1 (movement "good enough") is done (maintainer, 0.51). Next: **phase 2, restructure** (section below).
 
-## Next playtest (0.51.0)
-
-- Give a bot (Legion / Scourge hero) the Book, or wait for it: the hero stops, channels 180 s (rain of fire, timer
-  "Legion Summon (bot channelling)" at the top for everyone), then WL's summon happens and the Demon Portal stands on
-  the ritual spot. PINNED: "channels the Legion ritual @x,y", "Demon Portal placed at the ritual spot".
-- Ferries at speed 150 (the engine's minimum).
-- **Check via playtest when it happens (rare)**: Maiev's "Vault of the Wardens" by ferry (0.50.1), Tomb of Sargeras <->
-  Argus both ways (0.49.0).
-
-## Next playtest (0.50.1)
-
-- The Book carrier casts: PINNED "channels the Legion ritual @x,y -- invulnerable while channelling", then "Legion:
-  Demon Portal @x,y". If not: the LOAD line "legion ritual" (state, refused orders).
-- Ferry boats on the minimap in the bot's colour, sailing smoothly at about half the old speed.
-- Hero missions across the sea (Maiev's Vault of the Wardens, Book visits, Ragnaros): they board ferries.
-- Tomb of Sargeras <-> Argus (not checked in 0.50.0).
-
-## Next playtest (0.50.0) -- after the portal rework (maintainer: playtest when all problem portals are done)
-
-- Ferries: PINNED/LOAD "ferries (0.50) on: 8 links; boarded N, landed N, voyages N". In game: units vanish at a pier,
-  a boat in team colour sails, they appear at the far pier and walk on. Kul Tiras leaves its islands, the Broken
-  Isles / Kezan / Tol Barad / Echo Isles / Nazmir get visitors. No AI ship waygates visible any more.
-- Dark Portal: Outland bots attack the Eastern Kingdoms and back once it opens (turn 8-10). The dump lists every
-  waygate with its owner ("WL waygate Dark Portal ... P<owner>") -- tell me who took them.
-- Book of Medivh: a Scourge hero of any level fetches the Book once Dalaran's (or Gilneas') capital is dead; PINNED
-  "took the Book of Medivh at the pedestal (bot: no level 12)", then the ritual (0.49.0 checks below).
-
-## Next playtest (0.49.0) -- Legion portals
-
-- Long game (40+ min, Legion and Scourge bots) so the Book can be reached: Dalaran's capital must die first.
-- PINNED: "holds the Book of Medivh -> Legion ritual", "channels the Legion ritual @x,y -- invulnerable", "Legion: Demon
-  Portal @x,y ... <-> Antoran", "portal Tomb of Sargeras <-> Argus open: ...". Dump LOAD: "legion ritual" line.
-- In game: the hero stands 3 min channelling (invulnerable), the portal appears there; no Legion army at Felwood.
-- Tomb <-> Argus: units land beside the Tomb entrance / beside the Antoran portal (doodads there are ruins and rubble
-  -- check that ground units can walk off the landing spots).
-- Plus the 0.48.5 checks below (stopwatch, creeps at night, stutter).
-
-## Next playtest (0.48.5)
-
-- `-autodump`, 25-40 min. **Stopwatch** (real time at turn 10, 20, 30): tells a slow game (engine) from felt stutter.
-- Stutter with 30 + 5 per CP? If still: `-cap 30 4` mid-game and note the time.
-- Creeps at night: does an army still stand at a camp? Event log: "woke N sleeping creep(s)"; dump LOAD: "wake".
-- Back and forth: still gone?
-
-## Next playtest (0.48.4)
-
-- `-autodump` from the start, 25-40 min, Druids (P11) a bot. `-track` is NOT needed -- the dumps carry the trail.
-- Does the back and forth still show? If yes: game time, faction, `-xy` on a unit, `-dump`.
-- Load: idle-away and rest orders rise without guard positions (0.46: 3-10 x idle-away). Felt lag, and the latency
-  windows in the dump.
-- Dump: TURNAROUNDS "engine" per bot far below 0.48.3 (38 %); TRAIL units no longer end at their spawn; "commit"
-  line; `[route-neutral:switch]` vs `:gone` in the event log -> next fix (target hopping after captures).
-
-## Next playtest (0.48.3) -- the measurement build
-
-- `-autodump` on from the start (TRAIL and EVENT LOG are ring buffers; dumps every 5 min lose nothing). 30-40 min.
-- Druids (P11) must be a BOT (the trail follows P11 by default). Autopilot on another faction is fine -- say which.
-- When you see back and forth: note the game time and the faction, `-xy` on one of the units, and a `-dump`. If it
-  is the Druids, `-track` pings the followed units -- note the U-number of one that is in it.
-- Dump section TURNAROUNDS: the causes per bot; TRAIL: the Druid units' orders. `tools/ai/back_forth.py` on all dumps.
-
-## Next playtest (0.48.2)
-
-- Legion: "portal states" line -> "Legion teleporters open (2 edges)" after its "Argus" quest; the Legion leaves Argus.
-- "main moved" per 25 min far below 47; North Alliance waits at ONE spot.
-- Back and forth: still there? Which factions, when (game minute), and a `-xy` + dump at that moment.
+1. **Check via playtest when it happens (rare)**: a mission hero by ferry (Maiev's "Vault of the Wardens", 0.50.1),
+   Tomb of Sargeras <-> Argus both ways (0.49.0), the bot Legion ritual end to end (0.51: 180-s channel with timer,
+   then WL's summon and the Demon Portal on the ritual spot), the Legion leaving Argus (Demon Portal, Tomb portal,
+   0.48.2 teleporters).
+2. **Phase 3 (movement fine-tuning), measured in 0.48.x** -- only if the maintainer sees them again:
+   - after a capture the next target can lie behind the army (neutral hops early: territory distance; 48 neutral +
+     18 enemy turn-backs in 15 min, 0.48.4). Ideas: direction commitment (targets behind the front cost more), creep
+     camps only near the route / front, keep the attack group across a target change.
+   - defence ping-pong: `AiDefense.CloseThreat` skips the 45-s cooldown, and the army that just left is always within
+     4000 (0.48.2: 24 of 42 defences ended at the 30-s minimum, 15 of 31 re-entries within 60 s).
+   - group re-selection on every new target: dropped units still walking keep their OLD chain (TURNAROUNDS "group
+     swaps"); hold = attack-move of the whole army to its own centre.
+3. **Not WL, decide later**: `AiLegion.MoveLegionArmyToAlterac` teleports a bot Legion's army to Alterac when the
+   Scourge's plague lands; the Legion's summon bonus (3000 gold); the betrayal (the Scourge leaves the Legion's team);
+   the bot ritual itself (upstream: let a bot cast A00J, or a quest hook for the caster -- `WORKAROUNDS.md`).
+4. **Kul Tiras: its islands first** (not strict): prefer the home land's targets early.
+5. **Scourge creeps Northrend too slowly** (did better before; the Legion does not support it yet).
+6. Load: budget 30 + 5 (0.48.5); multiplayer 0.48.5: ~5 s behind real time at 20 min (fine). Keep the stopwatch.
+7. Ferry boats at 150 = the engine's minimum speed; slower only by lowering the map's MinUnitSpeed (all units).
 
 ## The plan: three phases
 
 | Phase | Versions (planned) | Goal |
 |---|---|---|
-| 1 Movement "good enough" | 0.46, 0.47, 0.48/0.49 as needed | engine load under control, graph right, armies fight |
+| 1 Movement "good enough" | 0.46-0.51 -- **done** (maintainer, 0.51) | engine load under control, graph right, armies fight |
 | 2 Restructure | ~0.50 | layout for the upstream PR, state in objects, old code deleted |
 | 3 Fine-tuning | after | movement details, graph without the fork's CPs, balance |
 
@@ -197,8 +99,9 @@ Rules for phase 1:
 | 0.48.4 | yes (15 min, Ahn'Qiraj on autopilot) | "improved a lot", no back and forth seen; engine walks 4.5 % -> 1.0 % of walks; Scourge army 4 min at a sleeping Mammut camp; some stutter (dwarves, turn 15) |
 | 0.48.5 | yes (22 min, multiplayer, maintainer as Kul Tiras / South Alliance) | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit. Stopwatch: ~5 s behind at 20 min (fine). Dark Portal unused: its waygates became player-owned (~10 min) -> 0.50 |
 | 0.49.0 | no (portal work continues without playtests) | Legion: Book of Medivh ritual only (bot hero invulnerable while channelling), Tomb <-> Argus both ways |
-| 0.51.0 | **next** | bot performs the Legion ritual itself (timer, rain of fire, portal at the spot); ferries at 150 |
-| 0.50.1 | yes (20 min) | (built: ritual order fix; boat owned by the bot, smooth, half speed; missions travel by route (ferries)) ferries look good (make them slower); the bot with the Book still did not cast (orders refused) |
+| 0.51.1 | **next** | bot Legion ritual: invulnerable every second, put back on its spot (never stopped); 0.51.0: the bot performs the ritual itself (timer, rain of fire, portal on the spot), ferries at 150 |
+| 0.51.0 | no (inside 0.51.1) | |
+| 0.50.1 | yes (20 min) | ritual order fix; boat owned by the bot, smooth, half speed; missions travel by route (ferries). Ferries look good (slower wanted); the bot with the Book still did not cast (orders refused) |
 | 0.50.0 | yes (24 min) | (built: ferries replace the AI ship waygates; Dark Portal open to all bots whoever owns its waygates; Book without level 12 for bots; Book pedestal Dalaran or Gilneas) Dark Portal works; ferries work ("enter boat" good, boat stuttered, not on the minimap, too fast); Arthas held the Book but did not cast; Maiev stood at the coast |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
@@ -213,265 +116,21 @@ observations from those games are void. Movement observations stay valid.
 - Note which A/B assignment ran (`ab` or `ab2`); the next game uses the other one.
 - If you take control of units: does an order start at once or after 1-2 s? (Compare with the latency probe.)
 
-## 0.46.3 results (15 min)
+## Phase 3 candidates (collected from the phase-1 lists -- decide with game data)
 
-- **Regroup at the start** (GitHub's 0.46.3 lacked the fix): 11 bots idled until 3:21-7:03 -> 0.46.4 thresholds in
-  units per phase (maintainer: 10 / 15 / 40, tune by playtest).
-- **Back and forth -- causes found** (Druids): (1) a defence pulls the whole army home, even across the sea
-  (Broken Isles -> Ashenvale twice for 8 / 62 enemy units); (2) creep camps and leftovers at home scored from the
-  territory, not from the army. Both fixed in 0.46.4 (first steps of "only forward"); theatres (0.47) finish it.
-- **Kul Tiras near Gnomeregan**: it got far-east targets (Southern / Northern Highlands, Dragonmaw Port, Grim Batol,
-  about one per minute -- allies took them first), and the walk east goes through the dwarf mountains since Loch
-  Modan - Searing Gorge is a wall (B01L stones). Real fix: target commitment + theatres (0.47); attackable stones.
-- **North Alliance** takes its CPs fast, then walks between them; it creeps a bit. Fine-tuning: "all reachable CPs
-  held -> creep camps -> a new CP reachable -> back to normal".
-- Lordaeron no longer tries to reach Northrend early -- the channel fix works.
-- `[you]` The 0.46.2 game crashed at turn 8: no dumps of it reached the AI -- if it happens again, send
-  `WLAI_heartbeat.txt` right after the crash (it is overwritten by the next game).
-
-## 0.46.2 results (81 min)
-
-- **A/B per phase** decided guard positions (removal costs orders in every phase), spread (more stalled late) and
-  gather (no difference) -> all off in 0.46.3. Regroup entered too rarely to judge.
-- **Evil factions won without the four 100-gold CPs** -- the earlier "Old Gods too weak" / "evil buff" was the
-  movement system holding them back.
-- **Eye of Sargeras** taken by bots for the first time.
-- **Not finished off**: Druids (Teldrassil), Frostwolf, Exodar, Stormwind, Quel'thalas lived on with 3-6 units and
-  1-3 CPs while the winners fought each other -> finish-off bias (0.46.3).
-- **Flapping**: target returns within 5 min up to 17-18 per bot in 80 min (Scourge, Ironforge, Dalaran, Legion,
-  Black Empire); Old Gods vs Frostwolf "dancing" without a clash -> theatres + target commitment (0.47).
-- **Lordaeron at the Brill coast**: route to Howling Fjords through the channel while WL's Whirlpool Blockers
-  stood -- the generator read them as trees (permanent walls was wrong, open water was wrong too): rock edges with a
-  channel node (0.46.3).
-- `[you]` **Kul Tiras around Dun Morogh (9417,-8499)**: that spot is Dun Morogh's area, whose only graph links are
-  Ironforge, Gnomeregan and the area node north-east -- no link south (Elwynn). Next time: `-xy` on such a unit
-  (shows the node) and the bot's ROUTES line.
-- 0.46.2 second game (7:36): the regroup half did not attack at all early (regroup at 0:03) -> fixed in 0.46.3.
-- [ai] low priority (maintainer): **attackable stones** -- between nodes 188 and 203 (0.46.3 map) and at Searing Gorge
-  / Alterac (B01L, now walls) units could destroy the stones; an edge "attackable": bots attack the stones when
-  their route needs the passage. Only if it disturbs the movement.
-- Dead-end area nodes kept for now: both reported spots were CP areas, not dead ends; area nodes let bots find and
-  finish enemy buildings and creeps away from CPs. Revisit with a concrete case (`-xy`).
-
-## 0.46.1 results (44 min)
-
-- **Engine**: the game clock keeps real time (turn 20 at 20:04, +0.3 %) -- the lag is the ORDER DELAY (pathfinder
-  queue), not a slow simulation. Probe: 10-15 min window median ~2 s, 40 % of orders >= 2 s; better after 30 min
-  (fewer units: 4679 at 10 min -> 2940 at 40).
-- **Portals**: 5080 teleports in 40 min; the Old Gods crossed the rift (Black Empire army at Dun Modr), South Alliance
-  fell to 13 CPs. Dark Portal open from turn 8-10 (live edges; later re-added by the bot).
-- **Creep camps**: 26 at 10 min -> 1 at 40 -- creeping works.
-- **Activity**: armies walk 74-85 % of the sampled time, fight 7-13 %.
-- **A/B**: gather no difference; spread no gain; guard confounded (all Old Gods in one half) -> applied in 0.46.2.
-- **Unit budget**: most bots capped at 10-20 min; the maintainer's autopilot Lordaeron sat at its budget (140 food,
-  1500 gold) -- that was the budget, not missing bonus gold. Autopilot in test mode gets the bot perks but NOT double
-  CP income (`AiIncome` skips human slots).
-- **Lordaeron to Northrend before the rocks**: the graph had Howling Fjords <-> Grizzly Hills without rocks; in
-  game Lordaeron is cut off until the rocks fall (maintainer) -> exceptions file (0.46.2). Root cause found:
-  pathing blockers and custom doodads were not (or wrongly) in the generator (0.46.2).
-- **Bots walking back and forth between own CPs / to own dead ends (Terrordale)**: the staging point was the own
-  CP nearest in a straight line -> on the route since 0.46.2.
-- `[you]` "weird non-CP nodes": `-xy` on a unit standing there shows the node number (0.46.2); add bad edges to
-  `tools/ai/route_exceptions.txt` (or tell the AI the two node numbers + build).
-
-## Next playtest (0.46.3)
-
-Protocol as above: empty `CustomMapData`, Veteran, `-autodump`, 40 min or longer, **stopwatch at turns 5, 10, 20, 30,
-40**. Then `dump_summary.py ... --real "t5=... t10=..." --append "<note>"`.
-- `-version` shows 0.46.3; the dump's LOAD has "style check (0.46): OK ...". If the map does not load at all: delete
-  `AiStyleCheck.cs`, rebuild, and tell the AI (the phase-2 style would not work).
-- Errors: the summary lists them at the top -- none expected.
-- **Rift / portals**: "pseudo-portals on: teleports N"; Old Gods units on the Eastern Kingdoms after the rift opens
-  (BOTS "army by landmass"); Fel Horde / Kalimdor no longer STUCK at the Maw. Units vanish close to the asset?
-- **Dark Portal**: "Dark Portal: ..." after turn 10 -- open (live / added by the bot) or closed? The WL waygate lines
-  show active / hidden.
-- **Load**: order latency windows over time vs. units on the map (0.45.0: 5221 at 10 min); stopwatch drift.
-- **Unit budget**: "army/budget, capped turns" -- do bots hit it; fewer units on the map than 0.45.0?
-- **Creep camps** (first time they run): ROUTES "creep camps N" > 0, bots clear camps in their areas.
-- **Planner**: "planner nulls" (kept valid target); Fel Horde target switches far below 608.
-- **A LONG game (2 h+)** -- the A/B tests are judged per phase: `dump_summary.py` prints "A/B per game phase"
-  (gather ab, spread ab, guard ab2, regroup ab). Decide per feature: on, off, or on from minute N.
-- **WL CPs only** (0.46.2): 168 CPs; bots still find targets in the former workaround areas (Terrordale, Sunsail
-  Anchorage, Runestone Falithas, Jaina's Sanctum, Sulfuron Spire, the Nexus) through area nodes and creep camps?
-- **Regroup** (new): "regroup ab" line -- the regrouping half: fewer single units fed to the enemy, more CPs?
-- **Staging**: "staging on route N, kept N"; rest orders per 10 min far below 0.46.1 (3711 at 10 min)? Bots no longer
-  walk between their own CPs?
-- **Graph**: Lordaeron reaches Northrend only after the rocks; Lordaeron City reachable from Tirisfal in game? (The
-  new graph goes around -- pathing blockers there.)
-- **A/B lines** (guard ab2 now / regroup ab): nothing to type -- one game tests both at once. Only big differences
-  count (factions differ). Optional later game with `-guard ab2 -gather ab2 -spread ab2` (one line each) swaps every
-  half; no extra games per switch.
-- No unit should use the Water Passageways at the Thandol Span ("naval waygates ignored" > 0).
-- **Quel'thalas**: caster orders skipped (P2); "targets by owner" -- who attacks P2?
-- `-edges` in game: the generated graph -- wrong edges? (`route_map.png` shows the same graph.)
-
-## 0.45.0 results (540-min game, `MEASUREMENTS.md`)
-
-- **Rift: no crossing in 510 min.** Opened at 29:02. Kalimdor team at 0 CPs from 45 min (Old Gods took Kalimdor);
-  from then on the three Old Gods bots (~650 units, 160-227k gold each) only targeted Eastern Kingdoms CPs through the
-  rift: STUCK 240 s -> skip 1200 s -> the next EK target, all game; 163 units of Black Empire beside the Maw at 540.
-  No Old Gods unit ever reached EK, no Fel Horde unit Kalimdor. The late game was a dead map because of the rift --
-  pseudo-portals (0.46) are the top item.
-- **Creep camps never ran**: `TICK ERROR in route creeps: war3map.lua:29279: attempt to perform arithmetic on a
-  boolean value` on every run since 0:27 (pinned once, then silent). With `-creeps on` (default) the one-shots are
-  skipped too, so 0.44.3+ bots cleared no camps on purpose. The playtest check "PINNED has no TICK ERROR" missed it.
-- **Fel Horde flapping (608 target switches)**: every ~40 s `route-enemy` Maw of Gor'ma -> `graph-enemy` (OLD picker)
-  Southshore / Strahnbrad / ... -> 8 s later back to the Maw. Its biggest group stood in Outland; the live graph had
-  no edge out of Outland (no Dark Portal waygate edge; `ROUTES.md`: Hellfire <-> Nethergarde "unreachable on foot"),
-  so `Pick` from Outland returned null and the old picker took over. Every switch re-orders the group.
-- **Gather points barely work**: 149 started in 540 min, 12 assembled, 121 timeouts (81 %).
-- **Lag at the end with FEWER units than early**: 5221 units on the map at 10 min, 2800-3400 from 30 min to the end.
-  Late: ~100 direct far orders / min (chain fallback, 46,914 in total -- cross-continent path requests), stalled share
-  ~24 % in 200-540 min (13 % up to 90 min), 1089 units idle at waygate exits, flapping. Without stopwatch numbers
-  unit count vs. orders vs. long-game degradation cannot be separated -- 0.46 measures it.
-- **Food-capped, not gold-capped**: the strong bots sat at their food maximum with 95-227k gold. The unit budget
-  (40 + 10 per CP) would have cut the 10-min peak by only ~15-20 % and the late game not at all.
-- **Quel'thalas survived** (12 CPs at 540, 90-106 structures all game, army often 19-60): 5102 units trained, ~4800
-  of them casters (Sorceress 1897, Priest 1898, Spell Breaker 1025) -- no autocast, weak. Its neighbours Scourge
-  (~260-300 units) and Legion spent the game on Lordaeron targets and defence (state switches 118 / 195). The dumps
-  cannot tell who attacked Quel'thalas how often (the event log keeps 300 lines) -- 0.46 counts targets by owner.
-- Not answered by this game: rift east end for humans, rest churn (rest orders 124,498 vs change 177,014 -- still
-  high), waygate exits in general.
-
-## Phase 1 -- 0.46 (fixes from 0.45.0, load, guard positions, graph, pseudo-portals)
-
-Each item: switch + counter. Designs: `CONCEPTS.md` sections 6-9. **Priority: pseudo-portals** (0.45.0: the rift
-decided the whole late game).
-
-0.46 is built in parts; the maintainer builds once all parts are in. Done: **part 1** (creep fix, check, graph list
-review, docs), **part 2** (pseudo-portals + Dark Portal, planner keeps its target, reachable groups, unit budget,
-latency probe, guard positions A/B), **part 3** (the rest of this list). 0.46.0 is complete.
-
-Fixes from 0.45.0:
-- [done, part 1] **Creep camps TICK ERROR**: confirmed in the built `war3map.lua` -- CSharp.lua emitted
-  `_creepLevel:get(node) + (GetUnitLevel(u) > 0) and GetUnitLevel(u) or 1`. Rewritten with a local; hard rule 16;
-  `check_refs.py` flags the pattern. Check the creep targets in the 0.46 game (first time they run).
-- [done, part 3] **`-edges` draws the generated graph** (the one the planner uses); the old graph only behind `-edges old`.
-- [done, part 2] **PORTALS section lists WL's own waygates** (Dark Portal n036, Emerald, Dun Modr ...): position, owner, active,
-  hidden, destination -- why the Dark Portal was no graph edge at 540 min in 0.45.0.
-- [done, part 2] **No fallback to the old picker while the route target is valid**: if `Pick` returns null and the committed
-  target came from the route planner and is still alive / not owned / reachable from the territory, keep it. Log WHY
-  `Pick` returned null (no start node, no route, nothing scored) as a counter.
-- [done, part 2] **Dark Portal / Outland**: a pseudo-portal edge Outland <-> Blasted Lands, open while WL's n036 Dark Portal
-  waygates are active (WL quest, turn 8-10 -- `README.md` "Portals and passages"), so groups in Outland can plan.
-- [done, part 2] **Groups only from units that can reach the target** (same walking component, or through a portal edge): the
-  Fel Horde's group for the Maw was its Outland units.
-- [done, part 3] **Caster share cap** in production: at most ~25 % of a bot's trained units are casters (Quel'thalas: 94 %).
-- [done, part 3] **Targets by owner** counter (per bot: how often it targeted each owner's CPs), so "who attacks whom" is
-  visible without the event log.
-- [done, part 3] **Gather diagnostics**: at a timeout, the share of the group that had arrived; `-gather ab` (per-bot A/B).
-- [done, part 3] `dump_summary.py`: TICK ERRORs at the top of the summary, not at the end; the defence log shows the real enemy
-  count while a defence is kept (now "0 enemy units").
-- [done, part 1] **Graph edits -- the maintainer's list** was made from the OLD graph (`-edges`). In the generated
-  graph (the planner's) 12 of 13 items were already as wanted:
-  - add Blackrock Depths - Burning Steppes, Moonglade - Auberdine, Windshear Crossing - Desolace, Gadgetzan - Tanaris,
-    Crystalsong Forest - Dragonblight, Drak'Tharon Keep - Venture Bay: all generated edges; Wetlands - Tol Barad: the
-    AI ship waygate (live edge, both ways).
-  - remove Searing Gorge - Burning Steppes, Menethil Harbour - Tol Barad, Ruins - Tunnels of Ahn'Qiraj, Uldum -
-    Throne of the Four Winds, Twilight Shore - Fuselight: no direct generated edge (connected through other nodes or
-    not at all).
-  - `[you]` remove Windshear Crossing - Feralas: in NEITHER graph -- where was it seen? (Desolace - Feralas exists.)
-  - `[you]` re-check the generated graph on `route_map.png` (`render_map.py`, attached to the 0.46 delivery): the
-    "~20 wrong connections" may have been the old graph. New findings -> the exceptions file below.
-  - The old graph is not edited (fallback only, deleted in phase 2).
-- [done, part 2] **Unit budget per CP** (`CONCEPTS.md` 8): production gate, `-cap off|<base> <perCp>`. Default 40 + 10 food per
-  held CP (~150 for an average faction), never above the faction's food maximum; heroes not counted. Bots only.
-  `AiApi` hook for a base per faction (set by Shattered Legacies; same for all until then).
-- [done, part 2] **Order-latency probe**: on a sample of orders the bot gives anyway (idle units only, at most 8 tracked), the
-  game time until the unit has moved 32. Dump: median / 90 % / max per 5 min. Game time -> desync-safe. No extra
-  orders.
-- [done, part 2] **Guard positions** (hypothesis): units of computer players walk back to their "guard position" after
-  chasing an enemy. Nothing in the code removes it. `RemoveAllGuardPositions` per bot at setup +
-  `RemoveGuardPosition` on every unit a bot gets (train / enter map). `-guard on|off|ab`. Counter: idle-away and rest
-  orders per bot (A/B halves compared).
-- [done, part 2] **Pseudo-portals, instant** (`CONCEPTS.md` 7): bots no longer click waygates; a chain ends at the portal
-  entry, an enter-region trigger teleports units with a ticket and re-chains them at the exit. For every portal edge
-  (rift, Argus / Legion, Emerald Portals, the AI ship waygates). `-pportal on|off` (off = 0.45 waygate click).
-  Counters: teleports, stale tickets, units teleported on issue (already inside).
-- [ai] **Per-bot A/B**: switches accept `ab` (even player slots on, odd off) and `ab2` (swapped). [done, part 2:
-  `AiAb`; part 3: own bit per switch -- guard 0, gather 1, spread 2.] For: guard,
-  gather, spread.
-- [done, part 3] **Activity breakdown** (from the stall sampler, no new scans): per sample walking / idle / hurt (in a fight) /
-  stalled, shares per 5 min. Ranged units shooting unhurt count as stalled -- compare between games.
-- [done, part 3] **Flapping returns**: per bot, targets left and taken again within 5 min (A -> B -> A).
-- [done, part 3] **Spread chain points** (test, not a certain gain): intermediate chain points get a per-unit offset (ring
-  around the node, or the edge's "via" point) instead of every unit walking to the same spot. `-spread on|off|ab`.
-- [done, part 3] `dump_summary.py --real "t5=5:02 t10=10:30 ..."` fills the "real s per game min" column.
-- [done, part 3] **CSharp.lua check**: a throwaway class with ~300 instance fields (+ a static instance of it); the maintainer
-  builds, `lua_check.py` must pass. Confirms that object state avoids hard rules 1, 2 and 7. Removed in 0.47.
-
-## Next playtest (0.47.0) -- the theatre build
-
-- Dump "theatres": which bots open a second / third theatre (Druids on the Broken Isles, Fel Horde in Outland + the
-  Eastern Kingdoms, Old Gods after the rift)? Does the main theatre move when its land is done ("main theatre done")?
-- **Back and forth**: does it stop? "target returns" per bot far below 0.46.2 (up to 17-18 in 80 min), "defended by
-  the rest" > 0 (the group kept its front).
-- Kul Tiras: no more east-west walking? North Alliance: forward or creeping instead of walking between its CPs?
-- Secondary theatres: their targets in the event log ("[theatre 2]: target ..."); do they hold their land?
-- Errors (summary top), order latency vs. 0.46.2.
-
-## Next playtest (0.48.1)
-
-- **Legion**: PINNED "Legion teleporter: Portal to Alterac cast"; the Legion army leaves Argus through it. The
-  pseudo-portals line ends with "Legion teleporters: <state>" (e.g. "cast refused" = WL's "Argus" quest not done).
-- **Back and forth**: armies no longer walk back to their base when a plan comes back empty; "main moved" far below 36
-  per 25 min.
-- **Empty plans**: ROUTES "empty plans: no candidate N, none reachable from the group N" -- which one dominates tells
-  where to look next (South Alliance 15-20 min in 0.48.0).
-- The "bot portals" part of the same line lists the Tomb -> Argus and rift portals once THEIR gates are open (Tomb:
-  turn 15 + a level-10 hero; rift: Nordrassil taken) -- "none open" before that is normal.
-- Outland: no more gathering at the north edge (1395,-18937) -- that was most likely the hold at the base.
-
-## Next playtest (0.48.0, superseded)
-
-- **Portals**: ROUTES "bot portals: tomb->Argus / rift->Highlands / rift->Maw" once open; the Legion leaves Argus
-  through WL's teleporters (one-way to Northrend / Alterac); Deeprun Tram used by Ironforge / Stormwind after its
-  research; nobody else uses another player's waygate. No bot waygates on Argus or at the rift any more.
-- **Nothing reachable**: event log "wait-at-rocks" -- the North Alliance waits at the Northrend rocks / whirlpools
-  instead of the Brill coast. "waits at closed rocks" counter.
-- **Theatres**: fewer early second fronts for strong factions; Scourge / Legion / Old Gods stronger again?
-- `[you]` Druids heading to Exodar / Teldrassil after the area is cleared: `-xy` on such a unit (node) and the
-  Druids' ROUTES line -- reinforcements walking from production, the staging point, or a target?
-
-## Phase 1 -- 0.48 / 0.49 (portals aligned with WL, ferries; tuning of 0.47)
-
-- [done 0.48.0] Player-owned waygates (Deeprun Tram, Legion Teleporters) for owner + allies; Tomb -> Argus one-way
-  and the rift as bot-only pseudo-portals; no visible bot waygates for Argus / the rift; wait at closed rocks.
-- [ai] **Ferries** (next): the 8 ship waygate pairs -> harbour-to-harbour trips (`CONCEPTS.md` 7).
-- [ai] **Book of Medivh / the Legion summon** (next, maintainer: force WL's REAL Legion event): the bot casts the
-  item's channel spell; the hero invulnerable while channelling -- no bot shortcuts for the summon.
-
-- [done 0.47] **Theatres** (`CONCEPTS.md` 6) and **only forward** (targets scored with the walk from the army;
-  defence of far CPs by the rest).
-- [ai] **Target commitment**, if returns stay high after 0.47: keep a target until taken, lost or blocked.
-- **Portals aligned with WL** (pseudo-portals from a data list instead of the bot's own waygates; maintainer 0.46.2):
-  - [ai] **Ships -> ferries** (`CONCEPTS.md` 7): the AI ship waygates go; sea links become ferry trips.
-  - [ai] **Old Gods rift**: no bot-made waygates -- pseudo-portal edges between WL's existing assets at both ends.
-    0.46.2: only one Old Gods faction used it; Fel Horde / Illidan barely -- check why (route cost, theatre).
-  - [ai] **Argus / Legion** (maintainer's spec, 0.46.3): remove the bot's Argus portals. WL's Legion portal BUILDING
-    (23072,-29344; not the portal usable after the summon) lets the Legion choose "go Northrend" or "go Alterac" --
-    two one-way pseudo-portal edges Argus -> Drak'Tharon Keep and Argus -> Alterac Mountains (the same exits a
-    human gets). Argus cannot be entered from outside at that stage. **Tomb of Sargeras -> Argus**: one-way, closed
-    until the Tomb is opened (the level-12 hero quest that opens the Tomb, `AiGates` "tomb"). One-way preferred.
-  - [ai] **Deeprun Tram** (Ironforge <-> Stormwind): exists in the map as in WL -- only the bot's pseudo-portal edge is
-    missing. Its ends are the two tram BUILDINGS (found by unit type, not coordinates -- moved buildings keep
-    working); the edge closes when either building is destroyed.
-  - [ai] **Book of Medivh** taken by the Scourge or the Legion: the bot casts the item's ability (the channel that
-    summons the portal) on the spot; the channelling hero is made invulnerable for the channel -- bots do not defend
-    a channelling hero.
-  - Data list for pseudo-portals: each entry = entry unit / point, exit unit / point, one-way or both, "open while"
-    condition (building alive, gate opened, quest done) -- replaces live waygate reading for bot-made portals.
-- [ai] **Ferries** (`CONCEPTS.md` 7): harbour-to-harbour edges, units hidden on board, visible boat, delay.
-- [ai] Remove the CSharp.lua check class.
-
-## Phase 1 -- 0.48 / 0.49 (as needed)
-
-- Problems found in 0.46 / 0.47 games.
-- [ai] **Step 2b, extend or re-order**: when the target changes during a chain, continue from the chain's end if
-  that costs <= ~1.2 x the direct route, else a new chain. Decide after the 0.46 data.
-- [you/ai] **Hop cost** of portals / ferries (300 today = one short walk; ferries: sail time). Decide with ROUTES data.
-- [ai] Defence leftovers after theatres (longer hold, defence only for CPs worth more than the current target, or
-  "defend" = the rest at staging).
+- [ai] Step 2b, extend or re-order: when the target changes during a chain, continue from the chain's end if that
+  costs <= ~1.2 x the direct route, else a new chain.
+- [you/ai] Hop cost of portals / ferries (300 + sail time today) -- decide with ROUTES data.
+- [ai] Defence leftovers: longer hold, defence only for CPs worth more than the current target, or "defend" = the rest
+  at staging; `CloseThreat` ping-pong (Open problems 2).
+- [ai] Old Gods rift: 0.46.2 only one Old Gods faction used it; Fel Horde / Illidan barely -- check why (route cost,
+  theatre).
+- [ai] low priority (maintainer, 0.46.2): **attackable stones** -- between nodes 188 and 203 (0.46.3 map) and at
+  Searing Gorge / Alterac (B01L, walls today): an edge "attackable" -- bots destroy the stones when their route needs
+  the passage. Only if it disturbs the movement.
+- `[you]` graph questions from 0.46-0.47 (need `-xy` on a unit there -- it shows the route node): "weird non-CP nodes";
+  Windshear Crossing - Feralas (in neither graph); Kul Tiras around Dun Morogh (9417,-8499; its area has no link
+  south); Druids heading to Exodar / Teldrassil after the area is cleared.
 
 ## Graph (generated from map data -- `tools/ai/gen_routes.py`, check with `tools/ai/render_map.py`)
 
@@ -486,7 +145,10 @@ Fixes from 0.45.0:
 - Phase 3: **graph independent of CPs** (nodes from terrain only, CPs as targets inside node areas) and remove the
   workaround CPs W1-W4 (`WORKAROUNDS.md`), replacing them with non-CP nodes at the same spots.
 
-## Phase 2 -- restructure (~0.50)
+## Phase 2 -- restructure (next chat)
+
+Rules: pure refactors (no behaviour change in the same drop); compare a game's `dump_summary.py` numbers before / after;
+keep every measurement (TURNAROUNDS, TRAIL, LOAD lines) working -- they are how phase 1 was won.
 
 Method for the upstream PR: clone upstream WL, make a PR branch, copy `Ai/` in, add the `[BOT]` hooks, ask for review.
 This code base is not the PR.
@@ -498,6 +160,8 @@ This code base is not the PR.
 - [ai] Everything fork-specific or a workaround moves to `ShatteredLegacies/` (hand-placed coordinates, ids, missions
   that only exist because of fork content); every hand-coded id skips silently when missing (5.x has no Old Gods).
 - [ai] Version tags in comments -> `CHANGELOG.md`.
+- [ai] Remove the CSharp.lua check class (the 0.46 check passed); keep `tools/ai/check_refs.py` limits until the
+  state-in-objects migration has removed the static arrays.
 - [ai] Reuse buffers in the per-service code (`Process`, `Select` allocate arrays / sets every call): Lua garbage.
 - [ai] `AiIncome` (bot pays computer slots WL's CP income) is a parallel payer for what is arguably a WL bug
   (`ControlPointManager` pays `User` slots only). For the PR: a one-line upstream fix instead; until then make sure

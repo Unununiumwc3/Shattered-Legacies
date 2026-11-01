@@ -23,64 +23,26 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.51.0)
+## State of the work (0.51.1) -- read this, then `TODO.md` ("Open problems" first)
 
-- **0.51.0**: the bot performs the Legion ritual itself (`AiRitual`); ferry boats at 150 (the engine's minimum).
-  Waiting for a playtest: Maiev by ferry, Tomb of Sargeras <-> Argus (both rare).
-
-
-- **0.50.1**: the Book ritual is ordered with "deathanddecay" (A00J is a Death and Decay; "volcano" was refused),
-  ferry boat owned by the bot / smooth / half speed, missions travel by route (`AiRoutes.MoveVia`).
-
-
-- **0.50.0 = portal rework, part 2**: ferries replace the AI ship waygates (`AiFerries`), Dark Portal open to all bots
-  (owner rule only for tram / Legion teleporters / exterior Demon Portal), Book without level 12 for bots. The
-  maintainer playtests when all problem portals are done.
-
-
-- **0.49.0 = portal rework, part 1 (Legion)**: summon only by the Book of Medivh ritual (`AiRitual`), WL's Demon
-  Portal where it was cast, Tomb of Sargeras <-> Argus both ways. Next: ferries (`TODO.md` "Open problems" 2).
- -- read this, then `TODO.md` ("Open problems" first)
-
-- **0.48.3 measured the back-and-forth** (dump sections TURNAROUNDS and TRAIL, `tools/ai/back_forth.py`): main
-  cause = the engine's guard position (units walk home to where they were trained). **0.48.4** removes guard positions
-  for all bots and adds commit on re-plan -- the 0.48.4 game confirmed it (engine walks 4.5 % -> 1.0 % of walks, followed
-  units no longer end at their spawn; maintainer: "improved a lot"). **0.48.5**: sleeping creeps woken at the target
-  (`AiWake`), budget 30 + 5 per CP, guard removal once per unit.
-
-- **Phase 1 (movement "good enough") is nearly done.** Maintainer after 0.48.1: "the game felt mostly good" -- the
-  remaining show stopper is **back-and-forth movement** (`TODO.md` "Open problems", with what is known about it),
-  then the rest of the portal work (ferries, Book of Medivh). Then phase 2 (restructure for the upstream PR) and
-  phase 3 (fine-tuning, balance). Phases end at their criteria (`TODO.md`), not at version numbers.
-- **How the bots move today** -- `README.md` "How the bots move" (pipeline) and "Already tried" (every approach that was
-  dropped and why -- read it before proposing a movement change). Key pieces:
-  - Generated route graph (`tools/ai/gen_routes.py` -> `AiRoutes.g.cs`): WL's CPs + area nodes; terrain, trees,
-    pathing blockers, custom doodad pathing; removable rocks = types WL's code puts into a `RockGroup`;
-    `tools/ai/route_exceptions.txt` for what the map files cannot tell (`remove`, `add`, `node @x,y`).
-  - Target planner (`AiRoutes.Pick/Plan`): territory distance + 0.5 x walk from the army ("only forward"), finish-off
-    bias, creep camps / leftovers, stickiness; nothing reachable -> wait at the nearest land-separating closed rock
-    edge (sticky), else hold in place. The old pickers run only with `-route off`.
-  - Theatres (`AiTheatres`): up to 3 fronts per bot (walking components), each with its own state slot
-    (`S(pid) = pid + 24 x theatre`, hard rule 17).
-  - Army (`AiArmy`): attack group sized to the need, rest at a staging point on the route, movement chains (queued
-    attack-moves), regroup (A/B), defence of far CPs by the rest.
-  - Ferries (`AiFerries`, 0.50): the 8 sea links as boat trips (bot-only).
-  - Portals (`AiPortals`): pseudo-portals (tickets + enter-region trigger) for every portal edge; all players'
-    waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb <-> Argus
-    (0.49: both ways, open at the summon or when anyone holds the Tomb CP) and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
-    pairs are still visible bot waygates (-> ferries).
-  - Load: unit budget per CP (`AiBudget`, 30 + 5 since 0.48.5), order-latency probe, caster cap.
-- **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append` (errors at the top, A/B per game phase,
-  stopwatch with `--real`). **The dump cuts long lines** (~250+ characters): put new information on its own line.
-- **WL facts that matter for the portals**: the Legion leaves Argus through WL's teleporter buildings (spells for
-  humans), the Deeprun Tram is a pair of WL waygates given to Ironforge / Stormwind, the Dark Portal opens by the Fel
-  Horde quest (turn 8-10), WL's Water Passageways are for ships only (never army edges).
+- **Phase 1 (movement "good enough") is DONE** (maintainer, 0.51: "we are ready for the refactor"). Back and forth fixed
+  (0.48.4: guard positions), portals reworked to WL's rules (0.48-0.51), ferries replace the AI ship waygates (0.50),
+  the Legion is summoned only through the Book of Medivh (0.49 / 0.51). Two mechanics wait for a playtest because they
+  happen rarely: a mission hero by ferry (Maiev's "Vault of the Wardens") and Tomb of Sargeras <-> Argus.
+- **Next: phase 2 = restructure** (`TODO.md` "Phase 2"): layout for the upstream PR, state in objects, the old code
+  (old pickers, hand-written graph, doctrine, wave runner) deleted. Do it as pure refactors -- no behaviour change in
+  the same drop -- and compare a game's dump numbers (`tools/ai/dump_summary.py`) before / after.
+- **How the bots move today** -- `README.md` "How the bots move" (the pipeline), "Already tried" (every dropped
+  approach and why -- read it before proposing a movement change), and "Movement: hard-learned facts" below.
+- **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append`; back and forth -> `tools/ai/back_forth.py`
+  (stitches all dumps of a game). **The dump wraps lines at ~180 characters** (`  ~` continuation): put new information
+  on its own line. Read PINNED first (`TICK ERROR` / `FAILED`), then BOTS, EVENT LOG, LOAD, TURNAROUNDS / TRAIL.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-  The map's CPs are WL's again (0.46.2): never add CPs to the map for the bot -- area nodes are bot data.
-- **Phase-2 style is proven**: state in objects works with CSharp.lua (0.46 in-game check). New subsystems: own class,
-  state in an object or in `S(pid)`-indexed arrays.
-- The maintainer plays mostly 25-80 min test games, often with `-autopilot` on one faction; he reports what he SEES
-  (screenshots, `-xy` coordinates) -- map them to nodes with `-xy` (shows the route node) and the dumps.
+  The map's CPs are WL's (0.46.2): never add CPs for the bot -- area nodes are bot data.
+- **Phase-2 style is proven**: state in objects works with CSharp.lua (0.46 check; `AiVoyage`, `AiTrackUnit` since).
+  New subsystems: own class, state in an object or in `S(pid)`-indexed arrays.
+- The maintainer plays 20-40 min test games (also multiplayer), often with `-autopilot` on one faction; he reports what
+  he SEES (screenshots, `-xy`) -- map them to route nodes (`-xy` shows the node) and to the dumps.
 
 ## Getting the code (sandbox)
 
@@ -284,6 +246,57 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - **Game speed**: when the simulation cannot keep up, single player slows down (turn counter behind a stopwatch);
   multiplayer shows lag screens.
 
+## Movement: hard-learned facts (phase 1, 0.39-0.51)
+
+What cost the most games to find out. Details and numbers: `README.md` "Already tried", `CHANGELOG.md`, `MEASUREMENTS.md`.
+
+- **Measure what the units DO, not only what the bot decides.** Order counts misled twice: 0.46 judged guard-position
+  removal by order counts (3-10 x idle-away orders) and kept the guard positions -- which were the back and forth. The
+  unit trail (0.48.3, `AiTrack`: one bot's units from their building, every order / turn) found it in one game.
+- **Guard positions** (computer players): a unit that runs out of orders walks back to where it was TRAINED, ~15-25 s
+  later, with an attack order (so every idle check sees it as busy). Removed for all bots (`AiGuard`, 0.48.4): engine
+  turnarounds 4.5 % -> 1.0 % of walks.
+- **Never re-order busy units on a timer**; only idle units away from their point (0.39/0.41). Re-issuing attack-moves
+  made stop-go stutter; re-sending every rest unit at each target change made rest units walk back and forth (0.44.3).
+- **Commit to routes and targets**: re-planning every service or from the straight-line nearest node made armies run
+  back and forth (0.42); plan from the group's AREA (0.42.1), re-plan every 30 s, switch only for < 0.5 x the score,
+  never to a target farther on foot than the current valid one (0.48.4 "commit").
+- **Score targets from the territory AND the army** ("only forward", 0.47): territory distance alone let any point of
+  a long border win, the army turned back; creep camps / leftovers scored from where the army stands.
+- **Queued attack-move chains** along the route (0.44), one backward tree per destination, 4 kept (0.44.2) -- per-unit
+  planning made 34k-op spikes. No group movement in WC3: every unit paths alone; the "group" is bookkeeping.
+- **Waygates break chains** (a teleport drops the queued orders): pseudo-portals (0.46) -- the chain ends at the entry,
+  a trigger teleports ticketed units and gives them the rest of the way at once. Bot-only by construction.
+- **Ferries instead of ship waygates** (0.50): board hidden + paused (`ShowUnit` false = out of the world; keep them OUT
+  of every enumeration -- `AiFerries.InTransit`), a boat sails with real move orders (moving it by `SetUnitX/Y` every
+  0.25 s stuttered), units land and continue. The boat is the bot's own unit (minimap), invulnerable, removed on landing.
+  WC3 clamps move speeds to MinUnitSpeed (150 by default).
+- **Missions must travel by route too** (`AiRoutes.MoveVia`, 0.50.1): a plain move order cannot cross the sea or use a
+  pseudo-portal -- Maiev stood at the coast once the ship waygates were gone.
+- **Player-owned waygates**: "owner + allies only" is right only for WL's private ones (Deeprun Tram n03B, Legion
+  Teleporters n0BE, exterior Demon Portal n037). The Dark Portal's waygates follow WL's "Dark Portal Aura Control
+  Nexus" -- whoever holds it owns them; with the owner rule both sides lost the Dark Portal for 10-20 min (0.48.5).
+- **Theatres** (0.47): one front per walking component, own state slot per theatre (`S(pid)`). The main front moves
+  only after ~30 s of empty plans and a 60-s "twice the food" hold -- instant switches moved fronts 36-47 times in 25 min.
+- **Empty plans**: hold where the army stands (0.48.1), wait at the nearest closed rock edge of its land (0.48, sticky
+  0.48.2) -- holding at the base walked armies home; the old pickers ignore rocks (Brill coast).
+- **Defence**: only the army's landmass, within 9000, min 30 s, 45-s cooldown (0.43.2); a CP far behind the group is
+  defended by the rest (0.47). Known: the cooldown is skipped when the threat is within 4000 -> defence ping-pong
+  (0.48.2 data; phase 3).
+- **Sleeping creeps**: units never auto-acquire a sleeping unit -- armies stood at night camps for minutes. `AiWake`
+  wakes them once the army is there (0.48.5).
+- **Engine load = orders**: every order (and every chain point that becomes active) waits in one pathfinder queue
+  for the whole game; thousands of units -> 1-2 s order delay. Levers that worked: idle-only orders, chains, unit
+  budget per CP (now 30 + 5), caster cap. The latency probe samples orders to IDLE units -- its numbers change meaning
+  when the idle population changes (0.48.4), compare with care. Stopwatch (turn vs real time) is the honest measure:
+  0.48.5 multiplayer ~5 s behind at 20 min.
+- **Spells by order**: a bot could not cast WL's Legion ritual A00J (a Death and Decay variant inside the Book's item
+  spellbook) -- "volcano" (its object-data order string) and "deathanddecay" were both refused. The bot performs the
+  ritual itself and completes WL's quest (`AiRitual`, 0.51). Changed order strings work only for Channel-based abilities.
+- **Offline replay beats guessing**: the Dark Portal bug (0.48.5) was found by replaying the planner's two Dijkstra
+  searches in Python on `AiRoutes.g.cs` + the dump's NODES / portal list (owner names with spaces broke the first regex
+  -- parse `own=(.*?) unc=`).
+
 ## WL facts that bit us
 
 Engine / API
@@ -409,13 +422,20 @@ Your setup
   leftovers in own areas (+2500), creep camps (+3000); 10-min lock on player-owned targets, stuck blacklist, stickiness.
   Fallback / `-route off`: the old frontier picker `SimpleBot.PickGraphTarget` on the hand-written graph
   (`AiGraph.Combined` / `Kalimdor`, merged at the Legion summon) -- to be deleted once the planner is proven.
-- **Movement** (`-chain on`): `AiArmy.Issue` -> `AiRoutes.Chain` (queued attack-moves along the route, waygate legs);
-  the attack group / rest / staging logic in `AiArmy.Attack`; gather points `AiRoutes.UpdateGather`; defence
-  `AiDefense.Pick` before targeting.
+- **Movement** (`-chain on`): `AiArmy.Issue` -> `AiRoutes.Chain` (queued attack-moves along the route; portal legs end
+  at the entry with a ticket -> `AiPortals` teleports, `AiFerries` boards / sails / lands); the attack group / rest /
+  staging logic in `AiArmy.Attack`; defence `AiDefense.Pick` before targeting; missions `AiRoutes.MoveVia`; theatres
+  `AiTheatres.Split` / `S(pid)`; guard positions `AiGuard`; sleeping creeps `AiWake`; commit / why in `AiRoutes.Pick`.
+- **Measuring movement**: `AiTrack` (TURNAROUNDS all bots, TRAIL one bot, `-track`), `AiObserve` (activity, returns),
+  `AiProbe` (order latency), `tools/ai/back_forth.py`, `tools/ai/dump_summary.py`.
 - **Bot bonuses**: `SimpleBot.HasPerks(p)` -- real bots and test-mode autopilot only.
 - **Command switch**: `AiDebug.Access` (`Off` release / `HostOnly` / `Everyone`); levels Read / Heavy / Control.
-- **Portals**: `AiGraph.Portals` (phases always / prelegion / legion / oldgods), created by `AiLegion`, watchdog
-  rebuilds them. Target distance through portals: `SimpleBot.TravelDist2`. Edge weights: `Edge.Weight`.
+- **Portals**: live waygates read every 30 s (`AiRoutes.CheckPortals`; owner rule `PrivateGate`), bot portals
+  (`AiPortals.AddBotPortals`: Tomb <-> Argus, rift), Legion teleporters, the Dark Portal fallback, ferry piers
+  (`AiFerries.AddEdges`; harbours = `AiGraph.Portals` phase "ship", lanes `AiLanes.g.cs`). No visible bot waygates
+  any more (`AiLegion.CreatePortals` creates none). Old picker only: `SimpleBot.TravelDist2`, `Edge.Weight`.
+- **Legion summon**: `AiRitual` (Book carrier, bot ritual, portal placement); `AiLegion.CheckLegionSummoned` runs the
+  summon handling (graph switches, war chest, betrayal, `CheckDemonPortal`).
 - **Missions**: Ragnaros (`AiMissions`, real level-12 hero), hero visits (`AiHeroVisits`, `AiConfig.HeroVisits`),
   kill targets / area clears (`AiConfig.KillTargets`, `ClearAreas`, `RequireType`). Heroes on a mission are in
   `AiState.MissionUnits`. Stranded heroes: `AiHeroCare`. Bot menu picks: `AiChoices`.

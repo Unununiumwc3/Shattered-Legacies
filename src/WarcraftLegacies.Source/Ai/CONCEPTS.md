@@ -132,7 +132,7 @@ Design:
 - Cost: up to 3 x the target planning per bot (the route trees are shared per destination).
 - Counters: theatres per bot, food per theatre, switches per theatre.
 
-## 7. Pseudo-portals (0.46) and ferries (0.47) (agreed)
+## 7. Pseudo-portals (0.46) and ferries (built 0.50 -- `AiFerries`)
 
 Problem: waygates were the most unstable part (0.42-0.45): units click the waygate, the teleport drops their queued
 chain (WC3), they stand at the exit; fixes made it better, the next change worse. Ships as real transports are too

@@ -4,6 +4,16 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.51.1
+End of phase 1 (maintainer: ready for the restructure). Version v0.51.1.
+- **The bot ritual cannot be stopped** (maintainer): the hero's invulnerability is set again every second (other code
+  may reset it), and a hero pushed off its spot is put back instead of cancelling. Only a removed hero, losing the Book
+  or changing owner ends it.
+- **Docs for the handover**: `AI_AGENTS_CONTEXT.md` -- state rewritten (phase 1 done, phase 2 next) and a new section
+  "Movement: hard-learned facts"; `README.md` "How the bots move" rewritten for 0.51 and "Already tried" extended;
+  `TODO.md` -- open problems for phase 2/3, the superseded per-build playtest checklists and old result write-ups
+  removed (history stays in `CHANGELOG.md` / `MEASUREMENTS.md`), still-open items kept ("Phase 3 candidates").
+
 ## 0.51.0
 From the 0.50.1 game (maintainer gave a bot the Book; ferries look good). Version v0.51.0.
 - **The bot performs the Legion ritual itself** (maintainer's choice): every cast order was refused in 0.50.0 / 0.50.1
