@@ -90,6 +90,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         _lastTarget[i] = -1;
         _lastWp[i] = -1;
+        _waitNode[i] = -1;
       }
     }
 
@@ -1774,7 +1775,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // 0.48: where to wait when nothing is reachable: the own-land end of the closed rock edge nearest to (sx, sy),
     // on the same land (walking component). False = no closed rock edge on this land.
-    internal static bool WaitPoint(player p, float sx, float sy, out float x, out float y)
+    internal static bool WaitPoint(player p, int pid, float sx, float sy, out float x, out float y)
     {
       x = 0f;
       y = 0f;
@@ -1785,6 +1786,18 @@ namespace WarcraftLegacies.Source.Ai
 
       Ready();
       var comp = CompAt(sx, sy);
+      // 0.48.2: keep the wait point while it still waits at closed rocks of this land -- recomputing "nearest" every
+      // service made the North Alliance patrol between two rock edges at Tirisfal (0.48.1)
+      var keep = pid >= 0 && pid < 24 ? _waitNode[AiTheatres.S(pid)] : -1;
+      if (keep >= 0 && CompOfNode(keep) == comp && WaitNodeStillBlocked(keep))
+      {
+        x = AiRouteData.NodeX[keep];
+        y = AiRouteData.NodeY[keep];
+        WaitPoints++;
+        return true;
+      }
+
+      var bestNode = -1;
       var best = -1f;
       for (var e = 0; e < AiRouteData.Edges; e++)
       {
@@ -1809,14 +1822,43 @@ namespace WarcraftLegacies.Source.Ai
             best = d;
             x = nx;
             y = ny;
+            bestNode = nd;
           }
         }
+      }
+
+      if (pid >= 0 && pid < 24)
+      {
+        _waitNode[AiTheatres.S(pid)] = bestNode;
       }
 
       if (best >= 0f)
       {
         WaitPoints++;
         return true;
+      }
+
+      return false;
+    }
+
+    private static int[] _waitNode = new int[AiTheatres.Agents];
+
+    // a node is still a wait point while one of its rock edges stays closed and leads to another land
+    private static bool WaitNodeStillBlocked(int nd)
+    {
+      for (var e = 0; e < AiRouteData.Edges; e++)
+      {
+        if (WalkEdgeOpen(e))
+        {
+          continue;
+        }
+
+        var a = AiRouteData.EdgeA[e];
+        var b = AiRouteData.EdgeB[e];
+        if ((a == nd || b == nd) && CompOfNode(a) != CompOfNode(b))
+        {
+          return true;
+        }
       }
 
       return false;
@@ -2065,8 +2107,9 @@ namespace WarcraftLegacies.Source.Ai
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped)
             + "; finish-off scores " + I2S(FinishTargets) + "; secondary-theatre plans " + I2S(SecondaryPlans)
-            + "; waits at closed rocks " + I2S(WaitPoints) + "; empty plans: no candidate " + I2S(NullNoCandidate)
-            + ", none reachable from the group " + I2S(NullFromGroup));
+            + "; waits at closed rocks " + I2S(WaitPoints));
+      o.Add("empty plans (0.48.1): no candidate " + I2S(NullNoCandidate) + ", none reachable from the group "
+            + I2S(NullFromGroup)); // 0.48.2: own line (the dump cuts long lines)
       AiTheatres.Lines(o); // 0.47
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)

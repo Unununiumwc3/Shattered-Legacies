@@ -213,8 +213,8 @@ namespace WarcraftLegacies.Source.Ai
   internal static class AiBudget
   {
     internal static bool On = true;
-    internal static int Base = 40;
-    internal static int PerCp = 8; // 0.46.2: was 10 -- order delay ~2 s at 10-15 min (0.46.1 game)
+    internal static int Base = 30; // 0.48.2: was 40 (maintainer: a bit laggy, tune food down)
+    internal static int PerCp = 7; // 0.48.2: was 8 (0.46.2: 10 -> 8, order delay ~2 s at 10-15 min)
     internal static int[] Budget = new int[24];
     internal static int[] Army = new int[24];
     internal static int[] CappedTurns = new int[24];
@@ -701,7 +701,6 @@ namespace WarcraftLegacies.Source.Ai
     {
       AiGuard.Setup();
       AiProbe.Setup();
-      AiPortals.Setup(); // 0.48.1: WL's Legion Teleporter spells
     }
 
     internal static void Lines(List<string> o)

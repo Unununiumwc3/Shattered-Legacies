@@ -8,8 +8,39 @@ in `README.md` ("How the bots move", "Already tried").
 Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
 `../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
 
-Current build: **0.48.1** (hold in place, front moves only after 30 s, Legion teleporter casts) -- before: **0.48.0** (portals part 1, wait at rocks, theatre tuning) -- before: **0.47.0** (theatres, only forward) -- before: **0.46.4** (regroup in units per phase, defence per landmass, creeps from the army) -- before: **0.46.3** (A/B results: guard / spread / gather off; finish-off bias; Tirisfal - Howling Fjords
-exception; Scarlet Crusade after Arthas turns).
+Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.md`; playtest results below.
+
+## Open problems -- start here (phase 1)
+
+1. **Back-and-forth movement** -- the show stopper (maintainer, 0.48.1). Known so far:
+   - 0.48.1 game, 25 min, 16 bots: ~580 target changes (route-neutral 269, route-enemy 187, defend 51, theatre 44,
+     wait/hold 30) = ~1.5 per bot per minute; each one re-chains the attack group ("change" orders 22,679, rest
+     5,285). Target RETURNS (A -> B -> A within 5 min) are down to max 9 per bot (0.46.2: 17-18), so most of it is
+     A -> B -> C hopping in different directions -- largely creep camps / neutral CPs one after another.
+   - Already fixed: hold at the base on empty plans (0.48.1), main-front flips (0.48.1 streak, 0.48.2 60 s),
+     defence pulling the group back (0.47), creeps / leftovers scored from the territory (0.46.4 / 0.47).
+   - Next ideas (pick after measuring): (a) a per-unit TURNAROUND counter (heading reverses > 120 degrees between
+     samples), attributed to the cause (target change, group re-selection, staging move, defence) -- measure first;
+     (b) direction commitment: targets behind the army's current front cost more (the vector territory -> army);
+     (c) creep camps only near the route / front unless nothing else; (d) keep the attack group across a target change
+     (re-select only when the new target is in another direction or the group is too small).
+   - Maintainer: Sentinels and Druids do it most at the start; later Dalaran, Scourge. A wave system to the front is
+     the goal (units d -> e -> f, not back to c).
+2. **Portals, rest of the WL alignment**: ferries for the 8 ship pairs (`CONCEPTS.md` 7); Book of Medivh (bot casts
+   the channel, hero invulnerable -- WL's real Legion event); check the Legion leaves Argus via the 0.48.2 teleporter
+   pseudo-portals.
+3. **Kul Tiras: its islands first** (not strict -- in 0.48.1 Stormwind took a CP of Kul Tiras' islands): prefer the own
+   home land's targets early (a bonus for targets on the bot's home land / theatre while any are left).
+4. **Scourge creeps Northrend too slowly** (did better before; also the Legion does not support it yet).
+5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
+   elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
+6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.48.2)
+
+- Legion: "portal states" line -> "Legion teleporters open (2 edges)" after its "Argus" quest; the Legion leaves Argus.
+- "main moved" per 25 min far below 47; North Alliance waits at ONE spot.
+- Back and forth: still there? Which factions, when (game minute), and a `-xy` + dump at that moment.
 
 ## The plan: three phases
 
@@ -69,7 +100,8 @@ Rules for phase 1:
 | 0.47.0 | yes (18 min) | back and forth much reduced; North Alliance ran to the Brill coast once nothing was reachable (old pickers); Scourge / Legion / Old Gods weaker (fronts opened too early); Druids still seen heading to Exodar / Teldrassil |
 | 0.47.0 | (second game) | froze ~3 min after the 18-min dump -- no data (send `WLAI_heartbeat.txt` after a freeze) |
 | 0.48.0 | yes (25 min) | Legion stuck on Argus (teleporters are spells, not cast); armies walked back to their base on empty plans; fronts moved 36 times; South Alliance "nothing reachable" 15-20 min |
-| 0.48.1 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
+| 0.48.1 | yes (25 min) | "felt mostly good"; tram worked; Legion did not leave Argus; North Alliance patrolled at Tirisfal; back and forth still (Sentinels, Druids early; Dalaran, Scourge later); a bit laggy |
+| 0.48.2 | **next** | finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)? |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

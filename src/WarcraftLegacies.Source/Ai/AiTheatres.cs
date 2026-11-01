@@ -53,6 +53,9 @@ namespace WarcraftLegacies.Source.Ai
     // "main moved" 36 times in 25 min, armies walking between fronts)
     private const int NothingStreak = 4;
     private static int[] _nothing = new int[24];
+    private const float SwitchAfter = 60f;
+    private static int[] _switchTo = new int[24];       // the component the main theatre may switch to
+    private static float[] _switchSince = new float[24];
 
     internal static void MainFoundTarget(int pid)
     {
@@ -101,6 +104,11 @@ namespace WarcraftLegacies.Source.Ai
       {
         _slotComp[i] = -1;
         _slotTarget[i] = "-";
+      }
+
+      for (var i = 0; i < 24; i++)
+      {
+        _switchTo[i] = -1;
       }
     }
 
@@ -210,7 +218,22 @@ namespace WarcraftLegacies.Source.Ai
         biggestFood = mainFood;
       }
 
-      if (main < 0 || mainFood < KeepFood || (biggest >= 0 && biggest != main && biggestFood >= 2 * mainFood))
+      // 0.48.2: the "twice the food" switch only after it held SwitchAfter seconds -- armies walking through a portal
+      // shift the food for a moment, and every switch changed the front's target (0.48.1: "main moved" 47 times in
+      // 25 min -- a source of the remaining back and forth)
+      var twice = biggest >= 0 && biggest != main && biggestFood >= 2 * mainFood;
+      if (twice && _switchTo[pid] != biggest)
+      {
+        _switchTo[pid] = biggest;
+        _switchSince[pid] = SimpleBot.Clock;
+      }
+      else if (!twice)
+      {
+        _switchTo[pid] = -1;
+      }
+
+      var held = twice && SimpleBot.Clock - _switchSince[pid] >= SwitchAfter;
+      if (main < 0 || mainFood < KeepFood || held)
       {
         if (main >= 0 && biggest != main)
         {
@@ -218,6 +241,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         main = biggest;
+        _switchTo[pid] = -1;
       }
 
       _slotComp[pid] = main;
