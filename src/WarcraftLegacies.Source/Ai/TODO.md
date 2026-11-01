@@ -13,6 +13,11 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 ## Open problems -- start here (phase 1)
 
 1. **Back-and-forth movement** -- the show stopper (maintainer, 0.48.1). Known so far:
+   - **0.48.4 game (15 min): fixed in the main.** Engine walks 4.5 % -> 1.0 % of walks (first 10 min); followed Druid
+     units no longer end at their spawn; re-plan switches 14 of 252 route changes. Remaining turn-backs are
+     decision-level: after a capture ("gone") the next target lies behind (neutral 48, enemy 18 in 15 min) and
+     defence in/out (11) -- phase-3 tuning unless the maintainer sees them. Activity "idle" 1 % -> 15 % (rest at the
+     staging point, groups at their target, sleeping creeps -> 0.48.5).
    - **0.48.3 FOUND IT (main part)**: the engine's guard position. A bot unit out of orders walks back to the spot
      where it was trained (attack order, so the bot thinks it is busy). Trail: every followed Druid unit back at its
      spawn (within 80) after 28,000-52,000 walked; "engine" = 38 % of all turnarounds. 0.48.4 removes guard positions
@@ -56,6 +61,13 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.48.5)
+
+- `-autodump`, 25-40 min. **Stopwatch** (real time at turn 10, 20, 30): tells a slow game (engine) from felt stutter.
+- Stutter with 30 + 5 per CP? If still: `-cap 30 4` mid-game and note the time.
+- Creeps at night: does an army still stand at a camp? Event log: "woke N sleeping creep(s)"; dump LOAD: "wake".
+- Back and forth: still gone?
 
 ## Next playtest (0.48.4)
 
@@ -141,7 +153,8 @@ Rules for phase 1:
 | 0.48.1 | yes (25 min) | "felt mostly good"; tram worked; Legion did not leave Argus; North Alliance patrolled at Tirisfal; back and forth still (Sentinels, Druids early; Dalaran, Scourge later); a bit laggy |
 | 0.48.2 | yes (26 min, Ironforge on autopilot) | (built: finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)?) turn-backs measured from the event log: neutral hops early, defence ping-pong (24 of 42 defences ended at the 30-s minimum) and enemy re-picks later; unit movement not in the dumps -> 0.48.3 |
 | 0.48.3 | yes (8.5 min, Black Empire on autopilot, Druids watched) | measurement build: units out of orders walk back to the spot where they were TRAINED (guard position) -- the back and forth; plus re-plan switches backwards |
-| 0.48.4 | **next** | guard positions removed for all bots; commit on re-plan; gone / switch in the event log |
+| 0.48.4 | yes (15 min, Ahn'Qiraj on autopilot) | "improved a lot", no back and forth seen; engine walks 4.5 % -> 1.0 % of walks; Scourge army 4 min at a sleeping Mammut camp; some stutter (dwarves, turn 15) |
+| 0.48.5 | **next** | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

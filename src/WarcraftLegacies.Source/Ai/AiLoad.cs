@@ -175,12 +175,24 @@ namespace WarcraftLegacies.Source.Ai
 
     // 0.48.4: every service, for each orderable army unit (SimpleBot.Process) -- also covers units the enter trigger
     // never sees (revived heroes, units given to the bot, units that existed before the mode was switched on)
+    // 0.48.5: once per unit (was every service for every army unit -- ~250 native calls per second; maintainer saw
+    // some stutter in 0.48.4; cheap insurance). The set starts over when it gets big (dead units).
+    private static HashSet<unit> _applied = new();
+
     internal static void Apply(int pid, unit u)
     {
-      if (Mode != AiAb.Off && AiAb.For(Mode, pid, AiAb.BitGuard))
+      if (Mode == AiAb.Off || !AiAb.For(Mode, pid, AiAb.BitGuard) || _applied.Contains(u))
       {
-        RemoveGuardPosition(u);
+        return;
       }
+
+      if (_applied.Count > 8000)
+      {
+        _applied.Clear();
+      }
+
+      _applied.Add(u);
+      RemoveGuardPosition(u);
     }
 
     private static void OnEnter()
@@ -231,7 +243,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool On = true;
     internal static int Base = 30; // 0.48.2: was 40 (maintainer: a bit laggy, tune food down)
-    internal static int PerCp = 7; // 0.48.2: was 8 (0.46.2: 10 -> 8, order delay ~2 s at 10-15 min)
+    internal static int PerCp = 5; // 0.48.5: was 7 (stutter at turn 15, 3852 units at 15 min); 0.48.2: 8 -> 7
     internal static int[] Budget = new int[24];
     internal static int[] Army = new int[24];
     internal static int[] CappedTurns = new int[24];
