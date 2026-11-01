@@ -96,7 +96,8 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
 | Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | an Old Gods faction takes Nordrassil, or the Maw is taken from outside the Old Gods (details: `AiGates`); `-ogrift` | bot-only pseudo-portal (hidden markers, 0.48; WL's portal at the Highlands stays) |
 | Emerald Portals (Shrine of Malorne <-> Feralas) | as soon as WL's preplaced pair is visible | bot activates WL's pair |
 | Legion Teleporters (Argus -> Northrend landing / Alterac landing, one-way) | after the Legion's "Argus" quest | WL (player-owned waygates `n0BE`; bot edge for the Legion + allies since 0.48) |
-| Tomb of Sargeras -> Argus (one-way) | when the Tomb is open | bot-only pseudo-portal (hidden marker, 0.48) |
+| Tomb of Sargeras <-> Argus (both ways; Argus end beside WL's interior Demon Portal) | when the Legion is summoned OR the Tomb of Sargeras CP is held by any player | bot-only pseudo-portal (hidden markers, 0.49) |
+| Demon Portal (WL: where the ritual's caster stood <-> Antoran) | WL's "Under the Burning Sky": a hero with the Book of Medivh casts the ritual (bot Legion / Scourge heroes do it since 0.49, invulnerable while channelling) | WL |
 | Deeprun Tram (Ironforge <-> Stormwind) | after the tram research | WL (player-owned `n03B`; bot edge for owner + allies since 0.48) |
 | AI ship waygates (Kalimdor islands, Kul Tiras, Tol Barad, Kezan, Balor) | from the start | bot (`AiLegion`) |
 | Water Passageways (Thandol Span; Highbank <-> western Kalimdor) -- SHIPS only, on deep water | always | WL (n03Q / n03S, Neutral Passive); no army edge since 0.46.1 |
@@ -148,6 +149,7 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.48.0 | hold at the BASE when nothing was found | armies walked back to their production buildings on every empty plan | 0.48.1: hold where the army stands |
 | 0.47.0-0.48.1 | main front follows the biggest army at once (2x) / on every empty plan | "main moved" 36-47 times per 25 min, armies between fronts | 0.48.1 streak, 0.48.2 60 s hold |
 | 0.48.1 | bot Legion casts WL's teleporter spells | never left Argus | 0.48.2: teleporters as pseudo-portals after the "Argus" quest |
+| v24-0.48.5 | bot completes WL's summon quest itself (Sunwell event, Book quest done, `-legion`); Demon Portal moved from (0,0); Legion army teleported to Felwood | not WL; the portal had no caster | 0.49: only WL's Book of Medivh ritual (`AiRitual`), portal where it was cast |
 | 0.42-0.46.0 | every active neutral waygate = graph edge | WL's naval Water Passageways became army routes (Thandol, Highbank <-> Kalimdor); 0.46 teleported dwarves onto the shore | 0.46.1: waygates on / to water skipped |
 
 **A/B in one game (0.46)**: behaviour switches have the modes `on`, `off`, `ab` and `ab2`. `ab` switches the
@@ -192,7 +194,6 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-budget on\|off` | control | Load budget: report only (default) or let deferrable tasks slide after a busy slot (test) |
 | `-botbreak` `-prod` `-atk` | ⚠ | Toggle all bot logic / production / attacking |
 | `-gold0` … `-gold200` | ⚠ | Gold every bot gets per production turn (default 25 ≈ 100 gold/min; Scourge/Legion 150 %) |
-| `-legion` | ⚠ | Force the Legion summon (Argus hub, graph merge, betrayal) |
 | `-ogrift` | ⚠ | Force the Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) open |
 | `-ship` | ⚠ | Ship-portal asset test |
 | `-autopilot` | always | See "Playing with bots" |
@@ -217,7 +218,7 @@ orders/min, LOAD, errors at 10/20/30/45 min) to `MEASUREMENTS.md`, so the number
 1. Lobby shows "Shattered Legacies: Botified Realm v<version>", `-version` the same bot build. 2. No `SYSTEM ERROR` text in
 the first turns. 3. `-autodump` at the start; afterwards PINNED has no `TICK ERROR`/`FAILED` and "portals: 8
 pair(s) created (always)". 4. BOTS: states like `atk`/`cap`/`def`, real army sizes. 5. `-portals` shows all pairs;
-`-legion` swaps Northrend for Felwood. The release-specific checks are in `TODO.md` ("Check in the next playtest").
+after a summon the Demon Portal stands where the ritual was cast. The release-specific checks are in `TODO.md` ("Check in the next playtest").
 
 ## Map name
 The map builds as **"Shattered Legacies: Botified Realm v<version>"** (lobby and loading screen; name in

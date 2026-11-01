@@ -207,14 +207,21 @@ namespace WarcraftLegacies.Source.Ai
     // ---- 0.48: bot-only portals at WL's spots (no visible waygates; maintainer's spec) ---------------------------
     // A HIDDEN, inactive marker (n036 without its blocking aura) is the "gate" of each one: the pseudo-portal trigger
     // works on its area like on any waygate; no human can use it, nothing shows. Open conditions follow WL's gates.
-    //  - Tomb of Sargeras -> Argus: ONE-WAY, closed until the Tomb is open (shared quest, gate "tomb").
+    //  - 0.49: Tomb of Sargeras <-> Argus, BOTH WAYS (maintainer): open once the Legion is summoned OR the Tomb of
+    //    Sargeras CP (n00J) is held by any player (AiGates.TombPortalOpen, gate "tombportal"). The Argus end stands
+    //    beside WL's interior Demon Portal (n03C, Antoran) -- before 0.49 one-way, behind the Tomb quest.
     //  - Old Gods rift, both ways: Maw of Gor'ma <-> Twilight Highlands (gate "oldgods", AiGates). Replaces the bot's
     //    visible rift waygates; WL's preplaced portal in the Twilight Highlands stays.
-    private const float TombX = -736f;   // Regions.Sargeras_Entrance (the Tomb visit spot)
+    private const float TombX = -736f;   // Regions.Sargeras_Entrance (the Tomb visit spot), open ground +-200
     private const float TombY = 8336f;
-    private const float ArgusX = AiWorld.LegionArgusPortalX; // Argus landing (open ground)
-    private const float ArgusY = AiWorld.LegionArgusPortalY;
+    private const float TombLandX = -736f; // arrivals from Argus: 400 south of the entry (walkable +-128)
+    private const float TombLandY = 7936f;
+    private const float ArgusX = 20843f;   // Argus entry: 400 east of WL's interior Demon Portal n03C (walkable +-150)
+    private const float ArgusY = -28656f;
+    private const float ArgusLandX = 20043f; // arrivals from the Tomb: 400 west of n03C (walkable +-150)
+    private const float ArgusLandY = -28656f;
     private static unit _tombMarker;
+    private static unit _argusMarker;
     private static unit _riftMaw;
     private static unit _riftHigh;
     internal static string BotPortals = "-";
@@ -238,12 +245,18 @@ namespace WarcraftLegacies.Source.Ai
     private static void AddBotPortals()
     {
       BotPortals = "";
-      if (SimpleBot.GateOpen("tomb"))
+      if (AiGates.TombPortalOpen())
       {
         _tombMarker = Marker(_tombMarker, TombX, TombY);
-        if (AiRoutes.AddPortalEdge(_tombMarker, ArgusX, ArgusY))
+        _argusMarker = Marker(_argusMarker, ArgusX, ArgusY);
+        if (AiRoutes.AddPortalEdge(_tombMarker, ArgusLandX, ArgusLandY))
         {
           BotPortals = BotPortals + " tomb->Argus";
+        }
+
+        if (AiRoutes.AddPortalEdge(_argusMarker, TombLandX, TombLandY))
+        {
+          BotPortals = BotPortals + " Argus->tomb";
         }
       }
 

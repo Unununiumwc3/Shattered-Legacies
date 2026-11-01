@@ -2590,7 +2590,6 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.AddWave(k++, "standings", AiStandings.Check);                       // 0.36
       AiScheduler.AddWave(k++, "palace handover", AiMissions.LegionPalaceHandover);   // v32
       AiScheduler.AddWave(k++, "banned forms", AiMissions.ScanBannedForms);           // v32
-      AiScheduler.AddWave(k++, "demon portal", () => AiLegion.FixDemonPortal());      // v31
       AiScheduler.AddWave(k++, "legion check", AiLegion.CheckLegionSummoned);         // v34.1
       AiScheduler.AddWave(k++, "portal watchdog", AiLegion.PortalWatchdog);           // v34.1
       AiScheduler.AddWave(k++, "kul tiras repair", AiMissions.KulTirasRepair);        // v34.1
@@ -3017,7 +3016,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.48.5";
+    public const string Build = "0.49.0";
 
     public static void Setup()
     {
@@ -3028,6 +3027,7 @@ namespace WarcraftLegacies.Source.Ai
       AiGoldVote.Setup();  // 0.35.1
       AiChoices.Setup();   // 0.37: bots pick in WL's click menus (before FactionChoiceDialogSetup runs)
       AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
+      AiRitual.Setup();    // 0.49: the Book of Medivh ritual (bot casters, invulnerable while channelling)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
       // 0.39.10: the fallbacks moved to ShatteredLegacies/ and are set up from GameSetup.cs ([SL] line).
     }

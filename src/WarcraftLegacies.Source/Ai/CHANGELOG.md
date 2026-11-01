@@ -4,6 +4,27 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.49.0
+Portal rework, part 1: the Legion (maintainer's spec). Version v0.49.0.
+- **The Book of Medivh is the only way to summon the Legion**, as in WL: a hero carrying the Book casts WL's ritual
+  ("Summon the Burning Legion", A00J, 180-s channel) and WL's quest "Under the Burning Sky" opens the Demon Portal
+  where the hero stands. New `AiRitual`: a bot hero (real bot or test autopilot) of the Legion or the Scourge with
+  the Book casts at once, kept out of army orders until the summon is done; mana raised to 410 if short (bot perk).
+  The Scourge now also sends a level-12 hero to the Book's pedestal (`AiConfig.HeroVisits`); Kel'Thuzad's own copy
+  of the ritual is not used.
+- **Invulnerable only while channelling**: a bot Legion / Scourge hero channelling the ritual is invulnerable from the
+  channel's start to its end (or interruption), then back to its previous state. WL's spell immunity stays as it is.
+- **Removed**: the summon when the Scourge takes the Sunwell (Quel'thalas losing the Sunwell no longer summons the
+  Legion); the forced quest completion when the Legion's Book quest was done; the `-legion` command; the bot Legion's
+  army teleported to Felwood at the summon; WL's Demon Portal moved from (0,0) to Quel'Danas (FixDemonPortal and its
+  15-s task); the unused Argus <-> Northrend / Felwood bot waygate links and their coordinates. After a summon the bot
+  only checks WL's portal pair (logs it, activates it if needed).
+- **Tomb of Sargeras <-> Argus, both ways** (bot pseudo-portal, hidden markers): open for good when the Legion is
+  summoned or when any player holds the Tomb of Sargeras CP (n00J). The Argus end stands beside WL's interior Demon
+  Portal (n03C, Antoran); landings 400 from each entry, all on open ground (`tools/ai/map_query.py`). With it open,
+  every faction may target Argus (before: only after the summon).
+- Dump LOAD: "legion ritual" line (state, hero, orders, channels).
+
 ## 0.48.5
 From the 0.48.4 game (15 min, Ahn'Qiraj on autopilot; maintainer: "improved a lot", no back and forth seen). Version
 v0.48.5.

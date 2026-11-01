@@ -1262,7 +1262,8 @@ namespace WarcraftLegacies.Source.Ai
         return Leftover(p, pid, i, d); // 0.44.1: our CP -- enemy buildings left in its area?
       }
 
-      if (fac.Name != "Legion" && !SimpleBot.GateOpen("legion") && AiGraph.ArgusNodes.Contains(t))
+      if (fac.Name != "Legion" && !SimpleBot.GateOpen("legion") && !SimpleBot.GateOpen("tombportal") // 0.49: or the Tomb
+          && AiGraph.ArgusNodes.Contains(t))
       {
         d.Skipped++;
         return null;

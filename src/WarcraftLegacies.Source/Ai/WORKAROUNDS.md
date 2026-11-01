@@ -46,7 +46,8 @@ They change the game for humans too, so the original maintainer has to agree to 
 | Gate sweep: bots' gates are removed (also new gates entering the map) | `AiGates` | bots cannot use the gate mechanic (maintainer's decision) | ask upstream |
 | AI waygates (always / prelegion / legion / oldgods), incl. the Broken Isles ship, Kezan, Tol Barad, Argus | `AiLegion`, `AiGraph.Portals` | real waygates -- humans use them too; owned by Neutral Extra (26) | ask upstream |
 | Waygate `n036` "Anti Portal Blocking" shrunk to 250 for AI portals | `AiLegion` | the 1000-range aura killed units at the landing spot | ask upstream |
-| Demon Portal fix (Argus <-> Sunwell link) | `AiLegion.FixDemonPortal` | WL's portal was missing at (0,0) | upstream bug? check on 5.x |
+| Demon Portal check after the summon (activates WL's pair if inactive, logs it) | `AiLegion.CheckDemonPortal` | 0.49: replaces the v31 FixDemonPortal -- the (0,0) portal came from the bot's own caster-less summons, which are gone | no |
+| Bot Legion / Scourge hero invulnerable while channelling the Book ritual; mana raised to 410 | `AiRitual` | bot perk (maintainer's spec) -- WL itself gives spell immunity | yes (balance), bot-only |
 | Emerald Portals activated, Old Gods rift (Maw of Gor'ma <-> Twilight Highlands) | `AiGates` | the Old Gods rift does not exist on 5.x | rift: no (4.8.2 only) |
 | CP handovers: Terrordale / Deathknell to the Scourge at "Plague of Undeath", Sulfuron Spire to Skywall, palace handover | `AiMissions`, `AiConfig` | bots would not get these areas otherwise | ask upstream |
 | Bot bonuses: gold subsidy, free techs / upgrades / heroes / revives, starter production buildings, Kul Tiras repair, Continental Outpost buildings | `AiTech`, `AiMissions`, `SimpleBot.HasPerks` | difficulty; humans never get them | design -- discuss upstream |

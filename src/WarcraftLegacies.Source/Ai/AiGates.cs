@@ -240,6 +240,42 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.49: the bot's Tomb of Sargeras <-> Argus pseudo-portal (AiPortals) -- open for good once the Legion is summoned
+    // (WL's "Under the Burning Sky") or the Tomb of Sargeras CP (n00J) is held by any player. Gate "tombportal" also
+    // lets every faction target Argus (AiRoutes.Candidate).
+    private const int TombCpId = 1848651850; // n00J Tomb of Sargeras
+
+    internal static bool TombPortalOpen()
+    {
+      if (SimpleBot.GateOpen("tombportal"))
+      {
+        return true;
+      }
+
+      var why = "";
+      if (AiRitual.Summoned())
+      {
+        why = "the Legion is summoned";
+      }
+      else
+      {
+        var cp = SimpleBot.SafeCp(TombCpId);
+        if (cp != null && cp.Unit != null && GetPlayerId(GetOwningPlayer(cp.Unit)) < 24)
+        {
+          why = SimpleBot.FacName(GetOwningPlayer(cp.Unit)) + " holds the Tomb of Sargeras";
+        }
+      }
+
+      if (why == "")
+      {
+        return false;
+      }
+
+      SimpleBot._gateOpen["tombportal"] = true;
+      SimpleBot.LogPin("portal Tomb of Sargeras <-> Argus open: " + why);
+      return true;
+    }
+
     // 0.37.2: gate "thandol" (Arathi Highlands <-> Dun Modr) follows the real bridge: WL blocks Thandol Span with
     // invulnerable rocks (LTrc, "Bridge Rocks" in Regions.BridgeAmbient) and removes them at turn 30. The old fixed
     // 20:00 opening sent dwarves to the rocks for ten minutes. Checked every wave tick until the rocks are gone.

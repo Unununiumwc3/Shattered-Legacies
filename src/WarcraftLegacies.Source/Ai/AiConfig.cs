@@ -55,23 +55,9 @@ public static class AiWorld
   //   nether end = Antoran Wastes (the demon staging), exit end = beside Felwood (Kalimdor). Verify with -xy.
   public const float LegionNetherX = 19456f;  // Antoran Wastes / Twisting Nether -- verify with -xy
   public const float LegionNetherY = -25008f;
-  // v34 ARGUS HUB (user coordinates, checked against the pathing map):
-  //  * Argus end of the AI's Legion portal pair (Antoran Wastes side). Before the summon it links to Northrend
-  //    (Crystalsong Forest), after the summon to Felwood.
-  public const float LegionArgusPortalX = 19644f;
-  public const float LegionArgusPortalY = -26014f;
-  public const float LegionNorthrendPortalX = -1500f;   // beside Crystalsong Forest
-  public const float LegionNorthrendPortalY = 20875f;
-  //  * Kalimdor end after the summon (Felwood). Also where a bot Legion's host is collected at the summon.
-  //    0.34.3: back to the v33 spot beside Felwood -- (-17377, 8732) was next to Auberdine.
-  //    0.35.3: moved 500 east, onto open ground -- (-14257, 8475) is exactly where a preplaced unit stands, 180
-  //    from the Felwood CP; ground units could not use the Argus -> Felwood portal (flyers could).
-  public const float LegionExitX = -13580f;
-  public const float LegionExitY = 8448f;
-  //  * WL's own exterior Demon Portal (n037, created at (0,0) by a caster-less summon) is rebuilt here, beside
-  //    Quel'Danas / the Sunwell, and WL's Antoran portal (n03C) is re-pointed at it.
-  public const float LegionSunwellPortalX = 17856f;
-  public const float LegionSunwellPortalY = 21983f;
+  // 0.49: the v34 Argus hub constants (bot portal Argus <-> Northrend / Felwood, the Legion's host collected at Felwood,
+  // WL's Demon Portal moved beside Quel'Danas) are gone -- the Legion arrives through WL's own Demon Portal at the
+  // ritual's caster, and Argus <-> Tomb of Sargeras is a bot pseudo-portal (AiPortals).
   //  * Legion start (bot only): its Argus workers are replaced by buildings around the start location.
   public const float LegionStartX = 18816f;
   public const float LegionStartY = -30784f;
@@ -336,9 +322,13 @@ public static class AiConfig
     // army is around. Not re-ordered while standing there (an order would break the channel).
     new HeroVisit("Twilight of the Gods", "Legion", 0, 1848652112, -9952f, 10848f) { Hero = "Archimonde" },
     // (0.37: "Lone Wanderer" / "Jailor of the Damned" removed -- Frostwolf never reaches Northrend.)
-    // 0.38: Legion "Book of Medivh": once Dalaran's capital is dead (LastObjective), a Legion unit goes to the pedestal
-    // (Regions.BookOfMedivhDalaran, any Legion unit counts) -> the Legion holds the Book -> AiLegion summons (bot only).
+    // 0.38: Legion "Book of Medivh": once Dalaran's capital is dead (LastObjective), a Legion hero goes to the pedestal
+    // (Regions.BookOfMedivhDalaran; for the Legion any unit counts) -> it carries the Book -> 0.49: it casts WL's
+    // ritual there (AiRitual) -- the Demon Portal opens where it stands.
     new HeroVisit("Book of Medivh", "Legion", 0, 0, 9456f, 5040f) { LastObjective = true },
+    // 0.49: the Scourge too (lore: Kel'Thuzad summons Archimonde with the Book) -- WL wants a level-12 hero for every
+    // faction but the Legion. Kel'Thuzad's own copy of the ritual is NOT used: only the Book summons.
+    new HeroVisit("Book of Medivh", "Scourge", 12, 0, 9456f, 5040f) { LastObjective = true },
     // 0.39: Frostwolf "A Feast for Our Kin": Cairne into Highmountain (Regions.Highmountain_Unlock), only while the
     // Frostwolf or an ally holds Stormheim (n05Z)
     new HeroVisit("A Feast for Our Kin", "Frostwolf", 0, 1848653146, 2039f, 10926f) { Hero = "Cairne Bloodhoof", AllyCp = true },
@@ -915,10 +905,7 @@ public static class AiGraph
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
     // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
     new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "always"),
-    new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
-      AiWorld.LegionNorthrendPortalX, AiWorld.LegionNorthrendPortalY, "", "Portal to Northrend", "Portal to Argus", "prelegion"),
-    new PortalLink(AiWorld.LegionArgusPortalX, AiWorld.LegionArgusPortalY,
-      AiWorld.LegionExitX, AiWorld.LegionExitY, "", "Portal to Felwood", "Portal to Argus", "legion"),
+    // 0.49: the Argus <-> Northrend (prelegion) and Argus <-> Felwood (legion) bot waygates are removed for good.
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
     // replaced by the real one. Both ends walkable (tools/ai/map_query.py).
@@ -1077,8 +1064,8 @@ public static class AiGraph
 
   public static readonly List<NodeEvent> Events = new()
   {
-    new NodeEvent(1848651825, "Scourge", "legion", ""), // The Sunwell -> summon Legion when Scourge takes it
-    new NodeEvent(1848653625, "Scourge", "legion", ""), // v34: ... or the corrupted Sunwell (both are CAPITALS)
+    // 0.49: no "legion" events -- the Scourge (or anyone) taking the Sunwell no longer summons the Legion; only the
+    // Book of Medivh ritual does (AiRitual). Kind "chat" still works for announcements.
   };
 }
 
