@@ -951,6 +951,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (cands == null)
       {
+        NullNoCandidate++; // 0.48.1: nothing to attack on the allowed lands
         return null;
       }
 
@@ -988,6 +989,7 @@ namespace WarcraftLegacies.Source.Ai
 
       if (best < 0)
       {
+        NullFromGroup++; // 0.48.1: candidates exist, none reachable from where the group stands
         return null;
       }
 
@@ -1821,6 +1823,8 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     internal static int WaitPoints;
+    internal static int NullNoCandidate; // 0.48.1
+    internal static int NullFromGroup;   // 0.48.1
 
     // 0.46.2: "-xy" shows the route node under the selected unit (the numbers of route_map.png / ROUTES.md)
     internal static string NodeLabel(float x, float y)
@@ -2061,7 +2065,8 @@ namespace WarcraftLegacies.Source.Ai
       o.Add("planner nulls (0.46): kept valid target " + I2S(KeptOnNull) + ", nothing reachable " + I2S(NullNoRoute)
             + ", no start node " + I2S(NullNoStart) + "; naval waygates ignored (checks) " + I2S(NavalSkipped)
             + "; finish-off scores " + I2S(FinishTargets) + "; secondary-theatre plans " + I2S(SecondaryPlans)
-            + "; waits at closed rocks " + I2S(WaitPoints));
+            + "; waits at closed rocks " + I2S(WaitPoints) + "; empty plans: no candidate " + I2S(NullNoCandidate)
+            + ", none reachable from the group " + I2S(NullFromGroup));
       AiTheatres.Lines(o); // 0.47
       AiPortals.Lines(o);
       for (var k = 0; k < _pFrom.Count; k++)

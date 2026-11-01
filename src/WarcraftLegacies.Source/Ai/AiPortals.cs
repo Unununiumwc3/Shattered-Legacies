@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MacroTools.Extensions;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -321,6 +322,92 @@ namespace WarcraftLegacies.Source.Ai
       return found;
     }
 
+    // ---- 0.48.1: WL's Legion Teleporters -------------------------------------------------------------------------
+    // WL's Argus exit is a SPELL of the Legion Teleporter buildings (n0BE): "Portal to Alterac" (A0UC, order
+    // "corrosivebreath") and "Portal to Northrend" (A0UB, order "cripple"), each castable once after the Legion's
+    // "Argus" quest. The cast opens a temporary slipstream portal (a Legion-owned waygate) from Argus -- AiRoutes
+    // reads it like every player-owned waygate (Legion + allies). 0.48.0 had no caster: the Legion never left Argus.
+    // A bot Legion casts when it has ArgusArmy food of army on Argus: Alterac first (the front), Northrend next.
+    private const int TeleporterType = 1848656453; // n0BE
+    private const int ArgusArmy = 40;
+    private static bool _castAlterac;
+    private static bool _castNorthrend;
+    internal static string LegionTeleporterState = "not tried";
+
+    internal static void Setup()
+    {
+      AiScheduler.Add("legion teleporters", 40, 13, LegionTeleporters, true); // every 10 s
+    }
+
+    private static void LegionTeleporters()
+    {
+      if (_castAlterac && _castNorthrend)
+      {
+        return;
+      }
+
+      var bots = SimpleBot.Bots;
+      for (var b = 0; b < bots.Count; b++)
+      {
+        var p = bots[b];
+        var fac = p.GetPlayerData().Faction;
+        if (fac == null || fac.Name != "Legion" || !SimpleBot.HasPerks(p))
+        {
+          continue;
+        }
+
+        var g = CreateGroup();
+        GroupEnumUnitsOfPlayer(g, p, null);
+        unit tele = null;
+        var argusFood = 0;
+        var argusComp = AiRoutes.CompAt(ArgusX, ArgusY);
+        unit u;
+        while ((u = FirstOfGroup(g)) != null)
+        {
+          GroupRemoveUnit(g, u);
+          if (GetUnitTypeId(u) == TeleporterType && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+          {
+            tele = u;
+          }
+          else if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+                   && AiRoutes.CompAt(GetUnitX(u), GetUnitY(u)) == argusComp)
+          {
+            argusFood = argusFood + GetUnitFoodUsed(u);
+          }
+        }
+
+        DestroyGroup(g);
+        if (tele == null)
+        {
+          LegionTeleporterState = "no teleporter";
+          continue;
+        }
+
+        if (argusFood < ArgusArmy)
+        {
+          LegionTeleporterState = "waiting for army on Argus (" + I2S(argusFood) + " food)";
+          continue;
+        }
+
+        if (!_castAlterac && IssueImmediateOrder(tele, "corrosivebreath"))
+        {
+          _castAlterac = true;
+          LegionTeleporterState = "cast Portal to Alterac";
+          SimpleBot.LogPin("Legion teleporter: Portal to Alterac cast (" + I2S(argusFood) + " food on Argus)");
+        }
+        else if (_castAlterac && !_castNorthrend && IssueImmediateOrder(tele, "cripple"))
+        {
+          _castNorthrend = true;
+          LegionTeleporterState = "cast Portal to Northrend";
+          SimpleBot.LogPin("Legion teleporter: Portal to Northrend cast (" + I2S(argusFood) + " food on Argus)");
+        }
+        else if (!_castAlterac)
+        {
+          LegionTeleporterState = "cast refused (quest \"Argus\" not done yet?)";
+        }
+      }
+    }
+
     // ---- commands and dump -------------------------------------------------------------------------------------
 
     internal static void OnCommand()
@@ -345,7 +432,7 @@ namespace WarcraftLegacies.Source.Ai
       o.Add("pseudo-portals " + (On ? "on" : "off") + ": teleports " + I2S(Teleports) + " (on issue " + I2S(OnIssue)
             + "), ignored " + I2S(Ignored) + ", open tickets " + I2S(_ticket.Count) + ", cleaned " + I2S(Cleaned)
             + ", watched waygates " + I2S(_watched.Count) + "; Dark Portal: " + DarkPortalState
-            + "; bot portals:" + BotPortals);
+            + "; bot portals:" + BotPortals + "; Legion teleporters: " + LegionTeleporterState);
 
       // WL's own waygates (not the AI pairs of Neutral Extra): where, owner, active, hidden, destination
       var g = CreateGroup();

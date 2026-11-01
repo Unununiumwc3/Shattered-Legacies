@@ -4,6 +4,20 @@ Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Gi
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
 same version.
 
+## 0.48.1
+From the 0.48.0 game (25 min). Version v0.48.1.
+- **Hold where the army stands**: when the planner finds nothing, the army holds at its own position. 0.48.0 held at
+  the bot's BASE -- armies walked back to their production buildings every time a plan came back empty ("a->b->c->d,
+  then back"; empty plans: 264 in 25 min).
+- **The main theatre moves only after ~30 s of empty plans** (4 services in a row). 0.48.0 moved it on every single
+  empty plan: "main moved" 36 times in 25 min, armies walking between fronts.
+- **WL's Legion Teleporters are cast**: Argus is left through a SPELL of the teleporter buildings ("Portal to Alterac"
+  / "Portal to Northrend", once each after the Legion's "Argus" quest), which opens a temporary Legion-owned
+  slipstream portal. A bot Legion casts when it has 40 food of army on Argus -- Alterac first, Northrend next; the
+  portal is read like every player-owned waygate. 0.48.0 had no caster: the Legion never left Argus. Dump: "Legion
+  teleporters: ..." in the pseudo-portals line, PINNED on a cast.
+- Dump: empty plans split by reason ("no candidate" / "none reachable from the group").
+
 ## 0.48.0
 Portals aligned with WL (part 1 -- ferries and the Book of Medivh follow), "nothing reachable" fixed, theatre
 tuning. From the 0.47.0 game (18 min: back and forth much reduced). Version v0.48.0.
