@@ -81,7 +81,6 @@ public static class AiDebug
     Register("-debug4", () => Toggle(On4, "economy"), Level.Heavy);
     Register("-xy", OnXy, Level.Read);
     Register("-fac", OnFac, Level.Read);
-    Register("-legion", OnLegion, Level.Control);
     Register("-ids", OnIds, Level.Heavy);
     Register("-id", OnId, Level.Read);
     Register("-portals", OnPortals, Level.Read);
@@ -463,15 +462,7 @@ public static class AiDebug
     return d.ContainsKey(k) ? d[k] : "-";
   }
 
-  // Force-summon the Legion for testing (normally a late milestone). Completes its SummonLegion quest,
-  // which unlocks the Nether Pit + Summoning Circle, rescues its units, and opens the portals.
-  private static void OnLegion()
-  {
-    AiLegion.SummonLegion(); // completes the quest AND spawns a fresh portal pair at the configured endpoints
-    DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8,
-      "|cffff5555Legion force-summoned. Use -portals to find the exit.|r");
-  }
-
+  // 0.49: "-legion" (force-summon) removed -- only the Book of Medivh ritual summons the Legion (AiRitual).
   // Float a label + ping at the Legion portal endpoints so they can be located even if the model is unclear.
   // v34.1: label + ping every AI portal that currently exists (ship and Argus portals).
   private static void OnPortals()
@@ -949,6 +940,7 @@ public static class AiDebug
             + " | last gate sweep " + I2S(AiGates.LastSweepOps));
       AiArmy.Lines(o);      // 0.41: orders by reason, attack group per bot
       AiWake.Lines(o);      // 0.48.5: sleeping creeps woken at the target
+      AiRitual.Lines(o);    // 0.49: the Book of Medivh ritual (bot casters)
       AiIncome.Lines(o);    // 0.44.2: CP income paid to computer slots
       AiLoad.Lines(o);      // 0.46: order latency, unit budget, guard positions A/B
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)

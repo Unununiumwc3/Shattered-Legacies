@@ -167,7 +167,11 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void Release(string key, unit hero)
     {
-      AiState.MissionUnits.Remove(hero);
+      if (!AiRitual.Owns(hero)) // 0.49: the Book carrier stays on its mission (the ritual channel must not be broken)
+      {
+        AiState.MissionUnits.Remove(hero);
+      }
+
       _hero.Remove(key);
     }
 

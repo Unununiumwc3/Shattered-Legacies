@@ -52,15 +52,27 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
      swaps, TRAIL of 8 Druid units from their building. Decide the fix from the next game's numbers -- candidates:
      (d) keep the group across a target change; a defence hysteresis that does not skip the cooldown for the army
      that just left; (b)/(c) for the early neutral hops.
-2. **Portals, rest of the WL alignment**: ferries for the 8 ship pairs (`CONCEPTS.md` 7); Book of Medivh (bot casts
-   the channel, hero invulnerable -- WL's real Legion event); check the Legion leaves Argus via the 0.48.2 teleporter
-   pseudo-portals.
+2. **Portals, rest of the WL alignment**: ferries for the 8 ship pairs (`CONCEPTS.md` 7). Done in 0.49.0: Book of
+   Medivh ritual (bot Legion / Scourge hero, invulnerable while channelling) as the only summon; Tomb of Sargeras <->
+   Argus both ways. Check: the Legion leaves Argus (Demon Portal, Tomb portal, 0.48.2 teleporters).
+   Left as is (not WL, decide later): `AiLegion.MoveLegionArmyToAlterac` teleports a bot Legion's army to Alterac
+   when the Scourge's plague lands; the summon bonus (3000 gold) and the betrayal (Scourge leaves the Legion's team).
 3. **Kul Tiras: its islands first** (not strict -- in 0.48.1 Stormwind took a CP of Kul Tiras' islands): prefer the own
    home land's targets early (a bonus for targets on the bot's home land / theatre while any are left).
 4. **Scourge creeps Northrend too slowly** (did better before; also the Legion does not support it yet).
 5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.49.0) -- Legion portals
+
+- Long game (40+ min, Legion and Scourge bots) so the Book can be reached: Dalaran's capital must die first.
+- PINNED: "holds the Book of Medivh -> Legion ritual", "channels the Legion ritual @x,y -- invulnerable", "Legion: Demon
+  Portal @x,y ... <-> Antoran", "portal Tomb of Sargeras <-> Argus open: ...". Dump LOAD: "legion ritual" line.
+- In game: the hero stands 3 min channelling (invulnerable), the portal appears there; no Legion army at Felwood.
+- Tomb <-> Argus: units land beside the Tomb entrance / beside the Antoran portal (doodads there are ruins and rubble
+  -- check that ground units can walk off the landing spots).
+- Plus the 0.48.5 checks below (stopwatch, creeps at night, stutter).
 
 ## Next playtest (0.48.5)
 
@@ -154,7 +166,8 @@ Rules for phase 1:
 | 0.48.2 | yes (26 min, Ironforge on autopilot) | (built: finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)?) turn-backs measured from the event log: neutral hops early, defence ping-pong (24 of 42 defences ended at the 30-s minimum) and enemy re-picks later; unit movement not in the dumps -> 0.48.3 |
 | 0.48.3 | yes (8.5 min, Black Empire on autopilot, Druids watched) | measurement build: units out of orders walk back to the spot where they were TRAINED (guard position) -- the back and forth; plus re-plan switches backwards |
 | 0.48.4 | yes (15 min, Ahn'Qiraj on autopilot) | "improved a lot", no back and forth seen; engine walks 4.5 % -> 1.0 % of walks; Scourge army 4 min at a sleeping Mammut camp; some stutter (dwarves, turn 15) |
-| 0.48.5 | **next** | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit |
+| 0.48.5 | not played separately (inside 0.49.0) |
+| 0.49.0 | **next** | Legion: Book of Medivh ritual only (bot hero invulnerable while channelling), Tomb <-> Argus both ways; plus 0.48.5 (creeps woken, 30 + 5) | sleeping creeps woken at the target; budget 30 + 5; guard removal once per unit |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

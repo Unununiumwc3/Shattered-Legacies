@@ -23,7 +23,11 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.48.5) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.49.0)
+
+- **0.49.0 = portal rework, part 1 (Legion)**: summon only by the Book of Medivh ritual (`AiRitual`), WL's Demon
+  Portal where it was cast, Tomb of Sargeras <-> Argus both ways. Next: ferries (`TODO.md` "Open problems" 2).
+ -- read this, then `TODO.md` ("Open problems" first)
 
 - **0.48.3 measured the back-and-forth** (dump sections TURNAROUNDS and TRAIL, `tools/ai/back_forth.py`): main
   cause = the engine's guard position (units walk home to where they were trained). **0.48.4** removes guard positions
@@ -48,8 +52,8 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   - Army (`AiArmy`): attack group sized to the need, rest at a staging point on the route, movement chains (queued
     attack-moves), regroup (A/B), defence of far CPs by the rest.
   - Portals (`AiPortals`): pseudo-portals (tickets + enter-region trigger) for every portal edge; all players'
-    waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb -> Argus
-    and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
+    waygates (player-owned: owner + allies -- Deeprun Tram, Dark Portal...); bot-only hidden markers for Tomb <-> Argus
+    (0.49: both ways, open at the summon or when anyone holds the Tomb CP) and the rift; WL's Legion Teleporters as pseudo-portals after the Legion's "Argus" quest (0.48.2). The ship
     pairs are still visible bot waygates (-> ferries).
   - Load: unit budget per CP (`AiBudget`, 30 + 5 since 0.48.5), order-latency probe, caster cap.
 - **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append` (errors at the top, A/B per game phase,
@@ -101,6 +105,8 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
+| `AiRitual.cs` | AiRitual | 0.49: a bot Legion / Scourge hero with the Book of Medivh casts WL's ritual (the only summon path); invulnerable only while channelling |
+| `AiWake.cs` | AiWake | 0.48.5: wakes sleeping creeps at the bot's target once its army stands there (no orders) |
 | `AiTrack.cs` | AiTrack, AiTrackUnit | 0.48.3, measurement only: turnarounds of every army unit with their cause (last bot order or engine), group swaps; unit trail of one bot (`-track`, default P11) -> dump TURNAROUNDS / TRAIL |
 | `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiObserve, AiCaster, AiLoad | 0.46: per-bot A/B (slot bits), guard positions, unit budget per CP, order-latency probe, activity / returns / targets by owner, caster cap |
 | `AiTheatres.cs` | AiTheatres | 0.47: theatres per bot (walking components), state slots, restrictions, dump |
@@ -343,9 +349,13 @@ Quests and story
 - **Arthas**: Scourge quest "The Culling" (Stratholme destroyed while Lordaeron's "Line of Succession" is open)
   permanently removes Lordaeron's Arthas (Hart) and lets the Scourge train its own (UEAR; N023 after "The Ascension"
   -- same legend, new unit type). Both legends are named "Arthas Menethil".
-- **Legion summon**: "Under the Burning Sky" = the ritual with the Book of Medivh. Shared quest "Book of Medivh":
-  Dalaran's capital dead + a unit at the pedestal (any Legion unit; others a level-12 hero). The AI summons on the
-  Scourge taking the Sunwell (did not happen in 40-85-min tests before 0.36).
+- **Legion summon**: "Under the Burning Sky" = the ritual A00J ("Summon the Burning Legion", order `volcano`, 180-s
+  channel, 410 mana, needs R04T "Legion exists") in the Book of Medivh's spellbook (item I006, A0BT); Kel'Thuzad has
+  A00J natively. The quest completes on the cast; WL opens the exterior Demon Portal (n037) WHERE THE CASTER STANDS
+  and points Antoran's n03C at it; WL gives the caster spell immunity while channelling. "Book of Medivh" quest (one
+  per faction): Dalaran's capital dead + a unit at the pedestal (Legion: any unit; others a level-12 hero). Since 0.49
+  this is the ONLY summon: a bot Legion / Scourge hero with the Book casts (`AiRitual`); no Sunwell event, no
+  `-legion`, no forced quest completion, no Felwood teleport.
 - "Twilight of the Gods" = Archimonde ENTERS `Regions.ArchimondeChannel` -> 420 s channel (any order breaks it).
 - "Fireland Invasion" (Skywall) rescues the Sulfuron Spire base. Skywall's own Ragnaros hero ("Lord of the
   Firelands", U02K) comes from its quest "Emissary of the Firelands" -- not the neutral boss.

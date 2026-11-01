@@ -202,7 +202,7 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      CheckBookSummon();
+      AiRitual.Tick(); // 0.49: a bot hero with the Book of Medivh casts WL's ritual (the ONLY summon path)
       AiMissions.RunTerrordale(); // 0.38.1: every 2 s, so the hand-over comes right after the plague
 
       var evs = AiGraph.Events;
@@ -323,98 +323,14 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
-    // 0.38: second summon trigger (lore: "Under the Burning Sky" -- Archimonde summoned with the Book of Medivh in
-    // Dalaran). The Legion's own "Book of Medivh" quest completes when Dalaran's capital is dead and a Legion unit
-    // reached the pedestal (AiConfig.HeroVisits sends one). For a bot Legion that quest done -> summon.
-    private static QuestData _legionBookQuest;
-    private static bool _bookChecked;
-
-    private static void CheckBookSummon()
-    {
-      if (_legionSummonStarted || _bookChecked)
-      {
-        return;
-      }
-
-      if (_legionBookQuest == null)
-      {
-        foreach (var f in FactionManager.GetAllFactions())
-        {
-          if (f.Name == "Legion")
-          {
-            _legionBookQuest = QuestAutoComplete.FindQuest(f, AiConfig.BookQuestTitle);
-          }
-        }
-
-        if (_legionBookQuest == null)
-        {
-          _bookChecked = true; // no Legion in this game / quest not found
-          return;
-        }
-      }
-
-      if (_legionBookQuest.Progress == QuestProgress.Complete && LegionIsBot())
-      {
-        _bookChecked = true;
-        SimpleBot.LogPin("Legion holds the Book of Medivh -> summon");
-        SummonLegion();
-      }
-    }
-
+    // 0.49: the "legion" event (Scourge holds the Sunwell -> summon) is gone -- only the Book ritual summons (AiRitual)
     private static void FireEvent(NodeEvent ev)
     {
-      if (ev.Kind == "legion" && !LegionIsBot())
-      {
-        SimpleBot.LogPin("event: " + ev.ByFaction + " holds the Sunwell -- Legion is human, no forced summon");
-        return; // 0.38: a human Legion summons through WL's own ritual
-      }
-
-      if (ev.Kind == "legion")
-      {
-        SimpleBot.Log("event: " + ev.ByFaction + " holds node " + I2S(ev.NodeId) + " -> Legion summon");
-        SummonLegion();
-      }
-      else if (ev.Kind == "chat")
+      if (ev.Kind == "chat")
       {
         for (var i = 0; i < 24; i++)
         {
           DisplayTimedTextToPlayer(Player(i), 0, 0, 10, ev.Text);
-        }
-      }
-    }
-
-    public static void SummonLegion()
-    {
-      foreach (var f in FactionManager.GetAllFactions())
-      {
-        if (f.Name != "Legion")
-        {
-          continue;
-        }
-
-        foreach (var q in f.GetAllQuests())
-        {
-          if (q is QuestSummonLegion)
-          {
-            if (_legionSummonStarted)
-            {
-              return; // v34: once only (Sunwell + corrupted Sunwell events, or a repeated -legion)
-            }
-
-            _legionSummonStarted = true;
-            var t = CreateTimer();
-            TimerStart(t, 1.0f, false, OnLegionSummoned); // let the quest's own CreatePortals run first
-            try
-            {
-              q.Progress = QuestProgress.Complete;
-            }
-            catch (System.Exception e)
-            {
-              SimpleBot.LogPin("Legion summon quest: WL error during completion -- " + e.Message);
-            }
-
-            return;
-          }
         }
       }
     }
@@ -491,19 +407,10 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void OnLegionSummonedSteps()
     {
-      // 1) v31: WL's own portal pair. QuestSummonLegion creates the exterior Demon Portal (n037) at the casting
-      //    hero's position -- (0,0) when the quest is completed without a caster (bot, -legion, Sunwell event) --
-      //    and points the interior Antoran portal (n03C) at it. Recreate it at the real exit and re-point the
-      //    interior portal. Only if WL's portal can't be found do we fall back to the old workaround pair.
-      //    v34: that portal now goes beside Quel'Danas (Argus <-> Sunwell). The Argus <-> Northrend portal is
-      //    removed and the Argus <-> Felwood portal opens (AiGraph.Portals, phase "legion").
-      SimpleBot.Safe("summon: demon portal", () =>
-      {
-        if (!FixDemonPortal())
-        {
-          SimpleBot.LogPin("Legion: WL Demon Portal not found at (0,0) -- Argus <-> Sunwell link missing");
-        }
-      });
+      // 1) 0.49: WL's own portal pair as WL makes it -- the exterior Demon Portal (n037) stands where the ritual's
+      //    caster stood, the interior one (n03C, Antoran) points at it. The bot only checks and logs it (both active).
+      //    Before: summons without a caster left it at (0,0); the bot moved it beside Quel'Danas (FixDemonPortal).
+      SimpleBot.Safe("summon: demon portal", CheckDemonPortal);
       SimpleBot.Safe("summon: portals", SwitchPortalsToLegionPhase);
 
       var legion = SimpleBot.PlayerOfFaction("Legion");
@@ -520,26 +427,8 @@ namespace WarcraftLegacies.Source.Ai
       // v32: the north stays with the Scourge -- the Legion stops defending a continent it has left.
       SimpleBot.Safe("summon: north handover", () => LegionNorthHandover(legion));
 
-      // 2) collect the Legion's host at the Kalimdor exit -- bots only, so a human Legion keeps control of theirs.
-      if (legion != null && SimpleBot.HasPerks(legion))
-      {
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, legion, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
-        {
-          GroupRemoveUnit(g, u);
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
-          {
-            continue;
-          }
-
-          SetUnitX(u, AiWorld.LegionExitX + GetRandomReal(-384f, 384f));
-          SetUnitY(u, AiWorld.LegionExitY + GetRandomReal(-384f, 384f));
-        }
-
-        DestroyGroup(g);
-      }
+      // 2) 0.49: no teleport of the Legion's host to Felwood any more -- it walks through WL's Demon Portal (or the
+      //    Tomb of Sargeras portal, AiPortals).
 
       // 3) graph switches (Legion home -> Kalimdor, hub gates, MERGE) happen in OnLegionSummoned, after this.
 
@@ -553,73 +442,73 @@ namespace WarcraftLegacies.Source.Ai
         SetPlayerAlliance(legion, scourge, ALLIANCE_PASSIVE, false);
       }
 
-      SimpleBot.PingAt(AiWorld.LegionExitX, AiWorld.LegionExitY);
-      SimpleBot.Announce("|cffff5555The Burning Legion pours into Kalimdor -- and the Scourge turns on its masters! (see the ping)|r");
+      if (_portalFound)
+      {
+        SimpleBot.PingAt(_portalX, _portalY);
+      }
+
+      SimpleBot.Announce("|cffff5555The Burning Legion pours into Azeroth -- and the Scourge turns on its masters!"
+                         + (_portalFound ? " (see the ping)" : "") + "|r");
     }
 
     private static bool _legionGoldGiven;
-    private static bool _legionSummonStarted;
 
-    // v31: find WL's exterior Demon Portal stranded near (0,0) and rebuild it at AiWorld.LegionExit, re-pointing
-    // WL's interior Antoran portal at it. Returns true if a portal was (or already is) in place. Called after a
-    // summon and from the 15 s wave tick (one small range scan at the map centre -- cheap, catches any summon path).
-    internal static bool FixDemonPortal()
+    // 0.49: WL's Demon Portal after the summon: find the exterior portal (n037, the Legion's), log where it stands and
+    // make sure both ends are active (the route planner reads active waygates every 30 s). Replaces FixDemonPortal
+    // (v31-0.48), which moved a portal stranded at (0,0) by the bot's own caster-less summons.
+    private static bool _portalFound;
+    private static float _portalX;
+    private static float _portalY;
+
+    private static void CheckDemonPortal()
     {
       var portalType = FourCC("n037");
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, 0f, 0f, 900f, null);
-      unit stranded = null;
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
+      unit exterior = null;
+      for (var pl = 0; pl < 28 && exterior == null; pl++)
       {
-        GroupRemoveUnit(g, u);
-        SimpleBot.WaveOps++;
-        if (stranded == null && GetUnitTypeId(u) == portalType)
+        var g = CreateGroup();
+        GroupEnumUnitsOfPlayer(g, Player(pl), null);
+        unit u;
+        while ((u = FirstOfGroup(g)) != null)
         {
-          stranded = u;
+          GroupRemoveUnit(g, u);
+          if (exterior == null && GetUnitTypeId(u) == portalType && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+          {
+            exterior = u;
+          }
         }
+
+        DestroyGroup(g);
       }
 
-      DestroyGroup(g);
-      if (stranded == null)
-      {
-        return _demonPortalFixed;
-      }
-
-      var owner = GetOwningPlayer(stranded);
-      var x = AiWorld.LegionSunwellPortalX; // v34: beside Quel'Danas (was: beside Felwood)
-      var y = AiWorld.LegionSunwellPortalY;
-      var fresh = CreateUnit(owner, portalType, x, y, 0f);
-      BlzSetUnitName(fresh, "Demon Portal to Argus");
-
-      // interior portal: preplaced n03C in Antoran (WL points it at the exterior portal's old position)
       var interior = SimpleBot.FindUnitOfType(FourCC("n03C"), AiWorld.LegionInteriorX, AiWorld.LegionInteriorY, 1500f);
-      if (interior != null)
+      if (exterior == null)
       {
-        LandBeside(GetUnitX(interior), GetUnitY(interior));
-        WaygateSetDestination(fresh, SimpleBot._spotX, SimpleBot._spotY);
-        LandBeside(x, y);
-        WaygateSetDestination(interior, SimpleBot._spotX, SimpleBot._spotY);
-        WaygateActivate(interior, true);
-        BlzSetUnitName(interior, "Demon Portal to Quel'Danas");
-      }
-      else
-      {
-        WaygateSetDestination(fresh, WaygateGetDestinationX(stranded), WaygateGetDestinationY(stranded));
+        SimpleBot.LogPin("Legion: WL Demon Portal (n037) not found after the summon");
+        return;
       }
 
-      WaygateActivate(fresh, true);
-      RemoveUnit(stranded);
-      DestroyEffect(AddSpecialEffect(AiWorld.TeleportFx, x, y));
-      SimpleBot.FloatLabel("Legion Portal", x, y);
-      SimpleBot.PingAt(x, y);
-      _demonPortalFixed = true;
-      SimpleBot.LogPin("Legion: Demon Portal moved (0,0) -> " + I2S(R2I(x)) + "," + I2S(R2I(y))
-          + (interior != null ? ", Antoran portal re-pointed" : ", Antoran portal NOT found"));
-      return true;
+      _portalFound = true;
+      _portalX = GetUnitX(exterior);
+      _portalY = GetUnitY(exterior);
+      var fixedA = !WaygateIsActive(exterior);
+      if (fixedA)
+      {
+        WaygateActivate(exterior, true);
+      }
+
+      var fixedB = interior != null && !WaygateIsActive(interior);
+      if (fixedB)
+      {
+        WaygateActivate(interior, true);
+      }
+
+      SimpleBot.LogPin("Legion: Demon Portal @" + I2S(R2I(_portalX)) + "," + I2S(R2I(_portalY)) + " (owner "
+                       + SimpleBot.FacName(GetOwningPlayer(exterior)) + ") <-> Antoran "
+                       + (interior != null ? "@" + I2S(R2I(GetUnitX(interior))) + "," + I2S(R2I(GetUnitY(interior))) : "NOT found")
+                       + (fixedA || fixedB ? " -- activated by the bot" : ""));
     }
 
-    private static bool _demonPortalFixed;
 
     // ---- v34 physical portals (AiGraph.Portals) ------------------------------------------------------------
     // Real waygates -- usable by every player. "always" + "prelegion" are created 2 s into the game, the
