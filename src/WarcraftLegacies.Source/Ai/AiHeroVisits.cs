@@ -44,11 +44,17 @@ namespace WarcraftLegacies.Source.Ai
             : null;
           var open = q != null && q.Progress == QuestProgress.Incomplete;
           var hero = _hero.ContainsKey(key) ? _hero[key] : null;
+          float hx = hv.X, hy = hv.Y;
+          if (hv.AtBookPedestal)
+          {
+            AiRitual.Pedestal(ref hx, ref hy); // 0.50: WL puts the Book in Dalaran OR Gilneas -- where it really is
+          }
+
           if (hero != null)
           {
             var alive = GetUnitTypeId(hero) != 0 && GetUnitState(hero, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(hero) == p;
-            var dx = GetUnitX(hero) - hv.X;
-            var dy = GetUnitY(hero) - hv.Y;
+            var dx = GetUnitX(hero) - hx;
+            var dy = GetUnitY(hero) - hy;
             var there = dx * dx + dy * dy <= AtTarget * AtTarget;
             // 0.37: never give up while standing at the target (Archimonde's 420 s channel outlasts GiveUp)
             var late = !there && SimpleBot.Clock - _since[key] > GiveUp;
@@ -67,12 +73,12 @@ namespace WarcraftLegacies.Source.Ai
 
             if (!there)
             {
-              IssuePointOrder(hero, "move", hv.X, hv.Y); // 0.37: not when there -- an order breaks a channel
+              IssuePointOrder(hero, "move", hx, hy); // 0.37: not when there -- an order breaks a channel
             }
 
             if (hv.WithArmy)
             {
-              Escort(p, hv.X, hv.Y); // 0.39.6
+              Escort(p, hx, hy); // 0.39.6
             }
 
             continue;
@@ -98,7 +104,7 @@ namespace WarcraftLegacies.Source.Ai
             continue; // 0.39.6: e.g. the Tomb of Sargeras is still closed
           }
 
-          if (hv.WithArmy && !ArmyNear(p, hv.X, hv.Y))
+          if (hv.WithArmy && !ArmyNear(p, hx, hy))
           {
             continue; // 0.39.6: wait until the army is close
           }
@@ -117,7 +123,7 @@ namespace WarcraftLegacies.Source.Ai
 
           if (hv.SameLandmass)
           {
-            var lmT = Geography.Landmass(hv.X, hv.Y);
+            var lmT = Geography.Landmass(hx, hy);
             if (lmT < 0 || Geography.Landmass(GetUnitX(best), GetUnitY(best)) != lmT)
             {
               continue;
@@ -128,7 +134,7 @@ namespace WarcraftLegacies.Source.Ai
           _since[key] = SimpleBot.Clock;
           AiState.MissionUnits.Add(best);
 
-          IssuePointOrder(best, "move", hv.X, hv.Y);
+          IssuePointOrder(best, "move", hx, hy);
           SimpleBot.LogPin(SimpleBot.FacName(p) + ": hero visit '" + hv.Quest + "' -- sends " + GetUnitName(best)
                            + " (lvl " + I2S(GetHeroLevel(best)) + ")");
         }

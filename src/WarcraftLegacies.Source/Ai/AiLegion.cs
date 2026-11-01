@@ -555,7 +555,7 @@ namespace WarcraftLegacies.Source.Ai
 
     private static void CreatePortals(string phase)
     {
-      if (phase == "prelegion" || phase == "legion" || phase == "oldgods")
+      if (phase == "prelegion" || phase == "legion" || phase == "oldgods" || phase == "ship")
       {
         // 0.48: no visible bot waygates for Argus and the rift any more (maintainer: align with WL). Argus is left
         // through WL's Legion Teleporters (player-owned waygates, AiRoutes) and entered through the Tomb of Sargeras;

@@ -447,7 +447,10 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     // one portal edge: waygate u -> its exit (dx, dy). False = no edge (unknown ground, both ends in one area).
-    internal static bool AddPortalEdge(unit u, float dx, float dy)
+    internal static bool AddPortalEdge(unit u, float dx, float dy) => AddPortalEdgeCost(u, dx, dy, 0f);
+
+    // 0.50: extra = cost on top of the walk to / from the ends (ferries: sailing + boarding time as walking distance)
+    internal static bool AddPortalEdgeCost(unit u, float dx, float dy, float extra)
     {
       if (u == null || _pUnit.Contains(u))
       {
@@ -472,7 +475,7 @@ namespace WarcraftLegacies.Source.Ai
         return false;
       }
 
-      var cost = Dist(AiRouteData.NodeX[a], AiRouteData.NodeY[a], ux, uy) + PortalCost
+      var cost = Dist(AiRouteData.NodeX[a], AiRouteData.NodeY[a], ux, uy) + PortalCost + extra
                  + Dist(dx, dy, AiRouteData.NodeX[b], AiRouteData.NodeY[b]);
       _padj[a].Add(_pFrom.Count);
       _padjIn[b].Add(_pFrom.Count);
@@ -483,7 +486,7 @@ namespace WarcraftLegacies.Source.Ai
       _pExitX.Add(dx);
       _pExitY.Add(dy);
       var oid = GetPlayerId(GetOwningPlayer(u));
-      _pOwner.Add(oid < 24 ? oid : -1);
+      _pOwner.Add(oid < 24 && PrivateGate(u) ? oid : -1);
       AiPortals.Watch(u); // 0.46: entry area for the pseudo-portal trigger
       return true;
     }
@@ -493,8 +496,29 @@ namespace WarcraftLegacies.Source.Ai
     // 0.48: who may use portal edge pe -- everyone (neutral / bot pseudo-portals) or the owner and its allies
     private static List<int> _pOwner = new();
 
+    // 0.50: only the waygates WL gives to a player on purpose are owner + allies only: the Deeprun Tram (n03B), the
+    // Legion Teleporters (n0BE) and the Legion's exterior Demon Portal (n037). Every other waygate is open to all bots,
+    // whoever owns it. 0.48.5 game: the six Dark Portal waygates (Neutral Hostile at 5:00) belonged to a player from
+    // ~10:00 on -- neither South Alliance nor Outland -- and both sides lost the Dark Portal (Fel Horde and Illidan held
+    // in Outland for 10 min with 36 reachable EK targets; Stormwind / Ironforge waited at the rocks).
+    private static bool PrivateGate(unit u)
+    {
+      var t = GetUnitTypeId(u);
+      return t == FourCC("n03B") || t == FourCC("n0BE") || t == FourCC("n037");
+    }
+
+    internal static int OwnerOf(int pe) => _pOwner[pe];
+
+    // 0.50: the route node whose area holds (x, y) (or the nearest on the same land)
+    internal static int NodeAt(float x, float y) => StartNode(x, y);
+
     private static bool PortalAllowed(player p, int pe)
     {
+      if (!AiFerries.EntryAllowed(p, _pUnit[pe]))
+      {
+        return false; // 0.50: a ferry pier held by an enemy is no entry
+      }
+
       var owner = _pOwner[pe];
       if (owner < 0 || p == null)
       {

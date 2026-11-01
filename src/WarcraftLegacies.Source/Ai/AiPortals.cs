@@ -163,6 +163,12 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
+      if (AiFerries.On && AiFerries.IsPier(gate))
+      {
+        AiFerries.Board(u, gate, dx, dy); // 0.50: a ferry pier -- board, sail, land (no teleport)
+        return;
+      }
+
       var now = SimpleBot.Clock;
       var last = _fxAt.ContainsKey(gate) ? _fxAt[gate] : -10f;
       if (now - last >= 1f)
@@ -226,7 +232,7 @@ namespace WarcraftLegacies.Source.Ai
     private static unit _riftHigh;
     internal static string BotPortals = "-";
 
-    private static unit Marker(unit m, float x, float y)
+    internal static unit Marker(unit m, float x, float y)
     {
       if (m != null && GetUnitTypeId(m) != 0 && GetUnitState(m, UNIT_STATE_LIFE) > 0.405f)
       {
@@ -284,6 +290,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static void AddStatic()
     {
       AddBotPortals();
+      AiFerries.AddEdges(); // 0.50: ferry piers (bot-only, hidden markers)
       AddLegionTeleporters();
       if (!_dpSearched)
       {
@@ -430,7 +437,7 @@ namespace WarcraftLegacies.Source.Ai
 
       // WL's own waygates (not the AI pairs of Neutral Extra): where, owner, active, hidden, destination
       var g = CreateGroup();
-      for (var pl = 24; pl < 28; pl++)
+      for (var pl = 0; pl < 28; pl++) // 0.50: every owner (0.48.5: the Dark Portal waygates left the neutral list)
       {
         if (pl == 26)
         {
@@ -442,9 +449,9 @@ namespace WarcraftLegacies.Source.Ai
         while ((u = FirstOfGroup(g)) != null)
         {
           GroupRemoveUnit(g, u);
-          if (GetUnitTypeId(u) != AiWorld.PortalUnitId && !WaygateIsActive(u))
+          if ((pl < 24 || GetUnitTypeId(u) != AiWorld.PortalUnitId) && !WaygateIsActive(u))
           {
-            continue;
+            continue; // players: active waygates only; neutrals: also WL's inactive portal units
           }
 
           o.Add("  WL waygate " + GetUnitName(u) + " @" + I2S(R2I(GetUnitX(u))) + "," + I2S(R2I(GetUnitY(u)))

@@ -45,7 +45,7 @@ namespace WarcraftLegacies.Source.Ai
 
         var owner = GetOwningPlayer(u);
         if (!SimpleBot.IsBot(owner) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || GetUnitMoveSpeed(u) <= 1f
-            || AiState.MissionUnits.Contains(u) || u == SimpleBot._ragHero)
+            || AiState.MissionUnits.Contains(u) || u == SimpleBot._ragHero || AiFerries.InTransit(u))
         {
           Forget(u);
           continue;

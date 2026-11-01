@@ -3,6 +3,8 @@ using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Factions.Legion.Quests;
+using WarcraftLegacies.Source.Objectives.UnitBased;
+using WarcraftLegacies.Source.Setup;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -156,6 +158,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         _lastSearch = SimpleBot.Clock;
+        BookForBots(); // 0.50: no level 12 for bot heroes at the pedestal
         _hero = FindBookHero();
         if (_hero == null)
         {
@@ -250,6 +253,128 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
+    // ---- 0.50: the Book of Medivh without level 12 for bots (maintainer) -------------------------------------------
+    // WL's Book quest wants a level-12 hero from every faction but the Legion. A bot Legion / Scourge hero of ANY level
+    // that stands at the pedestal when the level objective is the ONLY open one (Dalaran's / Gilneas' capital dead, no
+    // one else holds the Book) completes the bot's own Book quest; the bot then puts the Book in the hero's inventory
+    // (WL hands it only to the unit that completed the objective). WL's objective itself is not changed: humans still
+    // need level 12. AiHeroVisits sends the hero (AtBookPedestal).
+    private const float PedestalReach = 400f;
+    private static bool _pedestalKnown;
+    private static float _pedX;
+    private static float _pedY;
+    internal static int BookGiven;
+
+    // where WL created the pedestal (Dalaran or Gilneas, whichever faction registered its quest first)
+    internal static void Pedestal(ref float x, ref float y)
+    {
+      if (!_pedestalKnown)
+      {
+        var type = FourCC("nbsm");
+        var g = CreateGroup();
+        GroupEnumUnitsOfPlayer(g, Player(27), null);
+        unit u;
+        while ((u = FirstOfGroup(g)) != null)
+        {
+          GroupRemoveUnit(g, u);
+          if (!_pedestalKnown && GetUnitTypeId(u) == type)
+          {
+            _pedestalKnown = true;
+            _pedX = GetUnitX(u);
+            _pedY = GetUnitY(u);
+          }
+        }
+
+        DestroyGroup(g);
+      }
+
+      if (_pedestalKnown)
+      {
+        x = _pedX;
+        y = _pedY;
+      }
+    }
+
+    private static void BookForBots()
+    {
+      float px = 0f, py = 0f;
+      Pedestal(ref px, ref py);
+      if (!_pedestalKnown)
+      {
+        return;
+      }
+
+      for (var pl = 0; pl < 24; pl++)
+      {
+        var p = Player(pl);
+        if (!Eligible(p))
+        {
+          continue;
+        }
+
+        var q = QuestAutoComplete.FindQuest(p.GetPlayerData().Faction, AiConfig.BookQuestTitle);
+        if (q == null || q.Progress != QuestProgress.Incomplete || !OnlyLevelObjectiveOpen(q))
+        {
+          continue;
+        }
+
+        var hero = HeroNear(p, px, py);
+        if (hero == null)
+        {
+          continue;
+        }
+
+        q.Progress = QuestProgress.Complete;
+        if (!HasBook(hero))
+        {
+          UnitAddItem(hero, Artifacts.BookOfMedivh.Item);
+        }
+
+        BookGiven++;
+        SimpleBot.LogPin("P" + I2S(pl) + " " + SimpleBot.FacName(p) + ": " + GetUnitName(hero) + " (lvl "
+                         + I2S(GetHeroLevel(hero)) + ") took the Book of Medivh at the pedestal (bot: no level 12)"
+                         + (HasBook(hero) ? "" : " -- Book NOT in its inventory"));
+        return;
+      }
+    }
+
+    private static bool OnlyLevelObjectiveOpen(QuestData q)
+    {
+      var open = 0;
+      var level = false;
+      var objs = q.Objectives;
+      for (var i = 0; i < objs.Count; i++)
+      {
+        if (objs[i].Progress != QuestProgress.Complete)
+        {
+          open++;
+          level = objs[i] is ObjectiveHeroWithLevelInRect;
+        }
+      }
+
+      return open == 1 && level;
+    }
+
+    private static unit HeroNear(player p, float x, float y)
+    {
+      unit found = null;
+      var g = CreateGroup();
+      GroupEnumUnitsInRange(g, x, y, PedestalReach, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (found == null && GetOwningPlayer(u) == p && IsUnitType(u, UNIT_TYPE_HERO)
+            && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f && UnitInventorySize(u) > 0)
+        {
+          found = u;
+        }
+      }
+
+      DestroyGroup(g);
+      return found;
+    }
+
     // WL's "Under the Burning Sky" (QuestSummonLegion, global) is complete
     internal static bool Summoned()
     {
@@ -274,7 +399,8 @@ namespace WarcraftLegacies.Source.Ai
     internal static void Lines(List<string> o)
     {
       o.Add("legion ritual (0.49): " + State + (_hero != null ? " -- " + GetUnitName(_hero) + " of " + SimpleBot.FacName(GetOwningPlayer(_hero)) : "")
-            + "; orders " + I2S(Casts) + ", channels " + I2S(Channels));
+            + "; orders " + I2S(Casts) + ", channels " + I2S(Channels) + ", Book given at the pedestal (bot, no level 12) "
+            + I2S(BookGiven) + (_pedestalKnown ? " -- pedestal @" + I2S(R2I(_pedX)) + "," + I2S(R2I(_pedY)) : ""));
     }
   }
 }

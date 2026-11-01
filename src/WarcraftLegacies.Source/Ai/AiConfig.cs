@@ -325,10 +325,12 @@ public static class AiConfig
     // 0.38: Legion "Book of Medivh": once Dalaran's capital is dead (LastObjective), a Legion hero goes to the pedestal
     // (Regions.BookOfMedivhDalaran; for the Legion any unit counts) -> it carries the Book -> 0.49: it casts WL's
     // ritual there (AiRitual) -- the Demon Portal opens where it stands.
-    new HeroVisit("Book of Medivh", "Legion", 0, 0, 9456f, 5040f) { LastObjective = true },
+    new HeroVisit("Book of Medivh", "Legion", 0, 0, 9456f, 5040f) { LastObjective = true, AtBookPedestal = true },
     // 0.49: the Scourge too (lore: Kel'Thuzad summons Archimonde with the Book) -- WL wants a level-12 hero for every
     // faction but the Legion. Kel'Thuzad's own copy of the ritual is NOT used: only the Book summons.
-    new HeroVisit("Book of Medivh", "Scourge", 12, 0, 9456f, 5040f) { LastObjective = true },
+    // 0.50: bots need no level 12 (maintainer): any hero goes once only the hero objective is open, and AiRitual
+    // completes the bot's own Book quest when it stands at the pedestal (WL's level objective is not changed).
+    new HeroVisit("Book of Medivh", "Scourge", 0, 0, 9456f, 5040f) { LastObjective = true, AtBookPedestal = true },
     // 0.39: Frostwolf "A Feast for Our Kin": Cairne into Highmountain (Regions.Highmountain_Unlock), only while the
     // Frostwolf or an ally holds Stormheim (n05Z)
     new HeroVisit("A Feast for Our Kin", "Frostwolf", 0, 1848653146, 2039f, 10926f) { Hero = "Cairne Bloodhoof", AllyCp = true },
@@ -530,6 +532,7 @@ public sealed class HeroVisit
   public bool AllyCp;               // 0.39: RequireCpId may also be held by an ally
   public bool WithArmy;             // 0.39.6: only with the army close by; the nearby army escorts the hero
   public string RequireGate = "";   // 0.39.6: graph gate that must be open (e.g. "tomb")
+  public bool AtBookPedestal;       // 0.50: X / Y = where WL placed the Book of Medivh (Dalaran or Gilneas)
 
   public HeroVisit(string quest, string faction, int minLevel, int requireCpId, float x, float y)
   {
@@ -885,26 +888,28 @@ public static class AiGraph
     1848652609, // n03A Nath'raxas Hold
   };
 
+  // 0.50: phase "ship" = the bot FERRIES (AiFerries): no waygates any more, pier A / pier B are the harbours, the boat
+  // sails the lane of tools/ai/gen_lanes.py (AiLanes.g.cs, same order). Re-run gen_lanes.py when a pier moves.
   // v34: physical portals (real waygates -- everyone can use them). Created at game start ("always",
   // "prelegion") or at the Legion summon ("legion"); "prelegion" ones are removed at the summon. A/B order is
   // free; each end lands its travellers on open ground beside the OTHER end. Skin = unit type whose model the
   // waygate shows (ships: "hbot" transport ship; "" = keep the Dark Portal model). Names show on mouse-over.
   public static readonly List<PortalLink> Portals = new()
   {
-    new PortalLink(-2391f, 3837f, -4476f, 4880f, "hbot", "Ship to Azshara Coast", "Ship to Azsuna", "always"),
-    new PortalLink(-6362f, 2171f, -4256f, 2144f, "hbot", "Ship to The Abyss", "Ship to Eldarath", "always"),
-    new PortalLink(-7617f, -4539f, -4998f, -4379f, "hbot", "Ship to Nazjatar", "Ship to Echo Isles", "always"),
-    new PortalLink(-4931f, -12031f, -7726f, -14142f, "hbot", "Ship to Gadgetzan", "Ship to Nazmir", "always"),
-    new PortalLink(6507f, -12298f, 7869f, -10014f, "hbot", "Ship to Stormwind", "Ship to Kul Tiras", "always"),
+    new PortalLink(-2391f, 3837f, -4476f, 4880f, "hbot", "Ship to Azshara Coast", "Ship to Azsuna", "ship"),
+    new PortalLink(-6362f, 2171f, -4256f, 2144f, "hbot", "Ship to The Abyss", "Ship to Eldarath", "ship"),
+    new PortalLink(-7617f, -4539f, -4998f, -4379f, "hbot", "Ship to Nazjatar", "Ship to Echo Isles", "ship"),
+    new PortalLink(-4931f, -12031f, -7726f, -14142f, "hbot", "Ship to Gadgetzan", "Ship to Nazmir", "ship"),
+    new PortalLink(6507f, -12298f, 7869f, -10014f, "hbot", "Ship to Stormwind", "Ship to Kul Tiras", "ship"),
     // v34.1: Balor <-> Western Stranglethorn. Given as x-4853 y-14342; that point is open sea near Zandalar,
     // while x+4853 y-14342 is walkable on the Kul Tiras island 2000 from Balor -> sign typo assumed.
-    new PortalLink(4853f, -14342f, 8447f, -18608f, "hbot", "Ship to Stranglethorn", "Ship to Balor", "always"),
+    new PortalLink(4853f, -14342f, 8447f, -18608f, "hbot", "Ship to Stranglethorn", "Ship to Balor", "ship"),
     // v34.2: Nazmir <-> Kezan. Given as x-1201 y9903 for the Kezan side; that is the Broken Isles, while
     // x-1201 y-9903 is walkable on Kezan's own island (same ground area as the Kezan CP) -> sign typo assumed.
-    new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "always"),
+    new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "ship"),
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
     // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
-    new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "always"),
+    new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "ship"),
     // 0.49: the Argus <-> Northrend (prelegion) and Argus <-> Felwood (legion) bot waygates are removed for good.
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
