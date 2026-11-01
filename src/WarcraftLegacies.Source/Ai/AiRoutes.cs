@@ -509,6 +509,22 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static int OwnerOf(int pe) => _pOwner[pe];
 
+    // 0.50.1: a unit on a mission (hero visit, Ragnaros, stranded hero) walks to (x, y) the way the army does -- along
+    // the route graph, so it takes ferries and portals. A plain move order cannot cross the sea: 0.50.0 removed the AI
+    // ship waygates, and Maiev ("Vault of the Wardens") stood at the coast. Falls back to the plain move.
+    internal static void MoveVia(unit u, float x, float y)
+    {
+      if (u == null || AiFerries.InTransit(u))
+      {
+        return; // at sea: it continues when it lands
+      }
+
+      if (!Chain(GetOwningPlayer(u), u, x, y))
+      {
+        IssuePointOrder(u, "move", x, y);
+      }
+    }
+
     // 0.50: the route node whose area holds (x, y) (or the nearest on the same land)
     internal static int NodeAt(float x, float y) => StartNode(x, y);
 

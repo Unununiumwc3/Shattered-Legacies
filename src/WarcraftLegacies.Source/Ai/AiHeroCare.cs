@@ -98,7 +98,7 @@ namespace WarcraftLegacies.Source.Ai
           _walkSince[u] = SimpleBot.Clock;
           _stillSince[u] = SimpleBot.Clock;
           AiTrack.Ordered(u, d.AnchorX, d.AnchorY, AiTrack.KHero); // 0.48.3: measurement
-          IssuePointOrder(u, "move", d.AnchorX, d.AnchorY);
+          AiRoutes.MoveVia(u, d.AnchorX, d.AnchorY); // 0.50.1: by route (ferries, portals)
           SimpleBot.Log("P" + I2S(pid) + " " + SimpleBot.FacName(owner) + ": hero " + GetUnitName(u) + " stuck at "
                         + I2S(R2I(x)) + "," + I2S(R2I(y)) + " far from the army -> walks back");
           continue;

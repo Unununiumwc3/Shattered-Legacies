@@ -11,8 +11,9 @@ namespace WarcraftLegacies.Source.Ai
   // - Boarding: the pseudo-portal trigger hands a ticketed unit to Board instead of teleporting it. The unit is hidden
   //   (ShowUnit false: out of the game world) and paused, and kept out of the army logic (InTransit). The boat of
   //   this direction and player leaves BoardWait seconds after its first passenger; later arrivals take the next one.
-  // - Boat: a transport ship model, owned by Neutral Extra (26) in the bot's team colour, Locust (not clickable or
-  //   targetable), invulnerable, moved along the lane every scheduler slot (no pathfinder).
+  // - Boat (0.50.1): a transport ship OWNED BY THE BOT (shows on the minimap -- maintainer), invulnerable, removed at
+  //   the landing (timed life as a safety net), kept out of the bot's army logic (IsBoat). It sails with real move
+  //   orders from lane point to lane point (smooth; 0.50.0 jumped every 0.25 s and stuttered), at half the old speed.
   // - Landing: passengers shown beside the far pier (fixed offsets), unpaused and given the rest of their way at once.
   // "-ferry on|off": off = instant crossing (the 0.46 pseudo-portal teleport).
   internal sealed class AiVoyage
@@ -26,6 +27,9 @@ namespace WarcraftLegacies.Source.Ai
     internal float X;
     internal float Y;
     internal float Started;
+    internal float LastX;        // boat progress check (stuck)
+    internal float LastY;
+    internal float LastMoveAt;
     internal List<unit> Passengers = new();
     internal List<float> DestX = new();
     internal List<float> DestY = new();
@@ -35,10 +39,12 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool On = true;
     private const float BoardWait = 12f;     // the boat leaves this long after its first passenger
-    private const float ShipSpeed = 400f;    // per second
+    private const float ShipSpeed = 200f;    // per second (0.50.1: half of 0.50.0's 400 -- maintainer)
+    private const float PointReach = 200f;   // a lane point counts as reached within this
+    private const float StuckAfter = 4f;     // no progress this long -> the boat is put on its next point
     private const float Slot = 0.25f;        // scheduler slot
     private const float WalkSpeed = 300f;    // to express sailing time as walking distance (edge cost)
-    private const float MaxVoyage = 90f;     // safety: land after this long at sea, whatever happened
+    private const float MaxVoyage = 150f;    // safety: land after this long at sea, whatever happened
     private const string BoatType = "hbot";  // WC3's transport ship (model only)
     private const string FxBoard = "Objects\\Spawnmodels\\Naga\\NagaDeath\\NagaDeath.mdl";
 
@@ -47,6 +53,7 @@ namespace WarcraftLegacies.Source.Ai
     private static int[] _pierNode;
     private static Dictionary<unit, int> _dirOf = new(); // marker -> direction it starts
     private static HashSet<unit> _transit = new();
+    private static HashSet<unit> _boats = new();
     private static List<AiVoyage> _voyages = new();
     private static bool _ready;
     internal static int Boarded;
@@ -92,6 +99,8 @@ namespace WarcraftLegacies.Source.Ai
     }
 
     internal static bool InTransit(unit u) => _transit.Contains(u);
+
+    internal static bool IsBoat(unit u) => _boats.Contains(u);
 
     internal static bool IsPier(unit gate) => gate != null && _dirOf.ContainsKey(gate);
 
@@ -272,20 +281,31 @@ namespace WarcraftLegacies.Source.Ai
       v.Y = LaneY(v.Dir, 0);
       v.Point = 1;
       Voyages++;
-      v.Boat = CreateUnit(Player(26), FourCC(BoatType), v.X, v.Y, 0f);
+      var tx = LaneX(v.Dir, 1);
+      var ty = LaneY(v.Dir, 1);
+      v.Boat = CreateUnit(Player(v.Pid), FourCC(BoatType), v.X, v.Y, Atan2(ty - v.Y, tx - v.X) * 57.29578f);
       if (v.Boat != null)
       {
-        UnitAddAbility(v.Boat, FourCC("Aloc"));
+        _boats.Add(v.Boat);
         SetUnitInvulnerable(v.Boat, true);
-        SetUnitPathing(v.Boat, false);
-        SetUnitColor(v.Boat, GetPlayerColor(Player(v.Pid)));
+        SetUnitMoveSpeed(v.Boat, ShipSpeed);
         BlzSetUnitName(v.Boat, "Ferry -- " + SimpleBot.FacName(Player(v.Pid)));
+        UnitApplyTimedLife(v.Boat, FourCC("BTLF"), MaxVoyage + 30f); // never left behind
+        v.LastX = v.X;
+        v.LastY = v.Y;
+        v.LastMoveAt = SimpleBot.Clock;
+        IssuePointOrder(v.Boat, "move", tx, ty);
       }
     }
 
     // one slot of sailing; true = arrived
     private static bool Sail(AiVoyage v)
     {
+      if (v.Boat != null && GetUnitTypeId(v.Boat) != 0)
+      {
+        return SailBoat(v);
+      }
+
       var step = ShipSpeed * Slot;
       var n = LanePoints(v.Dir);
       while (step > 0f && v.Point < n)
@@ -323,10 +343,58 @@ namespace WarcraftLegacies.Source.Ai
       return v.Point >= n;
     }
 
+    // 0.50.1: the boat sails by itself (move order to the next lane point); this only checks progress
+    private static bool SailBoat(AiVoyage v)
+    {
+      var n = LanePoints(v.Dir);
+      var bx = GetUnitX(v.Boat);
+      var by = GetUnitY(v.Boat);
+      var tx = LaneX(v.Dir, v.Point);
+      var ty = LaneY(v.Dir, v.Point);
+      var now = SimpleBot.Clock;
+      var reached = (tx - bx) * (tx - bx) + (ty - by) * (ty - by) <= PointReach * PointReach;
+      var moved = (bx - v.LastX) * (bx - v.LastX) + (by - v.LastY) * (by - v.LastY) >= 50f * 50f;
+      if (moved)
+      {
+        v.LastX = bx;
+        v.LastY = by;
+        v.LastMoveAt = now;
+      }
+      else if (now - v.LastMoveAt >= StuckAfter)
+      {
+        SetUnitX(v.Boat, tx); // stuck (shore, another boat): put it on the point and go on
+        SetUnitY(v.Boat, ty);
+        v.LastX = tx;
+        v.LastY = ty;
+        v.LastMoveAt = now;
+        reached = true;
+      }
+
+      if (!reached)
+      {
+        if (GetUnitCurrentOrder(v.Boat) == 0)
+        {
+          IssuePointOrder(v.Boat, "move", tx, ty);
+        }
+
+        return false;
+      }
+
+      v.Point++;
+      if (v.Point >= n)
+      {
+        return true;
+      }
+
+      IssuePointOrder(v.Boat, "move", LaneX(v.Dir, v.Point), LaneY(v.Dir, v.Point));
+      return false;
+    }
+
     private static void Land(AiVoyage v)
     {
       if (v.Boat != null)
       {
+        _boats.Remove(v.Boat);
         RemoveUnit(v.Boat);
         v.Boat = null;
       }
@@ -400,7 +468,7 @@ namespace WarcraftLegacies.Source.Ai
 
       o.Add("ferries (0.50) " + (On ? "on" : "off") + ": " + I2S(_link.Count) + " links; boarded " + I2S(Boarded)
             + ", landed " + I2S(Landed) + ", voyages " + I2S(Voyages) + ", now at sea " + I2S(atSea) + " / boarding "
-            + I2S(waiting) + "; entries refused (enemy pier) " + I2S(Blocked));
+            + I2S(waiting) + "; route checks refused (enemy pier) " + I2S(Blocked));
     }
   }
 }
