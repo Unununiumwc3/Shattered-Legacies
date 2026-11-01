@@ -13,6 +13,12 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 ## Open problems -- start here (phase 1)
 
 1. **Back-and-forth movement** -- the show stopper (maintainer, 0.48.1). Known so far:
+   - **0.48.3 FOUND IT (main part)**: the engine's guard position. A bot unit out of orders walks back to the spot
+     where it was trained (attack order, so the bot thinks it is busy). Trail: every followed Druid unit back at its
+     spawn (within 80) after 28,000-52,000 walked; "engine" = 38 % of all turnarounds. 0.48.4 removes guard positions
+     for all bots. Second part: target changes that re-route the group backwards ("change" = 47 % of turnarounds) --
+     0.48.4 commit on re-plan; the event log now says gone / switch. Check both in the 0.48.4 game: engine turns per
+     walk should drop sharply; idle-away / rest orders will rise (that is the bot taking over -- watch the load).
    - 0.48.1 game, 25 min, 16 bots: ~580 target changes (route-neutral 269, route-enemy 187, defend 51, theatre 44,
      wait/hold 30) = ~1.5 per bot per minute; each one re-chains the attack group ("change" orders 22,679, rest
      5,285). Target RETURNS (A -> B -> A within 5 min) are down to max 9 per bot (0.46.2: 17-18), so most of it is
@@ -50,6 +56,15 @@ Current build: **0.48.2** (handover build for a new chat). History: `CHANGELOG.m
 5. **North Alliance waiting at Tirisfal**: waiting at the rocks is fine (quick when the Scourge's invasion goes
    elsewhere); 0.48.2 makes the wait point sticky -- check it no longer patrols.
 6. Load: still a bit laggy -> budget 30 + 7 in 0.48.2; check the latency windows.
+
+## Next playtest (0.48.4)
+
+- `-autodump` from the start, 25-40 min, Druids (P11) a bot. `-track` is NOT needed -- the dumps carry the trail.
+- Does the back and forth still show? If yes: game time, faction, `-xy` on a unit, `-dump`.
+- Load: idle-away and rest orders rise without guard positions (0.46: 3-10 x idle-away). Felt lag, and the latency
+  windows in the dump.
+- Dump: TURNAROUNDS "engine" per bot far below 0.48.3 (38 %); TRAIL units no longer end at their spawn; "commit"
+  line; `[route-neutral:switch]` vs `:gone` in the event log -> next fix (target hopping after captures).
 
 ## Next playtest (0.48.3) -- the measurement build
 
@@ -125,7 +140,8 @@ Rules for phase 1:
 | 0.48.0 | yes (25 min) | Legion stuck on Argus (teleporters are spells, not cast); armies walked back to their base on empty plans; fronts moved 36 times; South Alliance "nothing reachable" 15-20 min |
 | 0.48.1 | yes (25 min) | "felt mostly good"; tram worked; Legion did not leave Argus; North Alliance patrolled at Tirisfal; back and forth still (Sentinels, Druids early; Dalaran, Scourge later); a bit laggy |
 | 0.48.2 | yes (26 min, Ironforge on autopilot) | (built: finish-off bias; graph corrections (whirlpool rocks, Barrens hub, Teldrassil, Ahn'Qiraj); Lordaeron no longer gathers at the coast? Loch Modan - Searing Gorge and Alterac - Andorhal really blocked (B01L)?) turn-backs measured from the event log: neutral hops early, defence ping-pong (24 of 42 defences ended at the 30-s minimum) and enemy re-picks later; unit movement not in the dumps -> 0.48.3 |
-| 0.48.3 | **next** | measurement only: TURNAROUNDS (all bots, cause per turn), TRAIL (8 Druid units from their building), angle in target-change lines |
+| 0.48.3 | yes (8.5 min, Black Empire on autopilot, Druids watched) | measurement build: units out of orders walk back to the spot where they were TRAINED (guard position) -- the back and forth; plus re-plan switches backwards |
+| 0.48.4 | **next** | guard positions removed for all bots; commit on re-plan; gone / switch in the event log |
 
 **Every game before 0.44.2 ran without CP income for bots** (WL pays human slots only): gold, army size and balance
 observations from those games are void. Movement observations stay valid.

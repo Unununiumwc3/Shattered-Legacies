@@ -23,11 +23,11 @@ Changes outside these folders are marked in the code: `// [BOT]` (hook the bot n
 map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
 `grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.48.3) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.48.4) -- read this, then `TODO.md` ("Open problems" first)
 
-- **0.48.3 is a measurement build** for the back-and-forth (no behaviour change): dump sections TURNAROUNDS (all
-  bots, cause per turn) and TRAIL (8 units of P11 from their building, `-track`); `tools/ai/back_forth.py`. The
-  next fix is picked from its game -- see `TODO.md` "Open problems" 1.
+- **0.48.3 measured the back-and-forth** (dump sections TURNAROUNDS and TRAIL, `tools/ai/back_forth.py`): main
+  cause = the engine's guard position (units walk home to where they were trained). **0.48.4** removes guard positions
+  for all bots and adds commit on re-plan; check its game -- `TODO.md` "Open problems" 1.
 
 - **Phase 1 (movement "good enough") is nearly done.** Maintainer after 0.48.1: "the game felt mostly good" -- the
   remaining show stopper is **back-and-forth movement** (`TODO.md` "Open problems", with what is known about it),
@@ -246,8 +246,9 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - **No group movement**: every unit paths on its own. Units sent to the same point compete for it (crowds at nodes,
   bridges) -- 0.46 tests spreading the points.
 - **Waygate teleports drop the queued orders** (0.44.1: 1048 units idle at exits) -> pseudo-portals (0.46).
-- **Guard positions** (hypothesis, tested in 0.46): computer players' units walk back to a guard position after chasing
-  an enemy; nothing in the code removes it (`RemoveAllGuardPositions` / `RemoveGuardPosition`).
+- **Guard positions** (CONFIRMED 0.48.3): a computer player's unit that runs out of orders walks back to the spot
+  where it was TRAINED, ~15-25 s later, with an attack order (so "busy" for every idle check). This was the
+  back-and-forth movement. `AiGuard` removes them for all bots since 0.48.4 (`RemoveGuardPosition`, every service).
 - **Enter-region events fire only on entering**: a unit already inside the region when the trigger matters gets no
   event -- handle that case when the decision is made.
 - **Hidden** (`ShowUnit` false) = out of the game world: no target, no collision, not revealed by true sight (not the

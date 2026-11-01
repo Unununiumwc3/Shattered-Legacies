@@ -138,7 +138,8 @@ Read this before proposing a movement change. Details: `CHANGELOG.md` under the 
 | 0.42-0.46.1 | graph generator: trees, rock doodads and LTrc only | ~6600 invisible pathing blockers missing or half-size, custom doodads ignored: phantom edges (Howling Fjords - Grizzly Hills) | 0.46.2: blockers + custom doodad pathing + `route_exceptions.txt` |
 | 0.41-0.46.1 | staging = own CP nearest the target in a straight line | dead ends across gorges, jumping with every target: rest units walked between own CPs | 0.46.2: own node on the route, kept within 2500 |
 | 0.39.4-0.46.1 | extra CPs on the map for the bot (W1-W4) and the fork (13 CPs, four at 100 gold) | changed WL's economy; bot needs covered by area nodes since 0.42 | 0.46.2: WL's CPs restored |
-| 0.46-0.46.2 | guard positions removed for bot units (hypothesis: units walk back after chases) | the removed half issued 3-10 x the idle-away orders in every phase, both splits | 0.46.3: off (engine guard positions kept) |
+| 0.46-0.46.2 | guard positions removed for bot units (hypothesis: units walk back after chases) | the removed half issued 3-10 x the idle-away orders in every phase, both splits | 0.46.3: off (engine guard positions kept) -- **wrong call, 0.48.4: on again** |
+| 0.46.3-0.48.3 | engine guard positions kept (judged by order counts) | units out of orders walked back to the spot where they were TRAINED with an attack order (bot saw them as busy): the back and forth, 38 % of all turnarounds (0.48.3 trail) | 0.48.4: removed for all bots; judge movement changes by the trail / turnarounds, not by order counts alone |
 | 0.45-0.46.2 | gather points (wait at the last own node) | 81 % timeouts (0.45.0); no difference in any phase (0.46.2 A/B) | 0.46.3: off |
 | 0.46-0.46.2 | spread chain points (per-unit offset at nodes) | more stalled units from 50 min on (0.46.2 A/B) | 0.46.3: off |
 | 0.42-0.46.2 | rocks = LTrc only; LTrc-based custom destructables counted as trees | WL's Whirlpool Blockers (B013, removed after the Plague) were permanent; other blockades sized as trees | 0.46.3: removable types read from WL's `RockGroup` code, others walls |
@@ -181,7 +182,8 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default off (0.46.3: no difference in any game phase) |
 | `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
-| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default off (0.46.3: removal costs orders) |
+| `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default ON (0.48.4: with them, units out of orders walk back to where they were trained) |
+| `-commit on\|off\|ab\|ab2` | control | Commit on re-plan: keep the valid target when the new best one is farther from the group on foot (slot bit 4); default on (0.48.4) |
 | `-cap on\|off\|<base> <perCp>` | control | Unit budget: bots train units only below base + perCp x held CPs food (default 30 + 7, 0.48.2) |
 | `-regroup on\|off\|ab\|ab2` | control | Regroup: an army that fell below half of 10 / 15 / 40 units (early / mid / late) gathers at the staging point and attacks again as one wave at 10 / 15 / 40; default ab (slot bit 3) |
 | `-chain on\|off` | control | Army movement: chains of queued attack-moves along the graph, waygates clicked (default, 0.44) or one order to the target (0.43) |

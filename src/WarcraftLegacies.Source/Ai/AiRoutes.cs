@@ -612,6 +612,13 @@ namespace WarcraftLegacies.Source.Ai
     // nearest in a straight line: groups ran back and forth, across the closed Thandol bridge and over mountains.
 
     private const float ReplanEvery = 30f;
+    // 0.48.4: COMMIT -- a periodic re-plan keeps the current (still valid) target when the new best one is FARTHER from
+    // the group on foot. 0.48.3 Druids: 1500 before Northern Ashenvale the 30-s re-plan chose Felwood (its territory
+    // distance was cheaper) -- the group turned north, took Felwood, then walked back to Northern Ashenvale.
+    internal static int CommitMode = AiAb.OnAll;
+    internal static int CommitKept;
+    internal static int[] CommitKeptBy = new int[24];
+    private static string[] _why = new string[AiTheatres.Agents]; // 0.48.4: why the last plan changed the target
     internal static int KeptOnNull;  // 0.46: re-plan found nothing, valid target kept (was: old picker)
     internal static int NullNoRoute; // 0.46: Pick returned null -- nothing reachable / no candidate
     internal static int NullNoStart; // 0.46: Pick returned null -- the group stands on no node area
@@ -670,6 +677,9 @@ namespace WarcraftLegacies.Source.Ai
         }
         else
         {
+          // 0.48.4: first = no target before, gone = the old one was taken / died / unreachable, switch = the re-plan
+          // found a better one (stay = kept; not logged, the target did not change)
+          _why[AiTheatres.S(pid)] = tu == null ? (t >= 0 ? "gone" : "first") : (planned != tu ? "switch" : "stay");
           tu = planned;
         }
 
@@ -865,6 +875,26 @@ namespace WarcraftLegacies.Source.Ai
         + "]  -- -gather on|off|ab|ab2");
     }
 
+    // 0.48.4: "-commit on|off|ab|ab2"
+    internal static void OnCommitCommand()
+    {
+      var m = AiAb.Parse(GetEventPlayerChatString(), "-commit");
+      if (m >= 0)
+      {
+        CommitMode = m;
+      }
+
+      DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 8,
+        "commit (a re-plan keeps the valid target when the new one is farther from the group): " + AiAb.Name(CommitMode)
+        + " [slots" + AiAb.Slots(CommitMode, AiAb.BitCommit) + "]  -- -commit on|off|ab|ab2");
+    }
+
+    internal static string Why(int pid)
+    {
+      var w = pid >= 0 && pid < 24 ? _why[AiTheatres.S(pid)] : null;
+      return w != null ? w : "-";
+    }
+
     // 0.46: "-spread on|off|ab|ab2"
     internal static void OnSpreadCommand()
     {
@@ -997,6 +1027,13 @@ namespace WarcraftLegacies.Source.Ai
       if (curOk && best != cur && _score[best] >= _score[cur] * SimpleBot.StickySwitch)
       {
         d.Sticky++;
+        best = cur;
+      }
+      else if (curOk && best != cur && pid >= 0 && pid < 24 && AiAb.For(CommitMode, pid, AiAb.BitCommit)
+               && _dist[best] > _dist[cur])
+      {
+        CommitKept++; // 0.48.4: never turn away from a valid target for one that is farther on foot
+        CommitKeptBy[pid] = CommitKeptBy[pid] + 1;
         best = cur;
       }
 
@@ -2098,6 +2135,9 @@ namespace WarcraftLegacies.Source.Ai
         caps[k] = SimpleBot._cpCaptures.ContainsKey(k) ? SimpleBot._cpCaptures[k] : 0;
       }
 
+      o.Add("commit (0.48.4) " + AiAb.Name(CommitMode) + " [slots" + AiAb.Slots(CommitMode, AiAb.BitCommit)
+            + "]: re-plan switches blocked (new target farther on foot) " + I2S(CommitKept) + ", per bot "
+            + AiAb.Compare(CommitMode, AiAb.BitCommit, CommitKeptBy));
       o.Add("A/B gather [slots" + AiAb.Slots(GatherMode, AiAb.BitGather) + "]: CP captures per bot "
             + AiAb.Compare(GatherMode, AiAb.BitGather, caps));
       // 0.46.2: raw counts per bot (not a %), so dump_summary can compute every game phase from dump differences
