@@ -49,12 +49,33 @@ namespace WarcraftLegacies.Source.Ai
 
     // the main theatre's land has no target left (all taken): next service it becomes the biggest other theatre --
     // its units follow (they are "without a theatre" then and route there, through portals)
+    // 0.48.1: only after NothingStreak services in a row (~30 s) -- one empty plan moved the whole front (0.48.0:
+    // "main moved" 36 times in 25 min, armies walking between fronts)
+    private const int NothingStreak = 4;
+    private static int[] _nothing = new int[24];
+
+    internal static void MainFoundTarget(int pid)
+    {
+      if (pid >= 0 && pid < 24)
+      {
+        _nothing[pid] = 0;
+      }
+    }
+
     internal static void MainFoundNothing(int pid)
     {
       if (pid < 0 || pid >= 24)
       {
         return;
       }
+
+      _nothing[pid]++;
+      if (_nothing[pid] < NothingStreak)
+      {
+        return;
+      }
+
+      _nothing[pid] = 0;
 
       for (var t = 1; t < MaxTheatres; t++)
       {

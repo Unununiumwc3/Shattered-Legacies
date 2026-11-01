@@ -1466,6 +1466,7 @@ namespace WarcraftLegacies.Source.Ai
             var rt = AiRoutes.Pick(p, pid, fac, sx, sy, diag);
             if (rt != null)
             {
+              AiTheatres.MainFoundTarget(pid); // 0.48.1: resets the "nothing found" streak
               var enemyRt = GetPlayerId(GetOwningPlayer(rt)) < 24;
               Committed[pid] = rt;
               CommitTime[pid] = _clock;
@@ -1503,9 +1504,11 @@ namespace WarcraftLegacies.Source.Ai
               }
               else
               {
+                // 0.48.1: hold WHERE THE ARMY STANDS (tx, ty), not at the base (ax, ay): 0.48.0 walked the army back
+                // to its production buildings every time the planner briefly found nothing ("a->b->c->d, then back")
                 state = "hold";
                 NoteTarget(p, pid, null, "hold-nothing-reachable");
-                IssueAttackToPoint(p, pid, ax, ay, true, ax, ay);
+                IssueAttackToPoint(p, pid, tx, ty, true, tx, ty);
               }
 
               handled = true; // the old pickers below only run with -route off
@@ -2957,7 +2960,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.48.0";
+    public const string Build = "0.48.1";
 
     public static void Setup()
     {

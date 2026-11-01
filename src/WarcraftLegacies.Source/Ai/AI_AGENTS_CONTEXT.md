@@ -30,7 +30,8 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   objects, old code deleted) -> 3 fine-tuning (graph without the fork's CPs, balance). Do not refactor during phase 1,
   but write NEW subsystems in the phase-2 style (own class, state in an object) once the 0.46 CSharp.lua check passes.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
-- **0.48.0** = all players' waygates as edges (owner + allies: Deeprun Tram, Legion Teleporters), Tomb -> Argus and
+- **0.48.1** = hold in place on empty plans, main theatre moves after ~30 s of empty plans, bot Legion casts WL's
+  teleporter spells. **0.48.0** = all players' waygates as edges (owner + allies: Deeprun Tram, Legion Teleporters), Tomb -> Argus and
   the rift as hidden bot-only pseudo-portals, no visible bot Argus / rift waygates, wait at closed rocks instead of the
   old pickers, theatres open at max(40, 25 %). **0.47.0** = theatres (`AiTheatres`, state slots) + only forward (target score with the walk from the army; far
   defence by the rest). Big step without a playtest of 0.46.4. **0.46.4** = regroup in units per phase (10 / 15 / 40), defence does not pull units from other landmasses, creep /

@@ -701,6 +701,7 @@ namespace WarcraftLegacies.Source.Ai
     {
       AiGuard.Setup();
       AiProbe.Setup();
+      AiPortals.Setup(); // 0.48.1: WL's Legion Teleporter spells
     }
 
     internal static void Lines(List<string> o)
