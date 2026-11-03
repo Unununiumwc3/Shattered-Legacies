@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using MacroTools.Extensions;
 using WarcraftLegacies.Source.Ai;
 
-namespace WarcraftLegacies.Source.ShatteredLegacies
+namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise
 {
-  // 0.39.8: the Kezan Enterprise's special buildings (maintainer's design), started by the Kul Tiras fallback.
+  // 0.39.8: the Kezan Enterprise's special buildings (maintainer's design), started by the Kul Tiras fallback
+  // (was KezanEnterprise.cs).
   // - Kezan Oil Supply (h04Z): +50 gold per minute each while it stands (WL's BonusIncome; cannot be captured).
   // - Kezan Trading Center (o04M): a creep market. Each creep type has a stock of 3; one comes back every 2 min
   //   (6 min for a full stock). Done by code: the type's max-allowed = units alive + stock.
-  internal static class KezanEnterprise
+  internal static class KezanEnterpriseMechanics
   {
     private const int OilSupplyType = 1747989594;     // h04Z
     private const int GoldPerOilSupply = 50;

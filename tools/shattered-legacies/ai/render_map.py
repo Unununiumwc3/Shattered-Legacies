@@ -1,10 +1,10 @@
 """Draws the map as the bot sees it: terrain (water, cliffs / mountains, the map edge), trees, WL's removable rocks,
 CPs, area nodes, and the generated route graph. For discussing whether the graph fits the terrain.
 
-  python3 tools/ai/render_map.py                 (repo root; after gen_routes.py)
-    -> tools/ai/out/route_map.png        full size, 2 px per 32-unit cell, CP names (zoom in)
-    -> tools/ai/out/route_map_small.png  half size overview
-  python3 tools/ai/render_map.py --regions       also tint every node's area (region map)
+  python3 tools/shattered-legacies/ai/render_map.py                 (repo root; after gen_routes.py)
+    -> tools/shattered-legacies/ai/out/route_map.png        full size, 2 px per 32-unit cell, CP names (zoom in)
+    -> tools/shattered-legacies/ai/out/route_map_small.png  half size overview
+  python3 tools/shattered-legacies/ai/render_map.py --regions       also tint every node's area (region map)
 
 Legend (also drawn on the image): beige = walkable land, darker beige = walkable but not buildable, grey-brown =
 cliffs / mountains / doodads you cannot walk, light blue = shallow water (walkable), dark blue = deep water, black = map

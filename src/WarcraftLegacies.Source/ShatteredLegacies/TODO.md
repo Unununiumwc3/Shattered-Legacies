@@ -1,123 +1,150 @@
 # TODO -- Shattered Legacies (fork content)
 
-`[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work. Move finished items to
-`../Ai/CHANGELOG.md` (one changelog for the whole fork).
+`[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work. Finished items go to
+`CHANGELOG.md`. **This file holds everything that exists only in Shattered Legacies**: timelines, new factions, map
+content, the fork's win rule and game length, balance, known issues, the maintainer's ideas. Bot work (what would go
+into the upstream PR: `Ai/` + `[BOT]` hooks) is in `../Ai/TODO.md`. Fork code uses the bot only through `Ai/AiApi.cs`.
 
-**This file holds everything that exists only in Shattered Legacies**: fallbacks, Kezan, the Thandol Treaty, map
-content, the fork's win rule and game length, balance of the fork's factions, and the maintainer's brainstorming.
-Bot work (what would go into the upstream PR: `Ai/` + `[BOT]` hooks) is in `../Ai/TODO.md`. Fork code uses the bot
-only through `Ai/AiApi.cs` -- a feature here that needs bot data gets an `AiApi` method, never a reach into `Ai/`.
+Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (how, incl. the faction template).
 
-## Thandol Treaty (design draft -- `[you]` open points at the end)
+## Order of the work
 
-Belongs to the timeline (fallbacks, betrayals, sub-paths) -- `FALLBACKS.md` is renamed to a general timeline document
-in the phase-2 restructure; this section moves there then.
+The structure comes first, so that every later faction is the same template filled with different content.
 
-A start decision for the **North Alliance** (Lordaeron, Quel'thalas, Dalaran, Gilneas) and the **South Alliance**
-(Stormwind, Ironforge, Kul Tiras), today two separate teams kept apart by WL's rocks on the Thandol Span (removed at
-turn 30).
+0. ~~Structure (0.52)~~: folders, rename to timelines, separate docs for bot and fork, tools in `tools/shattered-legacies/`.
+1. **Content index** (own patch, no game code)
+2. **Turning-point core** + Defeat rules, pilot: Quel'thalas -> Sunfury
+3. **Kul Tiras -> Kezan Enterprise rebuilt** on the core; Scarlet Crusade shown on the Hourglass
+4. **Light turning point**, pilot: Illidari -> draenei remnant
+5. **Lordaeron pick** Arthas / Garithos
+6. **Faction by faction** (concepts)
+7. **Shared mechanics**
 
-- **Treaty kept** (= WL today): the rocks stay until turn 30. Then the announcement:
-  > The Treaty of the Thandol Span is shattered! Starving for land, gold, and reinforcements, mutual trust between
-  > the Northern and Southern Commands has collapsed. Driven by paranoia and desperation, both Alliances lower their
-  > bridges -- marching to claim total control over the Eastern Kingdoms!
+### 1. Content index (own patch)
 
-  (The text describes North vs South at war -- it fits this path only; the vote dialog needs its own text.)
-- **Great Alliance**: the rocks go at once; North and South become ONE team. WL already has an unused team
-  `TeamSetup.Alliance` (its "Great War" mode uses it) and `PlayerData.SetTeam` (scoreboard and alliances follow).
-  The price: the South pays the **Imperial Tax**, and the Defias rise in the south.
-- **Imperial Tax**: every second, X % (start: 20 %) of each South member's income -- CP income + WL's bonus income
-  (`PlayerData.TotalIncome`) + the bots' strength-vote bonus (an `AiApi` method that reports what the bot paid) --
-  is taken from the South member (never below 0 gold) and split equally among the living North members. One 1-s
-  task in this folder; WL's payout code and `AiIncome` stay untouched.
-- **Announcement when the tax starts** (draft):
-  > The Great Alliance is sealed -- at a price. Every fifth coin of the South now flows north as the Imperial Tax.
-  > Stormwind's treasury runs dry, its garrisons march north... and in the shadows of Westfall, the Defias
-  > Brotherhood sharpens its knives.
-- **Defias events** (design open): raids in Westfall / Elwynn / Redridge against the South's CPs while the tax runs.
-  Units: the 24p map has Defias Assassin / Kingpin (`h0AI`, `E01H`, `FACTION_UNITS.md`) -- the same asset risk as the
-  invisible Kezan units.
-- **Vote**: voters = all North and South players. If one of them is human, only the human votes count; otherwise
-  the bots vote at random (`GetRandomInt` -- synced). Tie = treaty kept. Not at 49 s (the bot strength vote uses that
-  slot); proposal ~1:30.
-- **Bots** need nothing special: the route graph follows the real rocks (edge open within 15 s), allies are never
-  targets, teams come from WL.
-- `[you]` open points:
-  - One human on ONE side decides for both (a North human can make the South pay). Accept, or require a yes from
-    each side?
-  - Tax recipients: equal split among the North (default), or the holder of the North's capital?
-  - The merged team (7 factions) still wins at 90 CPs like every team -- likely fast. Raise its threshold, or accept?
-  - The vote dialog's own text (the treaty text above describes the war path).
+A search index of everything that can be recycled, so no assistant has to scan the map data again.
+- [ai] `tools/shattered-legacies/content/content_index.py` reads `mapdata/WarcraftLegacies/` (main map) and
+  `mapdata/WarcraftLegacies24p/` (24p map, already in the repo since WL 4.8.2 -- the 24p GitHub repo has vJASS only,
+  no object data) and writes greppable TSV files to `ShatteredLegacies/Content/`, one per kind (units, abilities,
+  upgrades, items). Committed, regenerated on demand.
+- Columns: map, id, name, editor suffix, base id, race, faction (main: from `ObjectInfo`; 24p: from the building
+  that trains it), trains / builds / researches, requirements, model, icon, **model source** (stock WC3 / import, and
+  whether the import exists in the main map), **id status** ("identical in main" / "different object in main" /
+  "24p only" -- ~385 unit ids exist in both maps as different objects).
+- **Stock WC3 objects** (`hfoo`, `ogru`, ... and their models / icons): only referenced, never copied. Their data is
+  already in the repo: `src/War3Api.Object/Generated/1.36.0.20257/` (WC3 1.36: ~865 units, ~283 items, 90 upgrades,
+  ~837 abilities -- names in `Enums/*Type.cs`, model, icon, race, train lists in `*Loader.cs`). The index reads them
+  from there as map "stock".
+- [ai] Later, with the first content that needs it: `import.py <map>:<id> ...` copies objects with a new `?Z??` id and
+  their dependencies (abilities, upgrades, trained units, model import as LFS pointer) and records them in a generated
+  `Content/SL_OBJECTS.md` (new id | name | source | used by). LFS: the copied pointer refers to an object the repo
+  already has; check with `git lfs ls-files` that it is downloaded / pushed (see "New Kezan units are invisible").
 
-## Win rule and game length (fork only)
+### 2. Turning-point core (pilot: Quel'thalas -> Sunfury)
+
+- [ai] Turning point = `QuestData` (objectives: trigger + Hourglass research; `OnComplete`: effect list) and the
+  effect library (swap faction, modify faction, change team, relocate, leave behind, heroes, announce --
+  `Timelines/TIMELINES.md` section 1). Definitions move from `TimelineCatalog` into `Timelines/Factions/<X>/` and are
+  attached to WL's factions through `FactionManager.FactionRegistered` (no WL faction file changes).
+- [ai] **Hourglass of Fate** with researches: one per turning point, a dummy "condition" tech per trigger (greyed out
+  with readable text until it fires), incompatible sets for alternatives, hidden for other factions by object limits.
+  New object with a `?Z??` id (replaces `n0FB` / `AFB1`). `[you]` names, icon, tooltip texts; check the command card
+  in game (several hidden researches on one button position).
+- [ai] **Defeat rules** (maintainer): leavers -> bots (exists); lose only with no CP at all for more than 5 turns (WL's
+  `PlayerElimination` adjusted); no defeat when the essential legends are gone; a faction with an unused fallback is
+  never defeated. One `[SL]` hook at the top of `MacroTools/Factions/Faction.Defeat()`; check every caller (`PlayerElimination`,
+  essential legends, `CleanupUnoccupiedPlayerSlots`, `PlayerLeaves`).
+  Threshold (maintainer): **0 CPs** for more than 5 turns -- 1 CP is enough to live.
+- [ai] Pilot **Quel'thalas -> Sunfury** (full turning point, WL's `SunfuryFaction` and its quests, start in
+  `Regions.SunfuryStartingPosition`): remove the Sunfury pick from the Illidari slot (one `[SL]` line in
+  `Setup/FactionChoiceDialogSetup.cs`; with one choice left WL picks it without a dialog), then drop
+  `AiApi.ExcludeFromBotPicks("Sunfury")` in `Bot/SlBotSetup.cs`. Must run before WL's defeat (needs the Defeat hook).
+- [you] HQ of Quel'thalas: Silvermoon Palace AND the Sunwell (today) or the Sunwell only (concepts: "Sunwell destroyed").
+
+### 3. Kul Tiras -> Kezan Enterprise rebuilt
+
+- [ai] `KezanEnterpriseFaction` (`Faction` subclass) + `KezanEnterpriseObjectInfo` in
+  `src/WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/` (+ one `[SL]` line in `ObjectInfoRepository`)
+  instead of renaming WL's Kul Tiras object and setting limits by hand; the hidden base via WL's rescue mechanism
+  (`Regions.KezanUnlock`); leave behind by the inheritance rule. Oil income and creep market stay
+  (`Factions/KezanEnterprise/`).
+- [ai] The Scarlet Crusade's research (`R0XZ`, Tyr's Hand) listed on the Hourglass too -- no WL change.
+- [you] Kezan Oil Supply and Trading Center should not be buildable -- which builder offers them? Trading Center
+  placement, the creep list, stock refresh, oil income on the scoreboard; Bilgewater Harbor ships.
+- [you] End goal: acquire 20,000 gold (confirm the number); oil upgrades that raise the income?
+
+### 4. Light turning point (pilot: Illidari -> draenei remnant)
+
+- [ai] Modify faction: remove the non-draenei objects, add a few (content index), Akama. HQ: the Black Citadel.
+
+### 5. Lordaeron pick Arthas / Garithos (D1)
+
+- [ai] A `FactionChoice` for the Lordaeron slot like Dalaran / Gilneas (`Timelines/Factions/Lordaeron/`).
+  `[you]` Garithos as its own `Faction` class or Lordaeron with a game flag -- decide when we build it.
+
+### 6. Faction by faction (`Timelines/SCENARIO_CONCEPTS.md` section 8)
+
+Order proposal (reuse first): Theramore for Gilneas (WL path exists) -> Maiev's Watchers (Sentinels and Draenei) ->
+Valiance Expedition (Bolvar -> Lich King) -> Dwarven Expedition -> Twilight's Hammer -> Knights of the Ebon Blade ->
+Forsaken (Quel'thalas' betrayal, D3) -> Dream trees -> Mag'har -> Dreadlord Insurgents -> Brood of Nozdormu.
+- `[you]` **Dwarven Expedition**: name (must differ from Stormwind's Valiance Expedition); base near the Storm Peaks,
+  frost dwarves, "Secrets of Ulduar" -- a NEW quest (Ironforge's Explorers' League quests in WL go to Kalimdor / Uldum).
+- `[you]` Fallbacks of **Skywall** and the **Black Empire**: Earthen Ring / Xal'atath or Ramkahen / Titan Watchers.
+- Twilight's Hammer: Dragonmaw assets + the 24p tech / unit / building trees (content index).
+- End goals of the remaining factions (`SCENARIO_CONCEPTS.md` section 10).
+
+### 7. Shared mechanics (concepts sections 5, 7, 9, 11)
+
+Great Alliance + Imperial Tax + tax vote (D2; replaces the retired Thandol Treaty draft), Defias, Legion's Tithe,
+shared boxes (World Tree, Helm of Domination), defection (free slots P11 -> P14 -> P20), barks, sudden death "The End
+Time". `[you]` the numbers (tax rate, sudden death X / N / Y).
+
+## Win rule and game length
 
 - `[you]` Goal: a game ends with ONE winner after **100-140 min**, and the winner has to capture everything. WL's rule
   today: a TEAM wins at 90 CPs (`ControlPointVictory.CpsVictory`). Needs the fork's own rule (an `[SL]` change).
 - Caution: "everything" must mean every CAPTURABLE CP -- some CPs are invulnerable / quest-locked and can never fall.
-  The last few CPs (islands) make long tails, the 9.5-h stalemate kind; a share (e.g. 95 %) or "all capitals + N %"
-  ends cleaner. Bots must be able to reach them all (ferries, `../Ai/TODO.md` 0.47).
+  The last few CPs (islands) make long tails; a share (e.g. 95 %) or "all capitals + N %" ends cleaner. Bots must be
+  able to reach them all (ferries).
 - Measurement: the dump pins when a team first reaches 80 / 90 CPs; the actual winner / victory is not recorded yet
-  (bot debug item "winner record", `../Ai/TODO.md`). Then `dump_summary.py` reports the game length.
+  (bot debug item "winner record", `../Ai/TODO.md`).
 
-## Balance of the fork's factions and the bots' unit budget
+## Balance
 
-- The bots get a unit budget per CP in 0.46 (`../Ai/CONCEPTS.md` 8: 40 + 10 food per held CP, ~150 on average).
-  `[you]` a different base per faction / team (good vs evil) -- set from here through an `AiApi` hook.
-- `[you]` Humans too? A CP-based food cap for humans would be a fork rule (the bot budget is bots only).
+- The bots' unit budget per CP (`../Ai/CONCEPTS.md` 8). `[you]` a different base per faction / team (good vs evil) --
+  `AiApi.SetBudgetBase` from `Bot/SlBotSetup.cs`. `[you]` a CP-based food cap for humans too (a fork rule)?
+- `[you]` **Old Gods balance -- re-check**: "too weak" was measured WITHOUT bot income. In 0.45.0 (bots with income)
+  the Old Gods took all of Kalimdor; the Kalimdor team had 0 CPs at 45 min.
+- `[you]` **Quel'thalas survives very long** (0.45.0: alive at 540 min with 12 CPs). Map side: is the area unusually
+  fortified (towers, walls, the Elfgate)? Bot side: `../Ai/TODO.md`.
+- `[you]` **Stormwind Castle CP needs a buff**; **South Alliance vs Naga / Fel Horde**: the South needs a buff (or
+  Illidan / Fel Horde a debuff).
 
-## Known issues (v0.39.9 playtest)
+## Known issues
 
 - [ai] **Fallback messages are wrong**: when Kul Tiras loses its HQ, the game says the HQ was regained, although it
-  was destroyed for good.
-- [ai] **Dalaran / Gilneas fallback does not swap teams on the scoreboard.** Gilneas should use the same fallback as
-  Dalaran (same player slot), with Gilneas City as its HQ.
-- [you/ai] **Auto-surrender interferes with fallbacks**: the rule that makes players surrender with too few CPs can
-  stay, but 1 CP should be enough to survive.
-- [ai] **New Kezan units are invisible**: the unit count goes up during production, but nothing can be seen.
-  First check whether the models are only Git LFS pointers in the local checkout (`git lfs ls-files | awk '$2=="-"'`
-  lists them; `git lfs pull`, else fetch the assets from the original repository and `git lfs push origin`).
-  Probably assets: models / textures reused from the 24-player map need adjusted paths or must be copied over
-  (also seen with the builders in 0.39.6: `-id` on the goblin hall while it trains).
-- [you] **Old Gods balance -- re-check**: "too weak" was measured WITHOUT bot income. In 0.45.0 (bots with income)
-  the Old Gods took all of Kalimdor; the Kalimdor team had 0 CPs at 45 min.
-- [you] **Quel'thalas survives very long** (0.45.0: alive at 540 min with 12 CPs and 90-106 structures all game, a
-  small army most of the time). Bot side: caster spam (94 % casters) and neighbours busy elsewhere (`../Ai/TODO.md`
-  0.45.0 results). Map side: is the area unusually fortified (towers, walls, the Elfgate)?
-- [you] **Stormwind Castle CP needs a buff** (the 100-gold version).
-- [you] **South Alliance vs Naga / Fel Horde**: the South Alliance needs a buff (or Illidan / Fel Horde a debuff).
+  was destroyed for good (v0.39.9 playtest; check with step 3).
+- [ai] **Dalaran / Gilneas fallback does not swap teams on the scoreboard.** Gilneas should use Dalaran's path (same
+  slot), with Gilneas City as its HQ (step 6).
+- [ai] **New Kezan units are invisible**: the unit count goes up during production, but nothing can be seen. The
+  model files exist in `Imports/` as Git LFS pointers -- first check that the LFS objects are really downloaded and
+  pushed (`git lfs ls-files | awk '$2=="-"'` lists missing ones; `git lfs pull`, else fetch them from the original
+  repository and `git lfs push origin`). Then textures / paths of the models.
 - [ai] Hint "When a player leaves, their units are refunded ..." (`Setup/HintSetup.cs`) is wrong since bots take over
   leavers (0.39.2).
-
-## Fallbacks -> `FALLBACKS.md` (to be renamed to a general "timeline" document in the restructure)
-
-- [ai] **Must-have**: WL's defeat makes the player an observer -- the fallback must run BEFORE it (a hook in
-  `Faction.Defeat` or where WL eliminates a faction). Needs a `[SL]` hook in WL code.
-- [you] HQ choices per faction (table in `FALLBACKS.md`); the real fallback factions instead of the placeholders.
-- [ai] Losing conditions for Escape to Theramore / The Scarlet Crusade, then re-enable them.
-- [you] **Arthas when Lordaeron turns Scarlet Crusade early**: "The Culling" needs Lordaeron's "Line of Succession";
-  proposal: give the Scourge its Arthas unlock when Lordaeron becomes the Scarlet Crusade before it.
-- The HQ list is shared with the bot's planned "guardian summons" (`../Ai/TODO.md`): it should come to the bot
-  through `AiApi`, not from this folder.
-
-## Kezan Enterprise
-
-- [you] Check in the editor / game: Trading Center placement, the creep list, stock refresh, oil income on the
-  scoreboard; buildings / tooltips; Bilgewater Harbor ships.
-- [you] Kezan Oil Supply and Trading Center should not be buildable -- check which builder offers them.
-- [you] **Alternative win condition**: Kezan wins by owning a lot of gold (~20,000). Oil buildings would need
-  upgrades that raise the income.
+- [ai] Lobby slot names in `Info.json` are still WL's old 24p layout -> the Shattered Legacies layout
+  (`SCENARIO_CONCEPTS.md` section 3).
+- [you] Remove the preplaced units of the unused slots P6, P15, P18 at start? (WL only defeats empty slots that have a
+  faction.)
 
 ## Map content, design and ideas (brainstorm)
 
-The maintainer's own ideas go here too -- half-baked is fine.
-
-
+The maintainer's own ideas go here too -- half-baked is fine. Timeline ideas go to `SCENARIO_CONCEPTS.md` (backlog,
+section 12).
 - [you] **Pseudo-flyers**: air units lose real flying and become pseudo-flyers, because bots handle flying pathing
   badly (orc air units fly over the ocean). Affects the bot too -- see `../Ai/TODO.md`.
 - [you] **Book of Medivh redesign**: the Book gets its own spell; if the Scourge or the Legion gets it, it can trigger
-  the summon on that spot. The hero would need to be indestructible while channelling (bots cannot defend it).
+  the summon on that spot.
 - [you] Loading screen: a red "BOTIFIED" picture needs an image edit of `Imports/LoadingScreenTL/TR/BL/BR.blp`.
 - [you] Islands still free for neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury).
-- [ai] (low) Chinese localization from upstream WL (`Loc` system).
-- Later, switch paths (mostly covered by `FALLBACKS.md`): Quel'thalas -> Sunfury, Scarlet Crusade -> Legion at the
-  betrayal, Dalaran -> Kalimdor, Sentinels -> Maiev, Warsong / Frostwolf -> Dragonmaw, Stormwind -> Honor Hold.
+- [ai] (low) Chinese localization from upstream WL (`Loc` system) -- a cherry-pick candidate from 5.x.

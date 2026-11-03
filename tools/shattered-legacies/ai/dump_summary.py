@@ -2,9 +2,9 @@
 src/WarcraftLegacies.Source/Ai/MEASUREMENTS.md, so measurements stay in the repo and a new chat can read them.
 
 Usage (from the repo root, on the copied CustomMapData files):
-  python3 tools/ai/dump_summary.py ~/Downloads/game1/WLAI_dump_*.txt                 # print the block
-  python3 tools/ai/dump_summary.py ~/Downloads/game1/WLAI_*.txt --append "1 human, 12 bots, Veteran"
-  python3 tools/ai/dump_summary.py ... --real "t5=5:02 t10=10:30 t20=21:40"
+  python3 tools/shattered-legacies/ai/dump_summary.py ~/Downloads/game1/WLAI_dump_*.txt                 # print the block
+  python3 tools/shattered-legacies/ai/dump_summary.py ~/Downloads/game1/WLAI_*.txt --append "1 human, 12 bots, Veteran"
+  python3 tools/shattered-legacies/ai/dump_summary.py ... --real "t5=5:02 t10=10:30 t20=21:40"
      --real (0.46): the maintainer's stopwatch -- real time (m:ss) when the turn counter showed turn N. Gives the
      real seconds per game minute between the readings (the game falling behind real time).
      --append writes the block (with your note) to the end of MEASUREMENTS.md. The heartbeat file
@@ -21,7 +21,7 @@ import sys
 PRELOAD = re.compile(r'\s*call Preload\( "(.*)" \)')
 HEADER = re.compile(r"=== WLAI DUMP build=(\S+) t=(\S+)")
 CHECKPOINTS = [10, 20, 30, 45, 60, 90, 120, 180, 240, 300, 400, 500]
-MEASUREMENTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src", "WarcraftLegacies.Source",
+MEASUREMENTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "src", "WarcraftLegacies.Source",
                             "Ai", "MEASUREMENTS.md")
 
 

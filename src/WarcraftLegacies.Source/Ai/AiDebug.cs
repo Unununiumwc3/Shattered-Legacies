@@ -792,11 +792,14 @@ public static class AiDebug
       + " Most used: -dump  -autodump  -why  -track  -portals  -heroes  -edges  -xy  -id  -autopilot  -version");
   }
 
+  // 0.52: the map title in -version; a map that hosts the bot sets its own through AiApi.SetMapTitle.
+  internal static string MapTitle = "Warcraft Legacies";
+
   // 0.39.9: replaces the chat banner at game start.
   private static void OnVersion()
   {
     DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 15,
-      "|cffffcc00Shattered Legacies: Botified Realm|r -- Bot AI " + AiSetup.Build);
+      "|cffffcc00" + MapTitle + "|r -- Bot AI " + AiSetup.Build);
   }
 
 

@@ -6,7 +6,7 @@ namespace WarcraftLegacies.Source.Ai
   // anything but the boat.
   // - Harbours = the ship links in AiGraph.Portals (phase "ship"): pier A <-> pier B. Each pier is a hidden marker
   //   (AiPortals.Marker) and the gate of a one-way portal edge to the other pier. Cost = walk + sailing time (the
-  //   lane of tools/ai/gen_lanes.py, AiLanes.g.cs) + boarding wait, as walking distance.
+  //   lane of tools/shattered-legacies/ai/gen_lanes.py, AiLanes.g.cs) + boarding wait, as walking distance.
   // - Entry only while no enemy holds the pier's CP (EntryAllowed, via AiRoutes.PortalAllowed); landing anywhere.
   // - Boarding: the pseudo-portal trigger hands a ticketed unit to Board instead of teleporting it. The unit is hidden
   //   (ShowUnit false: out of the game world) and paused, and kept out of the army logic (InTransit). The boat of
@@ -88,7 +88,7 @@ namespace WarcraftLegacies.Source.Ai
       if (_link.Count != AiLaneData.Lanes)
       {
         SimpleBot.LogPin("ferries: " + I2S(_link.Count) + " ship links but " + I2S(AiLaneData.Lanes)
-                         + " lanes -- run tools/ai/gen_lanes.py; ferries off");
+                         + " lanes -- run tools/shattered-legacies/ai/gen_lanes.py; ferries off");
         On = false;
       }
 

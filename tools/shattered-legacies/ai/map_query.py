@@ -1,12 +1,12 @@
 """Offline map checks for the WL bot AI -- reads the map's SOURCE files (mapdata/WarcraftLegacies), no game needed.
 Use it before putting any coordinate into AiConfig.cs (maintainer coordinates had sign typos 3 times).
 
-  python3 tools/ai/map_query.py walk X Y            terrain walkable? (+ buildable, AI landmass id)
-  python3 tools/ai/map_query.py area X Y HALF       is the whole square +-HALF around X,Y walkable?
-  python3 tools/ai/map_query.py near X Y [R]        walkable point nearest to X,Y (search radius R, default 1500)
-  python3 tools/ai/map_query.py find CODE           preplaced units of a type ('n00J' or 1848651850): x y owner
-  python3 tools/ai/map_query.py around X Y [R]      preplaced units within R (default 800) of X,Y
-  python3 tools/ai/map_query.py rect NAME           centre of a Regions.X rectangle (Regions.g.cs) + walkability
+  python3 tools/shattered-legacies/ai/map_query.py walk X Y            terrain walkable? (+ buildable, AI landmass id)
+  python3 tools/shattered-legacies/ai/map_query.py area X Y HALF       is the whole square +-HALF around X,Y walkable?
+  python3 tools/shattered-legacies/ai/map_query.py near X Y [R]        walkable point nearest to X,Y (search radius R, default 1500)
+  python3 tools/shattered-legacies/ai/map_query.py find CODE           preplaced units of a type ('n00J' or 1848651850): x y owner
+  python3 tools/shattered-legacies/ai/map_query.py around X Y [R]      preplaced units within R (default 800) of X,Y
+  python3 tools/shattered-legacies/ai/map_query.py rect NAME           centre of a Regions.X rectangle (Regions.g.cs) + walkability
 
 Data facts (0.36): PathingMap.json = 32-unit cells, rows bottom-up from (-28672, -32256), flag 0x02 = not walkable,
 0x08 = not buildable; terrain only (doodads, destructables and units are NOT in it). Preplaced units in Units/*.json
@@ -14,7 +14,7 @@ store TypeId little-endian ('n00J' -> struct '<I'). Landmass ids come from the G
 Run from the repo root (or set WL_ROOT)."""
 import glob, json, os, re, struct, sys
 
-ROOT = os.environ.get("WL_ROOT", os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+ROOT = os.environ.get("WL_ROOT", os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 MAP = os.path.join(ROOT, "mapdata", "WarcraftLegacies")
 MINX, MINY = -28672.0, -32256.0
 _pm = None

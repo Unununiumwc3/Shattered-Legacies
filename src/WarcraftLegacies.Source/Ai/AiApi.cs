@@ -3,9 +3,9 @@ using MacroTools.ControlPoints;
 
 namespace WarcraftLegacies.Source.Ai
 {
-  // 0.39.10: the bot's public surface for code OUTSIDE Ai/ (Shattered Legacies, later other forks). Rule: other code
+  // 0.39.10: the bot's public surface for code OUTSIDE Ai/ (a fork's own content). Rule: other code
   // may use the bot only through this class; the bot never uses code outside Ai/ except WL's own (checked by
-  // tools/ai/check_refs.py, LAYER). Add a method here instead of reaching into SimpleBot's internals.
+  // tools/shattered-legacies/ai/check_refs.py, LAYER). Add a method here instead of reaching into SimpleBot's internals.
   public static class AiApi
   {
     // --- players ---------------------------------------------------------------------------------------------
@@ -64,6 +64,19 @@ namespace WarcraftLegacies.Source.Ai
       Merge(AiData.AltarHeroes, altarHeroes);
       Merge(AiData.Requires, requires);
       Merge(AiData.HeroSkills, heroSkills);
+    }
+
+    // 0.52: the map title shown by -version (default "Warcraft Legacies").
+    public static void SetMapTitle(string title)
+    {
+      AiDebug.MapTitle = title;
+    }
+
+    // 0.52: a faction a bot never picks in a faction dialog at game start (by WL faction name). A dialog whose other
+    // factions are all excluded keeps WL's default.
+    public static void ExcludeFromBotPicks(string factionName)
+    {
+      AiChoices.Excluded.Add(factionName);
     }
 
     // 0.46: the bots' unit budget = base + perCp x held CPs (AiBudget). A different base per faction, e.g. to balance

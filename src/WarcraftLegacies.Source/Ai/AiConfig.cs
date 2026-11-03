@@ -64,7 +64,7 @@ public static class AiWorld
   public const int LegionHeraldId = 1966092356;          // u00D Legion Herald (worker)
 
   // 0.36: fixed building spots for the bot Legion's Argus start (the ring search found room for only 3 of 8).
-  // Computed offline from mapdata PathingMap.json (tools/ai/map_query.py): each 288x288 footprint fully walkable,
+  // Computed offline from mapdata PathingMap.json (tools/shattered-legacies/ai/map_query.py): each 288x288 footprint fully walkable,
   // >= 200 from preplaced units, >= 384 apart, nearest first; a flood fill with all 8 placed (plus a one-unit lane
   // around each) still reaches the Argus portal, Antoran Wastes, Nath'raxas Hold and the east. Order = placement
   // order (5 barracks, altar, 2 farms). A spot that is not walkable at runtime falls back to the ring search.
@@ -228,7 +228,7 @@ public static class AiConfig
 
   // 0.37: Sulfuron Spire -- when Skywall's "Fireland Invasion" completes, each Old Gods BOT faction gets one
   // barracks beside the Spire so its troops also spawn there. Spots west/south-west of Regions.SulfuronSpire,
-  // footprint walkable and clear of preplaced units (tools/ai/map_query.py).
+  // footprint walkable and clear of preplaced units (tools/shattered-legacies/ai/map_query.py).
   public const string FirelandQuestTitle = "Fireland Invasion";
   public static readonly float[] SulfuronSpotX = { -11550f, -11392f, -12127f };
   public const int SulfuronCpId = 1848660816; // 0.39.3: n0SP, goes to Skywall at the Fireland Invasion
@@ -299,7 +299,7 @@ public static class AiConfig
   //   SameLandmass  send only while the hero already stands on the target's landmass (no route across the sea)
   // Shared quests (Faction "") send one hero at a time, all bots together -- only one can complete them.
   // Targets: centre of the quest's Regions.X rectangle (src/WarcraftLegacies.Source/Regions.g.cs), moved to the
-  // nearest walkable point where needed (checked with tools/ai/map_query.py).
+  // nearest walkable point where needed (checked with tools/shattered-legacies/ai/map_query.py).
   public static readonly List<HeroVisit> HeroVisits = new()
   {
     // Yogg-Saron: hero level 14 in the Prison of Yogg-Saron (Regions.YoggSaronPrison). 0.38.1: only for a bot that
@@ -889,7 +889,7 @@ public static class AiGraph
   };
 
   // 0.50: phase "ship" = the bot FERRIES (AiFerries): no waygates any more, pier A / pier B are the harbours, the boat
-  // sails the lane of tools/ai/gen_lanes.py (AiLanes.g.cs, same order). Re-run gen_lanes.py when a pier moves.
+  // sails the lane of tools/shattered-legacies/ai/gen_lanes.py (AiLanes.g.cs, same order). Re-run gen_lanes.py when a pier moves.
   // v34: physical portals (real waygates -- everyone can use them). Created at game start ("always",
   // "prelegion") or at the Legion summon ("legion"); "prelegion" ones are removed at the summon. A/B order is
   // free; each end lands its travellers on open ground beside the OTHER end. Skin = unit type whose model the
@@ -913,7 +913,7 @@ public static class AiGraph
     // 0.49: the Argus <-> Northrend (prelegion) and Argus <-> Felwood (legion) bot waygates are removed for good.
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
-    // replaced by the real one. Both ends walkable (tools/ai/map_query.py).
+    // replaced by the real one. Both ends walkable (tools/shattered-legacies/ai/map_query.py).
     new PortalLink(AiConfig.RiftMawX, AiConfig.RiftMawY, AiConfig.RiftHighlandsX, AiConfig.RiftHighlandsY, "n07E",
       "Rift to the Twilight Highlands", "Rift to the Maw of Gor'ma", "oldgods"),
   };

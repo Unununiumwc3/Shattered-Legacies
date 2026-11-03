@@ -4,11 +4,11 @@
 `CHANGELOG.md`; designs and ideas live in `CONCEPTS.md`; how the movement works today and what was already tried is
 in `README.md` ("How the bots move", "Already tried").
 
-**This file is bot work only.** Everything that exists only in Shattered Legacies -- fallbacks, Kezan, the Thandol
-Treaty, map content, the fork's win rule and game length, balance of the fork's factions, brainstorming -- is in
-`../ShatteredLegacies/TODO.md`. Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
+**This file is bot work only.** Rule of thumb: would it go into the upstream PR (`Ai/` + `[BOT]` hooks)? Then here.
+Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
+length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Current build: **0.51.1** -- end of phase 1, handover for the phase-2 chat. History: `CHANGELOG.md`; measurements:
+Current build: **0.52.0** (0.51.1 = end of phase 1; 0.52.0 only moved fork content out of the bot). History: `CHANGELOG.md`; measurements:
 `MEASUREMENTS.md`; what was learned: `AI_AGENTS_CONTEXT.md` "Movement: hard-learned facts".
 
 ## Open problems -- start here
@@ -63,7 +63,7 @@ Rules for phase 1:
 4. **Flapping**: few RETURNS (A -> B -> A within 5 min) per bot. Plain target switches are only informative: they are
    expected to be frequent early (many factions, allies capture targets) and to drop later.
 5. **No dead map**: CP owners still change in the last 20 min of a long game; a team reaches WL's win (90 CPs per
-   TEAM) eventually. Game length and the fork's own win rule: `../ShatteredLegacies/TODO.md` (not a bot criterion).
+   TEAM) eventually. Game length and a fork's own win rule are the fork's (not a bot criterion).
 6. **Final call**: the maintainer's judgement after a game he played (with other humans if possible). The numbers
    only guard against regressions.
 
@@ -132,7 +132,7 @@ observations from those games are void. Movement observations stay valid.
   Windshear Crossing - Feralas (in neither graph); Kul Tiras around Dun Morogh (9417,-8499; its area has no link
   south); Druids heading to Exodar / Teldrassil after the area is cleared.
 
-## Graph (generated from map data -- `tools/ai/gen_routes.py`, check with `tools/ai/render_map.py`)
+## Graph (generated from map data -- `tools/shattered-legacies/ai/gen_routes.py`, check with `tools/shattered-legacies/ai/render_map.py`)
 
 - [ai] **Exceptions file** for what map data cannot know (invisible blockers, gate units, quest-only passages, the
   maintainer's edge list), listed in `WORKAROUNDS.md`. Maintainer can mark nodes / edges on `route_map.png` in a fixed
@@ -157,10 +157,11 @@ This code base is not the PR.
 - [ai] Split `AiSystem.cs` (287 KB) by responsibility.
 - [ai] Delete the old frontier picker, edge sets, graph merge, goals, doctrine steps (once the route planner ran a
   few games without falling back), wave runner, `OpenThandolIfDue`; `-route off` / `-orders idle|all` go with them.
-- [ai] Everything fork-specific or a workaround moves to `ShatteredLegacies/` (hand-placed coordinates, ids, missions
-  that only exist because of fork content); every hand-coded id skips silently when missing (5.x has no Old Gods).
+- [ai] Everything fork-specific or a workaround moves out of `Ai/` behind `AiApi` (hand-placed coordinates, ids,
+  missions that only exist because of fork content); every hand-coded id skips silently when missing (5.x has no Old
+  Gods). 0.52: the map title and the faction-pick exclusions moved (`AiApi.SetMapTitle`, `ExcludeFromBotPicks`).
 - [ai] Version tags in comments -> `CHANGELOG.md`.
-- [ai] Remove the CSharp.lua check class (the 0.46 check passed); keep `tools/ai/check_refs.py` limits until the
+- [ai] Remove the CSharp.lua check class (the 0.46 check passed); keep `tools/shattered-legacies/ai/check_refs.py` limits until the
   state-in-objects migration has removed the static arrays.
 - [ai] Reuse buffers in the per-service code (`Process`, `Select` allocate arrays / sets every call): Lua garbage.
 - [ai] `AiIncome` (bot pays computer slots WL's CP income) is a parallel payer for what is arguably a WL bug
@@ -172,8 +173,8 @@ This code base is not the PR.
 - [ai] **Ragnaros / Yogg-Saron instant death**: in 0.46.2 the Scourge fought Yogg-Saron as a creep after the first
   death and killed him -- the creep-camp logic handles bosses well. Remove the instant-death handling for Ragnaros too
   (and Yogg's, if it is one). Phase 2/3.
-- [ai] **Fallback paths as one table** (Scarlet Crusade, Theramore; Shattered Legacies fallbacks added from the fork
-  side): research + building read from the WL quest's `ObjectiveResearch`; a small table per quest title for WHEN
+- [ai] **Fallback paths as one table** (Scarlet Crusade, Theramore; a fork's own turning points added through
+  `AiApi`): research + building read from the WL quest's `ObjectiveResearch`; a small table per quest title for WHEN
   (capital lost, legend turned, CPs below N, not before turn N). Phase 2.
 
 - [ai] **Area clears and kill targets** (`AiConfig.ClearAreas`, `KillTargets`): check each in a game with creep
@@ -227,7 +228,7 @@ This code base is not the PR.
 - Observations from games WITHOUT bot income (void for balance, kept for reference): Old Gods took Kalimdor (0.44.0),
   most bots had armies of 1-10 food (0.43.x-0.44.1).
 - [you/ai] CP towers vs bots: fully upgraded CP towers beat small bot armies.
-- [you] The South Alliance / Naga balance, Old Gods strength -> `../ShatteredLegacies/TODO.md`.
+- [you] The South Alliance / Naga balance, Old Gods strength -> the fork's TODO (map balance, not bot work).
 
 ## Freeze check (still open)
 
@@ -255,4 +256,4 @@ This code base is not the PR.
 - Push only named tags (`git push origin v0.46.0`), never `--tags`: old tags drag Git LFS into history the local
   clone never downloaded ("Git LFS upload failed"). Missing tags on GitHub so far: v0.42.1, v0.43.0, v0.43.1 (push if
   they exist locally).
-- The route map image (`tools/ai/out/`) is never committed; attach it to a GitHub release when worth keeping.
+- The route map image (`tools/shattered-legacies/ai/out/`) is never committed; attach it to a GitHub release when worth keeping.

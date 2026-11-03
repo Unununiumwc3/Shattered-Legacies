@@ -44,7 +44,7 @@ public static class GameSetup
     SoundLibrary.Setup();
     Artifacts.Setup();
     WarcraftLegacies.Source.Ai.AiSetup.Setup(); // [BOT] bot AI (Ai/); must run before FactionChoiceDialogSetup
-    WarcraftLegacies.Source.ShatteredLegacies.ShatteredLegaciesSetup.Setup(); // [SL] fallbacks, Kezan Enterprise
+    WarcraftLegacies.Source.ShatteredLegacies.ShatteredLegaciesSetup.Setup(); // [SL] timelines, bot data (ShatteredLegacies/)
     AllLegends.Setup();
     ShoreSetup.Setup();
     ControlPointSetup.Setup();

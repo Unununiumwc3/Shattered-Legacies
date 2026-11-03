@@ -2,7 +2,7 @@
   CS0841/CS0844  a local variable has the same name as a TYPE used in the same method ("timer timer = ...", then
                  "timer.Create()" anywhere in that method refers to the not-yet-declared local)
   CS0136         a local declared in a nested block has the same name as a local of an enclosing block
-Usage: python3 tools/ai/scope_check.py FILE_OR_DIR [...]   (exit code 1 on findings)"""
+Usage: python3 tools/shattered-legacies/ai/scope_check.py FILE_OR_DIR [...]   (exit code 1 on findings)"""
 import sys, os, glob
 import tree_sitter_c_sharp as tscs, tree_sitter as ts
 

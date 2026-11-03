@@ -14,7 +14,7 @@ using WarcraftLegacies.Source.Factions.Legion.Quests;
 // This file: SimpleBot (the core loop: targets, combat, defense, production, heroes, logging), QuestAutoComplete,
 // Geography, AiState, AiSetup. Other parts live in AiTech / AiMissions / AiLegion / AiWaveRunner / AiGates /
 // AiAutopilot (.cs) -- split in 0.35 because CSharp.lua turns all static members of a class into Lua locals of one
-// function (limit 200). Keep every class small; run tools/ai/check_refs.py before building.
+// function (limit 200). Keep every class small; run tools/shattered-legacies/ai/check_refs.py before building.
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -2984,7 +2984,7 @@ namespace WarcraftLegacies.Source.Ai
   // class into a Lua local of one function (limit 200) and builds initialized static fields in one static
   // constructor (about 55 upvalues). SimpleBot sits at both limits: in v34-v34.2 fields past the second limit were
   // nil (no bot attacked), and 0.34.3 crossed the first one (map would not load). New state goes here or into
-  // another small class -- never into SimpleBot. tools/ai/check_refs.py checks both limits.
+  // another small class -- never into SimpleBot. tools/shattered-legacies/ai/check_refs.py checks both limits.
   internal static class AiState
   {
     internal static readonly Dictionary<string, HashSet<int>> NodeSets = new();
@@ -3016,7 +3016,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.51.1";
+    public const string Build = "0.52.0";
 
     public static void Setup()
     {
@@ -3030,7 +3030,7 @@ namespace WarcraftLegacies.Source.Ai
       AiRitual.Setup();    // 0.49: the Book of Medivh ritual (bot casters, invulnerable while channelling)
       AiFerries.Setup();   // 0.50: bot ferries (replace the AI ship waygates)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
-      // 0.39.10: the fallbacks moved to ShatteredLegacies/ and are set up from GameSetup.cs ([SL] line).
+      // 0.39.10: a fork's own content is set up from GameSetup.cs itself, never from here.
     }
   }
 }

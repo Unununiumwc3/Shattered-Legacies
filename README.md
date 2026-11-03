@@ -16,25 +16,18 @@ A more detailed README will follow.
 
 ## Where things are
 
-- `src/WarcraftLegacies.Source/Ai/` -- the bot AI (README, TODO, CHANGELOG, measurements, `WORKAROUNDS.md`).
-- `src/WarcraftLegacies.Source/ShatteredLegacies/` -- this fork's own content: fallbacks, Kezan Enterprise (README
-  lists every change to the original map, TODO holds the open work).
+Based on Warcraft Legacies **4.8.2** (the last version with the Old Gods); changes from later versions come in by
+cherry-pick only.
 
-## Known issues (v0.39.9 playtesting; tracked in the two TODO files)
+- `src/WarcraftLegacies.Source/Ai/` -- the bot AI (README, TODO, CHANGELOG, measurements, `WORKAROUNDS.md`). It
+  contains no Shattered Legacies content, so it can be offered to the original Warcraft Legacies as it is.
+- `src/WarcraftLegacies.Source/ShatteredLegacies/` -- this fork's own content: timelines (fallbacks, sub paths,
+  betrayals, picks), the Kezan Enterprise. Its README lists every change to the original code and map; its TODO holds
+  the open work and the roadmap; `Timelines/` holds the scenario design.
+- `tools/shattered-legacies/` -- development tools (checks, generators) for both.
 
-- **Rift to Maw of Gorma does not work.** The target is around x 22545, y -4784; moving it about 100 units further north might fix it, or the cause is something else.
-- **Fallback messages are wrong.** When Kul Tiras loses its HQ, the game says the HQ was regained, although it was destroyed for good.
-- **Dalaran/Gilneas fallback does not swap teams on the scoreboard.** Gilneas should use the same fallback as Dalaran (same player slot), but with Gilneas City as its HQ.
-- **Auto-surrender interferes with fallbacks.** The rule that makes players surrender with too few control points can stay, but controlling 1 CP should be enough to survive.
-- **The Old Gods are still too weak.**
-- **New Kezan units are invisible.** The unit count goes up during production, but the units can't be seen. Probably an asset problem: models and textures reused from the 24-player map may need adjusted paths or need to be copied over.
-- **Orcs never seem to take the Warsong path** instead of Frostwolf. Either bad luck or the random selection doesn't work for them (it does work for the Sentinels and the Exodar).
-- **Stormwind Castle CP needs a buff** (the 100-gold version).
-
-## Planned
-
-- **Pseudo-flyers:** air units lose real flying and become pseudo-flyers, because bots handle flying pathing badly.
-- **Kezan alternative win condition:** Kezan wins by owning a large amount of gold (around 20,000). Unlikely, since Kezan is alone and needs gold to defend itself. The oil buildings should get upgrades that increase production, and with it the gold income.
+Known issues and plans are tracked in the two TODO files (`Ai/TODO.md` for the bots,
+`ShatteredLegacies/TODO.md` for everything else).
 
 ## Credits
 

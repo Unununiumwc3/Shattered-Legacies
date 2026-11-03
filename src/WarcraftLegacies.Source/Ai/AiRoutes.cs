@@ -5,7 +5,7 @@ using MacroTools.Quests;
 
 namespace WarcraftLegacies.Source.Ai
 {
-  // 0.42 (refactor phase 3): route planner on ONE generated graph (AiRouteData, tools/ai/gen_routes.py -- map data
+  // 0.42 (refactor phase 3): route planner on ONE generated graph (AiRouteData, tools/shattered-legacies/ai/gen_routes.py -- map data
   // only). "-route on" (default) / "-route off" (0.41: the hand-written frontier graph) for A/B tests.
   // - Edges: walking edges from the generator; closed while the LTrc rock group on them stands (checked every 15 s).
   //   Portal edges: every ACTIVE waygate of the neutral players (WL's own and the AI's portals), every 30 s.

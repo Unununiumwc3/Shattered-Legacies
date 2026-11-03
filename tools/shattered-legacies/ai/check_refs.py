@@ -1,14 +1,14 @@
 """Cross-class reference audit for the bot (Ai/) and the code that uses it (ShatteredLegacies/).
 Catches the slip that `dotnet build` may pass but json-to-w3x rejects: `AiConfig.X` where X lives in AiGraph,
 or a private member used from another class.
-Usage: python3 tools/ai/check_refs.py [dir ...]   (default: the Ai and ShatteredLegacies folders)
+Usage: python3 tools/shattered-legacies/ai/check_refs.py [dir ...]   (default: the Ai and ShatteredLegacies folders)
 0.39.10, layers: a file under a folder named "Ai" is bot code. LAYER = bot code uses a class from another folder
 (the bot must never depend on fork code); API = other code uses a bot class other than AiApi (go through AiApi)."""
 import sys, glob, os, re
 import tree_sitter_c_sharp as tscs, tree_sitter as ts
 
 parser = ts.Parser(ts.Language(tscs.language()))
-ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 dirs = sys.argv[1:] or [os.path.join(ROOT, "src", "WarcraftLegacies.Source", "Ai"),
                         os.path.join(ROOT, "src", "WarcraftLegacies.Source", "ShatteredLegacies")]
 files = sorted({p for d in dirs for p in glob.glob(os.path.join(d, "**", "*.cs"), recursive=True)})

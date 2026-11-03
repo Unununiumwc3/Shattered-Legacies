@@ -238,7 +238,7 @@ namespace WarcraftLegacies.Source.Ai
 
   // Unit budget per CP (CONCEPTS.md 8): a bot trains units only while its army food (heroes not counted) is below
   // Base + PerCp x held CPs, never above the faction's food maximum. A production gate in the bot -- WL's food state
-  // is not touched. Base per faction can be set by Shattered Legacies through AiApi.SetBudgetBase.
+  // is not touched. Base per faction can be set by a fork through AiApi.SetBudgetBase.
   internal static class AiBudget
   {
     internal static bool On = true;

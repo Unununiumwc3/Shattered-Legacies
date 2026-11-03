@@ -1,27 +1,26 @@
 # Context for AI assistants (vibecoding handover)
 
-Read this first, then `TODO.md`. Humans: the normal docs are in `README.md`; "AI" in file and class names means
-the **bots**, this file is about **AI assistants** working on the code.
+Read the repository's own context file first (way of working, delivery, releasing -- in this repository
+`../ShatteredLegacies/AI_AGENTS_CONTEXT.md`), then this file, then `TODO.md`. Humans: the normal docs are in
+`README.md`; "AI" in file and class names means the **bots**, this file is about **AI assistants** working on the code.
+This file and the other docs in `Ai/` describe the bot only.
 
 ## The project in one paragraph
 
-Computer-player bots for **Shattered Legacies: Botified Realm**, an unofficial fork of **Warcraft Legacies 4.8.2** (a
-Warcraft III Reforged map written in C# with WCSharp and transpiled to Lua by **CSharp.lua**). Kept on 4.8.2 because
-5.x removed the Old Gods. Repo: `https://github.com/Unununiumwc3/Shattered-Legacies`, branch `botified-dev`, tags
-`v0.MINOR.PATCH`. Never present it as "Warcraft Legacies" or "WL" in anything players see (lobby, loading screen,
-chat): the original maintainer asked for that, and players mistook the fork for an official release. Attribution and
-the fork notice ("based on Warcraft Legacies", "not the official version") stay -- he asked for those too.
+Computer-player bots for **Warcraft Legacies 4.8.2** (a Warcraft III Reforged map written in C# with WCSharp and
+transpiled to Lua by **CSharp.lua**). 4.8.2 is the last version with the Old Gods; the bot's map data (coordinates,
+ids, routes) is bound to it (`WORKAROUNDS.md` section 4). Developed in a fork that stays on 4.8.2; WL's own branches
+are 5.x.
 
-**Two layers** (0.39.10):
+**Layers** (0.39.10):
 - `src/WarcraftLegacies.Source/Ai/` = the bot. Long-term goal: a pull request to the original Warcraft Legacies that
-  works on the original map without workarounds. The bot never uses fork code.
-- `src/WarcraftLegacies.Source/ShatteredLegacies/` = the fork's own content (fallbacks, Kezan Enterprise). It may use
-  the bot, but only through `Ai/AiApi.cs`. `tools/ai/check_refs.py` enforces both (LAYER, API).
+  works on the original map without workarounds (`Ai/*.cs` + the `[BOT]` hooks). It contains no fork content.
+- Code outside `Ai/` -- WL's own, and a fork's own content -- may use the bot, but fork code only through
+  `Ai/AiApi.cs`. The bot never uses fork code. `tools/shattered-legacies/ai/check_refs.py` enforces both (LAYER, API).
 
-Changes outside these folders are marked in the code: `// [BOT]` (hook the bot needs), `// [SL]` (fork content),
-`// [WORKAROUND]` (temporary). Lists: `WORKAROUNDS.md` (what the bot needs outside `Ai/`, incl. map data and runtime
-map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork's changes). Find all markers with
-`grep -rn "\[BOT\]\|\[SL\]\|\[WORKAROUND\]" src`.
+Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WORKAROUND]` (temporary) and listed in
+`WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
+the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
 ## State of the work (0.51.1) -- read this, then `TODO.md` ("Open problems" first)
 
@@ -31,10 +30,10 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
   happen rarely: a mission hero by ferry (Maiev's "Vault of the Wardens") and Tomb of Sargeras <-> Argus.
 - **Next: phase 2 = restructure** (`TODO.md` "Phase 2"): layout for the upstream PR, state in objects, the old code
   (old pickers, hand-written graph, doctrine, wave runner) deleted. Do it as pure refactors -- no behaviour change in
-  the same drop -- and compare a game's dump numbers (`tools/ai/dump_summary.py`) before / after.
+  the same drop -- and compare a game's dump numbers (`tools/shattered-legacies/ai/dump_summary.py`) before / after.
 - **How the bots move today** -- `README.md` "How the bots move" (the pipeline), "Already tried" (every dropped
   approach and why -- read it before proposing a movement change), and "Movement: hard-learned facts" below.
-- **Measuring**: every game's dumps -> `tools/ai/dump_summary.py ... --append`; back and forth -> `tools/ai/back_forth.py`
+- **Measuring**: every game's dumps -> `tools/shattered-legacies/ai/dump_summary.py ... --append`; back and forth -> `tools/shattered-legacies/ai/back_forth.py`
   (stitches all dumps of a game). **The dump wraps lines at ~180 characters** (`  ~` continuation): put new information
   on its own line. Read PINNED first (`TICK ERROR` / `FAILED`), then BOTS, EVENT LOG, LOAD, TURNAROUNDS / TRAIL.
 - **Upstream PR method**: not this code base -- clone upstream WL, PR branch, copy `Ai/` in plus its `[BOT]` hooks.
@@ -46,21 +45,11 @@ map changes; "blocks PR" yes/no) and `../ShatteredLegacies/README.md` (the fork'
 
 ## Getting the code (sandbox)
 
-```
-GIT_LFS_SKIP_SMUDGE=1 git clone --depth 1 --filter=blob:none --sparse --branch botified-dev \
-    https://github.com/Unununiumwc3/Shattered-Legacies.git wl && cd wl
-git sparse-checkout set src/WarcraftLegacies.Source/Ai src/WarcraftLegacies.Source/ShatteredLegacies tools/ai \
-    src/MacroTools src/WarcraftLegacies.Source/Setup src/WarcraftLegacies.Shared \
-    mapdata/WarcraftLegacies/Units mapdata/WarcraftLegacies/UnitData mapdata/WarcraftLegacies/AbilityData \
-    src/WarcraftLegacies.CLI src/Warcraft.Cartographer
-```
-(`WarcraftLegacies.Shared` is needed by `gen_ai_data.py`; `git sparse-checkout add src/WarcraftLegacies.Source/GameLogic`
-for the other marked files. `git mv` into a folder outside the sparse set fails -- add the folder first.)
-(Cone mode also brings the files directly in the parent folders: `mapdata/WarcraftLegacies/PathingMap.json` and
-`src/WarcraftLegacies.Source/Regions.g.cs` -- what `tools/ai/map_query.py` needs. Add `src/WarcraftLegacies.Source/Factions`
-to read quest classes.)
-The repo is huge (map data, LFS models); never clone it fully. Upstream WL for comparison:
-`https://github.com/AzerothWarsLR/WarcraftLegacies` (`main` = 5.x).
+The clone command is in the repository's context file (`../ShatteredLegacies/AI_AGENTS_CONTEXT.md`). For bot work the
+sparse set needs at least `src/WarcraftLegacies.Source/Ai`, `tools/shattered-legacies/ai`, `src/MacroTools`,
+`src/WarcraftLegacies.Source/Setup`, `src/WarcraftLegacies.Shared` (for `gen_ai_data.py`) and the map data the tools
+read (`mapdata/WarcraftLegacies/Units`, `UnitData`, `AbilityData`; `PathingMap.json` and `Regions.g.cs` come with cone
+mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLegacies` (`main` = 5.x; tag `4.8.2`).
 
 ## Files
 
@@ -76,19 +65,19 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiGoldVote.cs` | AiGoldVote | bot strength vote at 49 s (the old game-mode vote slot) (sets `SimpleBot.BotGoldBonus`) |
 | `AiHeroVisits.cs` | AiHeroVisits | quests that need a hero at a place (Yogg-Saron, Tomb, Soul Gem, ...); config `AiConfig.HeroVisits` |
 | `AiChoices.cs` | AiChoices | bot picks in WL's click menus (orc faction random, Scourge always invades); hook `MacroTools/UserInterface/BotChoicePolicy.cs` |
-| `AiData.g.cs` | AiData | GENERATED (tools/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
+| `AiData.g.cs` | AiData | GENERATED (tools/shattered-legacies/ai/gen_ai_data.py): train lists, altar heroes, requirements, hero skill order of WL's factions -- re-run after WL updates |
 | `AiRoutes.cs` | AiRoutes | route planner (0.42): live edge state (rocks every 15 s, waygates every 30 s, enemy structures / creeps per node area), territory Dijkstra -> target, route from the group's area, commit + 30-s re-plan; movement chains (0.44, backward route trees, 4 kept); leftover / creep targets (0.44.1/0.44.3); gather points (0.45) |
 | `AiDefense.cs` | AiDefense | 0.43.2: which CP the army defends -- same landmass, within 9000, min 30 s, 45-s cooldown |
 | `AiIncome.cs` | AiIncome | 0.44.2: pays computer slots the CP income WL pays only to human slots (`PlayerData.TotalIncome`, per second) |
 | `AiPortals.cs` | AiPortals | 0.46: pseudo-portals (tickets, enter-region trigger per waygate, teleport + rest of the chain), Dark Portal edge, WL waygate dump |
 | `AiFerries.cs` | AiFerries, AiVoyage | 0.50: bot ferries -- piers as pseudo-portal gates, boarding (hidden + paused, `InTransit`), a boat sails the lane, landing + rest of the chain |
-| `AiLanes.g.cs` | AiLaneData | GENERATED (`tools/ai/gen_lanes.py`): sea lanes of the ferries, one per ship link |
+| `AiLanes.g.cs` | AiLaneData | GENERATED (`tools/shattered-legacies/ai/gen_lanes.py`): sea lanes of the ferries, one per ship link |
 | `AiRitual.cs` | AiRitual | 0.49: a bot Legion / Scourge hero with the Book of Medivh casts WL's ritual (the only summon path); invulnerable only while channelling |
 | `AiWake.cs` | AiWake | 0.48.5: wakes sleeping creeps at the bot's target once its army stands there (no orders) |
 | `AiTrack.cs` | AiTrack, AiTrackUnit | 0.48.3, measurement only: turnarounds of every army unit with their cause (last bot order or engine), group swaps; unit trail of one bot (`-track`, default P11) -> dump TURNAROUNDS / TRAIL |
 | `AiLoad.cs` | AiAb, AiGuard, AiBudget, AiProbe, AiObserve, AiCaster, AiLoad | 0.46: per-bot A/B (slot bits), guard positions, unit budget per CP, order-latency probe, activity / returns / targets by owner, caster cap |
 | `AiTheatres.cs` | AiTheatres | 0.47: theatres per bot (walking components), state slots, restrictions, dump |
-| `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
+| `AiRoutes.g.cs` | AiRouteData | GENERATED (`tools/shattered-legacies/ai/gen_routes.py`, map data only): nodes (CPs + area nodes), walking edges, rock groups. Report: `ROUTES.md` |
 | `AiArmy.cs` | AiArmy | 0.41: army orders -- attack group sized from the target, rest at the staging CP, orders only for idle units away from their point (`-orders smart`) |
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
 | `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |
@@ -98,22 +87,21 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 | `AiConfig.cs` | AiConfig, AiGraph, AiWorld, ... | data: CP graph edges, portals, quest rules, kill targets, coordinates |
 | `AiUpgrades.cs` | AiUpgrades | data: tech pools per faction, building upgrades, event researches |
 | `AiDebug.cs` | AiDebug | chat commands, `-dump` writer, readouts, **the command switch `Access`** |
-| `tools/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
+| `tools/shattered-legacies/ai/check_refs.py` | | cross-class refs + CSharp.lua limits (run before every build) |
 | `CONCEPTS.md` | | designs: movement steps, theatres, pseudo-portals / ferries, unit budget, load measuring; gold, production places, quest requirements |
 | `WORKAROUNDS.md` | | everything the bot needs outside `Ai/` (hooks, workarounds, runtime map changes, version-bound data) |
 | `MEASUREMENTS.md` | | load numbers per version (from `dump_summary.py`) |
-| `../ShatteredLegacies/` | ShatteredLegaciesSetup, FallbackConfig, FallbackSystem, KezanEnterprise, SlAiData | fork content: fallbacks, Kezan Enterprise; own `README.md`, `TODO.md`, `FALLBACKS.md`, `FACTION_UNITS.md` |
-| `tools/ai/gen_routes.py` | | generates `AiRoutes.g.cs` (nodes, edges, rock groups, region map) + report `ROUTES.md` from map data only; `--without <ids>` |
-| `tools/ai/render_map.py` | | draws terrain, CPs, area nodes and the route graph to `tools/ai/out/route_map.png` (never committed); `--regions` |
+| `tools/shattered-legacies/ai/gen_routes.py` | | generates `AiRoutes.g.cs` (nodes, edges, rock groups, region map) + report `ROUTES.md` from map data only; `--without <ids>` |
+| `tools/shattered-legacies/ai/render_map.py` | | draws terrain, CPs, area nodes and the route graph to `tools/shattered-legacies/ai/out/route_map.png` (never committed); `--regions` |
 | `ROUTES.md` | | generated report: every edge with its "via" point, detours, edges behind rocks |
-| `tools/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
-| `tools/ai/gen_lanes.py` | | 0.50: sea lanes for the ferries from `PathingMap.json` -> `AiLanes.g.cs` (re-run after moving a pier) |
-| `tools/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
-| `tools/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
-| `tools/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
-| `tools/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) and `../ShatteredLegacies/SlAiData.g.cs` (fork buildings, `SL_BUILDINGS`) from WL's ObjectInfo + map data (run after every WL update) |
-| `tools/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
-| `tools/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
+| `tools/shattered-legacies/ai/dump_summary.py` | | condenses one game's dumps into a block for `MEASUREMENTS.md` (`--append "note"`) |
+| `tools/shattered-legacies/ai/gen_lanes.py` | | 0.50: sea lanes for the ferries from `PathingMap.json` -> `AiLanes.g.cs` (re-run after moving a pier) |
+| `tools/shattered-legacies/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
+| `tools/shattered-legacies/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
+| `tools/shattered-legacies/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
+| `tools/shattered-legacies/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) from WL's ObjectInfo + map data (and the fork's production data in the fork's folder); run after every WL update |
+| `tools/shattered-legacies/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
+| `tools/shattered-legacies/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
 
 ## Hard rules (each one cost a broken build)
 
@@ -125,7 +113,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 2. **CSharp.lua: static fields with a non-literal initializer (`= new()`, a call) are built in one static
    constructor limited to ~55 upvalues; fields past that are silently `nil` at runtime.** Keep each class under ~45.
 3. `dotnet build` passing proves nothing about the Lua; wrong-class references only fail at the transpile step.
-   Run `tools/ai/check_refs.py` (refs + both limits) and, after building, `tools/ai/lua_check.py artifacts/war3map.lua`.
+   Run `tools/shattered-legacies/ai/check_refs.py` (refs + both limits) and, after building, `tools/shattered-legacies/ai/lua_check.py artifacts/war3map.lua`.
 4. Never `string.Replace` with user/game text that may contain `%` (Lua pattern). WL's `Loc.Format` is fixed.
 5. Avoid `GetHandleId` (key dictionaries by unit/player objects instead).
 6. Every periodic task is registered in `AiScheduler` (0.40; no new periodic timers) and runs through
@@ -138,20 +126,20 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
    lowercase API types (`timer`, `unit`, `player`, `trigger`, `dialog`, `effect`) and sometimes names locals the same
    (`timer timer = timer.Create();` in `ChoiceDialogPresenter.Run`). Any `timer.Create()` ABOVE that line in the same
    block then fails. Never add code to a method that declares such a local -- put it in an own method.
-   `tools/ai/scope_check.py` catches this and nested re-declarations (CS0136).
+   `tools/shattered-legacies/ai/scope_check.py` catches this and nested re-declarations (CS0136).
 10. **No compiler in the sandbox** (no dotnet, no nuget). Before every drop: `check_refs.py`, a tree-sitter syntax
     pass and `scope_check.py` on EVERY changed .cs file, including files outside `Ai/`; JSON files through `json.load`.
 11. **Unqualified calls across classes don't compile** (0.39.2 break, CS0103): a helper added to `SimpleBot` and
     called as `IsActive(...)` from `QuestAutoComplete` (same file, other class). `check_refs.py` reports these as
     UNQUALIFIED since 0.39.3.
-12. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM (files in `Ai/` and `ShatteredLegacies/` don't).
+12. **Keep file encodings**: WL's C#/JSON files start with a UTF-8 BOM (files in `Ai/` and the fork's folder don't).
     Keep whatever the file had. Python: read `utf-8-sig`, write the BOM back
     if it was there; `/bin/sh` is dash -- `printf '\xef'` writes the text `\xef`, not the byte. Compare BOMs with
     `git show HEAD:<file> | head -c 3 | od -An -tx1` before delivering.
 13. **Layers** (0.39.10): nothing in `Ai/` may reference a class outside `Ai/` except WL's own code; fork code uses
     the bot only through `AiApi` (add a method there instead of reaching into `SimpleBot`). `check_refs.py`: LAYER, API.
-14. **Markers**: every change in an original file gets `// [BOT]`, `// [SL]` or `// [WORKAROUND]` and an entry in
-    `WORKAROUNDS.md` or `../ShatteredLegacies/README.md` in the same drop.
+14. **Markers**: every change the bot needs in an original file gets `// [BOT]` or `// [WORKAROUND]` and an entry in
+    `WORKAROUNDS.md` in the same drop (fork changes: the fork's marker and list).
 15. **Desync**: never base a decision on wall-clock time, local files or per-client text. Counters for budgets must
     be deterministic (units enumerated, orders issued).
 16. **CSharp.lua: no compound assignment to an ARRAY element with a ternary / comparison / logic on the right**
@@ -163,29 +151,14 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
     area units, blacklist, counters per bot) stay indexed by the real pid. New per-bot state in those classes: size
     `AiTheatres.Agents`, index `S(pid)`.
 
-## How we work
+## How we work (bot-specific; the general way of working is in the repository's context file)
 
-- Session start: the maintainer pastes the repo/branch and a task; clone sparsely (command above), read this file
-  and `TODO.md`. He compiles in a Windows VM (Winboat) and runs git on Ubuntu; no GitHub Actions.
-- "Discuss only" = do not code. When coding: leave out what is unclear, put it in `TODO.md`, and say so.
-- Two TODO files: `Ai/TODO.md` = bot work only (what would go into the upstream PR); `../ShatteredLegacies/TODO.md` =
-  everything fork-only (fallbacks, Kezan, Thandol Treaty, map content, the fork's win rule, faction balance, the
-  maintainer's brainstorming). Put new items in the right one.
+- Bot work goes to `TODO.md` / `CHANGELOG.md` here; anything that exists only in the fork goes to the fork's files.
 - Before proposing a movement change, read `README.md` "Already tried"; add a row there when an approach is dropped
   or replaced (same drop).
-- At most one question per reply; propose defaults instead of asking many.
-- Push only named tags (`git push origin v<build>`), never `--tags` (old tags drag Git LFS into history the clone
-  never downloaded).
-- Deliver one patch per version (`git diff --binary -M` against the pushed branch, or against the previous patch
-  of the same delivery), verified with `git apply --check` on a clean worktree of `origin/botified-dev`, plus a zip
-  of the whole files with repo paths. The maintainer downloads them to `~/Downloads/` and runs the commands given in
-  the reply (apply, commit, tag); he cannot run `.ps1` scripts in Windows, only paste PowerShell commands.
-- Version on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`) AND `MapSettings.Version` in
-  `src/WarcraftLegacies.CLI/appsettings.json` (`v<build>`; also in the published file name), `CHANGELOG.md`.
-  Map title: "Shattered Legacies: Botified Realm v<build>" (name in `Info.json`, version appended on publish).
-  Docs-only drop: CHANGELOG only. Release = commit + push + tag `v<build>` (commands in `README.md`, "Releasing").
+- Bot build on every code drop: `AiSetup.Build` (bottom of `AiSystem.cs`); `CHANGELOG.md` entry.
 - Keep `TODO.md` and `CHANGELOG.md` current in the same drop; TODO only holds open work.
-- Measurements live in `MEASUREMENTS.md` (written by `tools/ai/dump_summary.py --append`), so a new chat sees them.
+- Measurements live in `MEASUREMENTS.md` (written by `tools/shattered-legacies/ai/dump_summary.py --append`), so a new chat sees them.
 - Testing data comes as `-dump` files (`CustomMapData/WLAI_dump_<time>.txt`). `dump_summary.py` condenses a whole
   game; to read one dump in full, decode:
   ```
@@ -199,7 +172,7 @@ The repo is huge (map data, LFS models); never clone it fully. Upstream WL for c
 - `mapdata/WarcraftLegacies/PathingMap.json`: 32-unit cells, rows bottom-up from (-28672, -32256), flag 0x02 not
   walkable / 0x04 not flyable / 0x08 not buildable / 0x40 NOT water. Destructables (trees, WL's `LTrc` rocks) and
   units are NOT in it -- `gen_routes.py` adds trees (64 x 64) and rock doodads; `LTrc` marks removable edges (+-192:
-  +-96 left a gap at the Thandol bridge railing). `tools/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
+  +-96 left a gap at the Thandol bridge railing). `tools/shattered-legacies/ai/map_query.py` wraps it (walk / area / near / find / around / rect).
 - Preplaced units: `Units/<x>_<y>.json`, grouped by area. The names follow NO simple rounding rule (checked in
   0.38) -- append a new unit to the file that already holds its nearest neighbours; never create new files. `TypeId`/`SkinId` **little-endian** (`struct.unpack('<I', b'n0JS')`), unique
   `CreationNumber` (max + 1). Doodads/destructables: `Doodads/*.json`. Object data: `UnitData/<id>.json` (`OldId`
@@ -330,7 +303,7 @@ Map mechanics
   ends on open ground (`LandBeside` keeps 250 from buildings). Waygate n036 carries A01M/A023 "Anti Portal Blocking"
   (1000-range immolation); AI portals shrink it to 250.
 - **Two graphs** (until phase 2): the route planner uses the GENERATED graph (`AiRoutes.g.cs`, drawn by
-  `tools/ai/render_map.py`); the OLD hand-written graph (`AiConfig` edges) is only the fallback picker's -- but it is
+  `tools/shattered-legacies/ai/render_map.py`); the OLD hand-written graph (`AiConfig` edges) is only the fallback picker's -- but it is
   what `-edges` draws in game and what the dump's EDGES sections list. The maintainer's 0.46 edge list was made from
   the old graph; the generated one already matched 12 of its 13 items. Always say which graph you mean.
 - **Dark Portal** (Outland <-> Blasted Lands): WL's Fel Horde quest "The Dark Portal" (`QuestDarkPortal`, global)
@@ -340,7 +313,7 @@ Map mechanics
   lists WL's own waygates in the dump).
 - **Graph generator inputs** (0.46.2): terrain (PathingMap), trees, LTrc rocks, WC3 pathing blockers (YTpb / YTlb
   64, YTpc / Ytlc 128; air-only YTfb / YTfc / YTab / YTac ignored), custom doodads with their own `dptx` pathing.
-  NOT known: standard doodads' built-in pathing (no game data in the repo) -> `tools/ai/route_exceptions.txt`.
+  NOT known: standard doodads' built-in pathing (no game data in the repo) -> `tools/shattered-legacies/ai/route_exceptions.txt`.
   Rocks (0.46.3): removable = types WL's code registers in a `RockGroup` (LTrc, B013 whirlpools -- read from the
   source by the generator); other LTrc-based customs are walls. `route_exceptions.txt`: `remove`, `add`, `node @x,y`.
   Custom DESTRUCTABLE pathing is mostly bridges (walkable) -- never mark it as blocking (that split Outland).
@@ -427,7 +400,7 @@ Your setup
   staging logic in `AiArmy.Attack`; defence `AiDefense.Pick` before targeting; missions `AiRoutes.MoveVia`; theatres
   `AiTheatres.Split` / `S(pid)`; guard positions `AiGuard`; sleeping creeps `AiWake`; commit / why in `AiRoutes.Pick`.
 - **Measuring movement**: `AiTrack` (TURNAROUNDS all bots, TRAIL one bot, `-track`), `AiObserve` (activity, returns),
-  `AiProbe` (order latency), `tools/ai/back_forth.py`, `tools/ai/dump_summary.py`.
+  `AiProbe` (order latency), `tools/shattered-legacies/ai/back_forth.py`, `tools/shattered-legacies/ai/dump_summary.py`.
 - **Bot bonuses**: `SimpleBot.HasPerks(p)` -- real bots and test-mode autopilot only.
 - **Command switch**: `AiDebug.Access` (`Off` release / `HostOnly` / `Everyone`); levels Read / Heavy / Control.
 - **Portals**: live waygates read every 30 s (`AiRoutes.CheckPortals`; owner rule `PrivateGate`), bot portals
