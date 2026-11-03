@@ -29,6 +29,23 @@ Markers in WL files: `// [BOT]` = hook the bot needs (list: `../Ai/WORKAROUNDS.m
 Every change to a WL file gets a marker and a row in the matching list in the same drop. Map data (JSON) cannot hold
 comments -- it is only listed.
 
+## State of the work -- read this, then `TODO.md` ("Order of the work")
+
+- **0.52.0 (released, map works)**: the structure is in place -- `Timelines/` (`Core/` engine, `TimelineCatalog`,
+  `Factions/<X>/`), `Bot/`, separate docs for bot and fork, tools in `tools/shattered-legacies/`. Behaviour as in
+  0.51.1: one turning point per faction, mostly placeholders; Kul Tiras -> Kezan Enterprise is the only real one.
+- **Content index (after 0.52.0, tools / docs only)**: `Content/` lists what the main map, the 24p map and stock WC3
+  offer, used or unused. Use it for every content question instead of scanning the map data:
+  `grep -i <name> Content/units.tsv`, browse `Content/REUSE.md`. Content is named `<map>:<id>` (`24p:u011`).
+- **Next: step 2 of `TODO.md`** -- the turning-point core (WL quests + effect library), the Hourglass of Fate with
+  researches, the Defeat rules (lose only with 0 CPs for more than 5 turns; one `[SL]` hook in `Faction.Defeat()`),
+  pilot Quel'thalas -> Sunfury (removes the Illidari pick). Build it as the template every later faction copies
+  (`Timelines/TIMELINES.md` section 3).
+- **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
+  anything the fork needs from the bot is one `AiApi` method.
+- The maintainer plays test games in the Windows VM and reports what he sees; he recycles content, he does not create
+  assets.
+
 ## Getting the code (sandbox)
 
 ```
@@ -42,6 +59,9 @@ git sparse-checkout set src/WarcraftLegacies.Source/Ai src/WarcraftLegacies.Sour
 - `WarcraftLegacies.Shared` is needed by `gen_ai_data.py`; `git sparse-checkout add src/WarcraftLegacies.Source/GameLogic`
   for the other marked files, `src/WarcraftLegacies.Source/Factions` to read WL's faction and quest classes (the
   templates for timeline content), `mapdata/WarcraftLegacies24p` for the 24p map's object data.
+- Re-running the content index needs the whole `src/WarcraftLegacies.Source` (code references), `src/War3Api.Object`
+  (stock data), `mapdata/WarcraftLegacies` and `mapdata/WarcraftLegacies24p` (object data, `Units/`, `Imports/` --
+  LFS pointers are enough). Reading it needs only `ShatteredLegacies/Content/`.
 - `git mv` into a folder outside the sparse set fails -- add the folder first.
 - Cone mode also brings the files directly in the parent folders: `mapdata/WarcraftLegacies/PathingMap.json` and
   `src/WarcraftLegacies.Source/Regions.g.cs` -- what `tools/shattered-legacies/ai/map_query.py` needs.
@@ -86,5 +106,8 @@ don't -- keep whatever the file had) and desync safety. In addition, for fork co
   whole files with repo paths. The maintainer downloads them to `~/Downloads/` and runs the commands given in the reply
   (apply, commit, tag); he cannot run `.ps1` scripts in Windows, only paste PowerShell commands.
 - Content for new factions: recycle, then adjust -- the maintainer does not create assets. Reuse objects of the main
-  map, the 24p map (`mapdata/WarcraftLegacies24p/`) and stock WC3 assets (referenced only, not in the repo). The
-  planned content index (`TODO.md`, step 1) is the search index for this -- use it instead of re-scanning the map data.
+  map, the 24p map (`mapdata/WarcraftLegacies24p/`) and stock WC3 (referenced only, its data is in
+  `src/War3Api.Object/Generated/`). The content index `Content/` is the search index for this -- use it instead of
+  re-scanning the map data; re-run `tools/shattered-legacies/content/content_index.py` after map data changes.
+- Generated files (`*.g.cs`, `Content/`, `FACTION_UNITS.md`, `ROUTES.md`, the drawio): change the generator, re-run
+  it, never edit the output. Generated images (`tools/shattered-legacies/ai/out/`) are never committed.
