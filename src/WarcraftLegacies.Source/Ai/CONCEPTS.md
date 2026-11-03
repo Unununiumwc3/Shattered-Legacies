@@ -186,7 +186,7 @@ complex.
 - Decided (0.50, built): boat invulnerable; no warning ping; humans lose the AI ship waygates (no visible bot
   waygates -- maintainer, 0.48). Boat leaves 12 s after its first passenger (per direction and player); speed 400;
   a pier is no ENTRY while an enemy holds its CP (neutral or own / allied: yes); landing anywhere. Lanes: A* over
-  128-unit water cells (all water, else half for narrow channels), smoothed -- `tools/ai/gen_lanes.py`.
+  128-unit water cells (all water, else half for narrow channels), smoothed -- `tools/shattered-legacies/ai/gen_lanes.py`.
   Harbours = the 8 former ship pairs (`AiConfig` PortalLink phase "ship").
 - [ai] Check WL's defeat handling for hidden units (a bot defeated during a trip): land them or remove them.
 - Later idea, not planned: shipyards a bot builds as extra entries. Bots build no ships today and every landmass
@@ -204,7 +204,7 @@ Design:
   (~4 CPs) ~80. Caution: 16 bots x 150 = ~2400 food, only ~20 % below 0.44.2 at 14 min (2986, already lagging) -- the
   0.46 data decides. `-cap off|<base> <perCp>` to try other values in game.
 - **Base per faction**: the bot owns the mechanism; the values per faction / team (good vs evil balance) come from
-  Shattered Legacies through an `AiApi` hook (`../ShatteredLegacies/TODO.md`). Default: the same base for all.
+  the map / fork through an `AiApi` hook (`AiApi.SetBudgetBase`). Default: the same base for all.
 - A production gate in the bot, not WL's food cap: WL's food state stays untouched (no fight with `FoodMaximum` and the
   bots' food floor of 100).
 - The total is bounded by the number of CPs -- the property that matters for the engine. Few factions with mass

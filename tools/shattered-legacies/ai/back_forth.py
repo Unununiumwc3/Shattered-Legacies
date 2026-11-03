@@ -1,8 +1,8 @@
 """Back-and-forth report from one game's dumps (0.48.3).
 
-Usage: python3 tools/ai/back_forth.py WLAI_dump_*.txt            (overview)
-       python3 tools/ai/back_forth.py WLAI_dump_*.txt --unit U3  (one followed unit's whole trail)
-       python3 tools/ai/back_forth.py WLAI_dump_*.txt --bot 11   (one bot's target changes)
+Usage: python3 tools/shattered-legacies/ai/back_forth.py WLAI_dump_*.txt            (overview)
+       python3 tools/shattered-legacies/ai/back_forth.py WLAI_dump_*.txt --unit U3  (one followed unit's whole trail)
+       python3 tools/shattered-legacies/ai/back_forth.py WLAI_dump_*.txt --bot 11   (one bot's target changes)
 
 Every dump keeps only the last ~300 event-log lines and ~700 trail lines; this stitches the EVENT LOG and TRAIL
 sections of all dumps of a game (with -autodump: every 5 min, nothing lost) into one timeline. Reports:

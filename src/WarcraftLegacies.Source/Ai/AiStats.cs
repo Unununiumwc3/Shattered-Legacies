@@ -7,7 +7,7 @@ namespace WarcraftLegacies.Source.Ai
 {
   // 0.38: what the bots really train. Counts every unit/hero a bot finishes training (event, no scans) and lists in
   // the dump, per bot: the trained types with counts, and the faction's categorised unit/hero types that were NEVER
-  // trained. Compare with the offline scan `python3 tools/ai/unit_scan.py <faction>`, which explains WHY a type
+  // trained. Compare with the offline scan `python3 tools/shattered-legacies/ai/unit_scan.py <faction>`, which explains WHY a type
   // can't be trained (wrong building pool, quest requirement without an AI rule, not in AiConfig.Heroes ...).
   internal static class AiStats
   {

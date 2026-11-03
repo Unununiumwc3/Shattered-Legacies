@@ -13,31 +13,64 @@ namespace WarcraftLegacies.Source.Ai
   // -1 = keep WL's default (option 1). Registered in AiSetup.Setup, which runs before WL's faction dialogs.
   internal static class AiChoices
   {
+    // 0.52: faction names a bot never picks at game start (AiApi.ExcludeFromBotPicks) -- a fork that moves a faction
+    // out of the pick (e.g. into a later turning point) excludes it here. Empty = every faction can be picked.
+    internal static List<string> Excluded = new();
+
     internal static void Setup()
     {
       BotChoicePolicy.Pick = Pick;
     }
 
+    private static bool IsExcluded(IChoice choice)
+    {
+      if (choice is FactionChoice fc && fc.Faction != null)
+      {
+        for (var i = 0; i < Excluded.Count; i++)
+        {
+          if (Excluded[i] == fc.Faction.Name)
+          {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
     private static int Pick(player p, IReadOnlyList<IChoice> choices)
     {
-      // Faction pick at game start, random for bots: the orc slot (Frostwolf / Warsong, 0.37.1), the Dalaran slot
-      // (Dalaran / Gilneas, 0.38) and the Sentinels slot (Sentinels / Draenei, 0.38.1). Illidari / Sunfury stays
-      // Basic on purpose (Sunfury is meant as Quel'thalas' fallback, TODO.md).
+      // Faction pick at game start, random for bots among the factions not excluded: the orc slot (Frostwolf /
+      // Warsong, 0.37.1), the Dalaran slot (Dalaran / Gilneas, 0.38), the Sentinels slot (Sentinels / Draenei,
+      // 0.38.1), the Illidari slot (Illidari / Sunfury). 0.52: one rule for every faction dialog instead of the three
+      // names; a dialog with a single allowed faction takes it without a roll.
       if (choices.Count > 0 && choices[0] is FactionChoice)
       {
+        var allowed = new List<int>();
         for (var i = 0; i < choices.Count; i++)
         {
-          if (choices[i] is FactionChoice fc && fc.Faction != null
-              && (fc.Faction.Name == "Warsong" || fc.Faction.Name == "Gilneas" || fc.Faction.Name == "The Exodar"))
+          if (!IsExcluded(choices[i]))
           {
-            var pick = GetRandomInt(0, choices.Count - 1);
-            SimpleBot.LogPin("bot pick P" + I2S(GetPlayerId(p)) + ": faction choice " + I2S(pick + 1) + " of "
-                             + I2S(choices.Count) + " (random)");
-            return pick;
+            allowed.Add(i);
           }
         }
 
-        return -1;
+        if (allowed.Count == 0)
+        {
+          return -1;
+        }
+
+        if (allowed.Count == 1)
+        {
+          SimpleBot.LogPin("bot pick P" + I2S(GetPlayerId(p)) + ": faction choice " + I2S(allowed[0] + 1) + " of "
+                           + I2S(choices.Count) + " (the others are excluded)");
+          return allowed[0];
+        }
+
+        var pick = allowed[GetRandomInt(0, allowed.Count - 1)];
+        SimpleBot.LogPin("bot pick P" + I2S(GetPlayerId(p)) + ": faction choice " + I2S(pick + 1) + " of "
+                         + I2S(choices.Count) + " (random)");
+        return pick;
       }
 
       // Scourge plague: one of the real invasions at random, never "No invasion" (the only choice without a place).

@@ -1,6 +1,6 @@
 # Route graph (generated)
 
-Written by `python3 tools/ai/gen_routes.py` together with `AiRoutes.g.cs`. Review this after every run.
+Written by `python3 tools/shattered-legacies/ai/gen_routes.py` together with `AiRoutes.g.cs`. Review this after every run.
 
 - Nodes: 168 CPs, 74 area nodes
 - Edges: 336, of them 11 behind rock groups (12 groups of `LTrc`)

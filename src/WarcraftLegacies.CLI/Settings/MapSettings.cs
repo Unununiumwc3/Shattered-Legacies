@@ -14,5 +14,5 @@ public sealed class MapSettings
   /// When a map has an entry, the published file is called "{file name}-{version}.w3x" instead of
   /// "{map name}{version}.w3x". File names must not contain characters Windows forbids, such as ':'.
   /// </summary>
-  public Dictionary<string, string> PublishedFileNames { get; init; } = new();
+  public Dictionary<string, string> PublishedFileNames { get; init; } = new(); // [SL] (0.39.9)
 }

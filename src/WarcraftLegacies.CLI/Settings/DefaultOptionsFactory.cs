@@ -43,6 +43,7 @@ public static class DefaultOptionsFactory
     var settings = AppSettings.Current;
     var rootPath = settings.CompilerSettings.RootPath;
     var mapDataRootPath = Path.Combine(rootPath, PathConventions.MapDataPath, mapName);
+    // [SL] (0.39.9): optional published file name per map (MapSettings.PublishedFileNames)
     var publishedFileName = settings.MapSettings.PublishedFileNames != null
                             && settings.MapSettings.PublishedFileNames.TryGetValue(mapName, out var customFileName)
                             && !string.IsNullOrWhiteSpace(customFileName)

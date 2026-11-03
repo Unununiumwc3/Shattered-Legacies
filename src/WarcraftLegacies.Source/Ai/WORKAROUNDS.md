@@ -4,8 +4,8 @@ Goal: a pull request of the bot to the original Warcraft Legacies that works on 
 workarounds. This file lists every change to the original code or map the bot depends on, and every change the bot
 makes to the map while the game runs. Keep it current in the same drop that adds or removes such a change.
 
-Markers in the code (search for them): `// [BOT]` = hook the bot needs, `// [SL]` = Shattered Legacies change
-(not needed by the bot; listed in `ShatteredLegacies/README.md`), `// [WORKAROUND]` = temporary, listed below.
+Markers in the code (search for them): `// [BOT]` = hook the bot needs, `// [WORKAROUND]` = temporary, listed below.
+Other markers (here `// [SL]`) belong to the fork that hosts the bot and are listed in the fork's own docs.
 Map data (JSON) cannot hold comments -- it is only listed here.
 
 "Blocks PR" = the bot would not work on the original map without it, or the original maintainer would have to
@@ -35,7 +35,7 @@ area node within 1800 (Sunsail 661, Terrordale 634, Runestone 1817, Jaina's Sanc
 So they are expected to be unnecessary. Since 0.44.1 enemy buildings anywhere in a node's area are targets and since
 0.44.3 creep camps too -- remove W1-W4 once a playtest shows bots attacking those areas without the extra CPs.
 **0.46.2: W1-W4 removed** (map data back to WL 4.8.2's CPs, maintainer's decision) -- the rows above are history.
-| W5 | Strength vote at 49 s | `Ai/AiGoldVote.cs` | uses the time slot of WL's game-mode vote, which Shattered Legacies removed (`[SL]` in `GameSetup.cs`). On the original map both dialogs would collide | start the vote when WL's own vote has ended (event, not a fixed time) | yes |
+| W5 | Strength vote at 49 s | `Ai/AiGoldVote.cs` | uses the time slot of WL's game-mode vote, which the hosting fork removed (its marker in `GameSetup.cs`). On the original map both dialogs would collide | start the vote when WL's own vote has ended (event, not a fixed time) | yes |
 
 ## 3. Changes the bot makes to the map at runtime
 
@@ -58,15 +58,17 @@ Also: **CP income for computer slots** (`AiIncome`, 0.44.2): WL pays CP income o
 (`ControlPointManager`). The bot pays its own slots the same amount -- no WL change. Upstream question: should WL pay
 computer slots itself (one condition in `ControlPointManager`)? Then `AiIncome` goes away. Blocks PR: no.
 
-## 4. Bot data tied to this map version or to Shattered Legacies content
+## 4. Bot data tied to this map version or to fork content
 
 | What | Where | Proper solution | Blocks PR |
 |---|---|---|---|
-| Hand-written CP graph (edges, weights, gates) incl. Shattered Legacies CPs (`n1A0`-`n1B2`, 100-gold CPs) and the W1-W4 CPs | `AiConfig` / `AiGraph` | 0.42: generated graph (`AiRoutes.g.cs`, map data only) with runtime state (rocks, waygates) is the default; the hand graph is the fallback / `-route off`. Delete it in 0.43 | yes, until deleted |
+| Hand-written CP graph (edges, weights, gates) incl. the fork's former extra CPs (`n1A0`-`n1B2`, 100-gold CPs) and the W1-W4 CPs | `AiConfig` / `AiGraph` | 0.42: generated graph (`AiRoutes.g.cs`, map data only) with runtime state (rocks, waygates) is the default; the hand graph is the fallback / `-route off`. Delete it in 0.43 | yes, until deleted |
 | Coordinates: portal ends, Argus spots, hero visits, kill targets, area clears | `AiConfig`, `AiWorld` | generate where possible; everything else must skip silently when its id is missing (5.x has no Old Gods) | yes |
-| Production data | `AiData.g.cs` (generated) | already generated from WL's data; Shattered Legacies factions come through `AiApi.AddProductionData` | no |
+| Production data | `AiData.g.cs` (generated) | already generated from WL's data; a fork's own factions come through `AiApi.AddProductionData` | no |
 
 ## Done
 
-- 0.39.10: the fallback system (Shattered Legacies) no longer lives in `Ai/`; the bot has no reference to it
-  (`check_refs.py` LAYER), and Shattered Legacies uses the bot only through `AiApi` (API check).
+- 0.39.10: the fork's fallback system no longer lives in `Ai/`; the bot has no reference to it (`check_refs.py`
+  LAYER), and the fork uses the bot only through `AiApi` (API check).
+- 0.52: the last fork content in `Ai/` moved out: the `-version` title (`AiApi.SetMapTitle`) and the rule that the
+  bot never picks Sunfury (`AiApi.ExcludeFromBotPicks`, set by the fork).

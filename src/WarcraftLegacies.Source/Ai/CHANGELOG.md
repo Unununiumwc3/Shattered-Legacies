@@ -1,8 +1,25 @@
-# Changelog -- Shattered Legacies: Botified Realm (bot AI and fork content)
+# Changelog -- bot AI
 
 Versions are `0.MINOR.PATCH` (feature build = MINOR, fix-only build = PATCH). Git tags: `v0.39.9` and later (older
 builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` command and every `-dump` header show the
-same version.
+same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
+0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
+
+## 0.52.0
+Structure only: the bot holds no fork content any more. Version v0.52.0.
+- **`AiApi.SetMapTitle`**: the title `-version` shows was a fixed fork text in `AiDebug`; default now "Warcraft
+  Legacies", the fork sets its own.
+- **Faction picks: one rule for every dialog** (`AiChoices`): a bot picks at random among the factions not excluded
+  through the new **`AiApi.ExcludeFromBotPicks`**; a dialog with one allowed faction takes it without a roll. Before:
+  random only when Warsong / Gilneas / The Exodar was among the choices, the Illidari / Sunfury dialog left to WL's
+  24-s timeout (option 1). Same picks as before in this map (the fork excludes Sunfury); the one difference: a bot
+  Illidari slot now gets the Illidari after 4 s like the other dialogs, not after 24 s.
+- **Tools moved** to `tools/shattered-legacies/ai/` (development aids of this repository, not part of a WL pull
+  request); paths in comments, generated headers and docs updated. `gen_ai_data.py` writes the fork's data to
+  `ShatteredLegacies/Bot/SlAiData.g.cs` (same data).
+- **Docs**: `README.md`, `AI_AGENTS_CONTEXT.md`, `TODO.md`, `CONCEPTS.md`, `WORKAROUNDS.md` describe the bot only;
+  the repository-level way of working (clone, delivery, versions, releasing, map name) moved to
+  `../ShatteredLegacies/AI_AGENTS_CONTEXT.md` and `../ShatteredLegacies/README.md`.
 
 ## 0.51.1
 End of phase 1 (maintainer: ready for the restructure). Version v0.51.1.
