@@ -253,6 +253,8 @@ the repository that hosts the bot (here `tools/shattered-legacies/ai/`), not par
 - `python3 tools/shattered-legacies/ai/scope_check.py src/WarcraftLegacies.Source/Ai <other changed .cs files>` — catches C# scope
   errors a syntax check misses (a local hiding a type name, e.g. `timer timer = ...`; a local re-declared in a nested
   block). Not a compiler, but it caught the 0.37.1 build break.
+- `python3 tools/shattered-legacies/ai/using_check.py` — extension methods called without their `using` (the publish step's
+  CSharp.lua compile fails on them; `dotnet build` of the CLI does not compile the map code). **Run before every build.**
 - `python3 tools/shattered-legacies/ai/gen_ai_data.py` — regenerates `AiData.g.cs` (train lists, hero skills ...) from WL's data
   (and the fork's own production data, handed over through `AiApi.AddProductionData`); run after every WL update, then
   rebuild.

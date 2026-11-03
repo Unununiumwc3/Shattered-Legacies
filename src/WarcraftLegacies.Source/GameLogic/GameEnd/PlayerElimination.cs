@@ -40,6 +40,12 @@ public static class PlayerElimination
 
   private static void ProcessPlayerElimination(player player)
   {
+    // [SL] (0.53): the fork's rule -- no CP for more than 5 turns, an unused fallback starts instead of the defeat
+    if (WarcraftLegacies.Source.ShatteredLegacies.Rules.EliminationRule.Process(player))
+    {
+      return;
+    }
+
     var playerData = player.GetPlayerData();
 
     if (!ShouldEliminate(player, playerData))

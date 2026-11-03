@@ -1,0 +1,21 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZcG",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(Hourglass condition)"
+    },
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "Not available yet"
+    }
+  ]
+}

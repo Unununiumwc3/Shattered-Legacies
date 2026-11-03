@@ -237,7 +237,7 @@ R0A8	main	used	Your team controls Jaina Proudmoore	-	Roch	demon	ReplaceableTextu
 R0A9	main	used	Quest Completed: A Feast for Our Kin	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R0AA	main	used	Quest Completed: Lone Wanderer	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R0AB	main	used	Quest Completed: Ragetotem Tribe	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-R0XZ	main	used	The Scarlet Crusade	(Lordaeron - Scarlet)	Rhde	human	ReplaceableTextures\CommandButtons\BTNDivine_Reckoning_Icon.blp	h030
+R0XZ	main	used	The Scarlet Crusade	(Lordaeron - Scarlet)	Rhde	human	ReplaceableTextures\CommandButtons\BTNDivine_Reckoning_Icon.blp	h030,nZh0
 RBAW	main	used	Quest Completed: Ascension	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RBCF	main	used	Quest Completed: Gift of Flesh	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RBEA	main	used	Accelerated Cycle	(Black Empire Stygian Hulk)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNNerubPunch.blp	n0AX
@@ -289,6 +289,40 @@ RYSP	main	used	Improved Slow Poison	(Illidari)	Rhde	naga	ReplaceableTextures\Com
 RYW5	main	used	Improved Swarm Beetle	(Cthun - Warrior)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNSwarmScarab.blp	o00R
 RZ02	main	used	Shadow Weaver Adept Training	(Cthun)	Ruba	undead	ReplaceableTextures\CommandButtons\BTNRejuvenation.blp	o00D
 RZZL	main	used	Quest Completed: The Emperor's Constructs	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc1	main	used	Silvermoon Palace lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc2	main	used	Gilneas Castle lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc3	main	used	Stormwind Keep lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc4	main	used	The Great Forge lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc5	main	used	Boralus Keep lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc6	main	used	Nordrassil and Cenarion Hold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc7	main	used	Auberdine and Feathermoon Stronghold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc8	main	used	Exodar Regalis lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc9	main	used	Thunder Bluff and Darkspear Hold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcA	main	used	Stonemaul Keep and Orgrimmar lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcB	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcC	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcD	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcE	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcF	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcG	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcH	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZd1	main	used	Fallback: Sunfury	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBloodElfPrince.blp	nZh0
+RZd2	main	used	Fallback: Gilneans on Darkshore (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNJaina.blp	nZh0
+RZd3	main	used	Fallback: Valiance Expedition (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroPaladin.blp	nZh0
+RZd4	main	used	Fallback: Dwarven Expedition (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	nZh0
+RZd5	main	used	Fallback: Kezan Enterprise	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	nZh0
+RZd6	main	used	Fallback: Dream trees (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNKeeperOfTheGrove.blp	nZh0
+RZd7	main	used	Fallback: Maiev's Watchers (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	nZh0
+RZd8	main	used	Fallback: Draenei of Shattrath (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroArchMage.blp	nZh0
+RZd9	main	used	Fallback: Dragonmaw (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChaosWarlord.blp	nZh0
+RZdA	main	used	Fallback: Dragonmaw (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChaosWarlord.blp	nZh0
+RZdB	main	used	Fallback: Knights of the Ebon Blade (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
+RZdC	main	used	Fallback: Dreadlord Insurgents (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDreadLord.blp	nZh0
+RZdD	main	used	Fallback: Mag'har (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	nZh0
+RZdE	main	used	Fallback: Akama's Ashtongue (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNEvilIllidan.blp	nZh0
+RZdF	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
+RZdG	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	nZh0
+RZdH	main	used	Fallback: Brood of Nozdormu (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	nZh0
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L

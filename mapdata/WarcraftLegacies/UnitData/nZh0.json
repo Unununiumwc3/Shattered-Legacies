@@ -1,6 +1,6 @@
 {
   "OldId": "ncop",
-  "NewId": "n0FB",
+  "NewId": "nZh0",
   "Unk": [
     0
   ],
@@ -76,7 +76,17 @@
     {
       "Id": "unam",
       "Type": 3,
-      "Value": "Fallback"
+      "Value": "Hourglass of Fate"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Shattered Legacies)"
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,RZdC,RZdD,RZdE,RZdF,RZdG,RZdH,R0XZ"
     },
     {
       "Id": "ussc",

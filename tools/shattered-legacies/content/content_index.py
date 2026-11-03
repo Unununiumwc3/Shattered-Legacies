@@ -17,7 +17,7 @@ Status of a row:
          ability's built-in data (e.g. a summon nobody changed) shows "unused".
   24p    24p only (id not in the main map) / changed (same id and name, other data) / different (same id, a
          DIFFERENT object) -- identical copies of main objects are left out. A copy into the main map always gets a
-         new ?Z?? id (ID rule, ShatteredLegacies/README.md).
+         new ?Za? id (Z second, lowercase third; ID rule, ShatteredLegacies/README.md).
   stock  used / unused in the main map (same rule as main).
 """
 import glob
@@ -152,7 +152,7 @@ def preplaced(map_dir):
         for u in json.load(open(f, encoding="utf-8-sig")):
             for t in [u.get("TypeId")] + [i.get("ItemId") for i in u.get("InventoryData") or []]:
                 if t:
-                    c = be(t)
+                    c = le(t)  # preplaced units store their type id little-endian (tools/.../map_query.py)
                     ids[c] = ids.get(c, 0) + 1
     return ids
 
@@ -353,7 +353,7 @@ def main():
                  "or referenced by anything used). Free to reuse under their id."),
                 ("24p", "24p map: not in the main map",
                  "Status `24p only` = the id is free in the main map; `different` = the id is taken by ANOTHER object in "
-                 "the main map. Copies get a new `?Z??` id. (`changed` = the same object with other data: only in "
+                 "the main map. Copies get a new `?Za?` id. (`changed` = the same object with other data: only in "
                  "units.tsv.)"))
     for m, title, text in sections:
         md += ["", f"## {title}", "", text]

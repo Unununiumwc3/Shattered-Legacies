@@ -26,7 +26,9 @@ public static class FactionChoiceDialogSetup
       Difficulty = FactionLearningDifficulty.Advanced,
       StartingArea = Regions.SunfuryStartingPosition
     };
-    new FactionChoiceDialogPresenter(illidari, sunfury).Run(player.Create(15));
+    // [SL] (0.53): Sunfury is Quel'thalas' fallback, not a pick -- the Illidari slot always plays the Illidari (one choice:
+    // no dialog), and Sunfury's Netherstorm areas stay for the fallback (no OnNotPicked cleanup).
+    new FactionChoiceDialogPresenter(illidari).Run(player.Create(15));
 
     var dalaran = new FactionChoice
     {

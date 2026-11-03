@@ -10,348 +10,40 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1376 | 295 | 495 | 1045 | 385 | 47 | 296 |
-| abilities | 1456 | 42 | 713 | 486 | 237 | 212 | 300 |
-| upgrades | 357 | 0 | 148 | 133 | 71 | 30 | 16 |
-| items | 83 | 13 | 81 | 28 | 2 | 5 | 222 |
+| units | 1664 | 7 | 495 | 1045 | 385 | 56 | 287 |
+| abilities | 1489 | 8 | 713 | 486 | 237 | 227 | 285 |
+| upgrades | 391 | 0 | 148 | 133 | 71 | 30 | 16 |
+| items | 83 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
 
 Objects of the main map that nothing uses (no faction limit, not preplaced, not in the code, not made or referenced by anything used). Free to reuse under their id.
 
-### creeps (186)
+### nightelf (1)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
-| `E00P` | Keeper of the Grove (Creep) | hero | stock |  |  | unused |
-| `n084` | Tempest Reach | building | stock |  |  | unused |
-| `nahy` | Ancient Hydra | unit | stock |  |  | unused |
-| `nwna` | Ancient Wendigo | unit | stock |  |  | unused |
-| `nwiz` | Apprentice Wizard | unit | stock |  |  | unused |
-| `nass` | Assassin | unit | stock |  |  | unused |
-| `nban` | Bandit | unit | stock |  |  | unused |
-| `nbld` | Bandit Lord | unit | stock |  |  | unused |
-| `nanb` | Barbed Arachnathid | unit | stock |  |  | unused |
-| `narg` | Battle Golem | unit | stock |  |  | unused |
-| `nowk` | Berserk Wildkin | unit | stock |  |  | unused |
-| `nspb` | Black Spider | unit | stock |  |  | unused |
-| `nadw` | Blue Dragon Whelp | unit | stock |  |  | unused |
-| `n080` | Boulderfist Magi | unit | stock |  |  | unused |
-| `n07Z` | Boulderfist Mauler | unit | stock |  |  | unused |
-| `nbrg` | Brigand | unit | stock |  |  | unused |
-| `nbzw` | Bronze Dragon Whelp | unit | stock |  |  | unused |
-| `nsbm` | Brood Mother | unit | stock |  |  | unused |
-| `nskf` | Burning Archer (Fel) | unit | stock |  |  | unused |
-| `ncea` | Centaur Archer | unit | stock |  |  | unused |
-| `ncer` | Centaur Drudge | unit | stock |  |  | unused |
-| `ncim` | Centaur Impaler | unit | stock |  |  | unused |
-| `ncnk` | Centaur Khan | unit | stock |  |  | unused |
-| `ncks` | Centaur Sorcerer | unit | stock |  |  | unused |
-| `nenc` | Corrupted Treant | unit | stock |  |  | unused |
-| `nanc` | Crystal Arachnathid | unit | stock |  |  | unused |
-| `n02G` | Crystalline Golem | unit | stock |  |  | unused |
-| `ndtb` | Dark Troll Berserker | unit | stock |  |  | unused |
-| `ndth` | Dark Troll High Priest | unit | stock |  |  | unused |
-| `ndtp` | Dark Troll Shadow Priest | unit | stock |  |  | unused |
-| `ndtt` | Dark Troll Trapper | unit | stock |  |  | unused |
-| `nwzd` | Dark Wizard | unit | stock |  |  | unused |
-| `nrvd` | Death Revenant | unit | stock |  |  | unused |
-| `nhdc` | Deceiver | unit | stock |  |  | unused |
-| `nlrv` | Deeplord Revenant | unit | stock |  |  | unused |
-| `nwwd` | Dire Frost Wolf | unit | stock |  |  | unused |
-| `nwld` | Dire Wolf (Creep) | unit | stock |  |  | unused |
-| `ndrd` | Draenei Darkslayer | unit | stock |  |  | unused |
-| `ndrf` | Draenei Guardian | unit | stock |  |  | unused |
-| `ndrh` | Draenei Harbinger | unit | stock |  |  | unused |
-| `ndrw` | Draenei Watcher | unit | stock |  |  | unused |
-| `ntrd` | Dragon Turtle | unit | stock |  |  | unused |
-| `nbda` | Dragonspawn Apprentice | unit | stock |  |  | unused |
-| `nbdo` | Dragonspawn Overseer | unit | stock |  |  | unused |
-| `nbdw` | Dragonspawn Warrior | unit | stock |  |  | unused |
-| `n03Y` | Drak'Thul | unit | stock |  |  | unused |
-| `nehy` | Elder Hydra | unit | stock |  |  | unused |
-| `njga` | Elder Jungle Stalker | unit | stock |  |  | unused |
-| `nvde` | Elder Voidwalker (Creep) | unit | stock |  |  | unused |
-| `nwnr` | Elder Wendigo | unit | stock |  |  | unused |
-| `nenf` | Enforcer | unit | stock |  |  | unused |
-| `nele` | Enraged Elemental | unit | stock |  |  | unused |
-| `njgb` | Enraged Jungle Stalker | unit | stock |  |  | unused |
-| `nowe` | Enraged Wildkin | unit | stock |  |  | unused |
-| `nhfp` | Fallen Priest | unit | stock |  |  | unused |
-| `npfl` | Fel Beast | unit | stock |  |  | unused |
-| `nfgu` | Felguard | unit | stock |  |  | unused |
-| `nspg` | Forest Spider | unit | stock |  |  | unused |
-| `nftb` | Forest Troll Berserker | unit | stock |  |  | unused |
-| `nfsh` | Forest Troll High Priest | unit | stock |  |  | unused |
-| `nftt` | Forest Troll Trapper | unit | stock |  |  | unused |
-| `nfrl` | Furbolg | unit | stock |  |  | unused |
-| `nfrg` | Furbolg Champion | unit | stock |  |  | unused |
-| `nfrs` | Furbolg Shaman | unit | stock |  |  | unused |
-| `nfrb` | Furbolg Tracker | unit | stock |  |  | unused |
-| `nfra` | Furbolg Ursa Warrior | unit | stock |  |  | unused |
-| `ntrg` | Gargantuan Sea Turtle | unit | stock |  |  | unused |
-| `ngh1` | Ghost | unit | stock |  |  | unused |
-| `nwwg` | Giant Frost Wolf | unit | stock |  |  | unused |
-| `nplg` | Giant Polar Bear | unit | stock |  |  | unused |
-| `ntrt` | Giant Sea Turtle | unit | stock |  |  | unused |
-| `nskg` | Giant Skeleton Warrior | unit | stock |  |  | unused |
-| `ngno` | Gnoll | unit | stock |  |  | unused |
-| `ngns` | Gnoll Assassin | unit | stock |  |  | unused |
-| `ngnb` | Gnoll Brute | unit | stock |  |  | unused |
-| `ngnv` | Gnoll Overseer | unit | stock |  |  | unused |
-| `ngna` | Gnoll Poacher | unit | stock |  |  | unused |
-| `ngnw` | Gnoll Warden | unit | stock |  |  | unused |
-| `nbot` | Goblin Privateer (Neutral Goblin) | unit | main | nshp |  | unused |
-| `nhrq` | Harpy Queen | unit | stock |  |  | unused |
-| `nhrr` | Harpy Rogue | unit | stock |  |  | unused |
-| `nhar` | Harpy Scout | unit | stock |  |  | unused |
-| `nhrh` | Harpy Storm-hag | unit | stock |  |  | unused |
-| `nhrw` | Harpy Windwitch | unit | stock |  |  | unused |
-| `nhhr` | Heretic | unit | stock |  |  | unused |
-| `nhyd` | Hydra | unit | stock |  |  | unused |
-| `nhyh` | Hydra Hatchling | unit | stock |  |  | unused |
-| `nrvi` | Ice Revenant | unit | stock |  |  | unused |
-| `nitr` | Ice Troll | unit | stock |  |  | unused |
-| `nits` | Ice Troll Berserker | unit | stock |  |  | unused |
-| `nith` | Ice Troll High Priest | unit | stock |  |  | unused |
-| `nitp` | Ice Troll Priest | unit | stock |  |  | unused |
-| `nitt` | Ice Troll Trapper | unit | stock |  |  | unused |
-| `nitw` | Ice Troll Warlord | unit | stock |  |  | unused |
-| `njg1` | Jungle Stalker | unit | stock |  |  | unused |
-| `nkob` | Kobold | unit | stock |  |  | unused |
-| `nkog` | Kobold Geomancer | unit | stock |  |  | unused |
-| `nkol` | Kobold Taskmaster | unit | stock |  |  | unused |
-| `nkot` | Kobold Tunneler | unit | stock |  |  | unused |
-| `nltl` | Lightning Lizard | unit | stock |  |  | unused |
-| `nrvl` | Lightning Revenant | unit | stock |  |  | unused |
-| `n08I` | Lord Falconrest | unit | stock |  |  | unused |
-| `nmgd` | Magnataur Destroyer | unit | stock |  |  | unused |
-| `nmgr` | Magnataur Reaver | unit | stock |  |  | unused |
-| `nlds` | Makrura Deepseer | unit | stock |  |  | unused |
-| `nlpd` | Makrura Pooldweller | unit | stock |  |  | unused |
-| `nlpr` | Makrura Prawn | unit | stock |  |  | unused |
-| `nlkl` | Makrura Tidal Lord | unit | stock |  |  | unused |
-| `nltc` | Makrura Tidecaller | unit | stock |  |  | unused |
-| `nmam` | Mammoth | unit | stock |  |  | unused |
-| `ngrk` | Mud Golem | unit | stock |  |  | unused |
-| `nmbg` | Mur'gul Blood-Gill | unit | stock |  |  | unused |
-| `nmcf` | Mur'gul Cliffrunner | unit | stock |  |  | unused |
-| `nmrv` | Mur'gul Marauder | unit | stock |  |  | unused |
-| `nmsn` | Mur'gul Snarecaster | unit | stock |  |  | unused |
-| `nmfs` | Murloc Flesheater | unit | stock |  |  | unused |
-| `nmmu` | Murloc Mutant | unit | stock |  |  | unused |
-| `nmrm` | Murloc Nightcrawler | unit | stock |  |  | unused |
-| `nmpg` | Murloc Plaguebearer | unit | stock |  |  | unused |
-| `n0D1` | Murloc Sorcerer (Creep-Loch Modan) | unit | stock |  |  | unused |
-| `nmrl` | Murloc Tiderunner | unit | stock |  |  | unused |
-| `nnwq` | Nerubian Queen | unit | stock |  |  | unused |
-| `nnwr` | Nerubian Seer | unit | stock |  |  | unused |
-| `nnws` | Nerubian Spider Lord | unit | stock |  |  | unused |
-| `nnwa` | Nerubian Warrior | unit | stock |  |  | unused |
-| `nnwl` | Nerubian Webspinner | unit | stock |  |  | unused |
-| `n08P` | Ny'alothan Tentacle | unit | main |  |  | unused |
-| `nogl` | Ogre Lord | unit | stock |  |  | unused |
-| `nogm` | Ogre Mauler | unit | stock |  |  | unused |
-| `nfov` | Overlord | unit | stock |  |  | unused |
-| `nano` | Overlord Arachnathid | unit | stock |  |  | unused |
-| `nepl` | Plague Treant | unit | stock |  |  | unused |
-| `nenp` | Poison Treant | unit | stock |  |  | unused |
-| `nplb` | Polar Bear | unit | stock |  |  | unused |
-| `nfpl` | Polar Furbolg | unit | stock |  |  | unused |
-| `nfpe` | Polar Furbolg Elder Shaman | unit | stock |  |  | unused |
-| `nfps` | Polar Furbolg Shaman | unit | stock |  |  | unused |
-| `nfpu` | Polar Furbolg Ursa Warrior | unit | stock |  |  | unused |
-| `n074` | Queen Nezar'Azret | unit | stock |  |  | unused |
-| `nrzt` | Quillboar | unit | stock |  |  | unused |
-| `nrzb` | Razormane Brute | unit | stock |  |  | unused |
-| `nrzm` | Razormane Medicine Man | unit | stock |  |  | unused |
-| `nrzs` | Razormane Scout | unit | stock |  |  | unused |
-| `nrdr` | Red Drake | unit | stock |  |  | unused |
-| `nwzg` | Renegade Wizard | unit | stock |  |  | unused |
-| `ndrv` | Revenant of the Depths | unit | stock |  |  | unused |
-| `nsrv` | Revenant of the Seas | unit | stock |  |  | unused |
-| `nrog` | Rogue | unit | stock |  |  | unused |
-| `nwzr` | Rogue Wizard | unit | stock |  |  | unused |
-| `nslr` | Salamander | unit | stock |  |  | unused |
-| `nslh` | Salamander Hatchling | unit | stock |  |  | unused |
-| `nslv` | Salamander Vizier | unit | stock |  |  | unused |
-| `nsll` | Salazarian Lizard | unit | stock |  |  | unused |
-| `nadr` | Saragosa | unit | stock |  |  | unused |
-| `nsgn` | Sea Giant | unit | stock |  |  | unused |
-| `nsgb` | Sea Giant Behemoth | unit | stock |  |  | unused |
-| `nsgh` | Sea Giant Hunter | unit | stock |  |  | unused |
-| `nsko` | Skeletal Orc | unit | stock |  |  | unused |
-| `nsog` | Skeletal Orc Grunt | unit | stock |  |  | unused |
-| `nslf` | Sludge Flinger | unit | stock |  |  | unused |
-| `nslm` | Sludge Minion | unit | stock |  |  | unused |
-| `n02H` | Small Crystalline Golem | unit | stock |  |  | unused |
-| `nsc3` | Spider Crab Behemoth | unit | stock |  |  | unused |
-| `nsc2` | Spider Crab Limbripper | unit | stock |  |  | unused |
-| `nscb` | Spider Crab Shorecrawler | unit | stock |  |  | unused |
-| `nspd` | Spiderling | unit | stock |  |  | unused |
-| `e003` | Storm Giant (Creep) | unit | stock |  |  | unused |
-| `nstw` | Storm Wyrm (Creep) | unit | stock |  |  | unused |
-| `nsrn` | Stormreaver Necrolyte | unit | stock |  |  | unused |
-| `nthl` | Thunder Lizard 2 | unit | stock |  |  | unused |
-| `nwlt` | Timber Wolf | unit | stock |  |  | unused |
-| `nsgg` | Titan Construct | unit | stock |  |  | unused |
-| `ntkc` | Tuskarr Chieftain | unit | stock |  |  | unused |
-| `ntkf` | Tuskarr Fighter | unit | stock |  |  | unused |
-| `ntkh` | Tuskarr Healer | unit | stock |  |  | unused |
-| `ntks` | Tuskarr Sorcerer | unit | stock |  |  | unused |
-| `ntka` | Tuskarr Spearman | unit | stock |  |  | unused |
-| `ntkt` | Tuskarr Trapper | unit | stock |  |  | unused |
-| `ntkw` | Tuskarr Warrior | unit | stock |  |  | unused |
-| `n072` | Vile Priestess Hexx | unit | stock |  |  | unused |
-| `ndqt` | Vile Temptress | unit | stock |  |  | unused |
-| `nwrg` | War Golem | unit | stock |  |  | unused |
-| `nanw` | Warrior Arachnathid | unit | stock |  |  | unused |
-| `nwen` | Wendigo | unit | stock |  |  | unused |
-| `nowb` | Wildkin | unit | stock |  |  | unused |
-| `ngh2` | Wraith | unit | stock |  |  | unused |
-
-### critters (2)
-
-| Id | Name | Kind | Model | Made at | Trains / builds | Status |
-|---|---|---|---|---|---|---|
-| `mD06` | Diadon2 - 8v8 season 2 champion (Patrons) | unit | stock |  |  | unused |
-| `n0DY` | Dragozer - 8v8 season 1 champion (Patrons) | unit | stock |  |  | unused |
-
-### human (41)
-
-| Id | Name | Kind | Model | Made at | Trains / builds | Status |
-|---|---|---|---|---|---|---|
-| `ncb0` | City Building 0 | building | stock |  |  | unused |
-| `ncb1` | City Building 1 | building | stock |  |  | unused |
-| `ncb2` | City Building 2 | building | stock |  |  | unused |
-| `ncb3` | City Building 3 | building | stock |  |  | unused |
-| `ncb4` | City Building 4 | building | stock |  |  | unused |
-| `ncb5` | City Building 5 | building | stock |  |  | unused |
-| `ncb6` | City Building 6 | building | stock |  |  | unused |
-| `ncb7` | City Building 7 | building | stock |  |  | unused |
-| `ncb8` | City Building 8 | building | stock |  |  | unused |
-| `ncb9` | City Building 9 | building | stock |  |  | unused |
-| `ncba` | City Building 10 | building | stock |  |  | unused |
-| `ncbb` | City Building 11 | building | stock |  |  | unused |
-| `ncbc` | City Building 12 | building | stock |  |  | unused |
-| `ncbd` | City Building 13 | building | stock |  |  | unused |
-| `ncbe` | City Building 14 | building | stock |  |  | unused |
-| `ncbf` | City Building 15 | building | stock |  |  | unused |
-| `h03P` | Gnome Dwelling (Ironforge Other) | building | stock |  |  | unused |
-| `h013` | Gnomeregan (Ironforge Other) | building | stock |  | h019,h037,hpea | unused |
-| `h00N` | Goldshire (Stormwind) | building | main |  | h019,h05F,hpea | unused |
-| `nef0` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef1` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef2` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef4` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef5` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef6` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `nef7` | High Elven Farm (Quelthalas) | building | stock |  |  | unused |
-| `h05Z` | Honor Hold (Stormwind Other) | building | main |  | h00A,h019,h01B,h02O,h04C,h054,hpea | unused |
-| `h09K` | Howling Oak (Gilneas Other) | building | stock |  | e00N,ewsp | unused |
-| `h040` | Imperial Quarters (Stormwind controlled) | building | stock |  | h00J,hpea,n05L,n093 | unused |
-| `h05G` | Lakeshire (Stormwind Other) | building | main |  | h019,h05F,hpea | unused |
-| `o05I` | Missile Battery (Creep Tower) | building | main |  |  | unused |
-| `o05F` | Naval Battery (KulTiras Tower) | building | main |  |  | unused |
-| `h05E` | Nethergarde Barracks (Stormwind Other) | building | main |  | h00A,h01B,h02O,h04C,h054,h05N | unused |
-| `h02R` | Northshire Abbey (Stormwind Other) | building | main |  | h00J,n05L,n093 | unused |
-| `h03X` | Sentinel Tower (Stormwind Tower) | building | main |  |  | unused |
-| `h01O` | Shadowforge City (Ironforge Other) | building | main |  | h019,h01L,h037 | unused |
-| `h025` | Stormwind Cannon (Stormwind Tower) | building | main |  |  | unused |
-| `zb01` | Sunwell Tower (Quelthalas Tower) | building | stock |  |  | unused |
-| `h02A` | Mountaineer (Creep) | unit | main |  |  | unused |
-| `ngst` | Rock Golem (Dalaran-Stone Token) | unit | stock |  |  | unused |
-| `n0CC` | Shadowforge Titan (Ragnaros) | unit | main |  |  | unused |
-
-### nightelf (9)
-
-| Id | Name | Kind | Model | Made at | Trains / builds | Status |
-|---|---|---|---|---|---|---|
-| `nbwd` | Barrow Den | building | stock |  | e00N,ewsp | unused |
-| `ncaw` | Corrupted Ancient of War | building | stock |  |  | unused |
-| `nctl` | Corrupted Tree of Life | building | stock |  | o000 | unused |
-| `nsgt` | Blackwald Spider (Creep) | unit | stock |  |  | unused |
-| `nsts` | Satyr Shadowdancer | unit | stock |  |  | unused |
-| `ntrh` | Sea Turtle Hatchling (Druids) | unit | stock |  |  | unused |
-| `nspr` | Spider | unit | stock |  |  | unused |
 | `even` | Spirit of Vengeance | unit | stock |  |  | unused |
-| `nssp` | Spitting Spider | unit | stock |  |  | unused |
 
-### orc (22)
-
-| Id | Name | Kind | Model | Made at | Trains / builds | Status |
-|---|---|---|---|---|---|---|
-| `Nalc` | Baron of Gadgetzan (Creep) | hero | stock |  |  | unused |
-| `Otch` | Tauren Chieftain | hero | stock |  |  | unused |
-| `o069` | Dark Conclave (Creep Magic) | building | main |  |  | unused |
-| `ndfl` | Defiled Fountain of Life (Fel Horde) | building | stock |  |  | unused |
-| `o067` | Dungeon (Creep Barracks) | building | main |  |  | unused |
-| `o06U` | Highmountain (Frostwolf Other) | building | main |  | n03R,noga,o00A,o00E,opeo | unused |
-| `o048` | Improved Watch Tower (Creep Tower 2) | building | main |  |  | unused |
-| `o04M` | Kezan Trading Center (Creep Special) | building | main |  | ncen,nfsp,nftr,nmrr,nogr,nomg | unused |
-| `o06C` | Nest (Creep Farm) | building | main |  |  | unused |
-| `o06S` | Ratchet (Creep Other) | building | main |  | o02I,o04Q | unused |
-| `o06D` | Shipyard (Creep Shipyard) | building | main |  |  | unused |
-| `ners` | Eredar Sorcerer (Fel-Portal) | unit | stock |  |  | unused |
-| `npfm` | Fel Ravager (Fel Horde-Portal) | unit | stock |  |  | unused |
-| `odes` | Frigate (Warsong-Frostwolf-Fel Horde) | unit | stock |  |  | unused |
-| `o04G` | Haruspex (Creep) | unit | main |  |  | unused |
-| `o04F` | Hex Doctor (Creep) | unit | main |  |  | unused |
-| `h05D` | Raptor Rider (Creep) | unit | main |  |  | unused |
-| `o04D` | Scout (Creep) | unit | stock |  |  | unused |
-| `nogo` | Stonemaul Bruiser (Warsong) | unit | stock |  |  | unused |
-| `nftk` | Warlord (Warsong) | unit | stock |  |  | unused |
-| `h021` | Watcher (Creep) | unit | main |  |  | unused |
-| `nfgb` | Wrathguard (Fel Horde-Portal) | unit | stock |  |  | unused |
-
-### other (22)
+### other (2)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
-| `ncnt` | Centaur Tent | building | stock |  |  | unused |
-| `nct1` | Centaur Tent (2) | building | stock |  |  | unused |
-| `nct2` | Centaur Tent (3) | building | stock |  |  | unused |
-| `ngt2` | Creep Hut 2 | building | stock |  |  | unused |
-| `nfh0` | Forest Troll Hut | building | stock |  |  | unused |
-| `nfh1` | Forest Troll Hut 2 | building | stock |  |  | unused |
-| `nfr1` | Furbolg Hut 2 | building | stock |  |  | unused |
-| `nfr2` | Furbolg Hut | building | stock |  |  | unused |
-| `ngad` | Goblin Laboratory | building | stock |  |  | unused |
-| `nshp` | Goblin Shipyard | building | stock |  |  | unused |
-| `nhns` | Harpy Nest | building | stock |  |  | unused |
-| `nmh0` | Hut 0 | building | stock |  |  | unused |
-| `nmh1` | Hut 1 | building | stock |  |  | unused |
-| `ntnt` | Tauren Tent | building | stock |  |  | unused |
-| `nten` | Tent | building | stock |  |  | unused |
-| `ntn2` | Tent 2 | building | stock |  |  | unused |
-| `n03S` | Water Passageway | building | stock |  |  | unused |
-| `n03Q` | Water Passageway 2 | building | stock |  |  | unused |
-| `n0AI` | Clockwerk Goblin (creep) | unit | stock |  |  | unused |
 | `ncg1` | Clockwerk Goblin (level 2) | unit | stock |  |  | unused |
 | `ncgb` | Clockwerk Goblin (level 1) | unit | stock |  |  | unused |
-| `n08R` | Grim Batol Tunnels | unit | stock |  |  | unused |
 
-### undead (13)
+### undead (4)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
-| `o02H` | Blackrock Encampment (Legion - Alterac) | building | stock |  | u007,u00D | unused |
-| `swSS` | Sulfuron Spire (Scourge T3) | building | main |  |  | unused |
 | `ucs1` | Carrion Beetle (Red - Anub'Arak)(Level 1) | unit | stock |  |  | unused |
 | `ucs2` | Carrion Beetle (Red - Anub'Arak)(Level 2) | unit | stock |  |  | unused |
 | `ucs3` | Dire Carrion Beetle (Red - Anub'Arak)(Level 3) | unit | stock |  |  | unused |
 | `uplg` | Disease Cloud | unit | stock |  |  | unused |
-| `o01F` | Marauder (Legion) | unit | stock |  |  | unused |
-| `nstl` | Satyr Soulstealer (Creep) | unit | stock |  |  | unused |
-| `nsat` | Satyr Trickster (Creep) | unit | stock |  |  | unused |
-| `nsty` | Satyr Warrior (Creep) | unit | stock |  |  | unused |
-| `uskm` | Skeletal Mage (Scourge - Black Citadel) | unit | stock |  |  | unused |
-| `uske` | Skeleton Warrior (Scourge - Necromancer) | unit | stock |  |  | unused |
-| `nvdw` | Voidweaver (Legion) | unit | stock |  |  | unused |
 
 ## 24p map: not in the main map
 
-Status `24p only` = the id is free in the main map; `different` = the id is taken by ANOTHER object in the main map. Copies get a new `?Z??` id. (`changed` = the same object with other data: only in units.tsv.)
+Status `24p only` = the id is free in the main map; `different` = the id is taken by ANOTHER object in the main map. Copies get a new `?Za?` id. (`changed` = the same object with other data: only in units.tsv.)
 
 ### commoner (7)
 

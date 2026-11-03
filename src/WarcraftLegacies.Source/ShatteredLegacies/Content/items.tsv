@@ -389,7 +389,7 @@ soul	stock	unused	Soul	soul	Miscellaneous	ReplaceableTextures\CommandButtons\BTN
 sprn	stock	unused	Spider Ring	sprn	Miscellaneous	ReplaceableTextures\CommandButtons\BTNRingVioletSpider.blp	AIa1	-
 srbd	stock	unused	Searing Blade	srbd	Miscellaneous	ReplaceableTextures\CommandButtons\BTNArcaniteMelee.blp	AIcs,AIfw	-
 srtl	stock	unused	Serathil	srtl	Miscellaneous	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpThree.blp	AIsx,AItf	-
-ssan	stock	used	Staff of Sanctuary	ssan	Purchasable	ReplaceableTextures\CommandButtons\BTNStaffOfSanctuary.blp	ANsa	-
+ssan	stock	unused	Staff of Sanctuary	ssan	Purchasable	ReplaceableTextures\CommandButtons\BTNStaffOfSanctuary.blp	ANsa	-
 ssil	stock	unused	Staff of Silence	ssil	Permanent	ReplaceableTextures\CommandButtons\BTNStaffOfSilence.blp	AIse	-
 stel	stock	unused	Staff of Teleportation	stel	Permanent	ReplaceableTextures\CommandButtons\BTNStaffOfTeleportation.blp	AImt	-
 stpg	stock	unused	Clockwork Penguin	stpg	Miscellaneous	ReplaceableTextures\CommandButtons\BTNPenguin.blp	AIpz	-

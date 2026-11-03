@@ -51,7 +51,7 @@ Stockpile) uses a model that only the 24p map has (`TODO.md`).
 
 ## Copying an object (planned, `TODO.md`)
 
-A copy always gets a new `?Z??` id (ID rule, `../README.md`) -- also when its 24p id is free in the main map, because
+A copy always gets a new `?Za?` id (ID rule, `../README.md`) -- also when its 24p id is free in the main map, because
 the World Editor may hand out that id to a later WL object -- together with what it needs (abilities, upgrades, trained units, the model file) and a row in the generated `SL_OBJECTS.md`
 (new id | name | source | used by). Until the import tool exists, the assistant copies the JSON by hand and lists it
 in `../README.md` "Changes to map data".
