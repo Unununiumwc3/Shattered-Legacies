@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.53.0
+No bot change (the map's version moved for the fork's turning-point core). `AiApi.ExcludeFromBotPicks` is no longer
+used by this fork (Sunfury left the Illidari pick) but stays for other forks.
+
 ## After 0.52.0 (docs only)
 - `AI_AGENTS_CONTEXT.md`: state of the work updated for 0.52.0 (no bot logic changed since 0.51.1).
 

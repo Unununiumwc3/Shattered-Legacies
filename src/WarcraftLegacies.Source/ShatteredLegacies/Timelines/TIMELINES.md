@@ -59,7 +59,8 @@ One folder per WL faction that gets timeline content, and one per new faction --
 
 ```
 Timelines/Factions/<Faction>/
-  <Faction>Timeline.cs        its turning points (definitions, registration through FactionManager.FactionRegistered)
+  <Faction>Fallback.cs        a turning point's effects (TurningPointDef.Run; the definition is in TimelineCatalog,
+                              the quest is attached by TimelineSystem through FactionManager.FactionRegistered)
   Quests/Quest<Name>.cs       the turning points and follow-up quests (QuestData, like WL)
   Mechanics/<Name>.cs         special mechanics (like Kezan's oil income and creep market)
   <New>Faction.cs             only for a full successor: Faction subclass (like ScarletCrusadeFaction)
@@ -73,7 +74,7 @@ Steps, in this order:
    (`tools/shattered-legacies/timelines/timeline_overview_gen.py`).
 2. **Content** -- choose what to recycle from the content index (main map, 24p map, stock WC3 assets) and note it in
    the slot's row of section 6. Never re-scan the map data for this.
-3. **Map data** -- copies get `?Z??` ids (`../README.md`, ID rule); list every new / changed object in
+3. **Map data** -- copies get `?Za?` ids (`Z` second, lowercase third) (`../README.md`, ID rule); list every new / changed object in
    `../README.md` "Changes to map data". Hidden bases: preplaced Neutral Passive inside a start rectangle (section 5).
 4. **Object limits** -- an `ObjectInfo` file for a new faction; a light turning point uses `ModObjectLimit`.
 5. **Code** -- the turning-point quest (trigger, Hourglass research, effects), the `Faction` subclass for a full one,
@@ -83,35 +84,40 @@ Steps, in this order:
    through `AiApi` in `../Bot/SlBotSetup.cs`. A missing `AiApi` method is added in the same drop.
 7. **Docs** -- section 6 status, `../README.md` lists, `../CHANGELOG.md`, `../TODO.md`.
 
-## 4. The engine today (0.52) and what changes
+## 4. The engine today (0.53)
 
-| Part | Today | Planned (`../TODO.md`) |
+| Part | Today | Next (`../TODO.md`) |
 |---|---|---|
-| `Core/TurningPointDef` + `TimelineCatalog` | one definition per WL faction: HQ unit types, start spot, placeholder hero, announcement, `Run` delegate | definitions per faction folder, registered through `FactionRegistered`; quest-based turning points |
-| `Core/TimelineSystem` | every 5 s: ALL HQ units lost (after having held one) -> available; bots run it at once, humans at the Hourglass; a recaptured HQ makes it unavailable again | quest objectives instead of the HQ scan; the effect library |
-| `Core/Hourglass` | one building per slot (`n0FB`, in the sealed top-right corner, columns by team), ability `AFB1` | the Hourglass of Fate: one research per turning point (below), new id `?Z??` |
-| Defeat | WL's: `Faction.Defeat()` makes the player an observer -- a fallback after that is impossible | fork rules below, one `[SL]` hook |
+| `TimelineCatalog` + `Core/TurningPointDef` | one definition per WL faction: HQ unit types, trigger text, Hourglass ids, start spot, placeholder hero, announcement, `Run` (the faction's own effects) | definitions per faction folder |
+| `Core/TurningPointQuest` | a turning point run by the timelines = a WL quest of its faction, attached through `FactionManager.FactionRegistered` (no WL faction file changes). Objectives: `ObjectiveHqLost` (unlocks the decision through its condition tech) + WL's `ObjectiveResearch` (the decision at the Hourglass). Completing it runs the effects | other triggers (legend dies, turn N ...) as objectives |
+| `Core/TimelineSystem` | every 5 s: the HQ objectives (all HQ units lost after having held one; held again -> unavailable again). Bots decide at once (the decision objective is set complete), humans research at the Hourglass. `ForceFallback` for the defeat rule | alternatives (stay / betray) |
+| `Core/Hourglass` | the Hourglass of Fate (`nZh0`, sealed top-right corner, columns by team), one per slot whose faction has a research on it; per-player limits hide the other factions' researches | -- |
+| `Core/Effects/` | `SwapFaction` (+ keep colour), `LeaveBehind` (WL's removal: removable units removed, CPs / capitals Neutral Hostile), `StartArea` (take a start area like a pick), `ChangeTeam` (living-target rule) | modify faction (light), inheritance to a lore heir |
+| Defeat (`../Rules/EliminationRule`) | the only way to lose: no CP for more than 5 turns (WL's `PlayerElimination` with one `[SL]` hook; humans, from turn 20, as in WL); an unused fallback starts instead of the defeat | -- |
 
-**The Hourglass of Fate (planned).** One research per turning point. Its requirement is a dummy "condition" tech with
-a readable name ("Requires: Sylvanas slain by the Scourge"), granted by code when the trigger fires -- until then WC3
-shows the button greyed out with that text, so players see what is possible. Alternatives (stay / betray) are an
-incompatible set. Researches of other factions are hidden by their object limits (0); one Hourglass type serves every
-slot. WL researches that already exist stay where they are and are listed on the Hourglass too (the Scarlet
-Crusade's `R0XZ` stays at Tyr's Hand -- `ObjectiveResearch` accepts it from any building). Bots research by code.
-To check in game: buttons of hidden researches sharing a command-card position; fallback: one Hourglass copy per slot.
-
-**Defeat (fork rules, planned).** Leavers are taken over by bots (exists, `[BOT]` in `PlayerLeaves`). The only way to
-lose: no CP at all for more than 5 turns (WL's auto-surrender adjusted; 1 CP is enough to live). No defeat
-when the essential legends are gone. One `[SL]` hook at the top of `Faction.Defeat()` asks the timelines first: a
-faction with an unused fallback is not defeated -- a bot runs it at once, a human gets it on the Hourglass.
+**The Hourglass of Fate.** One DECISION research per turning point; it requires a CONDITION tech with a readable
+name ("Requires: Silvermoon Palace lost"), which `ObjectiveHqLost` grants while the trigger holds --
+until then WC3 shows the button greyed out, so players see what is possible. Turning points that are not built yet
+show "Requires: Not available yet". WL's own researches stay where they are and are listed too (the Scarlet
+Crusade's `R0XZ`: Tyr's Hand and the Hourglass -- `ObjectiveResearch` accepts it from any building). Researches of
+other factions are hidden by their object limits (0). Data and ids: `tools/shattered-legacies/timelines/gen_hourglass.py`
+(writes the map data and `Core/HourglassData.g.cs`). Alternatives (stay / betray) will be incompatible sets
+(`ResearchManager.RegisterIncompatibleSet`).
 
 **Placement of the Hourglass** (`Regions.ArtifactDummyInstance`, 19584..22688 x 23232..24800): no preplaced units, no
 path out, inside the camera area up to y 24576. Three columns around x 22208 from y 23500 north, 150 apart, 7 per
 column; the middle column fills first (0.39.7).
 
+**Adding a turning point** (on top of section 3): a row in `gen_hourglass.py` (decision + condition, re-run), the
+definition in `TimelineCatalog` (`Decision` / `Condition` from `HourglassData`, `Hq`, `Trigger`, `Run`), the effects
+in `Timelines/Factions/<X>/`.
+
 ## 5. Data for the engine
 
-**Hidden bases.** Preplaced in the map data (Neutral Passive) inside a start rectangle and prepared with WL's rescue
+**Hidden bases.** 0.53: a turning point's `Prepare` runs at map setup -- Sunfury's start area is hidden with WL's
+`PrepareUnitsForRescue(HideAll)` and taken over by `StartArea.Take`; areas a successor's own quests take over later
+(Tempest Keep, Area 52, Upper Netherstorm) are made invulnerable and paused (`Invulnerable`), because hidden units
+cannot be found again by those quests. Preplaced in the map data (Neutral Passive) inside a start rectangle and prepared with WL's rescue
 mechanism, like Theramore: structures visible and invulnerable (nobody can build on the spot), units hidden; the
 turning point hands everything over (`RescueGroup`). Reused neutral buildings inside the rectangle get the same
 treatment. Check per rectangle that no other WL rescue / cleanup covers the area (WL removes Neutral Passive units in
@@ -123,7 +129,7 @@ some areas at runtime -- `CleanupNeutralPassiveUnits`).
 |---|---|---|---|
 | Lordaeron | Capital Palace `h000`, Stratholme Castle `h01G`, Tyr's Hand Citadel `h030` | (WL: Scarlet Crusade) | Arthas games: WL's research restart (D14); HQ fall breaks the Great Alliance; Garithos games: no fallback |
 | Dalaran / Gilneas | Violet Citadel `h002` / Gilneas Castle `h04I` | (WL: Theramore) / placeholder | both picks: Theramore / Jaina's Sanctum, Jaina's choice D6 |
-| Quel'thalas | Silvermoon Palace `h003`, the Sunwell `n001` | both | Sunwell destroyed = HQ |
+| Quel'thalas | Silvermoon Palace `h003`, the Sunwell `n001` | Silvermoon Palace only (0.53, maintainer) | -- |
 | Stormwind | Stormwind Keep `h00X` | same | -- |
 | Ironforge | the Great Forge `h001` | same | -- |
 | Kul Tiras | Boralus Keep `h046` | same | -- |
@@ -165,13 +171,13 @@ player. The bot's data is keyed by faction name: a renamed faction needs its own
 
 ## 6. Status per slot
 
-Today = what the code does in 0.52. Placeholders (Marin Noggenfogger at the planned spot + announcement) are replaced
+Today = what the code does in 0.53. Placeholders (Marin Noggenfogger at the planned spot + announcement) are replaced
 faction by faction.
 
 | Slot | Turning points (concepts) | Today | Content plan |
 |---|---|---|---|
-| P10 Lordaeron | pick Arthas / Garithos (D1), Scarlet Crusade (WL, D14), Treason (D10), Helm (D11) | WL's Scarlet Crusade only | -- |
-| P3 Quel'thalas | fallback Sunfury (WL faction), betrayal Forsaken (D3), rogue nation (D16) | placeholder | Sunfury = WL's faction; Forsaken: 24p buildings |
+| P10 Lordaeron | pick Arthas / Garithos (D1), Scarlet Crusade (WL, D14), Treason (D10), Helm (D11) | WL's Scarlet Crusade (also on the Hourglass, 0.53) | -- |
+| P3 Quel'thalas | fallback Sunfury (WL faction), betrayal Forsaken (D3), rogue nation (D16) | **fallback Sunfury implemented** (0.53, full turning point) | Forsaken: 24p buildings |
 | P8 Dalaran / Gilneas | fallback Theramore for both, Jaina's choice (D6), The Gates Close (D7) | Dalaran: WL's Theramore; Gilneas: placeholder (Darkshore -- superseded) | WL's Theramore |
 | P2 Stormwind | fallback Valiance Expedition, D9, Bolvar -> Lich King | placeholder | -- |
 | P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
@@ -181,7 +187,7 @@ faction by faction.
 | P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | placeholders ("Dragonmaw" -- superseded) | Dragonmaw assets + 24p tech / unit / building trees |
 | P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
 | P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
-| P16 Illidari | fallback draenei remnant (light; Akama's Ashtongue) | Hourglass only; WL's Sunfury pick still active | non-draenei objects removed, a few added |
+| P16 Illidari | fallback draenei remnant (light; Akama's Ashtongue) | Hourglass only; no Sunfury pick any more (0.53) | non-draenei objects removed, a few added |
 | P7 Fel Horde | fallback Mag'har | Hourglass only | -- |
 | P9 Skywall / P13 Black Empire | fallbacks **open** (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers) | Hourglass only | -- |
 | P17 Ahn'qiraj | fallback Brood of Nozdormu | Hourglass only | dragon models (24p) |
@@ -195,3 +201,5 @@ faction by faction.
 - 0.39.10: moved to `ShatteredLegacies/`, uses the bot only through `AiApi`.
 - 0.52: renamed to timelines (`Timelines/`, turning points, the Hourglass), split into `Core/`, the catalog and
   `Factions/<X>/`; same behaviour.
+- 0.53: turning points as WL quests, the Hourglass of Fate with researches (`nZh0`, `RZd*` / `RZc*`, replaces `n0FB`
+  / `AFB1`), the effect library, the fork's defeat rule, Quel'thalas -> Sunfury (no Sunfury pick any more).

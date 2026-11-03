@@ -4,7 +4,7 @@ E005	main	used	hero	The Prophet	-	Ewrd	naga	war3mapImported\HeroNerubianElder.md
 E00A	main	used	hero	Ancient Guardian	(Druids)	Emfr	nightelf	war3mapImported\BlackBear.mdl	main	ReplaceableTextures\CommandButtons\BTNFurbolgTracker.blp	Druids	eate	-	-	-	-	A06E,A07N,A0GK,A109,AInv,AOae,Aamk,Ault,ZB15	R002
 E00F	main	used	hero	Voidlord	(Sunfury) (morphed)	Eevm	human	war3mapImported\VoidWalkerSol.mdl	main	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_SummonVoidWalker.blp	-	-	-	-	-	-	A032,A0X6,A12N,A12Q,AInv,Aamk	-
 E00H	main	used	hero	Demigod of the Night Elves	(Druids-GHOST)	Ecen	nightelf	units\nightelf\HeroKeeperoftheGroveGhost\HeroKeeperoftheGroveGhost.mdl	stock	ReplaceableTextures\CommandButtons\BTNKeeperGhostBlue.blp	Druids	-	-	-	-	-	A03B,A0FX,A0U0,AEtq,AInv,Aamk,Ault	-
-E00P	main	unused	hero	Keeper of the Grove	(Creep)	Ekgg	creeps	units\nightelf\HeroKeeperoftheGroveGhost\HeroKeeperoftheGroveGhost	stock	ReplaceableTextures\CommandButtons\BTNKeeperGhostBlue.blp	-	-	-	-	-	-	AEah,AEer,AEtq,AInv,Amim,Ault	-
+E00P	main	used	hero	Keeper of the Grove	(Creep)	Ekgg	creeps	units\nightelf\HeroKeeperoftheGroveGhost\HeroKeeperoftheGroveGhost	stock	ReplaceableTextures\CommandButtons\BTNKeeperGhostBlue.blp	-	-	-	-	-	-	AEah,AEer,AEtq,AInv,Amim,Ault	-
 E016	main	used	hero	Ruler of House Waycrest	(KulTiras)	Ewar	human	war3mapImported\HumanAssassine.mdl	main	ReplaceableTextures\CommandButtons\BTNTess.blp	-	-	-	-	-	-	A01Q,A07N,A0KV,A10Y,AInv,AOcr,Aamk	R06T
 E01D	main	used	hero	Harbinger of Ny'alotha	(Nzoth)	Ewrd	naga	war3mapImported\Mindflayer.mdl	main	ReplaceableTextures\CommandButtons\BTNBOSSMythrax.blp	Black Empire	n0AV	-	-	-	-	A032,A0GK,A11O,AInv,AXK2,Aamk,MD23,MD29	RBMG
 E01E	main	used	hero	Ancient Guardian	(Gilneas)	Emfr	nightelf	war3mapImported\Unit_LogoshWolf.mdl	main	ReplaceableTextures\CommandButtons\BTNWolf.blp	Gilneas	h02X	-	-	-	-	A0GK,A0MM,A0ST,A0SV,A10Y,AInv,AOre,Aamk	R07U
@@ -60,7 +60,7 @@ N00D	main	used	hero	Primary Firelord	(Creep)	Nfir	demon	war3mapImported\Ragnaros
 N023	main	used	hero	Lord of the Scourge	(Scourge)	Nalc	undead	war3mapImported\Hero_LichKing_AWVariant.mdl	main	ReplaceableTextures\CommandButtons\BTNLichKing.blp	-	-	-	-	-	-	A00Z,A0SC,A10C,A10N,ACm2,AInv,Aamk,ZB02,ZB06	-
 N03D	main	used	hero	Warchief of the Fel Horde	(Fel)	Nbbc	orc	war3mapImported\FelOrcWarlord.mdl	main	ReplaceableTextures\CommandButtons\BTNFelOrc_Warlord.blp	Fel Horde	o02V	-	-	-	-	A07R,A0DB,A0TW,A0W1,A0W3,AInv,Aamk	-
 Naka	main	used	hero	Elder Sage	(Illidari)	Naka	naga	units\other\DranaiAkama\DranaiAkama	stock	ReplaceableTextures\CommandButtons\BTNDranaiAkama.blp	Illidan	nnad	-	-	-	-	A01Q,A0LW,A0TP,A0TV,A0YV,AInv,Aamk,ST9J	R05H
-Nalc	main	unused	hero	Baron of Gadgetzan	(Creep)	Nalc	orc	Units\Creeps\HeroGoblinAlchemist\HeroGoblinAlchemist	stock	ReplaceableTextures\CommandButtons\BTNHeroAlchemist.blp	-	-	-	-	-	-	A033,A0KN,A0RJ,A11W,AInv,Aamk	-
+Nalc	main	used	hero	Baron of Gadgetzan	(Creep)	Nalc	orc	Units\Creeps\HeroGoblinAlchemist\HeroGoblinAlchemist	stock	ReplaceableTextures\CommandButtons\BTNHeroAlchemist.blp	-	-	-	-	-	-	A033,A0KN,A0RJ,A11W,AInv,Aamk	-
 Nbbc	main	used	hero	Warchief of the Blackrock Clan	(Fel)	Nbbc	orc	war3mapImported\RendBlackhand_Hero.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackhand.blp	Fel Horde	o02V	-	-	-	-	A0AI,A0GK,A0KV,A0MM,AInv,AOmi,AOr2,AOww,Aamk	R03C
 Nmag	main	used	hero	Lord of Outland	(Fel)	Nmag	undead	units\demon\HeroPitLord\HeroPitLord	stock	ReplaceableTextures\CommandButtons\BTNPitLord.blp	Fel Horde	o02V	-	-	-	-	A04N,A07M,A0EJ,A0KU,AInv,Aamk,TP33	R00P
 Nman	main	used	hero	Mannoroth, the Destroyer	(Warsong-Bloodpact)	Nman	orc	units\demon\Mannoroth\Mannoroth	stock	ReplaceableTextures\CommandButtons\BTNMannoroth.blp	-	-	-	-	-	-	A04N,A0GK,A0KU,A0WM,AInv,Aamk	-
@@ -77,7 +77,7 @@ Ogrh	main	used	hero	Chieftain of the Warsong Clan	(Warsong)	Ogrh	orc	units\orc\H
 Opgh	main	used	hero	Corruptor of the Warsong Clan	(Warsong-Bloodpact)	Opgh	orc	units\demon\ChaosHellscream\ChaosHellscream	stock	ReplaceableTextures\CommandButtons\BTNChaosGrom.blp	Warsong	-	-	-	-	-	A03S,A0FK,A0KV,A0TW,A10G,AInv,AOww,Aamk	-
 Orex	main	used	hero	Beastmaster	(Frostwolf)	Orex	orc	Units\Other\Rexxar\Rexxar	stock	ReplaceableTextures\CommandButtons\BTNrexxarhd.blp	Frostwolf	oalt	-	-	-	-	A01C,A05S,A066,A07M,A0U4,AInv,Aamk	R05R
 Orkn	main	used	hero	Chieftain of the Darkspear Tribe	(Frostwolf)	Orkn	orc	units\orc\WitchDoctor\WitchDoctor.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroVoljin.blp	Frostwolf	oalt	-	-	-	-	A08D,A0GK,A0TZ,AHab,AInv,AOvd,Aamk,ZBsw	R032
-Otch	main	unused	hero	Tauren Chieftain	-	Otch	orc	units\orc\HeroTaurenChieftain\HeroTaurenChieftain	stock	ReplaceableTextures\CommandButtons\BTNHeroTaurenChieftain.blp	-	-	-	-	-	-	AInv,AOae,AOre,AOsh,AOws,Avul	-
+Otch	main	used	hero	Tauren Chieftain	-	Otch	orc	units\orc\HeroTaurenChieftain\HeroTaurenChieftain	stock	ReplaceableTextures\CommandButtons\BTNHeroTaurenChieftain.blp	-	-	-	-	-	-	AInv,AOae,AOre,AOsh,AOws,Avul	-
 Othr	main	used	hero	Warchief of the Horde	(Frostwolf)	Othr	orc	war3mapImported\Hero_Thrall.mdl	main	ReplaceableTextures\CommandButtons\BTNThrallhd.blp	Frostwolf	oalt	-	-	-	-	A01A,A0WL,AInv,ANmo,Aamk,YBFS,ZBCL	-
 TGGN	main	used	hero	Princess of Gilneas	(Gilneas)	Ewar	human	war3mapImported\HumanAssassine.mdl	main	ReplaceableTextures\CommandButtons\BTNTess.blp	Gilneas	h02X	-	-	-	-	A026,AEsh,AInv,Aamk,ST26,ST9J,YBPW	-
 U001	main	used	hero	Master of the Cult of the Damned	(Scourge-Necromancer)	Uktl	undead	units\undead\Kelthuzad\Kelthuzad.mdl	stock	ReplaceableTextures\CommandButtons\BTNKelThuzad.blp	Scourge	uaod	-	-	-	-	A0WP,A13R,AInv,AUan,AUdd,AUfn,Aamk	R08J
@@ -114,7 +114,7 @@ bHN1	main	used	unit	Herald	(Nzoth)	odkt	naga	war3mapImported\FacelessOneMastermi
 bpa1	main	used	unit	Archer	(Sentinels)	earc	nightelf	units\nightelf\Archer\Archer	stock	ReplaceableTextures\CommandButtons\BTNArcher.blp	-	-	-	-	-	-	-	-
 bph1	main	used	unit	Huntress	(Sentinels)	esen	nightelf	units\nightelf\Huntress\Huntress	stock	ReplaceableTextures\CommandButtons\BTNHuntress.blp	-	-	-	-	-	-	-	edob
 e000	main	used	building	Improved Ancient Protector	(Druids Tower)	etrp	nightelf	buildings\nightelf\AncientProtector\AncientProtector	stock	ReplaceableTextures\CommandButtons\BTNTreant.blp	Druids	-	-	-	-	-	Aro2	-
-e003	main	unused	unit	Storm Giant	(Creep)	emtg	creeps	units\nightelf\MountainGiant\MountainGiant	stock	ReplaceableTextures\CommandButtons\BTNMountainGiant.blp	-	-	-	-	-	-	ACbh,ACfl,Aien	-
+e003	main	used	unit	Storm Giant	(Creep)	emtg	creeps	units\nightelf\MountainGiant\MountainGiant	stock	ReplaceableTextures\CommandButtons\BTNMountainGiant.blp	-	-	-	-	-	-	ACbh,ACfl,Aien	-
 e006	main	used	unit	Priestess	(Sentinels)	earc	nightelf	units\nightelf\Runner\Runner.mdl	stock	ReplaceableTextures\CommandButtons\BTNNightElfRunner.blp	Sentinels	e00V	-	-	-	-	A07H,A0CX,A0ED,ANwk,Adsm,Aegr,Aien,Ault,S003	-
 e007	main	used	unit	Thornspeaker	(KulTiras)	edoc	human	DruidoftheClawKulTirasV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNDruidOfTheClaw.blp	Kul'tiras	h07Q	-	-	-	-	A0G3,A0G7,A0V1,Aien,Ault	-
 e008	main	used	unit	Ballista	(Quelthalas)	ebal	human	war3mapImported\BEGlaiveThrower_Fixed.mdl	main	ReplaceableTextures\CommandButtons\BTNBallista.blp	Quel'thalas	nheb	-	-	-	-	-	h03S
@@ -201,7 +201,7 @@ h00J	main	used	unit	Clergyman	(Stormwind)	hmpr	human	war3mapImported\ClericWC1.m
 h00K	main	used	building	Horizontal Wooden Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NZ	-
 h00L	main	used	building	Horizontal Wooden Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NZ	-
 h00M	main	used	building	Horizontal Wooden Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h00N	main	unused	building	Goldshire	(Stormwind)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindTownhall.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
+h00N	main	used	building	Goldshire	(Stormwind)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindTownhall.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
 h00O	main	used	building	Utgarde Keep	(Scourge Other)	hcas	human	war3mapImported\Dragons Reach.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulMain3.blp	-	-	h00P,h02G,h061	-	-	-	ACav,Avul	halt
 h00P	main	used	unit	Mammoth Rider	(Scourge	hkni	human	war3mapImported\VrykulmammothRider6Lumber3.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulWarMammoth.blp	Scourge	h00O	-	-	-	-	A020,A0R1,Ahan,Aihn	-
 h00T	main	used	building	Scarlet Monastery	(Scarlet/Lordaeron)	hars	human	war3mapImported\Building_ScarletMonastery.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	-	hcth,n03K,n04H,n04K	-	-	-	Abds	-
@@ -209,7 +209,7 @@ h00U	main	used	unit	Water Elemental	(Dalaran-Hydromancer Summon)	hwat	creeps	uni
 h00X	main	used	building	Stormwind Keep	(Stormwind Other)	hcas	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindCastle.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	halt
 h010	main	used	building	Jaina's Sanctum	(Dalaran Other)	hcas	human	buildings\human\HumanTower\HumanTower.mdl	stock	ReplaceableTextures\CommandButtons\BTNHumanArcaneTower.blp	-	-	h022,n007	-	-	-	A0JV	-
 h011	main	used	building	Intercontinental Artillery	(Creep Tower)	hwtw	human	war3mapImported\GoblinTinkerTurret_Artillery.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarfTurret.blp	-	-	-	-	-	-	A0RH	R07F,R04R
-h013	main	unused	building	Gnomeregan	(Ironforge Other)	harm	human	Units\Creeps\HeroTinkerFactory\HeroTinkerFactory.mdl	stock	ReplaceableTextures\CommandButtons\BTNWorkshop.blp	-	-	h019,h037,hpea	-	R022	-	A06K,A0CY,A0K5,A0M0	-
+h013	main	used	building	Gnomeregan	(Ironforge Other)	harm	human	Units\Creeps\HeroTinkerFactory\HeroTinkerFactory.mdl	stock	ReplaceableTextures\CommandButtons\BTNWorkshop.blp	-	-	h019,h037,hpea	-	R022	-	A06K,A0CY,A0K5,A0M0	-
 h014	main	used	building	Trading Post	(Sea)	hwtw	unknown	war3mapImported\Building_TradingPost.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	-	-	-	-	-	-	VP06	-
 h016	main	used	building	Granary	(Lordaeron-Other)	hhou	human	war3mapImported\Building_Granary.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h018	main	used	unit	Warrior	(Ironforge)	hfoo	human	war3mapImported\DwarvenWarrior.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWarrior.blp	Ironforge	h07C	-	-	-	-	A020,A02O,A07C,A0B8,Aihn	-
@@ -224,7 +224,7 @@ h01I	main	used	unit	Arcanist	(Dalaran)	hsor	human	war3mapImported\HeroArcanist.m
 h01K	main	used	unit	Water Elemental	(Tidal Lord Summon)	hwat	creeps	war3mapImported\SeaElementalAV2.mdl	main	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	-	-	-	-	-	-	-	-
 h01L	main	used	unit	Thane	(Ironforge)	hfoo	human	war3mapImported\DwarvenPaladin.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarven_Hero_Paladin.blp	Ironforge	h01O,h01U,h07C	-	-	-	-	A064,A0H1,A0HI,Aihn,VP20	h07G
 h01N	main	used	unit	Vile Corrupter	(Cthun)	hcth	naga	war3mapImported\Rhinolox.mdl	main	ReplaceableTextures/CommandButtons/BTNRhinolox.BLP	Ahn'qiraj	u01H	-	-	-	-	A0YC,Aiun,ZBRD	u022
-h01O	main	unused	building	Shadowforge City	(Ironforge Other)	hcas	human	war3mapImported\DwarvenFortressV2.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h019,h01L,h037	-	-	-	A0CY,A0K5	halt
+h01O	main	used	building	Shadowforge City	(Ironforge Other)	hcas	human	war3mapImported\DwarvenFortressV2.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h019,h01L,h037	-	-	-	A0CY,A0K5	halt
 h01P	main	used	unit	Steam Tank	(Ironforge)	hmtt	human	units\human\WarWagon\WarWagon	stock	ReplaceableTextures\CommandButtons\BTNSeigeEngineWithMissles.blp	-	harm	-	-	-	-	A0F5,S01F,S01G,S01H,TP02,TP03	h07G
 h01R	main	used	building	Town Hall	(Gilneas T1)	htow	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasTownHall.blp	Gilneas	hpea	hpea,o01V	-	-	-	-	-
 h01S	main	used	building	Tavern	(Ironforge Farm)	hhou	human	war3mapImported\DwarvenTavern.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenTavern.blp	Ironforge	h019	-	-	-	-	A09J	-
@@ -235,15 +235,15 @@ h01W	main	used	building	Elven Gate	(Gate - Closed)	hhou	unknown	Doodads\Lordaero
 h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
 h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	o04B,o04I	-	-	-	A04O	halt
-h021	main	unused	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
+h021	main	used	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
 h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+9	-	-	A041,Ahrp	-
 h023	main	used	building	Keep	(Gilneas T2)	hkee	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasKeep.blp	Gilneas	-	hpea,o01V	-	-	-	-	-
 h024	main	used	building	Light House	(Stormwind Other)	hwtw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	Dalaran,Gilneas,Stormwind	h060	-	-	-	-	A094	-
-h025	main	unused	building	Stormwind Cannon	(Stormwind Tower)	hctw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindCannonTower.blp	-	-	-	-	-	-	-	-
+h025	main	used	building	Stormwind Cannon	(Stormwind Tower)	hctw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindCannonTower.blp	-	-	-	-	-	-	-	-
 h026	main	used	building	Auchindoun	(Creep)	hcas	human	buildings\undead\HauntedMine\HauntedMine.mdl	stock	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	-	-	-	-	A0AE,Aihn	-
 h027	main	used	unit	Phoenix	(Blood Mage Summon)	hphx	human	units\human\phoenix\phoenix	stock	ReplaceableTextures\CommandButtons\BTNMarkOfFire.blp	-	-	-	-	-	-	A0EL,A0EM	-
 h029	main	used	unit	Veteran Footman	(Lordaeron)	hfoo	human	LordearonGuardsman.mdl	main	ReplaceableTextures\CommandButtons\BTN_Royal_Footman_2.blp	-	hbar	-	-	-	-	A020,A0YO,A13L,Aihn	-
-h02A	main	unused	unit	Mountaineer	(Creep)	hfoo	human	war3mapImported\DwarvenWarrior.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWarrior.blp	-	-	-	-	-	-	A020,A02O,A0B8,Aihn	-
+h02A	main	used	unit	Mountaineer	(Creep)	hfoo	human	war3mapImported\DwarvenWarrior.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWarrior.blp	-	-	-	-	-	-	A020,A02O,A0B8,Aihn	-
 h02C	main	used	building	Castle	(Gilneas T3)	hcas	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasCastle.blp	Gilneas	-	hpea,o01V	-	-	-	-	h02X
 h02D	main	used	unit	Geomancer	(Dalaran)	hmpr	human	war3mapImported\MageDalaranV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNPriest.blp	Dalaran	h036	-	-	-	-	A02R,A0FW,A0K6,A0ZU,Aihn	h066
 h02F	main	used	building	Household	(Gilneas Farm)	hhou	human	war3mapImported\GilneasFarm.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasFarm.blp	Gilneas	hpea	-	-	-	-	-	h01R
@@ -258,7 +258,7 @@ h02N	main	used	building	Lumber Mill	(Dalaran Research)	hlum	human	war3mapImporte
 h02O	main	used	unit	Bladesman	(Stormwind)	hcth	human	StormwindSergeant.mdl	main	ReplaceableTextures\CommandButtons\BTNpikeman.blp	Stormwind	h05E,h05Z,h06E	-	-	-	-	A0BG,Adef,Aihn,S01J	-
 h02P	main	used	building	Holding	(Sunfury T1)	htow	human	war3mapImported\BE_TownHall1.mdl	main	ReplaceableTextures\CommandButtons\BTNBE_TownHall1.blp	Sunfury	n0E2	n0E2,n0E7	-	-	-	-	-
 h02Q	main	used	unit	Pegasus Knight	(Lordaeron)	hdhw	human	war3mapImported\Unit_PegasusKnight1.mdl	main	ReplaceableTextures\CommandButtons\BTNMystical Knight on Pegasus Lordaeron.blp	Lordaeron	h06C	-	-	-	-	A0BJ,A0VV	R09X
-h02R	main	unused	building	Northshire Abbey	(Stormwind Other)	hcas	human	war3mapImported\Building_NorthshireAbbey.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h00J,n05L,n093	-	R005,R02E	-	A0K7,AUau	-
+h02R	main	used	building	Northshire Abbey	(Stormwind Other)	hcas	human	war3mapImported\Building_NorthshireAbbey.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h00J,n05L,n093	-	R005,R02E	-	A0K7,AUau	-
 h02S	main	used	building	Gates of Ahn'Qiraj	(Gate - Open)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O1	-
 h02T	main	used	building	Gates of Ahn'Qiraj	(Gate - Dead)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h02U	main	used	building	Gates of Ahn'Qiraj	(Gate - Closed)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O1	-
@@ -290,16 +290,16 @@ h03L	main	used	unit	Shotgunner	(Gilneas)	hrif	human	war3mapImported\GilneasRifle
 h03M	main	used	building	Hunter Tower	(Sentinels Tower)	hgtw	nightelf	war3mapImported\Building_SentinelTower.mdl	main	ReplaceableTextures\CommandButtons\BTNSentinelTower.blp	Sentinels	ewsp	-	-	-	-	A0HJ	edob
 h03N	main	used	building	Improved Hunter Tower	(Sentinels Tower)	hgtw	nightelf	war3mapImported\Building_SentinelTower.mdl	main	ReplaceableTextures\CommandButtons\BTNSentinelTower.blp	Sentinels	-	-	-	-	-	A0HJ	-
 h03O	main	used	building	Blacksmith	(Gilneas Research)	hbla	human	war3mapImported\GilneasBlacksmith.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasBlacksmith.blp	Gilneas	hpea	-	-	R006,R00C,R04R,Rhac,Rhar,Rhme	-	-	h01R
-h03P	main	unused	building	Gnome Dwelling	(Ironforge Other)	hhou	human	buildings\human\Workshop\Workshop.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
+h03P	main	used	building	Gnome Dwelling	(Ironforge Other)	hhou	human	buildings\human\Workshop\Workshop.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h03Q	main	used	building	City Watch	(Gilneas Barracks)	hbar	human	war3mapImported\GilneasBarracks.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasBarracks.blp	Gilneas	hpea	h03L,h04E,o04U	-	-	-	-	h01R
 h03S	main	used	building	Mansion	(Quelthalas T2)	hkee	human	war3mapImported\TownHallElfV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNElvenKeep.blp	Quel'thalas	-	n00A,nbee	-	R00G	-	-	-
 h03T	main	used	building	Palace	(Quelthalas T3)	hcas	human	war3mapImported\TownHallElfV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNElvenCastle.blp	Quel'thalas	-	n00A,nbee	-	R00G	-	-	h01H
 h03U	main	used	unit	Rear-Marshal	(Stormwind Defensive)	hcth	human	Royal Paladin.mdl	main	ReplaceableTextures/CommandButtons/BTNCaptain Falric.blp	Stormwind	h06A	-	-	-	-	A08U,A0BI,A0IS,Aihn	h06N
 h03V	main	used	building	Entrance	(Portal)	hprt	other	war3mapImported\Effect_Gateway_White.mdl	main	ReplaceableTextures\CommandButtons\BTNPortal.blp	-	-	-	-	-	-	A012,Avul,Awrp	-
 h03W	main	used	building	Control Point Defender	(Lordaeron)	hgtw	human	buildings\human\HumanTower\HumanTower	stock	ReplaceableTextures\CommandButtons\BTNGuardTower.blp	-	-	-	-	-	-	A0ZS	-
-h03X	main	unused	building	Sentinel Tower	(Stormwind Tower)	hgtw	human	war3mapImported\StormwindArcaneSanctum.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindGuardTower.blp	-	-	-	-	-	-	A0GD,ACav,ARal	-
+h03X	main	used	building	Sentinel Tower	(Stormwind Tower)	hgtw	human	war3mapImported\StormwindArcaneSanctum.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindGuardTower.blp	-	-	-	-	-	-	A0GD,ACav,ARal	-
 h03Y	main	used	building	Darkshire	(Stormwind Other)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindKeep.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
-h040	main	unused	building	Imperial Quarters	(Stormwind controlled)	halt	human	Doodads\Cityscape\Structures\Cathedral\Cathedral.mdl	stock	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	-	-	h00J,hpea,n05L,n093	-	R005,R02E	-	A0GD	-
+h040	main	used	building	Imperial Quarters	(Stormwind controlled)	halt	human	Doodads\Cityscape\Structures\Cathedral\Cathedral.mdl	stock	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	-	-	h00J,hpea,n05L,n093	-	R005,R02E	-	A0GD	-
 h041	main	used	unit	Marine	(KulTiras)	hfoo	human	CaptainKulTirasV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNTheCaptain.blp	Kul'tiras	h06R	-	-	-	-	A0BG,Adef,Aihn	-
 h042	main	used	building	Pinnacle	(Ironforge Magic)	harm	human	war3mapImported\DwarvenMysticHall.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenMysticHall.blp	Ironforge	h019	n00C,tp05	-	R00V,TP42	-	-	h07F
 h044	main	used	building	Altar of Knowledge	(Dalaran Altar)	halt	human	war3mapImported\Building_DalaranAltar.mdl	main	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	Dalaran	h022	H09N,Haah,Hant,Hjai	-	-	-	-	-
@@ -333,10 +333,10 @@ h057	main	used	unit	Galley	(NightElves)	hdes	human	units\nightelf\NightElfDestro
 h058	main	used	building	Shadowfang Keep	(Dalaran Other)	hkee	human	buildings\human\TownHall\TownHall	stock	ReplaceableTextures\CommandButtons\BTNKeep.blp	-	-	h022,n007,n04H,ninc	-	R061	-	A0JV	-
 h05A	main	used	building	Wizard's Sanctum	(Stormwind Other)	hcas	human	war3mapImported\Building_StormwindMageTower.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	Stormwind	-	-	-	R03T,R03U,R03V,R03W,R03X	-	A0RC,A0RE,A0RG,Avul	R022
 h05C	main	used	building	Quel'Danil Lodge	(Quelthalas)	hcas	human	buildings\other\BarrowDens\BarrowDens.mdl	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	-	-	n00A,nbee,nhea	-	-	-	-	-
-h05D	main	unused	unit	Raptor Rider	(Creep)	hkni	orc	war3mapImported\EliteHeadhunterScoutAWRV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollRaptor.blp	-	-	-	-	-	-	A020,A0XK,Adtg,Aihn,Aotr	o03Y
-h05E	main	unused	building	Nethergarde Barracks	(Stormwind Other)	hbar	human	war3mapImported\AlteracBarracks.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	-	-	h00A,h01B,h02O,h04C,h054,h05N	-	-	-	ACav	-
+h05D	main	used	unit	Raptor Rider	(Creep)	hkni	orc	war3mapImported\EliteHeadhunterScoutAWRV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollRaptor.blp	-	-	-	-	-	-	A020,A0XK,Adtg,Aihn,Aotr	o03Y
+h05E	main	used	building	Nethergarde Barracks	(Stormwind Other)	hbar	human	war3mapImported\AlteracBarracks.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	-	-	h00A,h01B,h02O,h04C,h054,h05N	-	-	-	ACav	-
 h05F	main	used	unit	Stormwind Champion	(Stormwind - Elite)	hkni	human	TheCaptainV1_1.mdl	main	ReplaceableTextures\CommandButtons\BTNKnightIcon.blp	Stormwind	h00N,h00X,h02V,h03Y,h05G,h06K,h06M,h06N	-	-	-	-	A01X,A020,A0AM,A0GK,A0H5,A0J6,A0YE,ACrk,Aihn	h06N
-h05G	main	unused	building	Lakeshire	(Stormwind Other)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindKeep.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
+h05G	main	used	building	Lakeshire	(Stormwind Other)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindKeep.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
 h05H	main	used	building	Thelsamar	(Ironforge Other)	hkee	human	war3mapImported\DwarvenFortressV2.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenKeep.blp	-	-	h019,h037	-	-	-	A0CY,A0K5,Afbb	-
 h05I	main	used	building	Ethel Rethor	(Creep)	hwtw	human	Doodads\Dalaran\Terrain\DalaranBuilding\DalaranBuilding1.mdl	stock	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	-	-	-	-	-	-	A0N4	-
 h05J	main	used	building	Champion's Hall	(Stormwind Other)	hcas	human	war3mapImported\ChampionsHall.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	Stormwind	-	-	-	R02Z,R030,R031,R03D	-	Avul	R022
@@ -348,7 +348,7 @@ h05Q	main	used	building	Dalaran Building	(Dalaran Other 2)	hhou	human	Doodads\Da
 h05S	main	used	unit	Brigadier	(Stormwind Garrison)	hfoo	human	units\creeps\Bandit\Bandit.mdl	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	A01K,A020,Aihn	-
 h05T	main	used	building	Instance Entrance	(Portal)	hprt	other	war3mapImported\Effect_Gateway_White.mdl	main	ReplaceableTextures\CommandButtons\BTNPortal.blp	-	-	-	-	-	-	Avul,Awrp	-
 h05X	main	used	building	Control Point Defender	(Stormwind)	hatw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindArcaneTower.blp	-	-	-	-	-	-	A0ZV	hars
-h05Z	main	unused	building	Honor Hold	(Stormwind Other)	hbar	human	war3mapImported\StormwindBarracks.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	-	-	h00A,h019,h01B,h02O,h04C,h054,hpea	-	-	-	A0GD,ACav	-
+h05Z	main	used	building	Honor Hold	(Stormwind Other)	hbar	human	war3mapImported\StormwindBarracks.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	-	-	h00A,h019,h01B,h02O,h04C,h054,hpea	-	-	-	A0GD,ACav	-
 h060	main	used	unit	Carrier Flagship	(Stormwind)	hdes	human	StormhawkShip.mdl	main	ReplaceableTextures\CommandButtons\BTNStormHawkIcon.blp	Stormwind	h06D	-	h024	-	-	A0S5,A0S6,Ahrp,Sch5,Sdro,Slo3	R04R
 h061	main	used	unit	Vrykul Berserk	(Scourge	hkni	human	war3mapImported\BeowulfTheBraveV2.mdl	main	ReplaceableTextures\CommandButtons\BTNNorse Chieftain.blp	Scourge	h00O	-	-	-	-	A01X,A020,A0AM,A0R1,A0YE,Ahan,Aihn	-
 h062	main	used	building	Town Hall	(KulTiras T1)	htow	human	war3mapImported\KultirasTownHallV1.mdl	main	ReplaceableTextures\CommandButtons\BTNKultirasTownHall.blp	Kul'tiras	h01E	h01E,n07G	-	-	-	-	-
@@ -432,7 +432,7 @@ h09F	main	used	unit	Deep Fiend	(Nzoth)	hcth	naga	war3mapImported\FacelessOneGlad
 h09H	main	used	unit	Walker	(Creep)	hmtt	orc	war3mapImported\GoblinSeigeWalker_Final.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblin Assault Tank 'Gazlowe'2.blp	-	o01M	-	-	-	-	A0JX,A0MN,A0OA,A0YG,A13I	o03N
 h09I	main	used	unit	Personal Tank	(Creep)	hrif	orc	war3mapImported\GoblinTank.mdl	main	ReplaceableTextures/CommandButtons/BTNGoblinAssaultTank.blp	-	o05T	-	-	-	-	A0MN,A13B,Aihn	o03Q,o03Q
 h09J	main	used	unit	Grenadier	(Creep)	hmtm	orc	war3mapImported\Grenadier.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinGrenadier.blp	-	o05T	-	-	-	-	Aihn	o03M
-h09K	main	unused	building	Howling Oak	(Gilneas Other)	hkee	human	buildings\nightelf\TreeofLife\TreeofLife.mdl	stock	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	e00N,ewsp	-	-	-	-	-
+h09K	main	used	building	Howling Oak	(Gilneas Other)	hkee	human	buildings\nightelf\TreeofLife\TreeofLife.mdl	stock	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	e00N,ewsp	-	-	-	-	-
 h09L	main	used	building	Crimson Cathedral	(Scarlet)	hkee	human	war3mapImported\CrimsonCathedral.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h022,h06B,n09N	-	-	-	-	-
 h09O	main	used	building	Control Point Defender	(Scarlet)	hgtw	human	war3mapImported\AlteracTower.mdl	main	ReplaceableTextures\CommandButtons\BTNGuardTower.blp	-	-	-	-	-	-	A0ZM	-
 h09P	main	used	unit	Longbowman	(Scarlet)	hrif	human	war3mapImported\ScarletArcher.mdl	main	ReplaceableTextures/CommandButtons/BTNScarletArcher.blp	Scarlet Crusade	h0AG	-	-	-	-	A0P6,A0Q2,ACen,Aihn	h0A3
@@ -551,7 +551,7 @@ hwt3	main	used	unit	Water Lord Elemental	(Dalaran-Jaina)	hwt3	human	units\human\
 hwtw	main	used	building	Scout Tower	(Lordaeron Tower)	hwtw	human	buildings\human\HumanTower\HumanTower	stock	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	Lordaeron	hpea	-	-	-	-	-	-
 ls05	main	used	unit	Shaper	(Skywall worker)	ewsp	naga	war3mapImported\Unit_Shaper.mdl	main	ReplaceableTextures\CommandButtons\BTNShaper.blp	Skywall	n05Q,n05W,n06R,nELC	-	eLFA,h03I,h07X,n05Q,n078,n07J,n07N,n08A,n08B,n08L,sELF	-	-	Adtn,Ahrp	-
 ls06	main	used	unit	Efreet	(Skywall)	uobs	naga	war3mapImported\Efreet.mdl	main	ReplaceableTextures\CommandButtons\BTNEfreetIcon.blp	Skywall	n08B	-	-	-	-	A03E,AEFS,WMTP	-
-mD06	main	unused	unit	Diadon2 - 8v8 season 2 champion	(Patrons)	npig	critters	Doodads\Cityscape\Props\City_Statue\City_Statue.mdl	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Avul	-
+mD06	main	used	unit	Diadon2 - 8v8 season 2 champion	(Patrons)	npig	critters	Doodads\Cityscape\Props\City_Statue\City_Statue.mdl	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Avul	-
 md01	main	used	building	West-Zangarmarsh	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 md02	main	used	building	East-Zangarmarsh	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 md03	main	used	building	Warden's Cage	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
@@ -641,8 +641,8 @@ n02C	main	used	unit	Pocket Factory	(Level 1)	nfa2	other	Units\Creeps\HeroTinkerF
 n02D	main	used	unit	War Golem	(Ironforge)	nwrg	human	war3mapImported\Unit_DwarfGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarfGolem.blp	Ironforge	harm	-	-	-	-	A0CC,ACrk	-
 n02E	main	used	building	Moonglade	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n02F	main	used	unit	Warlock	(Quelthalas)	nmed	human	war3mapImported\BloodelfWizard.mdl	main	ReplaceableTextures\CommandButtons\BTNBloodElfWizard.blp	Quel'thalas	n0A2	-	-	-	-	A0IW,A0RO,A0XL,ACrk,Aihn	R075
-n02G	main	unused	unit	Crystalline Golem	-	ngst	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	-	-
-n02H	main	unused	unit	Small Crystalline Golem	-	ngrk	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	-	-
+n02G	main	used	unit	Crystalline Golem	-	ngst	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	-	-
+n02H	main	used	unit	Small Crystalline Golem	-	ngrk	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	-	-
 n02I	main	used	building	Western Stranglethorn	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n02J	main	used	building	Howling Fjords	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
 n02K	main	used	building	Ruins of Ahn'Qiraj	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
@@ -683,15 +683,15 @@ n03M	main	used	building	Thunderbluff	-	ncop	creeps	buildings\other\CircleOfPower
 n03N	main	used	building	Quel'Danas	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
 n03O	main	used	building	Ranazjar Isle	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n03P	main	used	building	Corin's Crossing	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
-n03Q	main	unused	building	Water Passageway 2	-	nwgt	other	Abilities\Spells\Human\MassTeleport\MassTeleportTo.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
+n03Q	main	used	building	Water Passageway 2	-	nwgt	other	Abilities\Spells\Human\MassTeleport\MassTeleportTo.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
 n03R	main	used	unit	Dalaran Shield Level 2	-	ntor	human	war3mapImported\Dalaran Shield.mdl	main	ReplaceableTextures\CommandButtons\BTNNetherShield.blp	-	o00J,o06U	-	-	-	-	A11Q,A13N,Aloc	-
-n03S	main	unused	building	Water Passageway	-	nwgt	other	Abilities\Spells\Human\MassTeleport\MassTeleportTo.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
+n03S	main	used	building	Water Passageway	-	nwgt	other	Abilities\Spells\Human\MassTeleport\MassTeleportTo.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
 n03T	main	used	unit	Murmur	(Creep)	nelb	creeps	units\creeps\VoidWalker\VoidWalker.mdl	stock	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	-	-	-	-	-	-	A01Y,A06B,A06P,A112,ACsi	-
 n03U	main	used	building	Grizzly Hills	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
 n03V	main	used	unit	Sea Elemental	(KulTiras - Tidesage)	nrel	human	Units\Creeps\SeaElemental\SeaElemental	stock	ReplaceableTextures\CommandButtons\BTNSeaElemental.blp	-	-	-	-	-	-	-	-
 n03W	main	used	building	Jaguero Isle	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n03X	main	used	building	Grim Batol	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
-n03Y	main	unused	unit	Drak'Thul	-	nsrw	creeps	units\creeps\OrcWarlock\OrcWarlock	stock	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	-	-	-	-	-	A01Y,ACad,ACdc,ACmo	-
+n03Y	main	used	unit	Drak'Thul	-	nsrw	creeps	units\creeps\OrcWarlock\OrcWarlock	stock	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	-	-	-	-	-	A01Y,ACad,ACdc,ACmo	-
 n03Z	main	used	building	Durotar	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n040	main	used	building	Soul Forge	(Legion Research)	ndmg	undead	war3mapImported\CryptDemonV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonCrypt.blp	Legion	u00D	-	-	R006,R00C,R04R,R09X,Rhar,Rhme	-	-	-
 n041	main	used	unit	Infernal	(Legion-Archimond-Level 1)	ninf	undead	units\demon\Infernal\Infernal	stock	ReplaceableTextures\CommandButtons\BTNInfernal.blp	-	-	-	-	-	-	ACmi,ACrk,ANpi	-
@@ -790,9 +790,9 @@ n06Y	main	used	building	Healing Spire	(Quelthalas Unique)	negt	undead	war3mapImp
 n06Z	main	used	building	Flight Path	(Frostwolf, Warsong)	nwgt	other	units\creeps\GoblinZeppelin\GoblinZeppelin.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	Frostwolf,Warsong	-	-	-	R09N	-	A126,Avul,Awrp	-
 n070	main	used	unit	Nether Drake	(Fel-Portal)	nbdk	orc	units\creeps\NetherDragon\NetherDragon.mdl	stock	ReplaceableTextures\CommandButtons\BTNNetherDragon.blp	-	-	-	-	-	-	A07C	-
 n071	main	used	building	Pillar of C'thun	(Cthun Pillars)	nnfm	undead	war3mapImported\CthunZigguratTower.mdl	main	ReplaceableTextures\CommandButtons\BTNCthunTower.blp	Ahn'qiraj	u019	-	-	-	-	A0RU,A0YA	-
-n072	main	unused	unit	Vile Priestess Hexx	-	nfsh	creeps	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	-	-	-	-	-	-	ACev,AChx	-
+n072	main	used	unit	Vile Priestess Hexx	-	nfsh	creeps	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	-	-	-	-	-	-	ACev,AChx	-
 n073	main	used	unit	Tentacle	(Hideous Appendages - C'thun)	nfgt	naga	war3mapImported\CthunTentacle.mdl	main	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	-	-
-n074	main	unused	unit	Queen Nezar'Azret	-	nnwq	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	-	-
+n074	main	used	unit	Queen Nezar'Azret	-	nnwq	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	-	-
 n076	main	used	unit	Small Tentacle	-	nfgt	naga	Units\Creeps\ForgottenOne\ForgottenOneTent	stock	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	-	-
 n077	main	used	unit	Mindlasher	(Nzoth)	nogn	naga	war3mapImported\FacelessOneSorcerer.mdl	main	ReplaceableTextures\CommandButtons\BTNUnbroken2.blp	Black Empire	n0B3	-	-	-	-	A0D1,A0FS,A0SM,Aion	-
 n078	main	used	building	Altar of Elements	(Skywall Altar)	nnad	naga	war3mapImported\DarkIronAltar2.mdl	main	ReplaceableTextures\CommandButtons\BTNAltarOfElements.blp	Skywall	ls05	E023,U01S,U02K,UELN	-	-	-	-	-
@@ -814,12 +814,12 @@ n07T	main	used	building	Auction House	(Stormwind Shop)	nmrk	human	war3mapImporte
 n07U	main	used	building	Explorer's Vault	(Ironforge Shop)	nmrk	human	war3mapImported\DwarvenTurret.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenTreasury.blp	Ironforge	h019	-	-	-	-	Aall,Apit	-
 n07X	main	used	unit	Ogre Magi	(Creep)	nomg	orc	war3mapImported\Ogre Mage.mdl	main	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	o03E	-	-	-	-	A0EY,A0OL,Aion,Awfb	-
 n07Y	main	used	building	Venture Bay	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
-n07Z	main	unused	unit	Boulderfist Mauler	-	nogm	creeps	units\creeps\Ogre\Ogre	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	-	-	-	-	-	A06P,ACbh	-
-n080	main	unused	unit	Boulderfist Magi	-	nomg	creeps	units\creeps\OgreMagi\OgreMagi	stock	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	-	-	-	-	-	ACbb	-
+n07Z	main	used	unit	Boulderfist Mauler	-	nogm	creeps	units\creeps\Ogre\Ogre	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	-	-	-	-	-	A06P,ACbh	-
+n080	main	used	unit	Boulderfist Magi	-	nomg	creeps	units\creeps\OgreMagi\OgreMagi	stock	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	-	-	-	-	-	ACbb	-
 n081	main	used	building	Unfocused Demon Gate	(Fel T0 Red)	ndmg	orc	buildings\demon\DemonGate\DemonGate	stock	ReplaceableTextures\CommandButtons\BTNDemonGate.blp	-	-	-	-	-	-	ARal	-
 n082	main	used	unit	Skyfallen Infernal	(Fel Horde-Legion-Juggernaut)	ninf	orc	units\demon\Infernal\Infernal	stock	ReplaceableTextures\CommandButtons\BTNInfernal.blp	-	-	-	-	-	-	ACrk,ANpi	-
 n083	main	used	unit	Twilight Dragonspawn	(Creep)	nbdo	orc	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNpurpleDragonSpawn.blp	-	o03F	-	-	-	-	A020,A0CH,A0M5	o03B
-n084	main	unused	building	Tempest Reach	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
+n084	main	used	building	Tempest Reach	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n085	main	used	building	The Athenaeum	(Sentinels Other)	nbwd	nightelf	buildings\other\BarrowDens\BarrowDens	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	-	-	e00N,ewsp,h04L	-	-	-	A0GN	-
 n086	main	used	unit	Fel Death Knight	(Fel-Elite-Tier)	nchr	orc	war3mapImported\TeronGorefiendWC2V1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	Fel Horde	o008,o00F,o013,o02Y,o02Z,o030	-	-	-	-	A07C,A090,A0JK,A0JR,ACsk,Aion	o030,R05Z
 n087	main	used	unit	Phase Grenadier	(Creep)	nftr	orc	war3mapImported\TwilightCultist.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkSoldier.blp	-	o03D	-	-	-	-	Aslo	o03J
@@ -830,16 +830,16 @@ n08D	main	used	building	Icecrown Glacier	-	ncop	creeps	buildings\other\CircleOfP
 n08E	main	used	unit	Shadowpriest	(Warsong)	nw2w	orc	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest.mdl	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	Warsong	o006	-	-	-	-	A09E,A12J,ANtr,Aion,Anh1	R00K
 n08F	main	used	building	Undercity Entrance	-	nwgt	other	war3mapImported\Effect_DarkPortal.mdl	main	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	A01M,A023,Avul,Awrp	-
 n08G	main	used	unit	Plagueling	(Scourge)	nzom	undead	units\other\DalaranMutant\DalaranMutant.mdl	stock	ReplaceableTextures\CommandButtons\BTNDalaranMutant.blp	-	nfgl	-	-	-	-	A0EB,Aap1	-
-n08I	main	unused	unit	Lord Falconrest	-	nbld	creeps	units\human\Knight\Knight.mdl	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	-	-
+n08I	main	used	unit	Lord Falconrest	-	nbld	creeps	units\human\Knight\Knight.mdl	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	-	-
 n08J	main	used	unit	Black Widow	(Druids - Cenarius Summon)	nsbm	nightelf	units\creeps\SpiderGreen\SpiderGreen.mdl	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-	-	-	-	-	-	ACvs,ACwb,Ault	-
 n08K	main	used	unit	Feral Wolf	(Druids - Cenarius Summon)	nwld	nightelf	units\creeps\TimberWolf\TimberWolf.mdl	stock	ReplaceableTextures\CommandButtons\BTNDireWolf.blp	-	-	-	-	-	-	ACct,ACro,ANbh,Ault	-
 n08L	main	used	building	Lattice Spire	(Skywall Tower)	nntg	naga	war3mapImported\DarkIronInfernoBunker2.mdl	main	ReplaceableTextures\CommandButtons\BTNLaticeSpire.blp	Skywall	ls05	-	-	-	-	-	h03I
 n08M	main	used	building	Southshore	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n08N	main	used	building	Improved Lattice Spire	(Skywall Tower)	nntg	naga	war3mapImported\DarkIronInfernoBunker2.mdl	main	ReplaceableTextures\CommandButtons\BTNLaticeSpire.blp	Skywall	-	-	-	-	-	-	-
 n08O	main	used	unit	Ogre Magi	(Warsong)	nomg	orc	war3mapImported\Ogre Mage.mdl	main	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	Warsong	o006	-	-	-	-	A04C,A06Z,A092,Aion	R012
-n08P	main	unused	unit	Ny'alothan Tentacle	-	nfgt	creeps	war3mapImported\Unit_Ny'alothaTentacle.mdl	main	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	Aloc,Avul	-
+n08P	main	used	unit	Ny'alothan Tentacle	-	nfgt	creeps	war3mapImported\Unit_Ny'alothaTentacle.mdl	main	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	Aloc,Avul	-
 n08Q	main	used	building	Tol Barad	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
-n08R	main	unused	unit	Grim Batol Tunnels	-	nwgt	other	Doodads\Dungeon\Structures\DungeonArchway45\DungeonArchway45.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
+n08R	main	used	unit	Grim Batol Tunnels	-	nwgt	other	Doodads\Dungeon\Structures\DungeonArchway45\DungeonArchway45.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
 n08S	main	used	unit	Elemental Lord	(Skywall)	nbal	naga	Elemental_Lord.mdl	main	ReplaceableTextures\CommandButtons\BTNElemental Lord.blp	Skywall	n05Q,n05W,n06R,nELC	-	-	-	-	A07C,A08P,A0WR,A0WS,A0WV,A0Y4,A0Y5,A0Y6,A104,Aiun	n06R
 n08T	main	used	building	Dragonmaw Port	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n08U	main	used	building	Southern Ashenvale	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
@@ -883,7 +883,7 @@ n0AE	main	used	unit	Shard Golem	(Dalaran-Living Fragments)	ngrk	human	war3mapImp
 n0AF	main	used	building	Dustwallow Marsh	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n0AG	main	used	unit	Lord Barov	-	nbld	creeps	Units\Undead\HeroDeathknight\HeroDeathknight.mdl	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	-	-
 n0AH	main	used	unit	Deformed Chimera	(Nzoth)	nndr	naga	war3mapImported\ObscureDragon.mdl	main	ReplaceableTextures\CommandButtons\BTNObscure Dragon.blp	Black Empire	n0AX	-	-	-	-	A07C,A0SB,A0SQ,MD19	R09X,n0AT
-n0AI	main	unused	unit	Clockwerk Goblin	(creep)	ncg2	other	Units\Creeps\HeroTinkerRobot\HeroTinkerRobot	stock	ReplaceableTextures\CommandButtons\BTNClockWerkGoblin.blp	-	-	-	-	-	-	Adda	-
+n0AI	main	used	unit	Clockwerk Goblin	(creep)	ncg2	other	Units\Creeps\HeroTinkerRobot\HeroTinkerRobot	stock	ReplaceableTextures\CommandButtons\BTNClockWerkGoblin.blp	-	-	-	-	-	-	Adda	-
 n0AK	main	used	unit	Initiate Mage	(Dalaran)	nslm	human	war3mapImported\MageInitiateV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNMageInitiate.blp	Dalaran	h069	-	-	-	-	A0E9,Aihn	h066
 n0AL	main	used	building	Improved Iron Keep	(Warsong Tower 2)	nbt2	orc	war3mapImported\WatchTowerHumanV1.03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	Warsong	-	-	-	-	-	Aspi	-
 n0AM	main	used	building	Flame Pillar	(Fel Tower)	nbt1	orc	war3mapImported\TowerFelOrcV2.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonPillar.blp	Fel Horde	-	-	-	-	-	-	-
@@ -925,7 +925,7 @@ n0BP	main	used	unit	Lightforged Juggernaut	(Draenei)	nmed	nightelf	war3mapImport
 n0BV	main	used	building	Drustvar	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n0BW	main	used	building	Stormsong Valley	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n0BX	main	used	building	Tiragarde Sound	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
-n0CC	main	unused	unit	Shadowforge Titan	(Ragnaros)	nwrg	human	war3mapImported\Unit_DwarfGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronGolem.blp	-	-	-	-	-	-	A064,A0CC,ACrk	-
+n0CC	main	used	unit	Shadowforge Titan	(Ragnaros)	nwrg	human	war3mapImported\Unit_DwarfGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronGolem.blp	-	-	-	-	-	-	A064,A0CC,ACrk	-
 n0CF	main	used	unit	Fire Wyrm	(Ragnaros)	nstw	human	war3mapImported\FireElemental.mdl	main	ReplaceableTextures\CommandButtons\BTNFireDragonElemental.blp	Skywall	sELF	-	-	-	-	A089	-
 n0CG	main	used	unit	Core Hound	(Ragnaros)	nfel	human	war3mapImported\CoreHoundOptimized.mdl	main	ReplaceableTextures\CommandButtons\BTNCoreHoundIcon.blp	Skywall	sELF	-	-	-	-	A0X9,A0XA,AELS,Aion,Atru	-
 n0CI	main	used	unit	Goliathon	(2)	nba2	undead	war3mapImported\DragonboneGolem.mdl	main	ReplaceableTextures/CommandButtons/BTNCrystalGenerator.blp	-	-	-	-	-	-	A0AW,A0V6,A0ZN,ACmi,ACtb	-
@@ -937,7 +937,7 @@ n0CX	main	used	unit	Lightforged Warframe	(Draenei)	ninf	nightelf	war3mapImported
 n0CY	main	used	unit	Black Hole	-	ntor	human	war3mapImported\BlackHole.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackHole.blp	-	-	-	-	-	-	A11L,A11M,Aloc	-
 n0CZ	main	used	unit	Dreadnaught	(Ironforge)	nbal	human	war3mapImported\DwarfDreadNaughtRocket.mdl	main	ReplaceableTextures\CommandButtons\BTNDreadnaughtDwarf.blp	Ironforge	harm	-	-	-	-	-	-
 n0D0	main	used	unit	Dalaran Shield Level 1	-	ntor	human	war3mapImported\Dalaran Shield.mdl	main	ReplaceableTextures\CommandButtons\BTNNetherShield.blp	-	-	-	-	-	-	A11Q,A13M,Aloc	-
-n0D1	main	unused	unit	Murloc Sorcerer	(Creep-Loch Modan)	Nmsr	creeps	Units\Creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	AInv,ANrf	-
+n0D1	main	used	unit	Murloc Sorcerer	(Creep-Loch Modan)	Nmsr	creeps	Units\Creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	AInv,ANrf	-
 n0D6	main	used	building	Control Point Defender	(Warsong)	nbt1	orc	war3mapImported\WatchTowerHumanV1.03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	-	-	-	-	-	-	A0ZQ	-
 n0D8	main	used	building	Vendor-hall	(Scarlet Shop)	nmrk	human	war3mapImported\StromgardeTradeHouse.mdl	main	ReplaceableTextures\CommandButtons\BTNScarletTradeHouse.blp	Scarlet Crusade	h022	-	-	-	-	Aall,Apit	-
 n0D9	main	used	building	Slipstream Portal	(Stormwind - Khadgar)	nwgt	human	doodads\cinematic\ShimmeringPortal\ShimmeringPortal.mdl	stock	ReplaceableTextures\CommandButtons\BTNPortal.blp	-	-	-	-	-	-	A012,Avul,Awrp	-
@@ -948,7 +948,7 @@ n0DO	main	used	unit	Doom Guard	(Legion)	nbal	undead	units\demon\DoomGuard\DoomGu
 n0DU	main	used	building	Pyramid of Madness	(Nzoth Other)	nntt	naga	war3mapImported\BlackEmpireMainBuilding.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireCathedralOfMadness.blp	-	-	n0B4,n0B5	-	-	-	LEca	-
 n0DV	main	used	building	Control Point Defender	(Nzoth tower)	nntg	naga	war3mapImported\Building_NyAlothaObeliskFix.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireTowerViciousWatcher.blp	-	-	-	-	-	-	A0ZM	h06S
 n0DW	main	used	building	Control Point Defender	(Cthun tower)	nntg	naga	war3mapImported\CthunTentacleEye.mdl	main	ReplaceableTextures\CommandButtons\BTNZigguratUpgrade.blp	-	-	-	-	-	-	A0ZO	h06S
-n0DY	main	unused	unit	Dragozer - 8v8 season 1 champion	(Patrons)	npig	critters	Doodads\Cityscape\Props\City_Statue\City_Statue.mdl	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Avul	-
+n0DY	main	used	unit	Dragozer - 8v8 season 1 champion	(Patrons)	npig	critters	Doodads\Cityscape\Props\City_Statue\City_Statue.mdl	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Avul	-
 n0DZ	main	used	building	The Well of Eternity	(Sunfury Other)	nheb	human	war3mapImported\Fountainhead 242.mdl	main	ReplaceableTextures\CommandButtons\BTNFountainOfLife.blp	Sunfury	-	-	-	-	-	A12M	-
 n0E0	main	used	building	Sky-Fury Tower	(Sunfury tower)	negt	human	war3mapImported\BE_Tower.mdl	main	ReplaceableTextures\CommandButtons\BTNBE_TowerMagic.blp	Sunfury	-	-	-	-	-	-	h0C8
 n0E1	main	used	building	Improved Sky-Fury Tower	(Sunfury tower)	negt	human	war3mapImported\BE_Tower.mdl	main	ReplaceableTextures\CommandButtons\BTNBE_TowerMagic.blp	Sunfury	-	-	-	-	-	-	-
@@ -961,7 +961,6 @@ n0E9	main	used	unit	Chaos Warlock	(Warsong)	nogn	orc	units\demon\ChaosWarlock\Ch
 n0EA	main	used	unit	Dalaran Shield Level 3	-	ntor	human	war3mapImported\Dalaran Shield.mdl	main	ReplaceableTextures\CommandButtons\BTNNetherShield.blp	-	-	-	-	-	-	A0EW,A11Q,Aloc	-
 n0EB	main	used	building	Jintha'Alor	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n0EC	main	used	building	Mord’rethar	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
-n0FB	main	used	building	Fallback	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	Avul	-
 nAT1	main	used	unit	Tornado	(Al'akir - Level 1)	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	A02S,Aasl,Atsp,Avul	-
 nAT2	main	used	unit	Tornado	(Al'akir - Level 2)	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	A0H8,Aasl,Atsp,Avul	-
 nAt3	main	used	unit	Tornado	(Al'akir - Level 3)	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	A0H9,Aasl,Atsp,Avul	-
@@ -974,53 +973,54 @@ nNya	main	used	building	Ny'alotha, the Waking City	-	ncop	creeps	buildings\other
 nTFW	main	used	building	Throne of the Four Winds	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
 nTWL	main	used	building	Twilight Landing	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 nVXP	main	used	building	The Vortex Pinnacle	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
-nadr	main	unused	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
-nadw	main	unused	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
-nahy	main	unused	unit	Ancient Hydra	-	nahy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACdv,Advc,Aspo,Aspy,Awrh	-
-nanb	main	unused	unit	Barbed Arachnathid	-	nanb	creeps	Units\Creeps\Archnathid\Archnathid	stock	ReplaceableTextures\CommandButtons\BTNArachnathid.blp	-	-	-	-	-	-	-	-
-nanc	main	unused	unit	Crystal Arachnathid	-	nanc	creeps	Units\Creeps\ArchnathidGreen\ArchnathidGreen	stock	ReplaceableTextures\CommandButtons\BTNArachnathidGreen.blp	-	-	-	-	-	-	-	-
-nano	main	unused	unit	Overlord Arachnathid	-	nano	creeps	Units\Creeps\Archnathidpurple\Archnathidpurple	stock	ReplaceableTextures\CommandButtons\BTNArachnathidpurple.blp	-	-	-	-	-	-	ACac	-
-nanw	main	unused	unit	Warrior Arachnathid	-	nanw	creeps	Units\Creeps\ArchnathidGreen\ArchnathidGreen	stock	ReplaceableTextures\CommandButtons\BTNArachnathidGreen.blp	-	-	-	-	-	-	-	-
-narg	main	unused	unit	Battle Golem	-	narg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
-nass	main	unused	unit	Assassin	-	nass	creeps	units\creeps\BanditSpearThrower\BanditSpearThrower	stock	ReplaceableTextures\CommandButtons\BTNBanditSpearThrower.blp	-	-	-	-	-	-	ACvs,Ashm	-
+nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+6	-	Avul	-
+nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
+nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
+nahy	main	used	unit	Ancient Hydra	-	nahy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACdv,Advc,Aspo,Aspy,Awrh	-
+nanb	main	used	unit	Barbed Arachnathid	-	nanb	creeps	Units\Creeps\Archnathid\Archnathid	stock	ReplaceableTextures\CommandButtons\BTNArachnathid.blp	-	-	-	-	-	-	-	-
+nanc	main	used	unit	Crystal Arachnathid	-	nanc	creeps	Units\Creeps\ArchnathidGreen\ArchnathidGreen	stock	ReplaceableTextures\CommandButtons\BTNArachnathidGreen.blp	-	-	-	-	-	-	-	-
+nano	main	used	unit	Overlord Arachnathid	-	nano	creeps	Units\Creeps\Archnathidpurple\Archnathidpurple	stock	ReplaceableTextures\CommandButtons\BTNArachnathidpurple.blp	-	-	-	-	-	-	ACac	-
+nanw	main	used	unit	Warrior Arachnathid	-	nanw	creeps	Units\Creeps\ArchnathidGreen\ArchnathidGreen	stock	ReplaceableTextures\CommandButtons\BTNArachnathidGreen.blp	-	-	-	-	-	-	-	-
+narg	main	used	unit	Battle Golem	-	narg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
+nass	main	used	unit	Assassin	-	nass	creeps	units\creeps\BanditSpearThrower\BanditSpearThrower	stock	ReplaceableTextures\CommandButtons\BTNBanditSpearThrower.blp	-	-	-	-	-	-	ACvs,Ashm	-
 nbal	main	used	unit	Lesser Doom Guard	(Eye of Sargeras)	nbal	demon	units\demon\DoomGuard\DoomGuard	stock	ReplaceableTextures\CommandButtons\BTNDoomGuard.blp	-	-	-	-	-	-	A07L,A095,ACrf,ACrk	-
-nban	main	unused	unit	Bandit	-	nban	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	Ashm	-
-nbda	main	unused	unit	Dragonspawn Apprentice	-	nbda	creeps	Units\Creeps\DragonSpawnGreen\DragonSpawnGreen	stock	ReplaceableTextures\CommandButtons\BTNGreenDragonSpawn.blp	-	-	-	-	-	-	ACev,ACrj	-
+nban	main	used	unit	Bandit	-	nban	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	Ashm	-
+nbda	main	used	unit	Dragonspawn Apprentice	-	nbda	creeps	Units\Creeps\DragonSpawnGreen\DragonSpawnGreen	stock	ReplaceableTextures\CommandButtons\BTNGreenDragonSpawn.blp	-	-	-	-	-	-	ACev,ACrj	-
 nbdk	main	used	unit	Obsidian Drake	(Fel)	nbdk	orc	units\creeps\BlackDragon\BlackDragon	stock	ReplaceableTextures\CommandButtons\BTNBlackDragon.blp	Fel Horde	o02X	-	-	-	-	A0TU,Advc,ZBIN	R09X,o030
-nbdo	main	unused	unit	Dragonspawn Overseer	-	nbdo	creeps	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNpurpleDragonSpawn.blp	-	-	-	-	-	-	ACav,ACbf,ACev,Arsk	-
-nbdw	main	unused	unit	Dragonspawn Warrior	-	nbdw	creeps	Units\Creeps\DragonSpawnPurple\DragonSpawnPurple	stock	ReplaceableTextures\CommandButtons\BTNBlueDragonSpawn.blp	-	-	-	-	-	-	ACev	-
+nbdo	main	used	unit	Dragonspawn Overseer	-	nbdo	creeps	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNpurpleDragonSpawn.blp	-	-	-	-	-	-	ACav,ACbf,ACev,Arsk	-
+nbdw	main	used	unit	Dragonspawn Warrior	-	nbdw	creeps	Units\Creeps\DragonSpawnPurple\DragonSpawnPurple	stock	ReplaceableTextures\CommandButtons\BTNBlueDragonSpawn.blp	-	-	-	-	-	-	ACev	-
 nbee	main	used	unit	Architect	(Quelthalas, Worker)	nbee	human	units\critters\HighElfPeasant\HighElfPeasant	stock	ReplaceableTextures\CommandButtons\BTNBloodElfPeasant.blp	Quel'thalas	h003,h033,h03S,h03T,h05C,n001,n06Y,n079	-	h01H,h02Y,h033,h034,h03J,h04V,h073,h077,n0A2,nefm,nheb	-	-	A041,Ahrp	-
 nbel	main	used	unit	Sunfury Warrior	(Quelthalas)	nbel	human	units\other\BloodElfLieutenant\BloodElfLieutenant	stock	ReplaceableTextures\CommandButtons\BTNBloodelvenWarrior.blp	-	nheb	-	-	-	-	A020,A07C,A09B,A0BG,Adef,Aihn	-
 nbfl	main	used	building	Fountain of Blood	(Warsong)	nbfl	orc	buildings\other\FountainOfLifeBlood\FountainOfLifeBlood	stock	ReplaceableTextures\CommandButtons\BTNFountainOfLifeBlood.blp	-	-	-	-	-	-	-	-
-nbld	main	unused	unit	Bandit Lord	-	nbld	creeps	units\creeps\BanditLord\BanditLord	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	-	-
-nbot	main	unused	unit	Goblin Privateer	(Neutral Goblin)	nbot	creeps	war3mapImported\GoblinSteamboat_FinalV3.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	nshp	-	-	-	-	A0ZF,Sch5,Sdro,Slo3	-
-nbrg	main	unused	unit	Brigand	-	nbrg	creeps	units\creeps\BanditSpearThrower\BanditSpearThrower	stock	ReplaceableTextures\CommandButtons\BTNBanditSpearThrower.blp	-	-	-	-	-	-	A0P0,Ashm	-
+nbld	main	used	unit	Bandit Lord	-	nbld	creeps	units\creeps\BanditLord\BanditLord	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	-	-
+nbot	main	used	unit	Goblin Privateer	(Neutral Goblin)	nbot	creeps	war3mapImported\GoblinSteamboat_FinalV3.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	nshp	-	-	-	-	A0ZF,Sch5,Sdro,Slo3	-
+nbrg	main	used	unit	Brigand	-	nbrg	creeps	units\creeps\BanditSpearThrower\BanditSpearThrower	stock	ReplaceableTextures\CommandButtons\BTNBanditSpearThrower.blp	-	-	-	-	-	-	A0P0,Ashm	-
 nbsm	main	used	unit	Book of Medivh	-	nbsm	human	buildings\other\BookOfSummoning\BookOfSummoning	stock	ReplaceableTextures\CommandButtons\BTNBookOfSummoning.blp	-	-	-	-	-	-	Aiun,Avul	-
 nbt1	main	used	building	Boulder Tower	-	nbt1	orc	buildings\other\TowerDefenseTower\TowerDefenseTower	stock	ReplaceableTextures\CommandButtons\BTNRockTower.blp	-	-	-	-	-	-	-	ofrt
 nbt2	main	used	building	Improved Boulder Tower	-	nbt2	orc	buildings\other\TowerDefenseTower\TowerDefenseTower	stock	ReplaceableTextures\CommandButtons\BTNAdvancedRockTower.blp	Frostwolf,Warsong	-	-	-	-	-	-	R04R
-nbwd	main	unused	building	Barrow Den	-	nbwd	nightelf	buildings\other\BarrowDens\BarrowDens	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	-	-	e00N,ewsp	-	-	-	-	-
-nbzw	main	unused	unit	Bronze Dragon Whelp	-	nbzw	creeps	units\creeps\BronzeDragonWelp\BronzeDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	-	-	-	-	-	-	Alit,Aslo	-
+nbwd	main	used	building	Barrow Den	-	nbwd	nightelf	buildings\other\BarrowDens\BarrowDens	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	-	-	e00N,ewsp	-	-	-	-	-
+nbzw	main	used	unit	Bronze Dragon Whelp	-	nbzw	creeps	units\creeps\BronzeDragonWelp\BronzeDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	-	-	-	-	-	-	Alit,Aslo	-
 ncap	main	used	building	Corrupted Ancient Protector	-	ncap	nightelf	buildings\demon\CorruptedAncientProtector\CorruptedAncientProtector	stock	ReplaceableTextures\CommandButtons\BTNCorruptedAncientProtector.blp	-	-	-	-	-	-	Aeat,Aro2	-
-ncaw	main	unused	building	Corrupted Ancient of War	-	ncaw	nightelf	buildings\demon\CorruptedAncientofWar\CorruptedAncientofWar	stock	ReplaceableTextures\CommandButtons\BTNCorruptedAncientOfWar.blp	-	-	-	-	-	-	Aeat,Aro1	-
-ncb0	main	unused	building	City Building	0	ncb0	human	buildings\other\CityBuildingSmall45_0\CityBuildingSmall45_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb1	main	unused	building	City Building	1	ncb1	human	buildings\other\CityBuildingSmall45_1\CityBuildingSmall45_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb2	main	unused	building	City Building	2	ncb2	human	buildings\other\CityBuildingSmall45_2\CityBuildingSmall45_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb3	main	unused	building	City Building	3	ncb3	human	buildings\other\CityBuildingSmall90_0\CityBuildingSmall90_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb4	main	unused	building	City Building	4	ncb4	human	buildings\other\CityBuildingSmall90_1\CityBuildingSmall90_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb5	main	unused	building	City Building	5	ncb5	human	buildings\other\CityBuildingSmall90_2\CityBuildingSmall90_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb6	main	unused	building	City Building	6	ncb6	human	buildings\other\CityBuildingSmall135_0\CityBuildingSmall135_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb7	main	unused	building	City Building	7	ncb7	human	buildings\other\CityBuildingSmall135_1\CityBuildingSmall135_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb8	main	unused	building	City Building	8	ncb8	human	buildings\other\CityBuildingSmall135_2\CityBuildingSmall135_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncb9	main	unused	building	City Building	9	ncb9	human	buildings\other\CityBuildingSmall0_0\CityBuildingSmall0_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncba	main	unused	building	City Building	10	ncba	human	buildings\other\CityBuildingSmall0_1\CityBuildingSmall0_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncbb	main	unused	building	City Building	11	ncbb	human	buildings\other\CityBuildingSmall0_2\CityBuildingSmall0_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncbc	main	unused	building	City Building	12	ncbc	human	buildings\other\CityBuildingLarge_0\CityBuildingLarge_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncbd	main	unused	building	City Building	13	ncbd	human	buildings\other\CityBuildingLarge_45\CityBuildingLarge_45	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncbe	main	unused	building	City Building	14	ncbe	human	buildings\other\CityBuildingLarge_90\CityBuildingLarge_90	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncbf	main	unused	building	City Building	15	ncbf	human	buildings\other\CityBuildingLarge_135\CityBuildingLarge_135	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
-ncea	main	unused	unit	Centaur Archer	-	ncea	creeps	units\creeps\CentaurArcher\CentaurArcher	stock	ReplaceableTextures\CommandButtons\BTNCentaurArcher.blp	-	-	-	-	-	-	-	-
+ncaw	main	used	building	Corrupted Ancient of War	-	ncaw	nightelf	buildings\demon\CorruptedAncientofWar\CorruptedAncientofWar	stock	ReplaceableTextures\CommandButtons\BTNCorruptedAncientOfWar.blp	-	-	-	-	-	-	Aeat,Aro1	-
+ncb0	main	used	building	City Building	0	ncb0	human	buildings\other\CityBuildingSmall45_0\CityBuildingSmall45_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb1	main	used	building	City Building	1	ncb1	human	buildings\other\CityBuildingSmall45_1\CityBuildingSmall45_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb2	main	used	building	City Building	2	ncb2	human	buildings\other\CityBuildingSmall45_2\CityBuildingSmall45_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb3	main	used	building	City Building	3	ncb3	human	buildings\other\CityBuildingSmall90_0\CityBuildingSmall90_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb4	main	used	building	City Building	4	ncb4	human	buildings\other\CityBuildingSmall90_1\CityBuildingSmall90_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb5	main	used	building	City Building	5	ncb5	human	buildings\other\CityBuildingSmall90_2\CityBuildingSmall90_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb6	main	used	building	City Building	6	ncb6	human	buildings\other\CityBuildingSmall135_0\CityBuildingSmall135_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb7	main	used	building	City Building	7	ncb7	human	buildings\other\CityBuildingSmall135_1\CityBuildingSmall135_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb8	main	used	building	City Building	8	ncb8	human	buildings\other\CityBuildingSmall135_2\CityBuildingSmall135_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncb9	main	used	building	City Building	9	ncb9	human	buildings\other\CityBuildingSmall0_0\CityBuildingSmall0_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncba	main	used	building	City Building	10	ncba	human	buildings\other\CityBuildingSmall0_1\CityBuildingSmall0_1	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncbb	main	used	building	City Building	11	ncbb	human	buildings\other\CityBuildingSmall0_2\CityBuildingSmall0_2	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncbc	main	used	building	City Building	12	ncbc	human	buildings\other\CityBuildingLarge_0\CityBuildingLarge_0	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncbd	main	used	building	City Building	13	ncbd	human	buildings\other\CityBuildingLarge_45\CityBuildingLarge_45	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncbe	main	used	building	City Building	14	ncbe	human	buildings\other\CityBuildingLarge_90\CityBuildingLarge_90	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncbf	main	used	building	City Building	15	ncbf	human	buildings\other\CityBuildingLarge_135\CityBuildingLarge_135	stock	ReplaceableTextures\CommandButtons\BTNGenericHumanBuilding.blp	-	-	-	-	-	-	-	-
+ncea	main	used	unit	Centaur Archer	-	ncea	creeps	units\creeps\CentaurArcher\CentaurArcher	stock	ReplaceableTextures\CommandButtons\BTNCentaurArcher.blp	-	-	-	-	-	-	-	-
 ncen	main	used	unit	Centaur Outrunner	-	ncen	creeps	units\creeps\Centaur\Centaur	stock	ReplaceableTextures\CommandButtons\BTNcentaur.blp	-	o04M	-	-	-	-	A020	-
-ncer	main	unused	unit	Centaur Drudge	-	ncer	creeps	units\creeps\Centaur\Centaur	stock	ReplaceableTextures\CommandButtons\BTNCentaur.blp	-	-	-	-	-	-	-	-
+ncer	main	used	unit	Centaur Drudge	-	ncer	creeps	units\creeps\Centaur\Centaur	stock	ReplaceableTextures\CommandButtons\BTNCentaur.blp	-	-	-	-	-	-	-	-
 ncfs	main	used	unit	Watery Minion	(Level 1)	ncfs	creeps	Units\Creeps\MurgulTideWarrior\MurgulTideWarrior	stock	ReplaceableTextures\CommandButtons\BTNMurgulTideWarrior.blp	-	-	-	-	-	-	Xehc	-
 ncg1	main	unused	unit	Clockwerk Goblin	(level 2)	ncg1	other	Units\Creeps\HeroTinkerRobot\HeroTinkerRobot	stock	ReplaceableTextures\CommandButtons\BTNClockWerkGoblin.blp	-	-	-	-	-	-	Asd2	-
 ncg2	main	used	unit	Clockwerk Goblin	(level 4)	ncg2	other	Units\Creeps\HeroTinkerRobot\HeroTinkerRobot	stock	ReplaceableTextures\CommandButtons\BTNClockWerkGoblin.blp	-	-	-	-	-	-	A0HX	-
@@ -1030,162 +1030,162 @@ nchg	main	used	unit	Fel Grunt	(Fel)	nchg	orc	units\demon\ChaosGrunt\ChaosGrunt	s
 nchp	main	used	unit	Mage	(Lordaeron)	nchp	human	war3mapImported\LordaeronMagician.mdl	main	ReplaceableTextures\CommandButtons\BTNSorceress.blp	Lordaeron	h035	-	-	-	-	A014,A0E7,A10W,Aihn	-
 nchr	main	used	unit	Fel Raider	(Fel)	nchr	orc	units\demon\ChaosWolfRider\ChaosWolfRider	stock	ReplaceableTextures\CommandButtons\BTNChaosWolfRider.blp	Fel Horde	o02X	-	-	-	-	A07J,A0EH,A0ES,A0I8,A0LQ,A0SX,Aion	-
 nchw	main	used	unit	Fel Warlock	(Fel)	nchw	orc	units\demon\ChaosWarlock\ChaosWarlock	stock	ReplaceableTextures\CommandButtons\BTNChaosWarlock.blp	Fel Horde	o033	-	-	-	-	A0F8,A0JI,ACfb,Aion	-
-ncim	main	unused	unit	Centaur Impaler	-	ncim	creeps	units\creeps\CentaurArcher\CentaurArcher	stock	ReplaceableTextures\CommandButtons\BTNCentaurArcher.blp	-	-	-	-	-	-	ACsa	-
-ncks	main	unused	unit	Centaur Sorcerer	-	ncks	creeps	units\creeps\CentaurKhan\CentaurKhan	stock	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	-	-	-	-	-	-	ACbl,ACdm	-
-ncnk	main	unused	unit	Centaur Khan	-	ncnk	creeps	units\creeps\CentaurKhan\CentaurKhan	stock	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	-	-	-	-	-	-	SCae	-
-ncnt	main	unused	building	Centaur Tent	-	ncnt	other	buildings\other\CentaurTent\CentaurTent	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+ncim	main	used	unit	Centaur Impaler	-	ncim	creeps	units\creeps\CentaurArcher\CentaurArcher	stock	ReplaceableTextures\CommandButtons\BTNCentaurArcher.blp	-	-	-	-	-	-	ACsa	-
+ncks	main	used	unit	Centaur Sorcerer	-	ncks	creeps	units\creeps\CentaurKhan\CentaurKhan	stock	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	-	-	-	-	-	-	ACbl,ACdm	-
+ncnk	main	used	unit	Centaur Khan	-	ncnk	creeps	units\creeps\CentaurKhan\CentaurKhan	stock	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	-	-	-	-	-	-	SCae	-
+ncnt	main	used	building	Centaur Tent	-	ncnt	other	buildings\other\CentaurTent\CentaurTent	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
 ncpn	main	used	unit	Fel Peon	(Fel, Worker)	ncpn	orc	units\demon\ChaosPeon\ChaosPeon	stock	ReplaceableTextures\CommandButtons\BTNChaosPeon.blp	Fel Horde	o008,o00F,o013,o017,o02Y,o02Z,o030	-	n0AP,o02V,o02W,o02X,o02Y,o031,o032,o033,o034,ocbw,u00Q	-	-	A041,A08C,Arep	-
-nct1	main	unused	building	Centaur Tent	(2)	nct1	other	buildings\other\CentaurTent1\CentaurTent1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nct2	main	unused	building	Centaur Tent	(3)	nct2	other	buildings\other\CentaurTent2\CentaurTent2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nctl	main	unused	building	Corrupted Tree of Life	-	nctl	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNCorruptedTreeOfLife.blp	-	-	o000	-	Renb	-	Aeat,Aro1,Atol	-
-ndfl	main	unused	building	Defiled Fountain of Life	(Fel Horde)	ndfl	orc	buildings\other\FountainOfLifeDefiled\FountainOfLifeDefiled	stock	ReplaceableTextures\CommandButtons\BTNFountainOfLifeDefiled.blp	-	-	-	-	-	-	A0BN	-
+nct1	main	used	building	Centaur Tent	(2)	nct1	other	buildings\other\CentaurTent1\CentaurTent1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nct2	main	used	building	Centaur Tent	(3)	nct2	other	buildings\other\CentaurTent2\CentaurTent2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nctl	main	used	building	Corrupted Tree of Life	-	nctl	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNCorruptedTreeOfLife.blp	-	-	o000	-	Renb	-	Aeat,Aro1,Atol	-
+ndfl	main	used	building	Defiled Fountain of Life	(Fel Horde)	ndfl	orc	buildings\other\FountainOfLifeDefiled\FountainOfLifeDefiled	stock	ReplaceableTextures\CommandButtons\BTNFountainOfLifeDefiled.blp	-	-	-	-	-	-	A0BN	-
 ndgt	main	used	building	Kirin Tor Tower	(Dalaran Tower)	ndgt	human	war3mapImported\Building_DalaranWatchtower.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneGuardTowerA.blp	Dalaran	-	-	-	-	-	-	h066
 ndmg	main	used	building	Demon Gate	(Legion Siege)	ndmg	undead	war3mapImported\DemonGateV2_01.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonGate.blp	Legion	u00D	n04O,n04U,n0DO	-	-	-	A126	R04B
 ndqp	main	used	unit	Maiden of Dominance	(Fel-Portal-Eye of Sargeras)	ndqp	orc	units\demon\DemonessBlue\DemonessBlue	stock	ReplaceableTextures\CommandButtons\BTNBlueDemoness.blp	-	-	-	-	-	-	Asps	-
 ndqs	main	used	unit	Queen of Suffering	(Fel-Portal)	ndqs	orc	units\demon\Demoness\Demoness.mdl	stock	ReplaceableTextures\CommandButtons\BTNBlueDemoness.blp	-	-	-	-	-	-	ACua	-
-ndqt	main	unused	unit	Vile Temptress	-	ndqt	creeps	units\demon\Demoness\Demoness	stock	ReplaceableTextures\CommandButtons\BTNDemoness.blp	-	-	-	-	-	-	-	-
+ndqt	main	used	unit	Vile Temptress	-	ndqt	creeps	units\demon\Demoness\Demoness	stock	ReplaceableTextures\CommandButtons\BTNDemoness.blp	-	-	-	-	-	-	-	-
 ndr2	main	used	unit	Dark Minion	(Scourge- Death Knight)	ndr2	undead	war3mapImported\SkeletonBerserker.mdl	main	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	A07F,A0T2	-
-ndrd	main	unused	unit	Draenei Darkslayer	-	ndrd	creeps	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	ACim	-
-ndrf	main	unused	unit	Draenei Guardian	-	ndrf	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
-ndrh	main	unused	unit	Draenei Harbinger	-	ndrh	creeps	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	-	-	-	-	-	-	ACbb,Ache	-
+ndrd	main	used	unit	Draenei Darkslayer	-	ndrd	creeps	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	ACim	-
+ndrf	main	used	unit	Draenei Guardian	-	ndrf	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
+ndrh	main	used	unit	Draenei Harbinger	-	ndrh	creeps	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	-	-	-	-	-	-	ACbb,Ache	-
 ndrn	main	used	unit	Deathsworn	(Illidari)	ndrn	naga	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	Illidan	n08W	-	-	-	-	Aihn,YBBS,YBKS	-
 ndrs	main	used	unit	Seer	(Illidari)	ndrs	naga	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	Illidan	n08W	-	-	-	-	ACls,Aihn,YBAW,YBSW	-
-ndrv	main	unused	unit	Revenant of the Depths	-	ndrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	-	-
-ndrw	main	unused	unit	Draenei Watcher	-	ndrw	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
-ndtb	main	unused	unit	Dark Troll Berserker	-	ndtb	creeps	units\creeps\DarkTroll\DarkTroll	stock	ReplaceableTextures\CommandButtons\BTNDarkTroll.blp	-	-	-	-	-	-	-	-
-ndth	main	unused	unit	Dark Troll High Priest	-	ndth	creeps	units\creeps\DarkTrollShadowPriest\DarkTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollShadowPriest.blp	-	-	-	-	-	-	ACsl,Anh2	-
-ndtp	main	unused	unit	Dark Troll Shadow Priest	-	ndtp	creeps	units\creeps\DarkTrollShadowPriest\DarkTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollShadowPriest.blp	-	-	-	-	-	-	Anh1	-
+ndrv	main	used	unit	Revenant of the Depths	-	ndrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	-	-
+ndrw	main	used	unit	Draenei Watcher	-	ndrw	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
+ndtb	main	used	unit	Dark Troll Berserker	-	ndtb	creeps	units\creeps\DarkTroll\DarkTroll	stock	ReplaceableTextures\CommandButtons\BTNDarkTroll.blp	-	-	-	-	-	-	-	-
+ndth	main	used	unit	Dark Troll High Priest	-	ndth	creeps	units\creeps\DarkTrollShadowPriest\DarkTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollShadowPriest.blp	-	-	-	-	-	-	ACsl,Anh2	-
+ndtp	main	used	unit	Dark Troll Shadow Priest	-	ndtp	creeps	units\creeps\DarkTrollShadowPriest\DarkTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollShadowPriest.blp	-	-	-	-	-	-	Anh1	-
 ndtr	main	used	unit	Dark Troll	-	ndtr	creeps	units\creeps\DarkTroll\DarkTroll	stock	ReplaceableTextures\CommandButtons\BTNDarkTroll.blp	-	-	-	-	-	-	ACct	-
-ndtt	main	unused	unit	Dark Troll Trapper	-	ndtt	creeps	units\creeps\DarkTrollTrapper\DarkTrollTrapper	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollTrapper.blp	-	-	-	-	-	-	A07A,ACct	-
+ndtt	main	used	unit	Dark Troll Trapper	-	ndtt	creeps	units\creeps\DarkTrollTrapper\DarkTrollTrapper	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollTrapper.blp	-	-	-	-	-	-	A07A,ACct	-
 ndtw	main	used	unit	Xu'ba	-	ndtw	creeps	units\creeps\DarkTrollTrapper\DarkTrollTrapper	stock	ReplaceableTextures\CommandButtons\BTNDarkTrollTrapper.blp	-	-	-	-	-	-	A07G,ACct,Aihn	-
-nef0	main	unused	building	High Elven Farm	(Quelthalas)	nef0	human	buildings\other\ElvenVillageBuilding0\ElvenVillageBuilding0	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef1	main	unused	building	High Elven Farm	(Quelthalas)	nef1	human	buildings\other\ElvenVillageBuilding1\ElvenVillageBuilding1	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef2	main	unused	building	High Elven Farm	(Quelthalas)	nef2	human	buildings\other\ElvenVillageBuilding2\ElvenVillageBuilding2	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef4	main	unused	building	High Elven Farm	(Quelthalas)	nef4	human	buildings\other\ElvenVillageBuilding4\ElvenVillageBuilding4	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef5	main	unused	building	High Elven Farm	(Quelthalas)	nef5	human	buildings\other\ElvenVillageBuilding5\ElvenVillageBuilding5	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef6	main	unused	building	High Elven Farm	(Quelthalas)	nef6	human	buildings\other\ElvenVillageBuilding6\ElvenVillageBuilding6	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
-nef7	main	unused	building	High Elven Farm	(Quelthalas)	nef7	human	buildings\other\ElvenVillageBuilding7\ElvenVillageBuilding7	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef0	main	used	building	High Elven Farm	(Quelthalas)	nef0	human	buildings\other\ElvenVillageBuilding0\ElvenVillageBuilding0	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef1	main	used	building	High Elven Farm	(Quelthalas)	nef1	human	buildings\other\ElvenVillageBuilding1\ElvenVillageBuilding1	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef2	main	used	building	High Elven Farm	(Quelthalas)	nef2	human	buildings\other\ElvenVillageBuilding2\ElvenVillageBuilding2	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef4	main	used	building	High Elven Farm	(Quelthalas)	nef4	human	buildings\other\ElvenVillageBuilding4\ElvenVillageBuilding4	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef5	main	used	building	High Elven Farm	(Quelthalas)	nef5	human	buildings\other\ElvenVillageBuilding5\ElvenVillageBuilding5	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef6	main	used	building	High Elven Farm	(Quelthalas)	nef6	human	buildings\other\ElvenVillageBuilding6\ElvenVillageBuilding6	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
+nef7	main	used	building	High Elven Farm	(Quelthalas)	nef7	human	buildings\other\ElvenVillageBuilding7\ElvenVillageBuilding7	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	-	-	-	-	-	-	-	-
 nefm	main	used	building	Residence	(Quelthalas)	nefm	human	buildings\other\ElvenFarm\ElvenFarm	stock	ReplaceableTextures\CommandButtons\BTNElvenFarm.blp	Quel'thalas	nbee	-	-	-	-	-	-
 negt	main	used	building	Sun Tower	-	negt	human	buildings\other\ElvenGuardMagicTower\ElvenGuardMagicTower.mdl	stock	ReplaceableTextures\CommandButtons\BTNElvenSkyTower.blp	Quel'thalas	-	-	-	-	-	-	h02Y
-nehy	main	unused	unit	Elder Hydra	-	nehy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACff	-
-nele	main	unused	unit	Enraged Elemental	-	nele	creeps	units\human\WaterElemental\WaterElemental	stock	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	-	-	-	-	-	-	ACcv	-
+nehy	main	used	unit	Elder Hydra	-	nehy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACff	-
+nele	main	used	unit	Enraged Elemental	-	nele	creeps	units\human\WaterElemental\WaterElemental	stock	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	-	-	-	-	-	-	ACcv	-
 nemi	main	used	unit	King Terenas Menethil	(Lordaeron)	nemi	human	units\human\HeroPaladinBoss2\HeroPaladinBoss2.mdl	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	ACsk,Avul	-
-nenc	main	unused	unit	Corrupted Treant	-	nenc	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	-	-
-nenf	main	unused	unit	Enforcer	-	nenf	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	A020,ACct,ACev	-
-nenp	main	unused	unit	Poison Treant	-	nenp	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	ACvs,Aap3	-
-nepl	main	unused	unit	Plague Treant	-	nepl	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	ACce,Aap3,Aenr	-
+nenc	main	used	unit	Corrupted Treant	-	nenc	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	-	-
+nenf	main	used	unit	Enforcer	-	nenf	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	A020,ACct,ACev	-
+nenp	main	used	unit	Poison Treant	-	nenp	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	ACvs,Aap3	-
+nepl	main	used	unit	Plague Treant	-	nepl	creeps	units\creeps\CorruptedEnt\CorruptedEnt	stock	ReplaceableTextures\CommandButtons\BTNCorruptedEnt.blp	-	-	-	-	-	-	ACce,Aap3,Aenr	-
 nerd	main	used	unit	Eredar Wizard	(Eye of Sargeras)	nerd	creeps	units\demon\EredarWarlockPurple\EredarWarlockPurple	stock	ReplaceableTextures\CommandButtons\BTNEredarWarlockPurple.blp	-	-	-	-	-	-	ACfb,ACpa	-
-ners	main	unused	unit	Eredar Sorcerer	(Fel-Portal)	ners	orc	units\demon\EredarWarlockPurple\EredarWarlockPurple.mdl	stock	ReplaceableTextures\CommandButtons\BTNEredarRed.blp	-	-	-	-	-	-	A077,ACpa	-
+ners	main	used	unit	Eredar Sorcerer	(Fel-Portal)	ners	orc	units\demon\EredarWarlockPurple\EredarWarlockPurple.mdl	stock	ReplaceableTextures\CommandButtons\BTNEredarRed.blp	-	-	-	-	-	-	A077,ACpa	-
 nfa1	main	used	unit	Pocket Factory	(Level 2)	nfa1	other	Units\Creeps\HeroTinkerFactory\HeroTinkerFactory	stock	ReplaceableTextures\CommandButtons\BTNPocketFactory.blp	-	-	-	-	-	-	ARal	-
 nfa2	main	used	unit	Pocket Factory	(Level 3)	nfa2	other	Units\Creeps\HeroTinkerFactory\HeroTinkerFactory	stock	ReplaceableTextures\CommandButtons\BTNPocketFactory.blp	-	-	-	-	-	-	ARal	-
 nfel	main	used	unit	Fel Stalker	(Summoner-Warlock-Eye of Sargeras)	nfel	undead	units\demon\felhound\felhound	stock	ReplaceableTextures\CommandButtons\BTNFelHound.blp	-	-	-	-	-	-	A06Y,A0BU	-
-nfgb	main	unused	unit	Wrathguard	(Fel Horde-Portal)	nfgb	orc	units\demon\Felgaurd\Felgaurd	stock	ReplaceableTextures\CommandButtons\BTNFelGuard.blp	-	-	-	-	-	-	A020,A070,A0ER,A0GZ	-
+nfgb	main	used	unit	Wrathguard	(Fel Horde-Portal)	nfgb	orc	units\demon\Felgaurd\Felgaurd	stock	ReplaceableTextures\CommandButtons\BTNFelGuard.blp	-	-	-	-	-	-	A020,A070,A0ER,A0GZ	-
 nfgl	main	used	unit	Plague Titan	(Scourge)	nfgl	undead	units\other\FleshGolem\FleshGolem	stock	ReplaceableTextures\CommandButtons\BTNFleshGolem.blp	Scourge	uslh	-	-	-	n08G	A129,Aap1,Amed,S00L	unp2
-nfgu	main	unused	unit	Felguard	-	nfgu	creeps	units\demon\Felgaurd\Felgaurd	stock	ReplaceableTextures\CommandButtons\BTNFelGuard.blp	-	-	-	-	-	-	-	-
-nfh0	main	unused	building	Forest Troll Hut	-	nfh0	other	buildings\other\ForestTrollHut0\ForestTrollHut0	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nfh1	main	unused	building	Forest Troll Hut	2	nfh1	other	buildings\other\ForestTrollHut1\ForestTrollHut1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nfgu	main	used	unit	Felguard	-	nfgu	creeps	units\demon\Felgaurd\Felgaurd	stock	ReplaceableTextures\CommandButtons\BTNFelGuard.blp	-	-	-	-	-	-	-	-
+nfh0	main	used	building	Forest Troll Hut	-	nfh0	other	buildings\other\ForestTrollHut0\ForestTrollHut0	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nfh1	main	used	building	Forest Troll Hut	2	nfh1	other	buildings\other\ForestTrollHut1\ForestTrollHut1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
 nfod	main	used	unit	Faceless One Deathbringer	-	nfod	creeps	Units\Creeps\FacelessOne\FacelessOne	stock	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	-	-	-	-	-	-	ACad,ACsi	-
 nfoh	main	used	building	Fountain of Health	-	nfoh	other	buildings\other\FountainOfLife\FountainOfHealth	stock	ReplaceableTextures\CommandButtons\BTNFountainOfLife.blp	-	-	-	-	-	-	ACnr	-
-nfov	main	unused	unit	Overlord	-	nfov	creeps	units\demon\FelgaurdBlue\FelgaurdBlue	stock	ReplaceableTextures\CommandButtons\BTNFelGuardBlue.blp	-	-	-	-	-	-	ACce,ACvp,Acht	-
-nfpe	main	unused	unit	Polar Furbolg Elder Shaman	-	nfpe	creeps	units\creeps\PolarFurbolgTracker\PolarFurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgShaman.blp	-	-	-	-	-	-	ACfn,AChv	-
-nfpl	main	unused	unit	Polar Furbolg	-	nfpl	creeps	units\creeps\PolarFurbolg\PolarFurbolg	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolg.blp	-	-	-	-	-	-	-	-
-nfps	main	unused	unit	Polar Furbolg Shaman	-	nfps	creeps	units\creeps\PolarFurbolgTracker\PolarFurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgShaman.blp	-	-	-	-	-	-	ACdm,ACf2	-
-nfpu	main	unused	unit	Polar Furbolg Ursa Warrior	-	nfpu	creeps	units\creeps\PolarFurbolg\PolarFurbolg	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgElder.blp	-	-	-	-	-	-	ACac	-
-nfr1	main	unused	building	Furbolg Hut	2	nfr1	other	buildings\other\FurbolgHut\FurbolgHut	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nfr2	main	unused	building	Furbolg Hut	-	nfr2	other	buildings\other\FurbolgHut2\FurbolgHut2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nfra	main	unused	unit	Furbolg Ursa Warrior	-	nfra	creeps	units\creeps\FurbolgElder\FurbolgElder	stock	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	-	-	-	-	-	-	A0AW,A0W3	-
-nfrb	main	unused	unit	Furbolg Tracker	-	nfrb	creeps	units\creeps\FurbolgTracker\FurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNFurbolgTracker.blp	-	-	-	-	-	-	A0CR,ACff	-
+nfov	main	used	unit	Overlord	-	nfov	creeps	units\demon\FelgaurdBlue\FelgaurdBlue	stock	ReplaceableTextures\CommandButtons\BTNFelGuardBlue.blp	-	-	-	-	-	-	ACce,ACvp,Acht	-
+nfpe	main	used	unit	Polar Furbolg Elder Shaman	-	nfpe	creeps	units\creeps\PolarFurbolgTracker\PolarFurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgShaman.blp	-	-	-	-	-	-	ACfn,AChv	-
+nfpl	main	used	unit	Polar Furbolg	-	nfpl	creeps	units\creeps\PolarFurbolg\PolarFurbolg	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolg.blp	-	-	-	-	-	-	-	-
+nfps	main	used	unit	Polar Furbolg Shaman	-	nfps	creeps	units\creeps\PolarFurbolgTracker\PolarFurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgShaman.blp	-	-	-	-	-	-	ACdm,ACf2	-
+nfpu	main	used	unit	Polar Furbolg Ursa Warrior	-	nfpu	creeps	units\creeps\PolarFurbolg\PolarFurbolg	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgElder.blp	-	-	-	-	-	-	ACac	-
+nfr1	main	used	building	Furbolg Hut	2	nfr1	other	buildings\other\FurbolgHut\FurbolgHut	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nfr2	main	used	building	Furbolg Hut	-	nfr2	other	buildings\other\FurbolgHut2\FurbolgHut2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nfra	main	used	unit	Furbolg Ursa Warrior	-	nfra	creeps	units\creeps\FurbolgElder\FurbolgElder	stock	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	-	-	-	-	-	-	A0AW,A0W3	-
+nfrb	main	used	unit	Furbolg Tracker	-	nfrb	creeps	units\creeps\FurbolgTracker\FurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNFurbolgTracker.blp	-	-	-	-	-	-	A0CR,ACff	-
 nfre	main	used	unit	Furbolg Elder Shaman	(Druids - Cenarius Summon)	nfre	creeps	units\creeps\FurbolgShaman\FurbolgShaman	stock	ReplaceableTextures\CommandButtons\BTNFurbolgShaman.blp	-	-	-	-	-	-	A0EO,ACls,Ault	-
-nfrg	main	unused	unit	Furbolg Champion	-	nfrg	creeps	units\creeps\Furbolg\Furbolg	stock	ReplaceableTextures\CommandButtons\BTNFurbolg.blp	-	-	-	-	-	-	A0CR,ACpv	-
-nfrl	main	unused	unit	Furbolg	-	nfrl	creeps	units\creeps\Furbolg\Furbolg	stock	ReplaceableTextures\CommandButtons\BTNFurbolg.blp	-	-	-	-	-	-	-	-
-nfrs	main	unused	unit	Furbolg Shaman	-	nfrs	creeps	units\creeps\FurbolgShaman\FurbolgShaman	stock	ReplaceableTextures\CommandButtons\BTNFurbolgShaman.blp	-	-	-	-	-	-	AChv,ACr2	-
-nfsh	main	unused	unit	Forest Troll High Priest	-	nfsh	creeps	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	-	-	-	-	-	-	ACd2,ACif,Anh2	-
+nfrg	main	used	unit	Furbolg Champion	-	nfrg	creeps	units\creeps\Furbolg\Furbolg	stock	ReplaceableTextures\CommandButtons\BTNFurbolg.blp	-	-	-	-	-	-	A0CR,ACpv	-
+nfrl	main	used	unit	Furbolg	-	nfrl	creeps	units\creeps\Furbolg\Furbolg	stock	ReplaceableTextures\CommandButtons\BTNFurbolg.blp	-	-	-	-	-	-	-	-
+nfrs	main	used	unit	Furbolg Shaman	-	nfrs	creeps	units\creeps\FurbolgShaman\FurbolgShaman	stock	ReplaceableTextures\CommandButtons\BTNFurbolgShaman.blp	-	-	-	-	-	-	AChv,ACr2	-
+nfsh	main	used	unit	Forest Troll High Priest	-	nfsh	creeps	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	-	-	-	-	-	-	ACd2,ACif,Anh2	-
 nfsp	main	used	unit	Forest Troll Shadow Priest	-	nfsp	creeps	units\creeps\ForestTrollShadowPriest\ForestTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNForestTrollShadowPriest.blp	-	o04M	-	-	-	-	A0AO,A0EZ,ACdm	-
-nftb	main	unused	unit	Forest Troll Berserker	-	nftb	creeps	units\creeps\ForestTroll\ForestTroll	stock	ReplaceableTextures\CommandButtons\BTNForestTroll.blp	-	-	-	-	-	-	ACev,Absk	-
-nftk	main	unused	unit	Warlord	(Warsong)	nftk	orc	units\creeps\IceTroll\IceTroll.mdl	stock	ReplaceableTextures\CommandButtons\BTNTerrorTroll.blp	-	-	-	-	-	-	A0DS,A0DX,A0FJ,ACac,ANtr,Absk,Aion	R02Q
+nftb	main	used	unit	Forest Troll Berserker	-	nftb	creeps	units\creeps\ForestTroll\ForestTroll	stock	ReplaceableTextures\CommandButtons\BTNForestTroll.blp	-	-	-	-	-	-	ACev,Absk	-
+nftk	main	used	unit	Warlord	(Warsong)	nftk	orc	units\creeps\IceTroll\IceTroll.mdl	stock	ReplaceableTextures\CommandButtons\BTNTerrorTroll.blp	-	-	-	-	-	-	A0DS,A0DX,A0FJ,ACac,ANtr,Absk,Aion	R02Q
 nftr	main	used	unit	Forest Troll	-	nftr	creeps	units\creeps\ForestTroll\ForestTroll	stock	ReplaceableTextures\CommandButtons\BTNForestTroll.blp	-	o04M	-	-	-	-	ACev	-
-nftt	main	unused	unit	Forest Troll Trapper	-	nftt	creeps	units\creeps\ForestTrollTrapper\ForestTrollTrapper	stock	ReplaceableTextures\CommandButtons\BTNForestTrollTrapper.blp	-	-	-	-	-	-	ACen,ACev	-
-ngad	main	unused	building	Goblin Laboratory	-	ngad	other	buildings\other\AmmoDump\AmmoDump	stock	ReplaceableTextures\CommandButtons\BTNAmmoDump.blp	-	-	-	-	-	-	Andt,Ane2,Avul	-
+nftt	main	used	unit	Forest Troll Trapper	-	nftt	creeps	units\creeps\ForestTrollTrapper\ForestTrollTrapper	stock	ReplaceableTextures\CommandButtons\BTNForestTrollTrapper.blp	-	-	-	-	-	-	ACen,ACev	-
+ngad	main	used	building	Goblin Laboratory	-	ngad	other	buildings\other\AmmoDump\AmmoDump	stock	ReplaceableTextures\CommandButtons\BTNAmmoDump.blp	-	-	-	-	-	-	Andt,Ane2,Avul	-
 nggr	main	used	unit	Granite Golem	(Quelthalas)	nggr	human	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	ACmi,ACrk,ACtb,Adtg	-
-ngh1	main	unused	unit	Ghost	-	ngh1	creeps	units\creeps\BansheeGhost\BansheeGhost	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	ACps	-
-ngh2	main	unused	unit	Wraith	-	ngh2	creeps	units\creeps\BansheeGhost\BansheeGhost	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	ACcs,ACps	-
+ngh1	main	used	unit	Ghost	-	ngh1	creeps	units\creeps\BansheeGhost\BansheeGhost	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	ACps	-
+ngh2	main	used	unit	Wraith	-	ngh2	creeps	units\creeps\BansheeGhost\BansheeGhost	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	ACcs,ACps	-
 nglm	main	used	unit	Goblin Land Mine	-	nglm	creeps	units\creeps\GoblinLandMine\GoblinLandMine	stock	ReplaceableTextures\CommandButtons\BTNGoblinLandMine.blp	-	-	-	-	-	-	Amin,Amnx	-
 ngme	main	used	building	Goblin Merchant	-	ngme	other	buildings\other\Merchant\Merchant	stock	ReplaceableTextures\CommandButtons\BTNMerchant.blp	-	-	-	-	-	I000,amrc,bspd,dust,pghe,pgma,pomn,prvt,rde3,shea,tret	Aneu,Apit,Avul	-
-ngna	main	unused	unit	Gnoll Poacher	-	ngna	creeps	units\creeps\GnollArcher\GnollArcher	stock	ReplaceableTextures\CommandButtons\BTNGnollArcher.blp	-	-	-	-	-	-	-	-
-ngnb	main	unused	unit	Gnoll Brute	-	ngnb	creeps	units\creeps\Gnoll\Gnoll	stock	ReplaceableTextures\CommandButtons\BTNGnoll.blp	-	-	-	-	-	-	ANbh	-
-ngno	main	unused	unit	Gnoll	-	ngno	creeps	units\creeps\Gnoll\Gnoll	stock	ReplaceableTextures\CommandButtons\BTNGnoll.blp	-	-	-	-	-	-	-	-
-ngns	main	unused	unit	Gnoll Assassin	-	ngns	creeps	units\creeps\GnollArcher\GnollArcher	stock	ReplaceableTextures\CommandButtons\BTNGnollArcher.blp	-	-	-	-	-	-	ACvs	-
-ngnv	main	unused	unit	Gnoll Overseer	-	ngnv	creeps	units\creeps\GnollOverseer\GnollOverseer	stock	ReplaceableTextures\CommandButtons\BTNGnollKing.blp	-	-	-	-	-	-	ACac,ANbh	-
-ngnw	main	unused	unit	Gnoll Warden	-	ngnw	creeps	units\creeps\GnollWarden\GnollWarden	stock	ReplaceableTextures\CommandButtons\BTNGnollWarden.blp	-	-	-	-	-	-	ACpu	-
+ngna	main	used	unit	Gnoll Poacher	-	ngna	creeps	units\creeps\GnollArcher\GnollArcher	stock	ReplaceableTextures\CommandButtons\BTNGnollArcher.blp	-	-	-	-	-	-	-	-
+ngnb	main	used	unit	Gnoll Brute	-	ngnb	creeps	units\creeps\Gnoll\Gnoll	stock	ReplaceableTextures\CommandButtons\BTNGnoll.blp	-	-	-	-	-	-	ANbh	-
+ngno	main	used	unit	Gnoll	-	ngno	creeps	units\creeps\Gnoll\Gnoll	stock	ReplaceableTextures\CommandButtons\BTNGnoll.blp	-	-	-	-	-	-	-	-
+ngns	main	used	unit	Gnoll Assassin	-	ngns	creeps	units\creeps\GnollArcher\GnollArcher	stock	ReplaceableTextures\CommandButtons\BTNGnollArcher.blp	-	-	-	-	-	-	ACvs	-
+ngnv	main	used	unit	Gnoll Overseer	-	ngnv	creeps	units\creeps\GnollOverseer\GnollOverseer	stock	ReplaceableTextures\CommandButtons\BTNGnollKing.blp	-	-	-	-	-	-	ACac,ANbh	-
+ngnw	main	used	unit	Gnoll Warden	-	ngnw	creeps	units\creeps\GnollWarden\GnollWarden	stock	ReplaceableTextures\CommandButtons\BTNGnollWarden.blp	-	-	-	-	-	-	ACpu	-
 ngrd	main	used	unit	Ysondre	(Druids - Cenarius Summon)	ngrd	creeps	units\creeps\GreenDragon\GreenDragon	stock	ReplaceableTextures\CommandButtons\BTNGreenDragon.blp	-	-	-	-	-	-	Adtg,Ault	-
-ngrk	main	unused	unit	Mud Golem	-	ngrk	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	ACrk,ACsw	-
-ngst	main	unused	unit	Rock Golem	(Dalaran-Stone Token)	ngst	human	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	ACtb	-
-ngt2	main	unused	building	Creep Hut	2	ngt2	other	buildings\other\GnollHut2\GnollHut2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+ngrk	main	used	unit	Mud Golem	-	ngrk	creeps	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	ACrk,ACsw	-
+ngst	main	used	unit	Rock Golem	(Dalaran-Stone Token)	ngst	human	units\creeps\RockGolem\RockGolem	stock	ReplaceableTextures\CommandButtons\BTNRockGolem.blp	-	-	-	-	-	-	ACtb	-
+ngt2	main	used	building	Creep Hut	2	ngt2	other	buildings\other\GnollHut2\GnollHut2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
 ngz1	main	used	unit	Amani War Bear	(Level 1)	ngz1	creeps	units\creeps\GrizzlyBear\GrizzlyBear	stock	ReplaceableTextures\CommandButtons\BTNGrizzlyBear.blp	-	-	-	-	-	-	ACbh	-
 ngz2	main	used	unit	Raging Bear	(Level 2)	ngz2	nightelf	units\creeps\GrizzlyBear\GrizzlyBear	stock	ReplaceableTextures\CommandButtons\BTNGrizzlyBear.blp	-	-	-	-	-	-	ANbh	-
 ngz4	main	used	unit	Misha	(Grey - Rexxar Summon)	ngz4	other	units\creeps\GrizzlyBear\GrizzlyBear	stock	ReplaceableTextures\CommandButtons\BTNGrizzlyBear.blp	-	-	-	-	-	-	ACrk,ACro,ANb2	-
-nhar	main	unused	unit	Harpy Scout	-	nhar	creeps	units\creeps\Harpy\Harpy	stock	ReplaceableTextures\CommandButtons\BTNHarpy.blp	-	-	-	-	-	-	-	-
+nhar	main	used	unit	Harpy Scout	-	nhar	creeps	units\creeps\Harpy\Harpy	stock	ReplaceableTextures\CommandButtons\BTNHarpy.blp	-	-	-	-	-	-	-	-
 nhcn	main	used	building	Horn of Cenarius Pedestal	(Creep)	nhcn	nightelf	buildings\other\HornOfCenarius\HornOfCenarius	stock	ReplaceableTextures\CommandButtons\BTNHornOfCenarius.blp	-	-	-	-	-	-	-	-
-nhdc	main	unused	unit	Deceiver	-	nhdc	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	ACcs	-
+nhdc	main	used	unit	Deceiver	-	nhdc	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	ACcs	-
 nhea	main	used	unit	Ranger	(Quelthalas)	nhea	human	units\creeps\HighElfArcher\HighElfArcher	stock	ReplaceableTextures\CommandButtons\BTNHighElvenArcher.blp	Quel'thalas	h05C,nheb	-	-	-	-	A03H,Aihn	h02Y
 nheb	main	used	building	Cantonment	(Quelthalas Barracks)	nheb	human	buildings\other\MageTower\MageTower	stock	ReplaceableTextures\CommandButtons\BTNMageTower.blp	Quel'thalas	nbee	e008,hhes,nbel,nhea	-	R004,R01R,R01S	-	-	-
-nhfp	main	unused	unit	Fallen Priest	-	nhfp	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	-	-
-nhhr	main	unused	unit	Heretic	-	nhhr	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	ACca,ACrd	-
-nhns	main	unused	building	Harpy Nest	-	nhns	other	buildings\other\HarpyNest\HarpyNest	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nhrh	main	unused	unit	Harpy Storm-hag	-	nhrh	creeps	units\creeps\HarpyWitch\HarpyWitch	stock	ReplaceableTextures\CommandButtons\BTNHarpyWitch.blp	-	-	-	-	-	-	ACcs,ACsl	-
-nhrq	main	unused	unit	Harpy Queen	-	nhrq	creeps	units\creeps\HarpyQueen\HarpyQueen	stock	ReplaceableTextures\CommandButtons\BTNHarpyQueen.blp	-	-	-	-	-	-	ACcy,ACr2	-
-nhrr	main	unused	unit	Harpy Rogue	-	nhrr	creeps	units\creeps\Harpy\Harpy	stock	ReplaceableTextures\CommandButtons\BTNHarpy.blp	-	-	-	-	-	-	-	-
-nhrw	main	unused	unit	Harpy Windwitch	-	nhrw	creeps	units\creeps\HarpyWitch\HarpyWitch	stock	ReplaceableTextures\CommandButtons\BTNHarpyWitch.blp	-	-	-	-	-	-	ACff	-
+nhfp	main	used	unit	Fallen Priest	-	nhfp	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	-	-
+nhhr	main	used	unit	Heretic	-	nhhr	creeps	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	ACca,ACrd	-
+nhns	main	used	building	Harpy Nest	-	nhns	other	buildings\other\HarpyNest\HarpyNest	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nhrh	main	used	unit	Harpy Storm-hag	-	nhrh	creeps	units\creeps\HarpyWitch\HarpyWitch	stock	ReplaceableTextures\CommandButtons\BTNHarpyWitch.blp	-	-	-	-	-	-	ACcs,ACsl	-
+nhrq	main	used	unit	Harpy Queen	-	nhrq	creeps	units\creeps\HarpyQueen\HarpyQueen	stock	ReplaceableTextures\CommandButtons\BTNHarpyQueen.blp	-	-	-	-	-	-	ACcy,ACr2	-
+nhrr	main	used	unit	Harpy Rogue	-	nhrr	creeps	units\creeps\Harpy\Harpy	stock	ReplaceableTextures\CommandButtons\BTNHarpy.blp	-	-	-	-	-	-	-	-
+nhrw	main	used	unit	Harpy Windwitch	-	nhrw	creeps	units\creeps\HarpyWitch\HarpyWitch	stock	ReplaceableTextures\CommandButtons\BTNHarpyWitch.blp	-	-	-	-	-	-	ACff	-
 nhyc	main	used	unit	Dragon Turtle	(Illidari)	nhyc	naga	Units\Creeps\DragonSeaTurtleRange\DragonSeaTurtleRange	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleRed.blp	Illidan	nnsg	-	-	-	-	ACdv,ANth,Advc,Ansk	n055
-nhyd	main	unused	unit	Hydra	-	nhyd	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	Aspo,Aspt	-
-nhyh	main	unused	unit	Hydra Hatchling	-	nhyh	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	Aspo	-
+nhyd	main	used	unit	Hydra	-	nhyd	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	Aspo,Aspt	-
+nhyh	main	used	unit	Hydra Hatchling	-	nhyh	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	Aspo	-
 nhym	main	used	unit	Hydromancer	(Dalaran)	nhym	human	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNMageWC2.blp	Dalaran	h036	-	-	-	-	A029,A04L,A07Q,A138,Aihn	-
 nina	main	used	unit	Infernal Juggernaut	(Fel)	nina	orc	units\creeps\InfernalCannonFlame\InfernalCannonFlame	stock	ReplaceableTextures\CommandButtons\BTNInfernalFlameCannon.blp	Fel Horde	o008,o00F,o013,o02Y,o02Z,o030	-	-	-	-	A077	o030,R011
 ninc	main	used	unit	Burning Archer	(Legion)	ninc	undead	units\creeps\BurningArcher\BurningArcher.mdl	stock	ReplaceableTextures\CommandButtons\BTNSkeletonArcher.blp	Legion	h058,h0C2,n04Q	-	-	-	-	A0PI,ST2K	n040
 ninf	main	used	unit	Infernal	(Legion)	ninf	undead	units\demon\Infernal\Infernal	stock	ReplaceableTextures\CommandButtons\BTNInfernal.blp	Legion	n04Q	-	-	-	-	ACmi,ACrk,ANpi	R04B
-nith	main	unused	unit	Ice Troll High Priest	-	nith	creeps	units\creeps\IceTrollShadowPriest\IceTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNIceTrollShaman.blp	-	-	-	-	-	-	ACd2,ACf2,Anh2	-
-nitp	main	unused	unit	Ice Troll Priest	-	nitp	creeps	units\creeps\IceTrollShadowPriest\IceTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNIceTrollShadowPriest.blp	-	-	-	-	-	-	Anh1	-
-nitr	main	unused	unit	Ice Troll	-	nitr	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNIceTroll.blp	-	-	-	-	-	-	-	-
-nits	main	unused	unit	Ice Troll Berserker	-	nits	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNIceTrollBeserker.blp	-	-	-	-	-	-	ACev,Absk	-
-nitt	main	unused	unit	Ice Troll Trapper	-	nitt	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNICeTroll.blp	-	-	-	-	-	-	ACen	-
-nitw	main	unused	unit	Ice Troll Warlord	-	nitw	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNICeTroll.blp	-	-	-	-	-	-	ACat,ACct	-
-njg1	main	unused	unit	Jungle Stalker	-	njg1	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	-	-
-njga	main	unused	unit	Elder Jungle Stalker	-	njga	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	ANbh	-
-njgb	main	unused	unit	Enraged Jungle Stalker	-	njgb	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	A0AJ,ACce	-
-nkob	main	unused	unit	Kobold	-	nkob	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	-	-
-nkog	main	unused	unit	Kobold Geomancer	-	nkog	creeps	units\creeps\KoboldGeomancer\KoboldGeomancer	stock	ReplaceableTextures\CommandButtons\BTNKoboldGeomancer.blp	-	-	-	-	-	-	ACdm,ACsw	-
-nkol	main	unused	unit	Kobold Taskmaster	-	nkol	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	ACac,ACbh	-
-nkot	main	unused	unit	Kobold Tunneler	-	nkot	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	ACbh	-
-nlds	main	unused	unit	Makrura Deepseer	-	nlds	creeps	Units\Creeps\Lobstrokkblue\Lobstrokkblue	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkGreen.blp	-	-	-	-	-	-	Aenw,Aslp	-
-nlkl	main	unused	unit	Makrura Tidal Lord	-	nlkl	creeps	Units\Creeps\Lobstrokkgreen\Lobstrokkgreen	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkBlue.blp	-	-	-	-	-	-	ACav,ACce	-
-nlpd	main	unused	unit	Makrura Pooldweller	-	nlpd	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
-nlpr	main	unused	unit	Makrura Prawn	-	nlpr	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
-nlrv	main	unused	unit	Deeplord Revenant	-	nlrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	-	-	-	-	-	ACcv,ACf2,Amim	-
+nith	main	used	unit	Ice Troll High Priest	-	nith	creeps	units\creeps\IceTrollShadowPriest\IceTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNIceTrollShaman.blp	-	-	-	-	-	-	ACd2,ACf2,Anh2	-
+nitp	main	used	unit	Ice Troll Priest	-	nitp	creeps	units\creeps\IceTrollShadowPriest\IceTrollShadowPriest	stock	ReplaceableTextures\CommandButtons\BTNIceTrollShadowPriest.blp	-	-	-	-	-	-	Anh1	-
+nitr	main	used	unit	Ice Troll	-	nitr	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNIceTroll.blp	-	-	-	-	-	-	-	-
+nits	main	used	unit	Ice Troll Berserker	-	nits	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNIceTrollBeserker.blp	-	-	-	-	-	-	ACev,Absk	-
+nitt	main	used	unit	Ice Troll Trapper	-	nitt	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNICeTroll.blp	-	-	-	-	-	-	ACen	-
+nitw	main	used	unit	Ice Troll Warlord	-	nitw	creeps	units\creeps\IceTroll\IceTroll	stock	ReplaceableTextures\CommandButtons\BTNICeTroll.blp	-	-	-	-	-	-	ACat,ACct	-
+njg1	main	used	unit	Jungle Stalker	-	njg1	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	-	-
+njga	main	used	unit	Elder Jungle Stalker	-	njga	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	ANbh	-
+njgb	main	used	unit	Enraged Jungle Stalker	-	njgb	creeps	units\creeps\JungleBeast\JungleBeast	stock	ReplaceableTextures\CommandButtons\BTNJungleBeast.blp	-	-	-	-	-	-	A0AJ,ACce	-
+nkob	main	used	unit	Kobold	-	nkob	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	-	-
+nkog	main	used	unit	Kobold Geomancer	-	nkog	creeps	units\creeps\KoboldGeomancer\KoboldGeomancer	stock	ReplaceableTextures\CommandButtons\BTNKoboldGeomancer.blp	-	-	-	-	-	-	ACdm,ACsw	-
+nkol	main	used	unit	Kobold Taskmaster	-	nkol	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	ACac,ACbh	-
+nkot	main	used	unit	Kobold Tunneler	-	nkot	creeps	units\creeps\Kobold\Kobold	stock	ReplaceableTextures\CommandButtons\BTNKobold.blp	-	-	-	-	-	-	ACbh	-
+nlds	main	used	unit	Makrura Deepseer	-	nlds	creeps	Units\Creeps\Lobstrokkblue\Lobstrokkblue	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkGreen.blp	-	-	-	-	-	-	Aenw,Aslp	-
+nlkl	main	used	unit	Makrura Tidal Lord	-	nlkl	creeps	Units\Creeps\Lobstrokkgreen\Lobstrokkgreen	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkBlue.blp	-	-	-	-	-	-	ACav,ACce	-
+nlpd	main	used	unit	Makrura Pooldweller	-	nlpd	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
+nlpr	main	used	unit	Makrura Prawn	-	nlpr	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
+nlrv	main	used	unit	Deeplord Revenant	-	nlrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	-	-	-	-	-	ACcv,ACf2,Amim	-
 nlsn	main	used	unit	Makrura Snapper	-	nlsn	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
-nltc	main	unused	unit	Makrura Tidecaller	-	nltc	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred.mdl	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	ACf2,Anh1	-
-nltl	main	unused	unit	Lightning Lizard	-	nltl	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	ACpu,Alit	-
+nltc	main	used	unit	Makrura Tidecaller	-	nltc	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred.mdl	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	ACf2,Anh1	-
+nltl	main	used	unit	Lightning Lizard	-	nltl	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	ACpu,Alit	-
 nlv1	main	used	unit	Fire Elemental	(Quelthalas)	nlv1	human	Units\Creeps\LavaSpawn\LavaSpawn	stock	ReplaceableTextures\CommandButtons\BTNLavaSpawn.blp	-	-	-	-	-	-	A0JG	-
 nlv3	main	used	unit	Lava Spawn	(Level 3)	nlv3	other	Units\Creeps\LavaSpawn\LavaSpawn	stock	ReplaceableTextures\CommandButtons\BTNLavaSpawn.blp	-	-	-	-	-	-	-	-
-nmam	main	unused	unit	Mammoth	-	nmam	creeps	Units\Creeps\Mammoth\Mammoth	stock	ReplaceableTextures\CommandButtons\BTNMammoth.blp	-	-	-	-	-	-	-	-
-nmbg	main	unused	unit	Mur'gul Blood-Gill	-	nmbg	creeps	Units\Creeps\MurgulBloodGill\MurgulBloodGill	stock	ReplaceableTextures\CommandButtons\BTNMurgulBloodGill.blp	-	-	-	-	-	-	Anh1	-
-nmcf	main	unused	unit	Mur'gul Cliffrunner	-	nmcf	creeps	Units\Creeps\MurgulTideWarrior\MurgulTideWarrior	stock	ReplaceableTextures\CommandButtons\BTNMurgulTideWarrior.blp	-	-	-	-	-	-	-	-
+nmam	main	used	unit	Mammoth	-	nmam	creeps	Units\Creeps\Mammoth\Mammoth	stock	ReplaceableTextures\CommandButtons\BTNMammoth.blp	-	-	-	-	-	-	-	-
+nmbg	main	used	unit	Mur'gul Blood-Gill	-	nmbg	creeps	Units\Creeps\MurgulBloodGill\MurgulBloodGill	stock	ReplaceableTextures\CommandButtons\BTNMurgulBloodGill.blp	-	-	-	-	-	-	Anh1	-
+nmcf	main	used	unit	Mur'gul Cliffrunner	-	nmcf	creeps	Units\Creeps\MurgulTideWarrior\MurgulTideWarrior	stock	ReplaceableTextures\CommandButtons\BTNMurgulTideWarrior.blp	-	-	-	-	-	-	-	-
 nmdr	main	used	unit	Brown Elekk	(Draenei)	nmdr	nightelf	war3mapImported\WildElekkBrown.mdl	main	ReplaceableTextures\CommandButtons\BTNElephant.blp	The Exodar	-	-	-	-	-	A0VI	o050
-nmfs	main	unused	unit	Murloc Flesheater	-	nmfs	creeps	units\creeps\MurlocFlesheater\MurlocFlesheater.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocFlesheater.blp	-	-	-	-	-	-	ACcn	-
-nmgd	main	unused	unit	Magnataur Destroyer	-	nmgd	creeps	Units\Creeps\MagnataurBlue\MagnataurBlue	stock	ReplaceableTextures\CommandButtons\BTNBlueMagnataur.blp	-	-	-	-	-	-	-	-
-nmgr	main	unused	unit	Magnataur Reaver	-	nmgr	creeps	Units\Creeps\Magnataur\Magnataur	stock	ReplaceableTextures\CommandButtons\BTNMagnataurBrown.blp	-	-	-	-	-	-	-	-
-nmh0	main	unused	building	Hut	0	nmh0	other	buildings\other\MurlocHut0\MurlocHut0	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nmh1	main	unused	building	Hut	1	nmh1	other	buildings\other\MurlocHut1\MurlocHut1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nmmu	main	unused	unit	Murloc Mutant	-	nmmu	creeps	units\creeps\MurlocMutant\MurlocMutant.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocMutant.blp	-	-	-	-	-	-	ACcr	-
+nmfs	main	used	unit	Murloc Flesheater	-	nmfs	creeps	units\creeps\MurlocFlesheater\MurlocFlesheater.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocFlesheater.blp	-	-	-	-	-	-	ACcn	-
+nmgd	main	used	unit	Magnataur Destroyer	-	nmgd	creeps	Units\Creeps\MagnataurBlue\MagnataurBlue	stock	ReplaceableTextures\CommandButtons\BTNBlueMagnataur.blp	-	-	-	-	-	-	-	-
+nmgr	main	used	unit	Magnataur Reaver	-	nmgr	creeps	Units\Creeps\Magnataur\Magnataur	stock	ReplaceableTextures\CommandButtons\BTNMagnataurBrown.blp	-	-	-	-	-	-	-	-
+nmh0	main	used	building	Hut	0	nmh0	other	buildings\other\MurlocHut0\MurlocHut0	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nmh1	main	used	building	Hut	1	nmh1	other	buildings\other\MurlocHut1\MurlocHut1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nmmu	main	used	unit	Murloc Mutant	-	nmmu	creeps	units\creeps\MurlocMutant\MurlocMutant.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocMutant.blp	-	-	-	-	-	-	ACcr	-
 nmpe	main	used	unit	Slave	(Illidari, Nzoth, Worker)	nmpe	naga	units\creeps\MurgulSlave\MurgulSlave	stock	ReplaceableTextures\CommandButtons\BTNMurgalSlave.blp	Illidan	n04T,n055,nntt,o00F	-	e020,h06S,n08W,n0A3,nmrb,nnad,nnfm,nnsa,nnsg,nntg,nntt	-	-	A041,Arep	-
-nmpg	main	unused	unit	Murloc Plaguebearer	-	nmpg	creeps	units\creeps\MurlocMutant\MurlocMutant.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocMutant.blp	-	-	-	-	-	-	Aap3	-
+nmpg	main	used	unit	Murloc Plaguebearer	-	nmpg	creeps	units\creeps\MurlocMutant\MurlocMutant.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurlocMutant.blp	-	-	-	-	-	-	Aap3	-
 nmrb	main	used	building	Steamvault	(Illidari Shop)	nmrb	naga	war3mapImported\AncientVaultIllidariV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIllidariVault.blp	Illidan	nmpe	-	-	-	-	Aall,Apit	-
 nmrk	main	used	building	Marketplace	(Lordaeron Shop)	nmrk	human	war3mapImported\LordaeronTradeHouse.mdl	main	ReplaceableTextures\CommandButtons\BTNLordaeronTradeHouse.blp	Lordaeron	hpea	-	-	-	-	Aall,Apit	-
-nmrl	main	unused	unit	Murloc Tiderunner	-	nmrl	creeps	units\creeps\Murloc\Murloc.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurloc.blp	-	-	-	-	-	-	-	-
-nmrm	main	unused	unit	Murloc Nightcrawler	-	nmrm	creeps	units\creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	ACvs,Ashm	-
+nmrl	main	used	unit	Murloc Tiderunner	-	nmrl	creeps	units\creeps\Murloc\Murloc.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurloc.blp	-	-	-	-	-	-	-	-
+nmrm	main	used	unit	Murloc Nightcrawler	-	nmrm	creeps	units\creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	ACvs,Ashm	-
 nmrr	main	used	unit	Murloc Huntsman	-	nmrr	creeps	units\creeps\MurlocWarrior\MurlocWarrior.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurloc.blp	-	o04M	-	-	-	-	ACen	-
-nmrv	main	unused	unit	Mur'gul Marauder	-	nmrv	creeps	Units\Creeps\MurgulReaver\MurgulReaver	stock	ReplaceableTextures\CommandButtons\BTNMurgulBloodGill.blp	-	-	-	-	-	-	ACac	-
+nmrv	main	used	unit	Mur'gul Marauder	-	nmrv	creeps	Units\Creeps\MurgulReaver\MurgulReaver	stock	ReplaceableTextures\CommandButtons\BTNMurgulBloodGill.blp	-	-	-	-	-	-	ACac	-
 nmsc	main	used	unit	Shadowcaster	(Illidari)	nmsc	naga	Units\Creeps\MurgulShadowCaster\MurgulShadowCaster	stock	ReplaceableTextures\CommandButtons\BTNMurgulShadowCaster.blp	Illidan	n0A3	-	-	-	-	A0O3,AChw,Acrs,Aien	-
-nmsn	main	unused	unit	Mur'gul Snarecaster	-	nmsn	creeps	Units\Creeps\MurgulShadowCaster\MurgulShadowCaster	stock	ReplaceableTextures\CommandButtons\BTNMurgulShadowCaster.blp	-	-	-	-	-	-	ACdm,ACsw	-
+nmsn	main	used	unit	Mur'gul Snarecaster	-	nmsn	creeps	Units\Creeps\MurgulShadowCaster\MurgulShadowCaster	stock	ReplaceableTextures\CommandButtons\BTNMurgulShadowCaster.blp	-	-	-	-	-	-	ACdm,ACsw	-
 nmtw	main	used	unit	Mur'gul Tidewarrior	(Najentus Summon)	nmtw	creeps	Units\Creeps\MurgulTideWarrior\MurgulTideWarrior	stock	ReplaceableTextures\CommandButtons\BTNMurgulTideWarrior.blp	-	-	-	-	-	-	-	-
 nmyr	main	used	unit	Myrmidon	(Illidari)	nmyr	naga	units\naga\NagaMyrmidon\NagaMyrmidon	stock	ReplaceableTextures\CommandButtons\BTNNagaMyrmidon.blp	Illidan	nnsg	-	-	-	-	A0CH,A10B,Aihn,YBEN	-
 nnad	main	used	building	Altar of the Betrayer	(Illidari Altar)	nnad	naga	war3mapImported\AltarIllidariV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIllidariAltar.blp	Illidan	nmpe	Eevi,Hvsh,Naka,U00S	-	-	-	-	-
@@ -1198,100 +1198,100 @@ nnsu	main	used	unit	Coilfang Summoner	(Illidari)	nnsu	naga	Units\Naga\NagaSummon
 nnsw	main	used	unit	Siren	(Illidari)	nnsw	naga	Units\Naga\NagaSiren\NagaSiren	stock	ReplaceableTextures\CommandButtons\BTNSeaWitch.blp	Illidan	n0A3	-	-	-	-	A10W,ANpa,Aams,Aien	-
 nntg	main	used	building	Tidal Watcher	(Illidari Tower)	nntg	naga	war3mapImported\TowerIllidariV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNIllidariTidalGuardian.blp	Illidan	nmpe	-	-	-	-	-	h06S
 nntt	main	used	building	Betrayer's Reservoir	(Illidari T1)	nntt	naga	war3mapImported\BlackTempleIllidari4TierV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIllidariBlackTemple.blp	Illidan	nmpe	h0AC,nmpe,nnrg	-	ZBSI	-	Abds,Argl	-
-nnwa	main	unused	unit	Nerubian Warrior	-	nnwa	creeps	units\creeps\Nerubian\Nerubian	stock	ReplaceableTextures\CommandButtons\BTNNerubian.blp	-	-	-	-	-	-	Assp	-
-nnwl	main	unused	unit	Nerubian Webspinner	-	nnwl	creeps	units\creeps\NerubianSpiderLord\NerubianSpiderLord	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	ACwb,Arai,Aspa	-
-nnwq	main	unused	unit	Nerubian Queen	-	nnwq	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	-	-
-nnwr	main	unused	unit	Nerubian Seer	-	nnwr	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNnerubianSpiderLord.blp	-	-	-	-	-	-	-	-
-nnws	main	unused	unit	Nerubian Spider Lord	-	nnws	creeps	units\creeps\NerubianSpiderLord\NerubianSpiderLord	stock	ReplaceableTextures\CommandButtons\BTNnerubianSpiderLord.blp	-	-	-	-	-	-	Assp	-
+nnwa	main	used	unit	Nerubian Warrior	-	nnwa	creeps	units\creeps\Nerubian\Nerubian	stock	ReplaceableTextures\CommandButtons\BTNNerubian.blp	-	-	-	-	-	-	Assp	-
+nnwl	main	used	unit	Nerubian Webspinner	-	nnwl	creeps	units\creeps\NerubianSpiderLord\NerubianSpiderLord	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	ACwb,Arai,Aspa	-
+nnwq	main	used	unit	Nerubian Queen	-	nnwq	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNNerubianQueen.blp	-	-	-	-	-	-	-	-
+nnwr	main	used	unit	Nerubian Seer	-	nnwr	creeps	units\creeps\NerubianQueen\NerubianQueen	stock	ReplaceableTextures\CommandButtons\BTNnerubianSpiderLord.blp	-	-	-	-	-	-	-	-
+nnws	main	used	unit	Nerubian Spider Lord	-	nnws	creeps	units\creeps\NerubianSpiderLord\NerubianSpiderLord	stock	ReplaceableTextures\CommandButtons\BTNnerubianSpiderLord.blp	-	-	-	-	-	-	Assp	-
 noga	main	used	unit	Stonemaul Warchief Kor'gall	-	noga	creeps	units\creeps\OgreOneHeadedArmored\OgreOneHeadedArmored	stock	ReplaceableTextures\CommandButtons\BTNArmoredOge.blp	-	o00J,o06U	-	-	-	-	-	-
-nogl	main	unused	unit	Ogre Lord	-	nogl	creeps	units\creeps\OgreLord\OgreLord	stock	ReplaceableTextures\CommandButtons\BTNOgreLord.blp	-	-	-	-	-	-	A01T,ACav	-
-nogm	main	unused	unit	Ogre Mauler	-	nogm	creeps	units\creeps\Ogre\Ogre	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	-	-	-	-	-	A0C6,ACbh,ACct	-
+nogl	main	used	unit	Ogre Lord	-	nogl	creeps	units\creeps\OgreLord\OgreLord	stock	ReplaceableTextures\CommandButtons\BTNOgreLord.blp	-	-	-	-	-	-	A01T,ACav	-
+nogm	main	used	unit	Ogre Mauler	-	nogm	creeps	units\creeps\Ogre\Ogre	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	-	-	-	-	-	A0C6,ACbh,ACct	-
 nogn	main	used	unit	Warlock	(Warsong)	nogn	orc	units\creeps\ChaosWarlockGreen\ChaosWarlockGreen.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosWarlockGreen.blp	Warsong	o006	-	-	-	-	A0KS,A0W6,Aion,Awfb,S00N	-
-nogo	main	unused	unit	Stonemaul Bruiser	(Warsong)	nogo	orc	units\creeps\OgreOneHeaded\OgreOneHeaded	stock	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	-	-	-	-	-	A01U,A09Q,A0DS,A0DX,ACbh,Aion	-
+nogo	main	used	unit	Stonemaul Bruiser	(Warsong)	nogo	orc	units\creeps\OgreOneHeaded\OgreOneHeaded	stock	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	-	-	-	-	-	A01U,A09Q,A0DS,A0DX,ACbh,Aion	-
 nomg	main	used	unit	Ogre Magi	-	nomg	creeps	units\creeps\OgreMagi\OgreMagi	stock	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	o04M	-	-	-	-	ACbb	-
-nowb	main	unused	unit	Wildkin	-	nowb	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	-	-
-nowe	main	unused	unit	Enraged Wildkin	-	nowe	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	-	-
-nowk	main	unused	unit	Berserk Wildkin	-	nowk	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	ACbh	-
-npfl	main	unused	unit	Fel Beast	-	npfl	creeps	units\creeps\FelstalkerPurple\FelstalkerPurple	stock	ReplaceableTextures\CommandButtons\BTNPurpleFelhound.blp	-	-	-	-	-	-	-	-
-npfm	main	unused	unit	Fel Ravager	(Fel Horde-Portal)	npfm	orc	units\creeps\FelstalkerPurple\FelstalkerPurple	stock	ReplaceableTextures\CommandButtons\BTNPurpleFelhound.blp	-	-	-	-	-	-	A06Y,ACde,Afbk	-
+nowb	main	used	unit	Wildkin	-	nowb	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	-	-
+nowe	main	used	unit	Enraged Wildkin	-	nowe	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	-	-
+nowk	main	used	unit	Berserk Wildkin	-	nowk	creeps	units\creeps\Owlbear\Owlbear	stock	ReplaceableTextures\CommandButtons\BTNOwlBear.blp	-	-	-	-	-	-	ACbh	-
+npfl	main	used	unit	Fel Beast	-	npfl	creeps	units\creeps\FelstalkerPurple\FelstalkerPurple	stock	ReplaceableTextures\CommandButtons\BTNPurpleFelhound.blp	-	-	-	-	-	-	-	-
+npfm	main	used	unit	Fel Ravager	(Fel Horde-Portal)	npfm	orc	units\creeps\FelstalkerPurple\FelstalkerPurple	stock	ReplaceableTextures\CommandButtons\BTNPurpleFelhound.blp	-	-	-	-	-	-	A06Y,ACde,Afbk	-
 npgf	main	used	building	Pig Farm	(Fel Farm)	npgf	orc	war3mapImported\FarmPigFelOrcV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNFelOrcPigFarm.blp	-	o00E,opeo	-	-	-	-	Aspi	-
 npgr	main	used	building	Power Generator	(Fel)	npgr	orc	buildings\other\PowerGenerator\PowerGenerator	stock	ReplaceableTextures\CommandButtons\BTNPowerGenerator.blp	-	-	-	-	-	-	A0CF	-
-nplb	main	unused	unit	Polar Bear	-	nplb	creeps	units\creeps\PolarBear\PolarBear	stock	ReplaceableTextures\CommandButtons\BTNFrostBear.blp	-	-	-	-	-	-	-	-
-nplg	main	unused	unit	Giant Polar Bear	-	nplg	creeps	units\creeps\PolarBear\PolarBear	stock	ReplaceableTextures\CommandButtons\BTNFrostBear.blp	-	-	-	-	-	-	-	-
+nplb	main	used	unit	Polar Bear	-	nplb	creeps	units\creeps\PolarBear\PolarBear	stock	ReplaceableTextures\CommandButtons\BTNFrostBear.blp	-	-	-	-	-	-	-	-
+nplg	main	used	unit	Giant Polar Bear	-	nplg	creeps	units\creeps\PolarBear\PolarBear	stock	ReplaceableTextures\CommandButtons\BTNFrostBear.blp	-	-	-	-	-	-	-	-
 npn4	main	used	unit	Fire	(Chen)	npn4	orc	Units\Creeps\FirePandarenBrewmaster\FirePandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNFireBrewmaster.blp	-	-	-	-	-	-	ACrk,Apig	-
 npn5	main	used	unit	Storm	(Chen)	npn5	orc	Units\Creeps\StormPandarenBrewmaster\StormPandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNStormBrewmaster.blp	-	-	-	-	-	-	A0HP,ACrk	-
 npn6	main	used	unit	Earth	(Chen)	npn6	orc	Units\Creeps\EarthPandarenBrewmaster\EarthPandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNEarthBrewmaster.blp	-	-	-	-	-	-	ACmi,ACpv,ACrk	-
 nqb1	main	used	unit	Quilbeast	(Frostwolf-Headhunter)	nqb1	orc	Units\Creeps\QuillBeast\QuillBeast	stock	ReplaceableTextures\CommandButtons\BTNQuillBeast.blp	-	-	-	-	-	-	A05H	-
 nqb4	main	used	unit	Berserk Quilbeast	(Level 4)(Grey - Rexxar Summon)	nqb4	other	Units\Creeps\QuillBeast\QuillBeast	stock	ReplaceableTextures\CommandButtons\BTNQuillBeast.blp	-	-	-	-	-	-	Afzy	-
-nrdr	main	unused	unit	Red Drake	-	nrdr	creeps	units\creeps\RedDragon\RedDragon	stock	ReplaceableTextures\CommandButtons\BTNRedDragon.blp	-	-	-	-	-	-	-	-
+nrdr	main	used	unit	Red Drake	-	nrdr	creeps	units\creeps\RedDragon\RedDragon	stock	ReplaceableTextures\CommandButtons\BTNRedDragon.blp	-	-	-	-	-	-	-	-
 nrel	main	used	unit	Reef Elemental	(Stormwind)	nrel	creeps	Units\Creeps\SeaElemental\SeaElemental	stock	ReplaceableTextures\CommandButtons\BTNSeaElemental.blp	-	-	-	-	-	-	A00S	-
-nrog	main	unused	unit	Rogue	-	nrog	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	ACct,Ashm	-
-nrvd	main	unused	unit	Death Revenant	-	nrvd	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACad,ACdc,ACrd	-
-nrvi	main	unused	unit	Ice Revenant	-	nrvi	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACf2,ACvp	-
-nrvl	main	unused	unit	Lightning Revenant	-	nrvl	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACcl,ACpu	-
+nrog	main	used	unit	Rogue	-	nrog	creeps	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	ACct,Ashm	-
+nrvd	main	used	unit	Death Revenant	-	nrvd	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACad,ACdc,ACrd	-
+nrvi	main	used	unit	Ice Revenant	-	nrvi	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACf2,ACvp	-
+nrvl	main	used	unit	Lightning Revenant	-	nrvl	creeps	units\creeps\Revenant\Revenant	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	ACcl,ACpu	-
 nrwm	main	used	unit	Vaelastrasz	-	nrwm	creeps	units\creeps\RedDragon\RedDragon	stock	ReplaceableTextures\CommandButtons\BTNRedDragon.blp	-	-	-	-	-	-	A089	-
-nrzb	main	unused	unit	Razormane Brute	-	nrzb	creeps	units\creeps\RazorMane\RazorMane	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
-nrzm	main	unused	unit	Razormane Medicine Man	-	nrzm	creeps	units\creeps\RazorManeChief\RazorManeChief	stock	ReplaceableTextures\CommandButtons\BTNRazorManeChief.blp	-	-	-	-	-	-	AChw,ACs9	-
-nrzs	main	unused	unit	Razormane Scout	-	nrzs	creeps	units\creeps\RazorMane\RazorMane	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
-nrzt	main	unused	unit	Quillboar	-	nrzt	creeps	units\creeps\Bristleback\Bristleback	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
-nsat	main	unused	unit	Satyr Trickster	(Creep)	nsat	undead	units\creeps\SatyrTrickster\SatyrTrickster	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	Aens,Aiun	-
-nsbm	main	unused	unit	Brood Mother	-	nsbm	creeps	units\creeps\SpiderBlue\SpiderBlue	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-	-	-	-	-	-	A07A,ACvs,Aspd	-
-nsc2	main	unused	unit	Spider Crab Limbripper	-	nsc2	creeps	units\creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
-nsc3	main	unused	unit	Spider Crab Behemoth	-	nsc3	creeps	units\creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
-nscb	main	unused	unit	Spider Crab Shorecrawler	-	nscb	creeps	Units\Creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
+nrzb	main	used	unit	Razormane Brute	-	nrzb	creeps	units\creeps\RazorMane\RazorMane	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
+nrzm	main	used	unit	Razormane Medicine Man	-	nrzm	creeps	units\creeps\RazorManeChief\RazorManeChief	stock	ReplaceableTextures\CommandButtons\BTNRazorManeChief.blp	-	-	-	-	-	-	AChw,ACs9	-
+nrzs	main	used	unit	Razormane Scout	-	nrzs	creeps	units\creeps\RazorMane\RazorMane	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
+nrzt	main	used	unit	Quillboar	-	nrzt	creeps	units\creeps\Bristleback\Bristleback	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
+nsat	main	used	unit	Satyr Trickster	(Creep)	nsat	undead	units\creeps\SatyrTrickster\SatyrTrickster	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	Aens,Aiun	-
+nsbm	main	used	unit	Brood Mother	-	nsbm	creeps	units\creeps\SpiderBlue\SpiderBlue	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-	-	-	-	-	-	A07A,ACvs,Aspd	-
+nsc2	main	used	unit	Spider Crab Limbripper	-	nsc2	creeps	units\creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
+nsc3	main	used	unit	Spider Crab Behemoth	-	nsc3	creeps	units\creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
+nscb	main	used	unit	Spider Crab Shorecrawler	-	nscb	creeps	Units\Creeps\SpiderCrabCreep\SpiderCrabCreep	stock	ReplaceableTextures\CommandButtons\BTNSpiderCrab.blp	-	-	-	-	-	-	-	-
 nsel	main	used	unit	Sea Elemental	-	nsel	creeps	Units\Creeps\SeaElemental\SeaElemental	stock	ReplaceableTextures\CommandButtons\BTNSeaElemental.blp	-	-	-	-	-	-	ACbh	-
-nsgb	main	unused	unit	Sea Giant Behemoth	-	nsgb	creeps	Units\Creeps\SeaGiant\SeaGiant	stock	ReplaceableTextures\CommandButtons\BTNSeaGiant.blp	-	-	-	-	-	-	ACpv,ACtb,Awrs	-
-nsgg	main	unused	unit	Titan Construct	-	nsgg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
-nsgh	main	unused	unit	Sea Giant Hunter	-	nsgh	creeps	Units\Creeps\SeaGiantGreen\SeaGiantGreen	stock	ReplaceableTextures\CommandButtons\BTNSeaGiantGreen.blp	-	-	-	-	-	-	ACen,ACpv	-
-nsgn	main	unused	unit	Sea Giant	-	nsgn	creeps	Units\Creeps\SeaGiant\SeaGiant	stock	ReplaceableTextures\CommandButtons\BTNSeaGiant.blp	-	-	-	-	-	-	ACrk,ANth	-
-nsgt	main	unused	unit	Blackwald Spider	(Creep)	nsgt	nightelf	units\creeps\SpiderBlack\SpiderBlack.mdl	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlack.blp	-	-	-	-	-	-	A0DH,A0GX,ACvs	R02R
-nshp	main	unused	building	Goblin Shipyard	-	nshp	other	buildings\other\GoblinShipyard\GoblinShipyard	stock	ReplaceableTextures\CommandButtons\BTNGoblinShipyard.blp	-	-	-	-	-	nbot	Ane2,Avul	-
-nskf	main	unused	unit	Burning Archer	(Fel)	nskf	creeps	units\creeps\BurningArcher\BurningArcher	stock	ReplaceableTextures\CommandButtons\BTNSkeletonArcher.blp	-	-	-	-	-	-	ACsa	-
-nskg	main	unused	unit	Giant Skeleton Warrior	-	nskg	creeps	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
-nsko	main	unused	unit	Skeletal Orc	-	nsko	creeps	units\creeps\SkeletonOrc\SkeletonOrc	stock	ReplaceableTextures\CommandButtons\BTNSkeletalOrc.blp	-	-	-	-	-	-	-	-
-nslf	main	unused	unit	Sludge Flinger	-	nslf	creeps	units\creeps\SludgeMonster\SludgeMonster	stock	ReplaceableTextures\CommandButtons\BTNSludgeCreature.blp	-	-	-	-	-	-	A0KF,ACsw	-
-nslh	main	unused	unit	Salamander Hatchling	-	nslh	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
-nsll	main	unused	unit	Salazarian Lizard	-	nsll	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
-nslm	main	unused	unit	Sludge Minion	-	nslm	creeps	units\creeps\SludgeMonster\SludgeMonster	stock	ReplaceableTextures\CommandButtons\BTNSludgeCreature.blp	-	-	-	-	-	-	ACsw	-
+nsgb	main	used	unit	Sea Giant Behemoth	-	nsgb	creeps	Units\Creeps\SeaGiant\SeaGiant	stock	ReplaceableTextures\CommandButtons\BTNSeaGiant.blp	-	-	-	-	-	-	ACpv,ACtb,Awrs	-
+nsgg	main	used	unit	Titan Construct	-	nsgg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
+nsgh	main	used	unit	Sea Giant Hunter	-	nsgh	creeps	Units\Creeps\SeaGiantGreen\SeaGiantGreen	stock	ReplaceableTextures\CommandButtons\BTNSeaGiantGreen.blp	-	-	-	-	-	-	ACen,ACpv	-
+nsgn	main	used	unit	Sea Giant	-	nsgn	creeps	Units\Creeps\SeaGiant\SeaGiant	stock	ReplaceableTextures\CommandButtons\BTNSeaGiant.blp	-	-	-	-	-	-	ACrk,ANth	-
+nsgt	main	used	unit	Blackwald Spider	(Creep)	nsgt	nightelf	units\creeps\SpiderBlack\SpiderBlack.mdl	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlack.blp	-	-	-	-	-	-	A0DH,A0GX,ACvs	R02R
+nshp	main	used	building	Goblin Shipyard	-	nshp	other	buildings\other\GoblinShipyard\GoblinShipyard	stock	ReplaceableTextures\CommandButtons\BTNGoblinShipyard.blp	-	-	-	-	-	nbot	Ane2,Avul	-
+nskf	main	used	unit	Burning Archer	(Fel)	nskf	creeps	units\creeps\BurningArcher\BurningArcher	stock	ReplaceableTextures\CommandButtons\BTNSkeletonArcher.blp	-	-	-	-	-	-	ACsa	-
+nskg	main	used	unit	Giant Skeleton Warrior	-	nskg	creeps	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
+nsko	main	used	unit	Skeletal Orc	-	nsko	creeps	units\creeps\SkeletonOrc\SkeletonOrc	stock	ReplaceableTextures\CommandButtons\BTNSkeletalOrc.blp	-	-	-	-	-	-	-	-
+nslf	main	used	unit	Sludge Flinger	-	nslf	creeps	units\creeps\SludgeMonster\SludgeMonster	stock	ReplaceableTextures\CommandButtons\BTNSludgeCreature.blp	-	-	-	-	-	-	A0KF,ACsw	-
+nslh	main	used	unit	Salamander Hatchling	-	nslh	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
+nsll	main	used	unit	Salazarian Lizard	-	nsll	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
+nslm	main	used	unit	Sludge Minion	-	nslm	creeps	units\creeps\SludgeMonster\SludgeMonster	stock	ReplaceableTextures\CommandButtons\BTNSludgeCreature.blp	-	-	-	-	-	-	ACsw	-
 nsln	main	used	unit	Sludge Monstrosity	-	nsln	creeps	units\creeps\SludgeMonster\SludgeMonster	stock	ReplaceableTextures\CommandButtons\BTNSludgeCreature.blp	-	-	-	-	-	-	A0KH,A0P0,ACsw	-
-nslr	main	unused	unit	Salamander	-	nslr	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
-nslv	main	unused	unit	Salamander Vizier	-	nslv	creeps	units\creeps\ThunderLizardVizier\ThunderLizardVizier	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardVizier.blp	-	-	-	-	-	-	ACbl	-
+nslr	main	used	unit	Salamander	-	nslr	creeps	units\creeps\ThunderLizardSalamander\ThunderLizardSalamander	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardSalamander.blp	-	-	-	-	-	-	-	-
+nslv	main	used	unit	Salamander Vizier	-	nslv	creeps	units\creeps\ThunderLizardVizier\ThunderLizardVizier	stock	ReplaceableTextures\CommandButtons\BTNThunderLizardVizier.blp	-	-	-	-	-	-	ACbl	-
 nsnp	main	used	unit	Snap Dragon	(Illidari)	nsnp	naga	units\naga\SnapDragon\SnapDragon	stock	ReplaceableTextures\CommandButtons\BTNSnapDragon.blp	Illidan	nnsg	-	-	-	-	Adtg,Aien,YBSP	h06S
-nsog	main	unused	unit	Skeletal Orc Grunt	-	nsog	creeps	units\creeps\SkeletonOrc\SkeletonOrc	stock	ReplaceableTextures\CommandButtons\BTNSkeletalOrcGrunt.blp	-	-	-	-	-	-	-	-
-nspb	main	unused	unit	Black Spider	-	nspb	creeps	units\creeps\SpiderBlack\SpiderBlack	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlack.blp	-	-	-	-	-	-	A0DQ,Aspd,Aweb	-
-nspd	main	unused	unit	Spiderling	-	nspd	creeps	units\creeps\Nerubian\Nerubian	stock	ReplaceableTextures\CommandButtons\BTNNerubian.blp	-	-	-	-	-	-	Aweb	-
-nspg	main	unused	unit	Forest Spider	-	nspg	creeps	units\creeps\SpiderGreen\SpiderGreen	stock	ReplaceableTextures\CommandButtons\BTNSpiderGreen.blp	-	-	-	-	-	-	A0DQ,Aweb	-
-nspr	main	unused	unit	Spider	-	nspr	nightelf	units\creeps\Spider\Spider	stock	ReplaceableTextures\CommandButtons\BTNSpider.blp	-	-	-	-	-	-	ACvs	-
-nsrn	main	unused	unit	Stormreaver Necrolyte	-	nsrn	creeps	units\creeps\OrcWarlock\OrcWarlock	stock	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	-	-	-	-	-	ACbl,ACcl	-
-nsrv	main	unused	unit	Revenant of the Seas	-	nsrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	-	-
-nssp	main	unused	unit	Spitting Spider	-	nssp	nightelf	units\creeps\SpiderBlue\SpiderBlue	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-	-	-	-	-	-	A0DH,Aspo	-
+nsog	main	used	unit	Skeletal Orc Grunt	-	nsog	creeps	units\creeps\SkeletonOrc\SkeletonOrc	stock	ReplaceableTextures\CommandButtons\BTNSkeletalOrcGrunt.blp	-	-	-	-	-	-	-	-
+nspb	main	used	unit	Black Spider	-	nspb	creeps	units\creeps\SpiderBlack\SpiderBlack	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlack.blp	-	-	-	-	-	-	A0DQ,Aspd,Aweb	-
+nspd	main	used	unit	Spiderling	-	nspd	creeps	units\creeps\Nerubian\Nerubian	stock	ReplaceableTextures\CommandButtons\BTNNerubian.blp	-	-	-	-	-	-	Aweb	-
+nspg	main	used	unit	Forest Spider	-	nspg	creeps	units\creeps\SpiderGreen\SpiderGreen	stock	ReplaceableTextures\CommandButtons\BTNSpiderGreen.blp	-	-	-	-	-	-	A0DQ,Aweb	-
+nspr	main	used	unit	Spider	-	nspr	nightelf	units\creeps\Spider\Spider	stock	ReplaceableTextures\CommandButtons\BTNSpider.blp	-	-	-	-	-	-	ACvs	-
+nsrn	main	used	unit	Stormreaver Necrolyte	-	nsrn	creeps	units\creeps\OrcWarlock\OrcWarlock	stock	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	-	-	-	-	-	ACbl,ACcl	-
+nsrv	main	used	unit	Revenant of the Seas	-	nsrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	-	-
+nssp	main	used	unit	Spitting Spider	-	nssp	nightelf	units\creeps\SpiderBlue\SpiderBlue	stock	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-	-	-	-	-	-	A0DH,Aspo	-
 nsth	main	used	unit	Satyr Hellcaller	-	nsth	undead	units\creeps\satyrhellcaller\satyrhellcaller	stock	ReplaceableTextures\CommandButtons\BTNSatyr.blp	-	-	-	-	-	-	ACua,Aiun	-
-nstl	main	unused	unit	Satyr Soulstealer	(Creep)	nstl	undead	units\creeps\Satyr\Satyr	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	ACde,ACss,Aiun	-
-nsts	main	unused	unit	Satyr Shadowdancer	-	nsts	nightelf	units\creeps\SatyrTrickster\SatyrTrickster	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	ACev,Aiun,Ashm	-
-nstw	main	unused	unit	Storm Wyrm	(Creep)	nstw	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	ACcl,ACdv,ACls,Advc,Alit	-
-nsty	main	unused	unit	Satyr Warrior	(Creep)	nsty	undead	units\creeps\Satyr\Satyr	stock	ReplaceableTextures\CommandButtons\BTNSatyr.blp	-	-	-	-	-	-	A020,Afbk,Aiun	-
-nten	main	unused	building	Tent	-	nten	other	buildings\other\Tent\Tent	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nthl	main	unused	unit	Thunder Lizard	2	nthl	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	Alit	-
-ntka	main	unused	unit	Tuskarr Spearman	-	ntka	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarGold.blp	-	-	-	-	-	-	-	-
-ntkc	main	unused	unit	Tuskarr Chieftain	-	ntkc	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBlack.blp	-	-	-	-	-	-	ACac	-
-ntkf	main	unused	unit	Tuskarr Fighter	-	ntkf	creeps	Units\Creeps\tuskar\tuskar	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	-	-
-ntkh	main	unused	unit	Tuskarr Healer	-	ntkh	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	ACdm,Anh1	-
-ntks	main	unused	unit	Tuskarr Sorcerer	-	ntks	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	ACif	-
-ntkt	main	unused	unit	Tuskarr Trapper	-	ntkt	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarGold.blp	-	-	-	-	-	-	ACen	-
-ntkw	main	unused	unit	Tuskarr Warrior	-	ntkw	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	-	-
-ntn2	main	unused	building	Tent	2	ntn2	other	buildings\other\Tent1\Tent1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-ntnt	main	unused	building	Tauren Tent	-	ntnt	other	buildings\other\TaurenTent\TaurenTent	stock	ReplaceableTextures\CommandButtons\BTNTaurenHut.blp	-	-	-	-	-	-	-	-
+nstl	main	used	unit	Satyr Soulstealer	(Creep)	nstl	undead	units\creeps\Satyr\Satyr	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	ACde,ACss,Aiun	-
+nsts	main	used	unit	Satyr Shadowdancer	-	nsts	nightelf	units\creeps\SatyrTrickster\SatyrTrickster	stock	ReplaceableTextures\CommandButtons\BTNSatyrTrickster.blp	-	-	-	-	-	-	ACev,Aiun,Ashm	-
+nstw	main	used	unit	Storm Wyrm	(Creep)	nstw	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	ACcl,ACdv,ACls,Advc,Alit	-
+nsty	main	used	unit	Satyr Warrior	(Creep)	nsty	undead	units\creeps\Satyr\Satyr	stock	ReplaceableTextures\CommandButtons\BTNSatyr.blp	-	-	-	-	-	-	A020,Afbk,Aiun	-
+nten	main	used	building	Tent	-	nten	other	buildings\other\Tent\Tent	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+nthl	main	used	unit	Thunder Lizard	2	nthl	creeps	units\creeps\ThunderLizard\ThunderLizard	stock	ReplaceableTextures\CommandButtons\BTNThunderLizard.blp	-	-	-	-	-	-	Alit	-
+ntka	main	used	unit	Tuskarr Spearman	-	ntka	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarGold.blp	-	-	-	-	-	-	-	-
+ntkc	main	used	unit	Tuskarr Chieftain	-	ntkc	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBlack.blp	-	-	-	-	-	-	ACac	-
+ntkf	main	used	unit	Tuskarr Fighter	-	ntkf	creeps	Units\Creeps\tuskar\tuskar	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	-	-
+ntkh	main	used	unit	Tuskarr Healer	-	ntkh	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	ACdm,Anh1	-
+ntks	main	used	unit	Tuskarr Sorcerer	-	ntks	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	ACif	-
+ntkt	main	used	unit	Tuskarr Trapper	-	ntkt	creeps	Units\Creeps\tuskarRanged\tuskarRanged	stock	ReplaceableTextures\CommandButtons\BTNTuskaarGold.blp	-	-	-	-	-	-	ACen	-
+ntkw	main	used	unit	Tuskarr Warrior	-	ntkw	creeps	Units\Creeps\tuskarLord\tuskarLord	stock	ReplaceableTextures\CommandButtons\BTNTuskaarBrown.blp	-	-	-	-	-	-	-	-
+ntn2	main	used	building	Tent	2	ntn2	other	buildings\other\Tent1\Tent1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
+ntnt	main	used	building	Tauren Tent	-	ntnt	other	buildings\other\TaurenTent\TaurenTent	stock	ReplaceableTextures\CommandButtons\BTNTaurenHut.blp	-	-	-	-	-	-	-	-
 ntor	main	used	unit	Tornado	-	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	Aasl,Atdg,Atsp	-
-ntrd	main	unused	unit	Dragon Turtle	-	ntrd	creeps	Units\Creeps\DragonSeaTurtle\DragonSeaTurtle	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleRed.blp	-	-	-	-	-	-	ACdv,ANt2	-
-ntrg	main	unused	unit	Gargantuan Sea Turtle	-	ntrg	creeps	Units\Creeps\GiantSeaTurtle\GiantSeaTurtle	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
-ntrh	main	unused	unit	Sea Turtle Hatchling	(Druids)	ntrh	nightelf	Units\Creeps\SeaTurtleRange\SeaTurtleRange	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
+ntrd	main	used	unit	Dragon Turtle	-	ntrd	creeps	Units\Creeps\DragonSeaTurtle\DragonSeaTurtle	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleRed.blp	-	-	-	-	-	-	ACdv,ANt2	-
+ntrg	main	used	unit	Gargantuan Sea Turtle	-	ntrg	creeps	Units\Creeps\GiantSeaTurtle\GiantSeaTurtle	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
+ntrh	main	used	unit	Sea Turtle Hatchling	(Druids)	ntrh	nightelf	Units\Creeps\SeaTurtleRange\SeaTurtleRange	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
 ntrs	main	used	unit	Sea Turtle	(Druids - Tortolla)	ntrs	nightelf	Units\Creeps\SeaTurtle\SeaTurtle	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	H04U	-	-	-	-	ANth	-
-ntrt	main	unused	unit	Giant Sea Turtle	-	ntrt	creeps	Units\Creeps\GiantSeaTurtleRange\GiantSeaTurtleRange	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
+ntrt	main	used	unit	Giant Sea Turtle	-	ntrt	creeps	Units\Creeps\GiantSeaTurtleRange\GiantSeaTurtleRange	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ANth	-
 ntt2	main	used	building	Tauren Tent	(Frostwolf Other)	ntt2	orc	buildings\other\TaurenTent2\TaurenTent2	stock	ReplaceableTextures\CommandButtons\BTNTaurenHut.blp	Frostwolf,Warsong	-	-	-	-	-	-	-
-nvde	main	unused	unit	Elder Voidwalker	(Creep)	nvde	creeps	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	ACde,ACfl,Adtg	-
+nvde	main	used	unit	Elder Voidwalker	(Creep)	nvde	creeps	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	ACde,ACfl,Adtg	-
 nvdg	main	used	unit	Greater Voidwalker	(Eye of Sargeras)	nvdg	creeps	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	A076	-
 nvdl	main	used	unit	Voidwalker	(Fel-Portal)	nvdl	orc	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	-	-
-nvdw	main	unused	unit	Voidweaver	(Legion)	nvdw	undead	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	A0PY,Afrc,Apsh	-
+nvdw	main	used	unit	Voidweaver	(Legion)	nvdw	undead	units\creeps\VoidWalker\VoidWalker	stock	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	-	-	-	-	-	-	A0PY,Afrc,Apsh	-
 nvil	main	used	unit	Villager	(Male)	nvil	commoner	units\critters\VillagerMan\VillagerMan	stock	ReplaceableTextures\CommandButtons\BTNVillagerMan.blp	-	-	-	-	-	-	-	-
 nvk2	main	used	unit	Child	(2)	nvk2	commoner	units\critters\VillagerKid1\VillagerKid1	stock	ReplaceableTextures\CommandButtons\BTNVillagerKid2.blp	-	-	-	-	-	-	-	-
 nvl2	main	used	unit	Villager	(Male 2)	nvl2	commoner	units\critters\VillagerMan1\VillagerMan1	stock	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	-	-	-	-	-	-	-	-
@@ -1299,21 +1299,21 @@ nvlk	main	used	unit	Child	-	nvlk	commoner	units\critters\VillagerKid\VillagerKid
 nvlw	main	used	unit	Villager	(Female)	nvlw	commoner	units\critters\VillagerWoman\VillagerWoman	stock	ReplaceableTextures\CommandButtons\BTNVillagerWoman.blp	-	-	-	-	-	-	-	-
 nwe2	main	used	unit	Thunder Eagle	(Lordaeron)	nwe2	human	units\creeps\WarEagle\WarEagle	stock	ReplaceableTextures\CommandButtons\BTNWarEagle.blp	Lordaeron	h06C	-	-	-	-	Adtg,Alit	R09X,R04L
 nwe3	main	used	unit	Hawk	(Wanderer)	nwe3	orc	units\creeps\WarEagle\WarEagle	stock	ReplaceableTextures\CommandButtons\BTNWarEagle.blp	-	-	-	-	-	-	Adtg,Alit,Apiv	R09X
-nwen	main	unused	unit	Wendigo	-	nwen	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	-	-
+nwen	main	used	unit	Wendigo	-	nwen	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	-	-
 nwgs	main	used	unit	Couatl	(Illidari)	nwgs	naga	units\naga\WindSerpent\WindSerpent	stock	ReplaceableTextures\CommandButtons\BTNWindSerpent.blp	Illidan	nnsa	-	-	-	-	Smcv	R09X
-nwiz	main	unused	unit	Apprentice Wizard	-	nwiz	creeps	units\creeps\HumanMage\HumanMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	A009	-
-nwld	main	unused	unit	Dire Wolf	(Creep)	nwld	creeps	units\creeps\DireWolf\DireWolf	stock	ReplaceableTextures\CommandButtons\BTNDireWolf.blp	-	-	-	-	-	-	A07E,A07F,A0CR	-
+nwiz	main	used	unit	Apprentice Wizard	-	nwiz	creeps	units\creeps\HumanMage\HumanMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	A009	-
+nwld	main	used	unit	Dire Wolf	(Creep)	nwld	creeps	units\creeps\DireWolf\DireWolf	stock	ReplaceableTextures\CommandButtons\BTNDireWolf.blp	-	-	-	-	-	-	A07E,A07F,A0CR	-
 nwlg	main	used	unit	Giant Wolf	(Gilneas)	nwlg	human	units\creeps\TimberWolf\TimberWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	A070,A0CR	-
-nwlt	main	unused	unit	Timber Wolf	-	nwlt	creeps	units\creeps\TimberWolf\TimberWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct,ACev	-
-nwna	main	unused	unit	Ancient Wendigo	-	nwna	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	ACbh,ACrn	-
-nwnr	main	unused	unit	Elder Wendigo	-	nwnr	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	ACbh	-
-nwrg	main	unused	unit	War Golem	-	nwrg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
-nwwd	main	unused	unit	Dire Frost Wolf	-	nwwd	creeps	units\creeps\WhiteWolf\WhiteWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct,ACro	-
+nwlt	main	used	unit	Timber Wolf	-	nwlt	creeps	units\creeps\TimberWolf\TimberWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct,ACev	-
+nwna	main	used	unit	Ancient Wendigo	-	nwna	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	ACbh,ACrn	-
+nwnr	main	used	unit	Elder Wendigo	-	nwnr	creeps	units\creeps\Wendigo\Wendigo	stock	ReplaceableTextures\CommandButtons\BTNWendigo.blp	-	-	-	-	-	-	ACbh	-
+nwrg	main	used	unit	War Golem	-	nwrg	creeps	units\creeps\GolemStatue\GolemStatue	stock	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	-	-	-	-	-	-	ACmi	-
+nwwd	main	used	unit	Dire Frost Wolf	-	nwwd	creeps	units\creeps\WhiteWolf\WhiteWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct,ACro	-
 nwwf	main	used	unit	Frost Wolf	(Frostwolf - Drek'Thar Summon)	nwwf	creeps	units\creeps\WhiteWolf\WhiteWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	-	-
-nwwg	main	unused	unit	Giant Frost Wolf	-	nwwg	creeps	units\creeps\WhiteWolf\WhiteWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct	-
-nwzd	main	unused	unit	Dark Wizard	-	nwzd	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
-nwzg	main	unused	unit	Renegade Wizard	-	nwzg	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
-nwzr	main	unused	unit	Rogue Wizard	-	nwzr	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
+nwwg	main	used	unit	Giant Frost Wolf	-	nwwg	creeps	units\creeps\WhiteWolf\WhiteWolf	stock	ReplaceableTextures\CommandButtons\BTNTimberWolf.blp	-	-	-	-	-	-	ACct	-
+nwzd	main	used	unit	Dark Wizard	-	nwzd	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
+nwzg	main	used	unit	Renegade Wizard	-	nwzg	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
+nwzr	main	used	unit	Rogue Wizard	-	nwzr	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
 nzom	main	used	unit	Zombie	(Scourge)	nzom	undead	units\creeps\Zombie\Zombie	stock	ReplaceableTextures\CommandButtons\BTNZombie.blp	-	-	-	-	-	-	Aap1,Aiun	-
 o000	main	used	unit	Royalty	(Cthun Elites)	ogru	naga	war3mapImported\BloodBeetle.mdl	main	ReplaceableTextures\CommandButtons\BTNSilithid.blp	Ahn'qiraj	n05A,nctl,u020,u021,u022	-	-	-	-	A0NG,A0XG,A0Y2,A0Y3,ACmp,ACrk,Aion	u022
 o001	main	used	unit	Tol'vir Statue	(Cthun Tol'vir Statue)	odkt	naga	war3mapImported\ObsidianSphinx.mdl	main	ReplaceableTextures\CommandButtons\BTNObsidianStatue.blp	Ahn'qiraj	o00D	-	-	-	-	AL1A,AZ2A,AZ3A,Alit	RZZL,u022
@@ -1356,7 +1356,7 @@ o019	main	used	unit	Whirlpool	(Tidesage - Kul'tiras)	ohwd	human	Whirlpool.mdl	ma
 o01A	main	used	unit	Cannon	(KulTiras)	ocat	human	war3mapImported\SiegeCannon.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonIcon.blp	Kul'tiras	h07P	-	-	-	-	-	h07O,h06I
 o01B	main	used	building	Orgrimmar	(Warsong)	ofrt	orc	war3mapImported\Building_Orgrimmar.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n03F,o00A,o04L,opeo	-	R019	-	A027,A0GM,Aspi	-
 o01D	main	used	unit	Bloodlust Totem	(Fel-Zuluhed-Level 4)	osp1	orc	units\orc\StasisTotem\StasisTotem.mdl	stock	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-	-	-	-	-	-	S00B	-
-o01F	main	unused	unit	Marauder	(Legion)	ogru	undead	units\demon\ChaosGrunt\ChaosGrunt.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosGrunt.blp	-	-	-	-	-	-	Aion	-
+o01F	main	used	unit	Marauder	(Legion)	ogru	undead	units\demon\ChaosGrunt\ChaosGrunt.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosGrunt.blp	-	-	-	-	-	-	Aion	-
 o01G	main	used	unit	Brute	(Nzoth)	ogru	naga	Units\Creeps\FacelessOne\FacelessOne.mdl	stock	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	Black Empire	n0AW	-	-	-	-	A020,ABPF,Aion	-
 o01H	main	used	unit	Twilight Hammer Enforcer	(Creep)	ogru	orc	war3mapImported\Bruiser Twilight Hammer.mdl	main	ReplaceableTextures\CommandButtons\BTNBonechewerGrunt.blp	-	o03D	-	-	-	-	A01K,A020,Aion	-
 o01I	main	used	unit	Animated Armor	(Skywall)	ogru	naga	war3mapImported\NightElfMoonProtectorV2.mdl	main	ReplaceableTextures\CommandButtons\BTNArmorGolem.blp	Skywall	n08A	-	-	-	-	A0E2,A13J,AELP,Aion	-
@@ -1379,7 +1379,7 @@ o02A	main	used	unit	Ward of Gale	(Skywall)	osp1	naga	AirEssence.mdl	main	Replace
 o02D	main	used	building	Darkspear Hold	(Frostwolf Other)	otto	orc	buildings\orc\VoodooLounge\VoodooLounge.mdl	stock	ReplaceableTextures\CommandButtons\BTNTaurenTotem.blp	-	-	n03F,o00A,o04L,opeo	-	R019,Ropg	-	A0C9,A0GM,Aspi	ostr
 o02F	main	used	unit	Mangonel	(Lordaeron)	ocat	human	war3mapImported\Siege_Onager.mdl	main	ReplaceableTextures\CommandButtons\BTNOnager.blp	Lordaeron	h094,o00E	-	-	-	-	-	-
 o02G	main	used	building	Jintha'Alor	-	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	-	-	o04A	-	-	-	A0CM	-
-o02H	main	unused	building	Blackrock Encampment	(Legion - Alterac)	obar	undead	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	-	-	u007,u00D	-	R01Y,R04G	-	A0BV	-
+o02H	main	used	building	Blackrock Encampment	(Legion - Alterac)	obar	undead	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	-	-	u007,u00D	-	R01Y,R04G	-	A0BV	-
 o02I	main	used	unit	Builder	(Creep, Worker)	opeo	orc	war3mapImported\DayLaborer.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinWorker.blp	-	o03L,o03M,o06S	-	o01M,o03L,o03O,o03P,o03Q,o03S,o03T,o03U,o03V,o03X,o05T	-	-	Arep	-
 o02J	main	used	unit	Worgen	(Gilneas)	odkt	human	war3mapImported\Werewolf 71.mdl	main	ReplaceableTextures\CommandButtons\BTNworg.blp	Gilneas	h03E,h0A9	-	-	-	-	A020,A131,A132,Aion	-
 o02M	main	used	unit	Warsong Grunt	(Warsong)	ogru	orc	war3mapImported\WarsongGrunt.mdl	main	ReplaceableTextures\CommandButtons\BTNwarsonggrunt.blp	Warsong	o01S	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,Aion,S00Y,Sca1	-
@@ -1437,20 +1437,20 @@ o044	main	used	building	Dinosaur Pen	(Creep Specialist)	obea	orc	war3mapImported
 o045	main	used	building	Dwelling	(Creep Farm)	otrb	orc	war3mapImported\BurrowGurubashiV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsBurrow.blp	-	o04A	-	-	-	-	-	-
 o046	main	used	building	Watch Tower	(Creep Tower)	owtw	orc	war3mapImported\WatchTowerGurubashiV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsWatchTower.blp	-	o04A	-	-	-	-	-	o042
 o047	main	used	building	Bazaar	(Creep Shop)	ovln	orc	war3mapImported\VoodooLoungeGurubashiV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsVoodooLounge.blp	-	o04A	-	-	-	-	Aall,Apit	-
-o048	main	unused	building	Improved Watch Tower	(Creep Tower 2)	owtw	orc	war3mapImported\WatchTowerGurubashiV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsWatchTower.blp	-	-	-	-	-	-	-	-
+o048	main	used	building	Improved Watch Tower	(Creep Tower 2)	owtw	orc	war3mapImported\WatchTowerGurubashiV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsWatchTower.blp	-	-	-	-	-	-	-	-
 o049	main	used	building	Golden Dock	(Creep Shipyard)	oshy	orc	war3mapImported\ShipyardGurubashiV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsShipyard.blp	-	o04A	-	-	-	-	-	R04R
 o04A	main	used	unit	Gatherer	(Creep, Zandalari, Worker)	opeo	orc	war3mapImported\TrollGathererAlternateV2.mdl	main	ReplaceableTextures\CommandButtons\BTNIceTrollWitchDoctor.blp	-	o00K,o00N,o00Q,o018,o02G,o03R,o03Y,o03Z	-	o03R,o040,o041,o042,o043,o044,o045,o046,o047,o049,o04X	-	-	Arep	-
 o04B	main	used	unit	Cultist	(Creep Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	h01Z,o039,o03A,o03B	-	o039,o03C,o03D,o03E,o03F,o03G,o03I,o03J,o03K,u00Y	-	-	Arep	-
 o04C	main	used	unit	Seraphim	(Scarlet)	odkt	human	war3mapImported\Seraphim.mdl	main	ReplaceableTextures/CommandButtons/BTNRedLioness3.blp	Scarlet Crusade	n035	-	-	-	-	A020,A03O,A0QH,ACsk,Aion	-
-o04D	main	unused	unit	Scout	(Creep)	ohun	orc	units\orc\HeadHunter\HeadHunter	stock	ReplaceableTextures\CommandButtons\BTNHeadhunter.blp	-	-	-	-	-	-	A05H,ACsf,Aion,Aotr	o042
+o04D	main	used	unit	Scout	(Creep)	ohun	orc	units\orc\HeadHunter\HeadHunter	stock	ReplaceableTextures\CommandButtons\BTNHeadhunter.blp	-	-	-	-	-	-	A05H,ACsf,Aion,Aotr	o042
 o04E	main	used	unit	Boneseer	(Creep)	ohun	orc	war3mapImported\TrollBonecaster.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollShadowIce.blp	-	o00K,o03R,o03Y,o03Z	-	-	-	-	A07C,A0GK,A0OP,A0OQ,A0OU,A0TR,ACrk,Aion	o03Z
-o04F	main	unused	unit	Hex Doctor	(Creep)	odoc	orc	war3mapImported\ZandalariWitchDoctor.mdl	main	ReplaceableTextures\CommandButtons\BTNWitchDoctor.blp	-	-	-	-	-	-	A0P1,A0U6,Ahea,Aion	-
-o04G	main	unused	unit	Haruspex	(Creep)	oshm	orc	war3mapImported\TrollHexerMaskedV2.mdl	main	ReplaceableTextures\CommandButtons\BTNIceTrollShadowPriest.blp	-	-	-	-	-	-	A0D1,A0OZ,A0P3,Aion	-
+o04F	main	used	unit	Hex Doctor	(Creep)	odoc	orc	war3mapImported\ZandalariWitchDoctor.mdl	main	ReplaceableTextures\CommandButtons\BTNWitchDoctor.blp	-	-	-	-	-	-	A0P1,A0U6,Ahea,Aion	-
+o04G	main	used	unit	Haruspex	(Creep)	oshm	orc	war3mapImported\TrollHexerMaskedV2.mdl	main	ReplaceableTextures\CommandButtons\BTNIceTrollShadowPriest.blp	-	-	-	-	-	-	A0D1,A0OZ,A0P3,Aion	-
 o04I	main	used	unit	Battlemaster	(Creep)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	h01Z,o004,o039,o03A,o03B	-	-	-	-	A01T,A0EH,A0GK,A0IT,A0NQ,ACsk,Aion	o03B
 o04J	main	used	unit	Void Rider	(Creep)	owyv	orc	war3mapImported\NetherDragonRiderV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNWyvernRider.blp	-	o03F	-	-	-	-	A069,Adtg,Aven	-
 o04K	main	used	unit	Skull Catapult	(Creep)	ocat	orc	war3mapImported\CatapultWC1.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapultWC1.blp	-	o03D	-	-	-	-	-	-
 o04L	main	used	unit	Peon	(Warsong Worker)	opeo	orc	war3mapImported\WarsongPeon.mdl	main	ReplaceableTextures\CommandButtons\BTNPeon.blp	Warsong	o004,o00C,o00J,o01B,o02D,o02R,o02S	-	n03E,o006,o009,o00C,o01S,o01T,o020,o028,o02Q,o02T,o05G	-	-	A041,Arep,Sca5	-
-o04M	main	unused	building	Kezan Trading Center	(Creep Special)	oshy	orc	war3mapImported\Building_WarsongShop.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeMerchant.blp	-	-	ncen,nfsp,nftr,nmrr,nogr,nomg	-	-	-	-	-
+o04M	main	used	building	Kezan Trading Center	(Creep Special)	oshy	orc	war3mapImported\Building_WarsongShop.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeMerchant.blp	-	-	ncen,nfsp,nftr,nmrr,nogr,nomg	-	-	-	-	-
 o04O	main	used	unit	Alchemist	(Creep)	odoc	orc	war3mapImported\Goblin_Alchemist.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinSlasher.blp	-	o03S	-	-	-	-	A07A,A0NJ,A0QL,A11S,Aion	-
 o04P	main	used	unit	Nathrezim Warlock	(Legion)	odkt	undead	war3mapImported\Team Coloured Nathrezim.mdl	main	ReplaceableTextures\CommandButtons\BTNDreadlordInf.blp	Legion	u005,u006	-	-	-	-	A02T,A07B,A08P,A0WB,A0YY,Aion,HWP1,TPY7	u00N
 o04Q	main	used	unit	Tinker	(Creep)	ohun	orc	Units\Creeps\HeroTinker\HeroTinker.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	-	o03L,o03M,o06S	-	-	-	-	A07C,A0HA,A0TA,ACrk,ANs1,Aion	o03N
@@ -1475,22 +1475,22 @@ o05B	main	used	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdhe
 o05C	main	used	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiProphet.blp	The Exodar	o054	-	-	-	-	A0TG,A0TH,A0YJ,Aion	-
 o05D	main	used	unit	Elementalist	(Draenei)	odoc	nightelf	war3mapImported\VillagerDraenei.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiBattlemaster_by67chrome.blp	The Exodar	o054	-	-	-	-	A0FB,A0TL,A10W,Aion	-
 o05E	main	used	unit	Lurking Tempest	(Skywall)	oshm	naga	war3mapImported\StormElemental.mdl	main	ReplaceableTextures/CommandButtons/BTNStormElementalIcon.blp	Skywall	n07N	-	-	-	-	A0NN,AELL,AESC,Aion,Aslo	-
-o05F	main	unused	building	Naval Battery	(KulTiras Tower)	oshy	human	war3mapImported\Naval Battery.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
+o05F	main	used	building	Naval Battery	(KulTiras Tower)	oshy	human	war3mapImported\Naval Battery.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
 o05G	main	used	building	Siege Workshop	(Warsong Siege)	obea	orc	war3mapImported\OrcMill.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcBlacksmith.blp	Warsong	o04L	e01M,o00I	-	-	-	Abds,Aspi	o009,o02R
-o05I	main	unused	building	Missile Battery	(Creep Tower)	oshy	human	war3mapImported\GoblinTowerInduwer.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
+o05I	main	used	building	Missile Battery	(Creep Tower)	oshy	human	war3mapImported\GoblinTowerInduwer.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
 o05K	main	used	unit	Pillager	(Creep)	ogru	orc	war3mapImported\BlackrockRaiderV2.mdl	main	ReplaceableTextures\CommandButtons\BTNBonechewerGrunt.blp	-	o03D	-	-	-	-	A020,A0LQ,Aion	-
 o05L	main	used	unit	Dragon Hunter	(Creep)	ohun	orc	war3mapImported\SpearmanWC1v2.mdl	main	ReplaceableTextures\CommandButtons\BTNSpearmanWC1v2.blp	-	o03D	-	-	-	-	A05H,Aion	o068
 o05N	main	used	unit	Healing Flower	(Druids)	osp2	nightelf	war3mapImported\Petal Ward.mdl	main	ReplaceableTextures\CommandButtons\BTNHealingPlants.blp	-	-	-	-	-	-	A0HR	-
 o05Q	main	used	building	GreymaneTower	(Gilneas Real Tower)	owtw	human	war3mapImported\GilneasTower.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasTowerGuard.blp	-	-	-	-	-	-	A0J1	-
 o05T	main	used	building	Tank Factory	(Creep Siege)	obar	orc	war3mapImported\OrcBlacksmith_bakr.mdl	main	ReplaceableTextures\CommandButtons\BTNNewOrcBlackSmith.blp	-	o02I	h091,h09I,h09J,ngir	-	-	-	Aspi	o03Q,o03N
 o05U	main	used	building	Lightforged Gateway	(Draenei Elite)	obar	orc	war3mapImported\DraeneiAltar7.mdl	main	ReplaceableTextures\CommandButtons\BTNAltar of Starlight1.blp	The Exodar	o05A	n0BJ,n0BM,n0BP	-	-	-	-	R09A
-o067	main	unused	building	Dungeon	(Creep Barracks)	obar	orc	war3mapImported\DragonDungeon.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp	-	-	-	-	-	-	Aspi	-
+o067	main	used	building	Dungeon	(Creep Barracks)	obar	orc	war3mapImported\DragonDungeon.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp	-	-	-	-	-	-	Aspi	-
 o068	main	used	building	Quarry	(Creep Research)	ofor	orc	war3mapImported\DragonQuarry.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonQuarry.blp	-	-	-	-	-	-	Aspi	-
-o069	main	unused	building	Dark Conclave	(Creep Magic)	osld	orc	war3mapImported\DragonArcaneTemple.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonArcaneTemple.blp	-	-	-	-	-	-	Aspi	-
+o069	main	used	building	Dark Conclave	(Creep Magic)	osld	orc	war3mapImported\DragonArcaneTemple.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonArcaneTemple.blp	-	-	-	-	-	-	Aspi	-
 o06A	main	used	building	Improved Territorial Drake	(Creep Tower 2)	owtw	orc	war3mapImported\DragonTower.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonTower.blp	-	-	-	-	-	-	Arbr,Aspi	-
 o06B	main	used	building	Territorial Drake	(Creep Tower)	owtw	orc	war3mapImported\DragonTower.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonTower.blp	-	-	-	-	-	-	Arbr,Aspi	o068
-o06C	main	unused	building	Nest	(Creep Farm)	ocbw	orc	war3mapImported\DragonNest.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonNest.blp	-	-	-	-	-	-	A0CF,Aspi	-
-o06D	main	unused	building	Shipyard	(Creep Shipyard)	oshy	orc	war3mapImported\OrcBarrackAlphaV2_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeSummoningCircle.blp	-	-	-	-	-	-	-	-
+o06C	main	used	building	Nest	(Creep Farm)	ocbw	orc	war3mapImported\DragonNest.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonNest.blp	-	-	-	-	-	-	A0CF,Aspi	-
+o06D	main	used	building	Shipyard	(Creep Shipyard)	oshy	orc	war3mapImported\OrcBarrackAlphaV2_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeSummoningCircle.blp	-	-	-	-	-	-	-	-
 o06G	main	used	unit	Oil Rig Constructor	(Creep)	obot	orc	war3mapImported\HumanOilTanker.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadTransport.blp	-	o03V	-	-	-	-	A0MU,A0PJ,S000,Sch5,Sdro	R097
 o06H	main	used	unit	Warsong Battle Standard	(Creep)(Level 1)	osp1	orc	war3mapImported\Battle Standard.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcCaptureFlag.blp	-	-	-	-	-	-	A0ZB,A0ZC	-
 o06I	main	used	unit	Warsong Battle Standard	(Creep)(Level 2)	osp1	orc	war3mapImported\Battle Standard.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcCaptureFlag.blp	-	-	-	-	-	-	A0ZB,A0ZD	-
@@ -1501,9 +1501,9 @@ o06O	main	used	unit	Rallying Banner	(Stormwind)	ohwd	human	war3mapImported\Storm
 o06P	main	used	unit	Worgen Shaman	(Gilneas)	odkt	human	war3mapImported\WorgenDruid3.mdl	main	ReplaceableTextures/CommandButtons/BTNWorgen-Werewolf.blp	Gilneas	h03E,h0A9	-	-	-	-	A0UQ,A133,A135,ACrk,Aion	R07U
 o06Q	main	used	unit	Chaos Kodo Beast	(Warsong)	okod	orc	units\demon\ChaosKotoBeast\ChaosKotoBeast.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosKotoBeast.blp	-	-	-	-	-	-	A0DS,A0DX,A0VZ,ACrk,AInv,Aakb,Adev,Advc,Apak,S00U	o02S
 o06R	main	used	unit	Chaos Blademaster	(Warsong)	ogru	orc	units\demon\HeroChaosBladeMaster\HeroChaosBladeMaster.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosBlademaster.blp	-	-	-	-	-	-	A03T,A08P,A0DS,A0EF,A0MM,A0PE,A0QG,A0XM,Aion,S00Q	o02S
-o06S	main	unused	building	Ratchet	(Creep Other)	ofrt	orc	war3mapImported\Goblin Town Hallv1_2.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinGreatHallT1.blp	-	-	o02I,o04Q	-	-	-	-	-
+o06S	main	used	building	Ratchet	(Creep Other)	ofrt	orc	war3mapImported\Goblin Town Hallv1_2.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinGreatHallT1.blp	-	-	o02I,o04Q	-	-	-	-	-
 o06T	main	used	unit	Tauren Gladiator	(Frostwolf)	otau	orc	war3mapImported\bourrin.mdl	main	ReplaceableTextures\CommandButtons\BTNGreatTaurenThieftain.blp	Frostwolf	otto	-	-	-	-	A064,A0E6,A13Z,A142,ACrk,Aion	R0AB,ofor,ofrt
-o06U	main	unused	building	Highmountain	(Frostwolf Other)	ofrt	orc	war3mapImported\TaurenGreatHall.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n03R,noga,o00A,o00E,opeo	-	R00R	-	A09I,A0C9,A0GM,Aspi	-
+o06U	main	used	building	Highmountain	(Frostwolf Other)	ofrt	orc	war3mapImported\TaurenGreatHall.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n03R,noga,o00A,o00E,opeo	-	R00R	-	A09I,A0C9,A0GM,Aspi	-
 o06V	main	used	unit	Eagle Rider	(Scarlet)	owyv	human	war3mapImported\ScarletEagleKnight.mdl	main	ReplaceableTextures\CommandButtonsDisabled\BTNScarletEagleKnight.blp	Scarlet Crusade	h0BL	-	-	-	-	A0PG,A0QE,A0TJ,Adtg	R09X
 o06W	main	used	unit	Gal'darah	(Creep-Zul'Drak)	Obla	creeps	units\creeps\IceTrollShadowPriest\IceTrollShadowPriest.mdl	stock	ReplaceableTextures\CommandButtons\BTNDruidoftheClawIceTrollIconV1.blp	-	-	-	-	-	-	A0EH,A0GK,A0SX,A0TW,AUim	-
 o06X	main	used	unit	Jin'do	(Creep-Zul'Gurub)	Obla	creeps	Troll MageMask.mdl	main	ReplaceableTextures\CommandButtons\BTNForestTrollTrapper.blp	-	-	-	-	-	-	A0GK,AOhx,Arsw	-
@@ -1520,7 +1520,7 @@ obea	main	used	building	Beastiary	(Frostwolf Specialist)	obea	orc	war3mapImporte
 obot	main	used	unit	Horde Transport Ship	(Warsong-Frostwolf-Fel Horde)	obot	orc	OrcTransport.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadTransport.blp	Fel Horde,Frostwolf,Warsong	o02T,o032,o03I,oshy	-	-	-	-	Sch5,Sdro,Slo3	R04R
 ocat	main	used	unit	Catapult	(Frostwolf)	ocat	orc	CatapultV1_by_Kitabatake.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapult.blp	Frostwolf	obar	-	-	-	-	-	ofor,ostr
 ocbw	main	used	building	Fel Burrow	(Fel Farm)	ocbw	orc	war3mapImported\BurrowFelOrcV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNFelOrcBurrow.blp	Fel Horde	ncpn	-	-	-	-	A0CF,Abun,Aorb,Arbr,Aspi,Astd,Sbtl	-
-odes	main	unused	unit	Frigate	(Warsong-Frostwolf-Fel Horde)	odes	orc	units\creeps\OrcishDestroyerShip\OrcishDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNOrcishTransport.blp	-	-	-	-	-	-	A0FV,A0TE	R04R
+odes	main	used	unit	Frigate	(Warsong-Frostwolf-Fel Horde)	odes	orc	units\creeps\OrcishDestroyerShip\OrcishDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNOrcishTransport.blp	-	-	-	-	-	-	A0FV,A0TE	R04R
 odkt	main	used	unit	Eredar Occultist	(Fel)	odkt	orc	units\demon\EredarWarlock\EredarWarlock.mdl	stock	ReplaceableTextures\CommandButtons\BTNKiljaedin.blp	Fel Horde	o033	-	-	-	-	A03E,A0EE,ACrk,Aion,TP32	o030
 odoc	main	used	unit	Witch Doctor	(Frostwolf)	odoc	orc	units\orc\WitchDoctor\WitchDoctor	stock	ReplaceableTextures\CommandButtons\BTNWitchDoctor.blp	Frostwolf	osld	-	-	-	-	ANtr,Aeye,Ahwd,Aion,Asta	-
 oeye	main	used	unit	Sentry Ward	(Frostwolf-Witch Doctor)	oeye	orc	units\orc\SentryWard\SentryWard	stock	ReplaceableTextures\CommandButtons\BTNSentryWard.blp	-	-	-	-	-	-	Adt1,Aeth	-
@@ -1561,7 +1561,7 @@ shz5	main	used	unit	Aqir	(Nzoth)	hmtm	naga	war3mapImported\Unit_SiegeAqir_Attack
 sl2O	main	used	unit	Obsidian Eradicator	(Cthun)	uabo	naga	war3mapImported\ObsidianStatue_Ground.mdl	main	ReplaceableTextures\CommandButtons\BTNDestroyer.blp	Ahn'qiraj	o00R	-	-	-	-	A020,A0GF,A0WJ,A13J,Aiun,ZBHL,ZBMR	RZZL,u021
 st5K	main	used	building	Pit of Torment	(Nzoth Specialist)	nnsa	naga	war3mapImported\VortexOfSacrifice.mdl	main	ReplaceableTextures/CommandButtons/BTNVortexOfSacrifice.blp	Black Empire	n0B5	shz5,u02F	-	RBFC	-	-	n0AS
 st6W	main	used	unit	Unholy Archon	(Scarlet quest)	odkt	orc	war3mapImported\SatyrShadowmancer_V3_5.mdl	main	ReplaceableTextures\CommandButtons\BTNVampire.blp	-	-	-	-	-	-	ACrk,Aion	-
-swSS	main	unused	building	Sulfuron Spire	(Scourge T3)	unp2	undead	war3mapImported\Demon_BulwarkBastionCitadel.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonHallsOfTheDead.blp	-	-	-	-	-	-	-	uaod
+swSS	main	used	building	Sulfuron Spire	(Scourge T3)	unp2	undead	war3mapImported\Demon_BulwarkBastionCitadel.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonHallsOfTheDead.blp	-	-	-	-	-	-	-	uaod
 tlS0	main	used	unit	Ice Trap	(Cthun)	otot	orc	war3mapImported\Crystal Beartrap SD.mdl	main	ReplaceableTextures\CommandButtons\BTNTrap_of_Ice.blp	-	-	-	-	-	-	Aeth	-
 tp01	main	used	unit	Flame Tank	(Ironforge)	hmtt	human	units\human\WarWagon\WarWagon	stock	ReplaceableTextures\CommandButtons\BTNSeigeEngineWithMissles.blp	Ironforge	harm	-	-	-	-	A0F5,S01F,S01G,S01H,TP27	h07G
 tp02	main	used	unit	Artillery Tank	(Ironforge)	hmtt	human	units\human\WarWagon\WarWagon	stock	ReplaceableTextures\CommandButtons\BTNSeigeEngineWithMissles.blp	-	harm	-	-	-	-	A0F5,Aroc,S01F,S01G,S01H,TP31	h07G
@@ -1651,8 +1651,8 @@ uplg	main	unused	unit	Disease Cloud	-	uplg	undead	units\undead\PlagueCloud\Plagu
 usep	main	used	building	Crypt	(Scourge Barracks)	usep	undead	buildings\undead\Crypt\Crypt	stock	ReplaceableTextures\CommandButtons\BTNCrypt.blp	Scourge	uaco	ucry,ugar,ugho	-	R01D,Rugf,Ruwb	-	-	-
 ushd	main	used	unit	Shade	(Scourge)	ushd	undead	units\undead\Shade\Shade	stock	ReplaceableTextures\CommandButtons\BTNShade.blp	-	uaco	-	-	-	-	Agho,Atru,Augh	-
 ushp	main	used	building	Haunted Harbor	(Scourge Shipyard)	ushp	undead	buildings\undead\UndeadShipyard\UndeadShipyard	stock	ReplaceableTextures\CommandButtons\BTNUndeadShipyard.blp	Black Empire,Scourge	n0B5,uaco	h0AM,h0AQ,h0AT,h0AW,h0AZ,h0B9,h0BB,ubot	-	-	-	-	R04R
-uske	main	unused	unit	Skeleton Warrior	(Scourge - Necromancer)	uske	undead	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	A0PI	-
-uskm	main	unused	unit	Skeletal Mage	(Scourge - Black Citadel)	uskm	undead	units\undead\SkeletonMage\SkeletonMage	stock	ReplaceableTextures\CommandButtons\BTNSkeletonMage.blp	-	-	-	-	-	-	Afr2	-
+uske	main	used	unit	Skeleton Warrior	(Scourge - Necromancer)	uske	undead	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	A0PI	-
+uskm	main	used	unit	Skeletal Mage	(Scourge - Black Citadel)	uskm	undead	units\undead\SkeletonMage\SkeletonMage	stock	ReplaceableTextures\CommandButtons\BTNSkeletonMage.blp	-	-	-	-	-	-	Afr2	-
 uslh	main	used	building	Slaughterhouse	(Scourge Specialist)	uslh	undead	buildings\undead\Slaughterhouse\Slaughterhouse	stock	ReplaceableTextures\CommandButtons\BTNSlaughterhouse.blp	Scourge	uaco	nfgl,uabo,umtw	-	R01X,Ruex	-	-	unp1,ugrv
 utod	main	used	building	Temple of the Damned	(Scourge Magic)	utod	undead	buildings\undead\TempleOfTheDamned\TempleOfTheDamned	stock	ReplaceableTextures\CommandButtons\BTNTempleOfTheDamned.blp	Scourge	uaco	uban,unec,uobs	-	Ruba,Rune,Rusl,Rusm	-	-	unp1
 utom	main	used	building	Tomb of Relics	(Scourge Shop)	utom	undead	buildings\undead\TombOfRelics\TombOfRelics	stock	ReplaceableTextures\CommandButtons\BTNTombOfRelics.blp	Scourge	uaco	-	-	-	-	Aall,Apit	-
@@ -1667,7 +1667,7 @@ zB4E	main	used	unit	Mature Egg	(Cthun - Incubate)	nchg	naga	Doodads\Dungeon\Terr
 zBBG	main	used	unit	Cocoon	(Cthun - Defensive Cocoon)	nchg	naga	Doodads\Dungeon\Terrain\EggSack\EggSack0.mdl	stock	ReplaceableTextures\CommandButtons\BTNEgg.blp	-	-	-	-	-	-	-	-
 zBIE	main	used	unit	Immature Egg	(Cthun - Incubate)	nchg	naga	Doodads\Dungeon\Terrain\EggSack\EggSack1.mdl	stock	ReplaceableTextures\CommandButtons\BTNHatchingEgg.blp	-	-	-	-	-	-	-	-
 zBTH	main	used	unit	Tentacle	(Spawn Tentacle - C'thun)	nfgt	naga	war3mapImported\CthunTentacle.mdl	main	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	-	-
-zb01	main	unused	building	Sunwell Tower	(Quelthalas Tower)	negt	human	buildings\other\ElvenGuardMagicTower\ElvenGuardMagicTower.mdl	stock	ReplaceableTextures\CommandButtons\BTNElvenSkyTower.blp	-	-	-	-	-	-	A04X,AHta,Adts	-
+zb01	main	used	building	Sunwell Tower	(Quelthalas Tower)	negt	human	buildings\other\ElvenGuardMagicTower\ElvenGuardMagicTower.mdl	stock	ReplaceableTextures\CommandButtons\BTNElvenSkyTower.blp	-	-	-	-	-	-	A04X,AHta,Adts	-
 zbDF	main	used	unit	Ice Block	(Dispellable Dummy)	ushd	undead	Doodads\Terrain\LOSBlocker\IntentionallyLeftBlank.mdl	stock	ReplaceableTextures\CommandButtons\BTNShade.blp	-	-	-	-	-	-	-	-
 zbli	main	used	unit	Lich	(Scourge Elite)	ntrv	undead	units\undead\HeroLich\HeroLich_V1.mdl	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	-	o016,u000,u02L,unp1,unp2,unpl	-	-	-	-	A07C,A08P,A0WP,Aiun,ZBFN,ZBIB	unp2,ZB74
 E001	24p	24p only	hero	Archdruid of Darnassus	(Druids-Bear Form)	Emfr	nightelf	units\nightelf\DruidoftheClaw\DruidoftheClaw.mdl	stock	ReplaceableTextures\CommandButtons\BTNEnchantedBears.blp	-	-	-	-	-	-	A016,A0AV,A0GK,A0M2,AInv,Aamk,Ault	-
@@ -3680,7 +3680,7 @@ nba2	stock	used	unit	Doom Guard	(Summoned)	nba2	demon	units\demon\DoomGuard\Doom
 nbdm	stock	unused	unit	Blue Dragonspawn Meddler	-	nbdm	creeps	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNBlueDragonSpawn.blp	-	-	-	-	-	-	ACev	-
 nbdr	stock	unused	unit	Black Dragon Whelp	-	nbdr	creeps	units\creeps\BlackDragonWelp\BlackDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNBlackDragon.blp	-	-	-	-	-	-	-	-
 nbds	stock	unused	unit	Blue Dragonspawn Sorcerer	-	nbds	creeps	Units\Creeps\DragonSpawnGreen\DragonSpawnGreen	stock	ReplaceableTextures\CommandButtons\BTNGreenDragonSpawn.blp	-	-	-	-	-	-	ACev,ACfn	-
-nbnb	stock	unused	unit	Burrowed Barbed Arachnathid	-	nbnb	creeps	Units\Creeps\Archnathid\Archnathid	stock	ReplaceableTextures\CommandButtons\BTNArachnathid.blp	-	-	-	-	-	-	Abu5	-
+nbnb	stock	used	unit	Burrowed Barbed Arachnathid	-	nbnb	creeps	Units\Creeps\Archnathid\Archnathid	stock	ReplaceableTextures\CommandButtons\BTNArachnathid.blp	-	-	-	-	-	-	Abu5	-
 nbse	stock	unused	building	Resurrection Stone	(southeast facing)	nbse	other	Doodads\Cinematic\RessurectionStoneSE\RessurectionStoneSE	stock	ReplaceableTextures\CommandButtons\BTNResStone.blp	-	-	-	-	-	-	Avul	-
 nbsp	stock	unused	unit	Ship	-	nbsp	other	doodads\northrend\water\Battleship\Battleship	stock	ReplaceableTextures\CommandButtons\BTNShip.blp	-	-	-	-	-	-	-	-
 nbsw	stock	unused	building	Resurrection Stone	(southwest facing)	nbsw	other	Doodads\Cinematic\RessurectionStoneSW\RessurectionStoneSW	stock	ReplaceableTextures\CommandButtons\BTNResStone.blp	-	-	-	-	-	-	Avul	-
@@ -3698,8 +3698,8 @@ ncop	stock	unused	building	Circle of Power	-	ncop	other	buildings\other\CircleOf
 ncp2	stock	unused	building	Circle of Power	(medium)	ncp2	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	Avul	-
 ncp3	stock	unused	building	Circle of Power	(large)	ncp3	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	Avul	-
 ncrb	stock	used	unit	Crab	-	ncrb	critters	units\critters\SpiderCrab\SpiderCrab	stock	ReplaceableTextures\CommandButtons\BTNSpinyCrab.blp	-	-	-	-	-	-	Awan	-
-ncta	stock	unused	building	Corrupted Tree of Ages	-	ncta	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNTreeOfAges.blp	-	-	-	-	-	-	Aeat,Aent,Aro1,Atol	-
-ncte	stock	unused	building	Corrupted Tree of Eternity	-	ncte	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNTreeOfEternity.blp	-	-	-	-	-	-	Aeat,Aent,Aro1,Atol	-
+ncta	stock	used	building	Corrupted Tree of Ages	-	ncta	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNTreeOfAges.blp	-	-	-	-	-	-	Aeat,Aent,Aro1,Atol	-
+ncte	stock	used	building	Corrupted Tree of Eternity	-	ncte	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNTreeOfEternity.blp	-	-	-	-	-	-	Aeat,Aent,Aro1,Atol	-
 ndch	stock	unused	building	Draenei Chieftain's Hut	-	ndch	other	buildings\other\ChieftainHut\ChieftainHut	stock	ReplaceableTextures\CommandButtons\BTNDranaiChiefHut.blp	-	-	-	-	-	-	-	-
 nder	stock	unused	unit	Stag	-	nder	critters	units\critters\BlackStagMale\BlackStagMale	stock	ReplaceableTextures\CommandButtons\BTNStag.blp	-	-	-	-	-	-	Awan	-
 ndh0	stock	unused	building	Draenei Hut	-	ndh0	other	buildings\other\DraneiHut0\DraneiHut0	stock	ReplaceableTextures\CommandButtons\BTNDranaiHut.blp	-	-	-	-	-	-	Abds	-
@@ -3714,7 +3714,7 @@ ndog	stock	unused	unit	Dog	-	ndog	critters	units\critters\BrownWolf\BrownWolf	st
 ndqn	stock	unused	unit	Succubus	-	ndqn	creeps	units\demon\Demoness\Demoness	stock	ReplaceableTextures\CommandButtons\BTNDemoness.blp	-	-	-	-	-	-	-	-
 ndqv	stock	unused	unit	Vile Tormentor	-	ndqv	creeps	units\demon\DemonessBlue\DemonessBlue	stock	ReplaceableTextures\CommandButtons\BTNBlueDemoness.blp	-	-	-	-	-	-	ACsi	-
 ndr1	stock	used	unit	Lesser Dark Minion	-	ndr1	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
-ndr3	stock	unused	unit	Greater Dark Minion	-	ndr3	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
+ndr3	stock	used	unit	Greater Dark Minion	-	ndr3	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
 ndrb	stock	unused	building	Dragon Roost	-	ndrb	orc	buildings\other\DragonBuilding\DragonBuilding	stock	ReplaceableTextures\CommandButtons\BTNDragonRoost.blp	-	-	nrwm	-	-	-	-	-
 ndrg	stock	unused	building	Green Dragon Roost	-	ndrg	other	buildings\other\DragonBuildingGreen\DragonBuildingGreen	stock	ReplaceableTextures\CommandButtons\BTNGreenDragonRoost.blp	-	-	-	-	-	ngdk,ngrd,ngrw	Ane2,Avul	-
 ndrj	stock	unused	unit	Dalaran Reject	-	ndrj	creeps	units\other\DalaranReject\DalaranReject	stock	ReplaceableTextures\CommandButtons\BTNDalaranReject.blp	-	-	-	-	-	-	-	-
@@ -3751,7 +3751,7 @@ nfot	stock	unused	unit	Faceless One Terror	-	nfot	creeps	Units\Creeps\FacelessOn
 nfpc	stock	unused	unit	Polar Furbolg Champion	-	nfpc	creeps	units\creeps\PolarFurbolg\PolarFurbolg	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolg.blp	-	-	-	-	-	-	-	-
 nfpt	stock	unused	unit	Polar Furbolg Tracker	-	nfpt	creeps	units\creeps\PolarFurbolgTracker\PolarFurbolgTracker	stock	ReplaceableTextures\CommandButtons\BTNPolarFurbolgTracker.blp	-	-	-	-	-	-	ACsw	-
 nfrm	stock	unused	building	Frostmourne Pedestal	-	nfrm	undead	buildings\other\Frostmourne\Frostmourne	stock	ReplaceableTextures\CommandButtons\BTNFrostmourne.blp	-	-	-	-	-	-	Avul	-
-nfro	stock	unused	unit	Frog	-	nfro	critters	units\critters\Frog\Frog	stock	ReplaceableTextures\CommandButtons\BTNHex.blp	-	-	-	-	-	-	Awan	-
+nfro	stock	used	unit	Frog	-	nfro	critters	units\critters\Frog\Frog	stock	ReplaceableTextures\CommandButtons\BTNHex.blp	-	-	-	-	-	-	Awan	-
 nfrp	stock	unused	unit	Primal Pandaren	-	nfrp	creeps	units\creeps\FurbolgPanda\FurbolgPanda	stock	ReplaceableTextures\CommandButtons\BTNFurbolgPanda.blp	-	-	-	-	-	-	-	-
 nfrt	stock	unused	building	Fruit Stand	-	nfrt	human	buildings\other\FruitStand\FruitStand	stock	ReplaceableTextures\CommandButtons\BTNMarketplace.blp	-	-	-	-	-	-	-	-
 nft1	stock	unused	building	Flame Tower	-	nft1	human	buildings\other\TowerDefenseTower\TowerDefenseTower	stock	ReplaceableTextures\CommandButtons\BTNFlameTower.blp	-	-	-	-	-	-	-	-
@@ -3784,13 +3784,13 @@ ngzd	stock	used	unit	Misha	(Level 2)	ngzd	other	units\creeps\GrizzlyBear\Grizzly
 nhef	stock	unused	unit	High Elf	(Female)	nhef	human	units\critters\ElfVillagerWoman\ElfVillagerWoman	stock	ReplaceableTextures\CommandButtons\BTNFemaleElfVillager.blp	-	-	-	-	-	-	-	-
 nhem	stock	unused	unit	High Elf	(Male)	nhem	human	units\critters\HighElfPeasant\HighElfPeasant	stock	ReplaceableTextures\CommandButtons\BTNElfVillager.blp	-	-	-	-	-	-	-	-
 nhew	stock	unused	unit	Worker	(Blood Elf)	nhew	human	units\critters\HighElfPeasant\HighElfPeasant	stock	ReplaceableTextures\CommandButtons\BTNElfVillager.blp	-	-	-	halt,hars,hbar,hbla,hhou,hlum,htow,hvlt,hwtw,nnsa,nnsg	-	-	Ahar,Ahrp	-
-nhmc	stock	unused	unit	Hermit Crab	-	nhmc	critters	units\critters\HermitCrab\HermitCrab	stock	ReplaceableTextures\CommandButtons\BTNHermitCrab.blp	-	-	-	-	-	-	Awan	-
+nhmc	stock	used	unit	Hermit Crab	-	nhmc	critters	units\critters\HermitCrab\HermitCrab	stock	ReplaceableTextures\CommandButtons\BTNHermitCrab.blp	-	-	-	-	-	-	Awan	-
 nhn2	stock	unused	building	Harpy Nest	2	nhn2	other	buildings\other\HarpyNest\HarpyNest	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
 nico	stock	unused	building	Icecrown Obelisk	-	nico	other	doodads\cinematic\IcecrownObelisk\IcecrownObelisk	stock	ReplaceableTextures\CommandButtons\BTNIceCrownObelisk.blp	-	-	-	-	-	-	-	-
 ninm	stock	unused	unit	Infernal Machine	-	ninm	creeps	units\creeps\InfernalCannonCannon\InfernalCannonCannon	stock	ReplaceableTextures\CommandButtons\BTNInfernalCannon.blp	-	-	-	-	-	-	ACbc	-
 nitb	stock	unused	building	Icy Treasure Box	-	nitb	human	buildings\other\IceCrownTreasureBox\IceCrownTreasureBox	stock	ReplaceableTextures\CommandButtons\BTNIcyTreasureBox.blp	-	-	-	-	-	-	-	-
 njks	stock	unused	unit	Jailor Kassan	-	njks	human	units\creeps\Bandit\Bandit	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	-	-
-nlps	stock	unused	unit	Summoned Prawn	-	nlps	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
+nlps	stock	used	unit	Summoned Prawn	-	nlps	creeps	Units\Creeps\Lobstrokkred\Lobstrokkred	stock	ReplaceableTextures\CommandButtons\BTNLobstrokkRed.blp	-	-	-	-	-	-	-	-
 nlur	stock	unused	unit	Monster Lure	-	nlur	creeps	Units\Creeps\MonsterLure\MonsterLure	stock	ReplaceableTextures\CommandButtons\BTNMonsterLure.blp	-	-	-	-	-	-	-	-
 nlv2	stock	used	unit	Lava Spawn	(Level 2)	nlv2	other	Units\Creeps\LavaSpawn\LavaSpawn	stock	ReplaceableTextures\CommandButtons\BTNLavaSpawn.blp	-	-	-	-	-	-	-	-
 nmdm	stock	used	unit	Medivh	(Raven Form)	nmdm	human	units\creeps\Medivh\Medivh	stock	ReplaceableTextures\CommandButtons\BTNRavenForm.blp	-	-	-	-	-	-	Amrf	-
@@ -3828,7 +3828,7 @@ nogr	stock	used	unit	Ogre Warrior	-	nogr	creeps	units\creeps\Ogre\Ogre	stock	Rep
 now2	stock	used	unit	Owl Scout	(Level 2)	now2	nightelf	units\nightelf\OwlSCOUT\OwlSCOUT	stock	ReplaceableTextures\CommandButtons\BTNScout.blp	-	-	-	-	-	-	ACmi,Adtg,Avul	-
 now3	stock	used	unit	Owl Scout	(Level 3)	now3	nightelf	units\nightelf\OwlSCOUT\OwlSCOUT	stock	ReplaceableTextures\CommandButtons\BTNScout.blp	-	-	-	-	-	-	ACmi,Adtg,Avul	-
 nowl	stock	used	unit	Owl Scout	(Level 1)	nowl	nightelf	units\nightelf\OwlSCOUT\OwlSCOUT	stock	ReplaceableTextures\CommandButtons\BTNScout.blp	-	-	-	-	-	-	ACmi,Adtg,Avul	-
-npig	stock	unused	unit	Pig	-	npig	critters	units\critters\Pig\Pig	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Awan	-
+npig	stock	used	unit	Pig	-	npig	critters	units\critters\Pig\Pig	stock	ReplaceableTextures\CommandButtons\BTNPig.blp	-	-	-	-	-	-	Awan	-
 npn1	stock	unused	unit	Fire	-	npn1	creeps	Units\Creeps\FirePandarenBrewmaster\FirePandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNFireBrewmaster.blp	-	-	-	-	-	-	ACrk,Apig	-
 npn2	stock	unused	unit	Storm	-	npn2	creeps	Units\Creeps\StormPandarenBrewmaster\StormPandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNStormBrewmaster.blp	-	-	-	-	-	-	ACcy,ACrk,ANwk,Adsm	-
 npn3	stock	unused	unit	Earth	-	npn3	creeps	Units\Creeps\EarthPandarenBrewmaster\EarthPandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNEarthBrewmaster.blp	-	-	-	-	-	-	ACmi,ACpv,ACrk,ANta	-
@@ -3862,7 +3862,7 @@ nsno	stock	used	unit	Snowy Owl	-	nsno	critters	units\critters\SnowOwl\SnowOwl	st
 nsns	stock	unused	unit	Watery Minion	(Level 3)	nsns	creeps	Units\Creeps\MurgulShadowCaster\MurgulShadowCaster	stock	ReplaceableTextures\CommandButtons\BTNMurgulShadowCaster.blp	-	-	-	-	-	-	ACdm,ACsw	-
 nsoc	stock	unused	unit	Skeletal Orc Champion	-	nsoc	creeps	units\creeps\SkeletonOrc\SkeletonOrc	stock	ReplaceableTextures\CommandButtons\BTNSkeletalOrcChampion.blp	-	-	-	-	-	-	ACdc	-
 nspc	stock	unused	unit	Support Column	-	nspc	orc	doodads\underground\terrain\SupportBeam\SupportBeam	stock	ReplaceableTextures\CommandButtons\BTNSupportBeam.blp	-	-	-	-	-	-	-	-
-nspp	stock	unused	unit	Spirit Pig	-	nspp	creeps	units\creeps\SpiritPig\SpiritPig	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
+nspp	stock	used	unit	Spirit Pig	-	nspp	creeps	units\creeps\SpiritPig\SpiritPig	stock	ReplaceableTextures\CommandButtons\BTNRazorback.blp	-	-	-	-	-	-	-	-
 nsqa	stock	unused	unit	Ancient Sasquatch	-	nsqa	creeps	units\creeps\Sasquatch\Sasquatch	stock	ReplaceableTextures\CommandButtons\BTNSasquatch.blp	-	-	-	-	-	-	ACfr,ACrn,ACtc	-
 nsqe	stock	unused	unit	Elder Sasquatch	-	nsqe	creeps	units\creeps\SasquatchShaman\SasquatchShaman	stock	ReplaceableTextures\CommandButtons\BTNSasquatchShaman.blp	-	-	-	-	-	-	ACbh,ACfr	-
 nsqo	stock	unused	unit	Sasquatch Oracle	-	nsqo	creeps	units\creeps\Sasquatch\Sasquatch	stock	ReplaceableTextures\CommandButtons\BTNSasquatch.blp	-	-	-	-	-	-	ACrj,ACro	-

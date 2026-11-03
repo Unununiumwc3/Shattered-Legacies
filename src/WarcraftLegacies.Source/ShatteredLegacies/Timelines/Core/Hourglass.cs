@@ -5,15 +5,14 @@ using WarcraftLegacies.Source.Ai;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 {
-  // The Hourglass of Fate (was the "Fallback" trigger building, 0.39.1): one building per player slot whose faction has
-  // a turning point. Humans start their turning point with its ability; bots never need it (TimelineSystem runs
-  // theirs by code). Planned (TODO.md, step 2): one research per turning point, greyed out until its trigger fired.
-  // The map data still calls the building "Fallback" (n0FB) and the ability "Begin the Fallback" (AFB1).
+  // The Hourglass of Fate (0.39.1 the "Fallback" trigger building; 0.53 with researches): one building per player slot
+  // whose faction has a turning point on it. Each turning point is one DECISION research (HourglassData, written by
+  // tools/shattered-legacies/timelines/gen_hourglass.py); it requires the turning point's CONDITION tech, so it is
+  // shown greyed out ("Requires: Silvermoon Palace lost") until its trigger fired. WL's own
+  // turning-point researches (the Scarlet Crusade, R0XZ) are listed too and stay where WL has them. Researches of
+  // other factions are hidden by object limits (0). Bots never need the building (TimelineSystem decides for them).
   internal static class Hourglass
   {
-    internal const int BuildingType = 1848657474; // n0FB (copy of a CP model, invulnerable, no attack)
-    internal const int AbilityId = 1095123505;    // AFB1 "Begin the Fallback" (channel, copy of LLLN)
-
     // Place: the sealed top-right corner (Regions.ArtifactDummyInstance -- WL only creates artifact items there).
     // 0.39.7 (maintainer): 3 columns around x 22208 starting at y 23500 going north; the middle column fills first,
     // then left, then right. Order: team (scoreboard), then member. 150 apart (100 overlapped the building models).
@@ -29,46 +28,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal static void Setup()
     {
       var create = CreateTimer();
-      TimerStart(create, CreateAt, false, Create);
-      var cast = CreateTrigger();
-      for (var i = 0; i < 24; i++)
-      {
-        TriggerRegisterPlayerUnitEvent(cast, Player(i), EVENT_PLAYER_UNIT_SPELL_EFFECT, null);
-      }
-
-      TriggerAddAction(cast, OnCast);
+      TimerStart(create, CreateAt, false, () => AiApi.Safe("hourglass", Create));
     }
-
-    internal static bool Has(int pid) => _building.ContainsKey(pid);
 
     internal static unit Get(int pid) => _building.ContainsKey(pid) ? _building[pid] : null;
-
-    // the turning point is available: a human may start it now
-    internal static void Offer(int pid)
-    {
-      if (_building.ContainsKey(pid))
-      {
-        UnitAddAbility(_building[pid], AbilityId);
-      }
-    }
-
-    // no longer available (HQ held again)
-    internal static void Withdraw(int pid)
-    {
-      if (_building.ContainsKey(pid))
-      {
-        UnitRemoveAbility(_building[pid], AbilityId);
-      }
-    }
-
-    internal static void MarkUsed(int pid, TurningPointDef def)
-    {
-      if (_building.ContainsKey(pid))
-      {
-        UnitRemoveAbility(_building[pid], AbilityId);
-        BlzSetUnitName(_building[pid], "Fallback: " + def.Name + " (used)");
-      }
-    }
 
     private static void Create()
     {
@@ -101,18 +64,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         var pid = order[oi];
         var p = Player(pid);
         var fac = p.GetPlayerData().Faction;
-        if (fac == null)
+        var def = fac == null ? null : TimelineCatalog.Find(fac.Name);
+        if (def == null || !def.HasHourglass)
         {
           continue;
         }
 
-        var def = TimelineCatalog.Find(fac.Name);
-        if (def == null)
-        {
-          continue;
-        }
-
-        TimelineSystem.Register(pid, def);
+        SetLimits(p, def);
         // 0.39.7: middle column first, then left, then right (each RowsPerColumn high, going north)
         var colIndex = placedCount / RowsPerColumn; // 0 middle, 1 left, 2 right, 3 far left ...
         var row = placedCount % RowsPerColumn;
@@ -120,22 +78,29 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         var side = colIndex == 0 ? 0 : (colIndex % 2 == 1 ? -((colIndex + 1) / 2) : colIndex / 2);
         var x = CenterX + ColumnStep * side;
         var y = FirstRowY + RowStep * row;
-        var u = CreateUnit(p, BuildingType, x, y, 270f);
-        BlzSetUnitName(u, "Fallback: " + def.Name);
-        _building[pid] = u;
+        _building[pid] = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
       }
 
       AiApi.Log("timelines: " + I2S(_building.Count) + " Hourglass building(s) created");
+      TimelineSystem.ArmAll();
     }
 
-    private static void OnCast()
+    // the player sees only his own faction's researches; WL's own (R0XZ) stays as WL limits it for its faction
+    private static void SetLimits(player p, TurningPointDef def)
     {
-      if (GetSpellAbilityId() != AbilityId)
+      var data = p.GetPlayerData();
+      for (var i = 0; i < HourglassData.Decisions.Length; i++)
       {
-        return;
+        data.SetObjectLimit(HourglassData.Decisions[i], HourglassData.Decisions[i] == def.Decision ? 1 : 0);
       }
 
-      TimelineSystem.OnHourglassUsed(GetPlayerId(GetOwningPlayer(GetTriggerUnit())));
+      for (var i = 0; i < HourglassData.WlResearches.Length; i++)
+      {
+        if (HourglassData.WlResearches[i] != def.WlResearch)
+        {
+          data.SetObjectLimit(HourglassData.WlResearches[i], 0);
+        }
+      }
     }
   }
 }

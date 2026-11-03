@@ -22,7 +22,7 @@ Status: everything below is **agreed** unless marked *open*.
 | Sub path          | voluntary commitment to another direction while the faction still stands                                |
 | Betrayal          | the faction (or one of its leaders) turns on its team or allies                                         |
 | Turning point     | taking a fallback / sub path / betrayal -- from the Hourglass (humans) or by code (bots, forced)        |
-| Hourglass of Fate | the trigger building (`n0FB` today); one research per turning point, greyed out until its trigger fired; WL's own turning-point researches (Scarlet Crusade) are listed too. Sudden death shatters it |
+| Hourglass of Fate | the trigger building (`nZh0`, 0.53); one research per turning point, greyed out until its trigger fired; WL's own turning-point researches (Scarlet Crusade) are listed too. Sudden death shatters it |
 | Full / light      | a full turning point swaps the faction (like WL's Scarlet Crusade); a light one keeps it and changes it (name, object limits, a few additions) -- `TIMELINES.md` section 1 |
 | Rogue nation      | a faction forced out of its team while it still stands; own team, hostile to all                        |
 | Shared box        | one goal several factions race for; the first one closes it (World Tree, Helm of Domination)            |
@@ -128,7 +128,7 @@ Pop-up choices (D3, D6, D11) have a 60 s window; Hourglass options stay until us
 
 | Mechanic                  | Used by                                         | Notes                                                                                     |
 |---------------------------|-------------------------------------------------|-------------------------------------------------------------------------------------------|
-| Hourglass turning points  | all                                             | existing trigger building (`n0FB`, `AFB1`), one ability per available turning point       |
+| Hourglass turning points  | all                                             | the Hourglass of Fate (`nZh0`, 0.53): one research per turning point, greyed out until available |
 | Pick                      | D1 (new), Dalaran / Gilneas, Sentinels / Draenei, Frostwolf / Warsong | WL's pick dialog                                          |
 | Choice at fallback        | Jaina (D6), South fallbacks (D9)                | dialog when the fallback triggers                                                         |
 | Tax task                  | Imperial Tax (South -> North), Legion's Tithe (Scourge -> Legion) | every second X % of the payer's income (CP + `PlayerData.TotalIncome` + bot strength-vote bonus) to the recipient(s), never below 0 gold |
@@ -205,7 +205,7 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 - **D3 Keep or defect** -- when Sylvanas is slain by the Scourge (lore: Arthas killed her and raised her as a banshee).
   - keep: the Scourge gets Sylvanas as a banshee hero.
   - defect: the human plays the **Forsaken** in P3 (Lavender) as an enslaved puppet on the Scourge's team; Quel'thalas moves to a free slot as a bot (Teal).
-- **Fallback: Sunfury** (Sunwell destroyed = HQ): Kael leads the survivors to Netherstorm. Team: Outland while the Black Citadel stands under the Illidari, then the Horde, otherwise own team (lore: the blood elves joined the Horde after Illidan).
+- **Fallback: Sunfury** (HQ: Silvermoon Palace lost -- 0.53, maintainer): Kael leads the survivors to Netherstorm. Team: Outland while the Black Citadel stands under the Illidari, then the Horde, otherwise own team (lore: the blood elves joined the Horde after Illidan).
 - **Garithos games -- rogue nation** after Treason: **D16** join the night elves (Kalimdor, any time -- the Highborne come home after ten thousand years) or the South (once Lordaeron is gone; bark "Selama ashal'anore!").
 
 **Forsaken** (P3 human, Lavender):
