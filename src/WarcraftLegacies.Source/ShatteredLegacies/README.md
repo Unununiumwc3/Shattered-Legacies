@@ -16,6 +16,7 @@ Documents of the fork (the bot has its own set in `../Ai/`):
 | `Timelines/SCENARIO_CONCEPTS.md` | WHAT is planned: vocabulary, rules, decision register D1-D17, every slot |
 | `Timelines/timeline-overview.drawio` | the flow of all timelines (GENERATED, `tools/shattered-legacies/timelines/`) |
 | `Timelines/FACTION_UNITS.md` | units and heroes per WL faction (GENERATED, `unit_scan.py --md`) |
+| `Content/` | the content index: what the main map, the 24p map and stock WC3 offer, used or not (GENERATED; `Content/README.md`) |
 
 ## Layers
 
@@ -43,6 +44,7 @@ ShatteredLegacies/
   Bot/
     SlBotSetup.cs               everything handed to the bot (AiApi): production data, heroes, map title, pick rules
     SlAiData.g.cs               GENERATED (tools/shattered-legacies/ai/gen_ai_data.py): the Kezan buildings' bot data
+  Content/                      GENERATED content index: REUSE.md + units / abilities / upgrades / items .tsv
   Timelines/
     TimelineSetup.cs            entry point of the timelines
     TimelineCatalog.cs          one turning-point definition per WL faction (mostly placeholders, see TIMELINES.md)
@@ -100,8 +102,9 @@ than the rule (`n0FB` is inside the editor's range; re-id planned with the Hourg
 |---|---|
 | `ai/` | the bot's checks and generators: `check_refs.py`, `scope_check.py`, `lua_check.py`, `gen_ai_data.py`, `gen_routes.py`, `gen_lanes.py`, `unit_scan.py`, `map_query.py`, `render_map.py`, `dump_summary.py`, `back_forth.py` -- details in `../Ai/README.md` "Developer checks" |
 | `timelines/` | `timeline_overview_gen.py` -- writes `Timelines/timeline-overview.drawio` in place (keeps its old draft page) |
+| `content/` | `content_index.py` -- writes the content index `Content/` (main map, 24p map, stock WC3; used / unused) |
 
-Planned: `content/` -- the content index of the main and the 24p map (`TODO.md`, step 1).
+Generated images (`ai/out/`) are never committed.
 
 ## Map name and versions
 

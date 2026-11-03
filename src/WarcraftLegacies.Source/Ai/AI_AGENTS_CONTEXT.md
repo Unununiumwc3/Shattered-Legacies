@@ -22,7 +22,11 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.51.1) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.52.0) -- read this, then `TODO.md` ("Open problems" first)
+
+- **0.52.0 changed no bot logic**: the fork's content left `Ai/` (map title and pick exclusions now come through
+  `AiApi.SetMapTitle` / `ExcludeFromBotPicks`), the tools moved to `tools/shattered-legacies/ai/`, and the docs here
+  describe the bot only. The last behaviour change is 0.51.1; the state below still holds.
 
 - **Phase 1 (movement "good enough") is DONE** (maintainer, 0.51: "we are ready for the refactor"). Back and forth fixed
   (0.48.4: guard positions), portals reworked to WL's rules (0.48-0.51), ferries replace the AI ship waygates (0.50),

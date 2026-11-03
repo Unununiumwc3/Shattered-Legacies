@@ -5,6 +5,9 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## After 0.52.0 (docs only)
+- `AI_AGENTS_CONTEXT.md`: state of the work updated for 0.52.0 (no bot logic changed since 0.51.1).
+
 ## 0.52.0
 Structure only: the bot holds no fork content any more. Version v0.52.0.
 - **`AiApi.SetMapTitle`**: the title `-version` shows was a fixed fork text in `AiDebug`; default now "Warcraft
