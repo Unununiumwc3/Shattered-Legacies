@@ -50,7 +50,8 @@ public sealed class ObjectiveHostilesInAreaAreDead : Objective
     {
       var unitsInAreas = GlobalGroup.EnumUnitsInRect(rectangle)
         .Where(x => x.Owner == player.NeutralAggressive && !x.IsUnitType(unittype.Ancient) &&
-                    !x.IsUnitType(unittype.Sapper));
+                    !x.IsUnitType(unittype.Sapper) && x.Alive); // [SL] (0.53): corpses of creeps killed before the quest
+                                                                // existed were counted and could never die again
       foreach (var unit in unitsInAreas)
       {
         _maxKillCount++;

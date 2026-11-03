@@ -22,6 +22,8 @@ CS = os.path.join(ROOT, "src", "WarcraftLegacies.Source", "ShatteredLegacies", "
 BUILDING = "nZh0"
 WL_RESEARCHES = ["R0XZ"]  # WL's own turning-point researches, also listed on the Hourglass (Scarlet Crusade)
 ICONS = "ReplaceableTextures\\CommandButtons\\"
+# command-card button per decision (x, y); default (0, 0). A faction with two turning points needs two positions.
+BUTTONS = {"Forsaken": (1, 0)}
 
 # key (C# name), WL faction name, decision id, condition id, button title, extended tooltip, condition text, icon
 TURNING_POINTS = [
@@ -29,6 +31,10 @@ TURNING_POINTS = [
      "Kael'thas leads the survivors of Quel'thalas to Netherstorm and the Sunfury rise: a second start as WL's Sunfury "
      "faction. Everything left in Quel'thalas is lost.",
      "Silvermoon Palace lost", "BTNHeroBloodElfPrince"),
+    ("Forsaken", "Quel'thalas", "RZdI", "RZcI", "Betrayal: Forsaken",
+     "Sylvanas' spirit rises as a banshee and breaks away: you play the Forsaken in Northrend, enslaved to the Scourge, "
+     "while Quel'thalas fights on in another slot under the AI.",
+     "Sylvanas Windrunner slain by the Scourge", "BTNBanshee"),
     ("Gilneas", "Gilneas", "RZd2", "RZc2", "Fallback: Gilneans on Darkshore (placeholder)",
      "Placeholder until Gilneas takes Dalaran's Theramore path.", "Gilneas Castle lost", "BTNJaina"),
     ("Stormwind", "Stormwind", "RZd3", "RZc3", "Fallback: Valiance Expedition (placeholder)",
@@ -107,8 +113,9 @@ def building():
 
 
 def decision(t):
-    _, _, rid, cid, title, text, cond, icon = t
-    mods = [mod("gglb", 0), mod("glmb", 0), mod("gtib", 5), mod("gbpx", 0), mod("gbpy", 0),
+    key, _, rid, cid, title, text, cond, icon = t
+    bx, by = BUTTONS.get(key, (0, 0))
+    mods = [mod("gglb", 0), mod("glmb", 0), mod("gtib", 5), mod("gbpx", bx), mod("gbpy", by),
             mod("greq", cid, 1, 3), mod("gar1", ICONS + icon + ".blp", 1, 3), mod("gnsf", "(Hourglass of Fate)", 1, 3),
             mod("gnam", title, 1, 3), mod("gtp1", title, 1, 3), mod("gub1", text, 1, 3)]
     return {"OldId": "Roch", "NewId": rid, "Unk": [0], "Modifications": mods}

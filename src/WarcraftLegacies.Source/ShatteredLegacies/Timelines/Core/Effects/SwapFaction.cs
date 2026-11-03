@@ -1,18 +1,23 @@
 using MacroTools.Extensions;
 using MacroTools.Factions;
+using MacroTools.GameTime;
+using WarcraftLegacies.Source.Objectives.TurnBased;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
 {
   // Effect "swap faction" (full turning point): the player gets a new Faction object -- WL's Scarlet Crusade pattern
   // (QuestScarletCrusade.AssignScarletCrusadeFaction): object levels copied, faction assigned, registered (its
-  // OnRegistered adds its quests). Ground rule: the successor keeps the player's colour (WL would switch to the new
-  // faction's colour).
+  // OnRegistered adds its quests).
+  // - Ground rule: the successor keeps the player's colour -- on the units and on the scoreboard (Faction.SetPlayerColor,
+  //   [SL] in MacroTools; 0.53 fix: the scoreboard showed the successor's own colour).
+  // - Its quests' WL deadlines ("Turn 10 hasn't started") count from its arrival, not from the game start
+  //   (ObjectiveExpire.ExpirationOffset, [SL]; 0.53 fix: they would have failed at turn 10).
   internal static class SwapFaction
   {
     internal static void Run(player p, Faction successor)
     {
       var data = p.GetPlayerData();
-      var colour = GetPlayerColor(p);
+      successor.SetPlayerColor(GetPlayerColor(p));
       var old = data.Faction;
       if (old != null)
       {
@@ -20,23 +25,21 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       }
 
       data.Faction = successor;
-      FactionManager.Register(successor);
-      KeepColour(p, colour);
+      RegisterArriving(successor);
     }
 
-    private static void KeepColour(player p, playercolor colour)
+    // registers a faction that arrives in the middle of the game: its quests' WL deadlines count from now
+    internal static void RegisterArriving(Faction faction)
     {
-      SetPlayerColor(p, colour);
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
+      ObjectiveExpire.ExpirationOffset = GameTimeManager.Turn;
+      try
       {
-        GroupRemoveUnit(g, u);
-        SetUnitColor(u, colour);
+        FactionManager.Register(faction);
       }
-
-      DestroyGroup(g);
+      finally
+      {
+        ObjectiveExpire.ExpirationOffset = 0;
+      }
     }
   }
 }

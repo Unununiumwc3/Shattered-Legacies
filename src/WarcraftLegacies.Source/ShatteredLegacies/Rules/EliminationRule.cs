@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using MacroTools.Extensions;
+using MacroTools.GameTime;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Rules
@@ -12,10 +14,26 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Rules
   {
     internal const int GraceTurns = 5; // defeat on the 6th turn in a row without a CP
 
+    private static readonly Dictionary<int, int> _graceUntil = new(); // pid -> last turn without the check
+
+    // 0.54: a faction that just started anew (a turning point) is not checked for the given number of turns
+    internal static void GiveGrace(player p, int turns)
+    {
+      _graceUntil[GetPlayerId(p)] = GameTimeManager.Turn + turns;
+      p.GetPlayerData().EliminationTurns = 0;
+    }
+
     // replaces WL's ProcessPlayerElimination; always handles the player (returns true)
     public static bool Process(player p)
     {
       var data = p.GetPlayerData();
+      var pid = GetPlayerId(p);
+      if (_graceUntil.ContainsKey(pid) && GameTimeManager.Turn <= _graceUntil[pid])
+      {
+        data.EliminationTurns = 0;
+        return true;
+      }
+
       if (data.ControlPoints.Count > 0)
       {
         data.EliminationTurns = 0;

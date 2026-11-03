@@ -74,7 +74,7 @@ public abstract class Faction
   public StartingGold? StartingGold { get; protected init; }
 
   /// <summary>Players with this faction will become this color.</summary>
-  public playercolor PlayerColor { get; }
+  public playercolor PlayerColor { get; private set; } // [SL] private set: SetPlayerColor
 
   /// <summary>
   /// A list of additional names that this Faction can be referred to by in commands.
@@ -112,7 +112,18 @@ public abstract class Faction
 
   public string ColoredName => $"{PrefixCol}{_name}|r";
 
-  public string PrefixCol { get; }
+  public string PrefixCol { get; private set; } // [SL] private set: SetPlayerColor
+
+  /// <summary>
+  /// [SL] (0.53): changes the faction's colour (name, scoreboard; the player and his units when it is applied next).
+  /// Shattered Legacies: a faction that takes over a player mid-game keeps that player's colour.
+  /// </summary>
+  public void SetPlayerColor(playercolor playerColor)
+  {
+    PlayerColor = playerColor;
+    PrefixCol = ColorManager.GetColorHexCode(playerColor);
+    NameChanged?.Invoke(new FactionNameChangeEventArgs(this, _name));
+  }
 
   public string Name
   {

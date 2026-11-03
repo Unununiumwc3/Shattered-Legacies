@@ -3,28 +3,25 @@ using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Rules;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 {
   // The timeline engine (0.39.1 FallbackSystem; 0.53 quest-based). Every WL faction that has a quest-run turning point
-  // (TurningPointDef.IsQuest) gets a TurningPointQuest when it registers (FactionManager.FactionRegistered -- no WL
-  // faction file changes). Every 5 s the HQ objectives are checked: a bot decides at once, a human gets the decision
-  // at the Hourglass of Fate. Completing the quest runs the effects: the faction's own (TurningPointDef.Run,
-  // Timelines/Factions/<X>/) and the placeholder hero, the announcement and a ping.
+  // (TurningPointDef.IsQuest) gets one TurningPointQuest per turning point when it registers
+  // (FactionManager.FactionRegistered -- no WL faction file changes). When a trigger fires: its OnTrigger effects
+  // (once), then a bot decides at once, a human gets the decision at the Hourglass of Fate. Completing the quest runs
+  // the effects: the turning point's own (TurningPointDef.Run, Timelines/Factions/<X>/), the placeholder hero, the
+  // announcement and a ping.
   internal static class TimelineSystem
   {
     internal const float CheckEvery = 5f;
+    internal const int GraceTurns = 10; // 0.54: a faction that just arrived cannot be eliminated for this long
 
     private static readonly List<TurningPointQuest> _quests = new();
 
     internal static void Setup()
     {
-      FactionManager.FactionRegistered += Attach;
-      foreach (var f in FactionManager.GetAllFactions())
-      {
-        Attach(f); // factions registered before this setup (none in 4.8.2's order, but safe)
-      }
-
       for (var i = 0; i < TimelineCatalog.All.Count; i++)
       {
         var def = TimelineCatalog.All[i];
@@ -34,6 +31,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         }
       }
 
+      FactionManager.FactionRegistered += Attach;
+      foreach (var f in FactionManager.GetAllFactions())
+      {
+        Attach(f); // factions registered before this setup (none in 4.8.2's order, but safe)
+      }
+
       Hourglass.Setup();
       var check = CreateTimer();
       TimerStart(check, CheckEvery, true, () => AiApi.Safe("timelines", Check));
@@ -41,23 +44,33 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
     private static void Attach(Faction faction)
     {
-      var def = TimelineCatalog.Find(faction.Name);
-      if (def == null || !def.IsQuest)
+      var defs = TimelineCatalog.FindAll(faction.Name);
+      for (var d = 0; d < defs.Count; d++)
       {
-        return;
-      }
+        var def = defs[d];
+        if (!def.IsQuest || HasQuest(def))
+        {
+          continue; // a definition belongs to one faction, once
+        }
 
+        var quest = new TurningPointQuest(def, faction.Icon);
+        faction.AddQuest(quest);
+        _quests.Add(quest);
+        quest.Trigger.ProgressChanged += _ => AiApi.Safe("turning point trigger", () => OnTriggerChanged(quest));
+      }
+    }
+
+    private static bool HasQuest(TurningPointDef def)
+    {
       for (var i = 0; i < _quests.Count; i++)
       {
         if (_quests[i].Def == def)
         {
-          return; // a definition belongs to one faction
+          return true;
         }
       }
 
-      var quest = new TurningPointQuest(def, faction.Icon);
-      faction.AddQuest(quest);
-      _quests.Add(quest);
+      return false;
     }
 
     // called by the Hourglass once it exists (62 s, after the picks): the HQ units are found now
@@ -65,7 +78,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     {
       for (var i = 0; i < _quests.Count; i++)
       {
-        _quests[i].HqLost.Arm();
+        if (_quests[i].HqLost != null)
+        {
+          _quests[i].HqLost.Arm();
+        }
       }
     }
 
@@ -74,35 +90,61 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       for (var i = 0; i < _quests.Count; i++)
       {
         var q = _quests[i];
-        if (!q.HqLost.Armed || q.Progress == QuestProgress.Complete)
+        if (q.HqLost != null && q.HqLost.Armed && q.Progress != QuestProgress.Complete)
         {
-          continue;
-        }
-
-        var change = q.HqLost.Poll();
-        var p = q.HqLost.EligibleFactions.Count > 0 ? q.HqLost.EligibleFactions[0].Player : null;
-        if (change == 0 || p == null)
-        {
-          continue;
-        }
-
-        if (change < 0)
-        {
-          DisplayTimedTextToPlayer(p, 0, 0, 15, "|cffffcc00Fallback no longer available:|r your HQ is held again.");
-          continue;
-        }
-
-        if (AiApi.IsBot(p) && AiApi.HasPerks(p))
-        {
-          q.Decided.Progress = QuestProgress.Complete; // bots decide at once -> the quest completes
-        }
-        else
-        {
-          DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00Your fallback is ready:|r " + q.Def.Name + ". Research it at "
-            + "the Hourglass of Fate in the north-east corner of the map when you want to start it.");
-          AiApi.LogPin("turning point ready for P" + I2S(GetPlayerId(p)) + " " + q.Def.Faction + " (human decides)");
+          q.HqLost.Poll(); // sets the objective's progress -> OnTriggerChanged
         }
       }
+    }
+
+    private static player PlayerOf(TurningPointQuest q) =>
+      q.Trigger.EligibleFactions.Count > 0 ? q.Trigger.EligibleFactions[0].Player : null;
+
+    private static void OnTriggerChanged(TurningPointQuest q)
+    {
+      var p = PlayerOf(q);
+      if (p == null || q.Progress == QuestProgress.Complete)
+      {
+        return;
+      }
+
+      if (q.Trigger.Progress != QuestProgress.Complete)
+      {
+        if (q.HqLost != null)
+        {
+          DisplayTimedTextToPlayer(p, 0, 0, 15, "|cffffcc00" + q.Def.Title + " no longer available:|r your HQ is held again.");
+        }
+
+        return;
+      }
+
+      if (!q.TriggerRan && q.Def.OnTrigger != null)
+      {
+        q.TriggerRan = true;
+        var def = q.Def;
+        Later(() => def.OnTrigger(p, def)); // outside the event that fired the trigger (e.g. a hero's death)
+      }
+
+      if (AiApi.IsBot(p) && AiApi.HasPerks(p))
+      {
+        q.Decided.Progress = QuestProgress.Complete; // bots decide at once -> the quest completes
+        return;
+      }
+
+      DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00" + q.Def.Title + " is possible now.|r Research it at the "
+        + "Hourglass of Fate in the north-east corner of the map when you want to start it.");
+      AiApi.LogPin("turning point ready for P" + I2S(GetPlayerId(p)) + " " + q.Def.Faction + ": " + q.Def.Title
+                   + " (human decides)");
+    }
+
+    private static void Later(System.Action action)
+    {
+      var t = CreateTimer();
+      TimerStart(t, 0f, false, () =>
+      {
+        DestroyTimer(t);
+        AiApi.Safe("turning point", action);
+      });
     }
 
     // 0.53, defeat rule (Rules/EliminationRule): a faction that would be eliminated but still has an unused fallback of
@@ -114,12 +156,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       {
         var q = _quests[i];
         if (q.Def.Kind != TurningPointKind.Fallback || q.Progress == QuestProgress.Complete
-            || q.HqLost.EligibleFactions.Count == 0 || q.HqLost.EligibleFactions[0] != fac)
+            || q.Trigger.EligibleFactions.Count == 0 || q.Trigger.EligibleFactions[0] != fac)
         {
           continue;
         }
 
-        q.HqLost.Progress = QuestProgress.Complete;
+        q.Trigger.Progress = QuestProgress.Complete;
         q.Decided.Progress = QuestProgress.Complete;
         AiApi.LogPin("turning point forced for P" + I2S(GetPlayerId(p)) + " " + q.Def.Faction + " (no CP left)");
         return true;
@@ -138,24 +180,26 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         return;
       }
 
-      var t = CreateTimer();
-      TimerStart(t, 0f, false, () =>
-      {
-        DestroyTimer(t);
-        AiApi.Safe("turning point", () => ApplyEffects(quest.Def, p));
-      });
+      var def = quest.Def;
+      Later(() => ApplyEffects(def, p));
     }
 
     private static void ApplyEffects(TurningPointDef def, player p)
     {
       // 0.53 fix: WL's FactionManager records every finished research in the faction's object levels, and a faction
-      // swap resets them to 0 -- which fails for the decision research ("Failed to set the object level of Fallback:
-      // Sunfury to 0; it is 1 instead") and stopped the swap. Taking the research back first makes that reset a no-op;
-      // the limit 0 keeps the button from coming back.
+      // change resets / re-applies them -- which failed for the decision research ("Failed to set the object level of
+      // Fallback: Sunfury to 0; it is 1 instead"). The research is taken back, the faction's record set to 0 and the
+      // button hidden (limit 0) before anything else.
       var level = GetPlayerTechCount(p, def.Decision, true);
       if (level > 0)
       {
         BlzDecPlayerTechResearched(p, def.Decision, level);
+      }
+
+      var fac = p.GetPlayerData().Faction;
+      if (fac != null && fac.GetObjectLevel(def.Decision) > 0)
+      {
+        fac.SetObjectLevel(def.Decision, 0);
       }
 
       p.GetPlayerData().SetObjectLimit(def.Decision, 0);
@@ -169,13 +213,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         CreateUnit(p, def.HeroType, def.X, def.Y, 270f);
       }
 
+      Hourglass.Refresh(p);                     // the new faction's turning points (none of the old one's)
+      EliminationRule.GiveGrace(p, GraceTurns); // a new start cannot be eliminated at once
       for (var i = 0; i < 24; i++)
       {
         DisplayTimedTextToPlayer(Player(i), 0, 0, 20, def.Announcement);
       }
 
       PingMinimap(def.X, def.Y, 5f);
-      AiApi.LogPin("TURNING POINT P" + I2S(GetPlayerId(p)) + " " + def.Faction + " -> " + def.Name);
+      AiApi.LogPin("TURNING POINT P" + I2S(GetPlayerId(p)) + " " + def.Faction + " -> " + def.Title);
     }
   }
 }

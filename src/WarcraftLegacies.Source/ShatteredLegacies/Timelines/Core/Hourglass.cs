@@ -33,6 +33,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
     internal static unit Get(int pid) => _building.ContainsKey(pid) ? _building[pid] : null;
 
+    // 0.54: after a turning point changed the player's faction, his Hourglass shows the new faction's turning points
+    internal static void Refresh(player p)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (_building.ContainsKey(GetPlayerId(p)))
+      {
+        SetLimits(p, fac == null ? new List<TurningPointDef>() : TimelineCatalog.FindAll(fac.Name));
+      }
+    }
+
     private static void Create()
     {
       var teams = FactionManager.GetAllTeams();
@@ -64,13 +74,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         var pid = order[oi];
         var p = Player(pid);
         var fac = p.GetPlayerData().Faction;
-        var def = fac == null ? null : TimelineCatalog.Find(fac.Name);
-        if (def == null || !def.HasHourglass)
+        var defs = fac == null ? new List<TurningPointDef>() : TimelineCatalog.FindAll(fac.Name);
+        var any = false;
+        for (var d = 0; d < defs.Count; d++)
+        {
+          any = any || defs[d].HasHourglass;
+        }
+
+        if (!any)
         {
           continue;
         }
 
-        SetLimits(p, def);
+        SetLimits(p, defs);
         // 0.39.7: middle column first, then left, then right (each RowsPerColumn high, going north)
         var colIndex = placedCount / RowsPerColumn; // 0 middle, 1 left, 2 right, 3 far left ...
         var row = placedCount % RowsPerColumn;
@@ -86,21 +102,34 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     }
 
     // the player sees only his own faction's researches; WL's own (R0XZ) stays as WL limits it for its faction
-    private static void SetLimits(player p, TurningPointDef def)
+    private static void SetLimits(player p, List<TurningPointDef> defs)
     {
       var data = p.GetPlayerData();
       for (var i = 0; i < HourglassData.Decisions.Length; i++)
       {
-        data.SetObjectLimit(HourglassData.Decisions[i], HourglassData.Decisions[i] == def.Decision ? 1 : 0);
+        data.SetObjectLimit(HourglassData.Decisions[i], Owns(defs, HourglassData.Decisions[i], false) ? 1 : 0);
       }
 
       for (var i = 0; i < HourglassData.WlResearches.Length; i++)
       {
-        if (HourglassData.WlResearches[i] != def.WlResearch)
+        if (!Owns(defs, HourglassData.WlResearches[i], true))
         {
           data.SetObjectLimit(HourglassData.WlResearches[i], 0);
         }
       }
+    }
+
+    private static bool Owns(List<TurningPointDef> defs, int research, bool wl)
+    {
+      for (var d = 0; d < defs.Count; d++)
+      {
+        if ((wl ? defs[d].WlResearch : defs[d].Decision) == research)
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 }

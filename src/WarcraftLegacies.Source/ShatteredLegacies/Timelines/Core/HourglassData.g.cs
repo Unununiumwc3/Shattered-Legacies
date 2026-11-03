@@ -9,6 +9,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     // decision research (researched at the Hourglass) and condition tech (granted when the trigger fired)
     internal const int DecisionQuelthalas = 1381655601; // RZd1 Fallback: Sunfury
     internal const int ConditionQuelthalas = 1381655345; // RZc1
+    internal const int DecisionForsaken = 1381655625; // RZdI Betrayal: Forsaken
+    internal const int ConditionForsaken = 1381655369; // RZcI
     internal const int DecisionGilneas = 1381655602; // RZd2 Fallback: Gilneans on Darkshore (placeholder)
     internal const int ConditionGilneas = 1381655346; // RZc2
     internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Valiance Expedition (placeholder)
@@ -43,7 +45,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionAhnqiraj = 1381655368; // RZcH
 
     // every research the Hourglass lists (decisions + WL's own), for the per-player limits
-    internal static int[] Decisions = { 1381655601, 1381655602, 1381655603, 1381655604, 1381655605, 1381655606, 1381655607, 1381655608, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
+    internal static int[] Decisions = { 1381655601, 1381655625, 1381655602, 1381655603, 1381655604, 1381655605, 1381655606, 1381655607, 1381655608, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
     internal static int[] WlResearches = { 1378900058 }; // R0XZ
   }
 }

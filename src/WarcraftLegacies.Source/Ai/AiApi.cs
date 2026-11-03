@@ -66,6 +66,11 @@ namespace WarcraftLegacies.Source.Ai
       Merge(AiData.HeroSkills, heroSkills);
     }
 
+    // 0.54: the bot takes over a player and plays it from now on, with the full bot treatment -- the same as for a
+    // leaving human (AiAutopilot.TakeOverLeaver). For a fork that hands a faction to a free slot mid-game. False if
+    // the player has no faction (or it is defeated).
+    public static bool TakeOver(player p) => AiAutopilot.TakeOverLeaver(p);
+
     // 0.52: the map title shown by -version (default "Warcraft Legacies").
     public static void SetMapTitle(string title)
     {

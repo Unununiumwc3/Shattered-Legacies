@@ -18,8 +18,15 @@ public sealed class ObjectiveExpire : Objective
 
   /// <param name="expirationTurn">The turn on which this objective will fail</param>
   /// <param name="questName">The name of the quest this objective belongs to</param>
+  /// <summary>
+  /// [SL] (0.53): added to every expiration turn while set -- a faction that arrives in the middle of the game gets its
+  /// quests' deadlines counted from its arrival (Shattered Legacies turning points set it around the registration).
+  /// </summary>
+  public static int ExpirationOffset { get; set; }
+
   public ObjectiveExpire(int expirationTurn, string questName)
   {
+    expirationTurn += ExpirationOffset; // [SL]
     SetDescription("Turn {turn} hasn't started", ("{turn}", expirationTurn.ToString()));
     _questName = questName;
     ShowsInPopups = false;

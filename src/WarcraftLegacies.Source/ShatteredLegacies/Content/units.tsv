@@ -99,6 +99,7 @@ U02K	main	used	hero	Lord of the Firelands	(Skywall)	Uktl	naga	war3mapImported\Ra
 U02S	main	used	hero	Ancient Sand Worm	-	Ulic	naga	war3mapImported\GiantSandWorm.mdl	main	ReplaceableTextures\CommandButtons\BTNMindWorm.blp	Ahn'qiraj	u01F	-	-	-	-	A000,A066,A0GK,A0S0,AInv,AUim,Aamk,ZBEG	RLLL
 U02V	main	used	hero	High Astromancer	(Sunfury)	Uktl	human	war3mapImported\HeroElfDarkEnchanter.mdl	main	ReplaceableTextures/CommandButtons/BTNBloodElfSorceress.blp	Sunfury	h0C6	-	-	-	-	A032,A0BQ,A0GK,A0X6,A12N,A12Q,AInv,Aamk,Alit	R09K
 UELN	main	used	hero	The Tidehunter	(Skywall)	Uktl	naga	war3mapImported\TidalLord.mdl	main	ReplaceableTextures\CommandButtons\BTNTidelord.blp	Skywall	n078	-	-	-	-	A00Y,A118,A13G,AInv,Aamk,MD09	RSW3
+UZa1	main	used	hero	Banshee Queen	(Forsaken)	Hvwd	undead	units\undead\Banshee\Banshee	stock	ReplaceableTextures\CommandButtons\BTNBanshee.blp	-	-	-	-	-	-	A047,A083,A0KV,A0PK,AEar,AInv,Aamk,Ault	-
 Uanb	main	used	hero	King of Azjol-Nerub	(Scourge)	Uanb	undead	units\undead\Anubarak\Anubarak	stock	ReplaceableTextures\CommandButtons\BTNanubarakhd.blp	Scourge	uaod	-	-	-	-	AInv,AUcb,AUim,AUls,AUts,Aamk	-
 Uear	main	used	hero	Champion of the Scourge	(Scourge)	Uear	undead	units\undead\EvilArthas\UndeadArthas	stock	ReplaceableTextures\CommandButtons\BTNArthasV1.blp	Scourge	uaod	-	-	-	-	A08V,A0LR,A0SC,A10C,A10N,AInv,Aamk,ZB02,ZB06	R01K
 Uktl	main	used	hero	Archlich of the Scourge	(Scourge-Lich)	Uktl	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	Scourge	-	-	-	-	-	A00F,A00J,A13R,AInv,AUan,AUdd,AUfn,Aamk	-
@@ -973,7 +974,7 @@ nNya	main	used	building	Ny'alotha, the Waking City	-	ncop	creeps	buildings\other
 nTFW	main	used	building	Throne of the Four Winds	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
 nTWL	main	used	building	Twilight Landing	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 nVXP	main	used	building	The Vortex Pinnacle	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
-nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+6	-	Avul	-
+nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+7	-	Avul	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
 nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
 nahy	main	used	unit	Ancient Hydra	-	nahy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACdv,Advc,Aspo,Aspy,Awrh	-

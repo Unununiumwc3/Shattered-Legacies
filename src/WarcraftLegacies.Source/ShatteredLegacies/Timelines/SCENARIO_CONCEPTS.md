@@ -205,6 +205,7 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 - **D3 Keep or defect** -- when Sylvanas is slain by the Scourge (lore: Arthas killed her and raised her as a banshee).
   - keep: the Scourge gets Sylvanas as a banshee hero.
   - defect: the human plays the **Forsaken** in P3 (Lavender) as an enslaved puppet on the Scourge's team; Quel'thalas moves to a free slot as a bot (Teal).
+  - 0.54 (maintainer): Sylvanas is lost to Quel'thalas either way. Bots always defect (one player becomes two). No time window: the decision stays open. The Forsaken start in Northrend near Drak'Tharon (2968, 17655; safe, not lore) with Sylvanas as a banshee hero, an altar and builders, and grow quest by quest into a full faction; breaking free (D4) turns her into the Dark Ranger and frees more of the tech tree; the last quest takes Lordaeron City as Undercity.
 - **Fallback: Sunfury** (HQ: Silvermoon Palace lost -- 0.53, maintainer): Kael leads the survivors to Netherstorm. Team: Outland while the Black Citadel stands under the Illidari, then the Horde, otherwise own team (lore: the blood elves joined the Horde after Illidan).
 - **Garithos games -- rogue nation** after Treason: **D16** join the night elves (Kalimdor, any time -- the Highborne come home after ten thousand years) or the South (once Lordaeron is gone; bark "Selama ashal'anore!").
 

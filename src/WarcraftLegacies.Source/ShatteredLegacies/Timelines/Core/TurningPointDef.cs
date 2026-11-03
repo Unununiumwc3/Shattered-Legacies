@@ -23,6 +23,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     public string Announcement = "";               // shown to everyone when the turning point happens
     public System.Action<player, TurningPointDef> Run; // faction-specific effects (Timelines/Factions/<X>/); null = none
     public System.Action Prepare;                  // run once at map setup (e.g. hide the new start area); null = none
+    // 0.54: the trigger as any WL quest objective (with ResearchId = Condition); null = ObjectiveHqLost from Hq
+    public System.Func<MacroTools.Quests.Objective> MakeTrigger;
+    // 0.54: effects that happen when the trigger fires, whatever is decided (e.g. Sylvanas is lost); null = none
+    public System.Action<player, TurningPointDef> OnTrigger;
 
     public TurningPointDef(string faction, string name, TurningPointKind kind, TurningPointSource source)
     {
@@ -36,5 +40,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal bool IsQuest => Source == TurningPointSource.Timeline && Decision != 0;
 
     internal bool HasHourglass => Decision != 0 || WlResearch != 0;
+
+    // quest title: "Fallback: Sunfury", "Betrayal: Forsaken" ...
+    internal string Title => (Kind == TurningPointKind.Betrayal ? "Betrayal: "
+      : Kind == TurningPointKind.SubPath ? "Path: " : Kind == TurningPointKind.Pick ? "Pick: " : "Fallback: ") + Name;
   }
 }
