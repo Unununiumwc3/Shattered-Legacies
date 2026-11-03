@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
+using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthalas;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
@@ -34,6 +36,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Prepare = () => QuelthalasFallback.Prepare(),
         Announcement = "|cffffcc00Quel'thalas is lost.|r Prince Kael'thas gathers the last of his people in Outland -- "
                        + "the Sunfury rise in Netherstorm.",
+      },
+      // 0.54, the pilot of a BETRAYAL with a split (concepts D3): Sylvanas slain by the Scourge -> the player may become the
+      // Forsaken; Quel'thalas goes on in a free slot, played by a bot. Bots always choose it.
+      new TurningPointDef("Quel'thalas", "Forsaken", TurningPointKind.Betrayal, TurningPointSource.Timeline)
+      {
+        MakeTrigger = () => new ObjectiveLegendKilledBy(AllLegends.Quel.Sylvanas, "Scourge",
+          "Sylvanas Windrunner is slain by the Scourge") { ResearchId = HourglassData.ConditionForsaken },
+        Description = "If the Scourge slays Sylvanas, she is lost to Quel'thalas for good. Her spirit may rise as a "
+                      + "banshee and break away: you play the Forsaken, enslaved to the Scourge, while Quel'thalas fights "
+                      + "on under another commander.",
+        Decision = HourglassData.DecisionForsaken, Condition = HourglassData.ConditionForsaken,
+        X = ForsakenConfig.StartX, Y = ForsakenConfig.StartY,
+        HeroType = 0,                          // Sylvanas the banshee leads them (ForsakenBetrayal)
+        OnTrigger = (p, def) => ForsakenBetrayal.OnSylvanasSlain(p),
+        Run = (p, def) => ForsakenBetrayal.Run(p, def),
+        Announcement = "|cffffcc00Sylvanas has risen as a banshee.|r In the frozen north the Forsaken gather -- slaves of "
+                       + "the Lich King, for now.",
       },
       // superseded: Gilneas takes Dalaran's Theramore / Jaina's Sanctum path (concepts, P8)
       new TurningPointDef("Gilneas", "Gilneans on Darkshore (placeholder)", TurningPointKind.Fallback,
@@ -175,15 +194,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       },
     };
 
-    // the definition for a WL faction name, null if it has none
-    internal static TurningPointDef Find(string factionName)
+    // 0.54: all definitions of a WL faction name (a faction can have several turning points), in catalog order
+    internal static List<TurningPointDef> FindAll(string factionName)
     {
-      TurningPointDef found = null;
+      var found = new List<TurningPointDef>();
       for (var i = 0; i < All.Count; i++)
       {
         if (All[i].Faction == factionName)
         {
-          found = All[i];
+          found.Add(All[i]);
         }
       }
 

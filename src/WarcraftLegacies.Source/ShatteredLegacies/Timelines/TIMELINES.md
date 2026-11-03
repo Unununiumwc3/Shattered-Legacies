@@ -26,6 +26,9 @@ A **turning point** is any deviation from WL's default history: a fallback, a su
 | Leave behind | old holdings kept / to a lore heir / neutral hostile | the inheritance rule (`SCENARIO_CONCEPTS.md` section 6) |
 | Heroes | legends come along or are created | `LegendaryHero.ForceCreate`, `AllLegends` |
 | Announce | text for everyone, minimap ping | -- |
+| Split (0.54) | one player becomes two: the old faction moves with army, quests and colour to a free slot (P11 / P14 / P20) and the bot plays it; the player gets the successor | `PlayerData.Faction` on both players, `AiApi.TakeOver` (the bot's leaver takeover) |
+| Spawn start (0.54) | a start kit created by code (buildings on free spots, units) for a successor without a preplaced base | `AiApi.FindBuildSpot` |
+| Hero fate (0.54) | a legend is lost to its faction for good, whatever is decided (runs when the trigger fires: `TurningPointDef.OnTrigger`) | `LegendaryHero.PermanentlyKill`, object limit 0 |
 
 **Full vs light.** Not every faction gets a completely new faction. A **full** turning point swaps the faction (Quel'thalas
 -> WL's Sunfury, Kul Tiras -> a Kezan Enterprise faction, like Lordaeron -> Scarlet Crusade). A **light** one keeps the
@@ -89,7 +92,7 @@ Steps, in this order:
 | Part | Today | Next (`../TODO.md`) |
 |---|---|---|
 | `TimelineCatalog` + `Core/TurningPointDef` | one definition per WL faction: HQ unit types, trigger text, Hourglass ids, start spot, placeholder hero, announcement, `Run` (the faction's own effects) | definitions per faction folder |
-| `Core/TurningPointQuest` | a turning point run by the timelines = a WL quest of its faction, attached through `FactionManager.FactionRegistered` (no WL faction file changes). Objectives: `ObjectiveHqLost` (unlocks the decision through its condition tech) + WL's `ObjectiveResearch` (the decision at the Hourglass). Completing it runs the effects | other triggers (legend dies, turn N ...) as objectives |
+| `Core/TurningPointQuest` | a turning point run by the timelines = a WL quest of its faction ("Fallback: ...", "Betrayal: ..."), attached through `FactionManager.FactionRegistered` (no WL faction file changes); a faction can have several. Objectives: the trigger -- `ObjectiveHqLost` by default, any WL objective through `TurningPointDef.MakeTrigger` (0.54: `ObjectiveLegendKilledBy`) -- which unlocks the decision through its condition tech, + WL's `ObjectiveResearch` (the decision at the Hourglass). `OnTrigger` effects run when the trigger fires, the effects when the quest completes | alternatives (stay / betray) as incompatible sets |
 | `Core/TimelineSystem` | every 5 s: the HQ objectives (all HQ units lost after having held one; held again -> unavailable again). Bots decide at once (the decision objective is set complete), humans research at the Hourglass. `ForceFallback` for the defeat rule | alternatives (stay / betray) |
 | `Core/Hourglass` | the Hourglass of Fate (`nZh0`, sealed top-right corner, columns by team), one per slot whose faction has a research on it; per-player limits hide the other factions' researches | -- |
 | `Core/Effects/` | `SwapFaction` (+ keep colour), `LeaveBehind` (WL's removal: removable units removed, CPs / capitals Neutral Hostile), `StartArea` (take a start area like a pick), `ChangeTeam` (living-target rule) | modify faction (light), inheritance to a lore heir |
@@ -177,7 +180,7 @@ faction by faction.
 | Slot | Turning points (concepts) | Today | Content plan |
 |---|---|---|---|
 | P10 Lordaeron | pick Arthas / Garithos (D1), Scarlet Crusade (WL, D14), Treason (D10), Helm (D11) | WL's Scarlet Crusade (also on the Hourglass, 0.53) | -- |
-| P3 Quel'thalas | fallback Sunfury (WL faction), betrayal Forsaken (D3), rogue nation (D16) | **fallback Sunfury implemented** (0.53, full turning point) | Forsaken: 24p buildings |
+| P3 Quel'thalas | fallback Sunfury (WL faction), betrayal Forsaken (D3), rogue nation (D16) | **fallback Sunfury** (0.53, full); **betrayal Forsaken** (0.54, split; placeholder tech) | Forsaken: the 24p tree (0.55), breaking free + Undercity (0.56) |
 | P8 Dalaran / Gilneas | fallback Theramore for both, Jaina's choice (D6), The Gates Close (D7) | Dalaran: WL's Theramore; Gilneas: placeholder (Darkshore -- superseded) | WL's Theramore |
 | P2 Stormwind | fallback Valiance Expedition, D9, Bolvar -> Lich King | placeholder | -- |
 | P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
@@ -201,5 +204,7 @@ faction by faction.
 - 0.39.10: moved to `ShatteredLegacies/`, uses the bot only through `AiApi`.
 - 0.52: renamed to timelines (`Timelines/`, turning points, the Hourglass), split into `Core/`, the catalog and
   `Factions/<X>/`; same behaviour.
+- 0.54: any objective as trigger, effects on the trigger, several turning points per faction, the split and spawn
+  effects, the fork's first own faction (Forsaken), `AiApi.TakeOver`; pilot: Quel'thalas' betrayal.
 - 0.53: turning points as WL quests, the Hourglass of Fate with researches (`nZh0`, `RZd*` / `RZc*`, replaces `n0FB`
   / `AFB1`), the effect library, the fork's defeat rule, Quel'thalas -> Sunfury (no Sunfury pick any more).

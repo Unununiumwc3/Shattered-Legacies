@@ -42,8 +42,12 @@ comments -- it is only listed.
   effect library (`Core/Effects/`), the fork's defeat rule (`Rules/EliminationRule`: no CP for more than 5 turns; an
   unused fallback starts instead), pilot Quel'thalas -> WL's Sunfury (no Sunfury pick any more). Waits for the
   playtest (`TODO.md`, step 2).
-- **Next: step 3 of `TODO.md`** -- Kul Tiras -> Kezan Enterprise rebuilt on the core (own `Faction` + `ObjectInfo`).
-  Every new turning point follows `Timelines/TIMELINES.md` sections 3 and 4.
+- **0.54.0**: the betrayal structure -- any objective as trigger, effects on the trigger, several turning points per
+  faction, the split ("one player becomes two", `AiApi.TakeOver`) and spawn effects, the fork's first own faction
+  (`Timelines/Factions/Forsaken/`, object limits in `src/WarcraftLegacies.Shared/ShatteredLegacies/`); pilot:
+  Quel'thalas' betrayal -> Forsaken (placeholder tech).
+- **Next: step 3 of `TODO.md`** -- 0.55: the import tool and the Forsaken tech tree from the 24p map. Every new
+  turning point follows `Timelines/TIMELINES.md` sections 3 and 4.
 - **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
   anything the fork needs from the bot is one `AiApi` method.
 - The maintainer plays test games in the Windows VM and reports what he sees; he recycles content, he does not create

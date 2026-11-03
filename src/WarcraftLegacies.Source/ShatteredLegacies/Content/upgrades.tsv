@@ -306,6 +306,7 @@ RZcE	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTex
 RZcF	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcG	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcH	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcI	main	used	Sylvanas Windrunner slain by the Scourge	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZd1	main	used	Fallback: Sunfury	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBloodElfPrince.blp	nZh0
 RZd2	main	used	Fallback: Gilneans on Darkshore (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNJaina.blp	nZh0
 RZd3	main	used	Fallback: Valiance Expedition (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroPaladin.blp	nZh0
@@ -323,6 +324,7 @@ RZdE	main	used	Fallback: Akama's Ashtongue (not yet)	(Hourglass of Fate)	Roch	de
 RZdF	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdG	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	nZh0
 RZdH	main	used	Fallback: Brood of Nozdormu (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	nZh0
+RZdI	main	used	Betrayal: Forsaken	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanshee.blp	nZh0
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L

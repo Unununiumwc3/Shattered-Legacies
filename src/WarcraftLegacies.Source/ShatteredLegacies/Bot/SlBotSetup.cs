@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
@@ -15,6 +16,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       // 0.39.10: keyed by the real name; the old key "The Kezan Enterprise" (0.39.6) never matched after 0.39.7.
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int> { KezanEnterpriseConfig.GallywixType });
+      // 0.54: the Forsaken (Quel'thalas' betrayal) -- Sylvanas the banshee is their hero
+      AiApi.RegisterHeroes(ForsakenConfig.Name, new List<int> { ForsakenConfig.SylvanasBanshee });
       // 0.53: no ExcludeFromBotPicks("Sunfury") any more -- Sunfury left the Illidari pick ([SL] in
       // Setup/FactionChoiceDialogSetup.cs) and became Quel'thalas' fallback.
     }

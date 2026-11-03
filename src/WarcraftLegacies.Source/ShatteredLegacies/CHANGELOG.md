@@ -4,6 +4,26 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.54.0
+The betrayal structure and its pilot: Quel'thalas -> the Forsaken. Version v0.54.0.
+- **Triggers**: a turning point's trigger can be any WL quest objective (`TurningPointDef.MakeTrigger`); new
+  `ObjectiveLegendKilledBy` ("Sylvanas Windrunner is slain by the Scourge"). `OnTrigger` effects run when the trigger
+  fires, whatever is decided. A faction can have several turning points (Quel'thalas: Fallback: Sunfury and Betrayal:
+  Forsaken, two buttons on its Hourglass). Quest titles by kind ("Fallback: ...", "Betrayal: ...").
+- **New effects**: `SplitFaction` (one player becomes two: the old faction moves with army, quests, team and colour to
+  the first free slot of P11 / P14 / P20 and the bot plays it -- new `AiApi.TakeOver`; gold and lumber shared half and
+  half), `Spawn` (a start kit by code). After every turning point the player's Hourglass shows the new faction's
+  turning points, and the defeat rule leaves him alone for 10 turns (`EliminationRule.GiveGrace`).
+- **The fork's first own faction**: `ForsakenFaction` (lavender, the Scourge's team) with object limits in
+  `src/WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/ForsakenObjectInfo.cs` (+ `[SL]` line in
+  `ObjectInfoRepository`). Placeholder tech: Necropolis, Ziggurat, Altar of Darkness, Crypt, Acolyte, Ghoul, Banshee,
+  Abomination.
+- **Pilot: Quel'thalas' betrayal** (`Timelines/Factions/Forsaken/ForsakenBetrayal`): Sylvanas slain by the Scourge ->
+  lost to Quel'thalas for good (WL's `PermanentlyKill`, no retraining); "Betrayal: Forsaken" at the Hourglass (bots
+  always take it): Quel'thalas goes on in a free slot under the bot, the player becomes the Forsaken in Northrend
+  near Drak'Tharon (2968, 17655) with Sylvanas the banshee (new hero `UZa1`), an Altar of Darkness and 3 Acolytes.
+- Hourglass data: `RZdI` / `RZcI` (Forsaken), button positions per decision (`gen_hourglass.py`).
+
 ## 0.53.0
 The turning-point core and its pilot. Version v0.53.0.
 - **Turning points are WL quests** (`Timelines/Core/TurningPointQuest`, the Scarlet Crusade pattern): every faction
@@ -38,6 +58,12 @@ The turning-point core and its pilot. Version v0.53.0.
     at map setup (`TurningPointDef.Prepare`, `StartArea.Prepare` / `Take`); the areas of Sunfury's quests (Tempest
     Keep, Area 52, Upper Netherstorm) are invulnerable and paused until those quests take them over.
   - Quel'thalas' HQ is Silvermoon Palace alone (maintainer) -- not also the Sunwell.
+  - Second playtest: the scoreboard showed Sunfury in its own colour (the Illidari's) -- `Faction.SetPlayerColor`
+    ([SL] in MacroTools), set before the swap. Sunfury's quests with a WL deadline ("Turn 10 hasn't started": Area 52,
+    Eco-domes, Upper Netherstorm) only looked completed and would have failed at turn 10 -- their deadlines now count
+    from the fallback (`ObjectiveExpire.ExpirationOffset`, [SL]). "Upper Netherstorm" could not be completed when
+    another faction had killed the creeps before -- `ObjectiveHostilesInAreaAreDead` counted the corpses ([SL], a WL
+    bug).
 - **Build fix** (before release): `TimelineSystem` called `GetPlayerData()` without `using MacroTools.Extensions;`
   -- the publish step failed. New check `tools/shattered-legacies/ai/using_check.py` finds such calls.
 - **Content index fixed**: preplaced units were read with the wrong byte order, so almost nothing counted as

@@ -5,22 +5,34 @@ using WarcraftLegacies.Source.Objectives.UnitBased;
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 {
   // 0.53: a turning point as a WL quest (the Scarlet Crusade pattern): it shows in the faction's quest log (F9), its
-  // objectives are the trigger (ObjectiveHqLost, which unlocks the decision) and the decision itself (WL's
-  // ObjectiveResearch at the Hourglass of Fate); completing it runs the effects (TimelineSystem.RunEffects).
-  // Bots decide by code (TimelineSystem sets the decision objective complete).
+  // objectives are the trigger (which unlocks the decision through its ResearchId, the turning point's condition
+  // tech) and the decision itself (WL's ObjectiveResearch at the Hourglass of Fate); completing it runs the effects
+  // (TimelineSystem.RunEffects). Bots decide by code (TimelineSystem sets the decision objective complete).
+  // 0.54: the trigger is any objective (TurningPointDef.MakeTrigger), "all HQ units lost" by default.
   internal sealed class TurningPointQuest : QuestData
   {
     internal readonly TurningPointDef Def;
-    internal readonly ObjectiveHqLost HqLost;
+    internal readonly Objective Trigger;
+    internal readonly ObjectiveHqLost HqLost; // null when the trigger is another objective
     internal readonly ObjectiveResearch Decided;
+    internal bool TriggerRan;                 // OnTrigger effects done (once)
 
     public TurningPointQuest(TurningPointDef def, string icon)
-      : base("Fallback: " + def.Name, def.Description, icon)
+      : base(def.Title, def.Description, icon)
     {
       Def = def;
-      HqLost = new ObjectiveHqLost(def.Hq, def.Trigger) { ResearchId = def.Condition };
+      if (def.MakeTrigger != null)
+      {
+        Trigger = def.MakeTrigger();
+      }
+      else
+      {
+        HqLost = new ObjectiveHqLost(def.Hq, def.Trigger) { ResearchId = def.Condition };
+        Trigger = HqLost;
+      }
+
       Decided = new ObjectiveResearch(def.Decision, HourglassData.BuildingType);
-      AddObjective(HqLost);
+      AddObjective(Trigger);
       AddObjective(Decided);
     }
 
