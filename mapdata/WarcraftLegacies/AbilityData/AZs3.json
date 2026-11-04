@@ -50,27 +50,6 @@
       "Value": 90
     },
     {
-      "Level": 1,
-      "Pointer": 1,
-      "Id": "Roa1",
-      "Type": 2,
-      "Value": 0.25
-    },
-    {
-      "Level": 3,
-      "Pointer": 1,
-      "Id": "Roa1",
-      "Type": 2,
-      "Value": 0.55
-    },
-    {
-      "Level": 4,
-      "Pointer": 1,
-      "Id": "Roa1",
-      "Type": 2,
-      "Value": 0.7
-    },
-    {
       "Id": "alev",
       "Value": 4
     },
@@ -97,6 +76,35 @@
       "Id": "acdn",
       "Type": 2,
       "Value": 15
+    },
+    {
+      "Id": "areq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Level": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.25
+    },
+    {
+      "Level": 2,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.4
+    },
+    {
+      "Level": 3,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.55
+    },
+    {
+      "Level": 4,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.7
     },
     {
       "Id": "anam",
@@ -142,7 +150,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while."
+      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while.|n|n|cffffcc00Level 1|r - 25% less damage.|n|cffffcc00Level 2|r - 40% less damage.|n|cffffcc00Level 3|r - 55% less damage.|n|cffffcc00Level 4|r - 70% less damage."
     },
     {
       "Level": 1,
@@ -154,7 +162,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while."
+      "Value": "Sylvanas' wail weakens nearby enemies: they deal 25% less damage for a while."
     },
     {
       "Level": 2,
@@ -166,7 +174,7 @@
       "Level": 2,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while."
+      "Value": "Sylvanas' wail weakens nearby enemies: they deal 40% less damage for a while."
     },
     {
       "Level": 3,
@@ -178,7 +186,7 @@
       "Level": 3,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while."
+      "Value": "Sylvanas' wail weakens nearby enemies: they deal 55% less damage for a while."
     },
     {
       "Level": 4,
@@ -190,7 +198,7 @@
       "Level": 4,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Sylvanas' wail weakens nearby enemies: they deal less damage for a while."
+      "Value": "Sylvanas' wail weakens nearby enemies: they deal 70% less damage for a while."
     }
   ]
 }
