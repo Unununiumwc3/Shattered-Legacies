@@ -124,6 +124,10 @@
       "Id": "upor",
       "Type": 3,
       "Value": ""
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
     }
   ]
 }

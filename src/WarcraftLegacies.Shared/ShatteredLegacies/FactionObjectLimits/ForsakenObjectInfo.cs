@@ -41,6 +41,15 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1968858723, 6, Tank); // uZfc EliteAbominations
       yield return new(1431987812, 1, Support); // UZfd GrandApothecary
       yield return new(1431987813, 1, Support); // UZfe MasterApothecary
+      yield return new(1381656114, 200); // RZf2 research
+      yield return new(1381656115, 200); // RZf3 research
+      yield return new(1382575461, 200); // Rhme research
+      yield return new(1382572402, 200); // Rhar research
+      yield return new(1381656116, 200); // RZf4 research
+      yield return new(1381656117, 200); // RZf5 research
+      yield return new(1378889782, 200); // R006 research
+      yield return new(1378889795, 200); // R00C research
+      yield return new(1381656161, 200); // RZfa research
     }
   }
 }

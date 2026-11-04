@@ -30,6 +30,10 @@
       "Id": "gnam",
       "Type": 3,
       "Value": "Quest Completed: Forsaken Independance"
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
     }
   ]
 }

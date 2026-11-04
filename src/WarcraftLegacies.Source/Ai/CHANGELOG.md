@@ -5,6 +5,9 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.55.1
+No bot change.
+
 ## 0.55.0
 No bot logic change. Generated data: the Forsaken buildings in `ShatteredLegacies/Bot/SlAiData.g.cs`
 (`gen_ai_data.py` `SL_BUILDINGS`).

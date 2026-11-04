@@ -214,6 +214,10 @@
       "Id": "usca",
       "Type": 1,
       "Value": 1.3
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
     }
   ]
 }

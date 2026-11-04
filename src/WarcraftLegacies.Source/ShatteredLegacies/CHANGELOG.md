@@ -4,6 +4,14 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.55.1
+Fixes from the 0.55.0 playtest. Version v0.55.1.
+- "SYSTEM ERROR: level (1) cannot be higher than the object limit for Tier 4 (0)" (and Archivist Adept Training): the
+  Forsaken's researches had no object limits -- WL records every finished research in the faction and refuses levels
+  above the limit. `import_24p.py` now gives every research the set's buildings offer a limit (9 researches).
+- Lumber is knowledge (the tome) in this map: the Forsaken's units, buildings and researches cost no lumber any more;
+  Tier 4 (the Haunted Castle's upgrade) costs 25 knowledge (maintainer).
+
 ## 0.55.0
 The Forsaken grow: the 24p tree, Sylvanas' phases, two quests; split fixes from the 0.54.1 playtest. Version v0.55.0.
 - **Import tool** `tools/shattered-legacies/content/import_24p.py`: copies 24p objects into the main map with new

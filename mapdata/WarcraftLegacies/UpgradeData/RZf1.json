@@ -30,6 +30,10 @@
       "Id": "gnam",
       "Type": 3,
       "Value": "Quest Completed: The Secret Buildup"
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
     }
   ]
 }
