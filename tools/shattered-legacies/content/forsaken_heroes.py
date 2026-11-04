@@ -51,7 +51,10 @@ def n(fid, value, level=None, real=False):
 
 def hero_skill(new_id, base, name, hotkey, x, levels, per_level, text, research_text, icon, targets=None, buffs=None):
     """A learnable hero skill with `levels` levels. per_level: {field: [values], ...} (real values with a float)."""
-    mods = [n("aher", 1), n("alev", levels), n("arlv", 1), n("alsk", 2), s("anam", name), s("ansf", "(Forsaken - Sylvanas)"),
+    # 0.56.1: no tech requirement -- the stock unit spells require Banshee Adept / Master Training, so the learned
+    # skill stayed hidden ("I lose the skill point but the ability does not show up")
+    mods = [s("areq", ""), n("aher", 1), n("alev", levels), n("arlv", 1), n("alsk", 2), s("anam", name),
+            s("ansf", "(Forsaken - Sylvanas)"),
             s("aart", BTN + icon), s("arar", BTN + icon), n("abpx", x), n("abpy", 2), n("arpx", x), n("arpy", 0),
             s("ahky", hotkey), s("arhk", hotkey), s("aret", "Learn " + name + " - [|cffffcc00Level %d|r]"),
             s("arut", research_text)]
@@ -89,20 +92,25 @@ def abilities():
     # Banshee Wail: WL's 4-level hero Howl of Terror (Magtheridon's A07M) under the banshee's name
     wail = load("AbilityData", "A07M")
     wail["NewId"] = "AZs3"
+    reduce = [0.25, 0.4, 0.55, 0.7]  # less damage dealt by the enemies (Howl of Terror's Roa1)
     keep = [m for m in wail["Modifications"] if m["Id"] not in ("ansf", "ahky", "arhk", "atp1", "aub1", "anam", "aret",
-                                                                 "arut", "abpx", "abpy", "arpx", "arpy")]
+                                                                 "arut", "abpx", "abpy", "arpx", "arpy", "Roa1", "areq")]
+    keep += [s("areq", "")] + [n("Roa1", reduce[lv - 1], lv, real=True) for lv in range(1, 5)]
     keep += [s("anam", "Banshee Wail"), s("ansf", "(Forsaken - Sylvanas)"), s("ahky", "E"), s("arhk", "E"),
              n("abpx", 2), n("abpy", 2), n("arpx", 2), n("arpy", 0),
              s("aret", "Learn Banshee Wail - [|cffffcc00Level %d|r]"),
-             s("arut", "Sylvanas' wail weakens nearby enemies: they deal less damage for a while.")]
+             s("arut", "Sylvanas' wail weakens nearby enemies: they deal less damage for a while.|n|n"
+                       "|cffffcc00Level 1|r - 25% less damage.|n|cffffcc00Level 2|r - 40% less damage.|n"
+                       "|cffffcc00Level 3|r - 55% less damage.|n|cffffcc00Level 4|r - 70% less damage.")]
     for lv in range(1, 5):
         keep += [s("atp1", "Banshee Wail - [|cffffcc00Level " + str(lv) + "|r]", lv),
-                 s("aub1", "Sylvanas' wail weakens nearby enemies: they deal less damage for a while.", lv)]
+                 s("aub1", "Sylvanas' wail weakens nearby enemies: they deal " + str(int(reduce[lv - 1] * 100))
+                   + "% less damage for a while.", lv)]
     wail["Modifications"] = keep
     write("AbilityData", "AZs3", wail)
     # Ethereal Walk (no skill point): Berserk's speed, the code makes her ethereal and lets her pass through units
     write("AbilityData", "AZs4", {"OldId": "Absk", "NewId": "AZs4", "Unk": [0], "Modifications": [
-        n("aher", 0), n("alev", 1), s("anam", "Ethereal Walk"), s("ansf", "(Forsaken - Sylvanas)"),
+        s("areq", ""), n("aher", 0), n("alev", 1), s("anam", "Ethereal Walk"), s("ansf", "(Forsaken - Sylvanas)"),
         s("aart", BTN + "BTNEtherealFormOn.blp"), n("abpx", 1), n("abpy", 1), s("ahky", "D"),
         n("bsk1", 0.5, 1, real=True), n("bsk2", 0.0, 1, real=True), n("bsk3", 0.0, 1, real=True),
         n("adur", 6, 1, real=True), n("ahdu", 6, 1, real=True), n("acdn", 30, 1, real=True), n("amcs", 50, 1),
