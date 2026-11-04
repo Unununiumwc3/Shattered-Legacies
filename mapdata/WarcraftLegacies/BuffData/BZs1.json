@@ -1,0 +1,29 @@
+{
+  "OldId": "Bbsk",
+  "NewId": "BZs1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "fart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp"
+    },
+    {
+      "Id": "ftip",
+      "Type": 3,
+      "Value": "Ghostform"
+    },
+    {
+      "Id": "fube",
+      "Type": 3,
+      "Value": "Sylvanas is ethereal: faster, physical attacks pass through her, magic hurts her more."
+    },
+    {
+      "Id": "fnsf",
+      "Type": 3,
+      "Value": "(Forsaken - Sylvanas)"
+    }
+  ]
+}

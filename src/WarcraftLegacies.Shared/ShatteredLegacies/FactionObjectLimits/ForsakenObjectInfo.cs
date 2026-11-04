@@ -47,6 +47,8 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1381656115, 200); // RZf3 research
       yield return new(1382575461, 200); // Rhme research
       yield return new(1382572402, 200); // Rhar research
+      yield return new(1378890834, 200); // R04R research
+      yield return new(1378892120, 200); // R09X research
       yield return new(1381656116, 200); // RZf4 research
       yield return new(1381656117, 200); // RZf5 research
       yield return new(1378889782, 200); // R006 research

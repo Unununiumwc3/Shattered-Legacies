@@ -12,7 +12,7 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 |---|---|---|---|---|---|---|---|
 | units | 1703 | 7 | 495 | 1045 | 385 | 56 | 287 |
 | abilities | 1534 | 8 | 713 | 486 | 237 | 228 | 284 |
-| upgrades | 408 | 0 | 148 | 133 | 71 | 30 | 16 |
+| upgrades | 409 | 0 | 148 | 133 | 71 | 30 | 16 |
 | items | 85 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map

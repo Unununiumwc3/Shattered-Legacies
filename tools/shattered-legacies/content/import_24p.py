@@ -81,8 +81,19 @@ FORSAKEN = {
     # 0.55.1 (maintainer): lumber is "knowledge" (the tome) in this map -- won by quests. The copies cost no lumber,
     # except what is set here (24p id -> {field: value}): Tier 4 costs knowledge.
     "zero_lumber": True,
-    "set": {"R04R": {"glmb": 25, "glmm": 0},
-            "A0DU": {"arlv": 6, "alsk": 6}},  # her ultimate at level 6 (maintainer), not 10
+    "set": {"R04R": {"glmb": 25, "glmm": 0, "greq": "R04X"},  # Tier 4 only after Free Will (maintainer, 0.57)
+            "A0DU": {"arlv": 6, "alsk": 6},                     # her ultimate at level 6 (maintainer), not 10
+            # 0.57 (maintainer): only these need Tier 4 -- Val'kyr, Plague Flyer (+ Flight), Elite Abominations,
+            # Elder Banshee, the Royal Sepulcrum
+            "u01V": {"ureq": "R04R"}, "o05H": {"ureq": "R04R,R09X"}, "u02G": {"ureq": "R04R"},
+            "n07V": {"ureq": "R04R"}, "u01W": {"ureq": "R04R"},
+            # the Haunted Harbor like every faction's: ships need Navigation (R04R of the MAIN map) -- researched at
+            # the Graveyard together with Flight (R09X); no Tier 4 for the harbour itself
+            "u01A": {"ureq": "RZs1"},
+            "u01J": {"ures": "R02A,Rhme,Rhar,=R04R,R09X"},  # "=" = the main map's id, not the 24p one
+            # 0.57 (maintainer): the Plaguetorium is the only troop building before Sylvanas reaches level 6 (RZs1,
+            # "The Banshee's Rise", forsaken_heroes.py / QuestForsakenRise)
+            "u014": {"ureq": "h08A,RZs1"}, "u016": {"ureq": "h08A,RZs1"}},
 }
 SETS = [FORSAKEN]
 
@@ -166,6 +177,7 @@ def main():
         drops = {(a, b, c) for a, b, c in s["drop"]}
 
         copied_files = set()
+        written = {}
         for oid in closure:
             kind, d = p24[oid]
             d = json.loads(json.dumps(d))
@@ -188,13 +200,16 @@ def main():
                 v = m.get("Value")
                 if isinstance(v, str):
                     parts = v.split(",")
-                    if all(len(p.strip()) == 4 or p.strip() == "" for p in parts) and any(len(p.strip()) == 4 for p in parts):
+                    ok = lambda p: len(p.strip()) == 4 or (p.strip().startswith("=") and len(p.strip()) == 5)
+                    if all(ok(p) or p.strip() == "" for p in parts) and any(ok(p) for p in parts):
                         parts = [p for p in parts if (oid, m["Id"], p.strip()) not in drops]
-                        m["Value"] = ",".join(mapping.get(p.strip(), p.strip()) for p in parts)
+                        m["Value"] = ",".join(p.strip()[1:] if p.strip().startswith("=") else mapping.get(p.strip(), p.strip())
+                                              for p in parts)
                     else:
                         files, new_value = copy_import(v, imp_main, imp_24)
                         copied_files |= files
                         m["Value"] = new_value
+            written[oid] = d
             out = os.path.join(MAIN, kind, mapping[oid] + ".json")
             with open(out, "w", encoding="utf-8", newline="\n") as f:
                 f.write(json.dumps(d, indent=2, ensure_ascii=False))
@@ -202,19 +217,16 @@ def main():
 
         # 0.55.1: every research the set's buildings offer needs an object limit (WL records research levels in the
         # faction and refuses levels above its limit: "level (1) cannot be higher than the object limit for Tier 4")
-        researches = []
+        researches = []  # from the copies as written (ids already the main map's)
         for oid in closure:
-            kind, d0 = p24[oid]
-            if kind != "UnitData":
+            if p24[oid][0] != "UnitData":
                 continue
-            for m in d0.get("Modifications", []):
+            for m in written[oid].get("Modifications", []):
                 if m["Id"] == "ures" and isinstance(m.get("Value"), str):
                     for t in m["Value"].split(","):
                         t = t.strip()
-                        if len(t) == 4 and (oid, "ures", t) not in drops and t not in exclude:
-                            code = mapping.get(t, t)
-                            if code not in researches:
-                                researches.append(code)
+                        if len(t) == 4 and t not in researches:
+                            researches.append(t)
         s["researches"] = researches
         write_object_info(s, mapping)
         write_constants(s, mapping)

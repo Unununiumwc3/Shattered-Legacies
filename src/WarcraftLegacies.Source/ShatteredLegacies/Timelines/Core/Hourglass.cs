@@ -43,7 +43,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       var side = colIndex == 0 ? 0 : (colIndex % 2 == 1 ? -((colIndex + 1) / 2) : colIndex / 2);
       var x = CenterX + ColumnStep * side;
       var y = FirstRowY + RowStep * row;
-      _building[GetPlayerId(p)] = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
+      var u = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
+      // 0.57 (maintainer): every faction's Hourglass looks like its own control point tower
+      var defender = p.GetPlayerData().Faction?.ControlPointDefenderUnitTypeId;
+      if (defender != null && defender.Value != 0)
+      {
+        BlzSetUnitSkin(u, defender.Value);
+      }
+
+      _building[GetPlayerId(p)] = u;
     }
 
     // 0.55: a player who gets a faction mid-game (the free slot of a split) gets an Hourglass of his own, showing that

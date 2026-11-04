@@ -2,10 +2,10 @@
 
 Usage (repo root):  python3 tools/shattered-legacies/content/forsaken_heroes.py   (after import_24p.py)
 Writes mapdata/WarcraftLegacies/UnitData/UZa1.json, UZa2.json, UZa3.json and AbilityData/AZs1..AZs5.json.
-  UZa1 The Banshee            (caster)  Possession, Anti-magic Shell, Banshee Wail; Ethereal Walk (no skill point)
+  UZa1 The Banshee            (caster)  Domination, Anti-magic Shell, Banshee Wail; Ghostform (no skill point)
   UZa2 The Dark Ranger        (attack)  Black Arrow, Silence, Aimed Shot; ultimate Multi Shot; Trueshot Aura
-  UZa3 Queen of the Forsaken  (mix)     Black Arrow, Possession, Banshee Wail; ultimate Banshee Queen; Trueshot Aura,
-                                        Ethereal Walk
+  UZa3 Queen of the Forsaken  (mix)     Black Arrow, Domination, Banshee Wail; ultimate Banshee Queen; Trueshot Aura,
+                                        Ghostform
 All three start from Quel'thalas' Sylvanas (Hvwd: stats, attack). Every learnable skill has 4 levels (ultimates 3,
 from level 6), plus the Attribute Bonus. The new skills are hero versions of existing spells; level 1 = the
 original, each level one even step (maintainer: no new spells -- reuse, scale carefully).
@@ -71,15 +71,17 @@ def hero_skill(new_id, base, name, hotkey, x, levels, per_level, text, research_
 
 
 def abilities():
-    pos = [3, 4, 5, 6]
+    # 0.57 (maintainer): Domination, not Possession -- Possession trades her body. Charm (the Dark Ranger's ultimate)
+    # takes a unit for good and she stays.
+    lvl = [3, 4, 5, 6]
     write("AbilityData", "AZs1", hero_skill(
-        "AZs1", "Apos", "Possession", "Q", 0, 4,
-        {"Pos1": pos, "amcs": [150, 140, 130, 120], "acdn": [90, 80, 70, 60], "aran": [500, 500, 500, 500]},
-        lambda lv: f"Sylvanas takes over an enemy unit of level {pos[lv - 1]} or lower for good. Her body stays "
-                   "behind while she channels.",
-        "Sylvanas takes over an enemy unit for good.|n|n|cffffcc00Level 1|r - up to level 3.|n|cffffcc00Level 2|r - "
-        "up to level 4.|n|cffffcc00Level 3|r - up to level 5.|n|cffffcc00Level 4|r - up to level 6.",
-        "BTNPossession.blp", targets="enemies,ground,neutral,nonhero,organic"))
+        "AZs1", "ANch", "Domination", "Q", 0, 4,
+        {"Nch1": lvl, "amcs": [150, 140, 130, 120], "acdn": [90, 80, 70, 60], "aran": [600, 600, 600, 600]},
+        lambda lv: f"Sylvanas binds an enemy unit of level {lvl[lv - 1]} or lower to her will for good.",
+        "Sylvanas binds an enemy unit to her will for good.|n|n|cffffcc00Level 1|r - up to level 3.|n"
+        "|cffffcc00Level 2|r - up to level 4.|n|cffffcc00Level 3|r - up to level 5.|n|cffffcc00Level 4|r - up to "
+        "level 6.",
+        "BTNCharm.blp", targets="enemies,ground,neutral,nonhero,organic"))
     shield = [300, 450, 600, 750]
     write("AbilityData", "AZs2", hero_skill(
         "AZs2", "Aam2", "Anti-magic Shell", "W", 1, 4,
@@ -108,15 +110,24 @@ def abilities():
                    + "% less damage for a while.", lv)]
     wail["Modifications"] = keep
     write("AbilityData", "AZs3", wail)
-    # Ethereal Walk (no skill point): Berserk's speed, the code makes her ethereal and lets her pass through units
+    # Ghostform (no skill point; 0.57 maintainer: 20 s, less speed, its own buff icon): Berserk's speed, the code
+    # makes her ethereal (the added "Ethereal" ability hidden) and lets her walk through units
+    write("BuffData", "BZs1", {"OldId": "Bbsk", "NewId": "BZs1", "Unk": [0], "Modifications": [
+        s("fart", BTN + "BTNEtherealFormOn.blp"), s("ftip", "Ghostform"),
+        s("fube", "Sylvanas is ethereal: faster, physical attacks pass through her, magic hurts her more."),
+        s("fnsf", "(Forsaken - Sylvanas)")]})
     write("AbilityData", "AZs4", {"OldId": "Absk", "NewId": "AZs4", "Unk": [0], "Modifications": [
-        s("areq", ""), n("aher", 0), n("alev", 1), s("anam", "Ethereal Walk"), s("ansf", "(Forsaken - Sylvanas)"),
+        s("areq", ""), n("aher", 0), n("alev", 1), s("anam", "Ghostform"), s("ansf", "(Forsaken - Sylvanas)"),
         s("aart", BTN + "BTNEtherealFormOn.blp"), n("abpx", 1), n("abpy", 1), s("ahky", "D"),
-        n("bsk1", 0.5, 1, real=True), n("bsk2", 0.0, 1, real=True), n("bsk3", 0.0, 1, real=True),
-        n("adur", 6, 1, real=True), n("ahdu", 6, 1, real=True), n("acdn", 30, 1, real=True), n("amcs", 50, 1),
-        s("atp1", "Ethereal Walk", 1),
-        s("aub1", "For 6 seconds Sylvanas becomes ethereal: 50% faster, she walks through units and physical attacks "
+        n("bsk1", 0.25, 1, real=True), n("bsk2", 0.0, 1, real=True), n("bsk3", 0.0, 1, real=True),
+        n("adur", 20, 1, real=True), n("ahdu", 20, 1, real=True), n("acdn", 60, 1, real=True), n("amcs", 75, 1),
+        s("abuf", "BZs1", 1), s("atp1", "Ghostform", 1),
+        s("aub1", "For 20 seconds Sylvanas becomes a ghost: 25% faster, she walks through units and physical attacks "
                   "pass through her -- magic hurts her more. She cannot attack meanwhile.", 1)]})
+    # 0.57: "The Banshee's Rise" -- a condition tech, granted when she reaches level 6 (QuestForsakenRise); the
+    # Laboratory, the Forbidden Archive and the Haunted Harbor require it (the Plaguetorium does not)
+    write("UpgradeData", "RZs1", {"OldId": "Roch", "NewId": "RZs1", "Unk": [0], "Modifications": [
+        s("gnsf", "(Forsaken condition)", 1), s("gnam", "Sylvanas reaches level 6", 1)]})
     # Multi Shot as the Dark Ranger's ultimate at level 6 (WL's Sylvanas has it at level 10)
     multi = load("AbilityData", "A047")
     multi["NewId"] = "AZs5"
@@ -137,7 +148,7 @@ def heroes():
     phases = [
         ("UZa1", "The Banshee", "units\\undead\\Banshee\\Banshee", "BTNBanshee.blp",
          "AZs1,AZs2,AZs3,Aamk", "AZs4,AInv,Ault",
-         "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she possesses her enemies."),
+         "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she dominates her enemies."),
         ("UZa2", "The Dark Ranger", "Units\\Undead\\EvilSylvanas\\EvilSylvanas", "BTNBansheeRanger.blp",
          f"{imp('A03J')},A083,A0PK,AZs5,Aamk", f"{imp('A01O')},A0KV,AInv,Ault",
          "Free of the Lich King, Sylvanas is a ranger again -- a deadly archer."),
@@ -146,7 +157,8 @@ def heroes():
          "The Banshee Queen, ruler of the Undercity: archer and spellcaster both."),
     ]
     for oid, title, model, icon, uhab, uabi, story in phases:
-        mods = list(common) + [s("umdl", model), s("urac", "undead"), s("uico", BTN + icon), s("unam", title),
+        mods = list(common) + ([s("upra", "INT")] if oid == "UZa1" else []) + [
+                               s("umdl", model), s("urac", "undead"), s("uico", BTN + icon), s("unam", title),
                                s("unsf", "(Forsaken)"), s("upro", "Sylvanas Windrunner"), s("uawt", "Revive Sylvanas"),
                                s("utpr", "Revive Sylvanas"), s("utip", "Summon Sylvanas"), s("utub", story),
                                s("uhab", uhab), s("uabi", uabi)]

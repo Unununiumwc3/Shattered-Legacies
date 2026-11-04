@@ -148,7 +148,7 @@ R04N	main	used	Turn 3 has passed	-	Roch	demon	ReplaceableTextures\CommandButtons
 R04O	main	used	Cleric Adept Training	(Gilneas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNWaterBurst.blp	h03D
 R04P	main	used	Druid of the Scythe Adept Training	(Gilneas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	h03D
 R04Q	main	used	Quest Completed: The Blood Elves	(Quel'thalas)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
-R04R	main	used	Navigation	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNHumanTransport.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+16
+R04R	main	used	Navigation	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNHumanTransport.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+17
 R04T	main	used	Legion exists	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R04V	main	used	Quest Completed: The Slumbering King	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R04Y	main	used	Quest Completed: Hearthlands	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
@@ -230,7 +230,7 @@ R09P	main	used	Revert Bloodpact	-	Rhde	undead	ReplaceableTextures/CommandButtons
 R09U	main	used	Seal of Blood	(Sunfury)	Rhse	human	ReplaceableTextures\CommandButtons\BTNPotionOfVampirism.blp	h0C9
 R09V	main	used	Storm Crow Form	(Druids)	Rhse	nightelf	ReplaceableTextures\CommandButtons\BTNRavenForm.blp	eaow
 R09W	main	used	Felsteel Refining	(Fel Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNTenebriousArmor.blp	o008,o013,o017,o02Y,o02Z,o030
-R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+11
+R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+12
 R09Y	main	used	Quest Completed: Return to Outland	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R0A7	main	used	Escape to Theramore	(Dalaran)	Rhde	human	ReplaceableTextures\CommandButtons\BTNOldRock.blp	h002
 R0A8	main	used	Your team controls Jaina Proudmoore	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -340,6 +340,7 @@ RZfb	main	used	Magic Sentry	(Dalaran)	Rhse	human	ReplaceableTextures\CommandButt
 RZfc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 RZfd	main	used	Precision Shots	(Quel'Thalas)	Rhri	human	ReplaceableTextures\CommandButtons\BTNImpalingBolt.blp	-
 RZfe	main	used	Quest Completed: A Parting of Ways	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZs1	main	used	Sylvanas reaches level 6	(Forsaken condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L

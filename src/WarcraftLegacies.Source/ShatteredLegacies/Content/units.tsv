@@ -992,7 +992,7 @@ nVXP	main	used	building	The Vortex Pinnacle	-	ncop	creeps	buildings\other\Circle
 nZf0	main	used	unit	Deadeye	(Forsaken, Cult)	nhea	undead	war3mapImported\UndeadArcher.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadArcher.blp	-	uZf2	-	-	-	-	A03H,AZf4,Aihn,Atru	uZf3
 nZf1	main	used	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	hZf0,hZf2,hZf7	-	-	-	-	ACsk,AZf6,AZf7,AZf8,AZf9,Aihn	RZf0,RZf2
 nZf2	main	used	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	uZf4	-	-	-	-	A0HY,AZfg,AZfh	hZf2
-nZf3	main	used	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	uZf8	-	-	-	-	A0XL,AZfj,AZfk,Aihn	RZf0
+nZf3	main	used	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	uZf8	-	-	-	-	A0XL,AZfj,AZfk,Aihn	RZf2
 nZf4	main	used	unit	Lesser Dark Minion	-	ndr1	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
 nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+7	-	Avul	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
@@ -1535,7 +1535,7 @@ o071	main	used	unit	Darkspear Berserker	(Warsong)	otbk	orc	war3mapImported\Fores
 o072	main	used	unit	Kor'kron Vanguard	(Warsong)	ogru	orc	war3mapImported/GruntAlternateBV2.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcGrunt.BLP	-	-	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,A10E,Aion,Sca1	-
 o073	main	used	unit	Mok'Nathal Warrior	(Warsong)	ogru	orc	war3mapImported/WarsongGruntV2.mdl	main	ReplaceableTextures/CommandButtons/BTNBlackrockGrunt.blp	-	o01S	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,Aion,Sca1	-
 oETL	main	used	unit	Tidal Lord	(Skywall)	odkt	naga	war3mapImported\GreatSeaElemental.mdl	main	ReplaceableTextures\CommandButtons\BTNWaterElemental2.blp	Skywall	n07N	-	-	-	-	AEFN,AELE,AELH,Aion	RSW3
-oZf0	main	used	unit	Plague Flyer	(forsaken)	owyv	undead	war3mapImported\MadScientist.mdl	main	ReplaceableTextures\CommandButtons\BtnMadScientist.blp	-	uZf4	-	-	-	-	AZfi	RZf2
+oZf0	main	used	unit	Plague Flyer	(forsaken)	owyv	undead	war3mapImported\MadScientist.mdl	main	ReplaceableTextures\CommandButtons\BtnMadScientist.blp	-	uZf4	-	-	-	-	AZfi	RZf2,R09X
 oalt	main	used	building	Altar of Storms	(Frostwolf Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Frostwolf	o00E,opeo	Ocbh,Orex,Orkn,Othr	-	-	-	Abds,Aspi	-
 obar	main	used	building	War Camp	(Frostwolf Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf	o00E,opeo	ocat,ogru,ohun	-	-	-	Aspi	-
 obea	main	used	building	Beastiary	(Frostwolf Specialist)	obea	orc	war3mapImported\FrostwolfBeastiary.mdl	main	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	Frostwolf	o00E,opeo	h0CN,h0CO,otbr	-	Rolf	-	Abds,Aspi	ofrt
@@ -1646,16 +1646,16 @@ uCBD	main	used	unit	Burrowed Worker	(Cthun, Worker)	uaco	undead	Doodads\Barrens\
 uZf0	main	used	building	Altar of the Queen	(Forsaken)	uaod	undead	war3mapImported\AltarOfQueensForsakenV1_08.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenAltarOfQueens.blp	-	uZf1	UZfd,UZfe	-	-	-	-	-
 uZf1	main	used	unit	Acolyte	(Forsaken, Cult, Worker)	uaco	undead	war3mapImported\AcolyteForsakenV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	hZf0,hZf1,hZf2,hZf7,uZff	-	hZf0,hZf3,hZf4,uZf0,uZf2,uZf3,uZf4,uZf5,uZf6,uZf7,uZf8	-	-	AZf0,AZf1,Arlm,Arst,Auns	-
 uZf2	main	used	building	Plaguetorium	(Forsaken)	usep	undead	war3mapImported\PlagueatoriumForsakenV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenPlagueatorium.blp	-	uZf1	hZf8,hZf9,nZf0	-	-	-	-	-
-uZf3	main	used	building	Graveyard	(Forsaken)	ugrv	undead	war3mapImported\GraveyardForsakenV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGraveyard.blp	-	uZf1	-	-	RZf3,Rhar,Rhme	-	Agyd,Arlm	-
-uZf4	main	used	building	Laboratory	(Forsaken)	uslh	undead	war3mapImported\LaboratoryForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenLaboratory.blp	-	uZf1	nZf2,oZf0,uZfa	-	-	-	-	hZf1
-uZf5	main	used	building	Forbidden Archive	(Forsaken)	utod	undead	war3mapImported\BarrowDenForsakenV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenArcaneDen.blp	-	uZf1	hZfa,uZf9	-	RZf4,RZf5	-	-	hZf1
+uZf3	main	used	building	Graveyard	(Forsaken)	ugrv	undead	war3mapImported\GraveyardForsakenV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGraveyard.blp	-	uZf1	-	-	R04R,R09X,RZf3,Rhar,Rhme	-	Agyd,Arlm	-
+uZf4	main	used	building	Laboratory	(Forsaken)	uslh	undead	war3mapImported\LaboratoryForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenLaboratory.blp	-	uZf1	nZf2,oZf0,uZfa	-	-	-	-	hZf1,RZs1
+uZf5	main	used	building	Forbidden Archive	(Forsaken)	utod	undead	war3mapImported\BarrowDenForsakenV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenArcaneDen.blp	-	uZf1	hZfa,uZf9	-	RZf4,RZf5	-	-	hZf1,RZs1
 uZf6	main	used	building	Forsaken Den	(Forsaken)	utom	undead	war3mapImported\BarrowDenForsakenV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenArcaneDen.blp	-	uZf1	-	-	-	-	Aall,Apit	-
-uZf7	main	used	building	Haunted Harbor	(Forsaken)	ushp	undead	war3mapImported\ShipyardForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenShipyard.blp	-	uZf1	uZfg,uZfh,ubot	-	R006,R00C	-	Ane2	RZf2
-uZf8	main	used	building	Royal Sepulcrum	(forsaken)	ubon	undead	war3mapImported\Armory.mdl	main	ReplaceableTextures\CommandButtons\BTNNerubianArmory.blp	-	uZf1	nZf3,uZfb,uZfc	-	-	-	-	RZf0
+uZf7	main	used	building	Haunted Harbor	(Forsaken)	ushp	undead	war3mapImported\ShipyardForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenShipyard.blp	-	uZf1	uZfg,uZfh,ubot	-	R006,R00C	-	Ane2	RZs1
+uZf8	main	used	building	Royal Sepulcrum	(forsaken)	ubon	undead	war3mapImported\Armory.mdl	main	ReplaceableTextures\CommandButtons\BTNNerubianArmory.blp	-	uZf1	nZf3,uZfb,uZfc	-	-	-	-	RZf2
 uZf9	main	used	unit	Apothecary	(Forsaken, Cult)	unec	undead	units\undead\Acolyte\Acolyte.mdl	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	uZf5	-	-	-	-	AZfd,AZfe,AZff,Aiun	-
 uZfa	main	used	unit	Plague Catapult	(Forsaken)	umtw	undead	war3mapImported\ForsakenCatapult.mdl	main	ReplaceableTextures\CommandButtons\BTNMeatWagon.blp	-	uZf4	-	-	-	-	Apts	-
-uZfb	main	used	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	main	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	uZf8	-	-	-	-	ACrk,AZfl,AZfm	-
-uZfc	main	used	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	main	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	uZf8	-	-	-	-	ACrk,AZfo,Aap1,Aiun	-
+uZfb	main	used	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	main	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	uZf8	-	-	-	-	ACrk,AZfl,AZfm	RZf2
+uZfc	main	used	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	main	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	uZf8	-	-	-	-	ACrk,AZfo,Aap1,Aiun	RZf2
 uZff	main	used	building	Scholomance	-	unp2	undead	buildings\undead\Necropolis\Necropolis	stock	ReplaceableTextures\CommandButtons\BTNBlackCitadel.blp	-	-	uZf1	-	RZfa	-	A0C8,AZfw,Arlm	-
 uZfg	main	used	unit	Dreadnought	(Scourge-Legion)	uubs	undead	units\creeps\UndeadShipBattleShip\UndeadShipBattleShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadBattleShip.blp	-	uZf7	-	-	-	-	ACrk,AZg0	RZf2
 uZfh	main	used	unit	Corsair	(Scourge-Legion)	udes	undead	units\creeps\UndeadDestroyerShip\UndeadDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadDestroyer.blp	-	uZf7	-	-	-	-	A0FV,A0TE	-

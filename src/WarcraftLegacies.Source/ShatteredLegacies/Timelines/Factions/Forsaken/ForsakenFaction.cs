@@ -23,9 +23,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
 
     public override void OnRegistered()
     {
+      var rise = new QuestForsakenRise();
+      AddQuest(rise);
+      StartingQuest = rise;
       var freeWill = new QuestForsakenFreeWill();
       AddQuest(freeWill);
-      StartingQuest = freeWill;
       AddQuest(new QuestForsakenThrone(freeWill));
       AddQuest(new QuestPlagueResearch());
       SharedFactionConfigSetup.AddSharedFactionConfig(this);

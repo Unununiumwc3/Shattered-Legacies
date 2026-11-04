@@ -31,7 +31,11 @@ public static class RefundSystem
         _globalTotals[enemy] += refund;
       }
 
-      u.DropAllItems();
+      if (!u.IsUnitType(unittype.Summoned)) // [SL] (0.57): summoned units have no inventory to drop -- WL threw here
+      {                                      // ("Tried to call DropAllItems on a summoned hero", the Plague's refund)
+        u.DropAllItems();
+      }
+
       u.Kill();
       u.Dispose();
     }

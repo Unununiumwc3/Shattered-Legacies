@@ -83,6 +83,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     private static void EtherealWalk(unit u)
     {
       UnitAddAbility(u, ForsakenConfig.Ethereal);
+      BlzUnitHideAbility(u, ForsakenConfig.Ethereal, true); // 0.57: it showed as a button without an icon
       SetUnitPathing(u, false);
       var t = CreateTimer();
       TimerStart(t, ForsakenConfig.EtherealWalkDuration, false, () =>
