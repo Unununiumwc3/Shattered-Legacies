@@ -99,7 +99,9 @@ U02K	main	used	hero	Lord of the Firelands	(Skywall)	Uktl	naga	war3mapImported\Ra
 U02S	main	used	hero	Ancient Sand Worm	-	Ulic	naga	war3mapImported\GiantSandWorm.mdl	main	ReplaceableTextures\CommandButtons\BTNMindWorm.blp	Ahn'qiraj	u01F	-	-	-	-	A000,A066,A0GK,A0S0,AInv,AUim,Aamk,ZBEG	RLLL
 U02V	main	used	hero	High Astromancer	(Sunfury)	Uktl	human	war3mapImported\HeroElfDarkEnchanter.mdl	main	ReplaceableTextures/CommandButtons/BTNBloodElfSorceress.blp	Sunfury	h0C6	-	-	-	-	A032,A0BQ,A0GK,A0X6,A12N,A12Q,AInv,Aamk,Alit	R09K
 UELN	main	used	hero	The Tidehunter	(Skywall)	Uktl	naga	war3mapImported\TidalLord.mdl	main	ReplaceableTextures\CommandButtons\BTNTidelord.blp	Skywall	n078	-	-	-	-	A00Y,A118,A13G,AInv,Aamk,MD09	RSW3
-UZa1	main	used	hero	Banshee Queen	(Forsaken)	Hvwd	undead	units\undead\Banshee\Banshee	stock	ReplaceableTextures\CommandButtons\BTNBanshee.blp	-	-	-	-	-	-	A047,A083,A0KV,A0PK,AEar,AInv,Aamk,Ault	-
+UZa1	main	used	hero	The Banshee	(Forsaken)	Hvwd	undead	units\undead\Banshee\Banshee	stock	ReplaceableTextures\CommandButtons\BTNBanshee.blp	-	-	-	-	-	-	A047,A083,A0KV,A0PK,AEar,AInv,Aamk,Ault	-
+UZfd	main	used	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	main	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	uZf0	-	-	-	-	A0NK,AHab,AInv,AZfp,AZfq,Aamk	RZf1
+UZfe	main	used	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	main	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	uZf0	-	-	-	-	AInv,AZfs,AZft,AZfu,AZfv,Aamk	-
 Uanb	main	used	hero	King of Azjol-Nerub	(Scourge)	Uanb	undead	units\undead\Anubarak\Anubarak	stock	ReplaceableTextures\CommandButtons\BTNanubarakhd.blp	Scourge	uaod	-	-	-	-	AInv,AUcb,AUim,AUls,AUts,Aamk	-
 Uear	main	used	hero	Champion of the Scourge	(Scourge)	Uear	undead	units\undead\EvilArthas\UndeadArthas	stock	ReplaceableTextures\CommandButtons\BTNArthasV1.blp	Scourge	uaod	-	-	-	-	A08V,A0LR,A0SC,A10C,A10N,AInv,Aamk,ZB02,ZB06	R01K
 Uktl	main	used	hero	Archlich of the Scourge	(Scourge-Lich)	Uktl	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	Scourge	-	-	-	-	-	A00F,A00J,A13R,AInv,AUan,AUdd,AUfn,Aamk	-
@@ -516,6 +518,17 @@ h0CO	main	used	unit	Mammoth Wrangler	(Frostwolf)	hkni	orc	war3mapImported\WarDru
 h0CP	main	used	unit	Gallant Knight	(Lordaeron)	hkni	human	LordearonKnight.mdl	main	ReplaceableTextures\CommandButtons\BTNKnightReClassic.blp	-	hbar	-	-	-	-	A020,A02Y,Ahsb,Aihn	hlum,hcas,hbla
 h0CQ	main	used	unit	Royal Arbalest	(Lordaeron)	hrif	human	war3mapImported\arbalester.mdl	main	ReplaceableTextures\CommandButtons\BTNarbalesticon.blp	-	hbar	-	-	-	-	A0A3,A0AC,A0F3,Aihn	hbla
 hEAE	main	used	unit	Greater Air Elemental	(Skywall-ertan)	hwt3	naga	war3mapImported\GreatAirElemental.mdl	main	ReplaceableTextures\CommandButtons\BTNSummonAirElemental.BLP	-	-	-	-	-	-	A0UZ	-
+hZf0	main	used	building	Dark Mansion	(Forsaken)	htow	undead	war3mapImported\TownHallForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenTownHall.blp	-	uZf1	nZf1,uZf1	-	-	-	AZf2	-
+hZf1	main	used	building	Grim Estate	(Forsaken)	hkee	undead	war3mapImported\TownHallForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenKeep.blp	-	-	uZf1	-	-	-	A0GA,AZf2	-
+hZf2	main	used	building	Haunted Castle	(Forsaken)	hcas	undead	war3mapImported\TownHallForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenCastle.blp	-	-	nZf1,uZf1	-	RZf2	-	AZf2	uZf0
+hZf3	main	used	building	Grave	(Forsaken)	hhou	undead	war3mapImported\GraveForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenGrave.blp	-	uZf1	-	-	-	-	-	-
+hZf4	main	used	building	Scout Tower	(Forsaken)	hwtw	undead	war3mapImported\TowerForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenTower.blp	-	uZf1	-	-	-	-	AZf3,Adts	-
+hZf5	main	used	building	Plague Tower	(Forsaken)	hgtw	undead	war3mapImported\TowerForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenTowerThirdUpgrade.blp	-	-	-	-	-	-	AZf3,Adts	uZf3
+hZf6	main	used	building	Improved Plague Tower	(Forsaken)	hgtw	undead	war3mapImported\TowerForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenTowerThirdUpgrade.blp	-	-	-	-	-	-	AZf3,Adts	RZf2
+hZf7	main	used	building	Undercity	(Forsaken)	htow	undead	buildings\undead\SacrificialPit\SacrificialPit.mdl	stock	ReplaceableTextures\CommandButtons\BTNSacrificialPit.blp	-	-	nZf1,uZf1	-	-	-	AZf2	-
+hZf8	main	used	unit	Rotguard	(Forsaken)	hhes	undead	war3mapImported\DeathGaurd.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathGaurd.blp	-	uZf2	-	-	-	-	A020,A070,A0ES,A0SX,Aihn	-
+hZf9	main	used	unit	Dreadguard	(Forsaken, Cult)	hcth	undead	war3mapImported\DeathGuardV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathGuard.blp	-	uZf2	-	-	-	-	A020,A0YE,AZf5,Aihn	RZf0
+hZfa	main	used	unit	Archivist	(Forsaken, Cult)	hsor	undead	war3mapImported\NecromancerBlack.mdl	main	ReplaceableTextures\CommandButtons\BTNNecromancer.blp	-	uZf5	-	-	-	-	A0D1,AZfa,AZfb,Aihn	-
 halt	main	used	building	Altar of Kings	(Lordaeron Altar)	halt	human	buildings\human\AltarofKings\AltarofKings	stock	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	Lordaeron	hpea	H01J,Hart,Hlgr,Huth	-	-	-	-	-
 harm	main	used	building	Workshop	(Ironforge Specialist)	harm	human	war3mapImported\DwarvenWorkshop.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWorkshop.blp	Ironforge	h019,hpea	h01P,n02D,n0CZ,tp01,tp02	-	R00T,R010,TP28,TP29,TP38	-	-	h07F
 hars	main	used	building	Arcane Sanctum	(Stormwind Magic)	hars	human	war3mapImported\StormwindArcaneSanctum.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	Stormwind	hpea	h00J,n05L,n093	-	R005,R02E	-	-	h06M
@@ -974,6 +987,10 @@ nNya	main	used	building	Ny'alotha, the Waking City	-	ncop	creeps	buildings\other
 nTFW	main	used	building	Throne of the Four Winds	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
 nTWL	main	used	building	Twilight Landing	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 nVXP	main	used	building	The Vortex Pinnacle	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
+nZf0	main	used	unit	Deadeye	(Forsaken, Cult)	nhea	undead	war3mapImported\UndeadArcher.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadArcher.blp	-	uZf2	-	-	-	-	A03H,AZf4,Aihn,Atru	uZf3
+nZf1	main	used	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	hZf0,hZf2,hZf7	-	-	-	-	ACsk,AZf6,AZf7,AZf8,AZf9,Aihn	RZf0,RZf2
+nZf2	main	used	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	uZf4	-	-	-	-	A0HY,AZfg,AZfh	hZf2
+nZf3	main	used	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	uZf8	-	-	-	-	A0XL,AZfj,AZfk,Aihn	RZf0
 nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+7	-	Avul	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
 nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
@@ -1515,6 +1532,7 @@ o071	main	used	unit	Darkspear Berserker	(Warsong)	otbk	orc	war3mapImported\Fores
 o072	main	used	unit	Kor'kron Vanguard	(Warsong)	ogru	orc	war3mapImported/GruntAlternateBV2.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcGrunt.BLP	-	-	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,A10E,Aion,Sca1	-
 o073	main	used	unit	Mok'Nathal Warrior	(Warsong)	ogru	orc	war3mapImported/WarsongGruntV2.mdl	main	ReplaceableTextures/CommandButtons/BTNBlackrockGrunt.blp	-	o01S	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,Aion,Sca1	-
 oETL	main	used	unit	Tidal Lord	(Skywall)	odkt	naga	war3mapImported\GreatSeaElemental.mdl	main	ReplaceableTextures\CommandButtons\BTNWaterElemental2.blp	Skywall	n07N	-	-	-	-	AEFN,AELE,AELH,Aion	RSW3
+oZf0	main	used	unit	Plague Flyer	(forsaken)	owyv	undead	war3mapImported\MadScientist.mdl	main	ReplaceableTextures\CommandButtons\BtnMadScientist.blp	-	uZf4	-	-	-	-	AZfi	RZf2
 oalt	main	used	building	Altar of Storms	(Frostwolf Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Frostwolf	o00E,opeo	Ocbh,Orex,Orkn,Othr	-	-	-	Abds,Aspi	-
 obar	main	used	building	War Camp	(Frostwolf Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf	o00E,opeo	ocat,ogru,ohun	-	-	-	Aspi	-
 obea	main	used	building	Beastiary	(Frostwolf Specialist)	obea	orc	war3mapImported\FrostwolfBeastiary.mdl	main	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	Frostwolf	o00E,opeo	h0CN,h0CO,otbr	-	Rolf	-	Abds,Aspi	ofrt
@@ -1622,6 +1640,22 @@ u02L	main	used	building	Shadow Vault	(Scourge)	unp2	undead	war3mapImported\Found
 u02P	main	used	unit	Djinn	(Skywall)	uobs	naga	war3mapImported\Genie.mdl	main	ReplaceableTextures\CommandButtons\BTNGenieIcon.blp	Skywall	n08B	-	-	-	-	AEHS,AERJ,WOTW	-
 u02W	main	used	unit	Energy Wagon	(Sunfury)	uobs	human	units\other\BloodElfWagon\BloodElfWagon.mdl	stock	ReplaceableTextures\CommandButtons\BTNBloodElfSupplyWagon.blp	Sunfury	h0CI	-	-	-	-	A12P,Aabs	-
 uCBD	main	used	unit	Burrowed Worker	(Cthun, Worker)	uaco	undead	Doodads\Barrens\Rocks\Crator\Crator1.mdl	stock	ReplaceableTextures\CommandButtons\BTNnerubianSpiderLord.blp	-	-	-	-	-	-	A0Y9	-
+uZf0	main	used	building	Altar of the Queen	(Forsaken)	uaod	undead	war3mapImported\AltarOfQueensForsakenV1_08.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenAltarOfQueens.blp	-	uZf1	UZfd,UZfe	-	-	-	-	-
+uZf1	main	used	unit	Acolyte	(Forsaken, Cult, Worker)	uaco	undead	war3mapImported\AcolyteForsakenV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	hZf0,hZf1,hZf2,hZf7,uZff	-	hZf0,hZf3,hZf4,uZf0,uZf2,uZf3,uZf4,uZf5,uZf6,uZf7,uZf8	-	-	AZf0,AZf1,Arlm,Arst,Auns	-
+uZf2	main	used	building	Plaguetorium	(Forsaken)	usep	undead	war3mapImported\PlagueatoriumForsakenV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenPlagueatorium.blp	-	uZf1	hZf8,hZf9,nZf0	-	-	-	-	-
+uZf3	main	used	building	Graveyard	(Forsaken)	ugrv	undead	war3mapImported\GraveyardForsakenV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGraveyard.blp	-	uZf1	-	-	RZf3,Rhar,Rhme	-	Agyd,Arlm	-
+uZf4	main	used	building	Laboratory	(Forsaken)	uslh	undead	war3mapImported\LaboratoryForsakenV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenLaboratory.blp	-	uZf1	nZf2,oZf0,uZfa	-	-	-	-	hZf1
+uZf5	main	used	building	Forbidden Archive	(Forsaken)	utod	undead	war3mapImported\BarrowDenForsakenV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenArcaneDen.blp	-	uZf1	hZfa,uZf9	-	RZf4,RZf5	-	-	hZf1
+uZf6	main	used	building	Forsaken Den	(Forsaken)	utom	undead	war3mapImported\BarrowDenForsakenV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenArcaneDen.blp	-	uZf1	-	-	-	-	Aall,Apit	-
+uZf7	main	used	building	Haunted Harbor	(Forsaken)	ushp	undead	war3mapImported\ShipyardForsakenV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNForsakenShipyard.blp	-	uZf1	uZfg,uZfh,ubot	-	R006,R00C	-	Ane2	RZf2
+uZf8	main	used	building	Royal Sepulcrum	(forsaken)	ubon	undead	war3mapImported\Armory.mdl	main	ReplaceableTextures\CommandButtons\BTNNerubianArmory.blp	-	uZf1	nZf3,uZfb,uZfc	-	-	-	-	RZf0
+uZf9	main	used	unit	Apothecary	(Forsaken, Cult)	unec	undead	units\undead\Acolyte\Acolyte.mdl	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	uZf5	-	-	-	-	AZfd,AZfe,AZff,Aiun	-
+uZfa	main	used	unit	Plague Catapult	(Forsaken)	umtw	undead	war3mapImported\ForsakenCatapult.mdl	main	ReplaceableTextures\CommandButtons\BTNMeatWagon.blp	-	uZf4	-	-	-	-	Apts	-
+uZfb	main	used	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	main	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	uZf8	-	-	-	-	ACrk,AZfl,AZfm	-
+uZfc	main	used	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	main	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	uZf8	-	-	-	-	ACrk,AZfo,Aap1,Aiun	-
+uZff	main	used	building	Scholomance	-	unp2	undead	buildings\undead\Necropolis\Necropolis	stock	ReplaceableTextures\CommandButtons\BTNBlackCitadel.blp	-	-	uZf1	-	RZfa	-	A0C8,AZfw,Arlm	-
+uZfg	main	used	unit	Dreadnought	(Scourge-Legion)	uubs	undead	units\creeps\UndeadShipBattleShip\UndeadShipBattleShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadBattleShip.blp	-	uZf7	-	-	-	-	ACrk,AZg0	RZf2
+uZfh	main	used	unit	Corsair	(Scourge-Legion)	udes	undead	units\creeps\UndeadDestroyerShip\UndeadDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadDestroyer.blp	-	uZf7	-	-	-	-	A0FV,A0TE	-
 uabo	main	used	unit	Abomination	(Scourge)	uabo	undead	units\undead\Abomination\Abomination	stock	ReplaceableTextures\CommandButtons\BTNAbomination.blp	Scourge	uslh	-	-	-	-	A127,Aap1,Aiun	R008,unp2
 uaco	main	used	unit	Acolyte	(Scourge, Worker)	uaco	undead	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	Scourge	ZBFT,o016,u000,u01M,u02L,unp1,unp2,unpl	-	u006,u00F,uaod,ubon,ugrv,unpl,usep,ushp,uslh,utod,utom,uzig	-	ushd	A041,Arst,Auns	-
 uaod	main	used	building	Altar of Darkness	(Scourge Altar)	uaod	undead	buildings\undead\AltarOfDarkness\AltarOfDarkness	stock	ReplaceableTextures\CommandButtons\BTNAltarOfDarkness.blp	Scourge	uaco	U001,U00A,Uanb,Uear,ubdd	-	-	-	-	-
@@ -1629,7 +1663,7 @@ uban	main	used	unit	Banshee	(Scourge)	uban	undead	units\undead\Banshee\Banshee	s
 ubdd	main	used	unit	Sapphiron	(Scourge-Demi)	ubdd	undead	units\undead\FrostWyrm\FrostWyrm	stock	ReplaceableTextures\CommandButtons\BTNskullblue.blp	Scourge	uaod	-	-	-	-	A058,ACrk,Afrb,Afrz	R025
 ubdr	main	used	unit	Sapphiron	(Creep)	ubdr	undead	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A08P	-
 ubon	main	used	building	Boneyard	(Scourge Siege)	ubon	undead	buildings\undead\BoneYard\BoneYard	stock	ReplaceableTextures\CommandButtons\BTNBoneyard.blp	Scourge	uaco	ubsp,ufro	-	R06N,Rufb	-	-	unp2
-ubot	main	used	unit	Haunted Transport Ship	(Scourge-Legion)	ubot	undead	units\creeps\UndeadTransportShip\UndeadTransportShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadTransport.blp	Black Empire,Legion,Scourge	u009,ushp	-	-	-	-	Sch5,Sdro,Slo3	R04R
+ubot	main	used	unit	Haunted Transport Ship	(Scourge-Legion)	ubot	undead	units\creeps\UndeadTransportShip\UndeadTransportShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadTransport.blp	Black Empire,Legion,Scourge	u009,uZf7,ushp	-	-	-	-	Sch5,Sdro,Slo3	R04R
 ubsp	main	used	unit	Obsidian Destroyer	(Scourge)	ubsp	undead	units\undead\ObsidianStatue\ObsidianStatue	stock	ReplaceableTextures\CommandButtons\BTNDestroyer.blp	-	ubon	-	-	-	-	ACmi,Aabs,Aave,Advm,Afak	R09X
 ucrm	main	used	unit	Burrowed Crypt Fiend	(Scourge)	ucrm	undead	units\undead\CryptFiend\CryptFiend	stock	ReplaceableTextures\CommandButtons\BTNCryptFiend.blp	-	-	-	-	-	-	Abur,Aiun,Aspa,Aweb	-
 ucry	main	used	unit	Crypt Fiend	(Scourge)	ucry	undead	units\undead\CryptFiend\CryptFiend	stock	ReplaceableTextures\CommandButtons\BTNCryptFiend.blp	Scourge	usep	-	-	-	-	A0DH,A0JL,Abur,Aiun,Aspa	R008,ugrv
@@ -1810,7 +1844,7 @@ U00R	24p	changed	hero	Old God	-	Ulic	naga	war3mapImported\Cthun.mdl	main	Replace
 U00S	24p	changed	hero	High Warlord	(Naga)	Ulic	naga	LordNajentusEars.mdl	main	ReplaceableTextures\CommandButtons\BTNLordNaj.blp	-	nnad	-	-	-	-	A0DA,A0WM,A118,AHad,AInv,Aamk	R008
 U00W	24p	24p only	hero	Majordomo of Ragnaros	(Ironforge)	Ulic	human	war3mapImported\Hero_Executus.mdl	24p	ReplaceableTextures\CommandButtons\BTNRoyalGuardHeroV2.blp	-	h07B	-	-	-	-	A0VR,A0WP,A0WR,A0WS,AInv,Aamk	-
 U00Z	24p	changed	hero	Obsidian Destroyer	-	Ulic	naga	war3mapImported\ObsidianSphinx.mdl	main	ReplaceableTextures\CommandButtons\BTNDestroyer.blp	-	u01F	-	-	-	-	A02G,A0GK,A0XT,A0XU,AInv,AUcb,Aamk	R07B
-U01O	24p	24p only	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	24p	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	u010	-	-	-	-	A0ND,A0NK,A0NL,AHab,AInv,Aamk	R04Z
+U01O	24p	24p only	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	main	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	u010	-	-	-	-	A0ND,A0NK,A0NL,AHab,AInv,Aamk	R04Z
 U01S	24p	changed	hero	Windlord	(Twilight)	Uktl	orc	war3mapImported\Hero_WindlordV1.mdl	main	ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp	-	o03C	-	-	-	-	A00Y,A0GK,A0ON,A11J,AHbz,AInv,ANsg,Aamk	R07T
 U01Z	24p	changed	hero	Old God	(Nzoth)	Ulic	naga	war3mapImported\Nzoth.mdl	main	ReplaceableTextures\CommandButtons\BTNNzothIcon.blp	-	-	-	-	-	-	A0N7,A0V9,A0Y7,A117,A11B,ACm2,Aamk	-
 U023	24p	24p only	hero	The Soulflayer	(Legion)	Uwar	orc	war3mapImported\Hero_Executus.mdl	24p	ReplaceableTextures\CommandButtons\BTNWindSerpent2.blp	-	-	-	-	-	-	A0QJ,A0QK,AInv,AUav,AUim,Aamk	-
@@ -1820,7 +1854,7 @@ U02A	24p	24p only	hero	N'raqi Aberration	(yogg)	Ulic	naga	war3mapImported\Facele
 U02B	24p	different	hero	Yogg-Saron Champion	-	Ulic	naga	war3mapImported\FacelessOneReaper.mdl	main	ReplaceableTextures\CommandButtons\BTNNerubianSmasher.blp	-	n0AV	-	-	-	-	A08X,A0GK,A0Y1,A11D,AInv,ANbr,AOre,Aamk	-
 U02C	24p	changed	hero	Old God	-	Ulic	naga	war3mapImported\YoggSaron.mdl	main	ReplaceableTextures\CommandButtons\BTNYogg-saronIcon.blp	-	-	-	-	-	-	A013,A02L,A0GK,A0R7,A10M,ACm2,AImt,Aamk	-
 U02D	24p	changed	hero	Death Knight Lord	(fel horde)	Uear	orc	war3mapImported\TeronGorefiendWC2V1.02.mdl	24p	ReplaceableTextures\CommandButtons\BTNDeathKnightTeron.blp	-	o02V	-	-	-	-	A04L,A0PA,A0RR,AHab,AInv,Aamk	R05Z
-U02I	24p	24p only	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	24p	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	u010	-	-	-	-	A072,A0LP,A0V7,A0VC,AInv,Aamk	-
+U02I	24p	24p only	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	main	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	u010	-	-	-	-	A072,A0LP,A0V7,A0VC,AInv,Aamk	-
 U02K	24p	changed	hero	Lord of the Firelands	(Ironforge)	Uktl	human	war3mapImported\Ragnaros.mdl	main	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	-	-	-	-	-	-	A0VU,A0VW,A0W9,A0WF,AInv,Aamk	-
 U02M	24p	24p only	hero	Grimscale Chieftain	(Naga)	Ulic	naga	war3mapImported\Hero_Murlock.mdl	24p	ReplaceableTextures\CommandButtons\BTNMurlocFlesheater.blp	-	n0D8	-	-	-	-	A033,A083,A0DA,A0YM,AInv,AOvd,Aamk	R04J,R04H,R093
 U02N	24p	24p only	hero	The Leader of Bloodcursed Naga	(Naga)	Ulic	naga	war3mapImported\Bloodnaga.mdl	24p	ReplaceableTextures\CommandButtons\BTNRoyalGuardHeroV2.blp	-	n0C0	-	-	-	-	A07N,A0TW,A102,A104,AInv,AUav,Aamk	R098
@@ -2196,8 +2230,8 @@ h08K	24p	changed	unit	Monk	(scarlet)	hmpr	human	war3mapImported\ClericWC1.mdl	ma
 h08L	24p	changed	unit	Cavalier	(scarlet)	hkni	human	units\creeps\BanditLord\BanditLord.mdl	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	h081	-	-	-	-	A020,A0PZ,A0QF,A0SH,Aihn	h07Z,h06G
 h08M	24p	24p only	unit	Man-at-arms	(scarlet)	hfoo	human	war3mapImported\BreelandMilitiaV3.mdl	24p	ReplaceableTextures\CommandButtons\BTNMilitia.blp	-	h097,h09M,h09N,h09O,h09P,h09Q	-	h07X,h084,h097	-	-	A01K,A0P5,A0Q0,Ahrp,Aihn	h07Y,h06G
 h08N	24p	24p only	unit	Dreadguard	(Forsaken, Cult)	hcth	undead	war3mapImported\DeathGuardV1.04.mdl	24p	ReplaceableTextures\CommandButtons\BTNDeathGuard.blp	-	u011	-	-	-	-	A020,A0YE,A0Z0,Aihn	R04X
-h08O	24p	24p only	unit	Rotguard	(Forsaken)	hhes	undead	war3mapImported\DeathGaurd.mdl	24p	ReplaceableTextures\CommandButtons\BTNDeathGaurd.blp	-	u011	-	-	-	-	A020,A070,A0ES,A0SX,Aihn	-
-h08P	24p	24p only	unit	Archivist	(Forsaken, Cult)	hsor	undead	war3mapImported\NecromancerBlack.mdl	24p	ReplaceableTextures\CommandButtons\BTNNecromancer.blp	-	u016	-	-	-	-	A0D1,A0SE,A0UX,Aihn	-
+h08O	24p	24p only	unit	Rotguard	(Forsaken)	hhes	undead	war3mapImported\DeathGaurd.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathGaurd.blp	-	u011	-	-	-	-	A020,A070,A0ES,A0SX,Aihn	-
+h08P	24p	24p only	unit	Archivist	(Forsaken, Cult)	hsor	undead	war3mapImported\NecromancerBlack.mdl	main	ReplaceableTextures\CommandButtons\BTNNecromancer.blp	-	u016	-	-	-	-	A0D1,A0SE,A0UX,Aihn	-
 h08R	24p	24p only	building	Scarlet Halls	(Scarlet)	htow	human	Doodads\Dalaran\Props\KingThrone45\KingThrone45.mdl	stock	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	-	-	h06B,hpea,o00X	-	-	-	Argl	-
 h08S	24p	24p only	building	Undercity	(Forsaken)	htow	undead	buildings\undead\SacrificialPit\SacrificialPit.mdl	stock	ReplaceableTextures\CommandButtons\BTNSacrificialPit.blp	-	-	n0BY,u01K	-	-	-	Argl	-
 h08T	24p	24p only	unit	Proudmoore Flagship	(landed)	hbsh	human	war3mapImported\GalleonKulTiras.mdl	24p	ReplaceableTextures\CommandButtons\BTNGalleonIcon.blp	-	-	-	-	-	-	A0JT,A0LM,ACsk,Repa	-
@@ -2578,11 +2612,11 @@ n07O	24p	changed	building	Terrorguard Demon Gate	(T3 Terror Guard)	ndmg	orc	buil
 n07P	24p	different	building	Orgrimmar (30gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
 n07Q	24p	different	building	Area 52 (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n07R	24p	24p only	unit	War Turtle	(Druid)	nhyc	orc	Units\Creeps\GiantSeaTurtleRange\GiantSeaTurtleRange.mdl	stock	ReplaceableTextures\CommandButtons\BTNSeaTurtleGreen.blp	-	-	-	-	-	-	ACdv,ANth,Advc,Ansk	o03Z
-n07S	24p	24p only	unit	Deadeye	(Forsaken, Cult)	nhea	undead	war3mapImported\UndeadArcher.mdl	24p	ReplaceableTextures\CommandButtons\BTNUndeadArcher.blp	-	u011	-	-	-	-	A02H,A03H,Aihn,Atru	u01J
+n07S	24p	24p only	unit	Deadeye	(Forsaken, Cult)	nhea	undead	war3mapImported\UndeadArcher.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadArcher.blp	-	u011	-	-	-	-	A02H,A03H,Aihn,Atru	u01J
 n07T	24p	different	building	Royal Treasury	(Stormwind)	nmrk	human	war3mapImported\ArcaneAcademyStormwindV1.02.mdl	24p	ReplaceableTextures\CommandButtons\BTNNobbyMansionArcaneAcademy.blp	-	hpea	-	-	-	-	Aall,Apit	-
 n07U	24p	different	building	Treasure Vault	(Khaz Modan)	nmrk	human	war3mapImported\DwarvenTurret.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenTreasury.blp	-	h019	-	-	-	-	Aall,Apit	-
 n07V	24p	24p only	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1.00.mdl	24p	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	u01W	-	-	-	-	A0XL,A0YS,ACbz,Aihn	R04X
-n07W	24p	24p only	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	24p	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	u014	-	-	-	-	A05L,A075,A0HY	h08B
+n07W	24p	24p only	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	u014	-	-	-	-	A05L,A075,A0HY	h08B
 n07X	24p	changed	unit	Ogre Magi	(twilight)	nomg	orc	war3mapImported\Ogre Mage.mdl	main	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	o03E	-	-	-	-	A0EY,A0OL,Aion,Awfb	-
 n07Y	24p	different	building	Venture Bay (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n07Z	24p	changed	unit	Boulderfist Mauler	-	nogm	creeps	units\creeps\Ogre\Ogre	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	-	-	-	-	-	A06P,ACbh	-
@@ -2726,7 +2760,7 @@ n0BU	24p	24p only	building	Teleporter	-	nwgt	other	Abilities\Spells\Human\MassTe
 n0BV	24p	different	building	Drustvar (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n0BW	24p	different	building	Stormsong Valley (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n0BX	24p	different	building	Tiragarde Sound (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
-n0BY	24p	24p only	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	24p	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	h089,h08B,h08S	-	-	-	-	A07C,A0KJ,A0V3,A0V4,ACsk,Aihn	R04X,R04R
+n0BY	24p	24p only	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	h089,h08B,h08S	-	-	-	-	A07C,A0KJ,A0V3,A0V4,ACsk,Aihn	R04X,R04R
 n0BZ	24p	24p only	building	Deep Sea Vault	(nzoth)	nmrb	naga	war3mapImported\ArcaneVaultNagaV2.01.mdl	24p	ReplaceableTextures\CommandButtons\BTNArcaneVault.blp	-	nmpe	-	-	-	-	Aall,Apit	-
 n0C0	24p	24p only	building	Altar of the Depths	(Nzoth)	nnad	naga	buildings\naga\AltarOfDepths\AltarOfDepths	stock	ReplaceableTextures\CommandButtons\BTNAltarOfDepths.blp	-	nmpe	H08U,H0A5,U02N	-	-	-	-	-
 n0C1	24p	24p only	building	Coral Bed	(Nzoth)	nnfm	naga	buildings\naga\CoralBed\CoralBed	stock	ReplaceableTextures\CommandButtons\BTNCoralBed.blp	-	nmpe	-	-	-	-	-	-
@@ -3407,7 +3441,7 @@ o05D	24p	changed	unit	Elementalist	(draenei)	odoc	nightelf	war3mapImported\Villa
 o05E	24p	different	building	Exodar Regalis	(Draenei)	oalt	nightelf	war3mapImported\DraeneiDimensionalGate.mdl	24p	ReplaceableTextures\CommandButtons\BTNMoonWell.blp	-	-	h09R,o05A	-	R013	-	A0ZA,A0ZJ	-
 o05F	24p	changed	building	Naval Battery	(Kultiras)	oshy	human	war3mapImported\Naval Battery.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
 o05G	24p	changed	building	Siege Workshop	(Warsong)	obea	orc	war3mapImported\OrcMill.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcBlacksmith.blp	-	o04L	e01L,e01M,o00I	-	-	-	Abds,Aspi	o009,o02R
-o05H	24p	24p only	unit	Plague Flyer	(forsaken)	owyv	undead	war3mapImported\MadScientist.mdl	24p	ReplaceableTextures\CommandButtons\BtnMadScientist.blp	-	u014	-	-	-	-	A0UW	R04R
+o05H	24p	24p only	unit	Plague Flyer	(forsaken)	owyv	undead	war3mapImported\MadScientist.mdl	main	ReplaceableTextures\CommandButtons\BtnMadScientist.blp	-	u014	-	-	-	-	A0UW	R04R
 o05I	24p	changed	building	Missile Battery	(goblin)	oshy	human	war3mapImported\GoblinTowerInduwer.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
 o05J	24p	24p only	building	Red Dragon Hatchery	(Dragonmaw)	obea	orc	buildings\other\DragonBuilding\DragonBuilding.mdl	stock	ReplaceableTextures\CommandButtons\BTNDragonRoost.blp	-	o05P	n0CP,n0CQ,o05M	-	-	-	Aspi	o03A
 o05K	24p	different	unit	Dragonmaw Warrior	(dragonmaw)	ogru	orc	war3mapImported\GruntAlternateBV2.mdl	main	ReplaceableTextures\CommandButtons\BTNGrunt.blp	-	o03D	-	-	-	-	A020,Aion	-
@@ -3529,13 +3563,13 @@ u01J	24p	24p only	building	Graveyard	(Forsaken)	ugrv	undead	war3mapImported\Grav
 u01K	24p	24p only	unit	Acolyte	(Forsaken, Cult, Worker)	uaco	undead	war3mapImported\AcolyteForsakenV1.00.mdl	24p	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	h089,h08A,h08B,h08S,u012,u01M,u02L	-	h089,h08C,h08D,u010,u011,u014,u016,u017,u01A,u01J,u01W	-	-	A106,Ahar,Arlm,Arst,Auns	-
 u01M	24p	changed	building	Caer Darrow Keep	(Scourge)	uaod	undead	buildings\human\TownHall\TownHall.mdl	stock	ReplaceableTextures\CommandButtons\BTNKeep.blp	-	-	hpea,u01K,uaco	-	-	-	-	-
 u01N	24p	changed	building	Altar of Destruction	(Legion)	uaod	undead	war3mapImported\AltarOfDarknessDemonV1.02.mdl	24p	ReplaceableTextures\CommandButtons\BTNDemonAltarOfDarkness.blp	-	u00D	U00L,Umal,Utic	-	-	-	-	-
-u01P	24p	24p only	unit	Plague Catapult	(Forsaken)	umtw	undead	war3mapImported\ForsakenCatapult.mdl	24p	ReplaceableTextures\CommandButtons\BTNMeatWagon.blp	-	u014	-	-	-	-	Apts	-
+u01P	24p	24p only	unit	Plague Catapult	(Forsaken)	umtw	undead	war3mapImported\ForsakenCatapult.mdl	main	ReplaceableTextures\CommandButtons\BTNMeatWagon.blp	-	u014	-	-	-	-	Apts	-
 u01Q	24p	changed	building	Improved Crystal Protector	(Draenei)	uzg1	orc	war3mapImported\DraeneiArcaneProtector V1.01.mdl	24p	ReplaceableTextures\CommandButtons\BTNDraeneiSpiritTower.blp	-	-	-	-	-	-	-	o053
 u01R	24p	24p only	unit	Apothecary	(Forsaken, Cult)	unec	undead	units\undead\Acolyte\Acolyte.mdl	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	u016	-	-	-	-	A0NB,A0RX,A0YY,Aiun	-
 u01T	24p	changed	unit	Herald	(twilight)	unec	orc	war3mapImported\HeraldOfTwilight.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	o03E	-	-	-	-	A08F,A0AR,A0O5,Aion	-
 u01U	24p	different	unit	Cultist of the Damned	(Forsaken, Cult)	uaco	undead	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	-	-	-	-	-	-	A0GK,A0N8,Apiv	-
-u01V	24p	24p only	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	24p	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	u01W	-	-	-	-	A0BM,A0NF,ACrk	-
-u01W	24p	24p only	building	Royal Sepulcrum	(forsaken)	ubon	undead	war3mapImported\Armory.mdl	24p	ReplaceableTextures\CommandButtons\BTNNerubianArmory.blp	-	u01K	n07V,u01V,u02G	-	-	-	-	R04X
+u01V	24p	24p only	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	main	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	u01W	-	-	-	-	A0BM,A0NF,ACrk	-
+u01W	24p	24p only	building	Royal Sepulcrum	(forsaken)	ubon	undead	war3mapImported\Armory.mdl	main	ReplaceableTextures\CommandButtons\BTNNerubianArmory.blp	-	u01K	n07V,u01V,u02G	-	-	-	-	R04X
 u01X	24p	24p only	building	Heart of Naxxramas	-	unp2	undead	buildings\undead\Necropolis\Necropolis	stock	ReplaceableTextures\CommandButtons\BTNBlackCitadel.blp	-	-	h00H,uaco	-	-	-	A0CB,Arlm	-
 u01Y	24p	24p only	unit	Deathwing	(twilight)	ubdd	undead	war3mapImported\Deathwing.mdl	24p	ReplaceableTextures\CommandButtons\BTNDeathwing.blp	-	-	-	-	-	-	A02P,A0AG,A0NH,ACrk	-
 u020	24p	changed	building	Monument	(C'thun building)	unpl	undead	war3mapImported\NerubianStrongholdV2.mdl	24p	ReplaceableTextures\CommandButtons\BTNNecropolis.blp	-	u019	o000,u019	-	-	-	A0RU,A0YA,Argl	-
@@ -3547,7 +3581,7 @@ u028	24p	different	unit	Fuel Transport Vehicle	(Goblin)	uobs	orc	war3mapImported
 u029	24p	changed	unit	Stygian Hulk	(yogg)	uabo	naga	war3mapImported\StygianHulkV2.mdl	24p	ReplaceableTextures\CommandButtons\BTNBlindBeast.blp	-	n0AW	-	-	-	-	A064,Aiun	n0AS
 u02E	24p	24p only	unit	Herald of Ny'alotha	(Black Emprie)	uabo	undead	war3mapImported\FacelessNightmareWeaver.mdl	24p	ReplaceableTextures\CommandButtons\BTNBOSSGeneralVezax.blp	-	n0B6	-	-	-	-	A06Z,A08P,A0KJ,ACm2,Avul	n0AS
 u02F	24p	different	unit	Forgotten one	(yogg)	uobs	naga	Units\Creeps\ForgottenOne\ForgottenOne.mdl	stock	ReplaceableTextures\CommandButtons\BTNForgottenOne.blp	-	n0B3	-	-	-	-	A0SO,A0SP	R07R
-u02G	24p	24p only	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	24p	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	u01W	-	-	-	-	A0X4,ACrk,Aap1,Aiun	-
+u02G	24p	24p only	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	main	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	u01W	-	-	-	-	A0X4,ACrk,Aap1,Aiun	-
 u02H	24p	changed	unit	Nether Ray	(Draenei)	ufro	nightelf	war3mapImported\NetherRayTC v2.mdl	main	ReplaceableTextures\CommandButtons\BTNWindSerpent2.blp	-	o055	-	-	-	-	Advm	o051
 u02J	24p	24p only	unit	Tidal Terror	(Nzoth)	ufro	naga	war3mapImported\WaterDragonOptamized.mdl	24p	ReplaceableTextures\CommandButtons\BTNSnapDragon.blp	-	n0C3	-	-	-	-	A0XJ,A0XQ	n0C9
 u02L	24p	changed	building	Shadow Vault	-	unp2	undead	war3mapImported\FoundryIronHordeV1.01.mdl	24p	ReplaceableTextures\CommandButtons\BTNIronHordeFoundry.blp	-	-	u01K	-	-	-	A0CB,Arlm	-
@@ -3649,7 +3683,7 @@ Udea	stock	unused	hero	Death Knight	-	Udea	undead	Units\Undead\HeroDeathknight\H
 Udre	stock	unused	hero	Dreadlord	-	Udre	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadLord.blp	-	-	-	-	-	-	AInv,AUav,AUcs,AUin,AUsl	-
 Udth	stock	unused	hero	Dreadlord	-	Udth	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AEsh,AInv,AUcs,AUdd,AUsl	-
 Ulic	stock	unused	hero	Lich	-	Ulic	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	-	-	-	-	-	-	AInv,AUdd,AUdr,AUfn,AUfu	-
-Usyl	stock	unused	hero	Dark Ranger	-	Usyl	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	-
+Usyl	stock	used	hero	Dark Ranger	-	Usyl	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	-
 Uvar	stock	unused	hero	Dreadlord	-	Uvar	undead	units\undead\Tichondrius\Tichondrius	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,ANdo,ANrf,AUav,AUsl	-
 Uvng	stock	unused	hero	Dreadlord	-	Uvng	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,AUav,AUcs,AUin,AUsl	-
 ebsh	stock	unused	unit	Night Elf Battleship	-	ebsh	nightelf	units\creeps\NightElfBattleship\NightElfBattleship	stock	ReplaceableTextures\CommandButtons\BTNNightElfBattleCruiser.blp	-	-	-	-	-	-	Ault	-

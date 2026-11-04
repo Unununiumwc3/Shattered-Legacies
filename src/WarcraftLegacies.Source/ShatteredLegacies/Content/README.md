@@ -49,9 +49,8 @@ Lists are cut after 8-12 entries (`,+N` = N more); `-` = none.
 Checked 0.52: all 4046 imports of the main map are on the fork's LFS server. Found by the index: `main:h086` (Field
 Stockpile) uses a model that only the 24p map has (`TODO.md`).
 
-## Copying an object (planned, `TODO.md`)
+## Copying an object (`tools/shattered-legacies/content/import_24p.py`)
 
 A copy always gets a new `?Za?` id (ID rule, `../README.md`) -- also when its 24p id is free in the main map, because
 the World Editor may hand out that id to a later WL object -- together with what it needs (abilities, upgrades, trained units, the model file) and a row in the generated `SL_OBJECTS.md`
-(new id | name | source | used by). Until the import tool exists, the assistant copies the JSON by hand and lists it
-in `../README.md` "Changes to map data".
+(new id | name | source | used by). Each new faction is an import set in the tool (its 24p ids, categories, limits).

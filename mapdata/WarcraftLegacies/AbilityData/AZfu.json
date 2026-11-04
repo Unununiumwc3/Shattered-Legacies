@@ -1,0 +1,148 @@
+{
+  "OldId": "ANab",
+  "NewId": "AZfu",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 4,
+      "Pointer": 3,
+      "Id": "Nab3",
+      "Value": 6
+    },
+    {
+      "Level": 1,
+      "Pointer": 4,
+      "Id": "Nab4",
+      "Type": 2,
+      "Value": 15
+    },
+    {
+      "Level": 2,
+      "Pointer": 4,
+      "Id": "Nab4",
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Level": 3,
+      "Pointer": 4,
+      "Id": "Nab4",
+      "Type": 2,
+      "Value": 25
+    },
+    {
+      "Level": 4,
+      "Pointer": 4,
+      "Id": "Nab4",
+      "Type": 2,
+      "Value": 30
+    },
+    {
+      "Level": 1,
+      "Pointer": 5,
+      "Id": "Nab5",
+      "Type": 2,
+      "Value": 10
+    },
+    {
+      "Level": 2,
+      "Pointer": 5,
+      "Id": "Nab5",
+      "Type": 2,
+      "Value": 15
+    },
+    {
+      "Level": 3,
+      "Pointer": 5,
+      "Id": "Nab5",
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Level": 4,
+      "Pointer": 5,
+      "Id": "Nab5",
+      "Type": 2,
+      "Value": 25
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Id": "arac",
+      "Type": 3,
+      "Value": "undead"
+    },
+    {
+      "Id": "aani",
+      "Type": 3,
+      "Value": "Attack"
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "E"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "E"
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "Hurls a flask of plague at a target.  The flask breaks upon impact, splashing a powerful plague on nearby hostile units.|nDecreases armor; deals high damage over time to the primary target; deals slightly less damage over time to nearby targets.|nLasts <A03Z,Dur1> seconds.|n|n|cffffcc00Level 1|r - <A03Z,DataD1> max damage per second, reduces armor by <A03Z,DataC1>.|n|cffffcc00Level 2|r - <A03Z,DataD2> max damage per second, reduces armor by <A03Z,DataC2>.|n|cffffcc00Level 3|r - <A03Z,DataD3> max damage per second, reduces armor by <A03Z,DataC3>. |n|cffffcc00Level 4|r - <A03Z,DataD4> max damage per second, reduces armor by <A03Z,DataC4>."
+    },
+    {
+      "Level": 1,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Plague Bomb - [|cffffcc00Level 1|r]"
+    },
+    {
+      "Level": 2,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Plague Bomb - [|cffffcc00Level 2|r]"
+    },
+    {
+      "Level": 3,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Plague Bomb - [|cffffcc00Level 3|r]"
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Plague Bomb - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Decreases armor by <A03Z:ANab,DataC1>; deals <A03Z:ANab,DataD1> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur1> seconds."
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Decreases armor by <A03Z:ANab,DataC2>; deals <A03Z:ANab,DataD2> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur2> seconds."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Decreases armor by <A03Z:ANab,DataC3>; deals <A03Z:ANab,DataD3> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur3> seconds."
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Decreases armor by <A03Z:ANab,DataC4>; deals <A03Z:ANab,DataD4> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur4> seconds."
+    }
+  ]
+}

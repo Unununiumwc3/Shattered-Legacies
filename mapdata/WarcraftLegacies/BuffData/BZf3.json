@@ -1,0 +1,14 @@
+{
+  "OldId": "AEtr",
+  "NewId": "BZf3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "fnam",
+      "Type": 3,
+      "Value": "Acid Rain Target"
+    }
+  ]
+}

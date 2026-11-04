@@ -46,8 +46,10 @@ comments -- it is only listed.
   faction, the split ("one player becomes two", `AiApi.TakeOver`) and spawn effects, the fork's first own faction
   (`Timelines/Factions/Forsaken/`, object limits in `src/WarcraftLegacies.Shared/ShatteredLegacies/`); pilot:
   Quel'thalas' betrayal -> Forsaken (placeholder tech).
-- **Next: step 3 of `TODO.md`** -- 0.55: the import tool and the Forsaken tech tree from the 24p map. Every new
-  turning point follows `Timelines/TIMELINES.md` sections 3 and 4.
+- **0.55.0**: the import tool (`tools/shattered-legacies/content/import_24p.py`, import sets per faction) and the
+  Forsaken tree from the 24p map, Sylvanas' phases, the quests "Free Will" and "The Throne of Lordaeron".
+- **Next**: the 0.55 playtest (`TODO.md` step 3), then Kul Tiras -> Kezan rebuilt the same way. Every new turning
+  point follows `Timelines/TIMELINES.md` sections 3 and 4; new content comes through an import set.
 - **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
   anything the fork needs from the bot is one `AiApi` method.
 - The maintainer plays test games in the Windows VM and reports what he sees; he recycles content, he does not create
