@@ -152,6 +152,10 @@
       "Id": "ua1m",
       "Type": 3,
       "Value": "war3mapImported\\ForsakenCatapultPlagueEmbersEffect.mdl"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
     }
   ]
 }

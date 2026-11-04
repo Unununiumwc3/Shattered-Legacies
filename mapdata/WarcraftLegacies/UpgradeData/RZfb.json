@@ -38,6 +38,10 @@
       "Id": "gub1",
       "Type": 3,
       "Value": "Provides towers with the ability to detect invisible units, excluding Cannon Towers."
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
     }
   ]
 }

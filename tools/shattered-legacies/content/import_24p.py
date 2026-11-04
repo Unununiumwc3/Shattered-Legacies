@@ -74,6 +74,10 @@ FORSAKEN = {
     "exclude": ["Usyl", "H049", "Uvar", "u01U", "R050", "R02D"],
     # field values to drop from copies: (24p id, field, token)
     "drop": [("u010", "utra", "Usyl"), ("h08B", "ures", "R050")],
+    # 0.55.1 (maintainer): lumber is "knowledge" (the tome) in this map -- won by quests. The copies cost no lumber,
+    # except what is set here (24p id -> {field: value}): Tier 4 costs knowledge.
+    "zero_lumber": True,
+    "set": {"R04R": {"glmb": 25, "glmm": 0}},
 }
 SETS = [FORSAKEN]
 
@@ -161,6 +165,20 @@ def main():
             kind, d = p24[oid]
             d = json.loads(json.dumps(d))
             d["NewId"] = mapping[oid]
+            if s.get("zero_lumber"):
+                for m in d.get("Modifications", []):
+                    if m["Id"] in ("ulum", "glmb", "glmm"):
+                        m["Value"] = 0
+                if kind == "UnitData" and not any(m["Id"] == "ulum" for m in d.get("Modifications", [])):
+                    d.setdefault("Modifications", []).append({"Id": "ulum", "Value": 0})
+                if kind == "UpgradeData" and not any(m["Id"] == "glmb" for m in d.get("Modifications", [])):
+                    d.setdefault("Modifications", []).append({"Id": "glmb", "Value": 0})
+            for field, value in s.get("set", {}).get(oid, {}).items():
+                hit = [m for m in d.get("Modifications", []) if m["Id"] == field]
+                for m in hit:
+                    m["Value"] = value
+                if not hit:
+                    d.setdefault("Modifications", []).append({"Id": field, "Value": value})
             for m in d.get("Modifications", []):
                 v = m.get("Value")
                 if isinstance(v, str):
@@ -177,6 +195,22 @@ def main():
                 f.write(json.dumps(d, indent=2, ensure_ascii=False))
             registry.append((mapping[oid], name_of(d), "24p:" + oid, s["name"]))
 
+        # 0.55.1: every research the set's buildings offer needs an object limit (WL records research levels in the
+        # faction and refuses levels above its limit: "level (1) cannot be higher than the object limit for Tier 4")
+        researches = []
+        for oid in closure:
+            kind, d0 = p24[oid]
+            if kind != "UnitData":
+                continue
+            for m in d0.get("Modifications", []):
+                if m["Id"] == "ures" and isinstance(m.get("Value"), str):
+                    for t in m["Value"].split(","):
+                        t = t.strip()
+                        if len(t) == 4 and (oid, "ures", t) not in drops and t not in exclude:
+                            code = mapping.get(t, t)
+                            if code not in researches:
+                                researches.append(code)
+        s["researches"] = researches
         write_object_info(s, mapping)
         write_constants(s, mapping)
         print(f"{s['name']}: {len(closure)} objects copied, {len(copied_files)} import files copied")
@@ -285,6 +319,8 @@ def write_object_info(s, mapping):
             continue
         cat = cats[0] if len(cats) == 1 else "new List<UnitCategory> { " + ", ".join(cats) + " }"
         lines.append(f"      yield return new({fourcc(code)}, {limit}, {cat}); // {code} {name}")
+    for code in s.get("researches", []):
+        lines.append(f"      yield return new({fourcc(code)}, 200); // {code} research")
     lines += ["    }", "  }", "}", ""]
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))

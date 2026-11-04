@@ -86,6 +86,10 @@
       "Id": "umdl",
       "Type": 3,
       "Value": "war3mapImported\\AcolyteForsakenV1_00.mdl"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
     }
   ]
 }

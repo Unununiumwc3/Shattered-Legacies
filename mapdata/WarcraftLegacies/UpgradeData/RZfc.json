@@ -22,6 +22,10 @@
       "Id": "gub1",
       "Type": 3,
       "Value": ""
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
     }
   ]
 }
