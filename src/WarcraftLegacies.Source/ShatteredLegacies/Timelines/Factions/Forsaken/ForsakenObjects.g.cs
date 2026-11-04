@@ -37,5 +37,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     internal const int MasterApothecary = 1431987813; // UZfe (24p U02I)
     internal const int QuestFreeWill = 1381656112; // RZf0 (24p R04X)
     internal const int QuestThroneOfLordaeron = 1381656113; // RZf1 (24p R04Z)
+    internal const int BlackArrow = 1096443697; // AZg1 (24p A03J)
+    internal const int TrueshotAura = 1096443698; // AZg2 (24p A01O)
+    internal const int BansheeQueen = 1096443699; // AZg3 (24p A0DU)
   }
 }

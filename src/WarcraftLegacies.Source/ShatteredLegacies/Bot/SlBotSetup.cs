@@ -18,7 +18,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int> { KezanEnterpriseConfig.GallywixType });
       // 0.54 / 0.55: the Forsaken (Quel'thalas' betrayal) -- Sylvanas first, then the 24p tree's apothecaries
       AiApi.RegisterHeroes(ForsakenConfig.Name, new List<int>
-        { ForsakenConfig.SylvanasBanshee, ForsakenObjects.MasterApothecary, ForsakenObjects.GrandApothecary });
+        { ForsakenConfig.SylvanasBanshee, ForsakenConfig.SylvanasDarkRanger, ForsakenConfig.SylvanasQueen,
+          ForsakenObjects.MasterApothecary, ForsakenObjects.GrandApothecary });
       // 0.53: no ExcludeFromBotPicks("Sunfury") any more -- Sunfury left the Illidari pick ([SL] in
       // Setup/FactionChoiceDialogSetup.cs) and became Quel'thalas' fallback.
     }

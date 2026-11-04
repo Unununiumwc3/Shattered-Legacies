@@ -339,6 +339,7 @@ RZfa	main	used	Open the Scholomance	(Scourge)	Rhde	undead	ReplaceableTextures\Co
 RZfb	main	used	Magic Sentry	(Dalaran)	Rhse	human	ReplaceableTextures\CommandButtons\BTNMagicalSentry.blp	-
 RZfc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 RZfd	main	used	Precision Shots	(Quel'Thalas)	Rhri	human	ReplaceableTextures\CommandButtons\BTNImpalingBolt.blp	-
+RZfe	main	used	Quest Completed: A Parting of Ways	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L
