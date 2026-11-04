@@ -21,7 +21,7 @@
     {
       "Id": "anam",
       "Type": 3,
-      "Value": "Ethereal Walk"
+      "Value": "Ghostform"
     },
     {
       "Id": "ansf",
@@ -50,7 +50,7 @@
       "Level": 1,
       "Id": "bsk1",
       "Type": 2,
-      "Value": 0.5
+      "Value": 0.25
     },
     {
       "Level": 1,
@@ -68,36 +68,42 @@
       "Level": 1,
       "Id": "adur",
       "Type": 2,
-      "Value": 6
+      "Value": 20
     },
     {
       "Level": 1,
       "Id": "ahdu",
       "Type": 2,
-      "Value": 6
+      "Value": 20
     },
     {
       "Level": 1,
       "Id": "acdn",
       "Type": 2,
-      "Value": 30
+      "Value": 60
     },
     {
       "Level": 1,
       "Id": "amcs",
-      "Value": 50
+      "Value": 75
+    },
+    {
+      "Level": 1,
+      "Id": "abuf",
+      "Type": 3,
+      "Value": "BZs1"
     },
     {
       "Level": 1,
       "Id": "atp1",
       "Type": 3,
-      "Value": "Ethereal Walk"
+      "Value": "Ghostform"
     },
     {
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "For 6 seconds Sylvanas becomes ethereal: 50% faster, she walks through units and physical attacks pass through her -- magic hurts her more. She cannot attack meanwhile."
+      "Value": "For 20 seconds Sylvanas becomes a ghost: 25% faster, she walks through units and physical attacks pass through her -- magic hurts her more. She cannot attack meanwhile."
     }
   ]
 }

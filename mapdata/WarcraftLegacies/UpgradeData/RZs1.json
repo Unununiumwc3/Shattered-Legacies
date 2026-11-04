@@ -1,0 +1,21 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZs1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(Forsaken condition)"
+    },
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "Sylvanas reaches level 6"
+    }
+  ]
+}

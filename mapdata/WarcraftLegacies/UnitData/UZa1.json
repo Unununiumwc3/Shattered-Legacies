@@ -91,6 +91,11 @@
       "Value": 1.1
     },
     {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "INT"
+    },
+    {
       "Id": "umdl",
       "Type": 3,
       "Value": "units\\undead\\Banshee\\Banshee"
@@ -138,7 +143,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she possesses her enemies."
+      "Value": "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she dominates her enemies."
     },
     {
       "Id": "uhab",

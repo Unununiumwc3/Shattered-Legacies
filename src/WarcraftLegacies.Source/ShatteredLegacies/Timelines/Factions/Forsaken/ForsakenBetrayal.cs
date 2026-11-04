@@ -25,6 +25,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     internal static void Prepare()
     {
       ForsakenSylvanas.Setup();
+      ForsakenUndercity.Prepare();
       _altar = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), ForsakenObjects.AltarOfTheQueen, ForsakenConfig.StartX,
         ForsakenConfig.StartY, 270f);
       SetUnitInvulnerable(_altar, true);

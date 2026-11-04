@@ -4,6 +4,29 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.57.0
+The Forsaken reworked after the 0.56 playtest, the Undercity as a base of its own. Version v0.57.0.
+- **Sylvanas** (`forsaken_heroes.py`): Domination instead of Possession (Charm-based: she keeps her body); Ghostform
+  instead of Ethereal Walk (20 s, +25% speed, its own buff icon; the hidden "Ethereal" ability no longer shows as a
+  button without an icon); the Banshee is an intelligence hero.
+- **Gates of the tree** (`import_24p.py`):
+  - "The Banshee's Rise" (new quest, Sylvanas level 6): until then the Plaguetorium is the only troop building; the
+    Laboratory, the Forbidden Archive and the Haunted Harbor need it.
+  - "Free Will" (the Dark Ranger, off the Scourge's team) later and harder: Sylvanas level 10, the Scourge's "The
+    Culling" done, and the Scourge below 10 CPs -- while it holds 10 it keeps the Forsaken. New building block
+    `ObjectiveFactionState` (another faction's quest done / CPs below N).
+  - Tier 4 only after Free Will; only the Val'kyr, Plague Flyer, Elite Abominations, Elder Banshee and the Royal
+    Sepulcrum need it.
+  - Ships like every faction's: the Graveyard researches Navigation (and Flight -- the Plague Flyer needs it); the
+    Haunted Harbor no longer needs Tier 4.
+- **"The Throne of Lordaeron"**: Lordaeron's Capital Palace must fall too (its quest marker on the minimap). Its
+  ruins get a waygate into **the Undercity** -- the eastern unused square of the south-west corner, prepared at map
+  setup, visible and invulnerable: a waygate in the middle, the Undercity north of it, Plaguetorium west, Graveyard
+  east, Forbidden Archive south, a Plague Tower in each corner, rocks and line-of-sight blockers along the edge (no
+  shooting across the void). The buildings become the Forsaken's. New building block `Core/Effects/Instance`.
+- **Hourglass of Fate**: every faction's looks like its own control point tower (its CP defender's model).
+- WL bug: the Plague's refund threw "Tried to call DropAllItems on a summoned hero" (`RefundSystem`, `[SL]`).
+
 ## 0.56.1
 Fixes from the 0.56.0 playtest. Version v0.56.1.
 - Possession, Anti-magic Shell and Ethereal Walk did not appear (the skill point was spent, no button): the stock unit

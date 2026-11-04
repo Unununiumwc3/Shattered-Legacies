@@ -1170,10 +1170,10 @@ AZg0	main	used	Repair	(All Colors - Battleships)	Ahrp	-	-	human	ReplaceableTextu
 AZg1	main	used	Black Arrow	(Red - Sylvanas)	ANba	yes	-	undead	ReplaceableTextures\CommandButtons\BTNTheBlackArrowOnOff.blp	UZa2,UZa3
 AZg2	main	used	Trueshot Aura	(sylvanas)	ACat	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNTrueShot.blp	UZa2,UZa3
 AZg3	main	used	Banshee Queen	(sylvanas)	AOls	yes	-	orc	ReplaceableTextures\CommandButtons\BTNGhost.blp	UZa3
-AZs1	main	used	Possession	(Forsaken - Sylvanas)	Apos	yes	-	undead	ReplaceableTextures\CommandButtons\BTNPossession.blp	UZa1,UZa3
+AZs1	main	used	Domination	(Forsaken - Sylvanas)	ANch	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCharm.blp	UZa1,UZa3
 AZs2	main	used	Anti-magic Shell	(Forsaken - Sylvanas)	Aam2	yes	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	UZa1
 AZs3	main	used	Banshee Wail	(Forsaken - Sylvanas)	ANht	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	UZa1,UZa3
-AZs4	main	used	Ethereal Walk	(Forsaken - Sylvanas)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNEtherealFormOn.blp	UZa1,UZa3
+AZs4	main	used	Ghostform	(Forsaken - Sylvanas)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNEtherealFormOn.blp	UZa1,UZa3
 AZs5	main	used	Multi Shot	(Forsaken - Sylvanas)	Aroc	yes	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	UZa2
 Aabs	main	used	Absorb Mana	(Scourge-Destroyer)	Aabs	-	-	undead	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	u02W,ubsp
 Aakb	main	used	War Drums	(Kodo Beast)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	o06Q,okod
