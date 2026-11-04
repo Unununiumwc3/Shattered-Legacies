@@ -188,21 +188,30 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     {
       // 0.53 fix: WL's FactionManager records every finished research in the faction's object levels, and a faction
       // change resets / re-applies them -- which failed for the decision research ("Failed to set the object level of
-      // Fallback: Sunfury to 0; it is 1 instead"). The research is taken back, the faction's record set to 0 and the
-      // button hidden (limit 0) before anything else.
+      // Fallback: Sunfury to 0; it is 1 instead"): a research level cannot be lowered while the research is allowed.
+      // 0.54.1 fix (the Forsaken split did not happen): the ORDER matters -- first the limit 0 (hides the button; WL's
+      // own work-around then sets levels with the limit raised for a moment), then the faction's record 0. A failure
+      // there must not stop the turning point: the record is 0 before WL touches the player (Faction.SetObjectLevel).
       var level = GetPlayerTechCount(p, def.Decision, true);
       if (level > 0)
       {
         BlzDecPlayerTechResearched(p, def.Decision, level);
       }
 
+      p.GetPlayerData().SetObjectLimit(def.Decision, 0);
       var fac = p.GetPlayerData().Faction;
       if (fac != null && fac.GetObjectLevel(def.Decision) > 0)
       {
-        fac.SetObjectLevel(def.Decision, 0);
+        try
+        {
+          fac.SetObjectLevel(def.Decision, 0);
+        }
+        catch (System.Exception ex)
+        {
+          AiApi.Log("timelines: decision research level kept (" + ex.Message + ")");
+        }
       }
 
-      p.GetPlayerData().SetObjectLimit(def.Decision, 0);
       if (def.Run != null)
       {
         def.Run(p, def);
