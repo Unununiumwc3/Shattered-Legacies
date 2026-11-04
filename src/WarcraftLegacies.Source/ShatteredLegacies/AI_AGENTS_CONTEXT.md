@@ -94,7 +94,8 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 - Imports with more than one dot in the name do not show in game (WL #4190): the import tool renames them. Model
   files are Git LFS pointers in the sandbox: textures can only be found after `git lfs pull` (re-run the import tool).
 - In WL's JSON, cooldown, duration, area, range and similar are "unreal" values (`Type 2`); levels, mana, positions
-  are plain integers. Copy the type from a WL object of the same field.
+  are plain integers; text is `Type 3`. A value of the wrong type stops the publish step ("requires an element of
+  type 'Number'"). Run `tools/shattered-legacies/content/check_json.py` after every map data change.
 - Object ids of the fork: `?Z` + a lowercase letter (`nZh0`, `RZd1`, `uZf0`); one case only in the last character --
   Windows file names ignore case.
 - Successors keep the player's colour (`Faction.SetPlayerColor`, set before the swap); WL deadlines of arriving

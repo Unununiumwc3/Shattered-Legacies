@@ -25,6 +25,9 @@ The Forsaken reworked after the 0.56 playtest, the Undercity as a base of its ow
   east, Forbidden Archive south, a Plague Tower in each corner, rocks and line-of-sight blockers along the edge (no
   shooting across the void). The buildings become the Forsaken's. New building block `Core/Effects/Instance`.
 - **Hourglass of Fate**: every faction's looks like its own control point tower (its CP defender's model).
+- Build fix (before release): the Val'kyr's new requirement was written without its text type -- the publish step
+  stopped ("requires an element of type 'Number'"). `import_24p.py` writes typed values; new check
+  `tools/shattered-legacies/content/check_json.py` (every value against its type).
 - WL bug: the Plague's refund threw "Tried to call DropAllItems on a summoned hero" (`RefundSystem`, `[SL]`).
 
 ## 0.56.1

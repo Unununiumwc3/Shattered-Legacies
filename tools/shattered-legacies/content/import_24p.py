@@ -194,8 +194,13 @@ def main():
                 hit = [m for m in d.get("Modifications", []) if m["Id"] == field]
                 for m in hit:
                     m["Value"] = value
-                if not hit:
-                    d.setdefault("Modifications", []).append({"Id": field, "Value": value})
+                if not hit:  # 0.57: with the type WL's JSON needs (3 = text; a string without it broke the build)
+                    mod = {"Id": field, "Value": value}
+                    if isinstance(value, str):
+                        mod = {"Id": field, "Type": 3, "Value": value}
+                    elif isinstance(value, float):
+                        mod = {"Id": field, "Type": 2, "Value": value}
+                    d.setdefault("Modifications", []).append(mod)
             for m in d.get("Modifications", []):
                 v = m.get("Value")
                 if isinstance(v, str):
