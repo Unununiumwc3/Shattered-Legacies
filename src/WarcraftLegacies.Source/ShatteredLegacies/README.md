@@ -129,7 +129,7 @@ exist in both maps as DIFFERENT objects.
 |---|---|
 | `ai/` | the bot's checks and generators: `check_refs.py`, `using_check.py`, `scope_check.py`, `lua_check.py`, `gen_ai_data.py`, `gen_routes.py`, `gen_lanes.py`, `unit_scan.py`, `map_query.py`, `render_map.py`, `dump_summary.py`, `back_forth.py` -- details in `../Ai/README.md` "Developer checks" |
 | `timelines/` | `timeline_overview_gen.py` -- writes `Timelines/timeline-overview.drawio` in place (keeps its old draft page); `gen_hourglass.py` -- the Hourglass of Fate's map data + `Timelines/Core/HourglassData.g.cs` |
-| `content/` | `content_index.py` -- the content index `Content/` (main map, 24p map, stock WC3; used / unused); `import_24p.py` -- copies 24p objects into the main map (new ids, dependencies, model files; ids kept in `import_ids.json`) and writes the faction's object limits, id constants and `Content/SL_OBJECTS.md` |
+| `content/` | `content_index.py` -- the content index `Content/` (main map, 24p map, stock WC3; used / unused); `import_24p.py` -- copies 24p objects into the main map (new ids, dependencies, model files; ids kept in `import_ids.json`) and writes the faction's object limits, id constants and `Content/SL_OBJECTS.md`; `forsaken_heroes.py` -- Sylvanas' heroes and skills; `check_json.py` -- every map data value against its type (run after map data changes) |
 
 Generated images (`ai/out/`) are never committed.
 
