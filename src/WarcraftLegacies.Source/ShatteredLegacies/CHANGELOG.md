@@ -4,6 +4,14 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.54.1
+Fix: the Forsaken betrayal did not happen (playtest of 0.54.0). Version v0.54.1.
+- Researching "Betrayal: Forsaken" ended in "TICK ERROR in turning point: Failed to set the object level of Betrayal:
+  Forsaken to 0; it is 1 instead" and the player stayed Quel'thalas. 0.54.0 cleared the faction's record of the
+  decision research while the research was still allowed -- WL can only change a research level while its limit is
+  0 (its own work-around raises it for a moment). Now: limit 0 first, then the record (and a failure there no longer
+  stops the turning point). The same order as the Sunfury fallback that worked in 0.53.
+
 ## 0.54.0
 The betrayal structure and its pilot: Quel'thalas -> the Forsaken. Version v0.54.0.
 - **Triggers**: a turning point's trigger can be any WL quest objective (`TurningPointDef.MakeTrigger`); new

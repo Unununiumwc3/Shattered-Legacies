@@ -5,6 +5,9 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.54.1
+No bot change (the map's version moved for a fork fix).
+
 ## 0.54.0
 - **`AiApi.TakeOver(player)`**: the bot takes over a player mid-game with the full bot treatment (the same as for a
   leaving human). For forks that hand a faction to a free slot (Shattered Legacies: the Forsaken betrayal).
