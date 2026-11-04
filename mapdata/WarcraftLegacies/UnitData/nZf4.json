@@ -1,0 +1,23 @@
+{
+  "OldId": "ndr1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "RZfe,Rusl,Rhme,Rhar,RZf6"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 8
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ],
+  "NewId": "nZf4"
+}

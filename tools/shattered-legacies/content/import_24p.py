@@ -68,6 +68,10 @@ FORSAKEN = {
         # researches whose ids the code needs (the Forsaken quests grant them)
         ("R04X", "QuestFreeWill", None, 0),       # "Quest Completed: Forsaken Independance" -> Free Will
         ("R04Z", "QuestThroneOfLordaeron", None, 0),  # "Quest Completed: The Secret Buildup" -> Undercity
+        # 0.56: Sylvanas' 24p skills, for her phase heroes (tools/shattered-legacies/content/forsaken_heroes.py)
+        ("A03J", "BlackArrow", None, 0),
+        ("A01O", "TrueshotAura", None, 0),
+        ("A0DU", "BansheeQueen", None, 0),
     ],
     # not imported (24p heroes / mechanics the fork does differently): Sylvanas Usyl (our UZa1 + phases), Ranger-Lord,
     # Arch Dreadlord, Cultist; "Declare Forsaken Independence" (R050: breaking free is level 6 here)
@@ -77,7 +81,8 @@ FORSAKEN = {
     # 0.55.1 (maintainer): lumber is "knowledge" (the tome) in this map -- won by quests. The copies cost no lumber,
     # except what is set here (24p id -> {field: value}): Tier 4 costs knowledge.
     "zero_lumber": True,
-    "set": {"R04R": {"glmb": 25, "glmm": 0}},
+    "set": {"R04R": {"glmb": 25, "glmm": 0},
+            "A0DU": {"arlv": 6, "alsk": 6}},  # her ultimate at level 6 (maintainer), not 10
 }
 SETS = [FORSAKEN]
 
@@ -329,7 +334,9 @@ def write_object_info(s, mapping):
 def getattr_extra(s):
     # hand-made objects of the set that are not imported (Sylvanas the banshee, 0.54)
     if s["name"] == "Forsaken":
-        return [("UZa1", "SylvanasBanshee", ["Marksman", "Support"], 1)]
+        return [("UZa1", "SylvanasBanshee", ["Marksman", "Support"], 1),        # forsaken_heroes.py, 0.56
+                ("UZa2", "SylvanasDarkRanger", ["Marksman", "Support"], 1),
+                ("UZa3", "SylvanasQueen", ["Marksman", "Support"], 1)]
     return []
 
 

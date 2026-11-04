@@ -27,6 +27,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
       AddQuest(freeWill);
       StartingQuest = freeWill;
       AddQuest(new QuestForsakenThrone(freeWill));
+      AddQuest(new QuestPlagueResearch());
       SharedFactionConfigSetup.AddSharedFactionConfig(this);
     }
   }

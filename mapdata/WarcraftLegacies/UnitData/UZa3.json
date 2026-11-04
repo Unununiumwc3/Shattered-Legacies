@@ -1,0 +1,154 @@
+{
+  "OldId": "Hvwd",
+  "NewId": "UZa3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uacq",
+      "Type": 2,
+      "Value": 750
+    },
+    {
+      "Id": "uagi",
+      "Value": 24
+    },
+    {
+      "Id": "uagp",
+      "Type": 2,
+      "Value": 2.2
+    },
+    {
+      "Id": "ubld",
+      "Value": 13
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 16
+    },
+    {
+      "Id": "ua1c",
+      "Type": 2,
+      "Value": 1.7
+    },
+    {
+      "Id": "ua1b",
+      "Value": 10
+    },
+    {
+      "Id": "uhpm",
+      "Value": 200
+    },
+    {
+      "Id": "uinp",
+      "Type": 2,
+      "Value": 2.3
+    },
+    {
+      "Id": "upri",
+      "Value": 18
+    },
+    {
+      "Id": "ua2r",
+      "Value": 650
+    },
+    {
+      "Id": "umvs",
+      "Value": 260
+    },
+    {
+      "Id": "ustp",
+      "Type": 2,
+      "Value": 1.5
+    },
+    {
+      "Id": "ua1g",
+      "Type": 3,
+      "Value": "air,debris,ground,item,structure,ward"
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "R01R"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "ussc",
+      "Type": 1,
+      "Value": 1.1
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Hero_DarkRangerBoss2.mdl"
+    },
+    {
+      "Id": "urac",
+      "Type": 3,
+      "Value": "undead"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBansheeRanger.blp"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Queen of the Forsaken"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Forsaken)"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Sylvanas Windrunner"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Sylvanas"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Sylvanas"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Sylvanas"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Banshee Queen, ruler of the Undercity: archer and spellcaster both."
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AZg1,AZs1,AZs3,AZg3,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AZg2,AZs4,AInv,Ault"
+    }
+  ]
+}

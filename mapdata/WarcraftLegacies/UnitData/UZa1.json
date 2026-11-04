@@ -6,11 +6,6 @@
   ],
   "Modifications": [
     {
-      "Id": "uabi",
-      "Type": 3,
-      "Value": "A0KV,AInv,Ault"
-    },
-    {
       "Id": "uacq",
       "Type": 2,
       "Value": 750
@@ -41,11 +36,6 @@
     {
       "Id": "ua1b",
       "Value": 10
-    },
-    {
-      "Id": "uhab",
-      "Type": 3,
-      "Value": "Aamk,A083,A047,AEar,A0PK"
     },
     {
       "Id": "uhpm",
@@ -148,7 +138,17 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. Leader of the Forsaken."
+      "Value": "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she possesses her enemies."
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AZs1,AZs2,AZs3,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AZs4,AInv,Ault"
     }
   ]
 }

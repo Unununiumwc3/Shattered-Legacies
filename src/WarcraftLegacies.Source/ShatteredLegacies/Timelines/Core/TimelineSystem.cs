@@ -17,6 +17,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   {
     internal const float CheckEvery = 5f;
     internal const int GraceTurns = 10; // 0.54: a faction that just arrived cannot be eliminated for this long
+    internal const int ArrivalIncome = 150; // 0.56 (maintainer): gold per turn for a new start without CPs ...
+    internal const int ArrivalTurns = 10;   // ... for this many turns
 
     private static readonly List<TurningPointQuest> _quests = new();
 
@@ -137,6 +139,21 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
                    + " (human decides)");
     }
 
+    // 0.56: a new start lives from CPs it does not have yet -- 150 gold per turn for 10 turns, while the player keeps
+    // the faction he got
+    private static void GrantArrivalIncome(player p)
+    {
+      var fac = p.GetPlayerData().Faction;
+      var now = MacroTools.GameTime.GameTimeManager.Turn;
+      MacroTools.GameTime.GameTimeManager.RegisterOnTurnRange(now + 1, now + ArrivalTurns, () =>
+      {
+        if (p.GetPlayerData().Faction == fac)
+        {
+          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + ArrivalIncome);
+        }
+      });
+    }
+
     private static void Later(System.Action action)
     {
       var t = CreateTimer();
@@ -223,6 +240,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       }
 
       Hourglass.Refresh(p);                     // the new faction's turning points (none of the old one's)
+      if (def.Run != null)
+      {
+        GrantArrivalIncome(p);                  // real new starts (not the placeholders)
+      }
+
       EliminationRule.GiveGrace(p, GraceTurns); // a new start cannot be eliminated at once
       for (var i = 0; i < 24; i++)
       {

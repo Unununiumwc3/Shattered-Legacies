@@ -42,6 +42,9 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZfy` | Seed Growth | `24p:A04C` | Forsaken |
 | `AZfz` |  | `24p:AIpl` | Forsaken |
 | `AZg0` |  | `24p:Repa` | Forsaken |
+| `AZg1` |  | `24p:A03J` | Forsaken |
+| `AZg2` |  | `24p:A01O` | Forsaken |
+| `AZg3` | Banshee Queen | `24p:A0DU` | Forsaken |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
@@ -62,6 +65,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZfb` |  | `24p:R01L` | Forsaken |
 | `RZfc` | Needs to be Made | `24p:R03N` | Forsaken |
 | `RZfd` | Precision Shots | `24p:R01S` | Forsaken |
+| `RZfe` | Quest Completed: A Parting of Ways | `24p:R008` | Forsaken |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
@@ -79,6 +83,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZf1` | Dark Ranger | `24p:n0BY` | Forsaken |
 | `nZf2` | Plague Construct | `24p:n07W` | Forsaken |
 | `nZf3` | Elder Banshee | `24p:n07V` | Forsaken |
+| `nZf4` |  | `24p:ndr1` | Forsaken |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
@@ -96,3 +101,4 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `uZff` | Scholomance | `24p:u012` | Forsaken |
 | `uZfg` | Dreadnought | `24p:uubs` | Forsaken |
 | `uZfh` | Corsair | `24p:udes` | Forsaken |
+| `uZfi` | Banshee Spirits | `24p:u00O` | Forsaken |

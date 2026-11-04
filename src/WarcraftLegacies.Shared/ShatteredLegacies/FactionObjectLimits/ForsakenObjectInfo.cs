@@ -10,6 +10,8 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
     public static IEnumerable<ObjectInfo> GetAllObjectLimits()
     {
       yield return new(1431986481, 1, new List<UnitCategory> { Marksman, Support }); // UZa1 SylvanasBanshee
+      yield return new(1431986482, 1, new List<UnitCategory> { Marksman, Support }); // UZa2 SylvanasDarkRanger
+      yield return new(1431986483, 1, new List<UnitCategory> { Marksman, Support }); // UZa3 SylvanasQueen
       yield return new(1968858672, 200, Altar); // uZf0 AltarOfTheQueen
       yield return new(1968858673, 200, Builder); // uZf1 Acolyte
       yield return new(1750754864, 200, TownHall); // hZf0 DarkMansion

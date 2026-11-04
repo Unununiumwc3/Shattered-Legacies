@@ -99,7 +99,9 @@ U02K	main	used	hero	Lord of the Firelands	(Skywall)	Uktl	naga	war3mapImported\Ra
 U02S	main	used	hero	Ancient Sand Worm	-	Ulic	naga	war3mapImported\GiantSandWorm.mdl	main	ReplaceableTextures\CommandButtons\BTNMindWorm.blp	Ahn'qiraj	u01F	-	-	-	-	A000,A066,A0GK,A0S0,AInv,AUim,Aamk,ZBEG	RLLL
 U02V	main	used	hero	High Astromancer	(Sunfury)	Uktl	human	war3mapImported\HeroElfDarkEnchanter.mdl	main	ReplaceableTextures/CommandButtons/BTNBloodElfSorceress.blp	Sunfury	h0C6	-	-	-	-	A032,A0BQ,A0GK,A0X6,A12N,A12Q,AInv,Aamk,Alit	R09K
 UELN	main	used	hero	The Tidehunter	(Skywall)	Uktl	naga	war3mapImported\TidalLord.mdl	main	ReplaceableTextures\CommandButtons\BTNTidelord.blp	Skywall	n078	-	-	-	-	A00Y,A118,A13G,AInv,Aamk,MD09	RSW3
-UZa1	main	used	hero	The Banshee	(Forsaken)	Hvwd	undead	units\undead\Banshee\Banshee	stock	ReplaceableTextures\CommandButtons\BTNBanshee.blp	-	-	-	-	-	-	A047,A083,A0KV,A0PK,AEar,AInv,Aamk,Ault	-
+UZa1	main	used	hero	The Banshee	(Forsaken)	Hvwd	undead	units\undead\Banshee\Banshee	stock	ReplaceableTextures\CommandButtons\BTNBanshee.blp	-	-	-	-	-	-	AInv,AZs1,AZs2,AZs3,AZs4,Aamk,Ault	-
+UZa2	main	used	hero	The Dark Ranger	(Forsaken)	Hvwd	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	A083,A0KV,A0PK,AInv,AZg1,AZg2,AZs5,Aamk,Ault	-
+UZa3	main	used	hero	Queen of the Forsaken	(Forsaken)	Hvwd	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,AZg1,AZg2,AZg3,AZs1,AZs3,AZs4,Aamk,Ault	-
 UZfd	main	used	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	main	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	uZf0	-	-	-	-	A0NK,AHab,AInv,AZfp,AZfq,Aamk	RZf1
 UZfe	main	used	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	main	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	uZf0	-	-	-	-	AInv,AZfs,AZft,AZfu,AZfv,Aamk	-
 Uanb	main	used	hero	King of Azjol-Nerub	(Scourge)	Uanb	undead	units\undead\Anubarak\Anubarak	stock	ReplaceableTextures\CommandButtons\BTNanubarakhd.blp	Scourge	uaod	-	-	-	-	AInv,AUcb,AUim,AUls,AUts,Aamk	-
@@ -991,6 +993,7 @@ nZf0	main	used	unit	Deadeye	(Forsaken, Cult)	nhea	undead	war3mapImported\UndeadA
 nZf1	main	used	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	hZf0,hZf2,hZf7	-	-	-	-	ACsk,AZf6,AZf7,AZf8,AZf9,Aihn	RZf0,RZf2
 nZf2	main	used	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	uZf4	-	-	-	-	A0HY,AZfg,AZfh	hZf2
 nZf3	main	used	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	uZf8	-	-	-	-	A0XL,AZfj,AZfk,Aihn	RZf0
+nZf4	main	used	unit	Lesser Dark Minion	-	ndr1	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
 nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RZd1,RZd2,RZd3,RZd4,RZd5,RZd6,RZd7,RZd8,RZd9,RZdA,RZdB,+7	-	Avul	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
 nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
@@ -1656,6 +1659,7 @@ uZfc	main	used	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war
 uZff	main	used	building	Scholomance	-	unp2	undead	buildings\undead\Necropolis\Necropolis	stock	ReplaceableTextures\CommandButtons\BTNBlackCitadel.blp	-	-	uZf1	-	RZfa	-	A0C8,AZfw,Arlm	-
 uZfg	main	used	unit	Dreadnought	(Scourge-Legion)	uubs	undead	units\creeps\UndeadShipBattleShip\UndeadShipBattleShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadBattleShip.blp	-	uZf7	-	-	-	-	ACrk,AZg0	RZf2
 uZfh	main	used	unit	Corsair	(Scourge-Legion)	udes	undead	units\creeps\UndeadDestroyerShip\UndeadDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadDestroyer.blp	-	uZf7	-	-	-	-	A0FV,A0TE	-
+uZfi	main	used	unit	Banshee Spirits	-	uloc	orc	Abilities\Spells\Undead\Possession\PossessionMissile.mdl	stock	ReplaceableTextures\CommandButtons\BTNLocustSwarm.blp	-	-	-	-	-	-	Aloc	-
 uabo	main	used	unit	Abomination	(Scourge)	uabo	undead	units\undead\Abomination\Abomination	stock	ReplaceableTextures\CommandButtons\BTNAbomination.blp	Scourge	uslh	-	-	-	-	A127,Aap1,Aiun	R008,unp2
 uaco	main	used	unit	Acolyte	(Scourge, Worker)	uaco	undead	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	Scourge	ZBFT,o016,u000,u01M,u02L,unp1,unp2,unpl	-	u006,u00F,uaod,ubon,ugrv,unpl,usep,ushp,uslh,utod,utom,uzig	-	ushd	A041,Arst,Auns	-
 uaod	main	used	building	Altar of Darkness	(Scourge Altar)	uaod	undead	buildings\undead\AltarOfDarkness\AltarOfDarkness	stock	ReplaceableTextures\CommandButtons\BTNAltarOfDarkness.blp	Scourge	uaco	U001,U00A,Uanb,Uear,ubdd	-	-	-	-	-
@@ -3683,7 +3687,7 @@ Udea	stock	unused	hero	Death Knight	-	Udea	undead	Units\Undead\HeroDeathknight\H
 Udre	stock	unused	hero	Dreadlord	-	Udre	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadLord.blp	-	-	-	-	-	-	AInv,AUav,AUcs,AUin,AUsl	-
 Udth	stock	unused	hero	Dreadlord	-	Udth	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AEsh,AInv,AUcs,AUdd,AUsl	-
 Ulic	stock	unused	hero	Lich	-	Ulic	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	-	-	-	-	-	-	AInv,AUdd,AUdr,AUfn,AUfu	-
-Usyl	stock	used	hero	Dark Ranger	-	Usyl	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	-
+Usyl	stock	unused	hero	Dark Ranger	-	Usyl	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	-
 Uvar	stock	unused	hero	Dreadlord	-	Uvar	undead	units\undead\Tichondrius\Tichondrius	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,ANdo,ANrf,AUav,AUsl	-
 Uvng	stock	unused	hero	Dreadlord	-	Uvng	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,AUav,AUcs,AUin,AUsl	-
 ebsh	stock	unused	unit	Night Elf Battleship	-	ebsh	nightelf	units\creeps\NightElfBattleship\NightElfBattleship	stock	ReplaceableTextures\CommandButtons\BTNNightElfBattleCruiser.blp	-	-	-	-	-	-	Ault	-
