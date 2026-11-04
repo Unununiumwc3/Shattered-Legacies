@@ -18,7 +18,8 @@ import unit_scan as us
 OUT = os.path.join(us.SRC, "WarcraftLegacies.Source", "Ai", "AiData.g.cs")
 SL_OUT = os.path.join(us.SRC, "WarcraftLegacies.Source", "ShatteredLegacies", "Bot", "SlAiData.g.cs")
 # Shattered Legacies: buildings of timeline factions that belong to no WL faction (The Kezan Enterprise, 0.39.6/0.39.8)
-SL_BUILDINGS = ["o03L", "o05T", "o03O", "o03S", "o03P"]
+SL_BUILDINGS = ["o03L", "o05T", "o03O", "o03S", "o03P",  # Kezan Enterprise
+                "uZf0", "hZf0", "hZf1", "hZf2", "uZf2", "uZf4", "uZf5", "uZf8", "uZf7", "hZf7"]  # 0.55 Forsaken (import_24p.py ids)
 ABIL = os.path.join(us.ROOT, "mapdata", "WarcraftLegacies", "AbilityData")
 BUILDING_CATS = {"TownHall", "Keep", "Castle", "GilneasManor", "Shipyard", "Lighthouse", "Farm", "Altar", "Specialist",
                  "SiegeWorkshop", "Barracks", "Research", "Magic", "Tower", "Shop", "Teleport", "FlyingBuilding"}

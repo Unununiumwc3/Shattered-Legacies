@@ -6,13 +6,13 @@ R002	main	used	Quest Completed: Crown of the Snow	(Druids)	Roch	demon	Replaceabl
 R003	main	used	Progenesis	(C'thun)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNEvolveExplode.blp	u020,u021,u022
 R004	main	used	Sunfury Training	(Quel'thalas)	Rhse	human	ReplaceableTextures\CommandButtons\BTNBloodelvenWarrior.blp	nheb
 R005	main	used	Clergyman Adept Training	(Arathor)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	h02R,h040,hars
-R006	main	used	Fortified Hulls	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNArcaniteArchitecture.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+14
+R006	main	used	Fortified Hulls	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNArcaniteArchitecture.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+15
 R007	main	used	Quest Completed: Otherwordly Invaders	(Sentinels)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
 R008	main	used	Domination	(Power)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R009	main	used	Quest Completed: Plague of Undeath	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R00A	main	used	Improved Thorns	(Druids)	Reeb	nightelf	ReplaceableTextures\CommandButtons\BTNThorns.blp	eaom
 R00B	main	used	Veteran Footmen	(Lordaeron)	Rhse	human	ReplaceableTextures\CommandButtons\BTN_Royal_Footman_2.blp	hbar
-R00C	main	used	Improved Cannons	(Universal Upgrade)	Rhra	human	ReplaceableTextures\CommandButtons\BTNHumanMissileUpThree.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+14
+R00C	main	used	Improved Cannons	(Universal Upgrade)	Rhra	human	ReplaceableTextures\CommandButtons\BTNHumanMissileUpThree.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+15
 R00D	main	used	Mass Bloodlust	(Frostwolf)	Rovs	orc	ReplaceableTextures\CommandButtons\btnmassbloodlust.blp	o02Q
 R00E	main	used	Hydromancer Adept Training	(Dalaran)	Rhst	human	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	h036
 R00F	main	used	Mithril Plated Armor	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNLancelot_Plate.blp	h07C
@@ -325,6 +325,20 @@ RZdF	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	Replace
 RZdG	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	nZh0
 RZdH	main	used	Fallback: Brood of Nozdormu (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	nZh0
 RZdI	main	used	Betrayal: Forsaken	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanshee.blp	nZh0
+RZf0	main	used	Quest Completed: Forsaken Independance	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZf1	main	used	Quest Completed: The Secret Buildup	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZf2	main	used	Tier 4	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNFourthUgrade.blp	hZf2
+RZf3	main	used	Chaos Infusion	(Scourge-Legion)	Rhan	undead	ReplaceableTextures\CommandButtons\BTNUnholyAura.blp	uZf3
+RZf4	main	used	Apothecary Adept Training	(Scourge)	Rune	undead	ReplaceableTextures\CommandButtons\BTNNecromancerAdept.blp	uZf5
+RZf5	main	used	Archivist Adept Training	(forsaken)	Rhst	undead	ReplaceableTextures\CommandButtons\BTNSorceressAdept.blp	uZf5
+RZf6	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
+RZf7	main	used	Backpack	(Human)	Rhpm	human	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
+RZf8	main	used	Backpack	(Undead)	Rupm	undead	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
+RZf9	main	used	Banshee Empowerement	(forsaken)	Rhss	undead	ReplaceableTextures\CommandButtons\BTNSuccubusTrueSight.blp	-
+RZfa	main	used	Open the Scholomance	(Scourge)	Rhde	undead	ReplaceableTextures\CommandButtons\BTNAffinityII.blp	uZff
+RZfb	main	used	Magic Sentry	(Dalaran)	Rhse	human	ReplaceableTextures\CommandButtons\BTNMagicalSentry.blp	-
+RZfc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
+RZfd	main	used	Precision Shots	(Quel'Thalas)	Rhri	human	ReplaceableTextures\CommandButtons\BTNImpalingBolt.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L
@@ -335,12 +349,12 @@ Reuv	main	used	Ultravision	(Light Blue Research)(Brown Research)	Reuv	nightelf	R
 Rews	main	used	Well Spring	-	Rews	nightelf	ReplaceableTextures\CommandButtons\BTNWellSpring.blp	edob
 Rhac	main	used	Improved Masonry	(Yellow/Purple/Orange/Green/Dark Green Research)	Rhac	human	ReplaceableTextures\CommandButtons\BTNStoneArchitecture.blp	h03O,h048,h06F,h07O,h0A3,hbla,hlum
 Rhan	main	used	Animal War Training	(Dark Green/Purple Research)	Rhan	human	ReplaceableTextures\CommandButtons\BTNAnimalWarTraining.blp	h06E,hbar
-Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+15
+Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+16
 Rhcd	main	used	Cloud	(Quel'thalas)	Rhcd	human	ReplaceableTextures\CommandButtons\BTNCloudOfFog.blp	h03J
 Rhfl	main	used	Flare	(Ironforge)	Rhfl	human	ReplaceableTextures\CommandButtons\BTNFlare.blp	h07C
 Rhfs	main	used	Fragmentation Shards	(Yellow Research)	Rhfs	human	ReplaceableTextures\CommandButtons\BTNFragmentationBombs.blp	h07C
 Rhhb	main	used	Storm Hammers	(Khaz Modan)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	hgra
-Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+15
+Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+16
 Rhpt	main	used	Priest Adept Training	(Quel'Thalas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	h034
 Rhri	main	used	Long Rifles	(Ironforge)	Rhri	human	ReplaceableTextures\CommandButtons\BTNDwarvenLongRifle.blp	h07C
 Rhse	main	used	Magic Sentry	-	Rhse	human	ReplaceableTextures\CommandButtons\BTNMagicalSentry.blp	h035

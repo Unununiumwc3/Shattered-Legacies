@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1665 | 7 | 495 | 1045 | 385 | 56 | 287 |
-| abilities | 1489 | 8 | 713 | 486 | 237 | 227 | 285 |
-| upgrades | 393 | 0 | 148 | 133 | 71 | 30 | 16 |
-| items | 83 | 13 | 81 | 28 | 2 | 4 | 223 |
+| units | 1699 | 7 | 495 | 1045 | 385 | 57 | 286 |
+| abilities | 1526 | 8 | 713 | 486 | 237 | 230 | 282 |
+| upgrades | 407 | 0 | 148 | 133 | 71 | 30 | 16 |
+| items | 85 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
 
@@ -888,10 +888,10 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `Udth` | Dreadlord | hero | stock |  |  | 24p only |
 | `Uvng` | Dreadlord | hero | stock |  |  | 24p only |
 | `Ubal` | Envoy of Archimonde (Legion) | hero | stock |  |  | 24p only |
-| `U01O` | Grand Apothecary (Forsaken) | hero | 24p | u010 |  | 24p only |
+| `U01O` | Grand Apothecary (Forsaken) | hero | main | u010 |  | 24p only |
 | `Ulic` | Lich | hero | stock |  |  | 24p only |
 | `H047` | Lord of the Satyrs (Legion Vassal) | hero | 24p |  |  | 24p only |
-| `U02I` | Master of the Royal Apothecary Society (Forsaken) | hero | 24p | u010 |  | 24p only |
+| `U02I` | Master of the Royal Apothecary Society (Forsaken) | hero | main | u010 |  | 24p only |
 | `H049` | Ranger-Lord (Forsaken) | hero | 24p |  |  | 24p only |
 | `U027` | Steward of Magic (nexus) | hero | 24p | h044 |  | 24p only |
 | `u010` | Altar of the Queen (Forsaken) | building | 24p | u01K | U01O,U02I,Usyl | 24p only |
@@ -920,7 +920,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h02W` | Plague Cauldron | building | stock |  |  | different |
 | `h08E` | Plague Tower (Forsaken) | building | 24p |  |  | 24p only |
 | `u011` | Plaguetorium (Forsaken) | building | 24p | u01K | h08N,h08O,n07S | 24p only |
-| `u01W` | Royal Sepulcrum (forsaken) | building | 24p | u01K | n07V,u01V,u02G | 24p only |
+| `u01W` | Royal Sepulcrum (forsaken) | building | main | u01K | n07V,u01V,u02G | 24p only |
 | `u012` | Scholomance | building | stock |  | u01K | 24p only |
 | `h08D` | Scout Tower (Forsaken) | building | 24p | u01K |  | 24p only |
 | `nshr` | Shrine | building | stock |  |  | 24p only |
@@ -930,15 +930,15 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `u01K` | Acolyte (Forsaken, Cult, Worker) | unit | 24p | h089,h08A,h08B,h08S,u012,u01M,u02L | h089,h08C,h08D,u010,u011,u014,u016,u017,u01A,u01J,u01W | 24p only |
 | `o060` | Annihilan Guard (Frostwolf) | unit | stock | n04Q |  | 24p only |
 | `u01R` | Apothecary (Forsaken, Cult) | unit | stock | u016 |  | 24p only |
-| `h08P` | Archivist (Forsaken, Cult) | unit | 24p | u016 |  | 24p only |
+| `h08P` | Archivist (Forsaken, Cult) | unit | main | u016 |  | 24p only |
 | `ucsB` | Burrowed Carrion Beetle (Red - Anub'Arak)(Level 2) | unit | stock |  |  | 24p only |
 | `ucsC` | Burrowed Carrion Beetle (Red - Anub'Arak)(Level 3) | unit | stock |  |  | 24p only |
 | `u00K` | Channel Dummy Caster | unit | stock |  |  | 24p only |
 | `udes` | Corsair (Scourge-Legion) | unit | stock | u009,u01A,ushp |  | 24p only |
 | `n0A1` | Crystal Lord (nexus) | unit | 24p | h065,h066,h068 |  | 24p only |
 | `u01U` | Cultist of the Damned (Forsaken, Cult) | unit | stock |  |  | different |
-| `n0BY` | Dark Ranger (forsaken) | unit | 24p | h089,h08B,h08S |  | 24p only |
-| `n07S` | Deadeye (Forsaken, Cult) | unit | 24p | u011 |  | 24p only |
+| `n0BY` | Dark Ranger (forsaken) | unit | main | h089,h08B,h08S |  | 24p only |
+| `n07S` | Deadeye (Forsaken, Cult) | unit | main | u011 |  | 24p only |
 | `o066` | Death Domain | unit | 24p |  |  | 24p only |
 | `u01Y` | Deathwing (twilight) | unit | 24p |  |  | 24p only |
 | `n091` | Doomfire Abyssal (Legion-Archimond-Level 2) | unit | stock |  |  | different |
@@ -947,7 +947,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `u019` | Drone (C'thun, Worker) | unit | main | u020,u021,u022 | n071,n073,o00D,o00R,u01F,u01G,u01H,u01I,u020 | different |
 | `n07V` | Elder Banshee (Forsaken) | unit | 24p | u01W |  | 24p only |
 | `u025` | Elementalist (nexus) | unit | 24p | h09B |  | 24p only |
-| `u02G` | Elite Abominations (Scourge, Forsaken, Cult) | unit | 24p | u01W |  | 24p only |
+| `u02G` | Elite Abominations (Scourge, Forsaken, Cult) | unit | main | u01W |  | 24p only |
 | `n04J` | Fel Creeper (Legion) | unit | stock |  |  | different |
 | `n042` | Gargantuan Abyssal (Legion-Archimond-Level 3) | unit | stock |  |  | different |
 | `n04O` | Greater Doom Guard (Legion) | unit | 24p | ndmg |  | different |
@@ -957,15 +957,15 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `nzlc` | Lich King (cinematic campaign unit) | unit | stock |  |  | 24p only |
 | `h09G` | MonolithSpawn | unit | stock |  | e01F | 24p only |
 | `u008` | Peasant Converter | unit | stock |  |  | different |
-| `u01P` | Plague Catapult (Forsaken) | unit | 24p | u014 |  | 24p only |
-| `n07W` | Plague Construct (Forsaken) | unit | 24p | u014 |  | 24p only |
-| `o05H` | Plague Flyer (forsaken) | unit | 24p | u014 |  | 24p only |
-| `h08O` | Rotguard (Forsaken) | unit | 24p | u011 |  | 24p only |
+| `u01P` | Plague Catapult (Forsaken) | unit | main | u014 |  | 24p only |
+| `n07W` | Plague Construct (Forsaken) | unit | main | u014 |  | 24p only |
+| `o05H` | Plague Flyer (forsaken) | unit | main | u014 |  | 24p only |
+| `h08O` | Rotguard (Forsaken) | unit | main | u011 |  | 24p only |
 | `nska` | Skeleton Archer (Scourge) | unit | stock |  | R094 | 24p only |
 | `uarb` | Sky Barge | unit | stock |  |  | 24p only |
 | `u01D` | Soul of Frostmourne | unit | stock |  |  | 24p only |
 | `uswb` | Sylvanas Windrunner (Banshee) | unit | stock |  |  | 24p only |
-| `u01V` | Val'kyr (forsaken) | unit | 24p | u01W |  | 24p only |
+| `u01V` | Val'kyr (forsaken) | unit | main | u01W |  | 24p only |
 | `h099` | Zealot (Nexus) | unit | 24p | h09A |  | 24p only |
 | `nzof` | Zombie Female | unit | stock |  |  | 24p only |
 

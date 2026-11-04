@@ -50,6 +50,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = ForsakenConfig.StartX, Y = ForsakenConfig.StartY,
         HeroType = 0,                          // Sylvanas the banshee leads them (ForsakenBetrayal)
         OnTrigger = (p, def) => ForsakenBetrayal.OnSylvanasSlain(p),
+        Prepare = () => ForsakenBetrayal.Prepare(),
         Run = (p, def) => ForsakenBetrayal.Run(p, def),
         Announcement = "|cffffcc00Sylvanas has risen as a banshee.|r In the frozen north the Forsaken gather -- slaves of "
                        + "the Lich King, for now.",

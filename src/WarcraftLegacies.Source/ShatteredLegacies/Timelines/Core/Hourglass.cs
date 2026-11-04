@@ -24,6 +24,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const float CreateAt = 62f; // after the faction picks (and where the mode vote used to end)
 
     private static readonly Dictionary<int, unit> _building = new(); // pid -> Hourglass
+    private static int _placed;                                        // buildings placed in the grid so far
 
     internal static void Setup()
     {
@@ -32,6 +33,30 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     }
 
     internal static unit Get(int pid) => _building.ContainsKey(pid) ? _building[pid] : null;
+
+    // 0.39.7: middle column first, then left, then right (each RowsPerColumn high, going north)
+    private static void Place(player p)
+    {
+      var colIndex = _placed / RowsPerColumn; // 0 middle, 1 left, 2 right, 3 far left ...
+      var row = _placed % RowsPerColumn;
+      _placed++;
+      var side = colIndex == 0 ? 0 : (colIndex % 2 == 1 ? -((colIndex + 1) / 2) : colIndex / 2);
+      var x = CenterX + ColumnStep * side;
+      var y = FirstRowY + RowStep * row;
+      _building[GetPlayerId(p)] = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
+    }
+
+    // 0.55: a player who gets a faction mid-game (the free slot of a split) gets an Hourglass of his own, showing that
+    // faction's turning points
+    internal static void Give(player p)
+    {
+      if (!_building.ContainsKey(GetPlayerId(p)))
+      {
+        Place(p);
+      }
+
+      Refresh(p);
+    }
 
     // 0.54: after a turning point changed the player's faction, his Hourglass shows the new faction's turning points
     internal static void Refresh(player p)
@@ -68,7 +93,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         }
       }
 
-      var placedCount = 0;
       for (var oi = 0; oi < order.Count; oi++)
       {
         var pid = order[oi];
@@ -87,14 +111,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         }
 
         SetLimits(p, defs);
-        // 0.39.7: middle column first, then left, then right (each RowsPerColumn high, going north)
-        var colIndex = placedCount / RowsPerColumn; // 0 middle, 1 left, 2 right, 3 far left ...
-        var row = placedCount % RowsPerColumn;
-        placedCount++;
-        var side = colIndex == 0 ? 0 : (colIndex % 2 == 1 ? -((colIndex + 1) / 2) : colIndex / 2);
-        var x = CenterX + ColumnStep * side;
-        var y = FirstRowY + RowStep * row;
-        _building[pid] = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
+        Place(p);
       }
 
       AiApi.Log("timelines: " + I2S(_building.Count) + " Hourglass building(s) created");

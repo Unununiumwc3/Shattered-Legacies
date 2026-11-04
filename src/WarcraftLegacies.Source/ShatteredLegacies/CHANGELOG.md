@@ -4,6 +4,23 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.55.0
+The Forsaken grow: the 24p tree, Sylvanas' phases, two quests; split fixes from the 0.54.1 playtest. Version v0.55.0.
+- **Import tool** `tools/shattered-legacies/content/import_24p.py`: copies 24p objects into the main map with new
+  `?Zf?` ids, follows their dependencies (abilities, upgrades, buffs, items; identical or same-named main objects are
+  reused), copies their model files (multi-dot names renamed like WL #4190; textures when the models are real files),
+  writes the faction's object limits and id constants and `Content/SL_OBJECTS.md`. First set: the **Forsaken** -- 91
+  objects, 27 model files. Replaces the placeholder Scourge tech (it was locked behind the Scourge's quests).
+- **Sylvanas' phases** (maintainer): 0 Ranger-General (Quel'thalas) -> 1 "The Banshee" -> 2 "The Dark Ranger" (level
+  6; the Dark Ranger model) -> 3 "Queen of the Forsaken" (Lordaeron City taken). She is a WL legendary hero now.
+- **Quests**: "Free Will" (Sylvanas level 6: the Dark Ranger, off the Scourge's team, unlocks the 24p tree's
+  "Forsaken Independance" units) and "The Throne of Lordaeron" (Lordaeron City: the Undercity, Queen of the
+  Forsaken, unlocks the Grand Apothecary).
+- **Start** (maintainer): the Altar of the Queen preplaced and invulnerable in Northrend (-1340, 20171); 3 Acolytes,
+  Sylvanas; **500 gold** -- the old faction keeps all its gold and lumber (no abuse by dying).
+- **The free slot gets an Hourglass of Fate** (its faction's turning points; the bot uses them by code).
+- Bot: production data for the Forsaken buildings (`SL_BUILDINGS`), their heroes.
+
 ## 0.54.1
 Fix: the Forsaken betrayal did not happen (playtest of 0.54.0). Version v0.54.1.
 - Researching "Betrayal: Forsaken" ended in "TICK ERROR in turning point: Failed to set the object level of Betrayal:
