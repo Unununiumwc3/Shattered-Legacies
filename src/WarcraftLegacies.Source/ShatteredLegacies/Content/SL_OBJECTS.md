@@ -132,6 +132,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZk0` | Ogre Mercenary | `24p:n099` | KezanEnterprise |
 | `nZk1` |  | `24p:n062` | KezanEnterprise |
 | `nZk2` | Oil Rig | `24p:n0AQ` | KezanEnterprise |
+| `nZk5` | Trading Zeppelin | `24p:nzep` | KezanEnterprise |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `oZk0` |  | `24p:o03L` | KezanEnterprise |
 | `oZk1` |  | `24p:o03M` | KezanEnterprise |
@@ -151,6 +152,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZkf` | Wizard | `24p:o04P` | KezanEnterprise |
 | `oZkg` | Alchemist | `24p:o04O` | KezanEnterprise |
 | `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
+| `oZkj` | Kezan Trading Center | `24p:o04M` | KezanEnterprise |
+| `oZkk` | Trader | `24p:o04S` | KezanEnterprise |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
 | `uZf2` | Plaguetorium | `24p:u011` | Forsaken |

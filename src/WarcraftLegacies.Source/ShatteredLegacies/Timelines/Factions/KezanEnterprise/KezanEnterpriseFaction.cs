@@ -39,6 +39,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
 
       AddQuest(new QuestGoblinEmpire());
+      var fortune = new QuestTradePrincesFortune(); // the end goal (on the scoreboard: KezanEnterpriseGoal)
+      AddQuest(fortune);
+      KezanEnterpriseGoal.Quest = fortune;
       SharedFactionConfigSetup.AddSharedFactionConfig(this);
     }
   }

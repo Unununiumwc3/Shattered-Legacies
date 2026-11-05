@@ -535,7 +535,7 @@ hZf8	main	used	unit	Rotguard	(Forsaken)	hhes	undead	war3mapImported\DeathGaurd.m
 hZf9	main	used	unit	Dreadguard	(Forsaken, Cult)	hcth	undead	war3mapImported\DeathGuardV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathGuard.blp	-	uZf2	-	-	-	-	A020,A0YE,AZf5,Aihn	RZf0
 hZfa	main	used	unit	Archivist	(Forsaken, Cult)	hsor	undead	war3mapImported\NecromancerBlack.mdl	main	ReplaceableTextures\CommandButtons\BTNNecromancer.blp	-	uZf5	-	-	-	-	A0D1,AZfa,AZfb,Aihn	-
 hZk0	main	used	building	Intercontinental Artillery	(goblin)	hwtw	human	war3mapImported\GoblinTinkerTurret_Artillery.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarfTurret.blp	-	oZke	-	-	-	-	A0RH	RZk6,RZk7
-hZk1	main	used	building	Kezan Oil Supply	(Goblin)	hhou	orc	war3mapImported\Building_OilFieldV2.mdl	main	ReplaceableTextures\CommandButtons\BTNAdvancedSpikedBarricades.blp	-	-	nZk2,uZk0	-	-	-	AZk2,AZk3,AZk4,Avul	-
+hZk1	main	used	building	Kezan Oil Supply	(Goblin)	hhou	orc	war3mapImported\Building_OilFieldV2.mdl	main	ReplaceableTextures\CommandButtons\BTNAdvancedSpikedBarricades.blp	-	-	nZk2,uZk0	-	RZko	-	AZk2,AZk3,AZk4,Avul	-
 hZk2	main	used	unit	Gunner	(goblin)	hrif	orc	war3mapImported\GoblinSoldier.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinMiner.blp	-	oZk4	-	-	-	-	Ahri,Aihn	oZk5
 hZk3	main	used	unit	Sappers	(goblin)	hmtm	orc	units\creeps\GoblinSapper\GoblinSapper.mdl	stock	ReplaceableTextures\CommandButtons\BTNRAWGoblinSapper.blp	-	oZk4	-	-	-	-	Aihn	oZk1
 hZk4	main	used	unit	Assault Tank	(goblin)	hmtt	orc	war3mapImported\Goblin_AssaultTank.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblin_AssaultTank.blp	-	oZk7	-	-	-	-	A03L,A0HS,A0O2,A0OA,AZk3	oZk2
@@ -1007,6 +1007,7 @@ nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	build
 nZk0	main	used	unit	Ogre Mercenary	(goblin)	nogo	orc	units\creeps\Ogre\Ogre.mdl	stock	ReplaceableTextures\CommandButtons\BTNOgre.blp	-	oZk4	-	-	-	-	ACbh,Aion	-
 nZk1	main	used	unit	Shredder	(goblin)	ngir	orc	units\creeps\IronGolem\IronGolem	stock	ReplaceableTextures\CommandButtons\BTNJunkGolem.blp	-	oZk7	-	-	-	-	A0JX,A0OA,A0SZ,A0YG,A0YK,AZk3,AZka,Arlm	-
 nZk2	main	used	unit	Oil Rig	(Warsong)	nzep	orc	war3mapImported\DUMMY.mdl	missing	ReplaceableTextures\CommandButtons\BTNOilStation.blp	-	hZk1	-	-	-	-	Aloc,Avul	-
+nZk5	main	used	unit	Trading Zeppelin	(Warsong)	nzep	orc	units\creeps\GoblinZeppelin\GoblinZeppelin	stock	ReplaceableTextures\CommandButtons\BTNGoblinZeppelin.blp	-	oZkj	-	-	-	-	Aloc,Avul	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
 nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
 nahy	main	used	unit	Ancient Hydra	-	nahy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACdv,Advc,Aspo,Aspy,Awrh	-
@@ -1566,6 +1567,8 @@ oZke	main	used	unit	Builder	(Goblin, Worker)	opeo	orc	war3mapImported\DayLaborer
 oZkf	main	used	unit	Wizard	(goblin)	oshm	orc	war3mapImported\GoblinWarlock.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinMage02.blp	-	oZk6	-	-	-	-	A10W,AZk7,AZk8,Aion	-
 oZkg	main	used	unit	Alchemist	(goblin	odoc	orc	war3mapImported\Hero_Goblin_Alchemist.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinSlasher.blp	-	oZk6	-	-	-	-	A07A,A0NJ,Acrs,Aion	-
 oZkh	main	used	unit	Tinker	(goblin)	ohun	orc	Units\Creeps\HeroTinker\HeroTinker.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	-	oZk0,oZk1,oZk2	-	-	-	-	A0HA,A0TA,ACrk,ANs1,AZk9,Aion	RZk7
+oZkj	main	used	building	Kezan Trading Center	(Goblin)	oshy	orc	war3mapImported\Building_WarsongShop.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeMerchant.blp	-	-	nZk5,oZkk	-	-	-	-	-
+oZkk	main	used	unit	Trader	(goblin)	obot	orc	war3mapImported\OrcOilTanker.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	oZkj	-	-	-	-	Aloc,Avul	-
 oalt	main	used	building	Altar of Storms	(Frostwolf Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Frostwolf	o00E,opeo	Ocbh,Orex,Orkn,Othr	-	-	-	Abds,Aspi	-
 obar	main	used	building	War Camp	(Frostwolf Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf	o00E,opeo	ocat,ogru,ohun	-	-	-	Aspi	-
 obea	main	used	building	Beastiary	(Frostwolf Specialist)	obea	orc	war3mapImported\FrostwolfBeastiary.mdl	main	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	Frostwolf	o00E,opeo	h0CN,h0CO,otbr	-	Rolf	-	Abds,Aspi	ofrt
@@ -3451,7 +3454,7 @@ o04O	24p	changed	unit	Alchemist	(goblin	odoc	orc	war3mapImported\Hero_Goblin_Alc
 o04P	24p	different	unit	Wizard	(goblin)	oshm	orc	war3mapImported\GoblinWarlock.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinMage02.blp	-	o03S	-	-	-	-	A02R,A0SJ,A10W,Aion	-
 o04Q	24p	changed	unit	Tinker	(goblin)	ohun	orc	Units\Creeps\HeroTinker\HeroTinker.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	-	o03L,o03M,o03N	-	-	-	-	A07C,A0HA,A0TA,ACrk,ANs1,Aion	R04R
 o04R	24p	24p only	building	Oil Platform	(Goblin)	obea	orc	war3mapImported\OrcOilPlatform.mdl	main	ReplaceableTextures\CommandButtons\BTNOilStation.blp	-	-	-	-	-	-	Avul	-
-o04S	24p	24p only	unit	Trader	(goblin)	obot	orc	war3mapImported\OrcOilTanker.mdl	24p	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	o04M	-	-	-	-	Aloc,Avul	-
+o04S	24p	24p only	unit	Trader	(goblin)	obot	orc	war3mapImported\OrcOilTanker.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	o04M	-	-	-	-	Aloc,Avul	-
 o04T	24p	changed	unit	Bone Totem	(bone Seer)	osp4	orc	war3mapImported\TrollBonecaster_Totem.mdl	main	ReplaceableTextures\CommandButtons\BTNBigBadTotem.blp	-	-	-	-	-	-	A0TS	-
 o04U	24p	changed	unit	Cyclone Cannon	(Gilneas)	ocat	human	war3mapImported\cyclone.mdl	main	ReplaceableTextures\CommandButtons\BTNCycloneCannon.blp	-	h03Q	-	-	-	-	-	R04R,R02R
 o04V	24p	different	unit	Soul Hunter	(yogg)	otbk	naga	war3mapImported\FacelessOneHuntsman.mdl	main	ReplaceableTextures\CommandButtons\BTNFacelessOneCultist.blp	-	n0AW	-	-	-	-	Afbk,Aion,Atru	h06U

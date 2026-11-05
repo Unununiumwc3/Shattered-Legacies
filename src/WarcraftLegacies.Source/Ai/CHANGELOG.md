@@ -5,6 +5,14 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.59.0
+- **`AiApi.GiveStarterProduction(player)`**: a faction that arrives on a bot mid-game (a fork's fallback, a split)
+  gets the starter production of the game start -- one of each production building of its faction it lacks, around
+  its base (town hall, else any structure; not the slot's start location, which belonged to the faction it replaced),
+  and an altar if it has none. `AiMissions.PlaceProduction(p, arriving)` is the game-start pass for one bot (0.39.2),
+  split out. Bots never construct: a successor without a preplaced barracks trained nothing (Sunfury on P11, 0.57.3).
+- Fork data: the Kezan Enterprise's Trading Center in `SL_BUILDINGS` (it trains the traders).
+
 ## 0.58.0
 No bot logic change. Fork data only: the Kezan Enterprise's buildings in `SL_BUILDINGS` (`gen_ai_data.py`, now the
 24p goblin copies) and its heroes (Gallywix, Gazlowe, Noggenfogger) through `AiApi.RegisterHeroes`.

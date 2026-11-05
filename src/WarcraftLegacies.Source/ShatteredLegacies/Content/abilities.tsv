@@ -3409,7 +3409,7 @@ Ahrl	stock	used	Harvest	(Ghouls Lumber)	Ahrl	-	-	undead	ReplaceableTextures\Comm
 Aimp	stock	used	Vorpal Blades	-	Aimp	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNVorpalBlades.blp	ebal
 Aivs	stock	used	Invisibility	-	Aivs	-	-	human	ReplaceableTextures\CommandButtons\BTNInvisibility.blp	-
 Alam	stock	used	Sacrifice	(Acolyte)	Alam	-	-	undead	ReplaceableTextures\CommandButtons\BTNSacrifice.blp	-
-Aloc	stock	used	Locust	-	Aloc	-	-	undead	-	el06,h02W,h06H,n03J,n03R,n067,+17
+Aloc	stock	used	Locust	-	Aloc	-	-	undead	-	el06,h02W,h06H,n03J,n03R,n067,+19
 Amb2	stock	unused	Replenish Mana	-	Amb2	-	-	undead	ReplaceableTextures\CommandButtons\BTNReplenishManaOn.blp	-
 Ambb	stock	used	Mana Burn	(Neutral Hostile 3)	Ambb	-	-	creeps	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	-
 Ambd	stock	used	Mana Burn	(Neutral Hostile 1)	Ambd	-	-	creeps	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	-
@@ -3487,7 +3487,7 @@ Augh	stock	used	Shade	(Icon)	Augh	-	-	undead	ReplaceableTextures\PassiveButtons\
 Ausm	stock	used	Skeletal Mastery	(Icon)	Ausm	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNSkeletonMage.blp	-
 Auuf	stock	used	Incite Unholy Frenzy	-	Auuf	-	-	undead	ReplaceableTextures\CommandButtons\BTNUnholyFrenzy.blp	-
 Avng	stock	used	Spirit of Vengeance	-	Avng	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNAvengingWatcherOn.blp	-
-Avul	stock	used	Invulnerable	(Neutral)	Avul	-	-	other	-	Otch,el06,even,h00O,h02W,h03V,+41
+Avul	stock	used	Invulnerable	(Neutral)	Avul	-	-	other	-	Otch,el06,even,h00O,h02W,h03V,+43
 Awan	stock	used	Wander	(Neutral)	Awan	-	-	other	-	-
 Awh2	stock	unused	Gather	(Wisp Gold and Lumber - Ancient Spirits)	Awh2	-	-	creeps	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	-
 Awha	stock	used	Gather	(Wisp Gold and Lumber)	Awha	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	-

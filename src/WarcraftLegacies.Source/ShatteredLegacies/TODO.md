@@ -15,8 +15,8 @@ The structure comes first, so that every later faction is the same template fill
 1. ~~Content index~~ (after 0.52.0): `Content/` -- left: the import tool (below)
 2. ~~Turning-point core~~ (0.53): quests + Hourglass researches + effects + defeat rule, pilot Quel'thalas -> Sunfury
    -- left: the playtest checks (below)
-3. **Kul Tiras -> Kezan Enterprise rebuilt** (~~0.58: own `Faction`, the 24p goblin tree, quests, Oil Rigs~~):
-   playtest, then the items below
+3. **Kul Tiras -> Kezan Enterprise rebuilt** (~~0.58: own `Faction`, the 24p goblin tree, quests, Oil Rigs; 0.59:
+   the 24p Trading Center and trade, Oil Refining, the end goal on the scoreboard~~): playtest 0.59, the items below
 4. **Forsaken -- polish** (~~0.54-0.57: betrayal, split, 24p tree, Sylvanas' phases, gates, Undercity~~): the
    small issues below, the five 24p quests, Quel'thalas' late game
 5. **Light turning point**, pilot: Illidari -> draenei remnant
@@ -69,11 +69,10 @@ setup, to hide Neutral Passive units placed there (none are); no other WL or bot
   mountain) when they are polished.
 
 Small issues (maintainer, 0.57 playtest), in the order I would take them:
-- [ai] **Sunfury on a bot slot builds no troops** (0.57.3 playtest, dump 22m45s: P11 Sunfury gold 1790, food 5/100,
-  army 1 -- nothing trained since the fallback). The swap itself works now. Suspects: the start area gives Sunfury no
-  production building (Holding + 5 `n0E2`), and the bot builds the starting structures of a faction only at the
-  game start (`AiMissions.PlaceStarter` and the starter kit), not for a faction that arrives later -- check what
-  starts a bot's building plan, then give arriving bot factions the same (a bot API call from `TimelineSystem`).
+- [you] ~~**Sunfury on a bot slot builds no troops**~~ (0.59: cause confirmed in the code -- bots never construct
+  and the starter production ran only at the game start; now `AiApi.GiveStarterProduction` 3 s after a turning point
+  on a bot): check in the playtest that Sunfury / the Enterprise on a bot slot get their production buildings (pin
+  "arrival production -- placed: ...") and train.
 - [ai] **The Undercity in the bot's node system** (maintainer, 0.57.3): the bot does not know the square or the
   gates. Plan without touching the bot's generated graph: an extension point in the bot API --
   `AiApi.AddNode(name, x, y)` + `AiApi.AddPortalEdge(fromNode, toNode, gate)` -- that the fork calls from
@@ -137,27 +136,28 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   texts; a model for "Queen of the Forsaken" (24p `Hero_DarkRangerBoss2` is copied with its unit -- a candidate).
 - [ai] (polish) The Forsaken bot: production data exist (`SL_BUILDINGS`); check in a bot game that it builds.
 
-### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.58 and polish
+### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.59 and polish
 
-- [you] **Playtest 0.58** (cheat Boralus Keep away, then the Hourglass): at the start Kezan's buildings stand
-  (invulnerable), its mercenaries are hidden. After the fallback: the base is yours as the 24p goblin buildings
-  (Fortress, War Camp, Lumber Mill, Laboratory, Burrows, Missile Towers, Goblin Dock, Oil Supply), plus the Altar of
-  Industry, 2 more Oil Supplies, 4 Builders, Katherine, Kezan's CP; own team, allied with no one; Kul Tiras' old
-  holdings went to Stormwind (if it plays on the South) or were removed. Then: an Oil Supply trains "Oil Rig" -> a
-  platform at sea 40-60 s later (ping, +25 gold per minute; Engineer's Guild / Fuel Transport unlock); the quest
-  log shows Explosive Engineering (4 rigs -> Gazlowe), Gadgetzan, Western Expansion, Lumber Market Crash, Goblin
-  Empire; the Goblin Dock trains WL's Horde ships after Navigation (Lumber Mill).
-- [you] **Models**: after `git lfs pull`, run `python3 tools/shattered-legacies/content/import_24p.py` once more
-  (textures of the 7 new model / icon files); commit what it adds. A model that shows white or green lacks a texture.
-- [ai] **The Enterprise on a bot slot** probably builds nothing -- same cause as "Sunfury on a bot slot builds no
-  troops" (step 4): the bot plans a faction's buildings only at the game start.
-- [ai] (refinement) The upgradeable oil refinery (maintainer): a research at the Oil Supply that raises the gold per
-  Oil Supply / platform (`KezanEnterpriseConfig.GoldPerOil*`); oil income on the scoreboard.
+- [you] **Playtest 0.59**: the Trading Center on Kezan is the 24p's (trains Trading Zeppelins and Traders: they
+  leave on their own for a goblin town and come back, "+gold" over them on the way home); Oil Refining at the Oil
+  Supply (3 levels; the scoreboard's "Kezan oil" grows); the scoreboard shows "Kezan goal: <gold> / 20000", "Kezan
+  oil", "Kezan trade" from the fallback on (not before). Also the 0.58 points that the playtest did not cover.
+- [you] **The pseudo mercenary centre** (maintainer: done another way) -- how? The 0.39.8 creep market (Trading
+  Center trains ogres / centaurs ..., stock 3, one back every 2 min) is removed in 0.59; old code in git history
+  (`KezanEnterpriseMarket.cs`, 0.58.0).
+- [you] **The end goal reached** -- what does it do? Today: announced to everyone, the scoreboard says "reached". Win
+  for the Enterprise, a big reward, or a point in the fork's win rule (below)? Also: "hold 20,000 at once" (my
+  default) or "earned 20,000 in total"?
+- [you] Balance: trade pay (`KezanEnterpriseConfig.ZeppelinGoldPer1000` / `TraderGoldPer1000`, a full fleet ~+400
+  gold per minute) and costs (60 / 150 gold); Oil Refining; Western Expansion (hold Feathermoon and Auberdine) and
+  Lumber Market Crash (Nordrassil) are big asks for an island faction on its own team; Gadgetzan's 15 turns; the
+  Tinker needs Tier 4 (24p data).
 - [ai] (polish) The 24p fuel system comes with the data (mechanical units carry fuel as mana, the Oil Supply's Fuel
   Refill aura, the Fuel Transport) -- check in game that it does not leave tanks without mana for good.
-- [you] End goal: acquire 20,000 gold (confirm the number) -- needs the fork's win rule (below).
-- [you] Balance: Western Expansion (hold Feathermoon and Auberdine) and Lumber Market Crash (Nordrassil) are big asks
-  for an island faction on its own team; Gadgetzan's 15 turns; the Tinker needs Tier 4 (24p data).
+- [ai] (polish) Business Expansion (24p: train 16 zeppelins + 10 traders -> the Goblin Dock) is not rebuilt -- the dock
+  is there from the start; a quest with another reward could come back now that the traders exist.
+- [ai] (polish) Traders stuck at sea: a ship that cannot reach a harbour counts as arrived after 240 s
+  (`TradeLegMax`); watch for ships that idle in a corner.
 
 ### 4. Light turning point (pilot: Illidari -> draenei remnant)
 

@@ -75,6 +75,17 @@ namespace WarcraftLegacies.Source.Ai
       return AiAutopilot.TakeOverLeaver(p);
     }
 
+    // 0.58: a faction that arrives later on a bot (a fallback, a split) gets what every bot got at the start: one of
+    // each production building of its faction it does not own yet, around its base, and an altar if it has none
+    // (bots never construct; without this a successor without a preplaced barracks trained nothing). Bots only.
+    public static void GiveStarterProduction(player p)
+    {
+      if (SimpleBot.IsBot(p))
+      {
+        AiMissions.PlaceProduction(p, true);
+      }
+    }
+
     // 0.57.1: a computer slot of the lobby that stays without a bot until TakeOver (a fork's free slot for a faction
     // that arrives later). Call before the bot starts (map setup).
     public static void ReserveSlot(int playerId)

@@ -10,7 +10,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
   // - an Oil Supply sends an "Oil Rig" expedition (the 24p's n0AQ, trained there): 40-60 s later an Oil Platform rises
   //   at sea near that Oil Supply (pinged), +25 gold per minute while it stands, at most 8. The platforms can be
   //   attacked (the 24p's were invulnerable). They also unlock the Engineer's Guild and the Fuel Transport (24p data).
-  // Income goes through WL's BonusIncome (only the difference is applied).
+  // - Oil Refining (3 levels at the Oil Supply) adds 10 gold per Oil Supply and 5 per platform per level.
+  // Income goes through WL's BonusIncome (only the difference is applied); Income is what the scoreboard shows.
   internal static class KezanEnterpriseOil
   {
     internal static player Owner;
@@ -31,6 +32,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       var trained = CreateTrigger();
       TriggerRegisterPlayerUnitEvent(trained, p, EVENT_PLAYER_UNIT_TRAIN_FINISH, null);
       TriggerAddAction(trained, () => AiApi.Safe("kezan oil rig", OnTrained));
+      var refined = CreateTrigger(); // Oil Refining pays at once, not at the next 10 s check
+      TriggerRegisterPlayerUnitEvent(refined, p, EVENT_PLAYER_UNIT_RESEARCH_FINISH, null);
+      TriggerAddAction(refined, () => AiApi.Safe("kezan oil refining", Update));
       Update();
     }
 
@@ -63,8 +67,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
 
       DestroyGroup(g);
-      var want = supplies * KezanEnterpriseConfig.GoldPerOilSupply
-                 + Platforms.Count * KezanEnterpriseConfig.GoldPerOilPlatform;
+      var refining = GetPlayerTechCount(Owner, KezanEnterpriseConfig.OilRefining, true);
+      var want = supplies * (KezanEnterpriseConfig.GoldPerOilSupply + refining * KezanEnterpriseConfig.RefiningPerSupply)
+                 + Platforms.Count * (KezanEnterpriseConfig.GoldPerOilPlatform
+                                      + refining * KezanEnterpriseConfig.RefiningPerPlatform);
       if (want != Income)
       {
         Owner.GetPlayerData().BonusIncome += want - Income;

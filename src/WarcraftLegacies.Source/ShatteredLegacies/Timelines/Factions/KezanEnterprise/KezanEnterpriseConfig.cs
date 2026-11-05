@@ -30,15 +30,44 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const int GoldPerOilSupply = 50;
     internal const int GoldPerOilPlatform = 25;
     internal const int MaxOilPlatforms = 8;           // the 24p limit ("Can only build 8")
+    // the upgradeable refinery (maintainer): Oil Refining (RZko, 3 levels at the Oil Supply; data written by
+    // tools/shattered-legacies/content/kezan_objects.py -- keep its tooltip numbers in step) adds per level
+    internal const int OilRefining = 1381657455;      // RZko
+    internal const int RefiningPerSupply = 10;
+    internal const int RefiningPerPlatform = 5;
     internal const float RigDelayMin = 40f;           // the 24p expedition: an Oil Rig appears after 40-60 s
     internal const float RigDelayMax = 60f;
     internal const float RigRangeMin = 1200f;         // ... at sea, this far from the Oil Supply that sent it
     internal const float RigRangeMax = 5000f;
     internal const float RigSpacing = 700f;           // ... and not next to another platform
 
+    // trade (0.59, the 24p Trading Center): Trading Zeppelins / Traders pay this much gold per 1,000 of distance
+    // of straight-line distance on a round trip (Kezan -> Booty Bay and back ~41,000: a zeppelin ~41 gold in ~4 min,
+    // a ship ~82). A full fleet (16 + 10) brings roughly 400 gold per minute.
+    internal const int ZeppelinGoldPer1000 = 1;
+    internal const int TraderGoldPer1000 = 2;
+    internal const float TradeCheckEvery = 2f;
+    internal const float TradeLegMax = 240f;          // a leg longer than this counts as arrived (stuck)
+
+    // the goblin towns they trade with: x, y of the town's CP (zeppelins), x, y of its harbour (ships) -- harbours: the
+    // nearest deep-water spot reachable by sea from Kezan (found offline on mapdata/.../PathingMap, 0.59)
+    internal static float[] TradeTowns =
+    {
+      10368f, -22976f, 10060f, -23822f, // Booty Bay (n00L)
+      -10624f, -3968f, -9781f, -4675f,  // Ratchet (n0A6)
+      -8832f, -13184f, -7986f, -12876f, // Gadgetzan (n05C)
+      2688f, 16448f, 1936f, 16174f,     // Venture Bay (n07Y)
+      19200f, -9984f, 19650f, -10520f,  // Fuselight (n01E)
+      -9856f, 7296f, -7394f, 7730f,     // Winterspring (n01X)
+    };
+
     // quests
     internal const int GadgetzanTurns = 15;           // 24p: 1522 s; here counted from the arrival
     internal const int OilRigsForGazlowe = 4;         // 24p "Explosive Engineering"
     internal const int LumberMarketKnowledge = 30;    // 24p gave 30,000 lumber; lumber is knowledge in this map
+
+    // the end goal (concepts section 10, maintainer: on the scoreboard while the Enterprise plays): hold this much gold
+    // at once -- the Trade Prince's fortune (KezanEnterpriseGoal)
+    internal const int GoalGold = 20000;
   }
 }

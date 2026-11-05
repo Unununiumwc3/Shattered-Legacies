@@ -10,7 +10,6 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
     public static IEnumerable<ObjectInfo> GetAllObjectLimits()
     {
       yield return new(1211118924, 1, Support); // H05L KatherineProudmoore
-      yield return new(1865430093, 200); // o04M TradingCenter
       yield return new(1868722036, 200); // obot TransportShip
       yield return new(1747992915, 200); // h0AS ScoutShip
       yield return new(1747992912, 200); // h0AP Frigate
@@ -47,6 +46,9 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1750756149, 6, Flyer); // hZk5 WarZeppelin
       yield return new(1968859952, 2, Support); // uZk0 FuelTransport
       yield return new(1851419442, 8); // nZk2 OilRig
+      yield return new(1868196714, 200); // oZkj TradingCenter
+      yield return new(1851419445, 16); // nZk5 TradingZeppelin
+      yield return new(1868196715, 10); // oZkk Trader
       yield return new(1331325801, 1, Support); // OZki Gallywix
       yield return new(1314548531, 1, Siege); // NZk3 Gazlowe
       yield return new(1314548532, 1, Support); // NZk4 Noggenfogger
@@ -61,6 +63,7 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1381657393, 200); // RZk1 research
       yield return new(1378889782, 200); // R006 research
       yield return new(1378889795, 200); // R00C research
+      yield return new(1381657455, 200); // RZko research
     }
   }
 }

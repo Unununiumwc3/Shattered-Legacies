@@ -10,9 +10,9 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1734 | 7 | 495 | 1045 | 385 | 56 | 287 |
+| units | 1737 | 7 | 495 | 1045 | 385 | 56 | 287 |
 | abilities | 1554 | 8 | 713 | 486 | 237 | 228 | 284 |
-| upgrades | 422 | 0 | 148 | 133 | 71 | 30 | 16 |
+| upgrades | 423 | 0 | 148 | 133 | 71 | 30 | 16 |
 | items | 87 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
@@ -617,7 +617,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `nspc` | Support Column | unit | stock |  |  | 24p only |
 | `o063` | Tauren Gladiator (Frostwolf) | unit | main | otto |  | 24p only |
 | `u005` | Totemic Spirits | unit | stock |  |  | different |
-| `o04S` | Trader (goblin) | unit | 24p | o04M |  | 24p only |
+| `o04S` | Trader (goblin) | unit | main | o04M |  | 24p only |
 | `nzep` | Trading Zeppelin (Warsong) | unit | stock | o04M |  | 24p only |
 | `h038` | UnholyArmorDummy | unit | stock |  |  | 24p only |
 | `n08C` | Voidcrusher (Fel Horde-Portal) | unit | stock |  |  | 24p only |

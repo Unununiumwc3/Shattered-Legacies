@@ -1,4 +1,5 @@
 using WarcraftLegacies.Source.ShatteredLegacies.Bot;
+using WarcraftLegacies.Source.ShatteredLegacies.Rules;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies
@@ -12,6 +13,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies
     {
       SlBotSetup.Setup();    // the fork's data for the bot (Bot/)
       TimelineSetup.Setup(); // turning points: fallbacks, sub paths, betrayals, picks (Timelines/)
+      ScoreboardLines.Setup(); // 0.58: the fork's lines on the scoreboard (end goals)
     }
   }
 }
