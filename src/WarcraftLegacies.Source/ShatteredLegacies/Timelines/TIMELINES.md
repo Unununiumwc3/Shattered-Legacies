@@ -154,7 +154,7 @@ check for conflicts; other numbers = a player slot at start). Rows for designs t
 | Sunfury (Quel'thalas) | `Regions.SunfuryStartingPosition` (1888..3616, -23424..-22048) | Netherstorm `n02O` (-64,-19840) | the whole WL Sunfury start | only once Sunfury is no longer an Illidari pick |
 | Valiance Expedition (Stormwind) | Borean Tundra | Borean Tundra `n00G` (-7744,15680); quest: Dragonblight `n02Q` (-640,17152) | Stormwind buildings (copies) | the Nexus area clear runs there (fine) |
 | Dwarven Expedition (Ironforge, name open) | near the Storm Peaks | Storm Peaks `n02S` (3456,22976); quest: Ulduar ("Secrets of Ulduar", new) | Explorer's Vault `n07U` (copy), dwarf buildings, frost dwarves (24p?) | Yogg-Saron's prison is next door (the Yogg quest needs that CP -- fine, lore) |
-| Kezan Enterprise (Kul Tiras) | `Regions.KezanUnlock` (-2400..608, -8000..-5184) | Kezan `n04Z` (-960,-7168); quest: Gadgetzan `n05C` (-8832,-13184) | Bilgewater Harbor `o03V` (-1632,-5408, owner 27), goblin buildings | built 0.39.6-0.39.8 |
+| Kezan Enterprise (Kul Tiras) | `Regions.KezanUnlock` (-2400..608, -8000..-5184) | Kezan `n04Z` (-960,-7168); quests: Gadgetzan `n05C` (-8832,-13184), the goblin towns (Goblin Empire) | the base preplaced in KezanUnlock (owner 27, WL's creep goblins -> the 24p copies by `MainEquivalents`) | 0.58: `HideNonStructures`; no other WL rescue / cleanup covers it |
 | Dream trees (Druids) | Twilight Grove, Duskwood | Duskwood `n00V` (12160,-16384, owner 20 at start); quest: Hinterlands `n01A` (16256,4352) | druid buildings (copies) | Duskwood starts owned by slot 20 -- which faction? |
 | Maiev's Watchers (Sentinels, Draenei) | Warden's Cage, Outland | Warden's Cage `md03` (5440,-31040, owner 27) | `Regions.MaievStartUnlock` (-6016..-4896, -28416..-27104), the Sentinels' Maiev quests | MaievStartUnlock belongs to a Sentinels quest -> reuse or second rectangle |
 | Twilight's Hammer (orc slot) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | the capital must stay WL's |
@@ -184,7 +184,7 @@ faction by faction.
 | P8 Dalaran / Gilneas | fallback Theramore for both, Jaina's choice (D6), The Gates Close (D7) | Dalaran: WL's Theramore; Gilneas: placeholder (Darkshore -- superseded) | WL's Theramore |
 | P2 Stormwind | fallback Valiance Expedition, D9, Bolvar -> Lich King | placeholder | -- |
 | P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
-| P23 Kul Tiras | fallback Kezan Enterprise (own team) | **implemented** (0.39.5-0.39.8), to be rebuilt on WL's mechanics | own `Faction` + `ObjectInfo` |
+| P23 Kul Tiras | fallback Kezan Enterprise (own team) | **fallback Kezan Enterprise** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | refinery upgrade, end goal 20,000 gold |
 | P12 Druids | fallback Dream trees | placeholder | -- |
 | P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | placeholders (Exodar: Shattrath -- superseded) | -- |
 | P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | placeholders ("Dragonmaw" -- superseded) | Dragonmaw assets + 24p tech / unit / building trees |
@@ -206,5 +206,7 @@ faction by faction.
   `Factions/<X>/`; same behaviour.
 - 0.54: any objective as trigger, effects on the trigger, several turning points per faction, the split and spawn
   effects, the fork's first own faction (Forsaken), `AiApi.TakeOver`; pilot: Quel'thalas' betrayal.
+- 0.58: Kul Tiras -> Kezan Enterprise rebuilt: own faction (24p goblin tree), base on Kezan via WL's rescue mechanism,
+  lore heir Stormwind (`LeaveBehind.ToHeir`), Oil Rigs, the 24p goblin quests.
 - 0.53: turning points as WL quests, the Hourglass of Fate with researches (`nZh0`, `RZd*` / `RZc*`, replaces `n0FB`
   / `AFB1`), the effect library, the fork's defeat rule, Quel'thalas -> Sunfury (no Sunfury pick any more).

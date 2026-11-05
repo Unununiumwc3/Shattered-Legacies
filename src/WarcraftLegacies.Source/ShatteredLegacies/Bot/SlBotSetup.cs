@@ -12,11 +12,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     internal static void Setup()
     {
       AiApi.SetMapTitle("Shattered Legacies: Botified Realm"); // -version (0.52; was a fixed text in the bot)
-      // Production data of the Kezan Enterprise buildings (generated, tools/shattered-legacies/ai/gen_ai_data.py) and
-      // the Enterprise's hero list (Kul Tiras is renamed by its fallback, so it needs its own entry) -- Gallywix first.
-      // 0.39.10: keyed by the real name; the old key "The Kezan Enterprise" (0.39.6) never matched after 0.39.7.
+      // Production data of the fork's buildings (generated, tools/shattered-legacies/ai/gen_ai_data.py) and the Kezan
+      // Enterprise's heroes -- Gallywix first. 0.58: the Enterprise is a faction of its own with the 24p goblin tree
+      // (KezanEnterpriseObjects); Katherine comes along by the fallback.
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
-      AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int> { KezanEnterpriseConfig.GallywixType });
+      AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int>
+        { KezanEnterpriseObjects.Gallywix, KezanEnterpriseObjects.Gazlowe, KezanEnterpriseObjects.Noggenfogger });
       // 0.57.1: the free slots (computer "NPC" in the lobby) get no bot until a split hands them a faction
       for (var i = 0; i < SplitFaction.FreeSlotOrder.Length; i++)
       {

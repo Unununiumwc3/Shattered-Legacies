@@ -1,0 +1,80 @@
+{
+  "OldId": "AHbh",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 3,
+      "Pointer": 1,
+      "Id": "Hbh1",
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Level": 4,
+      "Pointer": 1,
+      "Id": "Hbh1",
+      "Type": 2,
+      "Value": 25
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Level": 1,
+      "Pointer": 1,
+      "Id": "Hbh1",
+      "Type": 2,
+      "Value": 10
+    },
+    {
+      "Level": 2,
+      "Pointer": 1,
+      "Id": "Hbh1",
+      "Type": 2,
+      "Value": 15
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(noggen)"
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "Gives a chance that an attack will do <AHbh,DataC1> bonus damage and stun an opponent for <AHbh,Dur1> seconds. |n|n|cffffcc00Level 1|r - <AHbh,DataA1>% chance per attack. |n|cffffcc00Level 2|r - <AHbh,DataA2>% chance per attack. |n|cffffcc00Level 3|r - <AHbh,DataA3>% chance per attack. |n|cffffcc00Level 4|r - <AHbh,DataA4>% chance per attack."
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Bash - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Gives a <AHbh,DataA2>% chance that an attack will do <AHbh,DataC2> bonus damage and stun an opponent for <AHbh,Dur2> seconds."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Gives a <AHbh,DataA3>% chance that an attack will do <AHbh,DataC3> bonus damage and stun an opponent for <AHbh,Dur3> seconds."
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Gives a <AHbh,DataA4>% chance that an attack will do <AHbh,DataC4> bonus damage and stun an opponent for <AHbh,Dur4> seconds."
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "E"
+    }
+  ],
+  "NewId": "AZkf"
+}

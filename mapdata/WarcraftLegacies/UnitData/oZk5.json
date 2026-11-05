@@ -1,0 +1,94 @@
+{
+  "OldId": "ofor",
+  "NewId": "oZk5",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ubld",
+      "Value": 30
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "ugol",
+      "Value": 20
+    },
+    {
+      "Id": "ugor",
+      "Value": 13
+    },
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "unwalkable"
+    },
+    {
+      "Id": "upri",
+      "Value": 15
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "RZk8,Rhme,Rhar,Rosp,Rorb,R04R"
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": "oZk0"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Goblin)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "E"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.8
+    },
+    {
+      "Id": "uubs",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Resource harvesting center and producer of Horde enhancements. |n|cfff5962dResearches:|R Weapon Upgdrades, Armor Upgrades, Reinforced Defenses, Spiked Barricades, Spiritual Infusion|n"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\LumberMillBanditV1_01.mdl"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Lumber Mill"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Build Lumber Mill"
+    },
+    {
+      "Id": "upor",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ]
+}

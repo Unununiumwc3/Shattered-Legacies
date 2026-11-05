@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.58.0
+No bot logic change. Fork data only: the Kezan Enterprise's buildings in `SL_BUILDINGS` (`gen_ai_data.py`, now the
+24p goblin copies) and its heroes (Gallywix, Gazlowe, Noggenfogger) through `AiApi.RegisterHeroes`.
+
 ## 0.57.4
 No bot change.
 

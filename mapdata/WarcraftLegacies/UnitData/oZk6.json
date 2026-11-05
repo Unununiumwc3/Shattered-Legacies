@@ -1,0 +1,112 @@
+{
+  "OldId": "obea",
+  "NewId": "oZk6",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ubld",
+      "Value": 30
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "ugol",
+      "Value": 14
+    },
+    {
+      "Id": "ugor",
+      "Value": 13
+    },
+    {
+      "Id": "ulur",
+      "Value": 50
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\6x6SimpleSolid.tga"
+    },
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "unwalkable"
+    },
+    {
+      "Id": "upri",
+      "Value": 18
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": "oZk1"
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "RZk0,RZk1"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "oZkf,oZkg"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ubpx",
+      "Value": 1
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Goblin)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "S"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.85
+    },
+    {
+      "Id": "uubs",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Place for mad experimenting.|n|cfff5962dTrains:|R Alchemist, Wizard|n|cfff5962dResearches:|R Wizard Training, Alchemist Training"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Building_GoblinBeastiary.mdl"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Laboratory"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Build Laboratory"
+    },
+    {
+      "Id": "upor",
+      "Type": 3,
+      "Value": ""
+    }
+  ]
+}
