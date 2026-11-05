@@ -47,6 +47,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
         slot.GetPlayerData().SetTeam(team);
       }
 
+      UnallyOutsideTeam(slot); // 0.57.4
+
       if (old != null)
       {
         slot.GetPlayerData().Faction = old; // the old faction (and its colour) on the free slot
@@ -83,6 +85,35 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       if (old != null && !AiApi.TakeOver(slot))
       {
         AiApi.Log("timelines: the bot could not take over P" + I2S(GetPlayerId(slot) + 1));
+      }
+    }
+
+    // 0.57.4: WL's teams only ally a player with his team; they never take alliances away. A free slot started with the
+    // alliances of its lobby force -- until 0.57.4 the Scourge / Legion force (Info.json), so Quel'thalas on P11 and the
+    // Scourge / Legion were allies (Legion units healed it, it only fought the Forsaken). Everyone outside the slot's
+    // team becomes an enemy, both ways.
+    private static readonly alliancetype[] Alliances =
+    {
+      ALLIANCE_PASSIVE, ALLIANCE_HELP_REQUEST, ALLIANCE_HELP_RESPONSE, ALLIANCE_SHARED_XP, ALLIANCE_SHARED_SPELLS,
+      ALLIANCE_SHARED_VISION, ALLIANCE_SHARED_CONTROL, ALLIANCE_SHARED_ADVANCED_CONTROL,
+    };
+
+    internal static void UnallyOutsideTeam(player slot)
+    {
+      var team = slot.GetPlayerData().Team;
+      for (var i = 0; i < 24; i++)
+      {
+        var other = Player(i);
+        if (other == slot || (team != null && other.GetPlayerData().Team == team))
+        {
+          continue;
+        }
+
+        for (var a = 0; a < Alliances.Length; a++)
+        {
+          SetPlayerAlliance(slot, other, Alliances[a], false);
+          SetPlayerAlliance(other, slot, Alliances[a], false);
+        }
       }
     }
 
