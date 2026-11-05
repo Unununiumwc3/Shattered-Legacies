@@ -7,6 +7,7 @@ using MacroTools.Shared;
 using MacroTools.ControlPoints;
 using MacroTools.GameTime;
 using WarcraftLegacies.Source.Factions.Legion.Quests;
+using WarcraftLegacies.Source.Objectives.TurnBased;
 
 // Warcraft Legacies bot AI -- see README.md (overview, commands), AI_AGENTS_CONTEXT.md (for AI assistants),
 // CHANGELOG.md (history) and TODO.md in this folder. Version: AiSetup.Build at the end of this file.
@@ -52,11 +53,12 @@ namespace WarcraftLegacies.Source.Ai
 
     public static void Setup()
     {
-      var t = CreateTimer();
-      TimerStart(t, 120f, false, OnFire);
+      // 0.57.2: starting quests and deadline quests in ONE rule (OnEarlyQuestTick) -- the old 120 s OnFire and the
+      // title list AiConfig.EarlyQuests are only a fallback now
       // 0.40: periodic checks run in the scheduler (AiScheduler); phases chosen to avoid the production slots
       AiScheduler.Add("timed quests", 120, 11, OnTimedQuests, true); // v30: every 30 s
       AiScheduler.Add("early quests", 12, 7, OnEarlyQuestTick, true); // v32: every 3 s
+      FactionManager.FactionRegistered += OnLateFaction; // 0.57.1: factions that arrive mid-game
     }
 
     // v30/v31: AiConfig.QuestRules -- force-complete a bot faction's quest once all its conditions hold.
@@ -242,29 +244,13 @@ namespace WarcraftLegacies.Source.Ai
       return null;
     }
 
-    private static void OnFire()
+    // 0.57.2: the turn a faction arrived (0 = the game start). A faction that arrives later (a fork's successor) gets
+    // the same time as at a start: its starting quest is due at the end of its first full turn.
+    private static readonly Dictionary<string, int> _arrival = new();
+
+    private static void OnLateFaction(Faction f)
     {
-      var factions = FactionManager.GetAllFactions();
-      for (var i = 0; i < factions.Count; i++)
-      {
-        var f = factions[i];
-        var pl = f.Player;
-        if (pl == null)
-        {
-          continue;
-        }
-
-        if (ComputerOnly && GetPlayerController(pl) != MAP_CONTROL_COMPUTER)
-        {
-          continue;
-        }
-
-        var q = f.StartingQuest;
-        if (q != null && q.Progress != QuestProgress.Complete)
-        {
-          ForceComplete(q, f.Name); // v32: Kul Tiras no longer skipped -- its '%' text bug is caught instead
-        }
-      }
+      _arrival[f.Name] = GameTimeManager.Turn;
     }
 
     // v32: complete a quest; a WL error inside its reward code (e.g. Kul Tiras' unescaped '%') is caught and
@@ -283,57 +269,23 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    // ---- v32 early quests: complete during turn N-1 (N = the WL turn the quest expires on) ----------------
-    private static List<QuestData> _earlyQ;
-    private static List<int> _earlyTurn;
-    private static List<string> _earlyFac;
-    private static int _earlyCursor;
+    // ---- 0.57.2 bot quest timing (replaces v32's early quests) -------------------------------------------------
+    // A bot faction's quest is completed for it in the LAST 30 SECONDS of a turn, if the bot has not done it itself:
+    //   - a quest with a deadline (WL's ObjectiveExpire, turn N): in turn N-1 -- read from the objective, no list;
+    //     a faction that arrives later has its deadlines shifted (the fork's ObjectiveExpire.ExpirationOffset)
+    //   - the faction's starting quest without a deadline: in its first full turn (arrival + 1)
+    //   - quests of AiConfig.EarlyQuests (titles + turns): as before, for deadlines that are not an ObjectiveExpire
+    // At most one completion per tick (3 s), so rescued bases do not all land in the same frame. Computer players only.
+    internal const float QuestWindowSeconds = 30f;
 
     private static void OnEarlyQuestTick()
     {
       var turn = GameTimeManager.Turn;
-      if (turn < 1)
+      if (turn < 1 || GameTimeManager.TurnTimeRemaining > QuestWindowSeconds)
       {
         return;
       }
 
-      if (_earlyQ == null)
-      {
-        BuildEarlyQuestList();
-      }
-
-      // At most ONE completion per tick (3 s), so the rescued bases/heroes don't all land in the same frame.
-      for (; _earlyCursor < _earlyQ.Count; _earlyCursor++)
-      {
-        if (turn < _earlyTurn[_earlyCursor] - 1)
-        {
-          return; // list is sorted by expiry turn -> nothing else is due yet
-        }
-
-        var q = _earlyQ[_earlyCursor];
-        if (q.Progress == QuestProgress.Incomplete || q.Progress == QuestProgress.Undiscovered)
-        {
-          if (ForceComplete(q, _earlyFac[_earlyCursor]))
-          {
-            SimpleBot.LogPin("early quest COMPLETED (turn " + I2S(turn) + "): " + _earlyFac[_earlyCursor] + " / " + q.Title);
-          }
-
-          _earlyCursor++;
-          return;
-        }
-
-        SimpleBot.Log("early quest skipped: " + _earlyFac[_earlyCursor] + " / " + q.Title
-                      + (q.Progress == QuestProgress.Complete ? " (already completed)" : " (already failed)"));
-      }
-    }
-
-    // Bot factions' quests whose title is in AiConfig.EarlyQuests, sorted by expiry turn (insertion sort -- stable,
-    // deterministic, no Dictionary iteration).
-    private static void BuildEarlyQuestList()
-    {
-      _earlyQ = new List<QuestData>();
-      _earlyTurn = new List<int>();
-      _earlyFac = new List<string>();
       var factions = FactionManager.GetAllFactions();
       for (var i = 0; i < factions.Count; i++)
       {
@@ -343,28 +295,51 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        for (var e = 0; e < AiConfig.EarlyQuests.Count; e++)
+        var arrival = _arrival.ContainsKey(f.Name) ? _arrival[f.Name] : 0;
+        foreach (var q in f.GetAllQuests())
         {
-          var eq = AiConfig.EarlyQuests[e];
-          var q = FindQuest(f, eq.Title);
-          if (q == null)
+          if (q.Progress != QuestProgress.Incomplete && q.Progress != QuestProgress.Undiscovered)
+          {
+            continue; // done (perhaps by the bot itself) or failed
+          }
+
+          var deadline = DeadlineOf(q);
+          var due = deadline > 0 ? turn >= deadline - 1 : q == f.StartingQuest && turn >= arrival + 1;
+          if (!due)
           {
             continue;
           }
 
-          var at = _earlyQ.Count;
-          while (at > 0 && _earlyTurn[at - 1] > eq.ExpireTurn)
+          if (ForceComplete(q, f.Name))
           {
-            at--;
+            SimpleBot.LogPin("bot quest COMPLETED (turn " + I2S(turn) + "): " + f.Name + " / " + q.Title);
           }
 
-          _earlyQ.Insert(at, q);
-          _earlyTurn.Insert(at, eq.ExpireTurn);
-          _earlyFac.Insert(at, f.Name);
+          return;
+        }
+      }
+    }
+
+    // the turn a quest fails on: its ObjectiveExpire, else AiConfig.EarlyQuests by title; 0 = no deadline
+    private static int DeadlineOf(QuestData q)
+    {
+      for (var o = 0; o < q.Objectives.Count; o++)
+      {
+        if (q.Objectives[o] is ObjectiveExpire expire)
+        {
+          return expire.ExpirationTurn;
         }
       }
 
-      SimpleBot.Log("early quests queued for bots: " + I2S(_earlyQ.Count));
+      for (var e = 0; e < AiConfig.EarlyQuests.Count; e++)
+      {
+        if (AiConfig.EarlyQuests[e].Title == q.Title)
+        {
+          return AiConfig.EarlyQuests[e].ExpireTurn;
+        }
+      }
+
+      return 0;
     }
   }
 
@@ -600,7 +575,8 @@ namespace WarcraftLegacies.Source.Ai
       for (var i = 0; i < 24; i++)
       {
         var p = Player(i);
-        if (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING && GetPlayerController(p) == MAP_CONTROL_COMPUTER)
+        if (GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING && GetPlayerController(p) == MAP_CONTROL_COMPUTER
+            && !AiState.Reserved.Contains(i)) // 0.57.1: a reserved slot gets its bot by AiApi.TakeOver
         {
           Bots.Add(p);
           Committed[i] = null;
@@ -2997,6 +2973,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static readonly Dictionary<int, List<float>> BlackUntil = new();
     internal static readonly Dictionary<int, Dictionary<unit, int>> StuckCount = new(); // 0.37.2: repeats per target
     internal static readonly HashSet<int> TakenOver = new(); // 0.39.2: slots taken over from leaving humans
+    internal static readonly HashSet<int> Reserved = new();  // 0.57.1: computer slots kept free (AiApi.ReserveSlot)
     internal static readonly HashSet<string> TickErrors = new();
     internal static readonly Dictionary<int, unit> KillTargetUnit = new();
     internal static readonly HashSet<int> KillDone = new();
@@ -3016,7 +2993,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.57.0";
+    public const string Build = "0.57.2";
 
     public static void Setup()
     {

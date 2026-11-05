@@ -203,6 +203,11 @@
       "Id": "usca",
       "Type": 1,
       "Value": 1.4
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": "R04R"
     }
   ],
   "NewId": "uZfh"

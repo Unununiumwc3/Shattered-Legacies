@@ -7,6 +7,23 @@ Read this first. Then, depending on the task:
 
 "AI" in file and class names means the **bots**; this file is about **AI assistants** working on the code.
 
+## Handover (end of the 0.52-0.57 session) -- where things stand
+
+- **Released state**: `v0.57.2` on `botified-dev`. Everything since 0.52 is in `CHANGELOG.md` (fork) and
+  `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
+- **Next work**: `TODO.md` "Order of the work" -- step 3 **Kul Tiras -> Kezan Enterprise rebuilt** with the
+  Forsaken's building blocks (table below); step 4 the Forsaken's small issues.
+- **How we work**: the maintainer edits nothing by hand. The assistant clones the repo in the sandbox, makes the
+  change, runs every check, and hands over ONE `git apply` patch (plus a full patch when the base is unclear); the
+  maintainer applies, commits, builds on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and
+  `json-to-w3x publish`), playtests, and sends screenshots / `-dump` files. Version bump in every patch
+  (`AiSetup.Build` in `Ai/AiSystem.cs`, `appsettings.json`), both changelogs.
+- **Checks before every patch** (no compiler in the sandbox): `tools/shattered-legacies/ai/check_refs.py`,
+  `using_check.py`, `scope_check.py`, a tree-sitter C# syntax pass, `tools/shattered-legacies/content/check_json.py`
+  after map data changes, `git apply --check` on a clean copy of the base.
+- **Generators** (never edit their output): `gen_hourglass.py` (Hourglass), `import_24p.py` (24p objects, object
+  limits, id constants), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
+
 ## The project in one paragraph
 
 **Shattered Legacies: Botified Realm** is an unofficial fork of **Warcraft Legacies 4.8.2** (a Warcraft III Reforged
@@ -52,8 +69,13 @@ comments -- it is only listed.
   income for new starts. 0.56.1: her new skills had the stock tech requirement (invisible after learning).
 - **0.57.0**: the Forsaken reworked (Domination, Ghostform, level-6 / Free Will / Tier 4 gates, ships), the Undercity
   as the first instance (`Core/Effects/Instance`), Hourglass models per faction.
-- **Next**: the 0.57 playtest, the 24p Forsaken quests, Quel'thalas' late game, then Kul Tiras -> Kezan rebuilt the
-  same way (`TODO.md`). Every new turning
+- **0.57.1**: free slots are lobby computer slots "NPC" (P11, P14, P20; reserved for the bot until a split), late
+  factions' starting quests, the Throne via holding the Capital Palace, the Undercity built after WL's corner hiding.
+- **0.57.2**: the free slots are fixed computer slots (the map's "fixed player settings" keep humans out); the bot
+  completes a bot faction's starting / deadline quests in the last 30 s of the turn before (deadline read from WL's
+  `ObjectiveExpire`, no list), arriving factions get the same time from their arrival.
+- **Next: Kul Tiras -> Kezan Enterprise rebuilt** with the Forsaken's building blocks (`TODO.md` step 3); the
+  Forsaken's small issues are step 4. Every new turning
   point follows `Timelines/TIMELINES.md` sections 3 and 4; new content comes through an import set.
 - **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
   anything the fork needs from the bot is one `AiApi` method.
@@ -98,6 +120,11 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
   type 'Number'"). Run `tools/shattered-legacies/content/check_json.py` after every map data change.
 - Object ids of the fork: `?Z` + a lowercase letter (`nZh0`, `RZd1`, `uZf0`); one case only in the last character --
   Windows file names ignore case.
+- A slot that should be played by the bot must be a COMPUTER player (lobby, `Info.json`): many bot features (quest
+  auto-complete, production checks) are computer-only; a taken-over empty slot is only half a bot.
+- WL hides every Neutral Passive unit in `Regions.HideUnitBottomLeft` at setup -- anything placed in the south-west
+  squares must be created a moment later.
+- Capitals are never destroyed (the attacker takes them over): quest objectives use `ObjectiveControlCapital`.
 - Successors keep the player's colour (`Faction.SetPlayerColor`, set before the swap); WL deadlines of arriving
   factions count from the arrival (`ObjectiveExpire.ExpirationOffset`).
 

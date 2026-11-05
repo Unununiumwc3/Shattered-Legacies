@@ -207,6 +207,21 @@
       "EnemyHighPriorityFlags": 0
     },
     {
+      "Id": 10,
+      "Controller": 2,
+      "Race": 3,
+      "Flags": 1,
+      "Name": "NPC",
+      "StartPosition": {
+        "X": -21824,
+        "Y": -29112
+      },
+      "AllyLowPriorityFlags": 0,
+      "AllyHighPriorityFlags": 0,
+      "EnemyLowPriorityFlags": 0,
+      "EnemyHighPriorityFlags": 0
+    },
+    {
       "Id": 11,
       "Controller": 1,
       "Race": 4,
@@ -233,6 +248,21 @@
       },
       "AllyLowPriorityFlags": 0,
       "AllyHighPriorityFlags": 32768,
+      "EnemyLowPriorityFlags": 0,
+      "EnemyHighPriorityFlags": 0
+    },
+    {
+      "Id": 13,
+      "Controller": 2,
+      "Race": 3,
+      "Flags": 1,
+      "Name": "NPC",
+      "StartPosition": {
+        "X": -18624,
+        "Y": -26824
+      },
+      "AllyLowPriorityFlags": 0,
+      "AllyHighPriorityFlags": 0,
       "EnemyLowPriorityFlags": 0,
       "EnemyHighPriorityFlags": 0
     },
@@ -280,6 +310,21 @@
       "AllyHighPriorityFlags": 262164,
       "EnemyLowPriorityFlags": 4194448,
       "EnemyHighPriorityFlags": 12582912
+    },
+    {
+      "Id": 19,
+      "Controller": 2,
+      "Race": 3,
+      "Flags": 1,
+      "Name": "NPC",
+      "StartPosition": {
+        "X": -16308,
+        "Y": -26824
+      },
+      "AllyLowPriorityFlags": 0,
+      "AllyHighPriorityFlags": 0,
+      "EnemyLowPriorityFlags": 0,
+      "EnemyHighPriorityFlags": 0
     },
     {
       "Id": 22,
@@ -342,6 +387,11 @@
       "Flags": 7,
       "Players": 32832,
       "Name": "Fel Horde, Illidari"
+    },
+    {
+      "Flags": 0,
+      "Players": 533504,
+      "Name": "NPC"
     }
   ],
   "UpgradeData": [

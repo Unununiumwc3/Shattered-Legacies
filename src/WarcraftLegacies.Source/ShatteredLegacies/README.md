@@ -87,6 +87,9 @@ ShatteredLegacies/
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | only living creeps count (a WL bug: corpses could never die again) -- could go upstream | 0.53 |
 | `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | registers the fork's factions' object limits (`ShatteredLegacies/FactionObjectLimits/`) | 0.54 |
 | `MacroTools/Utils/RefundSystem.cs` | summoned units have no items to drop (a WL bug) -- could go upstream | 0.57 |
+| `MacroTools/GameTime/GameTimeManager.cs` | `TurnTimeRemaining` (read-only, for the bot's quest timing) -- part of the bot's PR | 0.57.2 |
+| `Objectives/TurnBased/ObjectiveExpire.cs` | `ExpirationTurn` (read-only, for the bot) -- part of the bot's PR | 0.57.2 |
+| `mapdata/WarcraftLegacies/Info.json` | three computer slots "NPC" (P11, P14, P20) and their force -- the free slots for splits | 0.57.1 |
 | `README.md` (repository root) | the fork's README | 0.39.9 |
 
 Every new faction of the fork: one line in `WarcraftLegacies.Shared/ObjectInfoRepository.cs` (first: the Forsaken). (A hook in

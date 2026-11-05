@@ -4,6 +4,32 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.57.2
+Bot quest timing for starts and turning points; wrap-up of the 0.52-0.57 session. Version v0.57.2.
+- The free slots P11 / P14 / P20 are computer players fixed by the map (the map's "fixed player settings"): humans
+  cannot take them in the lobby.
+- Bot quest timing (bot, see `../Ai/CHANGELOG.md`): starting quests and deadline quests of bot factions are completed
+  for them in the last 30 seconds of the turn before -- also for factions that arrive with a turning point (their
+  deadlines are shifted by the arrival turn, `ObjectiveExpire.ExpirationOffset`).
+- `[SL]` in WL: `GameTimeManager.TurnTimeRemaining`, `ObjectiveExpire.ExpirationTurn` (read-only, for the bot).
+- Docs: handover in `AI_AGENTS_CONTEXT.md`; the Undercity corner and terrain options in `TODO.md`.
+
+## 0.57.1
+Fixes from the 0.57.0 playtest. Version v0.57.1.
+- **Free slots are computer slots** (maintainer): P11, P14, P20 are "NPC" computer players in the lobby
+  (`Info.json`, force "NPC"). Quel'thalas on a free slot was not a computer player, so the bot only half played it
+  (no troops after the Sunfury fallback, no starting quests). The bot leaves them alone until a split hands them a
+  faction (`AiApi.ReserveSlot`, bot). Free = no faction and no human in it.
+- **Starting quests of late factions** (bot): a computer faction that registers mid-game gets its starting quest
+  completed like at the start, and its deadline quests join the bot's early-quest list.
+- **The Throne of Lordaeron**: capitals are taken over, not destroyed -- the objective is now to hold the Capital
+  Palace; then it falls into ruins by itself (removed, rubble, the gate in the middle), so no one can destroy it
+  first.
+- **The Undercity's buildings and gate were hidden**: WL hides all Neutral Passive units in that corner region at
+  setup; the square is now built a second later.
+- **Ships**: the main map's Transport Ship joins the Forsaken; their Corsair and Dreadnought need Navigation.
+- `TODO.md` reordered: Kezan Enterprise next, the Forsaken's small issues listed.
+
 ## 0.57.0
 The Forsaken reworked after the 0.56 playtest, the Undercity as a base of its own. Version v0.57.0.
 - **Sylvanas** (`forsaken_heroes.py`): Domination instead of Possession (Charm-based: she keeps her body); Ghostform

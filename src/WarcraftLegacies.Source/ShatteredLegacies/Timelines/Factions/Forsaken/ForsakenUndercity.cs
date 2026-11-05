@@ -15,6 +15,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
 
     internal static void Prepare()
     {
+      // 0.57.1: a moment after the map setup -- WL's NeutralVictimAndPassiveSetup hides every Neutral Passive unit in
+      // Regions.HideUnitBottomLeft (the Undercity's square lies in it), which hid the buildings and the gate
+      var t = CreateTimer();
+      TimerStart(t, 1f, false, () =>
+      {
+        DestroyTimer(t);
+        Build();
+      });
+    }
+
+    private static void Build()
+    {
       Square = new Instance("Undercity", ForsakenConfig.UndercityMinX, ForsakenConfig.UndercityMinY,
         ForsakenConfig.UndercityMaxX, ForsakenConfig.UndercityMaxY);
       Square.Prepare(

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 
@@ -16,6 +17,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       // 0.39.10: keyed by the real name; the old key "The Kezan Enterprise" (0.39.6) never matched after 0.39.7.
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int> { KezanEnterpriseConfig.GallywixType });
+      // 0.57.1: the free slots (computer "NPC" in the lobby) get no bot until a split hands them a faction
+      for (var i = 0; i < SplitFaction.FreeSlotOrder.Length; i++)
+      {
+        AiApi.ReserveSlot(SplitFaction.FreeSlotOrder[i]);
+      }
+
       // 0.54 / 0.55: the Forsaken (Quel'thalas' betrayal) -- Sylvanas first, then the 24p tree's apothecaries
       AiApi.RegisterHeroes(ForsakenConfig.Name, new List<int>
         { ForsakenConfig.SylvanasBanshee, ForsakenConfig.SylvanasDarkRanger, ForsakenConfig.SylvanasQueen,
