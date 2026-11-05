@@ -1,0 +1,116 @@
+{
+  "OldId": "ofrt",
+  "NewId": "oZk2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AZk0"
+    },
+    {
+      "Id": "ubld",
+      "Value": 50
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "ufma",
+      "Value": 30
+    },
+    {
+      "Id": "ugol",
+      "Value": 160
+    },
+    {
+      "Id": "ugor",
+      "Value": 50
+    },
+    {
+      "Id": "ulur",
+      "Value": 200
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\8x8SimpleSolid.tga"
+    },
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "unwalkable"
+    },
+    {
+      "Id": "urtm",
+      "Value": 90
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": "oZk3"
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "RZk7"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "oZkh,oZke"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "uupt",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utyp",
+      "Type": 3,
+      "Value": "ancient,mechanical,townhall"
+    },
+    {
+      "Id": "ubpx",
+      "Value": 2
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Goblin)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "C"
+    },
+    {
+      "Id": "uubs",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Primary structure, used to train workers and gather resources.|n|cfff5962dTrains:|R Builder, Tinker"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\GreatHallGoblinV1_01.mdl"
+    },
+    {
+      "Id": "upor",
+      "Type": 3,
+      "Value": ""
+    }
+  ]
+}

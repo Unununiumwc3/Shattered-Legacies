@@ -1,136 +1,84 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
-using MacroTools.Factions;
-using MacroTools.Legends;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
+using WarcraftLegacies.Source.Shared;
+using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
 {
-  // 0.39.5 (maintainer's design): Kul Tiras -> the Kezan Enterprise (was FallbackSystem.KulTirasFallback).
-  // Everything Kul Tiras owns goes to Stormwind (if Stormwind still plays) or is removed -- except Katherine (moved to
-  // Kezan) and the Hourglass. Kezan and the Neutral Hostile creeps around it become Kul Tiras'. Kul Tiras loses all
-  // its allies. To be rebuilt on WL's mechanics (own Faction class and ObjectInfo, like the Scarlet Crusade):
-  // TODO.md, step 3.
+  // Kul Tiras -> the Kezan Enterprise (0.39.5, maintainer's design; 0.58 rebuilt on the Forsaken's / Sunfury's building
+  // blocks, TODO step 3). Effects, in this order:
+  //   1. swap faction: a new KezanEnterpriseFaction (its tree, limits and quests; the player keeps his colour)
+  //   2. leave behind (inheritance rule): everything Kul Tiras owns goes to its lore heir Stormwind if Stormwind still
+  //      plays on Kul Tiras' team, otherwise removed / Neutral Hostile -- except Katherine and the Hourglass
+  //   3. relocate: the base preplaced on Kezan (Regions.KezanUnlock, hidden until now) is taken over, WL's creep
+  //      goblins replaced by the Enterprise's copies; Kezan's CP joins; start kit (Altar of Industry, 2 Oil Supplies,
+  //      4 Builders)
+  //   4. heroes: Katherine Proudmoore leads the survivors (moved, revived or created)
+  //   5. team: its own ("Kezan Enterprise Pact"), allied with no one
+  //   6. mechanics: oil (KezanEnterpriseOil) and the creep market (KezanEnterpriseMarket)
   internal static class KultirasFallback
   {
+    private static List<unit> _startUnits = new();
+
+    // map setup: the base on Kezan waits -- buildings visible and invulnerable, units hidden (WL's rescue mechanism)
+    internal static void Prepare()
+    {
+      _startUnits = StartArea.Prepare(Regions.KezanUnlock, RescuePreparationMode.HideNonStructures);
+    }
+
     internal static void Run(player p, TurningPointDef def)
     {
-      player stormwind = null;
-      foreach (var f in FactionManager.GetAllFactions())
+      var katherine = AllLegends.Kultiras.LegendKatherine;
+      var keep = new List<unit>();
+      var hourglass = Hourglass.Get(GetPlayerId(p));
+      if (hourglass != null)
       {
-        if (f.Name == "Stormwind" && f.Player != null && AiApi.IsActive(f.Player))
-        {
-          stormwind = f.Player;
-        }
+        keep.Add(hourglass);
       }
 
-      unit katherine = null;
-      var legends = LegendaryHeroManager.GetAll();
-      for (var i = 0; i < legends.Count; i++)
+      var kathUnit = katherine.Unit;
+      var kathIsOurs = kathUnit != null && GetOwningPlayer(kathUnit) == p;
+      if (kathIsOurs)
       {
-        if (legends[i].Name == "Katherine Proudmoore")
-        {
-          katherine = legends[i].Unit;
-        }
+        keep.Add(kathUnit);
       }
 
-      var pid = GetPlayerId(p);
-      var hourglass = Hourglass.Get(pid);
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
+      var enterprise = new KezanEnterpriseFaction();
+      SwapFaction.Run(p, enterprise); // first: if it fails, the player keeps his units
+      var heir = LeaveBehind.ToHeir(p, KezanEnterpriseConfig.Heir, keep);
+      var taken = StartArea.Take(p, _startUnits, enterprise, KezanEnterpriseObjects.MainEquivalents);
+      var kezan = AiApi.SafeCp(UNIT_N04Z_KEZAN);
+      if (kezan != null && kezan.Unit != null && GetOwningPlayer(kezan.Unit) != p)
       {
-        GroupRemoveUnit(g, u);
-        if (u == katherine || u == hourglass)
-        {
-          continue;
-        }
-
-        if (stormwind != null)
-        {
-          SetUnitOwner(u, stormwind, true);
-        }
-        else
-        {
-          RemoveUnit(u);
-        }
+        AiApi.GiveUnit(kezan.Unit, p);
       }
 
-      DestroyGroup(g);
-      if (katherine != null && GetUnitState(katherine, UNIT_STATE_LIFE) > 0.405f)
+      var placed = Spawn.Buildings(p, KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY,
+        KezanEnterpriseConfig.StartBuildings);
+      Spawn.Units(p, KezanEnterpriseConfig.StartX + 200f, KezanEnterpriseConfig.StartY - 200f,
+        KezanEnterpriseConfig.StartUnits);
+      var start = new Point(KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY);
+      if (kathIsOurs && GetUnitState(kathUnit, UNIT_STATE_LIFE) > 0.405f)
       {
-        SetUnitPosition(katherine, def.X, def.Y);
+        SetUnitPosition(kathUnit, KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY);
+      }
+      else if (kathUnit == null || kathIsOurs || GetUnitState(kathUnit, UNIT_STATE_LIFE) <= 0.405f)
+      {
+        katherine.ForceCreate(p, start, 270f); // ours but dead, or nobody's; another player's living Katherine stays his
       }
 
-      var kezan = AiApi.SafeCp(KezanEnterpriseConfig.KezanCp);
-      unit kezanUnit = null;
-      if (kezan != null && kezan.Unit != null)
-      {
-        kezanUnit = kezan.Unit;
-        AiApi.GiveUnit(kezanUnit, p);
-      }
-
-      // 0.39.7: everything neutral on Kezan (Regions.KezanAmbient) joins: the goblin buildings there (Scrapyard,
-      // Bunker, Laboratory, Rocket Tower, Oil Supply ...) and the units -- passive AND hostile
-      var area = Rect(KezanEnterpriseConfig.AreaMinX, KezanEnterpriseConfig.AreaMinY, KezanEnterpriseConfig.AreaMaxX,
-        KezanEnterpriseConfig.AreaMaxY);
-      var g2 = CreateGroup();
-      GroupEnumUnitsInRect(g2, area, null);
-      var taken = 0;
-      while ((u = FirstOfGroup(g2)) != null)
-      {
-        GroupRemoveUnit(g2, u);
-        var o = GetPlayerId(GetOwningPlayer(u));
-        if ((o == PLAYER_NEUTRAL_AGGRESSIVE || o == PLAYER_NEUTRAL_PASSIVE) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
-            && u != kezanUnit)
-        {
-          SetUnitOwner(u, p, true);
-          taken++;
-        }
-      }
-
-      DestroyGroup(g2);
-      RemoveRect(area);
-      AiApi.LogPin("Kezan: " + I2S(taken) + " neutral buildings / units joined");
-
-      // 0.39.6: the faction becomes "The Kezan Enterprise" -- renamed, goblin start buildings, its units allowed
-      var fac = p.GetPlayerData().Faction;
-      if (fac != null)
-      {
-        fac.Name = KezanEnterpriseConfig.Name;
-      }
-
-      for (var i = 0; i < KezanEnterpriseConfig.UnitTypes.Length; i++)
-      {
-        SetPlayerTechMaxAllowed(p, KezanEnterpriseConfig.UnitTypes[i], 100);
-      }
-
-      for (var i = 0; i < KezanEnterpriseConfig.HeroTypes.Length; i++)
-      {
-        SetPlayerTechMaxAllowed(p, KezanEnterpriseConfig.HeroTypes[i], 1); // 0.39.7: all three Altar of Industry heroes
-      }
-
-      fac?.Unally(); // 0.39.7: WL's own unally -- new team "<n> Pact", the scoreboard follows
-      KezanEnterpriseMechanics.Start(p); // 0.39.8: oil income, creep market
-      var usedX = new List<float>();
-      var usedY = new List<float>();
-      var placed = 0;
-      for (var i = 0; i < KezanEnterpriseConfig.BuildingTypes.Length; i++)
-      {
-        if (AiApi.FindBuildSpot(def.X, def.Y, usedX, usedY, out var sx, out var sy))
-        {
-          CreateUnit(p, KezanEnterpriseConfig.BuildingTypes[i], sx, sy, 270f);
-          usedX.Add(sx);
-          usedY.Add(sy);
-          placed++;
-        }
-      }
-
-      AiApi.LogPin("Kul Tiras fallback -> The Kezan Enterprise: old army to " + (stormwind != null ? "Stormwind" : "removed")
-                   + ", " + I2S(placed) + " goblin buildings, own team (Pact)");
+      p.GetPlayerData().Faction?.Unally(); // WL's own unally: a new team "<name> Pact", the scoreboard follows
+      SplitFaction.UnallyOutsideTeam(p);   // WL's teams only add alliances: the lobby's South Alliance ends here
+      KezanEnterpriseOil.Start(p);
+      KezanEnterpriseMarket.Start(p);
+      p.RepositionCamera(start);
+      AiApi.LogPin("Kul Tiras fallback -> Kezan Enterprise: old holdings to "
+                   + (heir != null ? "Stormwind" : "neutral hostile") + ", " + I2S(taken) + " start units, "
+                   + I2S(placed) + " start buildings, own team");
     }
   }
 }

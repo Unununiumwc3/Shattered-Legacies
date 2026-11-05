@@ -45,12 +45,38 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZg1` |  | `24p:A03J` | Forsaken |
 | `AZg2` |  | `24p:A01O` | Forsaken |
 | `AZg3` | Banshee Queen | `24p:A0DU` | Forsaken |
+| `AZk0` |  | `24p:Argl` | KezanEnterprise |
+| `AZk1` | Structure Spiked Barricade | `24p:A0CF` | KezanEnterprise |
+| `AZk2` | Fuel Refill | `24p:A0OJ` | KezanEnterprise |
+| `AZk3` | Oil Unit | `24p:A0MN` | KezanEnterprise |
+| `AZk4` | Transfer Fuel | `24p:A0FR` | KezanEnterprise |
+| `AZk5` |  | `24p:Ahar` | KezanEnterprise |
+| `AZk6` | Self Destruct | `24p:A106` | KezanEnterprise |
+| `AZk7` | Mage Armor | `24p:A02R` | KezanEnterprise |
+| `AZk8` |  | `24p:A0SJ` | KezanEnterprise |
+| `AZk9` | AAASpell Resistance | `24p:A07C` | KezanEnterprise |
+| `AZka` |  | `24p:Ahr3` | KezanEnterprise |
+| `AZkb` |  | `24p:A0NY` | KezanEnterprise |
+| `AZkc` | Transfer Fuel | `24p:A0HG` | KezanEnterprise |
+| `AZkd` | Summon Gallywix Personal Transport | `24p:A012` | KezanEnterprise |
+| `AZke` | Call for Reinforcements | `24p:A00C` | KezanEnterprise |
+| `AZkf` |  | `24p:AHbh` | KezanEnterprise |
+| `AZkg` |  | `24p:ANcr` | KezanEnterprise |
+| `AZkh` | Summon Engineer | `24p:A0R0` | KezanEnterprise |
+| `AZki` | Seed Growth | `24p:A04C` | KezanEnterprise |
+| `AZkj` |  | `24p:AIpl` | KezanEnterprise |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
 | `BZf3` | Acid Rain Target | `24p:B09O` | Forsaken |
+| `BZk0` | Mage Armour | `24p:B00A` | KezanEnterprise |
 | `IZf0` | Summon Forsaken Acolyte | `24p:I00N` | Forsaken |
 | `IZf1` | Seeds of Regrowth | `24p:I00L` | Forsaken |
+| `IZk0` | Summon Engineer | `24p:I00X` | KezanEnterprise |
+| `IZk1` | Seeds of Regrowth | `24p:I00L` | KezanEnterprise |
+| `NZk3` | Chief Engineer | `24p:Ntin` | KezanEnterprise |
+| `NZk4` | Baron of Gadgetzan | `24p:Nalc` | KezanEnterprise |
+| `OZki` | Trade Prince of the Bilgewater Cartel | `24p:O04N` | KezanEnterprise |
 | `RZf0` | Quest Completed: Forsaken Independance | `24p:R04X` | Forsaken |
 | `RZf1` | Quest Completed: The Secret Buildup | `24p:R04Z` | Forsaken |
 | `RZf2` | Tier 4 | `24p:R04R` | Forsaken |
@@ -66,6 +92,19 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZfc` | Needs to be Made | `24p:R03N` | Forsaken |
 | `RZfd` | Precision Shots | `24p:R01S` | Forsaken |
 | `RZfe` | Quest Completed: A Parting of Ways | `24p:R008` | Forsaken |
+| `RZk0` | Wizard Adept Training | `24p:R07L` | KezanEnterprise |
+| `RZk1` | Alchemist Adept Training | `24p:R07M` | KezanEnterprise |
+| `RZk2` | Quest Completed: Explosive Engineering | `24p:R01F` | KezanEnterprise |
+| `RZk3` | Quest Completed: Gadgetzan | `24p:R07E` | KezanEnterprise |
+| `RZk4` | Quest Completed: Western Expansion | `24p:R07Y` | KezanEnterprise |
+| `RZk5` | Quest Completed: Lumber Market Crash | `24p:R07Z` | KezanEnterprise |
+| `RZk6` | Quest Completed: Goblin Empire | `24p:R07F` | KezanEnterprise |
+| `RZk7` | Tier 4 | `24p:R04R` | KezanEnterprise |
+| `RZk8` | Spiritual Infusion | `24p:R023` | KezanEnterprise |
+| `RZk9` | Horde War Machine | `24p:R021` | KezanEnterprise |
+| `RZka` | Solo Upgrade | `24p:Rguv` | KezanEnterprise |
+| `RZkb` |  | `24p:Ropm` | KezanEnterprise |
+| `RZkc` | Needs to be Made | `24p:R03N` | KezanEnterprise |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
@@ -79,12 +118,39 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZf8` | Rotguard | `24p:h08O` | Forsaken |
 | `hZf9` | Dreadguard | `24p:h08N` | Forsaken |
 | `hZfa` | Archivist | `24p:h08P` | Forsaken |
+| `hZk0` | Intercontinental Artillery | `24p:h011` | KezanEnterprise |
+| `hZk1` | Kezan Oil Supply | `24p:h04Z` | KezanEnterprise |
+| `hZk2` | Gunner | `24p:h08Y` | KezanEnterprise |
+| `hZk3` | Sappers | `24p:h08X` | KezanEnterprise |
+| `hZk4` | Assault Tank | `24p:h08Z` | KezanEnterprise |
+| `hZk5` | War Zeppelin | `24p:h091` | KezanEnterprise |
 | `nZf0` | Deadeye | `24p:n07S` | Forsaken |
 | `nZf1` | Dark Ranger | `24p:n0BY` | Forsaken |
 | `nZf2` | Plague Construct | `24p:n07W` | Forsaken |
 | `nZf3` | Elder Banshee | `24p:n07V` | Forsaken |
 | `nZf4` |  | `24p:ndr1` | Forsaken |
+| `nZk0` | Ogre Mercenary | `24p:n099` | KezanEnterprise |
+| `nZk1` |  | `24p:n062` | KezanEnterprise |
+| `nZk2` | Oil Rig | `24p:n0AQ` | KezanEnterprise |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
+| `oZk0` |  | `24p:o03L` | KezanEnterprise |
+| `oZk1` |  | `24p:o03M` | KezanEnterprise |
+| `oZk2` |  | `24p:o03N` | KezanEnterprise |
+| `oZk3` | Altar of Industry | `24p:o03O` | KezanEnterprise |
+| `oZk4` | War Camp | `24p:o03P` | KezanEnterprise |
+| `oZk5` | Lumber Mill | `24p:o03Q` | KezanEnterprise |
+| `oZk6` | Laboratory | `24p:o03S` | KezanEnterprise |
+| `oZk7` | Engineer's Guild | `24p:o01M` | KezanEnterprise |
+| `oZk8` |  | `24p:o03T` | KezanEnterprise |
+| `oZk9` | Missile Tower | `24p:o03U` | KezanEnterprise |
+| `oZka` | Improved Missile Tower | `24p:o03W` | KezanEnterprise |
+| `oZkb` |  | `24p:o03X` | KezanEnterprise |
+| `oZkc` | Goblin Dock | `24p:o03V` | KezanEnterprise |
+| `oZkd` | Oil Platform | `24p:o04R` | KezanEnterprise |
+| `oZke` | Builder | `24p:o02I` | KezanEnterprise |
+| `oZkf` | Wizard | `24p:o04P` | KezanEnterprise |
+| `oZkg` | Alchemist | `24p:o04O` | KezanEnterprise |
+| `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
 | `uZf2` | Plaguetorium | `24p:u011` | Forsaken |
@@ -102,3 +168,4 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `uZfg` | Dreadnought | `24p:uubs` | Forsaken |
 | `uZfh` | Corsair | `24p:udes` | Forsaken |
 | `uZfi` | Banshee Spirits | `24p:u00O` | Forsaken |
+| `uZk0` | Fuel Transport Vehicle | `24p:u028` | KezanEnterprise |

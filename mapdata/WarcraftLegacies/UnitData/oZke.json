@@ -1,0 +1,106 @@
+{
+  "OldId": "opeo",
+  "NewId": "oZke",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AZk5,Arlm,Arep,AZk6"
+    },
+    {
+      "Id": "ubld",
+      "Value": 2
+    },
+    {
+      "Id": "ubui",
+      "Type": 3,
+      "Value": "hZk0,oZk0,oZk8,oZk5,oZkc,oZk4,oZk6,oZk3,oZkb,oZk9,oZk7"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 8
+    },
+    {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
+      "Id": "ugor",
+      "Value": 7
+    },
+    {
+      "Id": "urtm",
+      "Value": 2
+    },
+    {
+      "Id": "umvs",
+      "Value": 180
+    },
+    {
+      "Id": "utyp",
+      "Type": 3,
+      "Value": "sapper,peon"
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "RZk9,Ropg,RZka"
+    },
+    {
+      "Id": "ucam",
+      "Value": 1
+    },
+    {
+      "Id": "uaen",
+      "Value": 1
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": " (Goblin, Worker)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Hard working, back breaking laborer.|n|cfff5962dAbilities:|r Repair, Harvest|n|n|cffffcc00Attacks land and tree units."
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Builder"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\DayLaborer.mdl"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNGoblinWorker.blp"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Train Builder"
+    },
+    {
+      "Id": "usnd",
+      "Type": 3,
+      "Value": "GoblinSapper"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ]
+}

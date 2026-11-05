@@ -9,11 +9,12 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.57.4` on `botified-dev` (0.57.3: Sunfury on a bot slot, slot names, late factions' quests;
-  0.57.4: the free slots' alliances). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.58.0` on `botified-dev` (0.58.0: Kul Tiras -> Kezan Enterprise rebuilt; before: 0.57.4 the
+  free slots' alliances). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **Next work**: `TODO.md` "Order of the work" -- step 3 **Kul Tiras -> Kezan Enterprise rebuilt** with the
-  Forsaken's building blocks (table below); step 4 the Forsaken's small issues.
+- **0.58.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree, Oil Rigs, the 24p goblin
+  quests). **Next work**: the 0.58 playtest (`TODO.md` step 3), then step 4 the Forsaken's small issues -- above all
+  "a faction arriving on a bot slot builds nothing" (Sunfury, the Enterprise).
 - **How we work**: the maintainer edits nothing by hand. The assistant clones the repo in the sandbox, makes the
   change, runs every check, and hands over ONE `git apply` patch (plus a full patch when the base is unclear); the
   maintainer applies, commits, builds on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and
@@ -23,7 +24,7 @@ Read this first. Then, depending on the task:
   `using_check.py`, `scope_check.py`, a tree-sitter C# syntax pass, `tools/shattered-legacies/content/check_json.py`
   after map data changes, `git apply --check` on a clean copy of the base.
 - **Generators** (never edit their output): `gen_hourglass.py` (Hourglass), `import_24p.py` (24p objects, object
-  limits, id constants), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
+  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
 
 ## The project in one paragraph
 
@@ -75,8 +76,10 @@ comments -- it is only listed.
 - **0.57.2**: the free slots are fixed computer slots (the map's "fixed player settings" keep humans out); the bot
   completes a bot faction's starting / deadline quests in the last 30 s of the turn before (deadline read from WL's
   `ObjectiveExpire`, no list), arriving factions get the same time from their arrival.
-- **Next: Kul Tiras -> Kezan Enterprise rebuilt** with the Forsaken's building blocks (`TODO.md` step 3); the
-  Forsaken's small issues are step 4. Every new turning
+- **0.58.0**: Kul Tiras -> Kezan Enterprise rebuilt -- the second full faction of the fork, the same template:
+  import set `KEZAN` (`force`: copied although WL keeps creep versions under the 24p ids), `KezanEnterpriseFaction`,
+  `KultirasFallback` (hidden base -> `StartArea.Take` with `MainEquivalents`, `LeaveBehind.ToHeir`), oil
+  (`KezanEnterpriseOil`), five quests. Next: the playtest, then the Forsaken's small issues (step 4). Every new turning
   point follows `Timelines/TIMELINES.md` sections 3 and 4; new content comes through an import set.
 - **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
   anything the fork needs from the bot is one `AiApi` method.
@@ -90,6 +93,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | Need | Building block | Where |
 |---|---|---|
 | a turning point (fallback, betrayal, sub path, pick) | `TurningPointDef` in `TimelineCatalog` -> a WL quest (`TurningPointQuest`) with a trigger + the Hourglass decision | `Timelines/Core/` |
+| a 24p faction whose ids the main map uses for something else (WL's creep versions) | import set with `"force": True`; preplaced creep units become the copies with `StartArea.Take(..., <X>Objects.MainEquivalents)` | `import_24p.py`, `KultirasFallback` |
+| a count only code knows (rigs built, ...) | `ObjectiveCounter` (`Add(n)`) | `Timelines/Core/` |
+| leave behind to a lore heir | `LeaveBehind.ToHeir(p, "<faction>", keep)` (heir on the same team, else neutral hostile) | `Timelines/Core/Effects/` |
 | its trigger | any WL objective (`MakeTrigger`); `ObjectiveHqLost` (default), `ObjectiveLegendKilledBy` | `Timelines/Core/` |
 | the decision button | `tools/shattered-legacies/timelines/gen_hourglass.py` (decision + condition research, button position) | generator |
 | what happens | effects: `SwapFaction`, `SplitFaction` (one player becomes two, bot on a free slot), `LeaveBehind`, `StartArea` (hidden base), `Spawn` (start kit), `ChangeTeam`; `OnTrigger` (e.g. a hero lost for good); `Prepare` (map setup) | `Timelines/Core/Effects/` |

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
 using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthalas;
@@ -8,7 +9,7 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthalas;
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
 {
   // One turning point per WL faction (was FallbackConfig.All, 0.39.1-0.39.7). Real content: Quel'thalas -> Sunfury
-  // (0.53) and Kul Tiras -> Kezan Enterprise (0.39.5); the others are PLACEHOLDERS of the first slice, most of them
+  // (0.53), Quel'thalas -> Forsaken (0.54) and Kul Tiras -> Kezan Enterprise (0.39.5, rebuilt 0.58); the others are PLACEHOLDERS of the first slice, most of them
   // superseded by Timelines/SCENARIO_CONCEPTS.md (noted per entry), replaced faction by faction (TODO.md). HQs: WL's
   // essential legends (0.39.4; ALL of them must be lost; a recaptured HQ makes the turning point unavailable again).
   // Good factions: placeholder fallback (Marin Noggenfogger at the planned place); evil factions: shown on the
@@ -88,8 +89,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = 3468f, Y = 22662f,                 // Storm Peaks
         Announcement = "|cffffcc00Ironforge has fallen.|r The Explorers' League digs for hope in the Storm Peaks.",
       },
-      // 0.39.5 (maintainer): Kul Tiras keeps Katherine and becomes a mercenary faction on Kezan
-      // (Timelines/Factions/Kultiras/KultirasFallback.cs). To be rebuilt on WL's mechanics (TODO.md, step 3).
+      // 0.39.5 (maintainer): Kul Tiras keeps Katherine and becomes a mercenary faction on Kezan. 0.58: rebuilt -- a
+      // faction of its own (KezanEnterpriseFaction, the 24p goblin tree), the base on Kezan hidden until then
+      // (Timelines/Factions/Kultiras/KultirasFallback.cs).
       new TurningPointDef("Kul'tiras", "Kezan Enterprise", TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
         Trigger = "Boralus Keep is lost",
@@ -97,9 +99,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
                       + "the Kezan Enterprise, on its own team.",
         Decision = HourglassData.DecisionKultiras, Condition = HourglassData.ConditionKultiras,
         Hq = new[] { 1747989558 },             // h046 Boralus Keep
-        X = -662f, Y = -7410f,                 // Kezan
-        HeroType = 0,                          // no placeholder hero: Katherine is moved there
+        X = KezanEnterpriseConfig.StartX, Y = KezanEnterpriseConfig.StartY, // Kezan (maintainer: the right spot)
+        HeroType = 0,                          // no placeholder hero: Katherine leads them
         Run = (p, def) => KultirasFallback.Run(p, def),
+        Prepare = () => KultirasFallback.Prepare(),
         Announcement = "|cffffcc00The Proudmoore dynasty is shattered.|r Driven to piracy by tragedy, Katherine rallies the "
                        + "survivors under the skull and crossbones -- while the opportunistic Goblins of Kezan join the global "
                        + "conflict for gold and glory!",

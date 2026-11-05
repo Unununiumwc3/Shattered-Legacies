@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1703 | 7 | 495 | 1045 | 385 | 56 | 287 |
-| abilities | 1534 | 8 | 713 | 486 | 237 | 228 | 284 |
-| upgrades | 409 | 0 | 148 | 133 | 71 | 30 | 16 |
-| items | 85 | 13 | 81 | 28 | 2 | 4 | 223 |
+| units | 1734 | 7 | 495 | 1045 | 385 | 56 | 287 |
+| abilities | 1554 | 8 | 713 | 486 | 237 | 228 | 284 |
+| upgrades | 422 | 0 | 148 | 133 | 71 | 30 | 16 |
+| items | 87 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
 
@@ -540,7 +540,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `o03Q` | Lumber Mill (Goblin) | building | 24p | o02I |  | different |
 | `n07D` | Maiden of Dominance Demon Gate (T3 Maiden) | building | stock |  |  | 24p only |
 | `o03U` | Missile Tower (Goblin) | building | 24p | o02I |  | different |
-| `o04R` | Oil Platform (Goblin) | building | 24p |  |  | 24p only |
+| `o04R` | Oil Platform (Goblin) | building | main |  |  | 24p only |
 | `o01T` | Orc Shop (warsong) | building | 24p | o00E,o04L |  | different |
 | `n07B` | Queen of Suffering Demon Gate (T3 Queen Suffering) | building | stock |  |  | 24p only |
 | `o05J` | Red Dragon Hatchery (Dragonmaw) | building | stock | o05P | n0CP,n0CQ,o05M | 24p only |
@@ -579,7 +579,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `negz` | Engineer Gazlowe | unit | stock |  |  | 24p only |
 | `o01E` | Enhanced Healing Ward (Frostwolf-Witch Doctor) | unit | stock |  |  | 24p only |
 | `n0CN` | Foreman Glibbs (Warsong-Demi) | unit | stock | o020 |  | 24p only |
-| `u028` | Fuel Transport Vehicle (Goblin) | unit | 24p | h04Z |  | different |
+| `u028` | Fuel Transport Vehicle (Goblin) | unit | main | h04Z |  | different |
 | `ngbl` | Goblin Blaster | unit | stock |  |  | 24p only |
 | `o04W` | Golden Vessel (zandalar) | unit | 24p | o049 |  | 24p only |
 | `h08Y` | Gunner (goblin) | unit | main | o03P |  | different |
@@ -630,7 +630,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n03R` | Warsong Blood-Rider (Warsong-Elite) | unit | stock | o00J,o02W,o06U |  | different |
 | `nwad` | Watcher Ward | unit | stock |  |  | 24p only |
 | `ownr` | Wind Rider (Riderless) | unit | stock |  |  | 24p only |
-| `o04P` | Wizard (goblin) | unit | 24p | o03S |  | different |
+| `o04P` | Wizard (goblin) | unit | main | o03S |  | different |
 
 ### other (240)
 

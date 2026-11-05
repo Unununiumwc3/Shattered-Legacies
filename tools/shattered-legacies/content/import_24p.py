@@ -81,6 +81,11 @@ FORSAKEN = {
     # 0.55.1 (maintainer): lumber is "knowledge" (the tome) in this map -- won by quests. The copies cost no lumber,
     # except what is set here (24p id -> {field: value}): Tier 4 costs knowledge.
     "zero_lumber": True,
+    # hand-made / main-map objects with limits in the set's ObjectInfo (main ids as written)
+    "extra": [("UZa1", "SylvanasBanshee", ["Marksman", "Support"], 1),        # forsaken_heroes.py, 0.56
+              ("UZa2", "SylvanasDarkRanger", ["Marksman", "Support"], 1),
+              ("UZa3", "SylvanasQueen", ["Marksman", "Support"], 1),
+              ("ubot", "HauntedTransportShip", [], 200)],  # 0.57.1: the main map's transport (needs Navigation)
     "set": {"R04R": {"glmb": 25, "glmm": 0, "greq": "R04X"},  # Tier 4 only after Free Will (maintainer, 0.57)
             "A0DU": {"arlv": 6, "alsk": 6},                     # her ultimate at level 6 (maintainer), not 10
             # 0.57 (maintainer): only these need Tier 4 -- Val'kyr, Plague Flyer (+ Flight), Elite Abominations,
@@ -97,7 +102,75 @@ FORSAKEN = {
             # "The Banshee's Rise", forsaken_heroes.py / QuestForsakenRise)
             "u014": {"ureq": "h08A,RZs1"}, "u016": {"ureq": "h08A,RZs1"}},
 }
-SETS = [FORSAKEN]
+
+# 0.58: Kul Tiras' fallback (TODO step 3) -- the 24p map's goblin faction ("Bilgewater", jass/Setup/FactionSetup/
+# GoblinSetup.j in the 24p repository). The main map keeps WL's CREEP versions under the same ids (Area 52, Kezan's
+# decoration), so the roots are copied even where the 24p object only has other data ("force").
+KEZAN = {
+    "name": "KezanEnterprise",
+    "third": "k",
+    "force": True,  # copy every root, also when the main map has an object of the same name under that id
+    "objects": [
+        ("o03L", "GreatHall", ["TownHall"], 200),
+        ("o03M", "Stronghold", ["Keep"], 200),
+        ("o03N", "Fortress", ["Castle"], 200),
+        ("o03O", "AltarOfIndustry", ["Altar"], 200),
+        ("o03P", "WarCamp", ["Barracks"], 200),
+        ("o03Q", "LumberMill", ["Research"], 200),
+        ("o03S", "Laboratory", ["Magic"], 200),
+        ("o01M", "EngineersGuild", ["SiegeWorkshop"], 200),
+        ("o03T", "Burrow", ["Farm"], 200),
+        ("o03U", "MissileTower", ["Tower"], 200),
+        ("o03W", "ImprovedMissileTower", ["Tower"], 200),
+        ("o03X", "VoodooLounge", ["Shop"], 200),
+        ("o03V", "GoblinDock", ["Shipyard"], 200),
+        ("h011", "IntercontinentalArtillery", ["Specialist"], 1),
+        ("h04Z", "OilSupply", [], 200),      # not buildable: the preplaced ones on Kezan (oil income, Oil Rigs)
+        ("o04R", "OilPlatform", [], 8),      # created by code (KezanEnterpriseOil), never built
+        ("o02I", "Builder", ["Builder"], 200),
+        ("h08Y", "Gunner", ["Marksman"], 200),
+        ("n099", "OgreMercenary", ["Fighter"], 200),
+        ("h08X", "Sappers", ["Siege"], 8),
+        ("o04P", "Wizard", ["Support"], 200),
+        ("o04O", "Alchemist", ["Support"], 200),
+        ("o04Q", "Tinker", ["Elite"], 6),
+        ("n062", "Shredder", ["Tank"], 12),
+        ("h08Z", "AssaultTank", ["Siege"], 5),
+        ("h091", "WarZeppelin", ["Flyer"], 6),
+        ("u028", "FuelTransport", ["Support"], 2),
+        ("n0AQ", "OilRig", [], 8),           # the 24p expedition: trained at the Oil Supply, a platform at sea
+        ("O04N", "Gallywix", ["Support"], 1),
+        ("Ntin", "Gazlowe", ["Siege"], 1),
+        ("Nalc", "Noggenfogger", ["Support"], 1),
+        ("R07L", "WizardTraining", None, 0),
+        ("R07M", "AlchemistTraining", None, 0),
+        # the 24p goblin quests' rewards (Timelines/Factions/KezanEnterprise/Quests/)
+        ("R01F", "QuestExplosiveEngineering", None, 0),  # Gazlowe
+        ("R07E", "QuestGadgetzan", None, 0),             # Noggenfogger
+        ("R07Y", "QuestWesternExpansion", None, 0),      # War Zeppelins
+        ("R07Z", "QuestLumberMarket", None, 0),          # Shredders +500 hit points
+        ("R07F", "QuestGoblinEmpire", None, 0),          # Intercontinental Artillery
+    ],
+    # not imported: the 24p ships (the dock trains WL's Horde ships, below), the auto-trading Trading Zeppelin / Trader
+    # (24p GUI triggers; the main map's Trading Center is the creep market), Orgrimmar (o01B, the Fortress' upgrade in
+    # the 24p data), Business Expansion (R07G: the dock is needed from the start -- Kezan is an island)
+    "exclude": ["obot", "odes", "ojgn", "nzep", "o04S", "o04M", "o01B", "R07G"],
+    "drop": [("o03N", "uupt", "o01B"), ("o04R", "uabi", "Avul")],  # the platforms can be attacked (counterplay)
+    "zero_lumber": True,
+    # main-map objects the Enterprise uses (limits): Katherine (moved to Kezan, revived at the altar), WL's Horde ships
+    # (trained at the Goblin Dock), the Kezan Trading Center (preplaced; the creep market) -- no builder offers it
+    "extra": [("H05L", "KatherineProudmoore", ["Support"], 1),
+              ("o04M", "TradingCenter", [], 200),
+              ("obot", "TransportShip", [], 200), ("h0AS", "ScoutShip", [], 200), ("h0AP", "Frigate", [], 200),
+              ("h0B2", "Fireship", [], 200), ("h0AY", "Galley", [], 200), ("h0B5", "BoardingVessel", [], 200),
+              ("h0BC", "Juggernaut", [], 200), ("h0AO", "Bombard", [], 6)],
+    "set": {"R04R": {"glmb": 25, "glmm": 0},           # the 24p Tier 4 costs knowledge, like the Forsaken's
+            # the dock from the start (no Business Expansion, no Tier 4), WL's Horde ships (need Navigation)
+            "o03V": {"ureq": "", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO"},
+            # WL's Navigation (main R04R) at the Lumber Mill, like every faction's research building
+            "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R"}},
+}
+SETS = [FORSAKEN, KEZAN]
 
 
 def load(map_dir):
@@ -154,9 +227,10 @@ def main():
         roots = [o[0] for o in s["objects"]]
         exclude = set(s["exclude"])
         todo, closure = list(roots), []
+        forced = set(roots) if s.get("force") else set()
         while todo:
             oid = todo.pop(0)
-            if oid in closure or oid in exclude or not needs_copy(oid):
+            if oid in closure or oid in exclude or not (needs_copy(oid) or (oid in forced and oid in p24)):
                 continue
             closure.append(oid)
             for m in p24[oid][1].get("Modifications", []):
@@ -236,6 +310,11 @@ def main():
                             researches.append(t)
         s["researches"] = researches
         write_object_info(s, mapping)
+        # 0.58: force-copied roots whose id also exists in the main map (WL's creep version): main id -> copy, so
+        # preplaced main-map units can be replaced by the faction's copies (StartArea.Take)
+        # (only WL's creep versions -- "(Creep ...)" -- not other objects under the same id, e.g. u028 / o04P)
+        s["equivalents"] = [(o, mapping[o]) for o in roots if s.get("force") and o in mapping and o in main_data
+                            and main_data[o][0] == "UnitData" and "creep" in suffix_of(main_data[o][1]).lower()]
         write_constants(s, mapping)
         print(f"{s['name']}: {len(closure)} objects copied, {len(copied_files)} import files copied")
 
@@ -248,6 +327,13 @@ def main():
     lines += [f"| `{a}` | {b.replace('|', '/')} | `{c}` | {d} |" for a, b, c, d in sorted(registry)]
     with open(SL_OBJECTS, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
+
+
+def suffix_of(d):
+    for m in d.get("Modifications", []):
+        if m["Id"] == "unsf":
+            return str(m["Value"])
+    return ""
 
 
 def safe_name(rel):
@@ -354,13 +440,8 @@ def write_object_info(s, mapping):
 
 
 def getattr_extra(s):
-    # hand-made objects of the set that are not imported (Sylvanas the banshee, 0.54)
-    if s["name"] == "Forsaken":
-        return [("UZa1", "SylvanasBanshee", ["Marksman", "Support"], 1),        # forsaken_heroes.py, 0.56
-                ("UZa2", "SylvanasDarkRanger", ["Marksman", "Support"], 1),
-                ("UZa3", "SylvanasQueen", ["Marksman", "Support"], 1),
-                ("ubot", "HauntedTransportShip", [], 200)]  # 0.57.1: the main map's transport (needs Navigation)
-    return []
+    # 0.58: objects of the set that are not imported (hand-made, or main-map objects the faction uses): "extra"
+    return s.get("extra", [])
 
 
 def write_constants(s, mapping):
@@ -373,6 +454,11 @@ def write_constants(s, mapping):
     for o, n, _, _ in s["objects"]:
         code = mapping.get(o, o)
         lines.append(f"    internal const int {n} = {fourcc(code)}; // {code} (24p {o})")
+    if s.get("equivalents"):
+        lines += ["", "    // main-map id (WL's creep version under the 24p id) -> the faction's copy, in pairs",
+                  "    internal static int[] MainEquivalents =", "    {"]
+        lines += [f"      {fourcc(m)}, {fourcc(c)}, // {m} -> {c}" for m, c in s["equivalents"]]
+        lines += ["    };"]
     lines += ["  }", "}", ""]
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))

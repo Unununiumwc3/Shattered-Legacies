@@ -1,0 +1,17 @@
+{
+  "OldId": "Ropm",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ginh",
+      "Value": 1
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
+    }
+  ],
+  "NewId": "RZkb"
+}

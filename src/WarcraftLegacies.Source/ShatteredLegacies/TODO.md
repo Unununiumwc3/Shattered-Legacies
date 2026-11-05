@@ -15,8 +15,8 @@ The structure comes first, so that every later faction is the same template fill
 1. ~~Content index~~ (after 0.52.0): `Content/` -- left: the import tool (below)
 2. ~~Turning-point core~~ (0.53): quests + Hourglass researches + effects + defeat rule, pilot Quel'thalas -> Sunfury
    -- left: the playtest checks (below)
-3. **NEXT: Kul Tiras -> Kezan Enterprise rebuilt** on the building blocks the Forsaken proved (own `Faction` +
-   generated `ObjectInfo`, import set, quests, income mechanic of its own: the upgradeable oil refinery)
+3. **Kul Tiras -> Kezan Enterprise rebuilt** (~~0.58: own `Faction`, the 24p goblin tree, quests, Oil Rigs~~):
+   playtest, then the items below
 4. **Forsaken -- polish** (~~0.54-0.57: betrayal, split, 24p tree, Sylvanas' phases, gates, Undercity~~): the
    small issues below, the five 24p quests, Quel'thalas' late game
 5. **Light turning point**, pilot: Illidari -> draenei remnant
@@ -108,8 +108,8 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   Walk; level 6 -> Dark Ranger, skills reset; Lordaeron City -> Queen), her items stay; "Plague Research" (+5 knowledge
   per 100 kills); 150 gold per turn for 10 turns after the betrayal. The freeze at turn 14 (0.55.0): if it comes
   back, a `-dump` shortly before.
-- [you] (refinement) Income mechanics of their own: Kezan's upgradeable oil refinery; the Forsaken as corpse looters
-  (a Raise Dead variant that turns corpses into gold).
+- [you] (refinement) An income mechanic of their own: the Forsaken as corpse looters (a Raise Dead variant that
+  turns corpses into gold). Kezan's oil: step 3.
 - [you] **Playtest 0.57.1**: the NPC slots in the lobby (Computer), after the betrayal Quel'thalas on P11 builds
   troops and, after its own fallback, Sunfury too; holding the Capital Palace -> ruins + gate; the Undercity square
   shows its buildings and gate. Then the 0.57 list: Domination, Ghostform (20 s, buff icon), the Banshee's intelligence; level 6 -> the
@@ -137,16 +137,27 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   texts; a model for "Queen of the Forsaken" (24p `Hero_DarkRangerBoss2` is copied with its unit -- a candidate).
 - [ai] (polish) The Forsaken bot: production data exist (`SL_BUILDINGS`); check in a bot game that it builds.
 
-### 3. Kul Tiras -> Kezan Enterprise rebuilt (NEXT)
+### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.58 and polish
 
-- [ai] `KezanEnterpriseFaction` (`Faction` subclass) + `KezanEnterpriseObjectInfo` in
-  `src/WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/` (+ one `[SL]` line in `ObjectInfoRepository`)
-  instead of renaming WL's Kul Tiras object and setting limits by hand; the hidden base via WL's rescue mechanism
-  (`Regions.KezanUnlock`); leave behind by the inheritance rule. Oil income and creep market stay
-  (`Factions/KezanEnterprise/`).
-- [you] Kezan Oil Supply and Trading Center should not be buildable -- which builder offers them? Trading Center
-  placement, the creep list, stock refresh, oil income on the scoreboard; Bilgewater Harbor ships.
-- [you] End goal: acquire 20,000 gold (confirm the number); oil upgrades that raise the income?
+- [you] **Playtest 0.58** (cheat Boralus Keep away, then the Hourglass): at the start Kezan's buildings stand
+  (invulnerable), its mercenaries are hidden. After the fallback: the base is yours as the 24p goblin buildings
+  (Fortress, War Camp, Lumber Mill, Laboratory, Burrows, Missile Towers, Goblin Dock, Oil Supply), plus the Altar of
+  Industry, 2 more Oil Supplies, 4 Builders, Katherine, Kezan's CP; own team, allied with no one; Kul Tiras' old
+  holdings went to Stormwind (if it plays on the South) or were removed. Then: an Oil Supply trains "Oil Rig" -> a
+  platform at sea 40-60 s later (ping, +25 gold per minute; Engineer's Guild / Fuel Transport unlock); the quest
+  log shows Explosive Engineering (4 rigs -> Gazlowe), Gadgetzan, Western Expansion, Lumber Market Crash, Goblin
+  Empire; the Goblin Dock trains WL's Horde ships after Navigation (Lumber Mill).
+- [you] **Models**: after `git lfs pull`, run `python3 tools/shattered-legacies/content/import_24p.py` once more
+  (textures of the 7 new model / icon files); commit what it adds. A model that shows white or green lacks a texture.
+- [ai] **The Enterprise on a bot slot** probably builds nothing -- same cause as "Sunfury on a bot slot builds no
+  troops" (step 4): the bot plans a faction's buildings only at the game start.
+- [ai] (refinement) The upgradeable oil refinery (maintainer): a research at the Oil Supply that raises the gold per
+  Oil Supply / platform (`KezanEnterpriseConfig.GoldPerOil*`); oil income on the scoreboard.
+- [ai] (polish) The 24p fuel system comes with the data (mechanical units carry fuel as mana, the Oil Supply's Fuel
+  Refill aura, the Fuel Transport) -- check in game that it does not leave tanks without mana for good.
+- [you] End goal: acquire 20,000 gold (confirm the number) -- needs the fork's win rule (below).
+- [you] Balance: Western Expansion (hold Feathermoon and Auberdine) and Lumber Market Crash (Nordrassil) are big asks
+  for an island faction on its own team; Gadgetzan's 15 turns; the Tinker needs Tier 4 (24p data).
 
 ### 4. Light turning point (pilot: Illidari -> draenei remnant)
 
@@ -198,10 +209,10 @@ Time". `[you]` the numbers (tax rate, sudden death X / N / Y).
 ## Known issues
 
 - [ai] **Fallback messages are wrong**: when Kul Tiras loses its HQ, the game says the HQ was regained, although it
-  was destroyed for good (v0.39.9 playtest; check with step 3).
+  was destroyed for good (v0.39.9 playtest; check in the 0.58 playtest -- `TimelineSystem.OnTriggerChanged`).
 - [ai] **Dalaran / Gilneas fallback does not swap teams on the scoreboard.** Gilneas should use Dalaran's path (same
   slot), with Gilneas City as its HQ (step 6).
-- [ai] **New Kezan units are invisible**: the unit count goes up during production, but nothing can be seen. Checked
+- [ai] **New Kezan units are invisible** (0.39 Kezan units -- 0.58 uses the 24p copies; check again): the unit count goes up during production, but nothing can be seen. Checked
   (after 0.52.0): every model path of the Kezan units points to an import that exists in the main map, and all 4046
   main-map imports are on the fork's LFS server. Left: `[you]` `git lfs ls-files | awk '$2=="-"'` in your clone lists
   files that are only pointers locally (`git lfs pull` fixes them before building); then the models' TEXTURE paths

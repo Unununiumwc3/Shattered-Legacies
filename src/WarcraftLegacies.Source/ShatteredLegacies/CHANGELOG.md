@@ -4,6 +4,37 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.58.0
+Kul Tiras -> Kezan Enterprise rebuilt on the Forsaken's building blocks (`TODO.md` step 3). Version v0.58.0.
+- **A faction of its own**: `Timelines/Factions/KezanEnterprise/KezanEnterpriseFaction` + generated object limits
+  (`WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/KezanEnterpriseObjectInfo.cs`, one `[SL]` line in
+  `ObjectInfoRepository`) instead of Kul Tiras renamed with limits set by hand (0.39.6).
+- **The 24p goblin tree** (24p "Bilgewater"): a second import set in `import_24p.py` -- 67 objects with `?Zk?` ids, 7
+  model / icon files. Great Hall / Stronghold / Fortress, Altar of Industry, War Camp, Lumber Mill, Laboratory,
+  Engineer's Guild, Burrow, Missile Towers, Voodoo Lounge, Goblin Dock, Intercontinental Artillery; Builder, Gunner,
+  Ogre Mercenary, Sappers, Wizard, Alchemist, Tinker, Shredder, Assault Tank, War Zeppelin, Fuel Transport; heroes
+  Gallywix, Gazlowe, Noggenfogger. Changes to the 24p data: the Goblin Dock from the start (no "Business Expansion"
+  -- Kezan is an island) with WL's Horde ships, Navigation at the Lumber Mill, no lumber costs (Tier 4: 25
+  knowledge), the Fortress no longer upgrades into "Orgrimmar" (`o01B` in the 24p data), Oil Platforms can be
+  attacked. The import tool: `force` (copy roots although the main map has WL's creep version under the same id),
+  `extra` (main-map / hand-made objects in the limits, per set), `MainEquivalents` (creep id -> copy).
+- **The fallback** (`Kultiras/KultirasFallback`): the base preplaced on Kezan (`Regions.KezanUnlock`) waits from the
+  start (buildings visible and invulnerable, units hidden) and is taken over, WL's creep goblins replaced by the
+  copies; Kezan's CP joins; start kit Altar of Industry, 2 Oil Supplies, 4 Builders; Katherine moved / revived;
+  Kul Tiras' holdings to Stormwind only if Stormwind still plays on its team (inheritance rule step 2), otherwise
+  removed / Neutral Hostile; own team with an explicit unally. The neutral shops outside the base (Goblin Merchant,
+  Laboratory, Shipyard) are no longer taken (0.39.7 took everything in `KezanAmbient`).
+- **Oil** (`KezanEnterpriseOil`, the 24p Oil Rig expedition): Oil Supplies are not buildable (+50 gold per minute
+  each); an Oil Supply trains an "Oil Rig" -- 40-60 s later an Oil Platform rises at sea near it (pinged), +25 gold
+  per minute, at most 8. Platforms unlock the Engineer's Guild and the Fuel Transport (24p data). The creep market
+  stays (`KezanEnterpriseMarket`, was `KezanEnterpriseMechanics`).
+- **Quests** (the 24p goblin quests with WL objectives): Explosive Engineering (starting quest; 4 Oil Rigs ->
+  Gazlowe), Gadgetzan (its CP within 15 turns of the arrival -> Noggenfogger), Western Expansion (Feathermoon and
+  Auberdine -> War Zeppelins), Lumber Market Crash (Nordrassil -> Shredders +500 hit points, +30 knowledge), Goblin
+  Empire (7 goblin CPs -> the Intercontinental Artillery).
+- New building blocks: `Core/ObjectiveCounter` (a count from code), `StartArea.Prepare(area, mode)` and
+  `StartArea.Take(..., equivalents)`, `LeaveBehind.ToHeir`.
+
 ## 0.57.4
 Fix from the 0.57.3 playtest. Version v0.57.4.
 - **Alliances of the free slots**: WL's lobby setup (`Info.json`) put every slot outside the lobby -- also P11, P14,

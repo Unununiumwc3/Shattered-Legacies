@@ -44,7 +44,7 @@ TURNING_POINTS = [
      "Placeholder: the dwarves dig for hope in the Storm Peaks.", "The Great Forge lost", "BTNHeroMountainKing"),
     ("Kultiras", "Kul'tiras", "RZd5", "RZc5", "Fallback: Kezan Enterprise",
      "Katherine Proudmoore rallies the survivors on Kezan, joined by the goblins: a mercenary faction on its own team. "
-     "Kul Tiras' old army goes to Stormwind.", "Boralus Keep lost", "BTNHeroTinker"),
+     "Kul Tiras' old holdings go to Stormwind if it still fights on your team.", "Boralus Keep lost", "BTNHeroTinker"),
     ("Druids", "Druids", "RZd6", "RZc6", "Fallback: Dream trees (placeholder)",
      "Placeholder: the druids walk the Emerald Dream to its trees in the Eastern Kingdoms.",
      "Nordrassil and Cenarion Hold lost", "BTNKeeperOfTheGrove"),
