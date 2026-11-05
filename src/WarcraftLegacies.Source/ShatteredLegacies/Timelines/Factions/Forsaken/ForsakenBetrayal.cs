@@ -20,6 +20,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
   {
     private static unit _altar;
 
+    // 0.57.3 (maintainer): the Altar of the Queen is invulnerable only until the Forsaken are free (QuestForsakenFreeWill)
+    internal static void AltarVulnerable()
+    {
+      if (_altar != null && GetUnitTypeId(_altar) != 0)
+      {
+        SetUnitInvulnerable(_altar, false);
+      }
+    }
+
     // map setup (TurningPointDef.Prepare): Sylvanas' legend, and the Altar of the Queen preplaced in Northrend --
     // Neutral Passive and invulnerable until the Forsaken take it (and still invulnerable then: their safe start)
     internal static void Prepare()

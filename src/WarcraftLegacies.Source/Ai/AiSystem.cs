@@ -273,7 +273,7 @@ namespace WarcraftLegacies.Source.Ai
     // A bot faction's quest is completed for it in the LAST 30 SECONDS of a turn, if the bot has not done it itself:
     //   - a quest with a deadline (WL's ObjectiveExpire, turn N): in turn N-1 -- read from the objective, no list;
     //     a faction that arrives later has its deadlines shifted (the fork's ObjectiveExpire.ExpirationOffset)
-    //   - the faction's starting quest without a deadline: in its first full turn (arrival + 1)
+    //   - the faction's starting quest without a deadline: in the first turn, for factions of the game start only
     //   - quests of AiConfig.EarlyQuests (titles + turns): as before, for deadlines that are not an ObjectiveExpire
     // At most one completion per tick (3 s), so rescued bases do not all land in the same frame. Computer players only.
     internal const float QuestWindowSeconds = 30f;
@@ -303,8 +303,14 @@ namespace WarcraftLegacies.Source.Ai
             continue; // done (perhaps by the bot itself) or failed
           }
 
+          // 0.57.3: a deadline that already passed when the faction arrived (a WL successor such as the Scarlet
+          // Crusade, whose deadlines are not shifted) is not the bot's business; starting quests without a deadline
+          // only for factions of the game start (a later faction's starting quest is a real goal -- e.g. "A Once Great
+          // People" of the Scarlet Crusade, the Forsaken's "The Banshee's Rise")
           var deadline = DeadlineOf(q);
-          var due = deadline > 0 ? turn >= deadline - 1 : q == f.StartingQuest && turn >= arrival + 1;
+          var due = deadline > 0
+            ? deadline > arrival && turn >= deadline - 1
+            : arrival == 0 && q == f.StartingQuest && turn >= 1;
           if (!due)
           {
             continue;
@@ -2993,7 +2999,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.57.2";
+    public const string Build = "0.57.3";
 
     public static void Setup()
     {

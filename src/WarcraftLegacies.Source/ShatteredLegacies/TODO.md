@@ -69,6 +69,16 @@ setup, to hide Neutral Passive units placed there (none are); no other WL or bot
   mountain) when they are polished.
 
 Small issues (maintainer, 0.57 playtest), in the order I would take them:
+- [ai] **The Undercity in the bot's node system** (maintainer, 0.57.3): the bot does not know the square or the
+  gates. Plan without touching the bot's generated graph: an extension point in the bot API --
+  `AiApi.AddNode(name, x, y)` + `AiApi.AddPortalEdge(fromNode, toNode, gate)` -- that the fork calls from
+  `Timelines/Factions/Forsaken/` (like `RegisterHeroes`): Lordaeron City <-> gate <-> the Undercity. Then the
+  Undercity can also get a real control point (a CP unit created there, registered with WL's `ControlPointManager`).
+- [ai] The Undercity's gates: a ruin model instead of the waygate (maintainer).
+- [you] Watch: after the betrayal, did Quel'thalas on P11 really lose Silvermoon to the Forsaken (the 0.57.2 dump
+  shows Silvermoon owned by the Forsaken at 27:25)? The teams were right (P11 in North Alliance); the bots chose
+  their targets by their routes -- Scourge / Legion did not go for Quel'thalas. If the Forsaken never took it, the
+  split did not move all units.
 - [ai] Hourglass of Fate: they show the CP defenders (0.57.1 playtest); the maintainer wants the CP tower upgrades'
   models (e.g. `n02R`'s) -- find the per-faction tower upgrade unit types, map faction -> model.
 - [ai] The Undercity's buildings: invulnerable for good, or normal once the Forsaken own them?

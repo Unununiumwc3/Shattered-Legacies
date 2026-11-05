@@ -16,6 +16,10 @@ public static class GameTimeManager
   /// </summary>
   public static int Turn { get; private set; }
 
+  /// <summary>[SL] (0.57.3): while true, callbacks registered for past turns run on the next turn (a faction that
+  /// arrives mid-game registers its quests' turn callbacks). Set by Shattered Legacies around such a registration.</summary>
+  public static bool ClampPastTurns { get; set; }
+
   /// <summary>[SL] (0.57.2): seconds left in the current turn (0 before the turn timer starts).</summary>
   public static float TurnTimeRemaining => _turnTimer == null ? 0f : TimerGetRemaining(_turnTimer);
 

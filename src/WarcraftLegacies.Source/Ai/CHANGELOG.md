@@ -5,6 +5,11 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.57.3
+- Quest timing: a starting quest without a deadline is completed only for factions of the game start; a deadline
+  quest only if its deadline lies after the faction's arrival -- a later faction's starting quest is a real goal
+  (WL's Scarlet Crusade got "A Once Great People" for free).
+
 ## 0.57.2
 - **Quest timing for bots, one rule** (`QuestAutoComplete`): a bot faction's quest is completed for it in the last
   30 seconds of a turn, if the bot has not done it itself -- a quest with a deadline (WL's `ObjectiveExpire`, read
