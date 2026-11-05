@@ -5,6 +5,21 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.57.2
+- **Quest timing for bots, one rule** (`QuestAutoComplete`): a bot faction's quest is completed for it in the last
+  30 seconds of a turn, if the bot has not done it itself -- a quest with a deadline (WL's `ObjectiveExpire`, read
+  from the objective, no title list) in the turn before the deadline; the faction's starting quest without a deadline
+  in its first full turn. A faction that arrives mid-game counts from its arrival. Replaces the 120 s starting-quest
+  timer and the title list `AiConfig.EarlyQuests` (kept as a fallback for deadlines that are not an
+  `ObjectiveExpire`). Needs two read-only additions in WL: `GameTimeManager.TurnTimeRemaining`,
+  `ObjectiveExpire.ExpirationTurn` -- part of the bot's WL pull request.
+
+## 0.57.1
+- **`AiApi.ReserveSlot(id)`**: a computer slot of the lobby stays without a bot until `AiApi.TakeOver` (a fork's
+  free slot for a faction that arrives later).
+- **Late factions**: when a faction registers mid-game on a computer slot, its starting quest is completed (as at
+  the start) and the early-quest list is rebuilt to include its deadline quests.
+
 ## 0.57.0
 No bot change.
 

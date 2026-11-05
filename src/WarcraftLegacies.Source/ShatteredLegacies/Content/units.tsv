@@ -1657,8 +1657,8 @@ uZfa	main	used	unit	Plague Catapult	(Forsaken)	umtw	undead	war3mapImported\Forsa
 uZfb	main	used	unit	Val'kyr	(forsaken)	ubdd	undead	war3mapImported\ValkyrPale.mdl	main	ReplaceableTextures\CommandButtons\BTNPaleValkyr.blp	-	uZf8	-	-	-	-	ACrk,AZfl,AZfm	RZf2
 uZfc	main	used	unit	Elite Abominations	(Scourge, Forsaken, Cult)	uabo	undead	war3mapImported\Butcher.mdl	main	ReplaceableTextures\CommandButtons\BTNAbomination.blp	-	uZf8	-	-	-	-	ACrk,AZfo,Aap1,Aiun	RZf2
 uZff	main	used	building	Scholomance	-	unp2	undead	buildings\undead\Necropolis\Necropolis	stock	ReplaceableTextures\CommandButtons\BTNBlackCitadel.blp	-	-	uZf1	-	RZfa	-	A0C8,AZfw,Arlm	-
-uZfg	main	used	unit	Dreadnought	(Scourge-Legion)	uubs	undead	units\creeps\UndeadShipBattleShip\UndeadShipBattleShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadBattleShip.blp	-	uZf7	-	-	-	-	ACrk,AZg0	RZf2
-uZfh	main	used	unit	Corsair	(Scourge-Legion)	udes	undead	units\creeps\UndeadDestroyerShip\UndeadDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadDestroyer.blp	-	uZf7	-	-	-	-	A0FV,A0TE	-
+uZfg	main	used	unit	Dreadnought	(Scourge-Legion)	uubs	undead	units\creeps\UndeadShipBattleShip\UndeadShipBattleShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadBattleShip.blp	-	uZf7	-	-	-	-	ACrk,AZg0	R04R
+uZfh	main	used	unit	Corsair	(Scourge-Legion)	udes	undead	units\creeps\UndeadDestroyerShip\UndeadDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNUndeadDestroyer.blp	-	uZf7	-	-	-	-	A0FV,A0TE	R04R
 uZfi	main	used	unit	Banshee Spirits	-	uloc	orc	Abilities\Spells\Undead\Possession\PossessionMissile.mdl	stock	ReplaceableTextures\CommandButtons\BTNLocustSwarm.blp	-	-	-	-	-	-	Aloc	-
 uabo	main	used	unit	Abomination	(Scourge)	uabo	undead	units\undead\Abomination\Abomination	stock	ReplaceableTextures\CommandButtons\BTNAbomination.blp	Scourge	uslh	-	-	-	-	A127,Aap1,Aiun	R008,unp2
 uaco	main	used	unit	Acolyte	(Scourge, Worker)	uaco	undead	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	Scourge	ZBFT,o016,u000,u01M,u02L,unp1,unp2,unpl	-	u006,u00F,uaod,ubon,ugrv,unpl,usep,ushp,uslh,utod,utom,uzig	-	ushd	A041,Arst,Auns	-

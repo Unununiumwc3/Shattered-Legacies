@@ -24,9 +24,13 @@ public sealed class ObjectiveExpire : Objective
   /// </summary>
   public static int ExpirationOffset { get; set; }
 
+  /// <summary>[SL] (0.57.2): the turn on which this objective fails (readable, e.g. for the bot's quest timing).</summary>
+  public int ExpirationTurn { get; }
+
   public ObjectiveExpire(int expirationTurn, string questName)
   {
     expirationTurn += ExpirationOffset; // [SL]
+    ExpirationTurn = expirationTurn;    // [SL]
     SetDescription("Turn {turn} hasn't started", ("{turn}", expirationTurn.ToString()));
     _questName = questName;
     ShowsInPopups = false;

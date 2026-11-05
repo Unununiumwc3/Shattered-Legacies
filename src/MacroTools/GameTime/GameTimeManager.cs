@@ -16,6 +16,9 @@ public static class GameTimeManager
   /// </summary>
   public static int Turn { get; private set; }
 
+  /// <summary>[SL] (0.57.2): seconds left in the current turn (0 before the turn timer starts).</summary>
+  public static float TurnTimeRemaining => _turnTimer == null ? 0f : TimerGetRemaining(_turnTimer);
+
   private static timer? _turnTimer;
   private static readonly TurnScheduler _turnScheduler = new();
 

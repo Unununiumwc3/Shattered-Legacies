@@ -69,7 +69,19 @@ namespace WarcraftLegacies.Source.Ai
     // 0.54: the bot takes over a player and plays it from now on, with the full bot treatment -- the same as for a
     // leaving human (AiAutopilot.TakeOverLeaver). For a fork that hands a faction to a free slot mid-game. False if
     // the player has no faction (or it is defeated).
-    public static bool TakeOver(player p) => AiAutopilot.TakeOverLeaver(p);
+    public static bool TakeOver(player p)
+    {
+      AiState.Reserved.Remove(GetPlayerId(p));
+      return AiAutopilot.TakeOverLeaver(p);
+    }
+
+    // 0.57.1: a computer slot of the lobby that stays without a bot until TakeOver (a fork's free slot for a faction
+    // that arrives later). Call before the bot starts (map setup).
+    public static void ReserveSlot(int playerId)
+    {
+      AiState.Reserved.Add(playerId);
+      SimpleBot.Bots.Remove(Player(playerId)); // the bot may already have listed it (it sets up before the fork)
+    }
 
     // 0.52: the map title shown by -version (default "Warcraft Legacies").
     public static void SetMapTitle(string title)

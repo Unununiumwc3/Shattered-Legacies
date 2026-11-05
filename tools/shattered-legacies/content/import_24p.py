@@ -90,7 +90,8 @@ FORSAKEN = {
             # the Haunted Harbor like every faction's: ships need Navigation (R04R of the MAIN map) -- researched at
             # the Graveyard together with Flight (R09X); no Tier 4 for the harbour itself
             "u01A": {"ureq": "RZs1"},
-            "u01J": {"ures": "R02A,Rhme,Rhar,=R04R,R09X"},  # "=" = the main map's id, not the 24p one
+            "u01J": {"ures": "R02A,Rhme,Rhar,=R04R,R09X"},
+            "uubs": {"ureq": "=R04R"}, "udes": {"ureq": "=R04R"},  # 0.57.1: their ships need Navigation  # "=" = the main map's id, not the 24p one
             # 0.57 (maintainer): the Plaguetorium is the only troop building before Sylvanas reaches level 6 (RZs1,
             # "The Banshee's Rise", forsaken_heroes.py / QuestForsakenRise)
             "u014": {"ureq": "h08A,RZs1"}, "u016": {"ureq": "h08A,RZs1"}},
@@ -339,6 +340,9 @@ def write_object_info(s, mapping):
     for code, name, cats, limit in extra + [(mapping.get(o, o), n, c, l) for o, n, c, l in s["objects"]]:
         if cats is None:
             continue
+        if not cats:
+            lines.append(f"      yield return new({fourcc(code)}, {limit}); // {code} {name}")
+            continue
         cat = cats[0] if len(cats) == 1 else "new List<UnitCategory> { " + ", ".join(cats) + " }"
         lines.append(f"      yield return new({fourcc(code)}, {limit}, {cat}); // {code} {name}")
     for code in s.get("researches", []):
@@ -353,7 +357,8 @@ def getattr_extra(s):
     if s["name"] == "Forsaken":
         return [("UZa1", "SylvanasBanshee", ["Marksman", "Support"], 1),        # forsaken_heroes.py, 0.56
                 ("UZa2", "SylvanasDarkRanger", ["Marksman", "Support"], 1),
-                ("UZa3", "SylvanasQueen", ["Marksman", "Support"], 1)]
+                ("UZa3", "SylvanasQueen", ["Marksman", "Support"], 1),
+                ("ubot", "HauntedTransportShip", [], 200)]  # 0.57.1: the main map's transport (needs Navigation)
     return []
 
 

@@ -11,7 +11,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
   // lumber, the successor starts with a fixed amount (no abuse: a human cannot let himself be killed for a rich
   // start); the old faction's Hourglass of Fate comes along (a new one on the slot -- its turning points stay).
   // Free slots, in this order: P11, P14, P20 (Timelines/SCENARIO_CONCEPTS.md section 3; P6, P15, P18 hold preplaced
-  // units). A slot is free while it has no faction and nobody plays it.
+  // units). 0.57.1 (maintainer): they are computer slots "NPC" in the lobby (Info.json) -- a computer player gets the
+  // bot's full treatment (production, its starting quests); they stay without a bot until a split hands them a
+  // faction (AiApi.ReserveSlot / TakeOver). A slot is free while it has no faction and no human plays it.
   internal static class SplitFaction
   {
     internal static int[] FreeSlotOrder = { 10, 13, 19 }; // player ids of P11, P14, P20
@@ -21,7 +23,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       for (var i = 0; i < FreeSlotOrder.Length; i++)
       {
         var s = Player(FreeSlotOrder[i]);
-        if (s.GetPlayerData().Faction == null && GetPlayerSlotState(s) != PLAYER_SLOT_STATE_PLAYING)
+        if (s.GetPlayerData().Faction == null
+            && (GetPlayerSlotState(s) != PLAYER_SLOT_STATE_PLAYING || GetPlayerController(s) == MAP_CONTROL_COMPUTER))
         {
           return s;
         }
