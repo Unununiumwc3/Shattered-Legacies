@@ -184,7 +184,7 @@ faction by faction.
 | P8 Dalaran / Gilneas | fallback Theramore for both, Jaina's choice (D6), The Gates Close (D7) | Dalaran: WL's Theramore; Gilneas: placeholder (Darkshore -- superseded) | WL's Theramore |
 | P2 Stormwind | fallback Valiance Expedition, D9, Bolvar -> Lich King | placeholder | -- |
 | P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
-| P23 Kul Tiras | fallback Kezan Enterprise (own team) | **fallback Kezan Enterprise** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | refinery upgrade, end goal 20,000 gold |
+| P23 Kul Tiras | fallback Kezan Enterprise (own team) | **fallback Kezan Enterprise** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | 0.59: 24p Trading Center + trade, Oil Refining, end goal 20,000 gold on the scoreboard -- open: pseudo mercenary centre, what the end goal does |
 | P12 Druids | fallback Dream trees | placeholder | -- |
 | P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | placeholders (Exodar: Shattrath -- superseded) | -- |
 | P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | placeholders ("Dragonmaw" -- superseded) | Dragonmaw assets + 24p tech / unit / building trees |
@@ -206,6 +206,8 @@ faction by faction.
   `Factions/<X>/`; same behaviour.
 - 0.54: any objective as trigger, effects on the trigger, several turning points per faction, the split and spawn
   effects, the fork's first own faction (Forsaken), `AiApi.TakeOver`; pilot: Quel'thalas' betrayal.
+- 0.59: Kezan: the 24p Trading Center (traders), Oil Refining, the end goal on the scoreboard; arriving factions on
+  a bot get production buildings.
 - 0.58: Kul Tiras -> Kezan Enterprise rebuilt: own faction (24p goblin tree), base on Kezan via WL's rescue mechanism,
   lore heir Stormwind (`LeaveBehind.ToHeir`), Oil Rigs, the 24p goblin quests.
 - 0.53: turning points as WL quests, the Hourglass of Fate with researches (`nZh0`, `RZd*` / `RZc*`, replaces `n0FB`

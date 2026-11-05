@@ -139,6 +139,11 @@ KEZAN = {
         ("h091", "WarZeppelin", ["Flyer"], 6),
         ("u028", "FuelTransport", ["Support"], 2),
         ("n0AQ", "OilRig", [], 8),           # the 24p expedition: trained at the Oil Supply, a platform at sea
+        # 0.59 (maintainer): the Trading Center from the 24p too -- its Trading Zeppelins and Traders trade on their
+        # own between it and the goblin towns (KezanEnterpriseTrade); not buildable: the preplaced one on Kezan
+        ("o04M", "TradingCenter", [], 200),
+        ("nzep", "TradingZeppelin", [], 16),
+        ("o04S", "Trader", [], 10),
         ("O04N", "Gallywix", ["Support"], 1),
         ("Ntin", "Gazlowe", ["Siege"], 1),
         ("Nalc", "Noggenfogger", ["Support"], 1),
@@ -151,16 +156,14 @@ KEZAN = {
         ("R07Z", "QuestLumberMarket", None, 0),          # Shredders +500 hit points
         ("R07F", "QuestGoblinEmpire", None, 0),          # Intercontinental Artillery
     ],
-    # not imported: the 24p ships (the dock trains WL's Horde ships, below), the auto-trading Trading Zeppelin / Trader
-    # (24p GUI triggers; the main map's Trading Center is the creep market), Orgrimmar (o01B, the Fortress' upgrade in
+    # not imported: the 24p ships (the dock trains WL's Horde ships, below), Orgrimmar (o01B, the Fortress' upgrade in
     # the 24p data), Business Expansion (R07G: the dock is needed from the start -- Kezan is an island)
-    "exclude": ["obot", "odes", "ojgn", "nzep", "o04S", "o04M", "o01B", "R07G"],
+    "exclude": ["obot", "odes", "ojgn", "o01B", "R07G"],
     "drop": [("o03N", "uupt", "o01B"), ("o04R", "uabi", "Avul")],  # the platforms can be attacked (counterplay)
     "zero_lumber": True,
     # main-map objects the Enterprise uses (limits): Katherine (moved to Kezan, revived at the altar), WL's Horde ships
-    # (trained at the Goblin Dock), the Kezan Trading Center (preplaced; the creep market) -- no builder offers it
+    # (trained at the Goblin Dock)
     "extra": [("H05L", "KatherineProudmoore", ["Support"], 1),
-              ("o04M", "TradingCenter", [], 200),
               ("obot", "TransportShip", [], 200), ("h0AS", "ScoutShip", [], 200), ("h0AP", "Frigate", [], 200),
               ("h0B2", "Fireship", [], 200), ("h0AY", "Galley", [], 200), ("h0B5", "BoardingVessel", [], 200),
               ("h0BC", "Juggernaut", [], 200), ("h0AO", "Bombard", [], 6)],
@@ -168,7 +171,15 @@ KEZAN = {
             # the dock from the start (no Business Expansion, no Tier 4), WL's Horde ships (need Navigation)
             "o03V": {"ureq": "", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO"},
             # WL's Navigation (main R04R) at the Lumber Mill, like every faction's research building
-            "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R"}},
+            "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R"},
+            # 0.58: Oil Refining (hand-made, kezan_objects.py) at the Oil Supply -- the upgradeable refinery
+            "h04Z": {"ures": "=RZko"},
+            # 0.59: the Trading Center's tooltip (24p: the shipyard's); the traders cost gold only (no lumber: more
+            # gold instead -- 24p 15 + 80 lumber / 125 + 250 lumber)
+            "o04M": {"utub": "The Enterprise's trading house.|n|cfff5962dTrains:|R Trading Zeppelins and Traders, "
+                             "which trade on their own between it and the goblin towns and bring back gold."},
+            "nzep": {"ugol": 60},
+            "o04S": {"ugol": 150}},
 }
 SETS = [FORSAKEN, KEZAN]
 

@@ -9,12 +9,13 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.58.0` on `botified-dev` (0.58.0: Kul Tiras -> Kezan Enterprise rebuilt; before: 0.57.4 the
-  free slots' alliances). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.59.0` on `botified-dev` (0.59.0: Kezan's 24p Trading Center and trade, Oil Refining, the
+  end goal on the scoreboard, arriving factions on bot slots get production; 0.58.0: Kul Tiras -> Kezan rebuilt). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.58.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree, Oil Rigs, the 24p goblin
-  quests). **Next work**: the 0.58 playtest (`TODO.md` step 3), then step 4 the Forsaken's small issues -- above all
-  "a faction arriving on a bot slot builds nothing" (Sunfury, the Enterprise).
+- **0.58.0 / 0.59.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
+  Oil Rigs, Oil Refining, trade, the 24p goblin quests, the end goal on the scoreboard). **Next work**: the 0.59
+  playtest and the maintainer's answers (`TODO.md` step 3: pseudo mercenary centre, what the end goal does), then
+  step 4 the Forsaken's small issues.
 - **How we work**: the maintainer edits nothing by hand. The assistant clones the repo in the sandbox, makes the
   change, runs every check, and hands over ONE `git apply` patch (plus a full patch when the base is unclear); the
   maintainer applies, commits, builds on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and
@@ -24,7 +25,7 @@ Read this first. Then, depending on the task:
   `using_check.py`, `scope_check.py`, a tree-sitter C# syntax pass, `tools/shattered-legacies/content/check_json.py`
   after map data changes, `git apply --check` on a clean copy of the base.
 - **Generators** (never edit their output): `gen_hourglass.py` (Hourglass), `import_24p.py` (24p objects, object
-  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
+  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `kezan_objects.py` (Oil Refining), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
 
 ## The project in one paragraph
 
@@ -95,6 +96,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | a turning point (fallback, betrayal, sub path, pick) | `TurningPointDef` in `TimelineCatalog` -> a WL quest (`TurningPointQuest`) with a trigger + the Hourglass decision | `Timelines/Core/` |
 | a 24p faction whose ids the main map uses for something else (WL's creep versions) | import set with `"force": True`; preplaced creep units become the copies with `StartArea.Take(..., <X>Objects.MainEquivalents)` | `import_24p.py`, `KultirasFallback` |
 | a count only code knows (rigs built, ...) | `ObjectiveCounter` (`Add(n)`) | `Timelines/Core/` |
+| an end goal "hold N gold" | `ObjectiveHoldGold(n)` | `Timelines/Core/` |
+| a line on the scoreboard (end goals, a faction's numbers) | `ScoreboardLines.Add(() => text or "")` | `Rules/` |
+| a hand-made object of a fork faction | a small generator next to `import_24p.py` (`forsaken_heroes.py`, `kezan_objects.py`) | `tools/shattered-legacies/content/` |
 | leave behind to a lore heir | `LeaveBehind.ToHeir(p, "<faction>", keep)` (heir on the same team, else neutral hostile) | `Timelines/Core/Effects/` |
 | its trigger | any WL objective (`MakeTrigger`); `ObjectiveHqLost` (default), `ObjectiveLegendKilledBy` | `Timelines/Core/` |
 | the decision button | `tools/shattered-legacies/timelines/gen_hourglass.py` (decision + condition research, button position) | generator |

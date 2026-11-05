@@ -4,6 +4,29 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.59.0
+Kezan Enterprise, the rest (maintainer after the 0.58 playtest), and arriving factions on bot slots. Version v0.59.0.
+- **The Trading Center from the 24p** (maintainer: needed for the oil part to work right): the preplaced one becomes
+  the 24p's (`oZkj`). It trains **Trading Zeppelins** (at most 16) and **Traders** (ships, at most 10), which
+  cannot be controlled and trade on their own (`KezanEnterpriseTrade`, the 24p's GUI triggers rebuilt): to a random
+  goblin town -- Booty Bay, Ratchet, Gadgetzan, Venture Bay, Fuselight, Winterspring; ships to the town's harbour
+  (found offline on the pathing map, all reachable by sea from Kezan) -- and back, paid by the distance (1 / 2 gold
+  per 1,000 of round trip, a full fleet about +400 gold per minute). Gold only: 60 / 150 (the 24p's lumber dropped).
+- **The creep market is gone** (`KezanEnterpriseMarket` removed): maintainer -- the pseudo mercenary centre comes
+  another way (`TODO.md`).
+- **Oil Refining** (the upgradeable refinery): 3 levels at the Oil Supply (150 / 250 / 350 gold), each +10 gold per
+  minute per Oil Supply and +5 per Oil Platform. Hand-made (`tools/shattered-legacies/content/kezan_objects.py`,
+  `RZko`).
+- **The end goal on the scoreboard** (maintainer): "The Trade Prince's Fortune" -- hold 20,000 gold at once
+  (`Core/ObjectiveHoldGold`). From the Enterprise's arrival the scoreboard shows, under the teams: the gold held /
+  20,000 (then "reached"), the oil income per minute, the gold earned by trade. Reaching it is announced to everyone;
+  what it does beyond that is open (the fork's win rule, `TODO.md`).
+- **The scoreboard takes extra lines** (`[SL]` hook in WL's `FactionMultiboard.ExtraLines`; the fork's lines:
+  `Rules/ScoreboardLines`, refreshed every 2 s).
+- **A faction that arrives on a bot slot gets its production buildings** (Sunfury / the Enterprise on a bot trained
+  nothing -- bots never build): 3 s after the turning point, one of each production building it lacks around its base
+  and an altar if it has none, as every bot got at the game start (`AiApi.GiveStarterProduction`, bot).
+
 ## 0.58.0
 Kul Tiras -> Kezan Enterprise rebuilt on the Forsaken's building blocks (`TODO.md` step 3). Version v0.58.0.
 - **A faction of its own**: `Timelines/Factions/KezanEnterprise/KezanEnterpriseFaction` + generated object limits

@@ -47,84 +47,163 @@ namespace WarcraftLegacies.Source.Ai
       _starterProductionDone = true;
       for (var b = 0; b < SimpleBot.Bots.Count; b++)
       {
-        var p = SimpleBot.Bots[b];
-        var fac = p.GetPlayerData().Faction;
-        if (fac == null || !SimpleBot.HasPerks(p))
+        PlaceProduction(SimpleBot.Bots[b], false);
+      }
+    }
+
+    // 0.58: the starter production of ONE bot. `arriving` = a faction that came later (a fallback, a split --
+    // AiApi.GiveStarterProduction): the centre is its base (a town hall, else any structure) instead of its workers /
+    // the slot's start location (which belongs to the faction it replaced), and it also gets an altar if it has none
+    // (the game-start pass leaves that to the starter kit at 0:20 / 3:00).
+    internal static void PlaceProduction(player p, bool arriving)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (fac == null || !SimpleBot.HasPerks(p))
+      {
+        return;
+      }
+
+      float cx = 0f, cy = 0f;
+      if (!FindCentre(p, arriving, out cx, out cy))
+      {
+        var loc = GetPlayerStartLocation(p);
+        cx = GetStartLocationX(loc);
+        cy = GetStartLocationY(loc);
+      }
+
+      var usedX = new List<float>();
+      var usedY = new List<float>();
+      var placed = "";
+      var failed = "";
+      var seen = new List<int>();
+      for (var c = 0; c < ProductionCats.Length; c++)
+      {
+        if (!fac.TryGetObjectByCategory(ProductionCats[c], out var ids) || ids == null)
         {
           continue;
         }
 
-        // centre: the bot's workers, else its start location
-        float cx = 0f, cy = 0f;
-        var n = 0;
-        var g = CreateGroup();
-        GroupEnumUnitsOfPlayer(g, p, null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
+        for (var i = 0; i < ids.Count; i++)
         {
-          GroupRemoveUnit(g, u);
-          if (IsUnitType(u, UNIT_TYPE_PEON))
+          var t = ids[i];
+          if (SimpleBot.ListHas(seen, t) || !AiData.Trains.ContainsKey(t) || GetPlayerTechCount(p, t, true) > 0)
           {
-            cx += GetUnitX(u);
-            cy += GetUnitY(u);
-            n++;
+            continue; // already handled, trains nothing we use, or already owned
+          }
+
+          seen.Add(t);
+          if (AiLegion.FindBuildSpot(cx, cy, usedX, usedY))
+          {
+            CreateUnit(p, t, SimpleBot._spotX, SimpleBot._spotY, 270f);
+            usedX.Add(SimpleBot._spotX);
+            usedY.Add(SimpleBot._spotY);
+            placed = placed + " " + GetObjectName(t);
+          }
+          else
+          {
+            failed = failed + " " + GetObjectName(t);
           }
         }
+      }
 
-        DestroyGroup(g);
-        if (n > 0)
+      var altar = arriving ? MissingAltar(p, fac) : 0;
+      if (altar != 0)
+      {
+        if (AiLegion.FindBuildSpot(cx, cy, usedX, usedY))
         {
-          cx /= n;
-          cy /= n;
+          CreateUnit(p, altar, SimpleBot._spotX, SimpleBot._spotY, 270f);
+          placed = placed + " " + GetObjectName(altar);
         }
         else
         {
-          var loc = GetPlayerStartLocation(p);
-          cx = GetStartLocationX(loc);
-          cy = GetStartLocationY(loc);
-        }
-
-        var usedX = new List<float>();
-        var usedY = new List<float>();
-        var placed = "";
-        var failed = "";
-        var seen = new List<int>();
-        for (var c = 0; c < ProductionCats.Length; c++)
-        {
-          if (!fac.TryGetObjectByCategory(ProductionCats[c], out var ids) || ids == null)
-          {
-            continue;
-          }
-
-          for (var i = 0; i < ids.Count; i++)
-          {
-            var t = ids[i];
-            if (SimpleBot.ListHas(seen, t) || !AiData.Trains.ContainsKey(t) || GetPlayerTechCount(p, t, true) > 0)
-            {
-              continue; // already handled, trains nothing we use, or already owned
-            }
-
-            seen.Add(t);
-            if (AiLegion.FindBuildSpot(cx, cy, usedX, usedY))
-            {
-              CreateUnit(p, t, SimpleBot._spotX, SimpleBot._spotY, 270f);
-              usedX.Add(SimpleBot._spotX);
-              usedY.Add(SimpleBot._spotY);
-              placed = placed + " " + GetObjectName(t);
-            }
-            else
-            {
-              failed = failed + " " + GetObjectName(t);
-            }
-          }
-        }
-
-        if (placed != "" || failed != "")
-        {
-          SimpleBot.LogPin(SimpleBot.FacName(p) + ": starter production --" + (placed != "" ? " placed:" + placed : "")
-                           + (failed != "" ? " | NO ROOM:" + failed : ""));
+          failed = failed + " " + GetObjectName(altar);
         }
       }
+
+      if (placed != "" || failed != "")
+      {
+        SimpleBot.LogPin(SimpleBot.FacName(p) + (arriving ? ": arrival" : ": starter") + " production --"
+                         + (placed != "" ? " placed:" + placed : "") + (failed != "" ? " | NO ROOM:" + failed : ""));
+      }
+    }
+
+    // the centre for the production buildings: game start = the bot's workers; arriving = its town hall, else any
+    // structure, else its workers. False = none (the caller takes the start location).
+    private static bool FindCentre(player p, bool arriving, out float x, out float y)
+    {
+      float wx = 0f, wy = 0f, sx = 0f, sy = 0f, hx = 0f, hy = 0f;
+      var nw = 0;
+      var haveStructure = false;
+      var haveHall = false;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
+        {
+          continue;
+        }
+
+        if (IsUnitType(u, UNIT_TYPE_PEON))
+        {
+          wx += GetUnitX(u);
+          wy += GetUnitY(u);
+          nw++;
+        }
+        else if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
+        {
+          if (!haveHall && IsUnitType(u, UNIT_TYPE_TOWNHALL))
+          {
+            hx = GetUnitX(u);
+            hy = GetUnitY(u);
+            haveHall = true;
+          }
+
+          if (!haveStructure)
+          {
+            sx = GetUnitX(u);
+            sy = GetUnitY(u);
+            haveStructure = true;
+          }
+        }
+      }
+
+      DestroyGroup(g);
+      if (arriving && (haveHall || haveStructure))
+      {
+        x = haveHall ? hx : sx;
+        y = haveHall ? hy : sy;
+        return true;
+      }
+
+      if (nw > 0)
+      {
+        x = wx / nw;
+        y = wy / nw;
+        return true;
+      }
+
+      x = 0f;
+      y = 0f;
+      return false;
+    }
+
+    // the cheapest altar of the faction if the bot owns none (0 = has one, or the faction has none)
+    private static int MissingAltar(player p, Faction fac)
+    {
+      var altars = new List<int>();
+      SimpleBot.AddCategory(fac, UnitCategory.Altar, altars);
+      for (var i = 0; i < altars.Count; i++)
+      {
+        if (GetPlayerTechCount(p, altars[i], true) > 0)
+        {
+          return 0;
+        }
+      }
+
+      return Cheapest(altars);
     }
 
     internal static void RunStarterKit()

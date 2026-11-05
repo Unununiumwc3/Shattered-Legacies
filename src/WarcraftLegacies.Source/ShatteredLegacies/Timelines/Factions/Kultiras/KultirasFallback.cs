@@ -15,11 +15,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
   //   2. leave behind (inheritance rule): everything Kul Tiras owns goes to its lore heir Stormwind if Stormwind still
   //      plays on Kul Tiras' team, otherwise removed / Neutral Hostile -- except Katherine and the Hourglass
   //   3. relocate: the base preplaced on Kezan (Regions.KezanUnlock, hidden until now) is taken over, WL's creep
-  //      goblins replaced by the Enterprise's copies; Kezan's CP joins; start kit (Altar of Industry, 2 Oil Supplies,
+  //      goblins replaced by the Enterprise's copies (the Trading Center too, 0.59); Kezan's CP joins; start kit (Altar of Industry, 2 Oil Supplies,
   //      4 Builders)
   //   4. heroes: Katherine Proudmoore leads the survivors (moved, revived or created)
   //   5. team: its own ("Kezan Enterprise Pact"), allied with no one
-  //   6. mechanics: oil (KezanEnterpriseOil) and the creep market (KezanEnterpriseMarket)
+  //   6. mechanics: oil (KezanEnterpriseOil), trade (KezanEnterpriseTrade, 0.59: the 24p Trading Center); the end
+  //      goal (20,000 gold), oil and trade on the scoreboard (KezanEnterpriseGoal). 0.59: the creep market of the main
+  //      map's Trading Center is gone (maintainer: the pseudo mercenary centre comes another way).
   internal static class KultirasFallback
   {
     private static List<unit> _startUnits = new();
@@ -28,6 +30,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
     internal static void Prepare()
     {
       _startUnits = StartArea.Prepare(Regions.KezanUnlock, RescuePreparationMode.HideNonStructures);
+      KezanEnterpriseGoal.Setup(); // its lines on the scoreboard (empty until the Enterprise plays)
     }
 
     internal static void Run(player p, TurningPointDef def)
@@ -74,7 +77,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       p.GetPlayerData().Faction?.Unally(); // WL's own unally: a new team "<name> Pact", the scoreboard follows
       SplitFaction.UnallyOutsideTeam(p);   // WL's teams only add alliances: the lobby's South Alliance ends here
       KezanEnterpriseOil.Start(p);
-      KezanEnterpriseMarket.Start(p);
+      KezanEnterpriseTrade.Start(p);
       p.RepositionCamera(start);
       AiApi.LogPin("Kul Tiras fallback -> Kezan Enterprise: old holdings to "
                    + (heir != null ? "Stormwind" : "neutral hostile") + ", " + I2S(taken) + " start units, "

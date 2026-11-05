@@ -305,7 +305,7 @@ Open for most factions. Known so far:
 | P4 Scourge          | The Ascension (WL)                       | no                |
 | P2 Valiance         | Lich King Bolvar                         | no                |
 | P1 Twilight's Hammer | The Hour of Twilight: Deathwing returns | no                |
-| P23 Kezan           | acquire 20,000 gold                      | no                |
+| P23 Kezan           | acquire 20,000 gold (0.59: hold it at once, on the scoreboard) | no |
 
 ---
 
@@ -333,7 +333,7 @@ Open for most factions. Known so far:
 
 ## 13. Open
 
-- End goals for the remaining factions; Kezan's number.
+- End goals for the remaining factions; what reaching an end goal does (Kezan's 20,000 gold: confirmed, 0.59).
 - Fallbacks of Skywall and the Black Empire (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers); D17 depends on it.
 - Name of the Dwarven Expedition.
 - Remove the preplaced units of P6, P15, P18 at start? [ai] `PlayerDistributor` for defections.

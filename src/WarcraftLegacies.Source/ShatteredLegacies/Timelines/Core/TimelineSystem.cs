@@ -243,6 +243,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       if (def.Run != null)
       {
         GrantArrivalIncome(p);                  // real new starts (not the placeholders)
+        if (AiApi.IsBot(p))
+        {
+          // 0.58: a bot never builds -- the new faction gets its production buildings like every bot at the game start
+          // (Sunfury / the Kezan Enterprise on a bot slot trained nothing); a moment later, once its base is taken
+          var bot = p;
+          var t = CreateTimer();
+          TimerStart(t, 3f, false, () =>
+          {
+            DestroyTimer(t);
+            AiApi.Safe("arrival production", () => AiApi.GiveStarterProduction(bot));
+          });
+        }
       }
 
       EliminationRule.GiveGrace(p, GraceTurns); // a new start cannot be eliminated at once

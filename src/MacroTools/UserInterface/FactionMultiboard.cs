@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System; // [SL] (0.58) extra lines
+using System.Collections.Generic;
 using MacroTools.ControlPoints;
 using MacroTools.Exceptions;
 using MacroTools.Extensions;
@@ -27,6 +28,16 @@ public sealed class FactionMultiboard
   private const float WidthTeam = WidthFaction + WidthCp + WidthIncome;
 
   private static bool _initialized;
+
+  /// <summary>[SL] (0.58): extra lines under the teams (a fork's end goals, e.g. the Kezan Enterprise's gold) -- each
+  /// provider returns its line, or "" for none. <see cref="RefreshExtraLines"/> updates them.</summary>
+  public static List<Func<string>> ExtraLines { get; } = new();
+
+  /// <summary>[SL] (0.58): updates the extra lines (a line that appears or vanishes re-renders the board).</summary>
+  public static void RefreshExtraLines() => Instance?.UpdateExtraRows();
+
+  private int _extraRow; // [SL] (0.58)
+  private int _extraCount; // [SL] (0.58)
 
   private readonly Dictionary<Faction, int> _rowsByFaction = new();
   private readonly Dictionary<Team, int> _rowsByTeam = new();
@@ -178,7 +189,64 @@ public sealed class FactionMultiboard
         }
       }
     }
+    row += AddExtraRows(row); // [SL] (0.58)
     _multiboard.Rows = row;
+  }
+
+  // [SL] (0.58): the extra lines, styled like a team row; returns how many
+  private int AddExtraRows(int row)
+  {
+    _extraRow = row;
+    _extraCount = 0;
+    foreach (var line in ExtraLines)
+    {
+      var text = line.Invoke();
+      if (string.IsNullOrEmpty(text))
+      {
+        continue;
+      }
+
+      SetExtraRow(row + _extraCount, text);
+      _extraCount++;
+    }
+
+    return _extraCount;
+  }
+
+  // [SL] (0.58)
+  private void UpdateExtraRows()
+  {
+    var texts = new List<string>();
+    foreach (var line in ExtraLines)
+    {
+      var text = line.Invoke();
+      if (!string.IsNullOrEmpty(text))
+      {
+        texts.Add(text);
+      }
+    }
+
+    if (texts.Count != _extraCount)
+    {
+      Render();
+      return;
+    }
+
+    for (var i = 0; i < texts.Count; i++)
+    {
+      SetExtraRow(_extraRow + i, texts[i]);
+    }
+  }
+
+  // [SL] (0.58)
+  private void SetExtraRow(int row, string text)
+  {
+    var mbi = _multiboard.GetItem(row, ColumnTeam);
+    mbi.SetText(text);
+    mbi.SetWidth(WidthTeam);
+    mbi.SetVisibility(true, false);
+    _multiboard.GetItem(row, ColumnCp).SetVisibility(false, false);
+    _multiboard.GetItem(row, ColumnIncome).SetVisibility(false, false);
   }
 
   private static void RegisterFaction(Faction faction)

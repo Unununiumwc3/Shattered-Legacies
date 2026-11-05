@@ -32,6 +32,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const int WarZeppelin = 1750756149; // hZk5 (24p h091)
     internal const int FuelTransport = 1968859952; // uZk0 (24p u028)
     internal const int OilRig = 1851419442; // nZk2 (24p n0AQ)
+    internal const int TradingCenter = 1868196714; // oZkj (24p o04M)
+    internal const int TradingZeppelin = 1851419445; // nZk5 (24p nzep)
+    internal const int Trader = 1868196715; // oZkk (24p o04S)
     internal const int Gallywix = 1331325801; // OZki (24p O04N)
     internal const int Gazlowe = 1314548531; // NZk3 (24p Ntin)
     internal const int Noggenfogger = 1314548532; // NZk4 (24p Nalc)
@@ -70,6 +73,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       1848653362, 1851419441, // n062 -> nZk1
       1747990618, 1750756148, // h08Z -> hZk4
       1747990833, 1750756149, // h091 -> hZk5
+      1865430093, 1868196714, // o04M -> oZkj
       1328559182, 1331325801, // O04N -> OZki
       1316252014, 1314548531, // Ntin -> NZk3
       1315007587, 1314548532, // Nalc -> NZk4
