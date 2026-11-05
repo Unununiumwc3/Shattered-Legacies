@@ -4,6 +4,15 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.57.4
+Fix from the 0.57.3 playtest. Version v0.57.4.
+- **Alliances of the free slots**: WL's lobby setup (`Info.json`) put every slot outside the lobby -- also P11, P14,
+  P20 -- into the "Scourge, Legion" force (allied, shared vision). WL's teams only add alliances, never remove
+  them, so Quel'thalas on P11 stayed allied with the Scourge and the Legion (their units healed it, it only fought
+  the Forsaken) although the scoreboard showed the right teams. The three slots are now only in the "NPC" force, and
+  a split makes everyone outside the slot's team an enemy, both ways (`SplitFaction.UnallyOutsideTeam`).
+- Not solved yet (`TODO.md`): Sunfury on a bot slot builds no troops.
+
 ## 0.57.3
 Fixes from the 0.57.2 playtest. Version v0.57.3.
 - **Sunfury on a bot slot did not happen** (scoreboard changed, the units stayed Quel'thalas'): registering Sunfury

@@ -9,7 +9,8 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.57.3` on `botified-dev` (0.57.3: Sunfury on a bot slot, slot names, late factions' quests). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.57.4` on `botified-dev` (0.57.3: Sunfury on a bot slot, slot names, late factions' quests;
+  0.57.4: the free slots' alliances). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
 - **Next work**: `TODO.md` "Order of the work" -- step 3 **Kul Tiras -> Kezan Enterprise rebuilt** with the
   Forsaken's building blocks (table below); step 4 the Forsaken's small issues.
@@ -125,6 +126,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 - WL hides every Neutral Passive unit in `Regions.HideUnitBottomLeft` at setup -- anything placed in the south-west
   squares must be created a moment later.
 - Capitals are never destroyed (the attacker takes them over): quest objectives use `ObjectiveControlCapital`.
+- Alliances start from the lobby forces (`Info.json`); WL's teams only ADD alliances, never remove them. A player
+  who changes sides needs an explicit unally (`SplitFaction.UnallyOutsideTeam`). WL puts every non-lobby slot into the
+  "Scourge, Legion" force.
 - A faction that arrives mid-game registers its quests then: WL code that schedules fixed turns failed for past
   turns -- always register arriving factions through `SwapFaction.RegisterArriving` (deadline shift + turn clamp).
 - Successors keep the player's colour (`Faction.SetPlayerColor`, set before the swap); WL deadlines of arriving

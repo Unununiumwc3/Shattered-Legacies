@@ -69,13 +69,19 @@ setup, to hide Neutral Passive units placed there (none are); no other WL or bot
   mountain) when they are polished.
 
 Small issues (maintainer, 0.57 playtest), in the order I would take them:
+- [ai] **Sunfury on a bot slot builds no troops** (0.57.3 playtest, dump 22m45s: P11 Sunfury gold 1790, food 5/100,
+  army 1 -- nothing trained since the fallback). The swap itself works now. Suspects: the start area gives Sunfury no
+  production building (Holding + 5 `n0E2`), and the bot builds the starting structures of a faction only at the
+  game start (`AiMissions.PlaceStarter` and the starter kit), not for a faction that arrives later -- check what
+  starts a bot's building plan, then give arriving bot factions the same (a bot API call from `TimelineSystem`).
 - [ai] **The Undercity in the bot's node system** (maintainer, 0.57.3): the bot does not know the square or the
   gates. Plan without touching the bot's generated graph: an extension point in the bot API --
   `AiApi.AddNode(name, x, y)` + `AiApi.AddPortalEdge(fromNode, toNode, gate)` -- that the fork calls from
   `Timelines/Factions/Forsaken/` (like `RegisterHeroes`): Lordaeron City <-> gate <-> the Undercity. Then the
   Undercity can also get a real control point (a CP unit created there, registered with WL's `ControlPointManager`).
 - [ai] The Undercity's gates: a ruin model instead of the waygate (maintainer).
-- [you] Watch: after the betrayal, did Quel'thalas on P11 really lose Silvermoon to the Forsaken (the 0.57.2 dump
+- Explained (0.57.4): Quel'thalas on P11 fought only the Forsaken because it was still allied with the Scourge and
+  the Legion (lobby force). Earlier note: after the betrayal, did Quel'thalas on P11 really lose Silvermoon to the Forsaken (the 0.57.2 dump
   shows Silvermoon owned by the Forsaken at 27:25)? The teams were right (P11 in North Alliance); the bots chose
   their targets by their routes -- Scourge / Legion did not go for Quel'thalas. If the Forsaken never took it, the
   split did not move all units.
