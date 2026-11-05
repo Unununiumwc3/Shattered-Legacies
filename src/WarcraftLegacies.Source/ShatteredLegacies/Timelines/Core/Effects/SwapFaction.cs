@@ -25,13 +25,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       }
 
       data.Faction = successor;
+      NameSlot(p, successor);
       RegisterArriving(successor);
     }
 
     // registers a faction that arrives in the middle of the game: its quests' WL deadlines count from now
+    // 0.57.3: and WL turn callbacks for turns already past run on the next turn (GameTimeManager.ClampPastTurns)
     internal static void RegisterArriving(Faction faction)
     {
       ObjectiveExpire.ExpirationOffset = GameTimeManager.Turn;
+      GameTimeManager.ClampPastTurns = true;
       try
       {
         FactionManager.Register(faction);
@@ -39,6 +42,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       finally
       {
         ObjectiveExpire.ExpirationOffset = 0;
+        GameTimeManager.ClampPastTurns = false;
+      }
+    }
+
+    // 0.57.3: a free slot (computer "NPC" in the lobby) carries its faction's name -- shown when its units are hovered
+    internal static void NameSlot(player p, Faction faction)
+    {
+      for (var i = 0; i < SplitFaction.FreeSlotOrder.Length; i++)
+      {
+        if (SplitFaction.FreeSlotOrder[i] == GetPlayerId(p))
+        {
+          SetPlayerName(p, faction.Name);
+        }
       }
     }
   }

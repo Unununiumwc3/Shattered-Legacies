@@ -91,7 +91,8 @@ FORSAKEN = {
             # the Graveyard together with Flight (R09X); no Tier 4 for the harbour itself
             "u01A": {"ureq": "RZs1"},
             "u01J": {"ures": "R02A,Rhme,Rhar,=R04R,R09X"},
-            "uubs": {"ureq": "=R04R"}, "udes": {"ureq": "=R04R"},  # 0.57.1: their ships need Navigation  # "=" = the main map's id, not the 24p one
+            "uubs": {"ureq": "=R04R"}, "udes": {"ureq": "=R04R"},  # 0.57.1: their ships need Navigation
+            "R02A": {"glmb": 10, "glmm": 0},  # 0.57.3 (maintainer): Chaos Infusion costs 10 knowledge per level  # "=" = the main map's id, not the 24p one
             # 0.57 (maintainer): the Plaguetorium is the only troop building before Sylvanas reaches level 6 (RZs1,
             # "The Banshee's Rise", forsaken_heroes.py / QuestForsakenRise)
             "u014": {"ureq": "h08A,RZs1"}, "u016": {"ureq": "h08A,RZs1"}},

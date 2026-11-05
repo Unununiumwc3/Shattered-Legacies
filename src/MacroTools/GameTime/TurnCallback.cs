@@ -32,6 +32,18 @@ internal sealed class TurnCallback
 
     var currentTurn = GameTimeManager.Turn;
 
+    // [SL] (0.57.3): while a faction arrives mid-game, callbacks for turns already past run on the next turn instead of
+    // failing ("Cannot register callback for turn 18 when current turn is 27" stopped Sunfury on a bot slot)
+    if (GameTimeManager.ClampPastTurns && startTurn <= currentTurn)
+    {
+      if (endTurn != Infinite)
+      {
+        endTurn = Math.Max(endTurn, currentTurn + 1) + (currentTurn + 1 - startTurn);
+      }
+
+      startTurn = currentTurn + 1;
+    }
+
     if (startTurn <= currentTurn)
     {
       throw new ArgumentException($"Cannot register callback for turn {startTurn} when current turn is {currentTurn}", nameof(startTurn));

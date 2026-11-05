@@ -50,6 +50,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       if (old != null)
       {
         slot.GetPlayerData().Faction = old; // the old faction (and its colour) on the free slot
+        SwapFaction.NameSlot(slot, old);    // 0.57.3: not "NPC"
       }
 
       var g = CreateGroup();

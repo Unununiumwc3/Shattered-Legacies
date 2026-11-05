@@ -89,6 +89,8 @@ ShatteredLegacies/
 | `MacroTools/Utils/RefundSystem.cs` | summoned units have no items to drop (a WL bug) -- could go upstream | 0.57 |
 | `MacroTools/GameTime/GameTimeManager.cs` | `TurnTimeRemaining` (read-only, for the bot's quest timing) -- part of the bot's PR | 0.57.2 |
 | `Objectives/TurnBased/ObjectiveExpire.cs` | `ExpirationTurn` (read-only, for the bot) -- part of the bot's PR | 0.57.2 |
+| `MacroTools/GameTime/TurnCallback.cs`, `GameTimeManager.cs` | `ClampPastTurns`: while a faction arrives mid-game, callbacks for past turns run on the next turn | 0.57.3 |
+| `Objectives/TurnBased/ObjectiveTurn.cs` | the target turn counts from a mid-game arrival (`ExpirationOffset`) | 0.57.3 |
 | `mapdata/WarcraftLegacies/Info.json` | three computer slots "NPC" (P11, P14, P20) and their force -- the free slots for splits | 0.57.1 |
 | `README.md` (repository root) | the fork's README | 0.39.9 |
 

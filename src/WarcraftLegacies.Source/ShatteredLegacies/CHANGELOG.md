@@ -4,6 +4,20 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.57.3
+Fixes from the 0.57.2 playtest. Version v0.57.3.
+- **Sunfury on a bot slot did not happen** (scoreboard changed, the units stayed Quel'thalas'): registering Sunfury
+  at turn 27 failed -- one of its quests waits for a fixed turn (18) that had passed ("Cannot register callback for
+  turn 18 when current turn is 27"), which stopped the swap halfway. While a faction arrives, WL turn callbacks for
+  past turns now run on the next turn (`GameTimeManager.ClampPastTurns`, `[SL]` in `TurnCallback`), and
+  `ObjectiveTurn` counts from the arrival like the deadlines.
+- **The free slot showed "NPC"** when its units were hovered: the slot takes its faction's name (split, swaps).
+- **Scarlet Crusade's "A Once Great People" was completed for the bot at once** (bot): starting quests without a
+  deadline are completed only for factions of the game start; deadline quests only if the deadline lies after the
+  faction's arrival (WL's Scarlet Crusade arrives with deadlines already past).
+- **Chaos Infusion** (Graveyard) costs 10 knowledge per level besides its gold (maintainer).
+- **The Altar of the Queen** becomes destructible when the Forsaken are free ("Free Will").
+
 ## 0.57.2
 Bot quest timing for starts and turning points; wrap-up of the 0.52-0.57 session. Version v0.57.2.
 - The free slots P11 / P14 / P20 are computer players fixed by the map (the map's "fixed player settings"): humans
