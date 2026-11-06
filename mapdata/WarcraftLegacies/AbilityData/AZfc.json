@@ -71,7 +71,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Increases a target friendly unit's damage by <ACif,DataA1,%>% and causes it to be refunded for 75% of the mana it spends on spells. |nLasts <ACif,Dur1> seconds."
+      "Value": "Increases a target friendly unit's damage by <AZfc,DataA1,%>% and causes it to be refunded for 75% of the mana it spends on spells. |nLasts <AZfc,Dur1> seconds."
     },
     {
       "Id": "auar",

@@ -27,18 +27,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       AddQuest(engineering);
       StartingQuest = engineering;
       AddQuest(new QuestGadgetzan());
-      // capitals of a slot whose pick may have replaced them: only while they exist (WL's objective needs the unit)
-      if (AllLegends.Sentinels.Feathermoon.Unit != null && AllLegends.Sentinels.Auberdine.Unit != null)
-      {
-        AddQuest(new QuestWesternExpansion());
-      }
-
+      // 0.60: no Western Expansion (maintainer: the Sentinels are probably dead by then)
+      // a capital of a slot whose pick may have replaced it: only while it exists (WL's objective needs the unit)
       if (AllLegends.Druids.Nordrassil.Unit != null)
       {
         AddQuest(new QuestLumberMarket());
       }
 
-      AddQuest(new QuestGoblinEmpire());
+      AddQuest(new QuestMasterOfTheSlaveTrade()); // 0.60: replaces Goblin Empire (the Refugee Slave Camps)
       var fortune = new QuestTradePrincesFortune(); // the end goal (on the scoreboard: KezanEnterpriseGoal)
       AddQuest(fortune);
       KezanEnterpriseGoal.Quest = fortune;

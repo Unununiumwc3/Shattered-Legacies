@@ -175,7 +175,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "The Alchemist sprays poison all around him. |n|n|cffffcc00Level 1|r - <AEfk,DataA1> damage per target. |n|cffffcc00Level 2|r - <AEfk,DataA2> damage per target. |n|cffffcc00Level 3|r - <AEfk,DataA3> damage per target. |n|cffffcc00Level 4|r - <AEfk,DataA4> damage per target."
+      "Value": "The Alchemist sprays poison all around him. |n|n|cffffcc00Level 1|r - <AZfq,DataA1> damage per target. |n|cffffcc00Level 2|r - <AZfq,DataA2> damage per target. |n|cffffcc00Level 3|r - <AZfq,DataA3> damage per target. |n|cffffcc00Level 4|r - <AZfq,DataA4> damage per target."
     },
     {
       "Level": 4,
@@ -187,13 +187,13 @@
       "Level": 3,
       "Id": "aub1",
       "Type": 3,
-      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AEfk,DataA3> damage."
+      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AZfq,DataA3> damage."
     },
     {
       "Level": 4,
       "Id": "aub1",
       "Type": 3,
-      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AEfk,DataA4> damage."
+      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AZfq,DataA4> damage."
     },
     {
       "Id": "anam",
@@ -227,13 +227,13 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AEfk,DataA1> damage."
+      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AZfq,DataA1> damage."
     },
     {
       "Level": 2,
       "Id": "aub1",
       "Type": 3,
-      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AEfk,DataA2> damage."
+      "Value": "The Alchemist sprays poison all around him, damaging nearby enemies. Each knife does <AZfq,DataA2> damage."
     },
     {
       "Id": "amat",

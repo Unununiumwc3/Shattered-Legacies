@@ -134,6 +134,11 @@
       "Id": "auar",
       "Type": 3,
       "Value": "ReplaceableTextures\\CommandButtons\\BTNDalaranMutant.blp"
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Raise Plaguelings - [|cffffcc00Level %d|r]"
     }
   ]
 }

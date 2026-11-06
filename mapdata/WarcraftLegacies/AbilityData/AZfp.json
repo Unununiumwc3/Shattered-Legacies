@@ -175,7 +175,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "Causes rains of acid energy to pour down in a large area, damaging enemy units.|nLasts <AEtq,Dur1> seconds. |n|n|cffffcc00Level 1|r - Deals 20 hit points per second. 180 seconds cooldown. |n|cffffcc00Level 2|r - Deals 25 hit points per second. 165 seconds cooldown. |n|cffffcc00Level 3|r - Deals 35 hit points per second. 150 seconds cooldown. "
+      "Value": "Causes rains of acid energy to pour down in a large area, damaging enemy units.|nLasts <AZfp,Dur1> seconds. |n|n|cffffcc00Level 1|r - Deals 20 hit points per second. 180 seconds cooldown. |n|cffffcc00Level 2|r - Deals 25 hit points per second. 165 seconds cooldown. |n|cffffcc00Level 3|r - Deals 35 hit points per second. 150 seconds cooldown. "
     },
     {
       "Level": 1,

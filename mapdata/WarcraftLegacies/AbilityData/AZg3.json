@@ -177,7 +177,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "Unleashes Banshees to attack the Dark Ranger enemies.|n|n|cffffcc00Level 1|r - 20 spirits. |n|cffffcc00Level 2|r - 30 spirits.|n|cffffcc00Level 3|r - 40 spirits.|n|nLasts <AOls,HeroDur1> seconds."
+      "Value": "Unleashes Banshees to attack the Dark Ranger enemies.|n|n|cffffcc00Level 1|r - 20 spirits. |n|cffffcc00Level 2|r - 30 spirits.|n|cffffcc00Level 3|r - 40 spirits.|n|nLasts <AZg3,HeroDur1> seconds."
     },
     {
       "Level": 1,
@@ -201,13 +201,13 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Unleashes ancient spirits which drain enemy health and replenish Sylvanas's health.|nLasts <AOls,HeroDur1> seconds."
+      "Value": "Unleashes ancient spirits which drain enemy health and replenish Sylvanas's health.|nLasts <AZg3,HeroDur1> seconds."
     },
     {
       "Level": 2,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Unleashes ancient spirits which drain enemy health and replenish Sylvanas's health.|nLasts <AOls,HeroDur1> seconds."
+      "Value": "Unleashes ancient spirits which drain enemy health and replenish Sylvanas's health.|nLasts <AZg3,HeroDur1> seconds."
     }
   ]
 }

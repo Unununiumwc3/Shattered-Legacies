@@ -34,6 +34,7 @@ public sealed class ObjectInfoRepository
     AddFactionObjectInfo(ScarletCrusadeObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.ForsakenObjectInfo.GetAllObjectLimits()); // [SL] (0.54)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.KezanEnterpriseObjectInfo.GetAllObjectLimits()); // [SL] (0.58)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.KezanSlaveCampsObjectInfo.GetAllObjectLimits()); // [SL] (0.60)
     AddFactionObjectInfo(ScourgeObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(SentinelsObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(SkywallObjectInfo.GetAllObjectLimits());

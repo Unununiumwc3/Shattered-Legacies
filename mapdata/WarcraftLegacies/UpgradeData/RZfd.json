@@ -58,7 +58,7 @@
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Enables the Precision Shots ability for your Rangers and Farstriders, which provides a <A02H,DataA1>% chance to do <A02H,DataB1> times damage on an attack."
+      "Value": "Enables the Precision Shots ability for your Rangers and Farstriders, which provides a <AZf4,DataA1>% chance to do <AZf4,DataB1> times damage on an attack."
     }
   ]
 }

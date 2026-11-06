@@ -5,6 +5,11 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.60.0
+No bot logic change. Fork data (`gen_ai_data.py`): workers are recognised by `peon` in their type too (the Forsaken
+Acolyte was in the train lists); the Refugee Slave Camps in `SL_BUILDINGS` (a bot ruling a goblin town buys refugees).
+TODO: bots that build with their workers, the food cap while the HQ is under siege (maintainer's proposals).
+
 ## 0.59.0
 - **`AiApi.GiveStarterProduction(player)`**: a faction that arrives on a bot mid-game (a fork's fallback, a split)
   gets the starter production of the game start -- one of each production building of its faction it lacks, around

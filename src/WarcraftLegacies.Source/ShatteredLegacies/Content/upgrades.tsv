@@ -230,7 +230,7 @@ R09P	main	used	Revert Bloodpact	-	Rhde	undead	ReplaceableTextures/CommandButtons
 R09U	main	used	Seal of Blood	(Sunfury)	Rhse	human	ReplaceableTextures\CommandButtons\BTNPotionOfVampirism.blp	h0C9
 R09V	main	used	Storm Crow Form	(Druids)	Rhse	nightelf	ReplaceableTextures\CommandButtons\BTNRavenForm.blp	eaow
 R09W	main	used	Felsteel Refining	(Fel Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNTenebriousArmor.blp	o008,o013,o017,o02Y,o02Z,o030
-R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+12
+R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+13
 R09Y	main	used	Quest Completed: Return to Outland	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R0A7	main	used	Escape to Theramore	(Dalaran)	Rhde	human	ReplaceableTextures\CommandButtons\BTNOldRock.blp	h002
 R0A8	main	used	Your team controls Jaina Proudmoore	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -344,9 +344,8 @@ RZk0	main	used	Wizard Adept Training	(goblin)	Rost	orc	ReplaceableTextures\Comma
 RZk1	main	used	Alchemist Adept Training	(goblin)	Rost	orc	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	oZk6
 RZk2	main	used	Quest Completed: Explosive Engineering	(Frostwolf)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
 RZk3	main	used	Quest Completed: Gadgetzan	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-RZk4	main	used	Quest Completed: Western Expansion	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZk5	main	used	Quest Completed: Lumber Market Crash	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-RZk6	main	used	Quest Completed: Goblin Empire	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZk6	main	used	Master of the Slave Trade	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZk7	main	used	Tier 4	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNFourthUgrade.blp	oZk2
 RZk8	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	oZk5
 RZk9	main	used	Horde War Machine	(Warsong-Quest)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNBundleOfLumber.blp	-
@@ -354,6 +353,27 @@ RZka	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\Comm
 RZkb	main	used	Backpack	(Orc)	Ropm	orc	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
 RZkc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 RZko	main	used	Oil Refining	(Kezan Enterprise)	Rhar	orc	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZk1
+RZr0	main	used	No refugees from Stormwind yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr1	main	used	No refugees from Kul'tiras yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr2	main	used	No refugees from Fel Horde yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr3	main	used	No refugees from Illidan yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr4	main	used	No refugees from Sunfury yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr5	main	used	No refugees from The Exodar yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr6	main	used	No refugees from Black Empire yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr7	main	used	No refugees from Frostwolf yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr8	main	used	No refugees from Warsong yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr9	main	used	No refugees from Skywall yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZra	main	used	No refugees from Ahn'qiraj yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrb	main	used	No refugees from Lordaeron yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrc	main	used	No refugees from Scourge yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrd	main	used	No refugees from Dalaran yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZre	main	used	No refugees from Gilneas yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrf	main	used	No refugees from Scarlet Crusade yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrg	main	used	No refugees from Ironforge yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrh	main	used	No refugees from Quel'thalas yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZri	main	used	No refugees from Legion yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrj	main	used	No refugees from Druids yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrk	main	used	No refugees from Sentinels yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZs1	main	used	Sylvanas reaches level 6	(Forsaken condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow

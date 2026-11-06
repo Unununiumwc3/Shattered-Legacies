@@ -200,6 +200,22 @@ This code base is not the PR.
 
 ## Production follow-ups
 
+- [you/ai] **Bots that build with their workers** (maintainer, 0.59 playtest) -- today a bot never constructs: the
+  starter production is placed at 0:35 and, since 0.59, for a faction that arrives later
+  (`AiApi.GiveStarterProduction`). Proposed rules, checked every 3 min, building free for bots:
+  1. no worker -> train workers (at the town hall);
+  2. at least 2 kinds of unit production building, otherwise build them;
+  3. at least 1 building of each kind the faction has;
+  4. build near the worker-producing building, with a free ring of X around each building (X big enough that every
+     unit can walk around it -- never a fence that closes units in; `AiLegion.FindBuildSpot` checks only the spot);
+  5. at 10 CPs a new main building (one that trains workers) plus 2 production buildings per kind, at a CP closer to
+     the front (about 2 CPs behind it).
+  Open: the workers must really walk there and build (order `build` with the worker; a placement that fails ->
+  next spot), what X is in pathing cells, what "the front" is (`AiRoutes` territory distance?), and the CSharp.lua
+  limits (a new class `AiBuilder`, scheduled in `AiScheduler`).
+- [ai] **Ignore the food cap while the HQ is under siege** (maintainer, 0.59 playtest): a bot whose HQ (or the capital
+  it defends) is under attack trains past `AiBudget`'s cap until the threat is gone.
+
 - [ai] **Autocast** (maintainer, 0.46.3): turn autocast ON for bot units whose ability supports it but starts off
   (Blood Knight Squire); heroes with autocast abilities (Kael's magic spheres) should skill them first. Phase 3.
 

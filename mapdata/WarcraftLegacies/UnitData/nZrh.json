@@ -1,0 +1,140 @@
+{
+  "OldId": "nhea",
+  "NewId": "nZrh",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "A03H,Aihn"
+    },
+    {
+      "Id": "udaa",
+      "Type": 3,
+      "Value": "A03H"
+    },
+    {
+      "Id": "ubld",
+      "Value": 2
+    },
+    {
+      "Id": "ucam",
+      "Value": 0
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 8
+    },
+    {
+      "Id": "ua1c",
+      "Type": 2,
+      "Value": 1.35
+    },
+    {
+      "Id": "udef",
+      "Value": 3
+    },
+    {
+      "Id": "ua1b",
+      "Value": 16
+    },
+    {
+      "Id": "ufoo",
+      "Value": 1
+    },
+    {
+      "Id": "ugol",
+      "Value": 17
+    },
+    {
+      "Id": "ugor",
+      "Value": 15
+    },
+    {
+      "Id": "uhpm",
+      "Value": 550
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "umpi",
+      "Value": 100
+    },
+    {
+      "Id": "umpm",
+      "Value": 100
+    },
+    {
+      "Id": "ua1r",
+      "Value": 450
+    },
+    {
+      "Id": "umpr",
+      "Type": 2,
+      "Value": 1
+    },
+    {
+      "Id": "urtm",
+      "Value": 2
+    },
+    {
+      "Id": "ua1s",
+      "Value": 5
+    },
+    {
+      "Id": "umvs",
+      "Value": 220
+    },
+    {
+      "Id": "uspe",
+      "Value": 1
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "R01S,Rguv,R01R,Rhme,Rhpm,Rhar"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.8
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Ranger"
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": "RZrh"
+    },
+    {
+      "Id": "ubpx",
+      "Value": 1
+    },
+    {
+      "Id": "ubpy",
+      "Value": 0
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Refugee, Quel'thalas)"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffffcc00Refugees from Quel'thalas|r, sold at the Refugee Slave Camp of Fuselight. Only once Quel'thalas has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+    }
+  ]
+}

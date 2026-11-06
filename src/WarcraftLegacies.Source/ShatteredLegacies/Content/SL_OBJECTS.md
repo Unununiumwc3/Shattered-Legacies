@@ -35,7 +35,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZfr` |  | `24p:Aabr` | Forsaken |
 | `AZfs` | Viral Plague | `24p:A0VC` | Forsaken |
 | `AZft` | Plague Summon | `24p:A0V7` | Forsaken |
-| `AZfu` |  | `24p:A072` | Forsaken |
+| `AZfu` | Plague Bomb | `24p:A072` | Forsaken |
 | `AZfv` | Corpse Explosion | `24p:A0LP` | Forsaken |
 | `AZfw` | Blighted Grounds | `24p:A0CB` | Forsaken |
 | `AZfx` | Summon Forsaken Acolyte | `24p:A035` | Forsaken |
@@ -96,9 +96,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZk1` | Alchemist Adept Training | `24p:R07M` | KezanEnterprise |
 | `RZk2` | Quest Completed: Explosive Engineering | `24p:R01F` | KezanEnterprise |
 | `RZk3` | Quest Completed: Gadgetzan | `24p:R07E` | KezanEnterprise |
-| `RZk4` | Quest Completed: Western Expansion | `24p:R07Y` | KezanEnterprise |
 | `RZk5` | Quest Completed: Lumber Market Crash | `24p:R07Z` | KezanEnterprise |
-| `RZk6` | Quest Completed: Goblin Empire | `24p:R07F` | KezanEnterprise |
+| `RZk6` | Master of the Slave Trade | `24p:R07F` | KezanEnterprise |
 | `RZk7` | Tier 4 | `24p:R04R` | KezanEnterprise |
 | `RZk8` | Spiritual Infusion | `24p:R023` | KezanEnterprise |
 | `RZk9` | Horde War Machine | `24p:R021` | KezanEnterprise |

@@ -20,7 +20,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
   {
     private static unit _altar;
 
-    // 0.57.3 (maintainer): the Altar of the Queen is invulnerable only until the Forsaken are free (QuestForsakenFreeWill)
+    // 0.57.3: the Altar of the Queen was invulnerable until the Forsaken are free (QuestForsakenFreeWill); 0.60
+    // (maintainer): it is invulnerable only while it waits -- attackable as soon as the Forsaken enter the game
     internal static void AltarVulnerable()
     {
       if (_altar != null && GetUnitTypeId(_altar) != 0)
@@ -76,6 +77,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
       {
         SetUnitOwner(_altar, p, true);
       }
+
+      AltarVulnerable(); // 0.60: from the arrival on
 
       Spawn.Units(p, ForsakenConfig.StartX + 250f, ForsakenConfig.StartY - 250f, ForsakenConfig.StartUnits);
       ForsakenSylvanas.Spawn(p, ForsakenConfig.StartX + 150f, ForsakenConfig.StartY - 300f);

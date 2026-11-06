@@ -33,7 +33,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken.
     protected override void OnComplete(Faction whichFaction)
     {
       ForsakenSylvanas.SetPhase(2);
-      ForsakenBetrayal.AltarVulnerable();
+      ForsakenBetrayal.AltarVulnerable(); // since 0.60 already at the arrival (kept: harmless)
       whichFaction.Unally(); // own team ("<faction> Pact"): no longer the Lich King's
     }
   }
