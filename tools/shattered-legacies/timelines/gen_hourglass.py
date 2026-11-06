@@ -68,9 +68,10 @@ TURNING_POINTS = [
     ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Mag'har (not yet)",
      "Planned: the orcs of Nagrand who never drank the blood. Not in this version.", "Not available yet",
      "BTNHeroBlademaster"),
-    ("Illidari", "Illidan", "RZdE", "RZcE", "Fallback: Akama's Ashtongue (not yet)",
-     "Planned: Akama opens the Black Temple to Illidan's enemies. Not in this version.", "Not available yet",
-     "BTNEvilIllidan"),
+    ("Illidari", "Illidan", "RZdE", "RZcE", "Fallback: Ashtongue Deathsworn",
+     "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn "
+     "to whoever holds the Black Temple's CP: purify Telredor, Halaar, Shattrath and Oshu'gun and restore Karabor to "
+     "the Light.", "Black Temple destroyed", "BTNDranaiAkama"),
     ("Skywall", "Skywall", "RZdF", "RZcF", "Fallback (not decided yet)",
      "Planned: the Earthen Ring or Ramkahen. Not in this version.", "Not available yet", "BTNHeroAvatarOfFlame"),
     ("BlackEmpire", "Black Empire", "RZdG", "RZcG", "Fallback (not decided yet)",

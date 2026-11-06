@@ -38,6 +38,9 @@ def i(fid, value):
     return {"Id": fid, "Value": value}
 
 
+REAL = {"usca"}
+
+
 def v(fid, value, level=None):
     """a field with the type WL's JSON needs: text 3, real 2, integer none (check_json.py)"""
     m = {} if level is None else {"Level": level}
@@ -45,7 +48,7 @@ def v(fid, value, level=None):
     if isinstance(value, str):
         m["Type"] = 3
     elif isinstance(value, float):
-        m["Type"] = 2
+        m["Type"] = 1 if fid in REAL else 2  # WL writes scales as real (1), the rest as unreal (2) -- check_json.py
     m["Value"] = value
     return m
 

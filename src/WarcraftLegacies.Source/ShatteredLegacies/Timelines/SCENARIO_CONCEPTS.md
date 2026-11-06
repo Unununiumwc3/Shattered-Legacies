@@ -267,10 +267,35 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 ### P16 Illidari / P7 Fel Horde
 
 - **Illidari** HQ: the Black Citadel. Magtheridon is enslaved by the Illidari.
-- **Illidari fallback: Akama's Ashtongue** (Akama + draenei buildings) -> joins the victor. A **light** turning point: the Illidari keep their faction, the non-draenei objects are removed and a few are added. Lore: Akama betrayed Illidan and opened the Black Temple to his enemies. Demon hunters are removed as a fallback.
+- **Illidari fallback: the Ashtongue Deathsworn** (0.63, maintainer; a **full** turning point -- a faction of its own,
+  not a light one). Akama's redemption arc.
+  - **Trigger:** the Black Temple (`o00F`) destroyed. It stays WL's building and is never renamed (other factions'
+    quests need it destroyed); where it stood rises the **Temple of the Deathsworn** (the fork's own type,
+    indestructible, the Ashtongue's production centre).
+  - **Allies -- the conquest rule** (a reusable building block, meant for most evil factions later: they are
+    conquered instead of defeated): the Ashtongue belong to the TEAM of whoever destroyed the Black Temple, then of
+    whoever holds the Black Temple's CP (`n00I`). The old team's alliances are removed. Anti-abuse: the Ashtongue
+    taking the CP themselves changes nothing; a later conquest by another player switches them again.
+  - **The sites** Telredor (the 24p's, placed at Zangarmarsh), Halaar, Shattrath and Oshu'gun become the Ashtongue's at
+    once and indestructible (they never change hands again) -- fel-tainted until purified.
+  - **Purification:** Ishanah, High Priestess of the Aldor (a hero), stands at Shattrath and cannot move until the work
+    is done. Purify (autocast, on -- bots too) draws mana from own and ALLIED units within 1,500 (production is
+    centred at the temple; units pass Shattrath on their way). 6,000 in all, at most 20 per second -> 5 minutes with
+    perfect mana; 2 per second by herself. Order: Telredor, Halaar, Shattrath, Oshu'gun -- each unlocks units at the
+    temple (Rangari; Elekk Knights; Luminarchs and Vindicators; Elementalists).
+  - **Final goal "Restoring Karabor to the Light"** (Outland cleansed of fel energy): the temple becomes the Temple of
+    Karabor, Xi'ri the naaru can be trained, Ishanah is free. "Karabor" as the faction's name: later (names are lookup
+    keys today).
+  - **Gold:** 10 per minute for every Outland CP their team holds -- they profit from defending their allies' land.
+  - **Units:** the Illidari's draenei (Akama -- the same unit, levels kept -- Deathsworn, Seers, Draenei Huts) and the
+    24p draenei as their own copies (distinct from WL's Exodar). Illidan is gone for good; naga and demons are not
+    theirs.
 - **Sunfury is no longer the Illidari slot's pick** -- it becomes Quel'thalas' fallback (a full turning point to WL's Sunfury faction).
 - If the **Legion** beats the Illidari, Magtheridon is unleashed and the **Fel Horde** joins the Legion. Otherwise the Fel Horde stays where it is.
 - **Fel Horde fallback: Mag'har** (orcs of Nagrand who never drank the blood) -> Horde if it exists, otherwise the victor's team.
+  Start: Kil'sorrow Fortress (maintainer, 0.63). Gold: a trading post that produces up to 4 traders by itself (60 s
+  each) -- attackable, not controllable, on fixed routes out of Outland (2 to Booty Bay, 2 to Fuselight); 4 on the
+  road at once completes a quest. Needs a mule / pack-horse asset.
 
 ### Old Gods: P9 Skywall / P13 Black Empire / P17 Ahn'qiraj
 

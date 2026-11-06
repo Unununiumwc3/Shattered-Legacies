@@ -203,7 +203,49 @@ KEZAN = {
                              "collapses. Oil Tankers take the oil home to the Oil Supply."},
             "u028": {"uabi": "A0OJ,A0NY,A0MN,A0HG,=AZq0"}},
 }
-SETS = [FORSAKEN, KEZAN]
+
+# 0.63: the Illidari's fallback (TODO step 3b): Akama's Ashtongue Deathsworn -- the 24p draenei ("The Exodar" in
+# WL) as THEIR OWN copies ("force": the main map has WL's Exodar versions under the same ids; separate copies keep the
+# two factions apart). Hand-made objects (the Temple of the Deathsworn / of Karabor, the purification techs, Purify):
+# ashtongue_objects.py.
+ASHTONGUE = {
+    "name": "Ashtongue",
+    "third": "y",
+    "force": True,
+    "objects": [
+        ("o05B", "Defender", ["Fighter"], 200),
+        ("h09T", "Rangari", ["Marksman"], 200),     # Telredor purified
+        ("h09U", "ElekkKnight", ["Tank"], 12),      # Halaar purified
+        ("o05C", "Luminarch", ["Support"], 200),    # Shattrath purified
+        ("h09R", "Vindicator", ["Elite"], 8),       # Shattrath purified
+        ("o05D", "Elementalist", ["Support"], 200), # Oshu'gun purified
+        ("H0AK", "Xiri", ["Support"], 1),           # the final goal (Restoring Karabor to the Light)
+        ("H09S", "Ishanah", ["Support"], 1),        # the purifier (placed by code, never trained)
+        ("h0AG", "Telredor", [], 1),                # the 24p Telredor (placed by code at Zangarmarsh)
+    ],
+    # their 24p requirements (the Exodar's buildings / techs) are replaced by the purification techs (set below)
+    "exclude": ["o053", "o051", "R04R", "R08L", "R082"],
+    "drop": [],
+    "zero_lumber": True,
+    # main-map objects the Ashtongue use: the Illidari's draenei (Akama, Deathsworn, Seer, the Draenei Hut); the
+    # hand-made temple, Purify and techs (ashtongue_objects.py)
+    "extra": [("Naka", "Akama", ["Assassin"], 1),
+              ("ndrn", "Deathsworn", ["Assassin"], 12),
+              ("ndrs", "Seer", ["Support"], 6),
+              ("n08W", "DraeneiHut", ["Specialist"], 200),
+              ("oZt0", "TempleOfTheDeathsworn", ["TownHall"], 1),
+              ("oZt1", "TempleOfKarabor", ["TownHall"], 1)],
+    "set": {
+        "h09T": {"ureq": "=RZt0"}, "h09U": {"ureq": "=RZt1"}, "o05C": {"ureq": "=RZt2"},
+        "h09R": {"ureq": "=RZt2"}, "o05D": {"ureq": "=RZt3"}, "H0AK": {"ureq": "=RZt4", "upro": "Xi'ri"},
+        # Ishanah, High Priestess of the Aldor: the 24p's Maraad (the Exodar's legend) made a priestess -- the
+        # Luminarch's model, the paladin's light skills; Purify (AZt0, autocast) by code
+        "H09S": {"ureq": "", "upro": "Ishanah", "unam": "High Priestess of the Aldor",
+                 "umdl": "war3mapImported\\DraeneiLuminary_NoGlow.mdl", "uhab": "=AHhb,=AHds,=AHad,=AHre",
+                 "uabi": "=AInv,=AZt0"},
+    },
+}
+SETS = [FORSAKEN, KEZAN, ASHTONGUE]
 
 
 def load(map_dir):
@@ -585,6 +627,7 @@ def write_constants(s, mapping):
         lines += [f"      {fourcc(m)}, {fourcc(c)}, // {m} -> {c}" for m, c in s["equivalents"]]
         lines += ["    };"]
     lines += ["  }", "}", ""]
+    os.makedirs(os.path.dirname(path), exist_ok=True)  # 0.63: a new faction's folder
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))
 

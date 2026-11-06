@@ -20,5 +20,23 @@ for f in files:
         if not ok:
             bad += 1
             print(f"{os.path.relpath(f, ROOT)}: {m['Id']} Type={t} Value={v!r}")
-print(f"json check: {len(files)} files, {bad} type mismatches")
+# 0.63: a field's Type must be the one the map uses for that field everywhere else (a scale written as unreal, Type 2,
+# where WL writes real, Type 1 -- 0.61-0.62's Oil Refinery). Fields with one dominant type (>= 95 %, >= 20 uses).
+from collections import Counter, defaultdict
+seen = defaultdict(Counter)
+where = []
+for f in files:
+    for m in json.load(open(f, encoding="utf-8-sig")).get("Modifications", []):
+        t = m.get("Type") or 0
+        seen[m["Id"]][t] += 1
+        where.append((f, m["Id"], t))
+odd = 0
+for f, fid, t in where:
+    c = seen[fid]
+    top, n = c.most_common(1)[0]
+    if t != top and n >= 20 and n >= 0.95 * sum(c.values()):
+        odd += 1
+        bad += 1
+        print(f"{os.path.relpath(f, ROOT)}: {fid} Type={t}, the map uses Type={top} ({n} of {sum(c.values())})")
+print(f"json check: {len(files)} files, {bad} type mismatches ({odd} unusual field types)")
 sys.exit(1 if bad else 0)

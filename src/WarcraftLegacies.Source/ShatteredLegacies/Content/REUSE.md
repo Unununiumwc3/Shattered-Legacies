@@ -10,20 +10,30 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1762 | 7 | 495 | 1045 | 385 | 56 | 287 |
-| abilities | 1575 | 8 | 713 | 486 | 237 | 228 | 284 |
-| upgrades | 440 | 0 | 148 | 133 | 71 | 30 | 16 |
+| units | 1774 | 17 | 495 | 1045 | 385 | 56 | 287 |
+| abilities | 1585 | 17 | 713 | 486 | 237 | 229 | 283 |
+| upgrades | 448 | 3 | 148 | 133 | 71 | 30 | 16 |
 | items | 87 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
 
 Objects of the main map that nothing uses (no faction limit, not preplaced, not in the code, not made or referenced by anything used). Free to reuse under their id.
 
-### nightelf (1)
+### nightelf (11)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
+| `HZy4` | High Priestess of the Aldor (Draenei) | hero | main |  |  | unused |
+| `HZy3` | The Naaru (Draenei) | hero | main |  |  | unused |
+| `hZy5` | Telredor (Draenei) | building | main |  | o05A,oZy2 | unused |
+| `oZy0` | Defender (Draenei) | unit | main |  |  | unused |
+| `hZy1` | Elekk Knight (draenei) | unit | main |  |  | unused |
+| `oZy2` | Elementalist (draenei) | unit | main | hZy5 |  | unused |
+| `nZy0` | Lightforged Warframe (Draenei) | unit | main |  |  | unused |
+| `oZy1` | Luminarch (Draenei) | unit | main |  |  | unused |
+| `hZy0` | Rangari (draenei) | unit | main |  |  | unused |
 | `even` | Spirit of Vengeance | unit | stock |  |  | unused |
+| `hZy2` | Vindicator (draenei) | unit | main |  |  | unused |
 
 ### other (2)
 
@@ -451,7 +461,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `nfv3` | Residence (Two Story-Druids-Sentinels) | building | stock |  |  | 24p only |
 | `nfv4` | Residence (Crested-Druids-Sentinels) | building | stock |  |  | 24p only |
 | `h03M` | Runestone (Sentinels) | building | stock | ewsp |  | different |
-| `h0AG` | Telredor (Draenei) | building | 24p |  | o05A,o05D | different |
+| `h0AG` | Telredor (Draenei) | building | main |  | o05A,o05D | different |
 | `h09W` | The Exodar | building | stock |  |  | different |
 | `h0AD` | Tuurem (Draenei) | building | 24p |  | h09T,o05B | 24p only |
 | `ngob` | World Tree Guardian Runestone | building | stock |  |  | 24p only |

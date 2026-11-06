@@ -33,7 +33,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal static List<int> Stock = new();
     internal static List<bool> CampSold = new();  // per camp: a refugee was sold there (the quest)
     internal static List<string> Fallen = new();
-    internal static ObjectiveCounter SoldCounter; // QuestMasterOfTheSlaveTrade
+    internal static List<ObjectiveAt> CampObjectives = new(); // QuestMasterOfTheSlaveTrade, one per camp (0.63)
     internal static bool GallywixTitled;          // its reward: new Gallywix units get the title too
 
     // map setup: limits for every faction, and fallen factions are recorded from the start (the Enterprise arrives late)
@@ -310,7 +310,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       if (!CampSold[camp])
       {
         CampSold[camp] = true; // 0.61 (maintainer): one sale per camp counts, not every kind
-        SoldCounter?.Add(1);
+        if (camp < CampObjectives.Count)
+        {
+          CampObjectives[camp].Complete();
+        }
       }
     }
   }

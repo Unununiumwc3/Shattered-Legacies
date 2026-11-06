@@ -9,8 +9,8 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
 | tool | writes | when |
 | --- | --- | --- |
 | `import_24p.py` | the copies (`?Z<third>?` ids, `import_ids.json` keeps them stable), their model / icon files, `<Faction>Objects.g.cs` (constants + `MainEquivalents`), `WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/<Faction>ObjectInfo.cs`, `Content/SL_OBJECTS.md` | after every change of a set; again after `git lfs pull` (textures) |
-| `forsaken_heroes.py`, `kezan_objects.py` | hand-made objects a 24p faction did not have (Sylvanas' phases; Oil Refining, the Refugee Slave Camps) | after changing their tables; rows are appended, never reordered (a row's index is its id) |
-| `check_json.py` | nothing -- checks the type of every value in the map's JSON (a string without `"Type": 3` broke the build, 0.57) | before every delivery |
+| `forsaken_heroes.py`, `kezan_objects.py`, `ashtongue_objects.py` | hand-made objects a 24p faction did not have (Sylvanas' phases; Oil Refining, the Refugee Slave Camps) | after changing their tables; rows are appended, never reordered (a row's index is its id) |
+| `check_json.py` | nothing -- checks the type of every value in the map's JSON (a string without `"Type": 3` broke the build, 0.57), and (0.63) that a field has the type the map uses for it everywhere else (a scale is real, Type 1 -- not unreal, 2) | before every delivery |
 | `content_index.py` | `ShatteredLegacies/Content/` (what exists in the main map, the 24p map, stock WC3) | after map data changes |
 | `../ai/gen_ai_data.py` | the bot's production data (`SL_BUILDINGS`: the fork's buildings) | after a set's buildings change |
 
@@ -21,7 +21,8 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
 2. **Roots** (`"objects"`): every building, unit, hero and research the faction trains / builds -- name, categories
    (the first decides `ReplaceWithFactionEquivalent` and the bot), limit. Researches with `None` categories: quest
    rewards (granted by a quest's `ResearchId`).
-3. **`"third"`**: a lowercase letter no set uses (Forsaken `f`, Kezan `k`; hand-made: `a`, `s`, `q`, `r`; the tool falls
+3. **`"third"`**: a lowercase letter no set uses (Forsaken `f`, Kezan `k`, Ashtongue `y`; hand-made: `a`, `s`, `q`, `r`,
+   `t`; the Hourglass: `c`, `d`, `h`; the tool falls
    back to `g`-`p` when a letter is full -- Kezan ran out of `AZk?` in 0.61 and went on with `AZg?`).
 4. **`"force": True`** when the main map keeps WL's CREEP version under the same 24p ids (the goblins: Area 52,
    Kezan's decoration) -- otherwise "same name" objects are not copied and the faction would get WL's creep data.
