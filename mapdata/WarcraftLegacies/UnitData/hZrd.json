@@ -41,10 +41,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 16
-    },
-    {
       "Id": "ugor",
       "Value": 14
     },
@@ -103,6 +99,10 @@
       "Value": "Battlemage"
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrd"
@@ -118,12 +118,12 @@
     {
       "Id": "unsf",
       "Type": 3,
-      "Value": "(Refugee, Dalaran)"
+      "Value": "(Refugee, Dalaran / Gilneas)"
     },
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Dalaran|r, sold at the Refugee Slave Camp of Venture Bay. Only once Dalaran has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Dalaran / Gilneas|r, sold at the Refugee Slave Camp of Venture Bay at half the price. Only once Dalaran / Gilneas has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

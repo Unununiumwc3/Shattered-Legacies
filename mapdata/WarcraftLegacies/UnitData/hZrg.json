@@ -38,10 +38,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 17
-    },
-    {
       "Id": "ugor",
       "Value": 20
     },
@@ -92,6 +88,10 @@
       "Value": 0.85
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrg"
@@ -112,7 +112,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Ironforge|r, sold at the Refugee Slave Camp of Fuselight. Only once Ironforge has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Ironforge|r, sold at the Refugee Slave Camp of Fuselight at half the price. Only once Ironforge has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

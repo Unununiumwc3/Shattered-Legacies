@@ -57,10 +57,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 15
-    },
-    {
       "Id": "uhpm",
       "Value": 520
     },
@@ -140,6 +136,10 @@
       "Value": "Footman"
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrb"
@@ -160,7 +160,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Lordaeron|r, sold at the Refugee Slave Camp of Venture Bay. Only once Lordaeron has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Lordaeron|r, sold at the Refugee Slave Camp of Venture Bay at half the price. Only once Lordaeron has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

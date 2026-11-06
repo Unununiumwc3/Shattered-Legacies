@@ -38,10 +38,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 20
-    },
-    {
       "Id": "ugor",
       "Value": 20
     },
@@ -107,6 +103,10 @@
       "Value": "ReplaceableTextures\\CommandButtons\\BTNGoldenArcherB.blp"
     },
     {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr1"
@@ -127,7 +127,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Kul'tiras|r, sold at the Refugee Slave Camp of Booty Bay. Only once Kul'tiras has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Kul'tiras|r, sold at the Refugee Slave Camp of Booty Bay at half the price. Only once Kul'tiras has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

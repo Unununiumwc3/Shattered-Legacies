@@ -4,35 +4,35 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
 {
   internal static class KezanEnterpriseSlaveCampsData
   {
-    // per camp: its building, the town's CP, the CP's position (the camp goes next to it)
+    // per camp: its building, the town's CP
     internal static int[] Camps = { 1868198192, 1868198193, 1868198194, 1868198195, 1868198196, 1868198197 };
     internal static int[] CampCps = {
       UNIT_N00L_BOOTY_BAY, UNIT_N0A6_RATCHET, UNIT_N05C_GADGETZAN, UNIT_N07Y_VENTURE_BAY, UNIT_N01E_FUSELIGHT,
       UNIT_N01X_WINTERSPRING,
     };
+    // where the camp stands; CampExact false = next to the CP at x, y (AiApi.FindBuildSpot)
     internal static float[] CampXY = {
-      10368f, -22976f, -10624f, -3968f, -8832f, -13184f, 2688f, 16448f, 19200f, -9984f, -9856f, 7296f,
+      10852f, -22728f, -10624f, -3968f, -8672f, -12960f, 1081f, 15949f, 18210f, -10567f, -8960f, 6912f,
     };
+    internal static bool[] CampExact = { true, false, true, true, true, true };
     internal static string[] CampTowns = {
       "Booty Bay", "Ratchet", "Gadgetzan", "Venture Bay", "Fuselight", "Everlook",
     };
 
-    // per refugee unit: the faction it comes from (Faction.Name), the unit, its condition research, its camp
+    // per refugee unit: the factions of its slot (Faction.Name, "A|B"), the unit, its condition research, its camp
     internal static string[] Factions = {
-      "Stormwind", "Kul'tiras", "Fel Horde", "Illidan", "Sunfury", "The Exodar", "Black Empire", "Frostwolf",
-      "Warsong", "Skywall", "Ahn'qiraj", "Lordaeron", "Scourge", "Dalaran", "Gilneas", "Scarlet Crusade", "Ironforge",
-      "Quel'thalas", "Legion", "Druids", "Sentinels",
+      "Stormwind", "Kul'tiras", "Fel Horde", "Illidan", "Sunfury", "Black Empire", "Frostwolf|Warsong", "Skywall",
+      "Ahn'qiraj", "Lordaeron", "Scourge", "Dalaran|Gilneas", "Scarlet Crusade", "Ironforge", "Quel'thalas", "Legion",
+      "Druids", "Sentinels|The Exodar",
     };
     internal static int[] Units = {
-      1750757936, 1750757937, 1851421234, 1851421235, 1750757940, 1750757941, 1868198454, 1868198455, 1868198456,
-      1851421241, 1868198497, 1750757986, 1750757987, 1750757988, 1750757989, 1750757990, 1750757991, 1851421288,
-      1851421289, 1700426346, 1700426347,
+      1750757936, 1750757937, 1851421234, 1851421235, 1750757940, 1868198454, 1868198455, 1851421241, 1868198497,
+      1750757986, 1750757987, 1750757988, 1750757990, 1750757991, 1851421288, 1851421289, 1700426346, 1700426347,
     };
     internal static int[] Conditions = {
-      1381659184, 1381659185, 1381659186, 1381659187, 1381659188, 1381659189, 1381659190, 1381659191, 1381659192,
-      1381659193, 1381659233, 1381659234, 1381659235, 1381659236, 1381659237, 1381659238, 1381659239, 1381659240,
-      1381659241, 1381659242, 1381659243,
+      1381659184, 1381659185, 1381659186, 1381659187, 1381659188, 1381659190, 1381659191, 1381659193, 1381659233,
+      1381659234, 1381659235, 1381659236, 1381659238, 1381659239, 1381659240, 1381659241, 1381659242, 1381659243,
     };
-    internal static int[] UnitCamp = { 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 5, 5 };
+    internal static int[] UnitCamp = { 0, 0, 0, 0, 0, 2, 1, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5 };
   }
 }

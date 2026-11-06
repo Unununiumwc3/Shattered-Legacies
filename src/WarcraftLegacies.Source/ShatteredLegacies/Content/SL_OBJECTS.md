@@ -45,6 +45,9 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZg1` |  | `24p:A03J` | Forsaken |
 | `AZg2` |  | `24p:A01O` | Forsaken |
 | `AZg3` | Banshee Queen | `24p:A0DU` | Forsaken |
+| `AZg4` | Flash of Light | `24p:A094` | Forsaken |
+| `AZg5` |  | `24p:A0SZ` | KezanEnterprise |
+| `AZg6` | Gunner Pilot | `24p:A0HS` | KezanEnterprise |
 | `AZk0` |  | `24p:Argl` | KezanEnterprise |
 | `AZk1` | Structure Spiked Barricade | `24p:A0CF` | KezanEnterprise |
 | `AZk2` | Fuel Refill | `24p:A0OJ` | KezanEnterprise |
@@ -65,6 +68,22 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZkh` | Summon Engineer | `24p:A0R0` | KezanEnterprise |
 | `AZki` | Seed Growth | `24p:A04C` | KezanEnterprise |
 | `AZkj` |  | `24p:AIpl` | KezanEnterprise |
+| `AZkk` |  | `24p:ANeg` | KezanEnterprise |
+| `AZkl` |  | `24p:A0PT` | KezanEnterprise |
+| `AZkm` | (/cffffcc00Q/r) Pocket Factory | `24p:A0RL` | KezanEnterprise |
+| `AZkn` | (/cffffcc00Q/r) Pocket Factory | `24p:A0RN` | KezanEnterprise |
+| `AZko` | (/cffffcc00Q/r) Pocket Factory | `24p:A0RM` | KezanEnterprise |
+| `AZkp` |  | `24p:A0RP` | KezanEnterprise |
+| `AZkq` | (/cffffcc00W/r) Cluster Rockets | `24p:A0RQ` | KezanEnterprise |
+| `AZkr` | (/cffffcc00W/r) Cluster Rockets | `24p:A0RS` | KezanEnterprise |
+| `AZks` |  | `24p:A0RV` | KezanEnterprise |
+| `AZkt` | Robo-Goblin | `24p:A0RW` | KezanEnterprise |
+| `AZku` | Robo-Goblin | `24p:A0UO` | KezanEnterprise |
+| `AZkv` | Robo-Goblin | `24p:A0WO` | KezanEnterprise |
+| `AZkw` | Robo-Goblin | `24p:A0Z6` | KezanEnterprise |
+| `AZkx` |  | `24p:A0NJ` | KezanEnterprise |
+| `AZky` |  | `24p:A07A` | KezanEnterprise |
+| `AZkz` | Gunner Pilot | `24p:A0JX` | KezanEnterprise |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |

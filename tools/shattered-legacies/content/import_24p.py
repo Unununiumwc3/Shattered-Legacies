@@ -163,11 +163,14 @@ KEZAN = {
     # 0.60: Western Expansion (R07Y) removed (maintainer: the Sentinels are probably dead by then) -- War Zeppelins
     # need only the Fortress and the Engineer's Guild
     "exclude": ["obot", "odes", "ojgn", "o01B", "R07G", "R07Y"],
-    "drop": [("o03N", "uupt", "o01B"), ("o04R", "uabi", "Avul"), ("h091", "ureq", "R07Y")],  # platforms attackable
+    # 0.61 (maintainer): the Oil Platforms keep the 24p's invulnerability again (0.58 dropped it)
+    "drop": [("o03N", "uupt", "o01B"), ("h091", "ureq", "R07Y")],
     "zero_lumber": True,
     # main-map objects the Enterprise uses (limits): Katherine (moved to Kezan, revived at the altar), WL's Horde ships
     # (trained at the Goblin Dock)
     "extra": [("H05L", "KatherineProudmoore", ["Support"], 1),
+              ("hZq0", "OilRefinery", [], 200),  # 0.61, hand-made (kezan_objects.py); its research: RZko
+              ("RZko", "OilRefining", [], 200),
               ("obot", "TransportShip", [], 200), ("h0AS", "ScoutShip", [], 200), ("h0AP", "Frigate", [], 200),
               ("h0B2", "Fireship", [], 200), ("h0AY", "Galley", [], 200), ("h0B5", "BoardingVessel", [], 200),
               ("h0BC", "Juggernaut", [], 200), ("h0AO", "Bombard", [], 6)],
@@ -178,15 +181,19 @@ KEZAN = {
             # R04R) and Flight (R09X -- WL's CLI FlightMigration makes EVERY flying unit require it: the Oil Rig,
             # the Trading Zeppelin and the War Zeppelin were locked, 0.59 playtest)
             "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R,=R09X"},
-            # 0.58: Oil Refining (hand-made, kezan_objects.py) at the Oil Supply -- the upgradeable refinery
-            "h04Z": {"ures": "=RZko"},
+            # 0.61: Oil Refining (hand-made, kezan_objects.py) is researched at the Oil Refinery now; the Oil Supply
+            # only holds the oil
             # 0.59: the Trading Center's tooltip (24p: the shipyard's); the traders cost gold only (no lumber: more
             # gold instead -- 24p 15 + 80 lumber / 125 + 250 lumber)
-            "o04M": {"utub": "The Enterprise's trading house.|n|cfff5962dTrains:|R Trading Zeppelins and Traders, "
+            "o04M": {"uabi": "Avul",  # 0.61: indestructible (maintainer)
+                     "utub": "The Enterprise's trading house.|n|cfff5962dTrains:|R Trading Zeppelins and Traders, "
                              "which trade on their own between it and the goblin towns and bring back gold."},
             "R07F": {"gnam": "Master of the Slave Trade"},  # 0.60: the quest that unlocks the Artillery now
-            "nzep": {"ugol": 60},
-            "o04S": {"ugol": 150}},
+            # 0.61 (maintainer): the traders need an Oil Platform (like the Engineer's Guild); the Trading Center is
+            # indestructible; the Fuel Transport gets Detonate (hand-made AZq0, KezanEnterpriseBombers)
+            "nzep": {"ugol": 60, "ureq": "o04R"},
+            "o04S": {"ugol": 150, "ureq": "o04R"},
+            "u028": {"uabi": "A0OJ,A0NY,A0MN,A0HG,=AZq0"}},
 }
 SETS = [FORSAKEN, KEZAN]
 
@@ -235,6 +242,33 @@ def main():
                 return False  # identical, or the same object with other data: use the main one
         return True
 
+    def extra_abilities(closure, exclude, todo, forced):
+        """0.61: an ability used under its main id that names an object this set COPIES (the Alchemist's Acid Bomb /
+        Dispel: areq R07M, the 24p's Alchemist Training -- copied as RZk1; under the main id they waited for the
+        main map's R07M, another object: the training gave no spells) is copied too. Adds them to todo; False = none."""
+        for c in list(closure):
+            for m in p24[c][1].get("Modifications", []):
+                for t in tokens(m.get("Value")):
+                    if (t not in closure and t not in exclude and t not in todo and t in p24 and t in main_data
+                            and p24[t][0] == "AbilityData"
+                            and any(r in closure for mm in p24[t][1].get("Modifications", [])
+                                    for r in tokens(mm.get("Value")))):
+                        todo.append(t)
+                        forced.add(t)
+        return bool(todo)
+
+    def dangling(oid):
+        """0.61: an object the main map has under the same id and name (so it would be used as it is) whose 24p data
+        names 24p objects the main map LACKS -- the main version cannot be what the 24p meant. Gazlowe's Engineering
+        Upgrade (ANeg) swaps his skills for 24p-only abilities (A0PT ...): under its main id the hero got abilities
+        that do not exist -> empty icons, the game crashed. Such an object is copied, its references with it."""
+        # abilities only, and only references to other abilities (an ability that swaps / adds abilities); a wider rule
+        # pulled hundreds of objects into the Forsaken set (units naming 24p-only items, sounds ...)
+        if oid not in p24 or oid not in main_data or p24[oid][0] != "AbilityData":
+            return False
+        return any(t in p24 and p24[t][0] == "AbilityData" and t not in main_data and t not in STOCK_SAFE
+                   for m in p24[oid][1].get("Modifications", []) for t in tokens(m.get("Value")))
+
     def tokens(value):
         if isinstance(value, str):
             for t in value.split(","):
@@ -246,9 +280,10 @@ def main():
         exclude = set(s["exclude"])
         todo, closure = list(roots), []
         forced = set(roots) if s.get("force") else set()
-        while todo:
+        while todo or extra_abilities(closure, exclude, todo, forced):
             oid = todo.pop(0)
-            if oid in closure or oid in exclude or not (needs_copy(oid) or (oid in forced and oid in p24)):
+            if oid in closure or oid in exclude or not (needs_copy(oid) or (oid in forced and oid in p24)
+                                                        or dangling(oid)):
                 continue
             closure.append(oid)
             for m in p24[oid][1].get("Modifications", []):
@@ -361,6 +396,7 @@ def main():
         f.write("\n".join(lines) + "\n")
 
 
+STOCK_SAFE = set()  # ids never treated as dangling (none yet)
 PLACEHOLDER = re.compile(r"<([A-Za-z0-9]{4})((?::[A-Za-z0-9]{4})?,)")
 
 

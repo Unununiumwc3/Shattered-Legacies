@@ -28,10 +28,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 19
-    },
-    {
       "Id": "ugor",
       "Value": 17
     },
@@ -145,13 +141,17 @@
       "Value": 120
     },
     {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr9"
     },
     {
       "Id": "ubpx",
-      "Value": 0
+      "Value": 1
     },
     {
       "Id": "ubpy",
@@ -165,7 +165,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Skywall|r, sold at the Refugee Slave Camp of Gadgetzan. Only once Skywall has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Skywall|r, sold at the Refugee Slave Camp of Gadgetzan at half the price. Only once Skywall has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

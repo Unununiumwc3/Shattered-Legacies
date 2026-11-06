@@ -38,10 +38,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 19
-    },
-    {
       "Id": "ugor",
       "Value": 20
     },
@@ -99,6 +95,10 @@
       "Value": "NONE"
     },
     {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr2"
@@ -119,7 +119,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Fel Horde|r, sold at the Refugee Slave Camp of Booty Bay. Only once Fel Horde has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Fel Horde|r, sold at the Refugee Slave Camp of Booty Bay at half the price. Only once Fel Horde has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

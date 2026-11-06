@@ -67,10 +67,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 13
-    },
-    {
       "Id": "ugor",
       "Value": 13
     },
@@ -201,13 +197,17 @@
       "Value": 0.75
     },
     {
+      "Id": "ugol",
+      "Value": 6
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZra"
     },
     {
       "Id": "ubpx",
-      "Value": 1
+      "Value": 2
     },
     {
       "Id": "ubpy",
@@ -221,7 +221,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Ahn'qiraj|r, sold at the Refugee Slave Camp of Gadgetzan. Only once Ahn'qiraj has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Ahn'qiraj|r, sold at the Refugee Slave Camp of Gadgetzan at half the price. Only once Ahn'qiraj has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

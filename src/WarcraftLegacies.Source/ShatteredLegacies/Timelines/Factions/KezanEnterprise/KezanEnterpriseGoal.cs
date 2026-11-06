@@ -7,7 +7,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
   // 0.58 (maintainer): the Enterprise's end goal, oil and trade on the scoreboard, from the moment it appears -- lines
   // under the teams (Rules/ScoreboardLines), empty (= not shown) before the fallback and after its defeat:
   //   "Kezan goal: 12345 / 20000"   (gold held now / the goal; "reached" once done)
-  //   "Kezan oil: +150 per min"     (KezanEnterpriseOil.Income: Oil Supplies, platforms, refining)
+  //   "Kezan oil: 4200 (+300/min)"  (0.61: the oil in the Oil Supply and what flows in -- KezanEnterpriseOil)
   //   "Kezan trade: 1234 gold"      (0.59: earned by the Trading Center's zeppelins and ships so far)
   internal static class KezanEnterpriseGoal
   {
@@ -51,6 +51,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       Playing() ? "Kezan trade: |cffffcc00" + I2S(KezanEnterpriseTrade.Earned) + "|r gold" : "";
 
     private static string OilLine() =>
-      Playing() ? "Kezan oil: |cffffcc00+" + I2S(KezanEnterpriseOil.Income) + "|r per min" : "";
+      Playing()
+        ? "Kezan oil: |cffffcc00" + I2S(KezanEnterpriseOil.Oil()) + "|r (+" + I2S(KezanEnterpriseOil.OilRate) + "/min)"
+        : "";
   }
 }

@@ -24,11 +24,10 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 MAP = os.path.join(ROOT, "mapdata", "WarcraftLegacies")
 BTN = "ReplaceableTextures\\CommandButtons\\"
 
-SUPPLY, PLATFORM = 50, 25            # KezanEnterpriseConfig.GoldPerOilSupply / GoldPerOilPlatform
-PER_SUPPLY, PER_PLATFORM = 10, 5     # KezanEnterpriseConfig.RefiningPerSupply / RefiningPerPlatform
-NAMES = ["Oil Refining", "Improved Oil Refining", "Advanced Oil Refining"]
-
-
+GOLD = [100, 150, 200]               # KezanEnterpriseConfig.RefineGold: gold per 1000 oil at Oil Refining 0 / 1 / 2
+OIL = 1000                           # KezanEnterpriseConfig.RefineOil
+NAMES = ["Improved Oil Refining", "Advanced Oil Refining"]
+TIER4 = "RZk7"                       # the Enterprise's Tier 4 (import_24p.py, KEZAN: 24p R04R)
 def s(fid, value, level=None):
     m = {} if level is None else {"Level": level}
     m.update({"Id": fid, "Type": 3, "Value": value})
@@ -39,20 +38,63 @@ def i(fid, value):
     return {"Id": fid, "Value": value}
 
 
+def v(fid, value, level=None):
+    """a field with the type WL's JSON needs: text 3, real 2, integer none (check_json.py)"""
+    m = {} if level is None else {"Level": level}
+    m["Id"] = fid
+    if isinstance(value, str):
+        m["Type"] = 3
+    elif isinstance(value, float):
+        m["Type"] = 2
+    m["Value"] = value
+    return m
+
+
 def main():
-    mods = [i("gglb", 150), i("gglm", 100), i("glmb", 0), i("glmm", 0), i("glvl", 3), i("gtim", 45), i("gtib", 15),
-            i("gbpx", 0), i("gbpy", 1), s("gef1", ""), s("gcls", ""), s("grac", "orc")]
-    for lvl in range(1, 4):
-        sup, pla = SUPPLY + PER_SUPPLY * lvl, PLATFORM + PER_PLATFORM * lvl
+    # 0.61 (maintainer): Oil Refining improves the Oil Refinery's exchange rate; 2 levels, the second behind Tier 4
+    # (0.59's base Rhar asked for a human Castle -- "Burg" -- at levels 2 / 3, which the Enterprise cannot build)
+    mods = [i("gglb", 200), i("gglm", 100), i("glmb", 0), i("glmm", 0), i("glvl", 2), i("gtim", 45), i("gtib", 15),
+            i("gbpx", 0), i("gbpy", 0), s("gef1", ""), s("gcls", ""), s("grac", "orc")]
+    for lvl in range(1, 3):
         mods += [s("gnam", NAMES[lvl - 1], lvl), s("gtp1", "Research " + NAMES[lvl - 1], lvl),
                  s("gnsf", "(Kezan Enterprise)", lvl), s("ghk1", "R", lvl), s("gar1", BTN + "BTNOilStation.blp", lvl),
-                 s("gub1", f"Refines more oil: every Kezan Oil Supply gives {sup} gold per minute, every Oil Platform "
-                           f"{pla} (was {sup - PER_SUPPLY} / {pla - PER_PLATFORM}).", lvl)]
+                 s("greq", "" if lvl == 1 else TIER4, lvl),
+                 s("gub1", f"The Oil Refinery turns {OIL} oil into {GOLD[lvl]} gold every 60 seconds "
+                           f"(was {GOLD[lvl - 1]}).", lvl)]
     data = {"OldId": "Rhar", "NewId": "RZko", "Unk": [0], "Modifications": mods}
     path = os.path.join(MAP, "UpgradeData", "RZko.json")
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(json.dumps(data, indent=2, ensure_ascii=False))
     print("wrote", os.path.relpath(path, ROOT))
+    refinery()
+    detonate()
+
+
+def refinery():
+    """0.61: the Oil Refinery (hZq0) -- the Oil Supply's model; its autocast "Refine Oil" (AZq1, a Moon Well's
+    Replenish without effect: the refinery has no mana) only shows the toggle; KezanEnterpriseOil does the exchange."""
+    write("AbilityData", "AZq1", {"OldId": "Ambt", "NewId": "AZq1", "Unk": [0], "Modifications": [
+        s("anam", "Refine Oil"), s("atp1", "Refine Oil", 1), s("aub1", f"While on (autocast), every 60 seconds turns {OIL} oil of the Kezan Oil Supply into {GOLD[0]} gold "
+                  f"({GOLD[1]} / {GOLD[2]} with Oil Refining).", 1), s("aart", BTN + "BTNOilStation.blp"),
+        v("aran", 0.0, 1), i("abpx", 1), i("abpy", 0), s("ahky", "F")]})
+    sup = unit_json("hZk1")
+    mods = [m for m in sup["Modifications"] if m["Id"] not in ("unam", "utra", "ures", "uabi", "utip", "utub", "uhot",
+                                                                 "ubpx", "ubpy", "umpm", "umpi", "umpr")]
+    mods += [s("unam", "Kezan Oil Refinery"), s("utra", ""), s("ures", "RZko"), s("uabi", "AZq1,Avul"),
+             s("utub", "Turns the Oil Supply's oil into gold (Refine Oil, autocast). Oil Refining improves the rate."),
+             i("umpm", 0), i("umpi", 0)]
+    write("UnitData", "hZq0", {"OldId": sup["OldId"], "NewId": "hZq0", "Unk": [0], "Modifications": mods})
+
+
+def detonate():
+    """0.61 (maintainer): the Fuel Transport as a suicide bomber -- Detonate (AZq0, Faerie Fire based: autocast toggle,
+    manual cast on an enemy). KezanEnterpriseBombers: on cast, or while autocast is on and an enemy comes close,
+    500 + its mana (oil) damage to everything within 1000 -- allies too."""
+    write("AbilityData", "AZq0", {"OldId": "Afae", "NewId": "AZq0", "Unk": [0], "Modifications": [
+        s("anam", "Detonate"), s("atp1", "Detonate", 1), s("aub1", "Blows the vehicle up: 500 damage plus its fuel (mana) to every unit and building within 1000 -- "
+                  "allies too. Autocast: detonates when an enemy comes close.", 1), s("aart", BTN + "BTNGoblinSapper.blp"),
+        v("amcs", 0, 1), v("aran", 300.0, 1), v("acdn", 1.0, 1), v("adur", 0.01, 1), v("ahdu", 0.01, 1),
+        i("abpx", 3), i("abpy", 2), s("ahky", "D")]})
 
 
 # ---------------------------------------------------------------------------------------------------------------- camps
@@ -62,27 +104,31 @@ MERC_MODEL = "buildings\\other\\Mercenary\\Mercenary.mdl"   # stock (WL's Stonem
 MERC_ICON = BTN + "BTNMercenaryCamp.blp"
 
 # the goblin towns (the Goblin Empire quest's coast, 0.58; maintainer 0.60: the camps replace that quest): name, CP
-# constant (Units.g.cs), CP position (preplaced) -- the camp is placed next to the CP (code: AiApi.FindBuildSpot)
+# constant (Units.g.cs), CP position, camp position (0.61: the maintainer's spots; None = next to the CP, found in
+# game by AiApi.FindBuildSpot)
 CAMPS = [
-    ("Booty Bay", "UNIT_N00L_BOOTY_BAY", 10368, -22976),
-    ("Ratchet", "UNIT_N0A6_RATCHET", -10624, -3968),
-    ("Gadgetzan", "UNIT_N05C_GADGETZAN", -8832, -13184),
-    ("Venture Bay", "UNIT_N07Y_VENTURE_BAY", 2688, 16448),
-    ("Fuselight", "UNIT_N01E_FUSELIGHT", 19200, -9984),
-    ("Everlook", "UNIT_N01X_WINTERSPRING", -9856, 7296),
+    ("Booty Bay", "UNIT_N00L_BOOTY_BAY", 10368, -22976, (10852, -22728)),
+    ("Ratchet", "UNIT_N0A6_RATCHET", -10624, -3968, None),
+    ("Gadgetzan", "UNIT_N05C_GADGETZAN", -8832, -13184, (-8672, -12960)),
+    ("Venture Bay", "UNIT_N07Y_VENTURE_BAY", 2688, 16448, (1081, 15949)),
+    ("Fuselight", "UNIT_N01E_FUSELIGHT", 19200, -9984, (18210, -10567)),
+    ("Everlook", "UNIT_N01X_WINTERSPRING", -9856, 7296, (-8960, 6912)),  # maintainer wrote y -6912: Winterspring is +
 ]
-# one refugee unit per WL faction: faction name (Faction.Name), its unit (a basic one), the camp (index into CAMPS).
-# Region = the town nearest the faction's home on this map, evened out (computed 0.60 from the preplaced units).
+# one refugee unit per WL SLOT (0.61: a slot with a pick -- Sentinels / The Exodar, Frostwolf / Warsong, Dalaran /
+# Gilneas -- is one entry, available when whichever faction plays it falls): faction names ("A|B"), its unit, the camp
+# (index into CAMPS). None = a retired row (its id stays reserved, nothing is written). Never reorder rows.
 REFUGEES = [
     ("Stormwind", "h00A", 0), ("Kul'tiras", "h06J", 0), ("Fel Horde", "nchg", 0), ("Illidan", "nmyr", 0),
-    ("Sunfury", "h0CF", 0), ("The Exodar", "h09T", 0),
-    ("Black Empire", "o04V", 1), ("Frostwolf", "ogru", 1), ("Warsong", "otbk", 1),
+    ("Sunfury", "h0CF", 0), None,                                   # 5: The Exodar -> row 20 (Sentinels / The Exodar)
+    ("Black Empire", "o04V", 2), ("Frostwolf|Warsong", "ogru", 1), None,  # 6: to Gadgetzan (maintainer); 8: Warsong -> 7
     ("Skywall", "n0CG", 2), ("Ahn'qiraj", "o00L", 2),
-    ("Lordaeron", "h01C", 3), ("Scourge", "h02G", 3), ("Dalaran", "h032", 3), ("Gilneas", "h04E", 3),
+    ("Lordaeron", "h01C", 3), ("Scourge", "h02G", 3), ("Dalaran|Gilneas", "h032", 3), None,  # 14: Gilneas -> 13
     ("Scarlet Crusade", "h09P", 3),
     ("Ironforge", "hrif", 4), ("Quel'thalas", "nhea", 4), ("Legion", "n04H", 4),
-    ("Druids", "edry", 5), ("Sentinels", "earc", 5),
+    ("Druids", "edry", 5), ("Sentinels|The Exodar", "earc", 5),
 ]
+RETIRED_UNITS = {5: "h09T", 8: "otbk", 14: "h04E"}  # the source of a retired row (its old file is removed)
+PRICE = 0.5  # 0.61 (maintainer): refugees cost half of the regular unit -- an incentive to buy at the camps
 REFUGEE_LIMIT = 12
 DROP = {"ureq", "utra", "ubui", "ures", "uupt", "ubpx", "ubpy", "uhot", "unsf", "utip", "utub", "ucat"}
 
@@ -132,7 +178,15 @@ def write(kind, code, data):
 
 def camps():
     units, info = [], []
-    for i, (fac, src, camp) in enumerate(REFUGEES):
+    for i, row in enumerate(REFUGEES):
+        if row is None:
+            for kind, code in (("UnitData", RETIRED_UNITS[i][0] + "Zr" + SEQ[i]), ("UpgradeData", "RZr" + SEQ[i])):
+                gone = os.path.join(MAP, kind, code + ".json")
+                if os.path.exists(gone):
+                    os.remove(gone)
+            continue
+        fac, src, camp = row
+        shown = " / ".join(fac.split("|"))
         code = src[0] + "Zr" + SEQ[i]
         res = "RZr" + SEQ[i]
         d = unit_json(src)
@@ -140,22 +194,25 @@ def camps():
         mods = [m for m in d["Modifications"] if m["Id"] not in DROP]
         town = CAMPS[camp][0]
         uname = name_of(d, src)
-        slot = sum(1 for _, _, c in REFUGEES[:i] if c == camp)   # its button: 3 columns, x = 3 left for the rally
+        slot = sum(1 for r in REFUGEES[:i] if r and r[2] == camp)  # its button: 3 columns, x = 3 left for the rally
+        gold = next((m["Value"] for m in mods if m["Id"] == "ugol"), None)
+        if isinstance(gold, int):
+            mods = [m for m in mods if m["Id"] != "ugol"] + [{"Id": "ugol", "Value": max(1, int(round(gold * PRICE)))}]
         mods += [{"Id": "ureq", "Type": 3, "Value": res}, {"Id": "ubpx", "Value": slot % 3},
-                 {"Id": "ubpy", "Value": slot // 3}, {"Id": "unsf", "Type": 3, "Value": "(Refugee, " + fac + ")"},
+                 {"Id": "ubpy", "Value": slot // 3}, {"Id": "unsf", "Type": 3, "Value": "(Refugee, " + shown + ")"},
                  {"Id": "utub", "Type": 3,
-                  "Value": "|cffffcc00Refugees from " + fac + "|r, sold at the Refugee Slave Camp of " + town
-                           + ". Only once " + fac + " has fallen (defeated, or its fallback); the camp's stock refills "
-                           "over time. Every sale pays the Kezan Enterprise."}]
+                  "Value": "|cffffcc00Refugees from " + shown + "|r, sold at the Refugee Slave Camp of " + town
+                           + " at half the price. Only once " + shown + " has fallen (defeated, or its fallback); the "
+                           "camp's stock refills over time. Every sale pays the Kezan Enterprise."}]
         write("UnitData", code, {"OldId": base, "NewId": code, "Unk": [0], "Modifications": mods})
         write("UpgradeData", res, {"OldId": "Roch", "NewId": res, "Unk": [0], "Modifications": [
-            {"Level": 1, "Id": "gnam", "Type": 3, "Value": "No refugees from " + fac + " yet"},
+            {"Level": 1, "Id": "gnam", "Type": 3, "Value": "No refugees from " + shown + " yet"},
             {"Level": 1, "Id": "gnsf", "Type": 3, "Value": "(Condition)"},
             {"Id": "glvl", "Value": 1}, {"Id": "gglb", "Value": 0}, {"Id": "glmb", "Value": 0}]})
         units.append((fac, code, res, camp, uname))
         info.append((code, categories(src), uname + " (refugee)"))
     camp_codes = []
-    for k, (town, _, _, _) in enumerate(CAMPS):
+    for k, (town, _, _, _, _) in enumerate(CAMPS):
         code = "oZq" + SEQ[k]
         trains = ",".join(c for _, c, _, cp, _ in units if cp == k)
         write("UnitData", code, {"OldId": "obar", "NewId": code, "Unk": [0], "Modifications": [
@@ -179,15 +236,17 @@ def write_cs(units, camp_codes):
              "// Do not edit. </auto-generated>",
              "namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise", "{",
              "  internal static class KezanEnterpriseSlaveCampsData", "  {",
-             "    // per camp: its building, the town's CP, the CP's position (the camp goes next to it)"]
+             "    // per camp: its building, the town's CP"]
     lines.append("    internal static int[] Camps = { " + ", ".join(str(fourcc(c)) for c in camp_codes) + " };")
-    lines.append("    internal static int[] CampCps = { " + ", ".join(cp for _, cp, _, _ in CAMPS) + " };")
-    lines.append("    internal static float[] CampXY = { " + ", ".join(f"{x}f, {y}f" for _, _, x, y in CAMPS)
+    lines.append("    internal static int[] CampCps = { " + ", ".join(c[1] for c in CAMPS) + " };")
+    lines.append("    // where the camp stands; CampExact false = next to the CP at x, y (AiApi.FindBuildSpot)")
+    lines.append("    internal static float[] CampXY = { " + ", ".join(
+        f"{(c[4] or (c[2], c[3]))[0]}f, {(c[4] or (c[2], c[3]))[1]}f" for c in CAMPS) + " };")
+    lines.append("    internal static bool[] CampExact = { " + ", ".join("true" if c[4] else "false" for c in CAMPS)
                  + " };")
-    lines.append("    internal static string[] CampTowns = { " + ", ".join('"' + t + '"' for t, _, _, _ in CAMPS)
-                 + " };")
+    lines.append("    internal static string[] CampTowns = { " + ", ".join('"' + c[0] + '"' for c in CAMPS) + " };")
     lines.append("")
-    lines.append("    // per refugee unit: the faction it comes from (Faction.Name), the unit, its condition research, its camp")
+    lines.append("    // per refugee unit: the factions of its slot (Faction.Name, \"A|B\"), the unit, its condition research, its camp")
     lines.append("    internal static string[] Factions = { " + ", ".join('"' + f + '"' for f, _, _, _, _ in units) + " };")
     lines.append("    internal static int[] Units = { " + ", ".join(str(fourcc(c)) for _, c, _, _, _ in units) + " };")
     lines.append("    internal static int[] Conditions = { " + ", ".join(str(fourcc(r)) for _, _, r, _, _ in units)

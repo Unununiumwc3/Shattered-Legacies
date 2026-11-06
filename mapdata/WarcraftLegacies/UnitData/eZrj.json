@@ -33,10 +33,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 18
-    },
-    {
       "Id": "ugor",
       "Value": 15
     },
@@ -103,6 +99,10 @@
       "Value": 0.85
     },
     {
+      "Id": "ugol",
+      "Value": 9
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrj"
@@ -123,7 +123,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Druids|r, sold at the Refugee Slave Camp of Everlook. Only once Druids has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Druids|r, sold at the Refugee Slave Camp of Everlook at half the price. Only once Druids has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

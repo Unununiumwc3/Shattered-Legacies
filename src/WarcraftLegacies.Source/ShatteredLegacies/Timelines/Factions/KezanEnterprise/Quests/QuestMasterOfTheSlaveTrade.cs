@@ -7,8 +7,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
 {
   // 0.60 (maintainer): replaces the 24p "Goblin Empire" (hold 7 goblin CPs -- hardly possible for an island faction
   // that arrives late). The goblin towns' rulers trade with Kezan instead: every kind of refugee sold at least once at
-  // the Refugee Slave Camps (KezanEnterpriseSlaveCamps; the Enterprise's own purchases count too). Reward: the title
-  // and the Intercontinental Artillery (the Goblin Empire's reward). Lore: whoever owns the contracts of a whole
+  // the Refugee Slave Camps (KezanEnterpriseSlaveCamps; the Enterprise's own purchases count too) -- 0.61: one sale at
+  // every camp. Reward: the title, the Intercontinental Artillery (the Goblin Empire's reward), 25 knowledge (0.61). Lore: whoever owns the contracts of a whole
   // continent's dispossessed owns its wars -- Gallywix, Master of the Slave Trade.
   public sealed class QuestMasterOfTheSlaveTrade : QuestData
   {
@@ -17,7 +17,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       + "the Refugee Slave Camps of the goblin ports -- whoever rules the port pays, the Enterprise profits.",
       @"ReplaceableTextures\CommandButtons\BTNGoblinPrince.blp")
     {
-      Sold = new ObjectiveCounter("Sell every kind of refugee once", KezanEnterpriseSlaveCampsData.Units.Length);
+      Sold = new ObjectiveCounter("Sell a refugee at every Refugee Slave Camp",
+        KezanEnterpriseSlaveCampsData.Camps.Length); // 0.61 (maintainer): one per camp, not every kind
       AddObjective(Sold);
       KezanEnterpriseSlaveCamps.SoldCounter = Sold;
       ResearchId = KezanEnterpriseObjects.QuestMasterOfTheSlaveTrade;
@@ -26,7 +27,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal ObjectiveCounter Sold { get; }
 
     protected override string RewardDescription =>
-      "Gallywix becomes the Master of the Slave Trade; the Intercontinental Artillery can be built (Tier 4)";
+      "Gallywix becomes the Master of the Slave Trade; the Intercontinental Artillery can be built (Tier 4); +"
+      + I2S(KezanEnterpriseConfig.SlaveTradeKnowledge) + " knowledge";
 
     protected override void OnComplete(Faction whichFaction)
     {
@@ -35,6 +37,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       if (p != null)
       {
         TitleGallywix(p);
+        SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER,
+          GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) + KezanEnterpriseConfig.SlaveTradeKnowledge); // 0.61
       }
 
       for (var i = 0; i < 24; i++)
