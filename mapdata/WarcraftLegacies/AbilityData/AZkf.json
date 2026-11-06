@@ -44,7 +44,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "Gives a chance that an attack will do <AHbh,DataC1> bonus damage and stun an opponent for <AHbh,Dur1> seconds. |n|n|cffffcc00Level 1|r - <AHbh,DataA1>% chance per attack. |n|cffffcc00Level 2|r - <AHbh,DataA2>% chance per attack. |n|cffffcc00Level 3|r - <AHbh,DataA3>% chance per attack. |n|cffffcc00Level 4|r - <AHbh,DataA4>% chance per attack."
+      "Value": "Gives a chance that an attack will do <AZkf,DataC1> bonus damage and stun an opponent for <AZkf,Dur1> seconds. |n|n|cffffcc00Level 1|r - <AZkf,DataA1>% chance per attack. |n|cffffcc00Level 2|r - <AZkf,DataA2>% chance per attack. |n|cffffcc00Level 3|r - <AZkf,DataA3>% chance per attack. |n|cffffcc00Level 4|r - <AZkf,DataA4>% chance per attack."
     },
     {
       "Level": 4,
@@ -56,19 +56,19 @@
       "Level": 2,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Gives a <AHbh,DataA2>% chance that an attack will do <AHbh,DataC2> bonus damage and stun an opponent for <AHbh,Dur2> seconds."
+      "Value": "Gives a <AZkf,DataA2>% chance that an attack will do <AZkf,DataC2> bonus damage and stun an opponent for <AZkf,Dur2> seconds."
     },
     {
       "Level": 3,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Gives a <AHbh,DataA3>% chance that an attack will do <AHbh,DataC3> bonus damage and stun an opponent for <AHbh,Dur3> seconds."
+      "Value": "Gives a <AZkf,DataA3>% chance that an attack will do <AZkf,DataC3> bonus damage and stun an opponent for <AZkf,Dur3> seconds."
     },
     {
       "Level": 4,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Gives a <AHbh,DataA4>% chance that an attack will do <AHbh,DataC4> bonus damage and stun an opponent for <AHbh,Dur4> seconds."
+      "Value": "Gives a <AZkf,DataA4>% chance that an attack will do <AZkf,DataC4> bonus damage and stun an opponent for <AZkf,Dur4> seconds."
     },
     {
       "Id": "arhk",

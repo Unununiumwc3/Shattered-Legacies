@@ -11,6 +11,9 @@ Reads the import sets below (one per new faction), then writes
 Rules: a referenced 24p object that is identical in the main map, or the same object with other data ("changed"),
 is used under its main id; one that is "different" or "24p only" is copied with a new id. Stock objects stay.
 Re-running gives the same ids (they are kept in tools/shattered-legacies/content/import_ids.json).
+"force" (0.58) copies the roots also when "changed"; tooltip placeholders are remapped and renamed hero skills get a
+name / learn title (0.60); objects dropped from a set lose their file, their id stays reserved (0.60).
+HOW TO ADD A FACTION and WL's rules a copied faction must follow: tools/shattered-legacies/content/README.md.
 """
 import glob
 import json
@@ -152,14 +155,15 @@ KEZAN = {
         # the 24p goblin quests' rewards (Timelines/Factions/KezanEnterprise/Quests/)
         ("R01F", "QuestExplosiveEngineering", None, 0),  # Gazlowe
         ("R07E", "QuestGadgetzan", None, 0),             # Noggenfogger
-        ("R07Y", "QuestWesternExpansion", None, 0),      # War Zeppelins
         ("R07Z", "QuestLumberMarket", None, 0),          # Shredders +500 hit points
-        ("R07F", "QuestGoblinEmpire", None, 0),          # Intercontinental Artillery
+        ("R07F", "QuestMasterOfTheSlaveTrade", None, 0), # Intercontinental Artillery (0.60: was Goblin Empire)
     ],
     # not imported: the 24p ships (the dock trains WL's Horde ships, below), Orgrimmar (o01B, the Fortress' upgrade in
     # the 24p data), Business Expansion (R07G: the dock is needed from the start -- Kezan is an island)
-    "exclude": ["obot", "odes", "ojgn", "o01B", "R07G"],
-    "drop": [("o03N", "uupt", "o01B"), ("o04R", "uabi", "Avul")],  # the platforms can be attacked (counterplay)
+    # 0.60: Western Expansion (R07Y) removed (maintainer: the Sentinels are probably dead by then) -- War Zeppelins
+    # need only the Fortress and the Engineer's Guild
+    "exclude": ["obot", "odes", "ojgn", "o01B", "R07G", "R07Y"],
+    "drop": [("o03N", "uupt", "o01B"), ("o04R", "uabi", "Avul"), ("h091", "ureq", "R07Y")],  # platforms attackable
     "zero_lumber": True,
     # main-map objects the Enterprise uses (limits): Katherine (moved to Kezan, revived at the altar), WL's Horde ships
     # (trained at the Goblin Dock)
@@ -170,14 +174,17 @@ KEZAN = {
     "set": {"R04R": {"glmb": 25, "glmm": 0},           # the 24p Tier 4 costs knowledge, like the Forsaken's
             # the dock from the start (no Business Expansion, no Tier 4), WL's Horde ships (need Navigation)
             "o03V": {"ureq": "", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO"},
-            # WL's Navigation (main R04R) at the Lumber Mill, like every faction's research building
-            "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R"},
+            # WL's universal researches at the Lumber Mill, like every faction's research building: Navigation (main
+            # R04R) and Flight (R09X -- WL's CLI FlightMigration makes EVERY flying unit require it: the Oil Rig,
+            # the Trading Zeppelin and the War Zeppelin were locked, 0.59 playtest)
+            "o03Q": {"ures": "R023,Rhme,Rhar,Rosp,Rorb,=R04R,=R09X"},
             # 0.58: Oil Refining (hand-made, kezan_objects.py) at the Oil Supply -- the upgradeable refinery
             "h04Z": {"ures": "=RZko"},
             # 0.59: the Trading Center's tooltip (24p: the shipyard's); the traders cost gold only (no lumber: more
             # gold instead -- 24p 15 + 80 lumber / 125 + 250 lumber)
             "o04M": {"utub": "The Enterprise's trading house.|n|cfff5962dTrains:|R Trading Zeppelins and Traders, "
                              "which trade on their own between it and the goblin towns and bring back gold."},
+            "R07F": {"gnam": "Master of the Slave Trade"},  # 0.60: the quest that unlocks the Artillery now
             "nzep": {"ugol": 60},
             "o04S": {"ugol": 150}},
 }
@@ -298,14 +305,28 @@ def main():
                         m["Value"] = ",".join(p.strip()[1:] if p.strip().startswith("=") else mapping.get(p.strip(), p.strip())
                                               for p in parts)
                     else:
+                        v = remap_placeholders(v, oid, mapping, main_data, p24)
                         files, new_value = copy_import(v, imp_main, imp_24)
                         copied_files |= files
                         m["Value"] = new_value
+            if kind == "AbilityData":
+                learn_title(d)
             written[oid] = d
             out = os.path.join(MAIN, kind, mapping[oid] + ".json")
             with open(out, "w", encoding="utf-8", newline="\n") as f:
                 f.write(json.dumps(d, indent=2, ensure_ascii=False))
             registry.append((mapping[oid], name_of(d), "24p:" + oid, s["name"]))
+
+        # 0.60: objects dropped from the set (an id in import_ids.json, no longer in the closure): their files go, the id
+        # stays reserved (never reused -- a saved game or an old note may name it)
+        for key, new in ids.items():
+            st, old = key.split(":", 1)
+            if st == s["name"] and old not in closure:
+                for kind in KINDS:
+                    gone = os.path.join(MAIN, kind, new + ".json")
+                    if os.path.exists(gone):
+                        os.remove(gone)
+                        print(f"  {s['name']}: removed {kind}/{new}.json ({old} is no longer in the set)")
 
         # 0.55.1: every research the set's buildings offer needs an object limit (WL records research levels in the
         # faction and refuses levels above its limit: "level (1) cannot be higher than the object limit for Tier 4")
@@ -338,6 +359,55 @@ def main():
     lines += [f"| `{a}` | {b.replace('|', '/')} | `{c}` | {d} |" for a, b, c, d in sorted(registry)]
     with open(SL_OBJECTS, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines) + "\n")
+
+
+PLACEHOLDER = re.compile(r"<([A-Za-z0-9]{4})((?::[A-Za-z0-9]{4})?,)")
+
+
+def remap_placeholders(text, oid, mapping, main_data, p24):
+    """0.60: tooltip placeholders "<A03Z,DataC1>" name an object id -- the 24p's. A copied object -> its new id;
+    a stock id (in neither map's data) or a main-map object of the same name stays; anything else (a 24p object that is
+    not copied, or a different main-map object under that id, of the same kind) -> the object's own new id, as does
+    the copy's own stock base: such a tooltip showed nothing (Plague Bomb's damage, 0.59 playtest) or another
+    object's numbers. Stock ids and other kinds (a unit in an ability's tooltip) stay. A ":base" part ("<A03Z:ANab,...>",
+    24p only, not a format the game reads -- WL never uses it) is dropped."""
+    kind, own = p24[oid][0], p24[oid][1]
+    base = own.get("OldId")
+
+    def fix(mt):
+        ref = mt.group(1)
+        if ref in mapping:
+            return "<" + mapping[ref] + ","
+        if ref == base and ref != oid:
+            return "<" + mapping[oid] + ","  # the stock base of this copy: the copy's own values
+        if ref not in p24 or p24[ref][0] != kind:
+            return "<" + ref + ","  # stock, or another kind of object (a unit's hit points in a summon's tooltip)
+        if ref in main_data and name_of(main_data[ref][1]) == name_of(p24[ref][1]):
+            return "<" + ref + ","  # the same object in the main map
+        return "<" + mapping[oid] + ","
+    return PLACEHOLDER.sub(fix, text)
+
+
+LEVEL_SUFFIX = re.compile(r"\s*-\s*\[.*$")
+
+
+def learn_title(d):
+    """0.60: a hero skill the 24p renamed only in its tooltips (atp1 "Plague Bomb - [Level 1]", no anam / aret)
+    showed the stock name in the learn button -- in a German client "Saeurebombe". Name and learn title from atp1."""
+    mods = d.get("Modifications", [])
+    have = {m["Id"] for m in mods}
+    if "arut" not in have:
+        return  # not a learnable hero skill
+    tp = next((m["Value"] for m in mods if m["Id"] == "atp1" and m.get("Level") in (None, 0, 1)), None)
+    if not isinstance(tp, str) or not tp.strip():
+        return
+    name = LEVEL_SUFFIX.sub("", tp).strip()
+    if not name:
+        return
+    if "anam" not in have:
+        mods.append({"Id": "anam", "Type": 3, "Value": name})
+    if "aret" not in have:
+        mods.append({"Id": "aret", "Type": 3, "Value": "Learn " + name + " - [|cffffcc00Level %d|r]"})
 
 
 def suffix_of(d):

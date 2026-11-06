@@ -17,6 +17,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal static int[] StartBuildings =
       { KezanEnterpriseObjects.AltarOfIndustry, KezanEnterpriseObjects.OilSupply, KezanEnterpriseObjects.OilSupply };
 
+    // where the Builders appear (0.60: was StartX + 200 / StartY - 200 -- a cliff pocket they could not leave; this
+    // spot is open ground inside the base, found offline on the pathing map: walkable, joined to the base)
+    internal const float UnitsX = -646f;
+    internal const float UnitsY = -6784f;
+
     internal static int[] StartUnits =
     {
       KezanEnterpriseObjects.Builder, KezanEnterpriseObjects.Builder, KezanEnterpriseObjects.Builder,
@@ -60,6 +65,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       19200f, -9984f, 19650f, -10520f,  // Fuselight (n01E)
       -9856f, 7296f, -7394f, 7730f,     // Winterspring (n01X)
     };
+
+    // the Refugee Slave Camps (0.60, KezanEnterpriseSlaveCamps): stock per refugee unit, one back every ..., and the
+    // object limit every faction gets for each refugee unit
+    internal const int CampStock = 3;
+    internal const float CampRestockEvery = 120f;
+    internal const int RefugeeLimit = 12;
+    internal const string GallywixTitle = "Master of the Slave Trade"; // the reward (QuestMasterOfTheSlaveTrade)
 
     // quests
     internal const int GadgetzanTurns = 15;           // 24p: 1522 s; here counted from the arrival

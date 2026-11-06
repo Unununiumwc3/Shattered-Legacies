@@ -14,7 +14,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthala
   //   1. swap faction: a new SunfuryFaction (its quests come with it; the player keeps his colour)
   //   2. leave behind: Quel'thalas' units are removed, its CPs and capitals turn Neutral Hostile (WL's Scarlet pattern);
   //      Kael'thas and the Hourglass stay
-  //   3. relocate: Sunfury's start area (Regions.SunfuryStartingPosition) is taken over like at a pick
+  //   3. relocate: Sunfury's start area (Regions.SunfuryStartingPosition) is taken over like at a pick; 0.60: the CPs
+  //      Area 52, Farahlon and Netherstorm join (if neutral)
   //   4. heroes: Kael'thas leads them (moved, revived or created)
   //   5. team: Outland while it has an undefeated member, otherwise own team (concepts: later the Horde)
   // Requires that Sunfury is no longer the Illidari slot's pick ([SL] in Setup/FactionChoiceDialogSetup.cs): its
@@ -55,6 +56,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthala
       LeaveBehind.ToNeutralHostile(p, keep);
       var area = Regions.SunfuryStartingPosition;
       var taken = StartArea.Take(p, _startUnits, sunfury);
+      // 0.60 (maintainer): Sunfury starts with Area 52, Farahlon and Netherstorm (if neutral -- StartCps)
+      var cps = StartCps.Give(p, UNIT_N07Q_AREA_52, UNIT_N0CW_FARAHLON, UNIT_N02O_NETHERSTORM);
       // Kael'thas: ours (alive or dead) or nobody's -> he leads the survivors; another player's living Kael stays his
       if (kaelUnit == null || kaelIsOurs || GetUnitState(kaelUnit, UNIT_STATE_LIFE) <= 0.405f)
       {
@@ -63,7 +66,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthala
 
       ChangeTeam.JoinOrAlone(p, TeamSetup.Outland);
       p.RepositionCamera(area.Center);
-      AiApi.LogPin("Quel'thalas fallback -> Sunfury: " + I2S(taken) + " start units, team "
+      AiApi.LogPin("Quel'thalas fallback -> Sunfury: " + I2S(taken) + " start units, " + I2S(cps) + " CPs, team "
                    + (p.GetPlayerData().Team != null ? p.GetPlayerData().Team.Name : "-"));
     }
   }

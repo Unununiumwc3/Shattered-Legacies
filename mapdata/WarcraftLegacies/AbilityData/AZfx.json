@@ -76,7 +76,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Summons a water elemental to attack the Hydromancer's enemies. Has <hwat,realHP> hit points and deals <hwat,mindmg1> - <hwat,maxdmg1> damage. |nLasts <AHwe,Dur1> seconds. |n|n|cffffcc00Attacks land and air units.|r"
+      "Value": "Summons a water elemental to attack the Hydromancer's enemies. Has <hwat,realHP> hit points and deals <hwat,mindmg1> - <hwat,maxdmg1> damage. |nLasts <AZfx,Dur1> seconds. |n|n|cffffcc00Attacks land and air units.|r"
     }
   ]
 }

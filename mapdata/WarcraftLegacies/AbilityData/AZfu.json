@@ -94,7 +94,7 @@
     {
       "Id": "arut",
       "Type": 3,
-      "Value": "Hurls a flask of plague at a target.  The flask breaks upon impact, splashing a powerful plague on nearby hostile units.|nDecreases armor; deals high damage over time to the primary target; deals slightly less damage over time to nearby targets.|nLasts <A03Z,Dur1> seconds.|n|n|cffffcc00Level 1|r - <A03Z,DataD1> max damage per second, reduces armor by <A03Z,DataC1>.|n|cffffcc00Level 2|r - <A03Z,DataD2> max damage per second, reduces armor by <A03Z,DataC2>.|n|cffffcc00Level 3|r - <A03Z,DataD3> max damage per second, reduces armor by <A03Z,DataC3>. |n|cffffcc00Level 4|r - <A03Z,DataD4> max damage per second, reduces armor by <A03Z,DataC4>."
+      "Value": "Hurls a flask of plague at a target.  The flask breaks upon impact, splashing a powerful plague on nearby hostile units.|nDecreases armor; deals high damage over time to the primary target; deals slightly less damage over time to nearby targets.|nLasts <AZfu,Dur1> seconds.|n|n|cffffcc00Level 1|r - <AZfu,DataD1> max damage per second, reduces armor by <AZfu,DataC1>.|n|cffffcc00Level 2|r - <AZfu,DataD2> max damage per second, reduces armor by <AZfu,DataC2>.|n|cffffcc00Level 3|r - <AZfu,DataD3> max damage per second, reduces armor by <AZfu,DataC3>. |n|cffffcc00Level 4|r - <AZfu,DataD4> max damage per second, reduces armor by <AZfu,DataC4>."
     },
     {
       "Level": 1,
@@ -124,25 +124,35 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Decreases armor by <A03Z:ANab,DataC1>; deals <A03Z:ANab,DataD1> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur1> seconds."
+      "Value": "Decreases armor by <AZfu,DataC1>; deals <AZfu,DataD1> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <AZfu,Dur1> seconds."
     },
     {
       "Level": 2,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Decreases armor by <A03Z:ANab,DataC2>; deals <A03Z:ANab,DataD2> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur2> seconds."
+      "Value": "Decreases armor by <AZfu,DataC2>; deals <AZfu,DataD2> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <AZfu,Dur2> seconds."
     },
     {
       "Level": 3,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Decreases armor by <A03Z:ANab,DataC3>; deals <A03Z:ANab,DataD3> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur3> seconds."
+      "Value": "Decreases armor by <AZfu,DataC3>; deals <AZfu,DataD3> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <AZfu,Dur3> seconds."
     },
     {
       "Level": 4,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Decreases armor by <A03Z:ANab,DataC4>; deals <A03Z:ANab,DataD4> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <A03Z:ANab,Dur4> seconds."
+      "Value": "Decreases armor by <AZfu,DataC4>; deals <AZfu,DataD4> damage per second to the primary target; deals slightly less damage to nearby targets.|nLasts <AZfu,Dur4> seconds."
+    },
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Plague Bomb"
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Plague Bomb - [|cffffcc00Level %d|r]"
     }
   ]
 }

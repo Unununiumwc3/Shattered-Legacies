@@ -9,13 +9,17 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.59.0` on `botified-dev` (0.59.0: Kezan's 24p Trading Center and trade, Oil Refining, the
-  end goal on the scoreboard, arriving factions on bot slots get production; 0.58.0: Kul Tiras -> Kezan rebuilt). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.60.0` on `botified-dev` (0.60.0: the Refugee Slave Camps, Flight for Kezan, 24p tooltip
+  fixes in the import tool, playtest fixes; 0.59.0: Kezan trade, Oil Refining, the end goal on the scoreboard). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.58.0 / 0.59.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
-  Oil Rigs, Oil Refining, trade, the 24p goblin quests, the end goal on the scoreboard). **Next work**: the 0.59
-  playtest and the maintainer's answers (`TODO.md` step 3: pseudo mercenary centre, what the end goal does), then
-  step 4 the Forsaken's small issues.
+- **0.58.0-0.60.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
+  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.60
+  playtest and the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
+  concept -- turtle / tower defence, buying time), then step 4 the Forsaken's small issues. Bot: `Ai/TODO.md`
+  "Production follow-ups" (bots that build with workers, food cap under siege).
+- **Reusing the 24p map**: read `tools/shattered-legacies/content/README.md` FIRST -- the steps of an import set and
+  WL's rules a copied faction must follow (object limits or WL refunds the unit, Flight / Navigation, tooltip
+  placeholders, workers, command card, LFS).
 - **How we work**: the maintainer edits nothing by hand. The assistant clones the repo in the sandbox, makes the
   change, runs every check, and hands over ONE `git apply` patch (plus a full patch when the base is unclear); the
   maintainer applies, commits, builds on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and
@@ -98,6 +102,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | a count only code knows (rigs built, ...) | `ObjectiveCounter` (`Add(n)`) | `Timelines/Core/` |
 | an end goal "hold N gold" | `ObjectiveHoldGold(n)` | `Timelines/Core/` |
 | a line on the scoreboard (end goals, a faction's numbers) | `ScoreboardLines.Add(() => text or "")` | `Rules/` |
+| control points a faction gets when it arrives | `StartCps.Give(p, cpTypes...)` (neutral ones only) | `Timelines/Core/Effects/` |
+| something that happens when a faction falls (defeat or its fallback) | `TimelineSystem.FactionFell.Add(name => ...)` + `Faction.ScoreStatusChanged` | `Timelines/Core/` |
+| units any player can buy | a limit in EVERY faction (`FactionManager.FactionRegistered` + `ModObjectLimit`), or WL refunds them | `KezanEnterpriseSlaveCamps` |
 | a hand-made object of a fork faction | a small generator next to `import_24p.py` (`forsaken_heroes.py`, `kezan_objects.py`) | `tools/shattered-legacies/content/` |
 | leave behind to a lore heir | `LeaveBehind.ToHeir(p, "<faction>", keep)` (heir on the same team, else neutral hostile) | `Timelines/Core/Effects/` |
 | its trigger | any WL objective (`MakeTrigger`); `ObjectiveHqLost` (default), `ObjectiveLegendKilledBy` | `Timelines/Core/` |

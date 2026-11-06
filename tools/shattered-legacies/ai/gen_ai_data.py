@@ -18,7 +18,9 @@ import unit_scan as us
 OUT = os.path.join(us.SRC, "WarcraftLegacies.Source", "Ai", "AiData.g.cs")
 SL_OUT = os.path.join(us.SRC, "WarcraftLegacies.Source", "ShatteredLegacies", "Bot", "SlAiData.g.cs")
 # Shattered Legacies: buildings of timeline factions that belong to no WL faction (The Kezan Enterprise, 0.39.6/0.39.8)
+WORKER_BASES = ("opeo", "hpea", "upeo", "ewsp", "uaco", "nmpe")  # stock workers (base ids)
 SL_BUILDINGS = ["oZk0", "oZk1", "oZk2", "oZk3", "oZk4", "oZk6", "oZk7", "oZkc", "hZk1", "oZkj",  # Kezan (0.58, 0.59)
+                "oZq0", "oZq1", "oZq2", "oZq3", "oZq4", "oZq5",  # Refugee Slave Camps (0.60, kezan_objects.py)
                 "uZf0", "hZf0", "hZf1", "hZf2", "uZf2", "uZf4", "uZf5", "uZf8", "uZf7", "hZf7"]  # 0.55 Forsaken (import_24p.py ids)
 ABIL = os.path.join(us.ROOT, "mapdata", "WarcraftLegacies", "AbilityData")
 BUILDING_CATS = {"TownHall", "Keep", "Castle", "GilneasManor", "Shipyard", "Lighthouse", "Farm", "Altar", "Specialist",
@@ -75,7 +77,9 @@ def build(infos, extra_buildings):
     for b in extra_buildings:
         for u in (us.trains(b) or []):
             base = us.udata(u).get("_base") or u
-            if base in ("opeo", "hpea", "upeo", "ewsp"):
+            # 0.60: workers by type too ("peon" in utyp) -- the Forsaken's Acolyte (base uaco) was trained as an army
+            # unit (autopilot built workers, 0.59 playtest)
+            if base in WORKER_BASES or "peon" in str(us.udata(u).get("utyp") or "").split(","):
                 continue
             target = altars if (us.is_hero(u) or us.is_hero(base)) else trains
             target.setdefault(b, [])

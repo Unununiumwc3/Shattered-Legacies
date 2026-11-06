@@ -68,6 +68,9 @@ setup, to hide Neutral Passive units placed there (none are); no other WL or bot
   Risk: the pathing map must match; first test on one square. Recommended for the instances (Undercity, the dwarves'
   mountain) when they are polished.
 
+Done in 0.60 (maintainer, 0.59 playtest): the Altar of the Queen attackable from the arrival; the autopilot / bots no
+longer train Acolytes as army; Plague Bomb shows its damage (import tool). Check in the 0.60 playtest.
+
 Small issues (maintainer, 0.57 playtest), in the order I would take them:
 - [you] ~~**Sunfury on a bot slot builds no troops**~~ (0.59: cause confirmed in the code -- bots never construct
   and the starter production ran only at the game start; now `AiApi.GiveStarterProduction` 3 s after a turning point
@@ -136,28 +139,52 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   texts; a model for "Queen of the Forsaken" (24p `Hero_DarkRangerBoss2` is copied with its unit -- a candidate).
 - [ai] (polish) The Forsaken bot: production data exist (`SL_BUILDINGS`); check in a bot game that it builds.
 
-### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.59 and polish
+### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.60 and polish
 
-- [you] **Playtest 0.59**: the Trading Center on Kezan is the 24p's (trains Trading Zeppelins and Traders: they
-  leave on their own for a goblin town and come back, "+gold" over them on the way home); Oil Refining at the Oil
-  Supply (3 levels; the scoreboard's "Kezan oil" grows); the scoreboard shows "Kezan goal: <gold> / 20000", "Kezan
-  oil", "Kezan trade" from the fallback on (not before). Also the 0.58 points that the playtest did not cover.
-- [you] **The pseudo mercenary centre** (maintainer: done another way) -- how? The 0.39.8 creep market (Trading
-  Center trains ogres / centaurs ..., stock 3, one back every 2 min) is removed in 0.59; old code in git history
-  (`KezanEnterpriseMarket.cs`, 0.58.0).
+- [you] **Playtest 0.60**: the Lumber Mill researches Flight -> Oil Rigs, Trading Zeppelins, War Zeppelins can be
+  trained; the Builders appear on open ground in the base; six **Refugee Slave Camps** rise next to Booty Bay,
+  Ratchet, Gadgetzan, Venture Bay, Fuselight and Everlook when the Enterprise arrives -- each belongs to whoever holds
+  that town's CP (neutral: nobody); its refugees are greyed out ("No refugees from X yet") until X falls (defeated or
+  its fallback; Kul Tiras' Navy Snipers at Booty Bay are there at once); a purchase by another player pays the
+  Enterprise ("Contract sold", the scoreboard's "Kezan trade"); stock 3, one back every 2 min. Quest "Master of the
+  Slave Trade" counts every kind sold once. Plus the 0.59 points (trade, Oil Refining, scoreboard lines).
+- [you] **Refugee Slave Camps built one by one** (maintainer: the first quest builds them; for now they are prebuilt).
+  Pitch, pick one:
+  (a) **Contracts**: a "Camp Contract" item (Trading Center, 1 per town) given to a Builder; at the town it becomes the
+  camp. The Builder has to sail there -- the camp appears where the Enterprise actually goes.
+  (b) **Trade routes open camps**: a camp opens at a town once the Trading Zeppelins / Traders made N trips there
+  (KezanEnterpriseTrade counts trips per town) -- no fighting, just business, and it rewards the trade fleet.
+  (c) **Pay the ruler**: a "Bribe <town>" research at the Trading Center per camp (cost rising per camp); the CP's
+  ruler must not be at war with ... -- simple, but it is only a button.
+  My default: (b) -- it ties the three mechanics (trade, camps, goal) together and needs no new unit.
+- [you] **Master of the Slave Trade** reward: today the title on Gallywix and the Intercontinental Artillery. Ideas:
+  the camps' stock refills twice as fast, or the Enterprise gets a share of every refugee's upkeep.
 - [you] **The end goal reached** -- what does it do? Today: announced to everyone, the scoreboard says "reached". Win
   for the Enterprise, a big reward, or a point in the fork's win rule (below)? Also: "hold 20,000 at once" (my
   default) or "earned 20,000 in total"?
-- [you] Balance: trade pay (`KezanEnterpriseConfig.ZeppelinGoldPer1000` / `TraderGoldPer1000`, a full fleet ~+400
-  gold per minute) and costs (60 / 150 gold); Oil Refining; Western Expansion (hold Feathermoon and Auberdine) and
-  Lumber Market Crash (Nordrassil) are big asks for an island faction on its own team; Gadgetzan's 15 turns; the
-  Tinker needs Tier 4 (24p data).
+- [you] Balance: refugee prices (the source unit's), limit 12 each, stock 3 / 2 min, which unit per faction and
+  which town (`tools/shattered-legacies/content/kezan_objects.py`, tables `CAMPS` / `REFUGEES`); trade pay
+  (`KezanEnterpriseConfig.ZeppelinGoldPer1000` / `TraderGoldPer1000`, a full fleet ~+400 gold per minute) and costs
+  (60 / 150 gold); Oil Refining; Lumber Market Crash (Nordrassil) is a big ask for an island faction; Gadgetzan's 15
+  turns; the Tinker needs Tier 4 (24p data).
 - [ai] (polish) The 24p fuel system comes with the data (mechanical units carry fuel as mana, the Oil Supply's Fuel
   Refill aura, the Fuel Transport) -- check in game that it does not leave tanks without mana for good.
 - [ai] (polish) Business Expansion (24p: train 16 zeppelins + 10 traders -> the Goblin Dock) is not rebuilt -- the dock
   is there from the start; a quest with another reward could come back now that the traders exist.
 - [ai] (polish) Traders stuck at sea: a ship that cannot reach a harbour counts as arrived after 240 s
   (`TradeLegMax`); watch for ships that idle in a corner.
+
+**Kezan concept -- needs more thought** (maintainer, 0.59 playtest):
+- [you] **A turtle / tower-defence strategy**: the Enterprise bombs and mines its own coast to defend. Needs more
+  tower buildings and mines (goblin land mines exist in the stock data: Goblin Land Mine `nglm`; 24p towers: Missile
+  Tower, Improved Missile Tower). Waves keep coming, more and more, while it holds.
+- [you] **Too weak when it appears**: Kalimdor has mass armies by then, the Enterprise starts alone with almost
+  nothing. How does it buy time? Ideas: Kezan's shore protected for N turns (a storm / reef no ship can cross, a
+  bought truce), stronger preplaced defences (towers, mines already laid), a mercenary fleet that guards the island for
+  the first turns, or bigger start gold that only towers can use.
+- [you] **The goblin towns as trade areas instead of conquest**: holding these CPs is hardly possible (they appear
+  too late). Instead the Enterprise takes the town's shops, improves them (better items) and gets the profit for each
+  item sold to other players -- like the Refugee Slave Camps, for items.
 
 ### 4. Light turning point (pilot: Illidari -> draenei remnant)
 

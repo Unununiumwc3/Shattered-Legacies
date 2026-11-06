@@ -118,7 +118,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Raises <A04T,DataA1> dead units in an area for <A04T,Dur1> seconds."
+      "Value": "Raises <AZfl,DataA1> dead units in an area for <AZfl,Dur1> seconds."
     }
   ]
 }

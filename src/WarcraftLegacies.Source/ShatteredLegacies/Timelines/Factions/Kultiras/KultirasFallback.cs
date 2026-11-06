@@ -19,7 +19,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
   //      4 Builders)
   //   4. heroes: Katherine Proudmoore leads the survivors (moved, revived or created)
   //   5. team: its own ("Kezan Enterprise Pact"), allied with no one
-  //   6. mechanics: oil (KezanEnterpriseOil), trade (KezanEnterpriseTrade, 0.59: the 24p Trading Center); the end
+  //   6. mechanics: oil (KezanEnterpriseOil), trade (KezanEnterpriseTrade, 0.59: the 24p Trading Center), the
+  //      Refugee Slave Camps at the goblin towns (KezanEnterpriseSlaveCamps, 0.60); the end
   //      goal (20,000 gold), oil and trade on the scoreboard (KezanEnterpriseGoal). 0.59: the creep market of the main
   //      map's Trading Center is gone (maintainer: the pseudo mercenary centre comes another way).
   internal static class KultirasFallback
@@ -31,6 +32,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
     {
       _startUnits = StartArea.Prepare(Regions.KezanUnlock, RescuePreparationMode.HideNonStructures);
       KezanEnterpriseGoal.Setup(); // its lines on the scoreboard (empty until the Enterprise plays)
+      KezanEnterpriseSlaveCamps.Setup(); // 0.60: refugee limits for every faction; fallen factions from the start
     }
 
     internal static void Run(player p, TurningPointDef def)
@@ -54,16 +56,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       SwapFaction.Run(p, enterprise); // first: if it fails, the player keeps his units
       var heir = LeaveBehind.ToHeir(p, KezanEnterpriseConfig.Heir, keep);
       var taken = StartArea.Take(p, _startUnits, enterprise, KezanEnterpriseObjects.MainEquivalents);
-      var kezan = AiApi.SafeCp(UNIT_N04Z_KEZAN);
-      if (kezan != null && kezan.Unit != null && GetOwningPlayer(kezan.Unit) != p)
-      {
-        AiApi.GiveUnit(kezan.Unit, p);
-      }
+      StartCps.Give(p, UNIT_N04Z_KEZAN);
 
       var placed = Spawn.Buildings(p, KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY,
         KezanEnterpriseConfig.StartBuildings);
-      Spawn.Units(p, KezanEnterpriseConfig.StartX + 200f, KezanEnterpriseConfig.StartY - 200f,
-        KezanEnterpriseConfig.StartUnits);
+      Spawn.Units(p, KezanEnterpriseConfig.UnitsX, KezanEnterpriseConfig.UnitsY, KezanEnterpriseConfig.StartUnits);
       var start = new Point(KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY);
       if (kathIsOurs && GetUnitState(kathUnit, UNIT_STATE_LIFE) > 0.405f)
       {
@@ -78,6 +75,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       SplitFaction.UnallyOutsideTeam(p);   // WL's teams only add alliances: the lobby's South Alliance ends here
       KezanEnterpriseOil.Start(p);
       KezanEnterpriseTrade.Start(p);
+      KezanEnterpriseSlaveCamps.Start(p); // 0.60: the Refugee Slave Camps rise at the goblin towns
       p.RepositionCamera(start);
       AiApi.LogPin("Kul Tiras fallback -> Kezan Enterprise: old holdings to "
                    + (heir != null ? "Stormwind" : "neutral hostile") + ", " + I2S(taken) + " start units, "

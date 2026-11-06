@@ -42,9 +42,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const int AlchemistTraining = 1381657393; // RZk1 (24p R07M)
     internal const int QuestExplosiveEngineering = 1381657394; // RZk2 (24p R01F)
     internal const int QuestGadgetzan = 1381657395; // RZk3 (24p R07E)
-    internal const int QuestWesternExpansion = 1381657396; // RZk4 (24p R07Y)
     internal const int QuestLumberMarket = 1381657397; // RZk5 (24p R07Z)
-    internal const int QuestGoblinEmpire = 1381657398; // RZk6 (24p R07F)
+    internal const int QuestMasterOfTheSlaveTrade = 1381657398; // RZk6 (24p R07F)
 
     // main-map id (WL's creep version under the 24p id) -> the faction's copy, in pairs
     internal static int[] MainEquivalents =

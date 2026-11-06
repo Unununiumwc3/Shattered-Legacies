@@ -15,6 +15,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   // announcement and a ping.
   internal static class TimelineSystem
   {
+    // 0.60: called with the old faction's name when a real fallback runs (before its effects) -- a fallen faction
+    // for whoever cares (the Kezan Enterprise's Refugee Slave Camps; a defeat they take from WL's ScoreStatus)
+    internal static List<System.Action<string>> FactionFell = new();
+
     internal const float CheckEvery = 5f;
     internal const int GraceTurns = 10; // 0.54: a faction that just arrived cannot be eliminated for this long
     internal const int ArrivalIncome = 150; // 0.56 (maintainer): gold per turn for a new start without CPs ...
@@ -231,6 +235,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
       if (def.Run != null)
       {
+        if (def.Kind == TurningPointKind.Fallback)
+        {
+          // 0.60: a fallback counts as the old faction falling (the Kezan Enterprise's Refugee Slave Camps)
+          for (var i = 0; i < FactionFell.Count; i++)
+          {
+            var fell = FactionFell[i];
+            AiApi.Safe("faction fell", () => fell(def.Faction));
+          }
+        }
+
         def.Run(p, def);
       }
 
@@ -245,7 +259,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         GrantArrivalIncome(p);                  // real new starts (not the placeholders)
         if (AiApi.IsBot(p))
         {
-          // 0.58: a bot never builds -- the new faction gets its production buildings like every bot at the game start
+          // 0.59: a bot never builds -- the new faction gets its production buildings like every bot at the game start
           // (Sunfury / the Kezan Enterprise on a bot slot trained nothing); a moment later, once its base is taken
           var bot = p;
           var t = CreateTimer();

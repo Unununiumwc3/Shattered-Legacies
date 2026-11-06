@@ -4,6 +4,36 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.60.0
+0.59 playtest fixes, the Refugee Slave Camps, and the tools / docs for reusing the 24p map. Version v0.60.0.
+- **Refugee Slave Camps** (maintainer's design; `KezanEnterpriseSlaveCamps`, data `kezan_objects.py`): six camps,
+  one per goblin town (Booty Bay, Ratchet, Gadgetzan, Venture Bay, Fuselight, Everlook), placed next to the town's CP
+  when the Enterprise arrives (prebuilt for now; how they get built one by one: `TODO.md`). A camp belongs to whoever
+  holds the town's CP (that ruler trades with Kezan; neutral: nobody), so taking the CP takes the camp; the Enterprise
+  holding it uses the refugees itself. Each camp sells the refugees of its region -- one unit per WL faction (21, a
+  copy of a basic unit), greyed out "No refugees from X yet" until X falls (defeated, or its fallback). Stock 3, one
+  back every 2 min. Every sale to another player pays the Enterprise the price. Stock Mercenary Camp model.
+- **Quest "Master of the Slave Trade"** replaces Goblin Empire: every kind of refugee sold once -> Gallywix's title
+  and the Intercontinental Artillery. **Western Expansion removed** (maintainer); War Zeppelins need only the Fortress
+  and the Engineer's Guild.
+- **Flight at the Kezan Lumber Mill** (WL's build makes every flying unit require Flight: the Oil Rigs and zeppelins
+  were locked, 0.59 playtest).
+- **Kezan's Builders** appear on open ground in the base (they were in a cliff pocket).
+- **Sunfury** starts with the CPs Area 52, Farahlon and Netherstorm (maintainer; if neutral).
+- **Forsaken**: the Altar of the Queen can be attacked from the Forsaken's arrival on (maintainer).
+- **"Plague Bomb" showed no damage** (German: "Saeurebombe") -- not a translation problem: its 24p tooltips read
+  their numbers from another 24p ability (`A03Z`) that the main map lacks. `import_24p.py` now remaps tooltip
+  placeholders (also 5 other tooltips of the Forsaken and the Enterprise) and gives skills renamed only in their
+  tooltips their own name and learn title.
+- **Autopilot / bots trained Forsaken Acolytes as army** (`gen_ai_data.py` knew workers only by a few stock base ids;
+  now also by `peon` in their type).
+- Building blocks: `StartCps.Give` (CPs at an arrival), `TimelineSystem.FactionFell` (a faction falls: its fallback).
+- Tools / docs: `tools/shattered-legacies/content/README.md` -- how to add a 24p faction and WL's rules a copied
+  faction must follow (object limits or WL refunds the unit, Flight / Navigation, tooltips, workers, command card,
+  LFS); `import_24p.py` deletes the files of objects dropped from a set (the id stays reserved). The TODOs are split:
+  the fork's (`TODO.md`: the Kezan concept -- turtle / tower defence, buying time, trade towns) and the bot's
+  (`../Ai/TODO.md`: bots that build with workers, the food cap under siege).
+
 ## 0.59.0
 Kezan Enterprise, the rest (maintainer after the 0.58 playtest), and arriving factions on bot slots. Version v0.59.0.
 - **The Trading Center from the 24p** (maintainer: needed for the oil part to work right): the preplaced one becomes
