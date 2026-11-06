@@ -33,10 +33,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 15
-    },
-    {
       "Id": "ugor",
       "Value": 13
     },
@@ -93,6 +89,10 @@
       "Value": 0.85
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrk"
@@ -108,12 +108,12 @@
     {
       "Id": "unsf",
       "Type": 3,
-      "Value": "(Refugee, Sentinels)"
+      "Value": "(Refugee, Sentinels / The Exodar)"
     },
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Sentinels|r, sold at the Refugee Slave Camp of Everlook. Only once Sentinels has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Sentinels / The Exodar|r, sold at the Refugee Slave Camp of Everlook at half the price. Only once Sentinels / The Exodar has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

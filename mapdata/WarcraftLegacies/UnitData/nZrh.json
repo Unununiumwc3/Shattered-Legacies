@@ -46,10 +46,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 17
-    },
-    {
       "Id": "ugor",
       "Value": 15
     },
@@ -114,6 +110,10 @@
       "Value": "Ranger"
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrh"
@@ -134,7 +134,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Quel'thalas|r, sold at the Refugee Slave Camp of Fuselight. Only once Quel'thalas has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Quel'thalas|r, sold at the Refugee Slave Camp of Fuselight at half the price. Only once Quel'thalas has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

@@ -63,10 +63,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 17
-    },
-    {
       "Id": "ugor",
       "Value": 12
     },
@@ -179,6 +175,10 @@
       "Value": 0.9
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr4"
@@ -199,7 +199,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Sunfury|r, sold at the Refugee Slave Camp of Booty Bay. Only once Sunfury has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Sunfury|r, sold at the Refugee Slave Camp of Booty Bay at half the price. Only once Sunfury has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

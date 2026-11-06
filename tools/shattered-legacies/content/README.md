@@ -22,7 +22,7 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
    (the first decides `ReplaceWithFactionEquivalent` and the bot), limit. Researches with `None` categories: quest
    rewards (granted by a quest's `ResearchId`).
 3. **`"third"`**: a lowercase letter no set uses (Forsaken `f`, Kezan `k`; hand-made: `a`, `s`, `q`, `r`; the tool falls
-   back to `g`-`p` when a letter is full).
+   back to `g`-`p` when a letter is full -- Kezan ran out of `AZk?` in 0.61 and went on with `AZg?`).
 4. **`"force": True`** when the main map keeps WL's CREEP version under the same 24p ids (the goblins: Area 52,
    Kezan's decoration) -- otherwise "same name" objects are not copied and the faction would get WL's creep data.
    `MainEquivalents` then maps creep id -> copy, so `StartArea.Take(..., <Faction>Objects.MainEquivalents)` turns a
@@ -57,6 +57,17 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
   cancel). More kinds -> more buildings (the Refugee Slave Camps: one per town).
 - **Models**: the sandbox / a fresh clone has LFS pointers only. Commit the patch, `git lfs pull`, run `import_24p.py`
   again -- only then does it see which textures the models use (and copies them).
+- **Abilities that name abilities** (0.61): an ability the main map has under the same id and name is used as it is --
+  but if its 24p data names 24p-only abilities (Engineering Upgrade swapping Pocket Factory for `A0PT` ...), the hero
+  gets abilities that do not exist: empty icons, then a crash. The tool copies such an ability ("dangling").
+- **Abilities that name a copied object** (0.61): the Alchemist's Acid Bomb, used under its main id, required the
+  main map's `R07M` -- another object than the 24p's Alchemist Training (copied as `RZk1`): the training gave no
+  spells. The tool copies such an ability too, until nothing changes.
+- **Autocast switched on by code** (0.61): bots never touch autocast. Give the ability an on / off order
+  (Moon Well's Replenish `Ambt`: replenishon / -off; Faerie Fire `Afae`: 852150 / 852151), issue the "on" order when
+  the unit appears, and track the player's toggles through `EVENT_PLAYER_UNIT_ISSUED_ORDER` -- there is no native
+  that reads an autocast state (`KezanEnterpriseOil`, `KezanEnterpriseBombers`). Two abilities of the same base on
+  one unit clash (the Oil Supply's Transfer Fuel is `Ambt` -- the refinery's copy leaves it out).
 - **Dropped objects**: a root removed from a set -> the tool deletes its file, the id stays reserved in
   `import_ids.json` (0.60).
 - **Preplaced bases**: `StartArea.Prepare(area, RescuePreparationMode.HideNonStructures)` keeps buildings visible and

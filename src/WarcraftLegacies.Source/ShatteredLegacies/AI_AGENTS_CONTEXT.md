@@ -9,12 +9,13 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.60.0` on `botified-dev` (0.60.0: the Refugee Slave Camps, Flight for Kezan, 24p tooltip
-  fixes in the import tool, playtest fixes; 0.59.0: Kezan trade, Oil Refining, the end goal on the scoreboard). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.61.0` on `botified-dev` (0.61.0: Kezan oil like the 24p -- Oil Supply + Oil Refinery,
+  Fuel Transport bombers, Gazlowe crash fixed, slave camps reworked; 0.60.0: the Refugee Slave Camps). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.58.0-0.60.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
-  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.60
-  playtest and the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
+- **0.58.0-0.61.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
+  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.61
+  playtest, the "Known issues" of the 0.60 playtest (Kul Tiras' fallback flicker, Katherine's ultimate level, quest
+  buildings visible, detect invisible), the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
   concept -- turtle / tower defence, buying time), then step 4 the Forsaken's small issues. Bot: `Ai/TODO.md`
   "Production follow-ups" (bots that build with workers, food cap under siege).
 - **Reusing the 24p map**: read `tools/shattered-legacies/content/README.md` FIRST -- the steps of an import set and
@@ -104,6 +105,7 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | a line on the scoreboard (end goals, a faction's numbers) | `ScoreboardLines.Add(() => text or "")` | `Rules/` |
 | control points a faction gets when it arrives | `StartCps.Give(p, cpTypes...)` (neutral ones only) | `Timelines/Core/Effects/` |
 | something that happens when a faction falls (defeat or its fallback) | `TimelineSystem.FactionFell.Add(name => ...)` + `Faction.ScoreStatusChanged` | `Timelines/Core/` |
+| an autocast bots should use | switch it on by code (its "on" order) and track toggles by `EVENT_PLAYER_UNIT_ISSUED_ORDER` | `KezanEnterpriseOil` / `Bombers` |
 | units any player can buy | a limit in EVERY faction (`FactionManager.FactionRegistered` + `ModObjectLimit`), or WL refunds them | `KezanEnterpriseSlaveCamps` |
 | a hand-made object of a fork faction | a small generator next to `import_24p.py` (`forsaken_heroes.py`, `kezan_objects.py`) | `tools/shattered-legacies/content/` |
 | leave behind to a lore heir | `LeaveBehind.ToHeir(p, "<faction>", keep)` (heir on the same team, else neutral hostile) | `Timelines/Core/Effects/` |

@@ -32,10 +32,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 25
-    },
-    {
       "Id": "uhpm",
       "Value": 1135
     },
@@ -81,6 +77,10 @@
       "Value": "Myrmidon"
     },
     {
+      "Id": "ugol",
+      "Value": 12
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr3"
@@ -101,7 +101,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Illidan|r, sold at the Refugee Slave Camp of Booty Bay. Only once Illidan has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Illidan|r, sold at the Refugee Slave Camp of Booty Bay at half the price. Only once Illidan has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

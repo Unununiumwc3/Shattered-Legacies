@@ -42,10 +42,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 17
-    },
-    {
       "Id": "ugor",
       "Value": 16
     },
@@ -133,6 +129,10 @@
       "Value": "Gargoyle"
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr6"
@@ -153,7 +153,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Black Empire|r, sold at the Refugee Slave Camp of Ratchet. Only once Black Empire has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Black Empire|r, sold at the Refugee Slave Camp of Gadgetzan at half the price. Only once Black Empire has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

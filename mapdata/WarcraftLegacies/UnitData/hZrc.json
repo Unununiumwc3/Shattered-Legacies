@@ -45,10 +45,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 23
-    },
-    {
       "Id": "ugor",
       "Value": 24
     },
@@ -108,6 +104,10 @@
       "Value": 1.4
     },
     {
+      "Id": "ugol",
+      "Value": 12
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZrc"
@@ -128,7 +128,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Scourge|r, sold at the Refugee Slave Camp of Venture Bay. Only once Scourge has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Scourge|r, sold at the Refugee Slave Camp of Venture Bay at half the price. Only once Scourge has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

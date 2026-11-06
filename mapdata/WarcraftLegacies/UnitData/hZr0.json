@@ -62,10 +62,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 15
-    },
-    {
       "Id": "ugor",
       "Value": 12
     },
@@ -158,6 +154,10 @@
       "Value": "Bandit"
     },
     {
+      "Id": "ugol",
+      "Value": 8
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZr0"
@@ -178,7 +178,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Stormwind|r, sold at the Refugee Slave Camp of Booty Bay. Only once Stormwind has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Stormwind|r, sold at the Refugee Slave Camp of Booty Bay at half the price. Only once Stormwind has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

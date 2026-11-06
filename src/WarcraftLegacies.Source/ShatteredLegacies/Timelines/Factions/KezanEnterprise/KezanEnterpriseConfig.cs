@@ -13,9 +13,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const float StartX = -662f;
     internal const float StartY = -7410f;
 
-    // the start kit on top of the preplaced base (Spawn): the Altar of Industry and two more Oil Supplies
-    internal static int[] StartBuildings =
-      { KezanEnterpriseObjects.AltarOfIndustry, KezanEnterpriseObjects.OilSupply, KezanEnterpriseObjects.OilSupply };
+    // the start kit on top of the preplaced base (Spawn): the Altar of Industry and (0.61) the Oil Refinery -- was two
+    // more Oil Supplies; the preplaced Oil Supply (-1056, -6816) holds the oil now
+    internal static int[] StartBuildings = { KezanEnterpriseObjects.AltarOfIndustry, OilRefinery };
+    internal const int OilRefinery = 1750757680;      // hZq0 (hand-made, kezan_objects.py)
 
     // where the Builders appear (0.60: was StartX + 200 / StartY - 200 -- a cliff pocket they could not leave; this
     // spot is open ground inside the base, found offline on the pathing map: walkable, joined to the base)
@@ -31,15 +32,24 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     // Kul Tiras' lore heir (inheritance rule step 2): its holdings go to Stormwind if Stormwind still plays on its team
     internal const string Heir = "Stormwind";
 
-    // oil (maintainer: an income mechanic of its own). Gold per minute while the building stands (WL's BonusIncome).
-    internal const int GoldPerOilSupply = 50;
-    internal const int GoldPerOilPlatform = 25;
-    internal const int MaxOilPlatforms = 8;           // the 24p limit ("Can only build 8")
-    // the upgradeable refinery (maintainer): Oil Refining (RZko, 3 levels at the Oil Supply; data written by
-    // tools/shattered-legacies/content/kezan_objects.py -- keep its tooltip numbers in step) adds per level
-    internal const int OilRefining = 1381657455;      // RZko
-    internal const int RefiningPerSupply = 10;
-    internal const int RefiningPerPlatform = 5;
+    // oil (0.61, maintainer: like the 24p -- the Oil Supply fills up with oil, its mana; the Oil Refinery turns oil
+    // into gold). Oil per minute into the Oil Supply: its own wells, and every Oil Platform at sea.
+    internal const int OilPerMinute = 200;
+    internal const int StartOil = 1000;              // in the Oil Supply when the Enterprise arrives
+    internal const int OilPerPlatform = 100;
+    internal const int MaxOilPlatforms = 8;           // the 24p limit ("Can only build 8") -> at most 1000 per minute
+    // Refine Oil (the refinery's autocast, AZq1): every 60 s RefineOil oil -> RefineGold[Oil Refining level] gold
+    internal const int RefineOil = 1000;
+    internal static int[] RefineGold = { 100, 150, 200 }; // keep in step with kezan_objects.py (GOLD)
+    internal const float RefineEvery = 60f;
+    internal const int RefineAbility = 1096446257;    // AZq1
+    internal const int OilRefining = 1381657455;      // RZko, 2 levels at the refinery (the second behind Tier 4)
+
+    // the Fuel Transport as a suicide bomber (0.61, maintainer; KezanEnterpriseBombers): Detonate (AZq0, autocast on)
+    internal const int DetonateAbility = 1096446256;  // AZq0
+    internal const float DetonateDamage = 500f;       // + the vehicle's mana (fuel)
+    internal const float DetonateRadius = 1000f;
+    internal const float DetonateTrigger = 300f;      // autocast: an enemy this close sets it off
     internal const float RigDelayMin = 40f;           // the 24p expedition: an Oil Rig appears after 40-60 s
     internal const float RigDelayMax = 60f;
     internal const float RigRangeMin = 1200f;         // ... at sea, this far from the Oil Supply that sent it
@@ -72,6 +82,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const float CampRestockEvery = 120f;
     internal const int RefugeeLimit = 12;
     internal const string GallywixTitle = "Master of the Slave Trade"; // the reward (QuestMasterOfTheSlaveTrade)
+    internal const int SlaveTradeKnowledge = 25;      // ... and knowledge (lumber, the tome; 0.61, maintainer)
 
     // quests
     internal const int GadgetzanTurns = 15;           // 24p: 1522 s; here counted from the arrival

@@ -1,0 +1,121 @@
+{
+  "OldId": "ANeg",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 4,
+      "Pointer": 1,
+      "Id": "Neg1",
+      "Type": 2,
+      "Value": 0.4
+    },
+    {
+      "Level": 1,
+      "Pointer": 3,
+      "Id": "Neg3",
+      "Type": 3,
+      "Value": "ANsy,AZkl"
+    },
+    {
+      "Level": 2,
+      "Pointer": 3,
+      "Id": "Neg3",
+      "Type": 3,
+      "Value": "AZkl,AZkm"
+    },
+    {
+      "Level": 3,
+      "Pointer": 3,
+      "Id": "Neg3",
+      "Type": 3,
+      "Value": "AZkm,AZkn"
+    },
+    {
+      "Level": 4,
+      "Pointer": 3,
+      "Id": "Neg3",
+      "Type": 3,
+      "Value": "AZkn,AZko"
+    },
+    {
+      "Level": 1,
+      "Pointer": 4,
+      "Id": "Neg4",
+      "Type": 3,
+      "Value": "ANcs,AZkp"
+    },
+    {
+      "Level": 2,
+      "Pointer": 4,
+      "Id": "Neg4",
+      "Type": 3,
+      "Value": "AZkp,AZkq"
+    },
+    {
+      "Level": 3,
+      "Pointer": 4,
+      "Id": "Neg4",
+      "Type": 3,
+      "Value": "AZkq,AZkr"
+    },
+    {
+      "Level": 4,
+      "Pointer": 4,
+      "Id": "Neg4",
+      "Type": 3,
+      "Value": "AZkr,AZks"
+    },
+    {
+      "Level": 1,
+      "Pointer": 5,
+      "Id": "Neg5",
+      "Type": 3,
+      "Value": "ANrg,AZkt"
+    },
+    {
+      "Level": 2,
+      "Pointer": 5,
+      "Id": "Neg5",
+      "Type": 3,
+      "Value": "AZkt,AZku"
+    },
+    {
+      "Level": 3,
+      "Pointer": 5,
+      "Id": "Neg5",
+      "Type": 3,
+      "Value": "AZku,AZkv"
+    },
+    {
+      "Level": 4,
+      "Pointer": 5,
+      "Id": "Neg5",
+      "Type": 3,
+      "Value": "AZkv,AZkw"
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "Enhances other Tinker abilities with each level learned:|n|n|cffffcc00Cluster Rockets|r - Larger Area.|n|cffffcc00Pocket Factory|r - Builds Clockwerk Goblins more quickly.|n|cffffcc00Robo-Goblin|r - Increases armor and Strength; enhances Demolish.|n|nAlso gives bonus damage and increases the Tinker's movement speed.|n|n|cffffcc00Level 1|r - +<AZkk,DataB1> damage, +<AZkk,DataA1,%>% movement.|n|cffffcc00Level 2|r - +<AZkk,DataB2> damage, +<AZkk,DataA2,%>% movement.|n|cffffcc00Level 3|r - +<AZkk,DataB3> damage, +<AZkk,DataA3,%>% movement.|n|cffffcc00Level 4|r - +9 damage, +40% movement."
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Engineering Upgrade - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Improves other Tinker abilities, gives <AZkk,DataB4> attack damage and increases Tinker movement speed by <AZkk,DataA4,%>%."
+    }
+  ],
+  "NewId": "AZkk"
+}

@@ -15,8 +15,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
   //   2. leave behind (inheritance rule): everything Kul Tiras owns goes to its lore heir Stormwind if Stormwind still
   //      plays on Kul Tiras' team, otherwise removed / Neutral Hostile -- except Katherine and the Hourglass
   //   3. relocate: the base preplaced on Kezan (Regions.KezanUnlock, hidden until now) is taken over, WL's creep
-  //      goblins replaced by the Enterprise's copies (the Trading Center too, 0.59); Kezan's CP joins; start kit (Altar of Industry, 2 Oil Supplies,
-  //      4 Builders)
+  //      goblins replaced by the Enterprise's copies (the Trading Center too, 0.59); Kezan's CP joins; start kit:
+  //      Altar of Industry, the Oil Refinery (0.61; was 2 Oil Supplies), 4 Builders
   //   4. heroes: Katherine Proudmoore leads the survivors (moved, revived or created)
   //   5. team: its own ("Kezan Enterprise Pact"), allied with no one
   //   6. mechanics: oil (KezanEnterpriseOil), trade (KezanEnterpriseTrade, 0.59: the 24p Trading Center), the
@@ -74,6 +74,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       p.GetPlayerData().Faction?.Unally(); // WL's own unally: a new team "<name> Pact", the scoreboard follows
       SplitFaction.UnallyOutsideTeam(p);   // WL's teams only add alliances: the lobby's South Alliance ends here
       KezanEnterpriseOil.Start(p);
+      KezanEnterpriseBombers.Start(p); // 0.61: Fuel Transports as suicide bombers
       KezanEnterpriseTrade.Start(p);
       KezanEnterpriseSlaveCamps.Start(p); // 0.60: the Refugee Slave Camps rise at the goblin towns
       p.RepositionCamera(start);

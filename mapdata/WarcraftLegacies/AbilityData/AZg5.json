@@ -1,0 +1,29 @@
+{
+  "OldId": "ACce",
+  "NewId": "AZg5",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "areq",
+      "Type": 3,
+      "Value": "RZk5"
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(25%) (Shredders)"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "The unit strikes with such force that <AZg5,DataA1,%>% of their damage strikes through to enemies near the primary attacked unit."
+    },
+    {
+      "Id": "abpx",
+      "Value": 2
+    }
+  ]
+}

@@ -7,7 +7,7 @@
   "Modifications": [
     {
       "Id": "gglb",
-      "Value": 150
+      "Value": 200
     },
     {
       "Id": "gglm",
@@ -23,7 +23,7 @@
     },
     {
       "Id": "glvl",
-      "Value": 3
+      "Value": 2
     },
     {
       "Id": "gtim",
@@ -39,7 +39,7 @@
     },
     {
       "Id": "gbpy",
-      "Value": 1
+      "Value": 0
     },
     {
       "Id": "gef1",
@@ -60,109 +60,85 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Oil Refining"
-    },
-    {
-      "Level": 1,
-      "Id": "gtp1",
-      "Type": 3,
-      "Value": "Research Oil Refining"
-    },
-    {
-      "Level": 1,
-      "Id": "gnsf",
-      "Type": 3,
-      "Value": "(Kezan Enterprise)"
-    },
-    {
-      "Level": 1,
-      "Id": "ghk1",
-      "Type": 3,
-      "Value": "R"
-    },
-    {
-      "Level": 1,
-      "Id": "gar1",
-      "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNOilStation.blp"
-    },
-    {
-      "Level": 1,
-      "Id": "gub1",
-      "Type": 3,
-      "Value": "Refines more oil: every Kezan Oil Supply gives 60 gold per minute, every Oil Platform 30 (was 50 / 25)."
-    },
-    {
-      "Level": 2,
-      "Id": "gnam",
-      "Type": 3,
       "Value": "Improved Oil Refining"
     },
     {
-      "Level": 2,
+      "Level": 1,
       "Id": "gtp1",
       "Type": 3,
       "Value": "Research Improved Oil Refining"
     },
     {
-      "Level": 2,
+      "Level": 1,
       "Id": "gnsf",
       "Type": 3,
       "Value": "(Kezan Enterprise)"
     },
     {
-      "Level": 2,
+      "Level": 1,
       "Id": "ghk1",
       "Type": 3,
       "Value": "R"
     },
     {
-      "Level": 2,
+      "Level": 1,
       "Id": "gar1",
       "Type": 3,
       "Value": "ReplaceableTextures\\CommandButtons\\BTNOilStation.blp"
     },
     {
-      "Level": 2,
-      "Id": "gub1",
+      "Level": 1,
+      "Id": "greq",
       "Type": 3,
-      "Value": "Refines more oil: every Kezan Oil Supply gives 70 gold per minute, every Oil Platform 35 (was 60 / 30)."
+      "Value": ""
     },
     {
-      "Level": 3,
+      "Level": 1,
+      "Id": "gub1",
+      "Type": 3,
+      "Value": "The Oil Refinery turns 1000 oil into 150 gold every 60 seconds (was 100)."
+    },
+    {
+      "Level": 2,
       "Id": "gnam",
       "Type": 3,
       "Value": "Advanced Oil Refining"
     },
     {
-      "Level": 3,
+      "Level": 2,
       "Id": "gtp1",
       "Type": 3,
       "Value": "Research Advanced Oil Refining"
     },
     {
-      "Level": 3,
+      "Level": 2,
       "Id": "gnsf",
       "Type": 3,
       "Value": "(Kezan Enterprise)"
     },
     {
-      "Level": 3,
+      "Level": 2,
       "Id": "ghk1",
       "Type": 3,
       "Value": "R"
     },
     {
-      "Level": 3,
+      "Level": 2,
       "Id": "gar1",
       "Type": 3,
       "Value": "ReplaceableTextures\\CommandButtons\\BTNOilStation.blp"
     },
     {
-      "Level": 3,
+      "Level": 2,
+      "Id": "greq",
+      "Type": 3,
+      "Value": "RZk7"
+    },
+    {
+      "Level": 2,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Refines more oil: every Kezan Oil Supply gives 80 gold per minute, every Oil Platform 40 (was 70 / 35)."
+      "Value": "The Oil Refinery turns 1000 oil into 200 gold every 60 seconds (was 150)."
     }
   ]
 }

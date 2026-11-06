@@ -15,8 +15,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
   // - Each camp sells the refugees of its region: one unit per WL faction, only once that faction has fallen
   //   (defeated, or its fallback -- TimelineSystem.FactionFell); until then greyed out ("No refugees from X yet").
   // - Stock: 3 per unit, one back every 2 min (the owner's max-allowed = alive + stock).
-  // - Every sale to another player pays the Enterprise the unit's price; every unit sold at least once completes
-  //   "Master of the Slave Trade" (QuestMasterOfTheSlaveTrade).
+  // - Every sale to another player pays the Enterprise the unit's price (half the regular unit's, 0.61); a sale at
+  //   every camp completes "Master of the Slave Trade" (QuestMasterOfTheSlaveTrade).
+  // - 0.61: an entry stands for a slot with a pick ("Sentinels|The Exodar", "Frostwolf|Warsong", "Dalaran|Gilneas"):
+  //   its refugees come when whichever faction plays the slot falls.
   // Every faction gets an object limit for the refugees: WL refunds any trained unit whose limit is 0 in the buyer's
   // faction (GameLogic/RefundZeroLimitUnits -- why the 0.39.8 creep market trained nothing).
   // Data: KezanEnterpriseSlaveCampsData (generated, tools/shattered-legacies/content/kezan_objects.py).
@@ -25,7 +27,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal static player Kezan;
     internal static List<unit> Camps = new();
     internal static List<int> Stock = new();
-    internal static List<bool> Sold = new();
+    internal static List<bool> CampSold = new();  // per camp: a refugee was sold there (the quest)
     internal static List<string> Fallen = new();
     internal static ObjectiveCounter SoldCounter; // QuestMasterOfTheSlaveTrade
     internal static bool GallywixTitled;          // its reward: new Gallywix units get the title too
@@ -37,7 +39,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       for (var i = 0; i < units.Length; i++)
       {
         Stock.Add(KezanEnterpriseConfig.CampStock);
-        Sold.Add(false);
+      }
+
+      for (var k = 0; k < KezanEnterpriseSlaveCampsData.Camps.Length; k++)
+      {
+        CampSold.Add(false);
       }
 
       foreach (var f in FactionManager.GetAllFactions())
@@ -78,7 +84,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       var names = KezanEnterpriseSlaveCampsData.Factions;
       for (var i = 0; i < names.Length; i++)
       {
-        if (names[i] != name)
+        if (!SlotHas(names[i], name))
         {
           continue;
         }
@@ -96,7 +102,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
     }
 
-    // the Enterprise arrives: the camps rise next to the goblin towns' CPs
+    // 0.61: an entry stands for a slot -- "Sentinels|The Exodar": whichever of them plays it and falls
+    private static bool SlotHas(string slot, string name)
+    {
+      var parts = slot.Split('|');
+      for (var i = 0; i < parts.Length; i++)
+      {
+        if (parts[i] == name)
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    // the Enterprise arrives: the camps rise at the goblin towns (the maintainer's spots, or next to the CP)
     internal static void Start(player p)
     {
       if (Kezan != null)
@@ -110,7 +131,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       for (var k = 0; k < types.Length; k++)
       {
         unit camp = null;
-        if (AiApi.FindBuildSpot(xy[k * 2], xy[k * 2 + 1], new List<float>(), new List<float>(), out var x, out var y))
+        var x = xy[k * 2];
+        var y = xy[k * 2 + 1];
+        if (KezanEnterpriseSlaveCampsData.CampExact[k]
+            || AiApi.FindBuildSpot(xy[k * 2], xy[k * 2 + 1], new List<float>(), new List<float>(), out x, out y))
         {
           camp = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), types[k], x, y, 270f);
           SetUnitInvulnerable(camp, true);
@@ -250,9 +274,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
           + GetPlayerName(buyer) + " (+" + I2S(price) + " gold).");
       }
 
-      if (!Sold[i])
+      var camp = KezanEnterpriseSlaveCampsData.UnitCamp[i];
+      if (!CampSold[camp])
       {
-        Sold[i] = true;
+        CampSold[camp] = true; // 0.61 (maintainer): one sale per camp counts, not every kind
         SoldCounter?.Add(1);
       }
     }

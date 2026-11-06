@@ -4,6 +4,30 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.61.0
+0.60 playtest (maintainer): the Kezan oil like the 24p, the Fuel Transport as a bomber, a crash and two 24p data bugs
+found by the import tool, the slave camps reworked. Version v0.61.0.
+- **Crash fixed: Gazlowe's Engineering Upgrade** swapped his skills for 24p-only abilities (`A0PT` ...) because the
+  upgrade itself was used under its main-map id (same name) -> buttons without icons, the game crashed. `import_24p.py`
+  now copies an ability whose 24p data names abilities the main map lacks (13 new copies for the Enterprise).
+- **Alchemist / Wizard trainings** gave no spells: the Alchemist's Acid Bomb / Dispel (main ids) waited for the main
+  map's `R07M`, another object. The tool now also copies an ability that names an object the set copies.
+- **Oil like the 24p**: the preplaced Oil Supply fills up with oil (its mana): 200 per minute from its own wells, +100
+  per Oil Platform (at most 8); 1,000 at the start. The **Oil Refinery** (new, the Oil Supply's model, replaces the 2
+  extra Oil Supplies of the start kit) turns 1,000 oil into 100 gold every 60 s -- **Refine Oil**, an autocast that is
+  on from the start (bots too). **Oil Refining** (2 levels, at the refinery): 150, then 200 gold; the second level
+  behind Tier 4 (it asked for a human Castle, "Burg"). No more gold per Oil Supply / platform. Scoreboard: "Kezan oil:
+  <oil> (+<rate>/min)".
+- **Fuel Transport = suicide bomber**: Detonate (autocast, on when trained): an enemy within 300, or a manual cast ->
+  500 + its fuel (mana) damage to everything within 1,000, allies too, a pillar of flame (`KezanEnterpriseBombers`).
+- **Trading Zeppelins and Traders need an Oil Platform**; the **Trading Center and the Oil Platforms are
+  indestructible**.
+- **Refugee Slave Camps**: at the maintainer's spots (Gadgetzan, Booty Bay, Everlook, Fuselight, Venture Bay; Ratchet
+  next to its CP); refugees at **half price**; **one entry per slot** -- Sentinels / The Exodar (Sentinels' archers),
+  Frostwolf / Warsong, Dalaran / Gilneas: available when whichever faction plays the slot falls; **Black Empire at
+  Gadgetzan**. **Master of the Slave Trade**: one sale at every camp (not every kind); +25 knowledge.
+- Tools / docs: `content/README.md` -- the two new import rules, autocast toggles tracked by their orders.
+
 ## 0.60.0
 0.59 playtest fixes, the Refugee Slave Camps, and the tools / docs for reusing the 24p map. Version v0.60.0.
 - **Refugee Slave Camps** (maintainer's design; `KezanEnterpriseSlaveCamps`, data `kezan_objects.py`): six camps,

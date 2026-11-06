@@ -42,10 +42,6 @@
       "Value": 1
     },
     {
-      "Id": "ugol",
-      "Value": 18
-    },
-    {
       "Id": "ugor",
       "Value": 10
     },
@@ -104,6 +100,10 @@
       "Value": "units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl"
     },
     {
+      "Id": "ugol",
+      "Value": 9
+    },
+    {
       "Id": "ureq",
       "Type": 3,
       "Value": "RZri"
@@ -124,7 +124,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "|cffffcc00Refugees from Legion|r, sold at the Refugee Slave Camp of Fuselight. Only once Legion has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
+      "Value": "|cffffcc00Refugees from Legion|r, sold at the Refugee Slave Camp of Fuselight at half the price. Only once Legion has fallen (defeated, or its fallback); the camp's stock refills over time. Every sale pays the Kezan Enterprise."
     }
   ]
 }

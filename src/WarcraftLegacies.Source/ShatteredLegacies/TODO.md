@@ -139,7 +139,18 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   texts; a model for "Queen of the Forsaken" (24p `Hero_DarkRangerBoss2` is copied with its unit -- a candidate).
 - [ai] (polish) The Forsaken bot: production data exist (`SL_BUILDINGS`); check in a bot game that it builds.
 
-### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.60 and polish
+### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.61 and polish
+
+- [you] **Playtest 0.61**: Gazlowe's Engineering Upgrade (no more empty icons / crash); Alchemist and Wizard trainings
+  give their spells; the Oil Supply fills up (scoreboard "Kezan oil: <oil> (+<rate>/min)", +100 per platform), the
+  Oil Refinery's Refine Oil is on (autocast border) and pays 100 gold per minute ("+100" over it), Oil Refining 150 /
+  200 (the second behind Tier 4); Fuel Transports blow up near enemies (Detonate on); traders need a platform; the
+  Trading Center and the platforms cannot be hurt; the camps at your spots, refugees at half price, Sentinels' archers
+  at Everlook also in a Draenei game, Black Empire at Gadgetzan; Master of the Slave Trade after one sale per camp.
+- [ai] **Kezan's Missile Battery** (the main map's `o05I`, preplaced): 300 attack damage, very slow attack (maintainer).
+  It is the main map's object -- copy it for the Enterprise (hand-made, `kezan_objects.py`) and map it in
+  `StartArea.Take` (an extra equivalent), or change the main map's creep version (used anywhere else? check first).
+
 
 - [you] **Playtest 0.60**: the Lumber Mill researches Flight -> Oil Rigs, Trading Zeppelins, War Zeppelins can be
   trained; the Builders appear on open ground in the base; six **Refugee Slave Camps** rise next to Booty Bay,
@@ -234,6 +245,23 @@ Time". `[you]` the numbers (tax rate, sudden death X / N / Y).
   Illidan / Fel Horde a debuff).
 
 ## Known issues
+
+From the 0.60 playtest (maintainer):
+- [ai] **Kul Tiras' fallback flickers**: Boralus lost -> the fallback becomes available, after a while it is not, then
+  again -- although the keep is gone for good. Maintainer: available ONCE and that is it; retaking the HQ does not
+  take it away again (`TimelineSystem.OnTriggerChanged` / the HQ trigger: latch it). Also the old "HQ regained"
+  message.
+- [ai] **Katherine's ultimate without its level** after the fallback to Kezan: probably every hero that stays with its
+  faction through a fallback (the level requirement of hero skills -- `SwapFaction`, the faction's object levels?).
+  Investigate with one hero, then fix for all fallbacks.
+- [ai] **Preplaced quest buildings visible from the start** (the Well of Eternity, Jaina's sanctum and its units):
+  probably since the NPC / player slot changes (0.57.1). Try first: ONE NPC slot for all hidden units; otherwise at
+  least make such buildings invulnerable until they change to their quest's faction.
+- [ai] **Detect invisible** is possible with the Forsaken's towers: needs a rework -- a research for it, and / or the
+  same for other factions.
+- [ai] (polish) **Kezan's trade ships** sometimes sail through islands -- why do they ignore land at times? (an order
+  to a point on land? the "counts as arrived" fallback after 240 s? their pathing type?)
+- [you] An item was cut off in the 0.60 playtest notes ("Need mechanic that ...") -- what was it?
 
 - [ai] **Fallback messages are wrong**: when Kul Tiras loses its HQ, the game says the HQ was regained, although it
   was destroyed for good (v0.39.9 playtest; check in the 0.58 playtest -- `TimelineSystem.OnTriggerChanged`).

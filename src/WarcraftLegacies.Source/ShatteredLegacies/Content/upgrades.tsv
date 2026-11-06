@@ -352,28 +352,25 @@ RZk9	main	used	Horde War Machine	(Warsong-Quest)	Rhse	orc	ReplaceableTextures\Co
 RZka	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
 RZkb	main	used	Backpack	(Orc)	Ropm	orc	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
 RZkc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
-RZko	main	used	Oil Refining	(Kezan Enterprise)	Rhar	orc	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZk1
+RZko	main	used	Improved Oil Refining	(Kezan Enterprise)	Rhar	orc	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZq0
 RZr0	main	used	No refugees from Stormwind yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr1	main	used	No refugees from Kul'tiras yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr2	main	used	No refugees from Fel Horde yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr3	main	used	No refugees from Illidan yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr4	main	used	No refugees from Sunfury yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZr5	main	used	No refugees from The Exodar yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr6	main	used	No refugees from Black Empire yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZr7	main	used	No refugees from Frostwolf yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZr8	main	used	No refugees from Warsong yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZr7	main	used	No refugees from Frostwolf / Warsong yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZr9	main	used	No refugees from Skywall yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZra	main	used	No refugees from Ahn'qiraj yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrb	main	used	No refugees from Lordaeron yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrc	main	used	No refugees from Scourge yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZrd	main	used	No refugees from Dalaran yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZre	main	used	No refugees from Gilneas yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrd	main	used	No refugees from Dalaran / Gilneas yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrf	main	used	No refugees from Scarlet Crusade yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrg	main	used	No refugees from Ironforge yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrh	main	used	No refugees from Quel'thalas yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZri	main	used	No refugees from Legion yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrj	main	used	No refugees from Druids yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZrk	main	used	No refugees from Sentinels yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZrk	main	used	No refugees from Sentinels / The Exodar yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZs1	main	used	Sylvanas reaches level 6	(Forsaken condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
