@@ -4,6 +4,30 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.62.0
+0.61 playtest (maintainer): the oil has to be carried, the refinery works from any distance, slave camps and
+fallen factions fixed. Version v0.62.0.
+- **Oil, carried** (lore: rigs alone deliver nothing): every Oil Platform pumps 625 oil per minute into its own tank
+  (3,000) from a field of 40,000 -- dry and emptied, it collapses and a new rig is needed. **Oil Tankers** (the
+  Trading Center's ships, was "Trader") carry 300 per trip from the platform with the most unclaimed oil to the
+  Trading Center and into the Oil Supply; they never go to the goblin towns. **Trading Zeppelins** trade the gold.
+  No oil without rigs and tankers (0.61 had 200 per minute from nowhere and 1,000 at the start). Maxed out (8
+  platforms) 5,000 oil per minute: the refinery takes 1,000, the rest is fuel. Scoreboard: "Kezan oil: <oil>
+  (rigs +<pumped>/min)".
+- **Refine Oil works**: now Faerie Fire based (the Moon Well's Replenish needed the target in reach and mana) --
+  cast it on the Oil Supply from any distance, or leave autocast on (on from the start): every 60 s (its cooldown)
+  1,000 oil -> 100 / 150 / 200 gold. The refinery is half the Oil Supply's size.
+- **The Trading Center and the Oil Supply are indestructible** (their data said so, WL's rescue took it away).
+- **Slave camps**: 4x the regular training time; a unit trained when the stock is empty is refunded and removed (the
+  limit alone let them be spammed); an unruled camp belongs to Neutral Extra, not Neutral Passive (WL removes / rescues
+  Neutral Passive units -- the Venture Bay camp vanished), and a camp that is gone is placed again.
+- **A faction falls when its HQ is lost** (the fallback trigger), not only when its fallback runs -- refugees come for
+  every faction with an HQ (Druids, Skywall ...). The Druids need both Nordrassil and Cenarion Hold lost.
+- **Skywall's HQ** was a wrong id (`nelc`, no such unit: its trigger never armed) -- now the Vortex Pinnacle (`nELC`)
+  and the Sulfuron Spire (maintainer): both lost or not Skywall's.
+- **A lost HQ stays lost** for its turning point (maintainer): retaking it no longer takes the fallback away (Kul
+  Tiras' fallback came and went).
+
 ## 0.61.0
 0.60 playtest (maintainer): the Kezan oil like the 24p, the Fuel Transport as a bomber, a crash and two 24p data bugs
 found by the import tool, the slave camps reworked. Version v0.61.0.

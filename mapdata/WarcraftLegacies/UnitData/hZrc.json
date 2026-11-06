@@ -11,10 +11,6 @@
       "Value": "Ahan,A0R1,A020,Aihn"
     },
     {
-      "Id": "ubld",
-      "Value": 2
-    },
-    {
       "Id": "ucam",
       "Value": 0
     },
@@ -102,6 +98,10 @@
       "Id": "ussc",
       "Type": 1,
       "Value": 1.4
+    },
+    {
+      "Id": "ubld",
+      "Value": 8
     },
     {
       "Id": "ugol",

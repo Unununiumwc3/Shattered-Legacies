@@ -105,7 +105,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Beast stables for the Horde.|n|cfff5962dTrains:|R Wind Rider, Batrider, Kodo Beast|n|cfff5962dResearches:|R Envenomed Spears, Liquid Fire, For The Horde!"
+      "Value": "Pumps oil from the sea floor into its tank until the field runs dry -- then it collapses. Oil Tankers take the oil home to the Oil Supply."
     },
     {
       "Id": "umdl",
@@ -149,6 +149,19 @@
       "Id": "upor",
       "Type": 3,
       "Value": ""
+    },
+    {
+      "Id": "umpm",
+      "Value": 3000
+    },
+    {
+      "Id": "umpi",
+      "Value": 0
+    },
+    {
+      "Id": "umpr",
+      "Type": 2,
+      "Value": 0.0
     }
   ]
 }

@@ -14,7 +14,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
   //   takes the camp. The Enterprise holding the CP uses the refugees itself.
   // - Each camp sells the refugees of its region: one unit per WL faction, only once that faction has fallen
   //   (defeated, or its fallback -- TimelineSystem.FactionFell); until then greyed out ("No refugees from X yet").
-  // - Stock: 3 per unit, one back every 2 min (the owner's max-allowed = alive + stock).
+  // - Stock: 3 per unit, one back every 2 min (the owner's max-allowed = alive + stock; 0.62: a unit trained with no
+  //   stock left is refunded and removed), and 4x the regular training time (data, kezan_objects.py).
+  // - Unruled camps belong to Neutral Extra (0.62); a camp that is gone is placed again.
   // - Every sale to another player pays the Enterprise the unit's price (half the regular unit's, 0.61); a sale at
   //   every camp completes "Master of the Slave Trade" (QuestMasterOfTheSlaveTrade).
   // - 0.61: an entry stands for a slot with a pick ("Sentinels|The Exodar", "Frostwolf|Warsong", "Dalaran|Gilneas"):
@@ -26,6 +28,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
   {
     internal static player Kezan;
     internal static List<unit> Camps = new();
+    internal static List<float> CampX = new();   // where each camp stands (to put it back)
+    internal static List<float> CampY = new();
     internal static List<int> Stock = new();
     internal static List<bool> CampSold = new();  // per camp: a refugee was sold there (the quest)
     internal static List<string> Fallen = new();
@@ -136,15 +140,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
         if (KezanEnterpriseSlaveCampsData.CampExact[k]
             || AiApi.FindBuildSpot(xy[k * 2], xy[k * 2 + 1], new List<float>(), new List<float>(), out x, out y))
         {
-          camp = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), types[k], x, y, 270f);
+          camp = CreateUnit(Nobody(), types[k], x, y, 270f);
           SetUnitInvulnerable(camp, true);
         }
         else
         {
           AiApi.Log("slave camps: no room next to " + KezanEnterpriseSlaveCampsData.CampTowns[k]);
+          x = 0f;
+          y = 0f;
         }
 
         Camps.Add(camp);
+        CampX.Add(x);
+        CampY.Add(y);
       }
 
       for (var j = 0; j < 24; j++)
@@ -161,29 +169,41 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       SyncOwners();
     }
 
-    // each camp belongs to the ruler of its town's CP (neutral -> nobody)
+    // 0.62: an unruled camp belongs to Neutral Extra, not Neutral Passive -- WL cleans up / rescues Neutral Passive
+    // units in its regions (the Venture Bay camp vanished early in the 0.61 playtest)
+    private static player Nobody() => Player(26); // Neutral Extra (as AiLegion uses it)
+
+    // each camp belongs to the ruler of its town's CP (neutral -> nobody); a camp that is gone comes back
     private static void SyncOwners()
     {
       for (var k = 0; k < Camps.Count; k++)
       {
         var camp = Camps[k];
-        if (camp == null || GetUnitTypeId(camp) == 0)
+        if (camp == null || GetUnitTypeId(camp) == 0 || GetUnitState(camp, UNIT_STATE_LIFE) <= 0.405f)
         {
-          continue;
+          if (camp == null && CampX[k] == 0f && CampY[k] == 0f)
+          {
+            continue; // never placed (no room)
+          }
+
+          camp = CreateUnit(Nobody(), KezanEnterpriseSlaveCampsData.Camps[k], CampX[k], CampY[k], 270f);
+          Camps[k] = camp;
+          AiApi.Log("slave camps: the camp of " + KezanEnterpriseSlaveCampsData.CampTowns[k] + " was gone -- placed again");
         }
 
+        SetUnitInvulnerable(camp, true); // whatever touched it (a rescue makes units vulnerable)
         var cp = AiApi.SafeCp(KezanEnterpriseSlaveCampsData.CampCps[k]);
-        var ruler = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : Player(PLAYER_NEUTRAL_PASSIVE);
-        if (ruler == Player(PLAYER_NEUTRAL_AGGRESSIVE))
+        var ruler = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : Nobody();
+        if (GetPlayerId(ruler) >= 24)
         {
-          ruler = Player(PLAYER_NEUTRAL_PASSIVE);
+          ruler = Nobody(); // a neutral town: nobody trades
         }
 
         var old = GetOwningPlayer(camp);
         if (old != ruler)
         {
           SetUnitOwner(camp, ruler, true);
-          if (ruler != Player(PLAYER_NEUTRAL_PASSIVE) && Kezan != null && ruler != Kezan)
+          if (GetPlayerId(ruler) < 24 && Kezan != null && ruler != Kezan)
           {
             DisplayTimedTextToPlayer(ruler, 0, 0, 12, "|cffffcc00Refugee Slave Camp of "
               + KezanEnterpriseSlaveCampsData.CampTowns[k] + "|r: you rule the town -- you may buy its refugees "
@@ -202,7 +222,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     // the max-allowed of this camp's refugees for that player: alive + stock (owner), alive (anyone else)
     private static void UpdateCamp(int k, player who)
     {
-      if (who == Player(PLAYER_NEUTRAL_PASSIVE) || GetPlayerId(who) >= 24)
+      if (GetPlayerId(who) >= 24)
       {
         return;
       }
@@ -262,7 +282,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
 
       var buyer = GetOwningPlayer(u);
-      var left = Stock[i] > 0 ? Stock[i] - 1 : 0;
+      if (Stock[i] <= 0)
+      {
+        // 0.62: out of stock -> refunded (the max-allowed limit alone let the camps be spammed, 0.61 playtest)
+        SetPlayerState(buyer, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(buyer, PLAYER_STATE_RESOURCE_GOLD)
+                                                          + GetUnitGoldCost(t));
+        RemoveUnit(u);
+        DisplayTimedTextToPlayer(buyer, 0, 0, 8, "|cffff6600No refugees left|r at this camp -- one more comes every "
+                                                 + I2S(R2I(KezanEnterpriseConfig.CampRestockEvery)) + " seconds (refunded).");
+        UpdateCamp(KezanEnterpriseSlaveCampsData.UnitCamp[i], buyer);
+        return;
+      }
+
+      var left = Stock[i] - 1;
       Stock[i] = left;
       UpdateCamp(KezanEnterpriseSlaveCampsData.UnitCamp[i], buyer);
       if (Kezan != null && buyer != Kezan)

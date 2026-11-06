@@ -171,7 +171,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZkg` | Alchemist | `24p:o04O` | KezanEnterprise |
 | `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
 | `oZkj` | Kezan Trading Center | `24p:o04M` | KezanEnterprise |
-| `oZkk` | Trader | `24p:o04S` | KezanEnterprise |
+| `oZkk` | Oil Tanker | `24p:o04S` | KezanEnterprise |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
 | `uZf2` | Plaguetorium | `24p:u011` | Forsaken |

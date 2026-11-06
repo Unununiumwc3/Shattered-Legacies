@@ -68,6 +68,13 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
   the unit appears, and track the player's toggles through `EVENT_PLAYER_UNIT_ISSUED_ORDER` -- there is no native
   that reads an autocast state (`KezanEnterpriseOil`, `KezanEnterpriseBombers`). Two abilities of the same base on
   one unit clash (the Oil Supply's Transfer Fuel is `Ambt` -- the refinery's copy leaves it out).
+- **WL's rescue strips invulnerability** (0.62): `Rescue` calls `SetUnitInvulnerable(false)`, which also removes an
+  `Avul` from the data -- buildings of a start area that must stay indestructible get `SetUnitInvulnerable(true)`
+  after `StartArea.Take`.
+- **Neutral Passive is not a safe owner** (0.62): WL cleans up and rescues Neutral Passive units in its regions -- a
+  building that waits for an owner belongs to Neutral Extra (`Player(26)`).
+- **HQ ids**: check every `TurningPointDef.Hq` against `Units.g.cs` (case matters: `nelc` is not `nELC` -- Skywall's
+  trigger never armed until 0.62).
 - **Dropped objects**: a root removed from a set -> the tool deletes its file, the id stays reserved in
   `import_ids.json` (0.60).
 - **Preplaced bases**: `StartArea.Prepare(area, RescuePreparationMode.HideNonStructures)` keeps buildings visible and

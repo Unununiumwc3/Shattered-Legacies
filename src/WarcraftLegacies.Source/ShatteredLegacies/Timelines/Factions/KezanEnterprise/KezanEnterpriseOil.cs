@@ -5,23 +5,27 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise
 {
-  // The Enterprise's oil -- its income mechanic of its own. 0.61 (maintainer), like the 24p:
-  // - the Kezan Oil Supply (preplaced, -1056 / -6816) FILLS UP with oil -- its mana: its own wells
-  //   (KezanEnterpriseConfig.OilPerMinute) and every Oil Platform at sea (OilPerPlatform, at most 8 platforms);
-  // - the Oil Refinery (start kit) turns it into gold: Refine Oil (autocast, on from the start -- bots too) takes 1000
-  //   oil from the Oil Supply every 60 s -> 100 gold, 150 / 200 with Oil Refining (the refinery's research);
-  // - an Oil Supply sends an "Oil Rig" expedition (the 24p's n0AQ, trained there): 40-60 s later an Oil Platform
-  //   rises at sea near it (pinged; invulnerable, the 24p's). Platforms unlock the Engineer's Guild, the Fuel
-  //   Transport and the traders (24p data / 0.61). The Oil Supply's mana also fuels the mechanical units (24p Fuel
-  //   Refill aura) and the Fuel Transports (KezanEnterpriseBombers: their fuel is their blast).
-  // 0.58-0.60 paid gold per Oil Supply / platform straight through WL's BonusIncome -- gone.
+  // The Enterprise's oil -- its income mechanic of its own (0.58; 0.61 like the 24p; 0.62, maintainer: carried):
+  // - an Oil Supply sends an "Oil Rig" expedition (the 24p's n0AQ): 40-60 s later an Oil Platform rises at sea near it
+  //   (pinged; invulnerable, the 24p's). It pumps 625 oil per minute into its own tank (its mana, 3000) from a field
+  //   of 40,000 -- when the field runs dry the platform collapses: a new rig is needed. At most 8.
+  // - Oil Tankers (the Trading Center's ships, KezanEnterpriseTrade) carry it home into the Kezan Oil Supply (mana);
+  // - the Oil Refinery turns it into gold: Refine Oil (cast on the Oil Supply from any distance, or autocast -- on
+  //   from the start, bots too) takes 1000 oil -> 100 gold, 150 / 200 with Oil Refining; cooldown 60 s.
+  // - the Oil Supply's oil also fuels the mechanical units (24p Fuel Refill) and the Fuel Transports' blast.
+  // Platforms unlock the Engineer's Guild, the Fuel Transport and the traders (24p data / 0.61). No oil without rigs
+  // and tankers (0.61 had 200 per minute from nowhere).
   internal static class KezanEnterpriseOil
   {
+    private const int RefineOn = 852150;  // faeriefireon (Refine Oil, Faerie Fire based since 0.62)
+    private const int RefineOff = 852151; // faeriefireoff
+
     internal static player Owner;
-    internal static int OilRate;                  // oil per minute into the Oil Supply (the scoreboard)
+    internal static int OilRate;                  // oil per minute the platforms pump (the scoreboard)
     internal static List<unit> Platforms = new();
+    internal static List<int> Field = new();      // per platform: oil left in its field
     internal static List<unit> Refineries = new();
-    internal static List<bool> RefineOn = new();  // per refinery: Refine Oil's autocast (tracked by its orders)
+    internal static List<bool> AutoOn = new();    // per refinery: Refine Oil's autocast (tracked by its orders)
     internal static ObjectiveCounter RigCounter; // the quest "Explosive Engineering" (QuestExplosiveEngineering)
 
     internal static void Start(player p)
@@ -35,26 +39,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       var tick = CreateTimer();
       TimerStart(tick, 10f, true, () => AiApi.Safe("kezan oil", Update));
       var refine = CreateTimer();
-      TimerStart(refine, KezanEnterpriseConfig.RefineEvery, true, () => AiApi.Safe("kezan refine", Refine));
+      TimerStart(refine, 5f, true, () => AiApi.Safe("kezan refine", AutoRefine));
       var trained = CreateTrigger();
       TriggerRegisterPlayerUnitEvent(trained, p, EVENT_PLAYER_UNIT_TRAIN_FINISH, null);
       TriggerAddAction(trained, () => AiApi.Safe("kezan oil rig", OnTrained));
       var ordered = CreateTrigger();
       TriggerRegisterPlayerUnitEvent(ordered, p, EVENT_PLAYER_UNIT_ISSUED_ORDER, null);
       TriggerAddAction(ordered, () => AiApi.Safe("kezan refine toggle", OnOrder));
+      var cast = CreateTrigger();
+      TriggerRegisterPlayerUnitEvent(cast, p, EVENT_PLAYER_UNIT_SPELL_EFFECT, null);
+      TriggerAddAction(cast, () => AiApi.Safe("kezan refine cast", OnCast));
       FindRefineries();
-      var supply = Supply();
-      if (supply != null && GetUnitState(supply, UNIT_STATE_MANA) < KezanEnterpriseConfig.StartOil)
-      {
-        SetUnitState(supply, UNIT_STATE_MANA, KezanEnterpriseConfig.StartOil); // the first refining at once
-      }
-
       Update();
     }
 
     private static bool Alive(unit u) => u != null && GetUnitTypeId(u) != 0 && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f;
 
-    // the refineries the player has (the start kit), with Refine Oil switched on
+    // the refineries the player has, a new one with Refine Oil's autocast switched on
     private static void FindRefineries()
     {
       var g = CreateGroup();
@@ -63,11 +64,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       while ((u = FirstOfGroup(g)) != null)
       {
         GroupRemoveUnit(g, u);
-        if (GetUnitTypeId(u) == KezanEnterpriseConfig.OilRefinery && !Refineries.Contains(u))
+        if (GetUnitTypeId(u) == KezanEnterpriseConfig.OilRefinery && Alive(u) && !Refineries.Contains(u))
         {
           Refineries.Add(u);
-          RefineOn.Add(true);
-          IssueImmediateOrderById(u, ORDER_REPLENISH_ON); // autocast on (bots never touch it)
+          AutoOn.Add(true);
+          IssueImmediateOrderById(u, RefineOn); // autocast on (bots never touch it)
         }
       }
 
@@ -76,21 +77,29 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
 
     private static void OnOrder()
     {
-      var u = GetTriggerUnit();
-      var i = Refineries.IndexOf(u);
+      var i = Refineries.IndexOf(GetTriggerUnit());
       if (i < 0)
       {
         return;
       }
 
       var order = GetIssuedOrderId();
-      if (order == ORDER_REPLENISH_ON)
+      if (order == RefineOn)
       {
-        RefineOn[i] = true;
+        AutoOn[i] = true;
       }
-      else if (order == ORDER_REPLENISH_OFF)
+      else if (order == RefineOff)
       {
-        RefineOn[i] = false;
+        AutoOn[i] = false;
+      }
+    }
+
+    // a manual cast (on the Oil Supply -- any target of the player's does: the oil is always the Oil Supply's)
+    private static void OnCast()
+    {
+      if (GetSpellAbilityId() == KezanEnterpriseConfig.RefineAbility)
+      {
+        Refine(GetTriggerUnit(), true);
       }
     }
 
@@ -114,29 +123,53 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       return found;
     }
 
-    // every 10 s: oil into the Oil Supply; the Oil Rig limit (8 minus the platforms -- a running expedition counts by
-    // itself: its hidden unit lives until the platform appears)
+    // every 10 s: the platforms pump into their tanks; a dry field -> the platform collapses; the Oil Rig limit (8
+    // minus the platforms -- a running expedition counts by itself: its hidden unit lives until the platform appears)
     private static void Update()
     {
+      var pumped = 0;
       for (var i = Platforms.Count - 1; i >= 0; i--)
       {
-        if (!Alive(Platforms[i]))
+        var pl = Platforms[i];
+        if (!Alive(pl))
         {
           Platforms.RemoveAt(i);
+          Field.RemoveAt(i);
+          continue;
+        }
+
+        var room = GetUnitState(pl, UNIT_STATE_MAX_MANA) - GetUnitState(pl, UNIT_STATE_MANA);
+        var pump = KezanEnterpriseConfig.OilPerPlatform / 6;
+        pump = pump < Field[i] ? pump : Field[i];
+        pump = pump < R2I(room) ? pump : R2I(room);
+        if (pump > 0)
+        {
+          SetUnitState(pl, UNIT_STATE_MANA, GetUnitState(pl, UNIT_STATE_MANA) + pump);
+          var left = Field[i] - pump;
+          Field[i] = left;
+        }
+
+        if (Field[i] <= 0 && GetUnitState(pl, UNIT_STATE_MANA) < 1f)
+        {
+          // dry and emptied: the platform collapses (a rig slot is free again)
+          DisplayTimedTextToPlayer(Owner, 0, 0, 10, "|cffff6600An Oil Platform ran dry|r and collapses -- send a new "
+                                                    + "Oil Rig expedition.");
+          SetUnitInvulnerable(pl, false);
+          KillUnit(pl);
+          Platforms.RemoveAt(i);
+          Field.RemoveAt(i);
+          continue;
+        }
+
+        if (Field[i] > 0)
+        {
+          pumped++;
         }
       }
 
-      OilRate = KezanEnterpriseConfig.OilPerMinute + Platforms.Count * KezanEnterpriseConfig.OilPerPlatform;
-      var supply = Supply();
-      if (supply != null)
-      {
-        var mana = GetUnitState(supply, UNIT_STATE_MANA) + OilRate / 6f;
-        var max = GetUnitState(supply, UNIT_STATE_MAX_MANA);
-        SetUnitState(supply, UNIT_STATE_MANA, mana < max ? mana : max);
-      }
-
-      var left = KezanEnterpriseConfig.MaxOilPlatforms - Platforms.Count;
-      SetPlayerTechMaxAllowed(Owner, KezanEnterpriseObjects.OilRig, left > 0 ? left : 0);
+      OilRate = pumped * KezanEnterpriseConfig.OilPerPlatform;
+      var cap = KezanEnterpriseConfig.MaxOilPlatforms - Platforms.Count;
+      SetPlayerTechMaxAllowed(Owner, KezanEnterpriseObjects.OilRig, cap > 0 ? cap : 0);
     }
 
     // the oil in store now (the scoreboard)
@@ -146,40 +179,62 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       return supply != null ? R2I(GetUnitState(supply, UNIT_STATE_MANA)) : 0;
     }
 
-    // every 60 s: each refinery with Refine Oil on takes 1000 oil from the Oil Supply -> gold by Oil Refining
-    private static void Refine()
+    // every 5 s: each refinery with autocast on whose Refine Oil is ready refines (and goes on cooldown)
+    private static void AutoRefine()
     {
-      var level = GetPlayerTechCount(Owner, KezanEnterpriseConfig.OilRefining, true);
-      var rates = KezanEnterpriseConfig.RefineGold;
-      var gold = rates[level < rates.Length ? level : rates.Length - 1];
+      FindRefineries(); // one that came later
       for (var i = Refineries.Count - 1; i >= 0; i--)
       {
         var r = Refineries[i];
         if (!Alive(r) || GetOwningPlayer(r) != Owner)
         {
           Refineries.RemoveAt(i);
-          RefineOn.RemoveAt(i);
+          AutoOn.RemoveAt(i);
           continue;
         }
 
-        var supply = Supply();
-        if (!RefineOn[i] || supply == null || GetUnitState(supply, UNIT_STATE_MANA) < KezanEnterpriseConfig.RefineOil)
+        if (AutoOn[i] && BlzGetUnitAbilityCooldownRemaining(r, KezanEnterpriseConfig.RefineAbility) <= 0f)
         {
-          continue;
+          Refine(r, false);
+        }
+      }
+    }
+
+    // 1000 oil of the Oil Supply -> gold by Oil Refining (a manual cast already started the cooldown)
+    private static void Refine(unit r, bool manual)
+    {
+      var supply = Supply();
+      if (supply == null || GetUnitState(supply, UNIT_STATE_MANA) < KezanEnterpriseConfig.RefineOil)
+      {
+        if (manual)
+        {
+          DisplayTimedTextToPlayer(Owner, 0, 0, 8, "|cffff6600Refine Oil:|r the Oil Supply holds less than "
+                                                   + I2S(KezanEnterpriseConfig.RefineOil) + " oil.");
+          BlzEndUnitAbilityCooldown(r, KezanEnterpriseConfig.RefineAbility);
         }
 
-        SetUnitState(supply, UNIT_STATE_MANA, GetUnitState(supply, UNIT_STATE_MANA) - KezanEnterpriseConfig.RefineOil);
-        SetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD) + gold);
-        var tag = CreateTextTag();
-        SetTextTagText(tag, "+" + I2S(gold), 0.023f);
-        SetTextTagPos(tag, GetUnitX(r), GetUnitY(r), 96f);
-        SetTextTagColor(tag, 255, 220, 0, 255);
-        SetTextTagVelocity(tag, 0f, 0.03f);
-        SetTextTagPermanent(tag, false);
-        SetTextTagLifespan(tag, 3f);
-        SetTextTagFadepoint(tag, 2f);
-        SetTextTagVisibility(tag, GetLocalPlayer() == Owner); // only the owner sees it (no game state)
+        return;
       }
+
+      var level = GetPlayerTechCount(Owner, KezanEnterpriseConfig.OilRefining, true);
+      var rates = KezanEnterpriseConfig.RefineGold;
+      var gold = rates[level < rates.Length ? level : rates.Length - 1];
+      SetUnitState(supply, UNIT_STATE_MANA, GetUnitState(supply, UNIT_STATE_MANA) - KezanEnterpriseConfig.RefineOil);
+      SetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD) + gold);
+      if (!manual)
+      {
+        BlzStartUnitAbilityCooldown(r, KezanEnterpriseConfig.RefineAbility, KezanEnterpriseConfig.RefineEvery);
+      }
+
+      var tag = CreateTextTag();
+      SetTextTagText(tag, "+" + I2S(gold), 0.023f);
+      SetTextTagPos(tag, GetUnitX(r), GetUnitY(r), 96f);
+      SetTextTagColor(tag, 255, 220, 0, 255);
+      SetTextTagVelocity(tag, 0f, 0.03f);
+      SetTextTagPermanent(tag, false);
+      SetTextTagLifespan(tag, 3f);
+      SetTextTagFadepoint(tag, 2f);
+      SetTextTagVisibility(tag, GetLocalPlayer() == Owner); // only the owner sees it (no game state)
     }
 
     private static void OnTrained()
@@ -228,6 +283,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
 
       Platforms.Add(CreateUnit(Owner, KezanEnterpriseObjects.OilPlatform, x, y, 270f));
+      Field.Add(KezanEnterpriseConfig.PlatformField);
       DestroyEffect(AddSpecialEffect(@"Objects\Spawnmodels\Naga\NagaDeath\NagaDeath.mdl", x, y));
       if (GetLocalPlayer() == Owner)
       {
@@ -235,7 +291,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       }
 
       DisplayTimedTextToPlayer(Owner, 0, 0, 10, "|cffffcc00Oil Rig established|r (+"
-        + I2S(KezanEnterpriseConfig.OilPerPlatform) + " oil per minute into the Oil Supply).");
+        + I2S(KezanEnterpriseConfig.OilPerPlatform) + " oil per minute into its tank -- Oil Tankers carry it home).");
       RigCounter?.Add(1);
       Update();
     }

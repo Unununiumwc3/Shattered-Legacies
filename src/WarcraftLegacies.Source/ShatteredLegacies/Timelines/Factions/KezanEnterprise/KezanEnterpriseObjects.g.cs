@@ -34,7 +34,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const int OilRig = 1851419442; // nZk2 (24p n0AQ)
     internal const int TradingCenter = 1868196714; // oZkj (24p o04M)
     internal const int TradingZeppelin = 1851419445; // nZk5 (24p nzep)
-    internal const int Trader = 1868196715; // oZkk (24p o04S)
+    internal const int OilTanker = 1868196715; // oZkk (24p o04S)
     internal const int Gallywix = 1331325801; // OZki (24p O04N)
     internal const int Gazlowe = 1314548531; // NZk3 (24p Ntin)
     internal const int Noggenfogger = 1314548532; // NZk4 (24p Nalc)

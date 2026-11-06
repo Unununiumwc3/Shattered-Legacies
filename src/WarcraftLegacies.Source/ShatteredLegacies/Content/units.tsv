@@ -1584,7 +1584,7 @@ oZkf	main	used	unit	Wizard	(goblin)	oshm	orc	war3mapImported\GoblinWarlock.mdl	m
 oZkg	main	used	unit	Alchemist	(goblin	odoc	orc	war3mapImported\Hero_Goblin_Alchemist.mdl	main	ReplaceableTextures\CommandButtons\BTNGoblinSlasher.blp	-	oZk6	-	-	-	-	AZkx,AZky,Acrs,Aion	-
 oZkh	main	used	unit	Tinker	(goblin)	ohun	orc	Units\Creeps\HeroTinker\HeroTinker.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	-	oZk0,oZk1,oZk2	-	-	-	-	A0HA,A0TA,ACrk,ANs1,AZk9,Aion	RZk7
 oZkj	main	used	building	Kezan Trading Center	(Goblin)	oshy	orc	war3mapImported\Building_WarsongShop.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeMerchant.blp	-	-	nZk5,oZkk	-	-	-	Avul	-
-oZkk	main	used	unit	Trader	(goblin)	obot	orc	war3mapImported\OrcOilTanker.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	oZkj	-	-	-	-	Aloc,Avul	oZkd
+oZkk	main	used	unit	Oil Tanker	(goblin)	obot	orc	war3mapImported\OrcOilTanker.mdl	main	ReplaceableTextures\CommandButtons\BTNShipHull.blp	-	oZkj	-	-	-	-	Aloc,Avul	oZkd
 oZq0	main	used	building	Refugee Slave Camp	(Booty Bay)	obar	other	buildings\other\Mercenary\Mercenary.mdl	stock	ReplaceableTextures\CommandButtons\BTNMercenaryCamp.blp	-	-	hZr0,hZr1,hZr4,nZr2,nZr3	-	-	-	Abds,Aspi	-
 oZq1	main	used	building	Refugee Slave Camp	(Ratchet)	obar	other	buildings\other\Mercenary\Mercenary.mdl	stock	ReplaceableTextures\CommandButtons\BTNMercenaryCamp.blp	-	-	oZr7	-	-	-	Abds,Aspi	-
 oZq2	main	used	building	Refugee Slave Camp	(Gadgetzan)	obar	other	buildings\other\Mercenary\Mercenary.mdl	stock	ReplaceableTextures\CommandButtons\BTNMercenaryCamp.blp	-	-	nZr9,oZr6,oZra	-	-	-	Abds,Aspi	-

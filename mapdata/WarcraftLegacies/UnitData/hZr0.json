@@ -26,10 +26,6 @@
       "Value": 0.3
     },
     {
-      "Id": "ubld",
-      "Value": 2
-    },
-    {
       "Id": "ucol",
       "Type": 2,
       "Value": 8
@@ -152,6 +148,10 @@
       "Id": "usnd",
       "Type": 3,
       "Value": "Bandit"
+    },
+    {
+      "Id": "ubld",
+      "Value": 8
     },
     {
       "Id": "ugol",

@@ -16,10 +16,6 @@
       "Value": "A0C3"
     },
     {
-      "Id": "ubld",
-      "Value": 2
-    },
-    {
       "Id": "ucam",
       "Value": 1
     },
@@ -97,6 +93,10 @@
       "Id": "unam",
       "Type": 3,
       "Value": "Battlemage"
+    },
+    {
+      "Id": "ubld",
+      "Value": 8
     },
     {
       "Id": "ugol",

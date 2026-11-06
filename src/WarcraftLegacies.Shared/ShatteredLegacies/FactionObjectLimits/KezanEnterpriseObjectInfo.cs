@@ -50,7 +50,7 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1851419442, 8); // nZk2 OilRig
       yield return new(1868196714, 200); // oZkj TradingCenter
       yield return new(1851419445, 16); // nZk5 TradingZeppelin
-      yield return new(1868196715, 10); // oZkk Trader
+      yield return new(1868196715, 10); // oZkk OilTanker
       yield return new(1331325801, 1, Support); // OZki Gallywix
       yield return new(1314548531, 1, Siege); // NZk3 Gazlowe
       yield return new(1314548532, 1, Support); // NZk4 Noggenfogger

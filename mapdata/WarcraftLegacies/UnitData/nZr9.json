@@ -11,10 +11,6 @@
       "Value": "AELS,Atru,A0X9,A0XA,Aion"
     },
     {
-      "Id": "ubld",
-      "Value": 4
-    },
-    {
       "Id": "usle",
       "Value": 0
     },
@@ -139,6 +135,10 @@
       "Id": "ushx",
       "Type": 1,
       "Value": 120
+    },
+    {
+      "Id": "ubld",
+      "Value": 16
     },
     {
       "Id": "ugol",

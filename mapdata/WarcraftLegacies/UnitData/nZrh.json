@@ -16,10 +16,6 @@
       "Value": "A03H"
     },
     {
-      "Id": "ubld",
-      "Value": 2
-    },
-    {
       "Id": "ucam",
       "Value": 0
     },
@@ -108,6 +104,10 @@
       "Id": "unam",
       "Type": 3,
       "Value": "Ranger"
+    },
+    {
+      "Id": "ubld",
+      "Value": 8
     },
     {
       "Id": "ugol",

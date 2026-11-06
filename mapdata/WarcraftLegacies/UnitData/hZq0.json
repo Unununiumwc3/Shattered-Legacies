@@ -73,11 +73,6 @@
       "Value": "AZk2"
     },
     {
-      "Id": "ussc",
-      "Type": 1,
-      "Value": 9
-    },
-    {
       "Id": "uubs",
       "Type": 3,
       "Value": ""
@@ -118,11 +113,6 @@
     {
       "Id": "uclb",
       "Value": 200
-    },
-    {
-      "Id": "usca",
-      "Type": 1,
-      "Value": 1.6
     },
     {
       "Id": "usnd",
@@ -166,6 +156,11 @@
     {
       "Id": "umpi",
       "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 2,
+      "Value": 0.8
     }
   ]
 }

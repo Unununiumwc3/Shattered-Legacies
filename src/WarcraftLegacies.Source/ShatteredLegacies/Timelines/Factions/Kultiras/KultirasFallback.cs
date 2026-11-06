@@ -25,6 +25,26 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
   //      map's Trading Center is gone (maintainer: the pseudo mercenary centre comes another way).
   internal static class KultirasFallback
   {
+    // the Kezan Trading Center and the Oil Supply cannot be destroyed (maintainer) -- their data says so (Avul), but
+    // WL's rescue (SetUnitInvulnerable false) takes that away
+    private static void Indestructible(player p)
+    {
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        var t = GetUnitTypeId(u);
+        if (t == KezanEnterpriseObjects.TradingCenter || t == KezanEnterpriseObjects.OilSupply)
+        {
+          SetUnitInvulnerable(u, true);
+        }
+      }
+
+      DestroyGroup(g);
+    }
+
     private static List<unit> _startUnits = new();
 
     // map setup: the base on Kezan waits -- buildings visible and invulnerable, units hidden (WL's rescue mechanism)
@@ -56,6 +76,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       SwapFaction.Run(p, enterprise); // first: if it fails, the player keeps his units
       var heir = LeaveBehind.ToHeir(p, KezanEnterpriseConfig.Heir, keep);
       var taken = StartArea.Take(p, _startUnits, enterprise, KezanEnterpriseObjects.MainEquivalents);
+      Indestructible(p); // 0.62: WL's rescue had made the Trading Center and the Oil Supply vulnerable
       StartCps.Give(p, UNIT_N04Z_KEZAN);
 
       var placed = Spawn.Buildings(p, KezanEnterpriseConfig.StartX, KezanEnterpriseConfig.StartY,

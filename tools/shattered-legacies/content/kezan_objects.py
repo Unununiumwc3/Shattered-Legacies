@@ -71,18 +71,26 @@ def main():
 
 
 def refinery():
-    """0.61: the Oil Refinery (hZq0) -- the Oil Supply's model; its autocast "Refine Oil" (AZq1, a Moon Well's
-    Replenish without effect: the refinery has no mana) only shows the toggle; KezanEnterpriseOil does the exchange."""
-    write("AbilityData", "AZq1", {"OldId": "Ambt", "NewId": "AZq1", "Unk": [0], "Modifications": [
-        s("anam", "Refine Oil"), s("atp1", "Refine Oil", 1), s("aub1", f"While on (autocast), every 60 seconds turns {OIL} oil of the Kezan Oil Supply into {GOLD[0]} gold "
-                  f"({GOLD[1]} / {GOLD[2]} with Oil Refining).", 1), s("aart", BTN + "BTNOilStation.blp"),
-        v("aran", 0.0, 1), i("abpx", 1), i("abpy", 0), s("ahky", "F")]})
+    """the Oil Refinery (hZq0, 0.61) -- the Oil Supply's model at half its size (0.62, maintainer). Refine Oil (AZq1;
+    0.62: Faerie Fire based -- the Moon Well's Replenish needed the target in reach and mana): cast on the Kezan Oil
+    Supply from any distance, or autocast (on from the start): KezanEnterpriseOil takes 1000 oil from the Oil Supply
+    -> gold; cooldown 60 s."""
+    write("AbilityData", "AZq1", {"OldId": "Afae", "NewId": "AZq1", "Unk": [0], "Modifications": [
+        s("anam", "Refine Oil"), s("atp1", "Refine Oil", 1),
+        s("aub1", f"Turns {OIL} oil of the Kezan Oil Supply into {GOLD[0]} gold ({GOLD[1]} / {GOLD[2]} with Oil "
+                  "Refining). Cast it on the Oil Supply -- from any distance -- or leave autocast on: then it runs "
+                  "every 60 seconds by itself.", 1),
+        s("aart", BTN + "BTNOilStation.blp"), v("amcs", 0, 1), v("aran", 99999.0, 1), v("acdn", 60.0, 1),
+        v("adur", 0.01, 1), v("ahdu", 0.01, 1), s("atar", "structure,friend,self,vuln,invu", 1),
+        i("abpx", 1), i("abpy", 0), s("ahky", "F")]})
     sup = unit_json("hZk1")
+    scale = next((m["Value"] for m in sup["Modifications"] if m["Id"] == "usca"), 1.0)
     mods = [m for m in sup["Modifications"] if m["Id"] not in ("unam", "utra", "ures", "uabi", "utip", "utub", "uhot",
-                                                                 "ubpx", "ubpy", "umpm", "umpi", "umpr")]
+                                                                 "ubpx", "ubpy", "umpm", "umpi", "umpr", "usca",
+                                                                 "ussc")]
     mods += [s("unam", "Kezan Oil Refinery"), s("utra", ""), s("ures", "RZko"), s("uabi", "AZq1,Avul"),
              s("utub", "Turns the Oil Supply's oil into gold (Refine Oil, autocast). Oil Refining improves the rate."),
-             i("umpm", 0), i("umpi", 0)]
+             i("umpm", 0), i("umpi", 0), v("usca", round(scale * 0.5, 2))]
     write("UnitData", "hZq0", {"OldId": sup["OldId"], "NewId": "hZq0", "Unk": [0], "Modifications": mods})
 
 
@@ -128,6 +136,7 @@ REFUGEES = [
     ("Druids", "edry", 5), ("Sentinels|The Exodar", "earc", 5),
 ]
 RETIRED_UNITS = {5: "h09T", 8: "otbk", 14: "h04E"}  # the source of a retired row (its old file is removed)
+BUILD_TIME = 4  # 0.62 (maintainer): refugees take 4x the regular training time
 PRICE = 0.5  # 0.61 (maintainer): refugees cost half of the regular unit -- an incentive to buy at the camps
 REFUGEE_LIMIT = 12
 DROP = {"ureq", "utra", "ubui", "ures", "uupt", "ubpx", "ubpy", "uhot", "unsf", "utip", "utub", "ucat"}
@@ -195,6 +204,10 @@ def camps():
         town = CAMPS[camp][0]
         uname = name_of(d, src)
         slot = sum(1 for r in REFUGEES[:i] if r and r[2] == camp)  # its button: 3 columns, x = 3 left for the rally
+        # 0.62 (maintainer): 4x the training time -- the camps could be spammed
+        build = next((m["Value"] for m in mods if m["Id"] == "ubld"), None)
+        mods = [m for m in mods if m["Id"] != "ubld"] + [{"Id": "ubld", "Value": int(build if isinstance(build, int)
+                                                                                       else 30) * BUILD_TIME}]
         gold = next((m["Value"] for m in mods if m["Id"] == "ugol"), None)
         if isinstance(gold, int):
             mods = [m for m in mods if m["Id"] != "ugol"] + [{"Id": "ugol", "Value": max(1, int(round(gold * PRICE)))}]

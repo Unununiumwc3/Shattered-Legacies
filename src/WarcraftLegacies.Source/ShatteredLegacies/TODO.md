@@ -139,7 +139,20 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   texts; a model for "Queen of the Forsaken" (24p `Hero_DarkRangerBoss2` is copied with its unit -- a candidate).
 - [ai] (polish) The Forsaken bot: production data exist (`SL_BUILDINGS`); check in a bot game that it builds.
 
-### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.61 and polish
+### 3. Kul Tiras -> Kezan Enterprise -- playtest 0.62 and polish
+
+- [you] **Playtest 0.62**: oil starts at 0; an Oil Rig -> a platform whose tank fills (its mana bar); Oil Tankers
+  (Trading Center) sail to it, load, come back ("+300 oil" at home), the Oil Supply's mana grows; Refine Oil cast on
+  the Oil Supply (any distance) or by autocast pays 100 gold per minute; the Trading Center / Oil Supply cannot be
+  hurt; the refinery is smaller; slave camps train slowly and refund when empty; the Venture Bay camp stays;
+  druid refugees once Nordrassil AND Cenarion Hold are lost, Skywall's once the Vortex Pinnacle and the Sulfuron Spire
+  are; Kul Tiras' fallback no longer goes away.
+- [you] **Balance of the carried oil**: 625 per platform per minute, tank 3,000, field 40,000 (64 min at full pump),
+  300 per tanker trip (`KezanEnterpriseConfig`). With the platforms 1,200-5,000 from the Oil Supply a tanker makes
+  roughly 600-1,000 oil per minute -- 5-8 tankers for 8 platforms.
+- [you] **Druids' HQ**: today Nordrassil AND Cenarion Hold must be lost (the catalog's rule: all of them). Nordrassil
+  alone? (`TimelineCatalog.cs`, `Hq`).
+
 
 - [you] **Playtest 0.61**: Gazlowe's Engineering Upgrade (no more empty icons / crash); Alchemist and Wizard trainings
   give their spells; the Oil Supply fills up (scoreboard "Kezan oil: <oil> (+<rate>/min)", +100 per platform), the
@@ -247,10 +260,8 @@ Time". `[you]` the numbers (tax rate, sudden death X / N / Y).
 ## Known issues
 
 From the 0.60 playtest (maintainer):
-- [ai] **Kul Tiras' fallback flickers**: Boralus lost -> the fallback becomes available, after a while it is not, then
-  again -- although the keep is gone for good. Maintainer: available ONCE and that is it; retaking the HQ does not
-  take it away again (`TimelineSystem.OnTriggerChanged` / the HQ trigger: latch it). Also the old "HQ regained"
-  message.
+- [you] ~~**Kul Tiras' fallback flickers**~~ (0.62: a lost HQ stays lost for its turning point) -- check in the
+  playtest; if it still flickers, the cause is elsewhere (the HQ changing owners back and forth?).
 - [ai] **Katherine's ultimate without its level** after the fallback to Kezan: probably every hero that stays with its
   faction through a fallback (the level requirement of hero skills -- `SwapFaction`, the faction's object levels?).
   Investigate with one hero, then fix for all fallbacks.

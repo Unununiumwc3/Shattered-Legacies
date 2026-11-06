@@ -11,7 +11,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     public readonly string Name;                   // the successor, e.g. "Sunfury" (quest title "Fallback: <Name>")
     public readonly TurningPointKind Kind;
     public readonly TurningPointSource Source;
-    public int[] Hq = new int[0];                  // HQ building / CP unit types -- ALL must be lost (recaptured -> again)
+    public int[] Hq = new int[0];                  // HQ building / CP unit types -- ALL must be lost (0.62: then for good)
     public string Trigger = "";                    // the trigger as quest objective text ("Lose Silvermoon Palace ...")
     public string Description = "";                // quest text
     public int Decision;                           // decision research at the Hourglass (HourglassData); 0 = none

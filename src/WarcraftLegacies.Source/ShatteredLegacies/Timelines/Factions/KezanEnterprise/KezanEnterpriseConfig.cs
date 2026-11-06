@@ -32,12 +32,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     // Kul Tiras' lore heir (inheritance rule step 2): its holdings go to Stormwind if Stormwind still plays on its team
     internal const string Heir = "Stormwind";
 
-    // oil (0.61, maintainer: like the 24p -- the Oil Supply fills up with oil, its mana; the Oil Refinery turns oil
-    // into gold). Oil per minute into the Oil Supply: its own wells, and every Oil Platform at sea.
-    internal const int OilPerMinute = 200;
-    internal const int StartOil = 1000;              // in the Oil Supply when the Enterprise arrives
-    internal const int OilPerPlatform = 100;
-    internal const int MaxOilPlatforms = 8;           // the 24p limit ("Can only build 8") -> at most 1000 per minute
+    // oil (0.61 like the 24p; 0.62, maintainer: the oil has to be carried). Every Oil Platform pumps into its own tank
+    // (its mana) from a field that runs dry -- then it collapses and a new rig is needed. Oil Tankers carry it home
+    // into the Kezan Oil Supply (its mana); the Oil Refinery turns it into gold. Nothing without rigs and tankers.
+    // Maxed out (8 platforms, enough tankers): 8 x 625 = 5000 oil per minute -- the refinery takes 1000 of it, the rest
+    // is for fuel (mechanical units, Fuel Transports).
+    internal const int OilPerPlatform = 625;          // per minute into the platform's tank (3000, data)
+    internal const int PlatformField = 40000;         // oil in a platform's field (64 min at full pump)
+    internal const int MaxOilPlatforms = 8;           // the 24p limit ("Can only build 8")
+    internal const int TankerLoad = 300;              // oil an Oil Tanker carries per trip
+    internal const float TankerReach = 700f;          // this close to a platform / the Trading Center: loads / unloads
     // Refine Oil (the refinery's autocast, AZq1): every 60 s RefineOil oil -> RefineGold[Oil Refining level] gold
     internal const int RefineOil = 1000;
     internal static int[] RefineGold = { 100, 150, 200 }; // keep in step with kezan_objects.py (GOLD)
@@ -56,11 +60,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
     internal const float RigRangeMax = 5000f;
     internal const float RigSpacing = 700f;           // ... and not next to another platform
 
-    // trade (0.59, the 24p Trading Center): Trading Zeppelins / Traders pay this much gold per 1,000 of distance
+    // trade (0.59, the 24p Trading Center; 0.62: only the Trading Zeppelins trade gold -- the ships are Oil Tankers):
+    // Trading Zeppelins pay this much gold per 1,000 of distance
     // of straight-line distance on a round trip (Kezan -> Booty Bay and back ~41,000: a zeppelin ~41 gold in ~4 min,
     // a ship ~82). A full fleet (16 + 10) brings roughly 400 gold per minute.
     internal const int ZeppelinGoldPer1000 = 1;
-    internal const int TraderGoldPer1000 = 2;
     internal const float TradeCheckEvery = 2f;
     internal const float TradeLegMax = 240f;          // a leg longer than this counts as arrived (stuck)
 
