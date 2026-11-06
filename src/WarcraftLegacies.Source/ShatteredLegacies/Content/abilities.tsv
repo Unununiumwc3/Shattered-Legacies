@@ -1210,7 +1210,7 @@ AZkx	main	used	Acid Bomb	(Alchemist)	ANab	-	-	undead	ReplaceableTextures\Command
 AZky	main	used	Dispel Magic	(Goblin)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	oZkg
 AZkz	main	used	Gunner Pilot	(Goblin Shredder	Assp	-	-	creeps	-	nZk1
 AZq0	main	used	Detonate	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGoblinSapper.blp	uZk0
-AZq1	main	used	Refine Oil	-	Ambt	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZq0
+AZq1	main	used	Refine Oil	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZq0
 AZs1	main	used	Domination	(Forsaken - Sylvanas)	ANch	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCharm.blp	UZa1,UZa3
 AZs2	main	used	Anti-magic Shell	(Forsaken - Sylvanas)	Aam2	yes	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	UZa1
 AZs3	main	used	Banshee Wail	(Forsaken - Sylvanas)	ANht	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	UZa1,UZa3

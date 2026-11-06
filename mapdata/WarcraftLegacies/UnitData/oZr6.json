@@ -16,10 +16,6 @@
       "Value": 700
     },
     {
-      "Id": "ubld",
-      "Value": 2
-    },
-    {
       "Id": "ucam",
       "Value": 1
     },
@@ -127,6 +123,10 @@
       "Id": "usnd",
       "Type": 3,
       "Value": "Gargoyle"
+    },
+    {
+      "Id": "ubld",
+      "Value": 8
     },
     {
       "Id": "ugol",

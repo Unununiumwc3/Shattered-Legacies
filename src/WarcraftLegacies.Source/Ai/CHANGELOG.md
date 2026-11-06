@@ -5,6 +5,9 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.62.0
+No bot logic change. Fork data regenerated (`gen_ai_data.py`: the Oil Tanker renamed).
+
 ## 0.61.0
 No bot logic change. Fork data regenerated (`gen_ai_data.py`): the Kezan copies of 0.61, the refugee units of the
 slave camps (one per slot). The Enterprise's autocasts (Refine Oil, Detonate) are switched on by the fork's code, so

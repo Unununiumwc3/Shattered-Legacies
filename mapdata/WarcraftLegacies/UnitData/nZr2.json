@@ -16,10 +16,6 @@
       "Value": "A0EH"
     },
     {
-      "Id": "ubld",
-      "Value": 3
-    },
-    {
       "Id": "ucam",
       "Value": 0
     },
@@ -93,6 +89,10 @@
       "Id": "ucua",
       "Type": 3,
       "Value": "NONE"
+    },
+    {
+      "Id": "ubld",
+      "Value": 12
     },
     {
       "Id": "ugol",

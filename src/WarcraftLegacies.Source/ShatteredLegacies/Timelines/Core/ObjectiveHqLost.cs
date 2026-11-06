@@ -4,8 +4,9 @@ using MacroTools.Quests;
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 {
   // 0.53: the trigger of a fallback as a WL quest objective (was TimelineSystem.Check, 0.39.4): complete when ALL HQ
-  // units are lost (dead or owned by someone else) after the faction held at least one; incomplete again when one is
-  // held again. Its ResearchId (the turning point's condition tech) unlocks the decision at the Hourglass.
+  // units are lost (dead or owned by someone else) after the faction held at least one. 0.62 (maintainer): it stays
+  // complete -- retaking the HQ no longer takes the turning point away (Kul Tiras' fallback came and went, 0.60
+  // playtest). Its ResearchId (the turning point's condition tech) unlocks the decision at the Hourglass.
   internal sealed class ObjectiveHqLost : Objective
   {
     private readonly int[] _types;
@@ -48,7 +49,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       DestroyGroup(g);
     }
 
-    // returns +1 when the HQ was just lost, -1 when it was just held again, 0 otherwise
+    // returns +1 when the HQ was just lost, 0 otherwise
     internal int Poll()
     {
       if (_units == null || _units.Count == 0 || ProgressLocked || EligibleFactions.Count == 0)
@@ -75,13 +76,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       if (held > 0)
       {
         _hadHq = true;
-        if (Progress == QuestProgress.Complete)
-        {
-          Progress = QuestProgress.Incomplete; // recaptured -> must fall again
-          return -1;
-        }
-
-        return 0;
+        return 0; // 0.62: a lost HQ stays lost for the turning point (no "-1: held again" any more)
       }
 
       if (!_hadHq || Progress == QuestProgress.Complete)

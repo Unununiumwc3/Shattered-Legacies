@@ -146,7 +146,7 @@ KEZAN = {
         # own between it and the goblin towns (KezanEnterpriseTrade); not buildable: the preplaced one on Kezan
         ("o04M", "TradingCenter", [], 200),
         ("nzep", "TradingZeppelin", [], 16),
-        ("o04S", "Trader", [], 10),
+        ("o04S", "OilTanker", [], 10),  # 0.62: the 24p "Trader" ship, an Oil Tanker now
         ("O04N", "Gallywix", ["Support"], 1),
         ("Ntin", "Gazlowe", ["Siege"], 1),
         ("Nalc", "Noggenfogger", ["Support"], 1),
@@ -192,7 +192,15 @@ KEZAN = {
             # 0.61 (maintainer): the traders need an Oil Platform (like the Engineer's Guild); the Trading Center is
             # indestructible; the Fuel Transport gets Detonate (hand-made AZq0, KezanEnterpriseBombers)
             "nzep": {"ugol": 60, "ureq": "o04R"},
-            "o04S": {"ugol": 150, "ureq": "o04R"},
+            # 0.62 (maintainer): the ship is an OIL TANKER -- it carries oil from the Oil Platforms to the Oil Supply
+            # (KezanEnterpriseTrade); the zeppelins trade gold with the goblin towns
+            "o04S": {"ugol": 150, "ureq": "o04R", "unam": "Oil Tanker",
+                     "utub": "Carries the oil of the Oil Platforms home to the Kezan Oil Supply, on its own -- it "
+                             "cannot be controlled. Without tankers the platforms' oil stays at sea."},
+            # 0.62: the platforms store what they pump (mana = oil; KezanEnterpriseOil) until a tanker takes it
+            "o04R": {"umpm": 3000, "umpi": 0, "umpr": 0.0,
+                     "utub": "Pumps oil from the sea floor into its tank until the field runs dry -- then it "
+                             "collapses. Oil Tankers take the oil home to the Oil Supply."},
             "u028": {"uabi": "A0OJ,A0NY,A0MN,A0HG,=AZq0"}},
 }
 SETS = [FORSAKEN, KEZAN]

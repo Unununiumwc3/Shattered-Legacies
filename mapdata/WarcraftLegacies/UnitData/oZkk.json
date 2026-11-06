@@ -84,7 +84,7 @@
     {
       "Id": "unam",
       "Type": 3,
-      "Value": "Trader"
+      "Value": "Oil Tanker"
     },
     {
       "Id": "ussc",
@@ -99,7 +99,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Ship Gold Trader. Once trained, it cannot be controlled and will automatically trade between the Trading Center and a random Goblin trading location. Will collect gold over time.|n|n|cff99b4d1Can only build 10.|r"
+      "Value": "Carries the oil of the Oil Platforms home to the Kezan Oil Supply, on its own -- it cannot be controlled. Without tankers the platforms' oil stays at sea."
     },
     {
       "Id": "usca",

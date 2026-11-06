@@ -183,7 +183,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       new TurningPointDef("Skywall", "not decided yet", TurningPointKind.Fallback, TurningPointSource.NotYet)
       {
         Decision = HourglassData.DecisionSkywall, Condition = HourglassData.ConditionSkywall,
-        Hq = new[] { 1852140643 },             // nelc Vortex Pinnacle
+        // 0.62: was 1852140643 ("nelc", lowercase -- no such unit: Skywall's trigger never armed); the Vortex Pinnacle
+        // is nELC, and the Sulfuron Spire (swSS) counts too (maintainer): both lost or not Skywall's
+        Hq = new[] { UNIT_NELC_VORTEX_PINNACLE_SKYWALL_T3, UNIT_SWSS_SULFURON_SPIRE_SCOURGE_T3 },
       },
       new TurningPointDef("Black Empire", "not decided yet", TurningPointKind.Fallback, TurningPointSource.NotYet)
       {

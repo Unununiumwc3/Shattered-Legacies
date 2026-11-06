@@ -15,8 +15,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   // announcement and a ping.
   internal static class TimelineSystem
   {
-    // 0.60: called with the old faction's name when a real fallback runs (before its effects) -- a fallen faction
-    // for whoever cares (the Kezan Enterprise's Refugee Slave Camps; a defeat they take from WL's ScoreStatus)
+    // 0.60: called with the old faction's name when a real fallback runs (before its effects); 0.62 also when a
+    // fallback's trigger fires (its HQ lost) -- a fallen faction for whoever cares (the Kezan Enterprise's Refugee
+    // Slave Camps; a defeat they take from WL's ScoreStatus). Listeners must tolerate repeats.
     internal static List<System.Action<string>> FactionFell = new();
 
     internal const float CheckEvery = 5f;
@@ -122,6 +123,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         }
 
         return;
+      }
+
+      // 0.62: the faction FELL when its trigger fires (its HQ lost) -- not only when its fallback runs: placeholders and
+      // factions that never take their fallback count too (the Kezan Enterprise's Refugee Slave Camps; maintainer)
+      if (q.Def.Kind == TurningPointKind.Fallback)
+      {
+        for (var i = 0; i < FactionFell.Count; i++)
+        {
+          var fell = FactionFell[i];
+          var name = q.Def.Faction;
+          AiApi.Safe("faction fell", () => fell(name));
+        }
       }
 
       if (!q.TriggerRan && q.Def.OnTrigger != null)

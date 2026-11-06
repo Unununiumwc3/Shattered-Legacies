@@ -72,10 +72,6 @@
       "Value": "Rhme,Rhar,Rguv"
     },
     {
-      "Id": "ubld",
-      "Value": 4
-    },
-    {
       "Id": "uhpm",
       "Value": 1100
     },
@@ -98,6 +94,10 @@
       "Id": "umdl",
       "Type": 3,
       "Value": "units\\demon\\FelgaurdBlue\\FelgaurdBlue.mdl"
+    },
+    {
+      "Id": "ubld",
+      "Value": 16
     },
     {
       "Id": "ugol",

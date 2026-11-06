@@ -16,10 +16,6 @@
       "Value": 700
     },
     {
-      "Id": "ubld",
-      "Value": 3
-    },
-    {
       "Id": "ucol",
       "Type": 2,
       "Value": 8
@@ -86,6 +82,10 @@
       "Id": "usca",
       "Type": 1,
       "Value": 0.85
+    },
+    {
+      "Id": "ubld",
+      "Value": 12
     },
     {
       "Id": "ugol",

@@ -9,11 +9,11 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.61.0` on `botified-dev` (0.61.0: Kezan oil like the 24p -- Oil Supply + Oil Refinery,
-  Fuel Transport bombers, Gazlowe crash fixed, slave camps reworked; 0.60.0: the Refugee Slave Camps). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.62.0` on `botified-dev` (0.62.0: carried oil -- platforms, Oil Tankers, refinery from any
+  distance; fallen = HQ lost; Skywall HQ fixed; slave camp fixes; 0.61.0: Oil Refinery, bombers, Gazlowe crash). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.58.0-0.61.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
-  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.61
+- **0.58.0-0.62.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
+  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.62
   playtest, the "Known issues" of the 0.60 playtest (Kul Tiras' fallback flicker, Katherine's ultimate level, quest
   buildings visible, detect invisible), the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
   concept -- turtle / tower defence, buying time), then step 4 the Forsaken's small issues. Bot: `Ai/TODO.md`

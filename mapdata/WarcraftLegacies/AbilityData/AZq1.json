@@ -1,5 +1,5 @@
 {
-  "OldId": "Ambt",
+  "OldId": "Afae",
   "NewId": "AZq1",
   "Unk": [
     0
@@ -20,7 +20,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "While on (autocast), every 60 seconds turns 1000 oil of the Kezan Oil Supply into 100 gold (150 / 200 with Oil Refining)."
+      "Value": "Turns 1000 oil of the Kezan Oil Supply into 100 gold (150 / 200 with Oil Refining). Cast it on the Oil Supply -- from any distance -- or leave autocast on: then it runs every 60 seconds by itself."
     },
     {
       "Id": "aart",
@@ -29,9 +29,38 @@
     },
     {
       "Level": 1,
+      "Id": "amcs",
+      "Value": 0
+    },
+    {
+      "Level": 1,
       "Id": "aran",
       "Type": 2,
-      "Value": 0.0
+      "Value": 99999.0
+    },
+    {
+      "Level": 1,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 60.0
+    },
+    {
+      "Level": 1,
+      "Id": "adur",
+      "Type": 2,
+      "Value": 0.01
+    },
+    {
+      "Level": 1,
+      "Id": "ahdu",
+      "Type": 2,
+      "Value": 0.01
+    },
+    {
+      "Level": 1,
+      "Id": "atar",
+      "Type": 3,
+      "Value": "structure,friend,self,vuln,invu"
     },
     {
       "Id": "abpx",
