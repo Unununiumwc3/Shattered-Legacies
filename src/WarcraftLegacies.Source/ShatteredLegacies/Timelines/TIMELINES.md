@@ -32,7 +32,9 @@ A **turning point** is any deviation from WL's default history: a fallback, a su
 
 **Full vs light.** Not every faction gets a completely new faction. A **full** turning point swaps the faction (Quel'thalas
 -> WL's Sunfury, Kul Tiras -> a Kezan Enterprise faction, like Lordaeron -> Scarlet Crusade). A **light** one keeps the
-faction object and modifies it (Illidari -> draenei remnant: the non-draenei objects removed, a few added). Both run
+faction object and modifies it (0.63: no case left -- the Illidari's Ashtongue became a full one). Rule (0.63): a
+successor with its own name, tech tree, quests or income gets its own `Faction` class; light is only for "the same
+faction, a few objects more or less" and never brings a mechanic of its own. Both run
 through the same frame; only the effect list differs.
 
 **Turning points are WL quests.** Each one is a `QuestData` (objectives = trigger + the Hourglass research,
@@ -160,8 +162,8 @@ check for conflicts; other numbers = a player slot at start). Rows for designs t
 | Twilight's Hammer (orc slot) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | the capital must stay WL's |
 | Forsaken (Quel'thalas betrayal, D3) | Undercity (under Lordaeron City) | Lordaeron City `n01G` (9088,8576, owner 27), Tirisfal `n01F` (6784,10112, owner 9 = Lordaeron) | 24p Forsaken buildings (e.g. Plaguetorium `u011`) | Tirisfal / Brill are Lordaeron's at start -> own small rectangle |
 | Knights of the Ebon Blade (Scourge) | Eastern Plaguelands (Acherus) | Havenshire `n04W` (20608,9344, owner 27), Corin's Crossing `n03P` (17536,9088, owner 9) | Scourge buildings (copies) | Havenshire is owner 27 (rescue?) |
-| Mag'har (Fel Horde) | Nagrand (Garadar) | Nagrand `n00B` (-2944,-27904), Halaar `n0CV` (-4352,-29312) | orc buildings (copies) | none found |
-| Draenei remnant / Akama's Ashtongue (Illidari, light) | Shadowmoon Valley | Shadowmoon `n09V` (2560,-31040, owner 27), Black Temple `n00I` (7168,-30144, owner 27) | the Illidari's own draenei objects | both owner 27 -> probably the Illidari's own rescue |
+| Mag'har (Fel Horde) | Kil'sorrow Fortress (maintainer, 0.63; was Nagrand / Garadar) | Nagrand `n00B` (-2944,-27904), Halaar `n0CV` (-4352,-29312) | orc buildings (copies) | none found |
+| Ashtongue Deathsworn (Illidari, 0.63) | Shadowmoon Valley (the Black Temple's spot) | Shadowmoon `n09V` (2560,-31040, owner 27), Black Temple `n00I` (7168,-30144, owner 27) | the Illidari's own draenei objects | both owner 27 -> probably the Illidari's own rescue |
 | Brood of Nozdormu (Ahn'qiraj) | Tanaris (Caverns of Time) | Tanaris `n020` (-10624,-15360) | dragon models (24p) | -- |
 
 **Light successors -- what the engine can do without copying units.** Removing units / buildings: object limits = 0.
@@ -190,7 +192,7 @@ faction by faction.
 | P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | placeholders ("Dragonmaw" -- superseded) | Dragonmaw assets + 24p tech / unit / building trees |
 | P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
 | P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
-| P16 Illidari | fallback draenei remnant (light; Akama's Ashtongue) | Hourglass only; no Sunfury pick any more (0.53) | non-draenei objects removed, a few added |
+| P16 Illidari | fallback Ashtongue Deathsworn (full, 0.63) | **fallback Ashtongue** (0.63: Black Temple destroyed -> Temple of the Deathsworn, conquest rule, purification, Karabor) | faction name "Karabor"; balance |
 | P7 Fel Horde | fallback Mag'har | Hourglass only | -- |
 | P9 Skywall / P13 Black Empire | fallbacks **open** (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers) | Hourglass only | -- |
 | P17 Ahn'qiraj | fallback Brood of Nozdormu | Hourglass only | dragon models (24p) |
@@ -206,6 +208,8 @@ faction by faction.
   `Factions/<X>/`; same behaviour.
 - 0.54: any objective as trigger, effects on the trigger, several turning points per faction, the split and spawn
   effects, the fork's first own faction (Forsaken), `AiApi.TakeOver`; pilot: Quel'thalas' betrayal.
+- 0.63: Illidari -> Ashtongue Deathsworn (full): the conquest rule (Core/Conquest), purification, the Temple of the
+  Deathsworn / of Karabor.
 - 0.60: Kezan: the Refugee Slave Camps at the goblin towns (Master of the Slave Trade); Sunfury starts with Area 52,
   Farahlon, Netherstorm.
 - 0.59: Kezan: the 24p Trading Center (traders), Oil Refining, the end goal on the scoreboard; arriving factions on

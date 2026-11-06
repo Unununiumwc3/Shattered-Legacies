@@ -11,6 +11,27 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
   // 0.58: step 2 too -- ToHeir: everything goes to a lore heir that still plays on the player's team.
   internal static class LeaveBehind
   {
+    // 0.63 (maintainer): the old faction's heroes do not go to an heir -- they are removed (except `keep`)
+    internal static int RemoveHeroes(player p, List<unit> keep)
+    {
+      var removed = 0;
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (IsUnitType(u, UNIT_TYPE_HERO) && !keep.Contains(u))
+        {
+          RemoveUnit(u);
+          removed++;
+        }
+      }
+
+      DestroyGroup(g);
+      return removed;
+    }
+
     // step 2 -> 3: the heir (a WL faction's name) gets everything but `keep` if it is played (a human or an active
     // bot) and on the player's team right now; otherwise step 3. Returns the heir's player, or null.
     internal static player ToHeir(player p, string heirName, List<unit> keep)

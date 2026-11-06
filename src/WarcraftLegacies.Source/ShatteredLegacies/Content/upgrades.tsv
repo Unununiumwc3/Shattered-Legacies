@@ -302,7 +302,7 @@ RZcA	main	used	Stonemaul Keep and Orgrimmar lost	(Hourglass condition)	Roch	demo
 RZcB	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcC	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcD	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZcE	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcE	main	used	Black Temple destroyed	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcF	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcG	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcH	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -320,7 +320,7 @@ RZdA	main	used	Fallback: Dragonmaw (placeholder)	(Hourglass of Fate)	Roch	demon	
 RZdB	main	used	Fallback: Knights of the Ebon Blade (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
 RZdC	main	used	Fallback: Dreadlord Insurgents (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDreadLord.blp	nZh0
 RZdD	main	used	Fallback: Mag'har (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	nZh0
-RZdE	main	used	Fallback: Akama's Ashtongue (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNEvilIllidan.blp	nZh0
+RZdE	main	used	Fallback: Ashtongue Deathsworn	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNDranaiAkama.blp	nZh0
 RZdF	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdG	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	nZh0
 RZdH	main	used	Fallback: Brood of Nozdormu (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBronzeDragon.blp	nZh0
@@ -372,6 +372,17 @@ RZri	main	used	No refugees from Legion yet	(Condition)	Roch	demon	ReplaceableTex
 RZrj	main	used	No refugees from Druids yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrk	main	used	No refugees from Sentinels / The Exodar yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZs1	main	used	Sylvanas reaches level 6	(Forsaken condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt0	main	used	Telredor purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt1	main	used	Halaar purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt2	main	used	Shattrath purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt3	main	used	Oshu'gun purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt4	main	used	Karabor restored	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZy0	main	unused	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
+RZy1	main	unused	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
+RZy2	main	unused	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
+RZy3	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
+RZy4	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
+RZy5	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
 Reib	main	used	Improved Bows	(Light Blue Research)	Reib	nightelf	ReplaceableTextures\CommandButtons\BTNImprovedBows.blp	e00L

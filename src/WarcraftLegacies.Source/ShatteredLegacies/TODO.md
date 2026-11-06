@@ -210,6 +210,32 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   too late). Instead the Enterprise takes the town's shops, improves them (better items) and gets the profit for each
   item sold to other players -- like the Refugee Slave Camps, for items.
 
+### 3b. Illidari -> Ashtongue Deathsworn -- playtest 0.63
+
+- [you] **Playtest 0.63**: destroy the Black Temple (cheat its power generators and the temple away), take the
+  fallback at the Hourglass. Expect: an announcement; Illidan gone; the naga / demons removed or hostile; the Temple
+  of the Deathsworn on the Black Temple's spot (cannot be hurt, trains Defenders, Deathsworn, Seers -- the rest greyed
+  out until purified); Akama there with his level; Shattrath, Halaar, Oshu'gun and a Telredor at Zangarmarsh yours and
+  indestructible; Ishanah at Shattrath, rooted, Purify on (autocast border) -- mana beams from your / your allies'
+  units within 1500, light pillars, the quest counter "Purify Telredor" rising; your team = whoever destroyed the
+  temple; take the Black Temple CP with another player -> the Ashtongue switch to his team (announced); take it with
+  the Ashtongue -> nothing changes. Gold: +10 per minute per Outland CP of the team (income column).
+- [you] **Balance**: 6000 purification (1000 / 1250 / 1750 / 2000), 10 mana per unit per second, 20 in all, 2 by
+  herself (`AshtongueConfig`); the units the sites unlock; 10 gold per Outland CP.
+- [ai] **The faction's name "Karabor"** after the final goal: WL and the fork find factions by name (bot hero lists,
+  slave camps, catalog) -- make those use the faction object first, then rename.
+- [ai] **Evil factions conquered instead of defeated** (maintainer): `Core/Conquest` is ready for it -- hook it into the
+  elimination rule (`Rules/EliminationRule`): the seat = the faction's HQ CP; per faction: which ones are "evil".
+- [ai] **A "Hold <HQ>" quest for every faction** (maintainer): generated from the catalog's `Hq`, with map markers --
+  says which buildings the faction must not lose and what losing them unlocks.
+- [ai] **Mag'har** (Fel Horde fallback): start at Kil'sorrow Fortress; a trading post auto-producing up to 4 traders
+  (60 s each; attackable, not controllable; 2 to Booty Bay, 2 to Fuselight through the Dark Portal -- check that the
+  pathing uses the waygate); 4 on the road at once = a quest reward. Build the trade route as a Core block from
+  `KezanEnterpriseTrade`. [you] a mule / pack-horse asset (none in either map; the stock Kodo is the nearest).
+- [ai] (check) The WL quests that use the Black Temple -- Ironforge's "destroy it", the Fel Horde's rebuild and HQ list
+  -- after the Ashtongue's temple stands on its spot; Shattrath / Halaar are WL Exodar capitals (in a Draenei game the
+  Ashtongue take them).
+
 ### 4. Light turning point (pilot: Illidari -> draenei remnant)
 
 - [ai] Modify faction: remove the non-draenei objects, add a few (content index), Akama. HQ: the Black Citadel.

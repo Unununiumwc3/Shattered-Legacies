@@ -9,10 +9,10 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.62.0` on `botified-dev` (0.62.0: carried oil -- platforms, Oil Tankers, refinery from any
-  distance; fallen = HQ lost; Skywall HQ fixed; slave camp fixes; 0.61.0: Oil Refinery, bombers, Gazlowe crash). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+- **Released state**: `v0.63.0` on `botified-dev` (0.63.0: Illidari -> Ashtongue Deathsworn -- the third full
+  faction: conquest rule, purification, Karabor; 0.62.0: Kezan's carried oil). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.58.0-0.62.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
+- **0.63.0**: Illidari -> Ashtongue Deathsworn (full faction; `TODO.md` step 3b). **0.58.0-0.62.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
   Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.62
   playtest, the "Known issues" of the 0.60 playtest (Kul Tiras' fallback flicker, Katherine's ultimate level, quest
   buildings visible, detect invisible), the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
@@ -106,6 +106,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | control points a faction gets when it arrives | `StartCps.Give(p, cpTypes...)` (neutral ones only) | `Timelines/Core/Effects/` |
 | something that happens when a faction falls (defeat or its fallback) | `TimelineSystem.FactionFell.Add(name => ...)` + `Faction.ScoreStatusChanged` | `Timelines/Core/` |
 | an autocast bots should use | switch it on by code (its "on" order) and track toggles by `EVENT_PLAYER_UNIT_ISSUED_ORDER` | `KezanEnterpriseOil` / `Bombers` |
+| a vassal on the team of whoever holds its seat CP (evil factions conquered, not defeated) | `Conquest.Register(vassal, seatCp, overlord)` | `Timelines/Core/` |
+| an objective at a place (minimap icon) that code completes | `ObjectiveAt(text, x, y).Complete()` | `Timelines/Core/` |
+| a successor's heroes removed instead of inherited | `LeaveBehind.RemoveHeroes(p, keep)` | `Timelines/Core/Effects/` |
 | units any player can buy | a limit in EVERY faction (`FactionManager.FactionRegistered` + `ModObjectLimit`), or WL refunds them | `KezanEnterpriseSlaveCamps` |
 | a hand-made object of a fork faction | a small generator next to `import_24p.py` (`forsaken_heroes.py`, `kezan_objects.py`) | `tools/shattered-legacies/content/` |
 | leave behind to a lore heir | `LeaveBehind.ToHeir(p, "<faction>", keep)` (heir on the same team, else neutral hostile) | `Timelines/Core/Effects/` |

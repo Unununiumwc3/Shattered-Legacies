@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
@@ -18,6 +19,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int>
         { KezanEnterpriseObjects.Gallywix, KezanEnterpriseObjects.Gazlowe, KezanEnterpriseObjects.Noggenfogger });
+      // 0.63: the Ashtongue -- Akama, and Xi'ri once Karabor is restored (Ishanah is placed by code, never trained)
+      AiApi.RegisterHeroes(AshtongueConfig.Name, new List<int> { UNIT_NAKA_ELDER_SAGE_ILLIDARI, AshtongueObjects.Xiri });
       // 0.57.1: the free slots (computer "NPC" in the lobby) get no bot until a split hands them a faction
       for (var i = 0; i < SplitFaction.FreeSlotOrder.Length; i++)
       {

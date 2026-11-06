@@ -17,14 +17,17 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
       + "the Refugee Slave Camps of the goblin ports -- whoever rules the port pays, the Enterprise profits.",
       @"ReplaceableTextures\CommandButtons\BTNGoblinPrince.blp")
     {
-      Sold = new ObjectiveCounter("Sell a refugee at every Refugee Slave Camp",
-        KezanEnterpriseSlaveCampsData.Camps.Length); // 0.61 (maintainer): one per camp, not every kind
-      AddObjective(Sold);
-      KezanEnterpriseSlaveCamps.SoldCounter = Sold;
+      // 0.61 (maintainer): one sale per camp; 0.63: one objective per camp, with its map marker
+      var towns = KezanEnterpriseSlaveCampsData.CampTowns;
+      var xy = KezanEnterpriseSlaveCampsData.CampXY;
+      for (var k = 0; k < towns.Length; k++)
+      {
+        var at = new ObjectiveAt("Sell a refugee at " + towns[k], xy[k * 2], xy[k * 2 + 1]);
+        AddObjective(at);
+        KezanEnterpriseSlaveCamps.CampObjectives.Add(at);
+      }
       ResearchId = KezanEnterpriseObjects.QuestMasterOfTheSlaveTrade;
     }
-
-    internal ObjectiveCounter Sold { get; }
 
     protected override string RewardDescription =>
       "Gallywix becomes the Master of the Slave Trade; the Intercontinental Artillery can be built (Tier 4); +"

@@ -4,6 +4,30 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.63.0
+The Illidari's fallback: the Ashtongue Deathsworn (maintainer's design). Version v0.63.0.
+- **Trigger**: the Black Temple (`o00F`) destroyed. **Effects** (`Timelines/Factions/Illidari/IllidariFallback`): a
+  new `AshtongueFaction`; Illidan gone for good; everything but the draenei removed / hostile; the **Temple of the
+  Deathsworn** (the fork's type, the Black Temple's model, indestructible, the production centre; food 100) on the
+  Black Temple's spot; Shattrath, Halaar, Oshu'gun and the 24p's Telredor theirs and indestructible; Akama kept
+  (levels), revived or created; an announcement.
+- **Conquest rule** (`Core/Conquest`, reusable -- for evil factions later): the Ashtongue belong to the team of whoever
+  destroyed the Black Temple, then of whoever holds its CP; the old team's alliances go; the Ashtongue taking the CP
+  themselves changes nothing.
+- **Purification** (`AshtonguePurification`): Ishanah, High Priestess of the Aldor, rooted at Shattrath; Purify
+  (autocast, on) draws up to 10 mana per second from each own / allied unit within 1500 (20 in all) + 2 by herself;
+  Telredor 1000, Halaar 1250, Shattrath 1750, Oshu'gun 2000 -> 5 minutes with perfect mana. Each site: a quest and its
+  units at the temple. **Restoring Karabor to the Light**: the Temple of Karabor, Xi'ri the naaru, Ishanah free.
+- **Gold**: 10 per minute per Outland CP of their team (`AshtongueIncome`).
+- **Data**: import set `ASHTONGUE` (23 objects, `?Zy?`: Defender, Rangari, Elekk Knight, Luminarch, Vindicator,
+  Elementalist, Xi'ri, Ishanah, Telredor + dependencies; 3 model / icon files); hand-made `ashtongue_objects.py`
+  (`oZt0` / `oZt1` temples, `AZt0` Purify, `RZt0-4` conditions).
+- **Kezan**: Master of the Slave Trade has one objective per camp with its map marker (`Core/ObjectiveAt`); Kul Tiras'
+  heroes are removed at the fallback instead of going to Stormwind (`LeaveBehind.RemoveHeroes`).
+- **Tools**: `check_json.py` also flags a field written with another type than the map uses for it everywhere else
+  -- it found the Oil Refinery's scale written as unreal (0.61-0.62; fixed, real now); `import_24p.py` creates a new
+  faction's folder.
+
 ## 0.62.0
 0.61 playtest (maintainer): the oil has to be carried, the refinery works from any distance, slave camps and
 fallen factions fixed. Version v0.62.0.

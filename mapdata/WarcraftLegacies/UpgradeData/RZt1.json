@@ -1,0 +1,33 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZt1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "Halaar purified"
+    },
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(Condition)"
+    },
+    {
+      "Id": "glvl",
+      "Value": 1
+    },
+    {
+      "Id": "gglb",
+      "Value": 0
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
 using WarcraftLegacies.Source.Shared;
@@ -176,9 +178,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Decision = HourglassData.DecisionFelHorde, Condition = HourglassData.ConditionFelHorde,
         Hq = new[] { 1865429303, 1865429062, 1865429048 }, // o017, o00F, o008
       },
-      new TurningPointDef("Illidan", "Akama's Ashtongue (not yet)", TurningPointKind.Fallback, TurningPointSource.NotYet)
+      // 0.63 (maintainer): the Black Temple destroyed -> Akama's Ashtongue Deathsworn, sworn to whoever destroyed it, then
+      // to whoever holds its CP (Timelines/Factions/Illidari/IllidariFallback.cs)
+      new TurningPointDef("Illidan", "Ashtongue Deathsworn", TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
+        Trigger = "The Black Temple is destroyed",
+        Description = "If the Black Temple falls, Illidan is gone for good. Akama and the Ashtongue Deathsworn rise from "
+                      + "its ruins, sworn to whoever holds the Black Temple's CP. Ishanah purifies Telredor, Halaar, "
+                      + "Shattrath and Oshu'gun from Shattrath with your allies' mana -- then Karabor is restored.",
         Decision = HourglassData.DecisionIllidari, Condition = HourglassData.ConditionIllidari,
+        Hq = new[] { UNIT_O00F_BLACK_TEMPLE_ILLIDARI_FEL_HORDE },
+        X = AshtongueConfig.TempleX, Y = AshtongueConfig.TempleY,
+        HeroType = 0,                          // Akama leads them
+        Prepare = () => IllidariFallback.Prepare(),
+        Run = (p, def) => IllidariFallback.Run(p, def),
+        Announcement = "|cffffcc00The Black Temple has fallen.|r From its ruins Akama and the Ashtongue Deathsworn "
+                       + "rise -- sworn to those who hold the temple, bent on restoring Karabor to the Light.",
       },
       new TurningPointDef("Skywall", "not decided yet", TurningPointKind.Fallback, TurningPointSource.NotYet)
       {

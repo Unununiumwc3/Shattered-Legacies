@@ -41,6 +41,10 @@ H09M	main	used	hero	The Naaru	(Draenei)	Hvsh	nightelf	war3mapImported\Naaru.mdl	
 H09N	main	used	hero	Matriarch of Tirisfal	(Dalaran)	Hjai	human	war3mapImported\Aegwynn.mdl	main	ReplaceableTextures\CommandButtons\BTN_MagnaArchmage.blp	Dalaran	h044	-	-	-	-	A00W,A10L,A10T,A11A,AInv,Aamk	R09F
 H09S	main	used	hero	Hammer of the Light	(Draenei)	Huth	nightelf	war3mapImported\Vindicator Maraad.mdl	main	ReplaceableTextures\CommandButtons\BTNGlazeroth.blp	The Exodar	o058	-	-	-	-	A12Y,ACds,AEim,AHad,AHtb,AInv,Aamk	R082
 H0A2	main	used	hero	Scarlet Commander	(Scarlet)	Hpb1	human	war3mapImported\RenaultMograine.mdl	main	ReplaceableTextures\CommandButtons\BTNPaladinRenault.blp	Scarlet Crusade	h0BQ	-	-	-	-	A05E,A06S,A0NC,A0XO,ACds,AInv,Aamk	-
+HZy3	main	unused	hero	The Naaru	(Draenei)	Hvsh	nightelf	war3mapImported\Naaru.mdl	main	ReplaceableTextures\CommandButtons\BTNMagicalCrystal.blp	-	-	-	-	-	-	A033,A06U,AInv,AZy5,AZy6,Aamk	RZt4
+HZy4	main	unused	hero	High Priestess of the Aldor	(Draenei)	Huth	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNGlazeroth.blp	-	-	-	-	-	-	AHad,AHds,AHhb,AHre,AInv,AZt0	-
+HZy9	main	used	hero	The Naaru	(Draenei)	Hvsh	nightelf	war3mapImported\Naaru.mdl	main	ReplaceableTextures\CommandButtons\BTNMagicalCrystal.blp	-	oZt0,oZt1	-	-	-	-	A033,A06U,AInv,AZye,AZyf,Aamk	RZt4
+HZya	main	used	hero	High Priestess of the Aldor	(Draenei)	Huth	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNGlazeroth.blp	-	-	-	-	-	-	AHad,AHds,AHhb,AHre,AInv,AZt0	-
 Haah	main	used	hero	The Fallen Guardian	(Dalaran)	Haah	human	units\creeps\Medivh\Medivh.mdl	stock	ReplaceableTextures\CommandButtons\BTNmedivhhd.blp	Dalaran	h044	-	-	-	-	A0BQ,A0BR,A0BS,A0GK,A0UK,ACbn,AInv,Aamk	R04K
 Hant	main	used	hero	Grand Magus of the Kirin Tor	(Dalaran)	Hant	human	units\human\HeroArchMage\HeroArchMage	stock	ReplaceableTextures\CommandButtons\BTNantonidashd.blp	Dalaran	h044	-	-	-	-	A032,A0DG,A0N8,A0WC,A0WD,AInv,Aamk,TPWC	R038
 Hapm	main	used	hero	Lord Admiral of Kul Tiras	(KulTiras)	Hapm	human	units\other\Proudmoore\Proudmoore	stock	ReplaceableTextures\CommandButtons\BTNHeroPaladin.blp	Kul'tiras	h07M	-	-	-	-	A04K,A07X,A0V2,AInv,ANmo,Aamk	-
@@ -551,6 +555,14 @@ hZrc	main	used	unit	Vrykul Warrior	(Refugee, Scourge)	hcth	human	war3mapImported
 hZrd	main	used	unit	Battlemage	(Refugee, Dalaran / Gilneas)	hfoo	human	FootmanStromgardeV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNMagic_Bronze_Armour.blp	-	oZq3	-	-	-	-	A057,A0C3,Adef,Aihn	RZrd
 hZrf	main	used	unit	Longbowman	(Refugee, Scarlet Crusade)	hrif	human	war3mapImported\ScarletArcher.mdl	main	ReplaceableTextures/CommandButtons/BTNScarletArcher.blp	-	oZq3	-	-	-	-	A0P6,A0Q2,ACen,Aihn	RZrf
 hZrg	main	used	unit	Rifleman	(Refugee, Ironforge)	hrif	human	units\human\Rifleman\Rifleman	stock	ReplaceableTextures\CommandButtons\BTNRifleman.blp	-	oZq4	-	-	-	-	A0F4,A13J,Aens,Aihn	RZrg
+hZy0	main	unused	unit	Rangari	(draenei)	hrif	nightelf	war3mapImported\Rangari.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiHuntress.blp	-	-	-	-	-	-	Aens,Aihn	RZt0
+hZy1	main	unused	unit	Elekk Knight	(draenei)	hkni	nightelf	war3mapImported\ElekkKnight.mdl	main	ReplaceableTextures\CommandButtons\BTNElephant Rider.blp	-	-	-	-	-	-	A020,AZy2,Aihn	RZt1
+hZy2	main	unused	unit	Vindicator	(draenei)	hkni	nightelf	war3mapImported\HeroDraeneiPaladin.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiMaleShaman.blp	-	-	-	-	-	-	A02Y,A04W,A081,A0SD,ACrk,AZy4,Aihn	RZt2
+hZy5	main	unused	building	Telredor	(Draenei)	hkee	nightelf	war3mapImported\TempleOfInsight.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	o05A,oZy2	-	-	-	ACav,AZy7	-
+hZy6	main	used	unit	Rangari	(draenei)	hrif	nightelf	war3mapImported\Rangari.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiHuntress.blp	-	oZt0,oZt1	-	-	-	-	Aens,Aihn	RZt0
+hZy7	main	used	unit	Elekk Knight	(draenei)	hkni	nightelf	war3mapImported\ElekkKnight.mdl	main	ReplaceableTextures\CommandButtons\BTNElephant Rider.blp	-	oZt0,oZt1	-	-	-	-	A020,AZyb,Aihn	RZt1
+hZy8	main	used	unit	Vindicator	(draenei)	hkni	nightelf	war3mapImported\HeroDraeneiPaladin.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiMaleShaman.blp	-	oZt0,oZt1	-	-	-	-	A02Y,A04W,A081,A0SD,ACrk,AZyd,Aihn	RZt2
+hZyb	main	used	building	Telredor	(Draenei)	hkee	nightelf	war3mapImported\TempleOfInsight.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	o05A,oZy5	-	-	-	ACav,AZyg	-
 halt	main	used	building	Altar of Kings	(Lordaeron Altar)	halt	human	buildings\human\AltarofKings\AltarofKings	stock	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	Lordaeron	hpea	H01J,Hart,Hlgr,Huth	-	-	-	-	-
 harm	main	used	building	Workshop	(Ironforge Specialist)	harm	human	war3mapImported\DwarvenWorkshop.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWorkshop.blp	Ironforge	h019,hpea	h01P,n02D,n0CZ,tp01,tp02	-	R00T,R010,TP28,TP29,TP38	-	-	h07F
 hars	main	used	building	Arcane Sanctum	(Stormwind Magic)	hars	human	war3mapImported\StormwindArcaneSanctum.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	Stormwind	hpea	h00J,n05L,n093	-	R005,R02E	-	-	h06M
@@ -1024,6 +1036,8 @@ nZr3	main	used	unit	Myrmidon	(Refugee, Illidan)	nmyr	naga	units\naga\NagaMyrmido
 nZr9	main	used	unit	Core Hound	(Refugee, Skywall)	nfel	human	war3mapImported\CoreHoundOptimized.mdl	main	ReplaceableTextures\CommandButtons\BTNCoreHoundIcon.blp	-	oZq2	-	-	-	-	A0X9,A0XA,AELS,Aion,Atru	RZr9
 nZrh	main	used	unit	Ranger	(Refugee, Quel'thalas)	nhea	human	units\creeps\HighElfArcher\HighElfArcher	stock	ReplaceableTextures\CommandButtons\BTNHighElvenArcher.blp	-	oZq4	-	-	-	-	A03H,Aihn	RZrh
 nZri	main	used	unit	Fel Guard	(Refugee, Legion)	nfgu	undead	units\demon\FelgaurdBlue\FelgaurdBlue.mdl	stock	ReplaceableTextures\CommandButtons\BTNFelGuardBlue.blp	-	oZq4	-	-	-	-	A020,A0BG,A0ER,A12B,Aiun	RZri
+nZy0	main	unused	unit	Lightforged Warframe	(Draenei)	ninf	nightelf	war3mapImported\DivineGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDivineGolem.blp	-	-	-	-	-	-	A0NQ,ACmi,ACrk	-
+nZy1	main	used	unit	Lightforged Warframe	(Draenei)	ninf	nightelf	war3mapImported\DivineGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDivineGolem.blp	-	-	-	-	-	-	A0NQ,ACmi,ACrk	-
 nadr	main	used	unit	Saragosa	-	nadr	creeps	units\creeps\AzureDragon\AzureDragon	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	-	-
 nadw	main	used	unit	Blue Dragon Whelp	-	nadw	creeps	units\creeps\AzureDragonWelp\AzureDragonWelp	stock	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	-	-	-	-	-	-	A07C,A0LI,A0LS,Afrc	-
 nahy	main	used	unit	Ancient Hydra	-	nahy	creeps	Units\Creeps\Hydra\Hydra	stock	ReplaceableTextures\CommandButtons\BTNGreenHydra.blp	-	-	-	-	-	-	ACdv,Advc,Aspo,Aspy,Awrh	-
@@ -1098,8 +1112,8 @@ ndr2	main	used	unit	Dark Minion	(Scourge- Death Knight)	ndr2	undead	war3mapImpor
 ndrd	main	used	unit	Draenei Darkslayer	-	ndrd	creeps	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	ACim	-
 ndrf	main	used	unit	Draenei Guardian	-	ndrf	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
 ndrh	main	used	unit	Draenei Harbinger	-	ndrh	creeps	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	-	-	-	-	-	-	ACbb,Ache	-
-ndrn	main	used	unit	Deathsworn	(Illidari)	ndrn	naga	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	Illidan	n08W	-	-	-	-	Aihn,YBBS,YBKS	-
-ndrs	main	used	unit	Seer	(Illidari)	ndrs	naga	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	Illidan	n08W	-	-	-	-	ACls,Aihn,YBAW,YBSW	-
+ndrn	main	used	unit	Deathsworn	(Illidari)	ndrn	naga	units\other\DranaiWhite\DranaiWhite	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	Illidan	n08W,oZt0,oZt1	-	-	-	-	Aihn,YBBS,YBKS	-
+ndrs	main	used	unit	Seer	(Illidari)	ndrs	naga	units\other\DranaiMage\DranaiMage	stock	ReplaceableTextures\CommandButtons\BTNDranaiMage.blp	Illidan	n08W,oZt0,oZt1	-	-	-	-	ACls,Aihn,YBAW,YBSW	-
 ndrv	main	used	unit	Revenant of the Depths	-	ndrv	creeps	units\creeps\RevenantOfTheWaves\RevenantOfTheWaves	stock	ReplaceableTextures\CommandButtons\BTNRevenant.blp	-	-	-	-	-	-	-	-
 ndrw	main	used	unit	Draenei Watcher	-	ndrw	creeps	units\other\Dranai\Dranai	stock	ReplaceableTextures\CommandButtons\BTNDranai.blp	-	-	-	-	-	-	-	-
 ndtb	main	used	unit	Dark Troll Berserker	-	ndtb	creeps	units\creeps\DarkTroll\DarkTroll	stock	ReplaceableTextures\CommandButtons\BTNDarkTroll.blp	-	-	-	-	-	-	-	-
@@ -1520,7 +1534,7 @@ o056	main	used	building	Arcane Well	(Draenei Farm)	otrb	orc	war3mapImported\Drae
 o057	main	used	building	Vault of Relics	(Draenei Shop)	ovln	orc	war3mapImported\DraeneiVaultOfRelics V1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiVaultOfRelics.blp	The Exodar	o05A	-	-	-	-	Aall,Apit	-
 o058	main	used	building	Altar of Light	(Draenei Altar)	oalt	orc	war3mapImported\DraeneiAltarB V1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiAltarB.blp	The Exodar	o05A	E01I,E01J,H09M,H09S	-	-	-	-	-
 o059	main	used	building	Shipyard	(Draenei Shipyard)	oshy	orc	war3mapImported\DraeneiShipyardC.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiShipyardC.blp	The Exodar	o05A	etrs,h057,h0AU,h0AV,h0B1,h0B4,h0B8,h0BA	-	-	-	-	R04R
-o05A	main	used	unit	Gemcrafter	(Draenei, Worker)	opeo	orc	war3mapImported\DraeneiGemcrafter2V.mdl	main	ReplaceableTextures\CommandButtons\BTNDR_U_Artificer.blp	The Exodar	e01X,h0AE,o02P,o050,o051	-	o02P,o052,o053,o054,o055,o056,o057,o058,o059,o05U,u00U	-	-	A041,Arep	-
+o05A	main	used	unit	Gemcrafter	(Draenei, Worker)	opeo	orc	war3mapImported\DraeneiGemcrafter2V.mdl	main	ReplaceableTextures\CommandButtons\BTNDR_U_Artificer.blp	The Exodar	e01X,h0AE,hZy5,hZyb,o02P,o050,o051	-	o02P,o052,o053,o054,o055,o056,o057,o058,o059,o05U,u00U	-	-	A041,Arep	-
 o05B	main	used	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdherent.mdl	main	ReplaceableTextures\CommandButtons\BTNdraeneigem.blp	The Exodar	h0AH,o052	-	-	-	-	A020,A0BG,ADD1	-
 o05C	main	used	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiProphet.blp	The Exodar	o054	-	-	-	-	A0TG,A0TH,A0YJ,Aion	-
 o05D	main	used	unit	Elementalist	(Draenei)	odoc	nightelf	war3mapImported\VillagerDraenei.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiBattlemaster_by67chrome.blp	The Exodar	o054	-	-	-	-	A0FB,A0TL,A10W,Aion	-
@@ -1594,6 +1608,14 @@ oZq5	main	used	building	Refugee Slave Camp	(Everlook)	obar	other	buildings\other
 oZr6	main	used	unit	Lurker	(Refugee, Black Empire)	otbk	naga	war3mapImported\FacelessOneHuntsman.mdl	main	ReplaceableTextures\CommandButtons\BTNFacelessOneCultist.blp	-	oZq2	-	-	-	-	Afbk,Aion,Atru	RZr6
 oZr7	main	used	unit	Grunt	(Refugee, Frostwolf / Warsong)	ogru	orc	units\orc\Grunt\Grunt	stock	ReplaceableTextures\CommandButtons\BTNGrunt.blp	-	oZq1	-	-	-	-	A020,A0BG,A0ES,Aion	RZr7
 oZra	main	used	unit	Crematogaster	(Refugee, Ahn'qiraj)	ohun	naga	war3mapImported/Scorpion.mdl	main	ReplaceableTextures\CommandButtons\BTNArchnathidDK.blp	-	oZq2	-	-	-	-	A05H,APL2,Aion	RZra
+oZt0	main	used	building	Temple of the Deathsworn	-	oalt	other	Doodads\Northrend\Structures\AncientZiggurat\AncientZiggurat1.mdl	stock	ReplaceableTextures\CommandButtons\BTNTempleOfTheDamned.blp	-	-	HZy9,hZy6,hZy7,hZy8,ndrn,ndrs,oZy3,oZy4,oZy5	-	-	-	Arev,Avul	-
+oZt1	main	used	building	Temple of Karabor	-	oalt	other	Doodads\Northrend\Structures\AncientZiggurat\AncientZiggurat1.mdl	stock	ReplaceableTextures\CommandButtons\BTNTempleOfTheDamned.blp	-	-	HZy9,hZy6,hZy7,hZy8,ndrn,ndrs,oZy3,oZy4,oZy5	-	-	-	Arev,Avul	-
+oZy0	main	unused	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdherent.mdl	main	ReplaceableTextures\CommandButtons\BTNArchimonde.blp	-	-	-	-	-	-	A020,A0BG,AZy0,Adtg,Aion	-
+oZy1	main	unused	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNZodiac Warrior.blp	-	-	-	-	-	-	A0TH,A0YJ,AZy3,Aion	RZt2
+oZy2	main	unused	unit	Elementalist	(draenei)	odoc	nightelf	war3mapImported\VillagerDraenei.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiBattlemaster_by67chrome.blp	-	hZy5	-	-	-	-	A0FB,A0TL,A10W,Aion	RZt3
+oZy3	main	used	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdherent.mdl	main	ReplaceableTextures\CommandButtons\BTNArchimonde.blp	-	oZt0,oZt1	-	-	-	-	A020,A0BG,AZy9,Adtg,Aion	-
+oZy4	main	used	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNZodiac Warrior.blp	-	oZt0,oZt1	-	-	-	-	A0TH,A0YJ,AZyc,Aion	RZt2
+oZy5	main	used	unit	Elementalist	(draenei)	odoc	nightelf	war3mapImported\VillagerDraenei.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiBattlemaster_by67chrome.blp	-	hZyb,oZt0,oZt1	-	-	-	-	A0FB,A0TL,A10W,Aion	RZt3
 oalt	main	used	building	Altar of Storms	(Frostwolf Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Frostwolf	o00E,opeo	Ocbh,Orex,Orkn,Othr	-	-	-	Abds,Aspi	-
 obar	main	used	building	War Camp	(Frostwolf Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf	o00E,opeo	ocat,ogru,ohun	-	-	-	Aspi	-
 obea	main	used	building	Beastiary	(Frostwolf Specialist)	obea	orc	war3mapImported\FrostwolfBeastiary.mdl	main	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	Frostwolf	o00E,opeo	h0CN,h0CO,otbr	-	Rolf	-	Abds,Aspi	ofrt
@@ -2350,7 +2372,7 @@ h0AC	24p	different	unit	Naga Sea Witch	(illidan)	hcth	naga	units\naga\HeroNagaSe
 h0AD	24p	24p only	building	Tuurem	(Draenei)	hkee	nightelf	war3mapImported\DraeneiCrystalSpire V1.01.mdl	24p	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	h09T,o05B	-	-	-	ACav,Argl	-
 h0AE	24p	changed	building	Halaar	(Draenei)	hkee	nightelf	war3mapImported\DraeneiMetropolis.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	h09T,o05A	-	-	-	ACav,Argl	-
 h0AF	24p	different	building	Farahlon	(Draenei)	hkee	nightelf	war3mapImported\DraeneiVaultOfRelics V1.01.mdl	24p	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	o05A,o05D	-	-	-	ACav,Argl	-
-h0AG	24p	different	building	Telredor	(Draenei)	hkee	nightelf	war3mapImported\TempleOfInsight.mdl	24p	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	o05A,o05D	-	-	-	ACav,Argl	-
+h0AG	24p	different	building	Telredor	(Draenei)	hkee	nightelf	war3mapImported\TempleOfInsight.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	o05A,o05D	-	-	-	ACav,Argl	-
 h0AH	24p	changed	building	Shattrah	(Draenei)	hkee	nightelf	Doodads\Northrend\Structures\AncientZiggurat\AncientZiggurat0.mdl	stock	ReplaceableTextures\CommandButtons\BTNDraeneiDivineCitadel.blp	-	-	h09T,o05B	-	-	-	ACav,Argl	-
 h0AI	24p	24p only	unit	Defias Assassin	(Arathor-Elite)	hfoo	nightelf	war3mapImported\HumanAssassine.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanAssassine.blp	-	o05U	-	-	-	-	A07F,A0HY,A0QW,A0QZ,A0V3,ACrk,Aihn,Apiv	-
 h0AJ	24p	24p only	unit	Gnoll Overseer	(gnoll)	hfoo	nightelf	units\creeps\GnollOverseer\GnollOverseer.mdl	stock	ReplaceableTextures\CommandButtons\BTNGnollKing.blp	-	o05T	-	-	-	-	A064,A0HI,A0Z7,ACrk,Aihn	-

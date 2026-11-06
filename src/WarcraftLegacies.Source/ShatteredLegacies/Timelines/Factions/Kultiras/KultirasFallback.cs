@@ -13,7 +13,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
   // blocks, TODO step 3). Effects, in this order:
   //   1. swap faction: a new KezanEnterpriseFaction (its tree, limits and quests; the player keeps his colour)
   //   2. leave behind (inheritance rule): everything Kul Tiras owns goes to its lore heir Stormwind if Stormwind still
-  //      plays on Kul Tiras' team, otherwise removed / Neutral Hostile -- except Katherine and the Hourglass
+  //      plays on Kul Tiras' team, otherwise removed / Neutral Hostile -- except Katherine and the Hourglass; Kul Tiras'
+  //      other heroes are removed (0.63, maintainer)
   //   3. relocate: the base preplaced on Kezan (Regions.KezanUnlock, hidden until now) is taken over, WL's creep
   //      goblins replaced by the Enterprise's copies (the Trading Center too, 0.59); Kezan's CP joins; start kit:
   //      Altar of Industry, the Oil Refinery (0.61; was 2 Oil Supplies), 4 Builders
@@ -74,6 +75,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
 
       var enterprise = new KezanEnterpriseFaction();
       SwapFaction.Run(p, enterprise); // first: if it fails, the player keeps his units
+      LeaveBehind.RemoveHeroes(p, keep); // 0.63 (maintainer): Kul Tiras' heroes are removed, not given to the heir
       var heir = LeaveBehind.ToHeir(p, KezanEnterpriseConfig.Heir, keep);
       var taken = StartArea.Take(p, _startUnits, enterprise, KezanEnterpriseObjects.MainEquivalents);
       Indestructible(p); // 0.62: WL's rescue had made the Trading Center and the Oil Supply vulnerable

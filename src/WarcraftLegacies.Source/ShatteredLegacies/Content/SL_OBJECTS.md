@@ -84,11 +84,23 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZkx` |  | `24p:A0NJ` | KezanEnterprise |
 | `AZky` |  | `24p:A07A` | KezanEnterprise |
 | `AZkz` | Gunner Pilot | `24p:A0JX` | KezanEnterprise |
+| `AZy9` | Defender Shield | `24p:A0TF` | Ashtongue |
+| `AZya` | Self-Bloodlust | `24p:A0XM` | Ashtongue |
+| `AZyb` | Thick Skin | `24p:A0VI` | Ashtongue |
+| `AZyc` | Renewal | `24p:A0TG` | Ashtongue |
+| `AZyd` |  | `24p:A043` | Ashtongue |
+| `AZye` | Light's Edict | `24p:A0ZG` | Ashtongue |
+| `AZyf` | Army of Light | `24p:A0ZH` | Ashtongue |
+| `AZyg` |  | `24p:Argl` | Ashtongue |
+| `AZyh` | Army of Light Golem summon | `24p:A0ZI` | Ashtongue |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
 | `BZf3` | Acid Rain Target | `24p:B09O` | Forsaken |
 | `BZk0` | Mage Armour | `24p:B00A` | KezanEnterprise |
+| `BZy1` |  | `24p:B014` | Ashtongue |
+| `HZy9` | The Naaru | `24p:H0AK` | Ashtongue |
+| `HZya` | High Priestess of the Aldor | `24p:H09S` | Ashtongue |
 | `IZf0` | Summon Forsaken Acolyte | `24p:I00N` | Forsaken |
 | `IZf1` | Seeds of Regrowth | `24p:I00L` | Forsaken |
 | `IZk0` | Summon Engineer | `24p:I00X` | KezanEnterprise |
@@ -123,6 +135,9 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZka` | Solo Upgrade | `24p:Rguv` | KezanEnterprise |
 | `RZkb` |  | `24p:Ropm` | KezanEnterprise |
 | `RZkc` | Needs to be Made | `24p:R03N` | KezanEnterprise |
+| `RZy3` | Solo Upgrade | `24p:Rguv` | Ashtongue |
+| `RZy4` | Spiritual Infusion | `24p:R023` | Ashtongue |
+| `RZy5` | Needs to be Made | `24p:R03N` | Ashtongue |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
@@ -142,6 +157,10 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZk3` | Sappers | `24p:h08X` | KezanEnterprise |
 | `hZk4` | Assault Tank | `24p:h08Z` | KezanEnterprise |
 | `hZk5` | War Zeppelin | `24p:h091` | KezanEnterprise |
+| `hZy6` | Rangari | `24p:h09T` | Ashtongue |
+| `hZy7` | Elekk Knight | `24p:h09U` | Ashtongue |
+| `hZy8` | Vindicator | `24p:h09R` | Ashtongue |
+| `hZyb` | Telredor | `24p:h0AG` | Ashtongue |
 | `nZf0` | Deadeye | `24p:n07S` | Forsaken |
 | `nZf1` | Dark Ranger | `24p:n0BY` | Forsaken |
 | `nZf2` | Plague Construct | `24p:n07W` | Forsaken |
@@ -151,6 +170,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZk1` |  | `24p:n062` | KezanEnterprise |
 | `nZk2` | Oil Rig | `24p:n0AQ` | KezanEnterprise |
 | `nZk5` | Trading Zeppelin | `24p:nzep` | KezanEnterprise |
+| `nZy1` | Lightforged Warframe | `24p:n0DA` | Ashtongue |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `oZk0` |  | `24p:o03L` | KezanEnterprise |
 | `oZk1` |  | `24p:o03M` | KezanEnterprise |
@@ -172,6 +192,9 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
 | `oZkj` | Kezan Trading Center | `24p:o04M` | KezanEnterprise |
 | `oZkk` | Oil Tanker | `24p:o04S` | KezanEnterprise |
+| `oZy3` | Defender | `24p:o05B` | Ashtongue |
+| `oZy4` | Luminarch | `24p:o05C` | Ashtongue |
+| `oZy5` | Elementalist | `24p:o05D` | Ashtongue |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
 | `uZf2` | Plaguetorium | `24p:u011` | Forsaken |

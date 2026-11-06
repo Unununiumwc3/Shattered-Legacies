@@ -31,6 +31,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1868198195, new[] { 1750757986, 1750757987, 1750757988, 1750757990 } }, // oZq3: hZrb hZrc hZrd hZrf
       { 1868198196, new[] { 1750757991, 1851421288, 1851421289 } }, // oZq4: hZrg nZrh nZri
       { 1868198197, new[] { 1700426346, 1700426347 } }, // oZq5: eZrj eZrk
+      { 1868198960, new[] { 1868200243, 1852076654, 1852076659, 1750759734, 1750759735, 1868200244, 1750759736, 1868200245 } }, // oZt0: oZy3 ndrn ndrs hZy6 hZy7 oZy4 hZy8 oZy5
+      { 1868198961, new[] { 1868200243, 1852076654, 1852076659, 1750759734, 1750759735, 1868200244, 1750759736, 1868200245 } }, // oZt1: oZy3 ndrn ndrs hZy6 hZy7 oZy4 hZy8 oZy5
       { 1968858674, new[] { 1750754873, 1750754872, 1851418160 } }, // uZf2: hZf9 hZf8 nZf0
       { 1968858676, new[] { 1868195376, 1968858721, 1851418162 } }, // uZf4: oZf0 uZfa nZf2
       { 1968858677, new[] { 1750754913, 1968858681 } }, // uZf5: hZfa uZf9
@@ -42,12 +44,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     internal static readonly Dictionary<int, int[]> AltarHeroes = new()
     {
       { 1868196659, new[] { 1314548531, 1331325801, 1314548532 } }, // oZk3: NZk3 OZki NZk4
+      { 1868198960, new[] { 1213888825 } }, // oZt0: HZy9
+      { 1868198961, new[] { 1213888825 } }, // oZt1: HZy9
       { 1968858672, new[] { 1431987812, 1431987813 } }, // uZf0: UZfd UZfe
     };
 
     // unit/hero type -> requirements (research or unit type; met = GetPlayerTechCount >= 1)
     internal static readonly Dictionary<int, int[]> Requires = new()
     {
+      { 1213888825, new[] { 1381659700 } }, // HZy9: RZt4
       { 1314548531, new[] { 1381657394 } }, // NZk3: RZk2
       { 1314548532, new[] { 1381657395 } }, // NZk4: RZk3
       { 1431987812, new[] { 1381656113 } }, // UZfd: RZf1
@@ -73,6 +78,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1750757988, new[] { 1381659236 } }, // hZrd: RZrd
       { 1750757990, new[] { 1381659238 } }, // hZrf: RZrf
       { 1750757991, new[] { 1381659239 } }, // hZrg: RZrg
+      { 1750759734, new[] { 1381659696 } }, // hZy6: RZt0
+      { 1750759735, new[] { 1381659697 } }, // hZy7: RZt1
+      { 1750759736, new[] { 1381659698 } }, // hZy8: RZt2
       { 1851418160, new[] { 1968858675 } }, // nZf0: uZf3
       { 1851418161, new[] { 1381656112, 1381656114 } }, // nZf1: RZf0 RZf2
       { 1851418162, new[] { 1750754866 } }, // nZf2: hZf2
@@ -89,6 +97,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1868198454, new[] { 1381659190 } }, // oZr6: RZr6
       { 1868198455, new[] { 1381659191 } }, // oZr7: RZr7
       { 1868198497, new[] { 1381659233 } }, // oZra: RZra
+      { 1868200244, new[] { 1381659698 } }, // oZy4: RZt2
+      { 1868200245, new[] { 1381659699 } }, // oZy5: RZt3
       { 1868722036, new[] { 1378890834 } }, // obot: R04R
       { 1968858722, new[] { 1381656114 } }, // uZfb: RZf2
       { 1968858723, new[] { 1381656114 } }, // uZfc: RZf2
@@ -101,6 +111,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     // hero type -> skills in learning order (auras/passives first, attribute bonus last)
     internal static readonly Dictionary<int, int[]> HeroSkills = new()
     {
+      { 1213888825, new[] { 1093677875, 1096448357, 1096448358, 1093678677, 1096904043 } }, // HZy9: A033 AZye AZyf A06U Aamk
       { 1314548531, new[] { 1093685825, 1095660409, 1095656307, 1096444779, 1096904043 } }, // NZk3: A0RA ANsy ANcs AZkk Aamk
       { 1314548532, new[] { 1096444774, 1093685834, 1096444775, 1093684046, 1096904043 } }, // NZk4: AZkf A0RJ AZkg A0KN Aamk
       { 1331325801, new[] { 1096444772, 1093684530, 1096444773, 1093685058, 1096904043 } }, // OZki: AZkd A0M2 AZke A0OB Aamk

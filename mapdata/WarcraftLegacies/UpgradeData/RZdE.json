@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNEvilIllidan.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNDranaiAkama.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Akama's Ashtongue (not yet)"
+      "Value": "Fallback: Ashtongue Deathsworn"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Akama's Ashtongue (not yet)"
+      "Value": "Fallback: Ashtongue Deathsworn"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: Akama opens the Black Temple to Illidan's enemies. Not in this version."
+      "Value": "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn to whoever holds the Black Temple's CP: purify Telredor, Halaar, Shattrath and Oshu'gun and restore Karabor to the Light."
     }
   ]
 }
