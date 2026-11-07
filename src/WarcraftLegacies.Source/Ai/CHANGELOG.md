@@ -5,6 +5,18 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.65.0 — worker construction candidate (requires map build and playtest)
+
+- Added `AiBuilder` / `AiBuildSites` in `Ai/`: per-bot worker orders, native construct-start/finish/cancel
+  lifecycle, retries, worker training, producer/altar/HQ recovery, and original-HQ / owned-or-allied CP / worker
+  fallback. A real worker builds; routine magic starter structures are no longer generated.
+- 10 owned CPs allow two total bases; 20+ allow three total (cap three including HQ). Allied CPs may anchor a
+  safe forward base about two walking edges behind the front; each gets two troop producers total.
+- `AiApi.GiveStarterProduction` signals the builder rather than spawning buildings. The scripted Legion Argus
+  base remains temporarily, without deleting Herald workers. `AiScheduler` runs the worker construction task.
+- Documentation roadmap updated. Debug access **unchanged** (1.0 release gate). Native worker build menus,
+  delayed resource charging and map/pathing edge cases require testing: `BUILDING_DESIGN.md`.
+
 ## 0.64.0
 No bot logic change. Fork data: the Ashtongue's purified sites train (`SL_BUILDINGS`); their heroes are also registered
 under "Karabor" (the faction's name after its final goal).

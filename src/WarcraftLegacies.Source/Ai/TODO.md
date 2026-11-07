@@ -8,10 +8,43 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Current build: **0.52.0** (0.51.1 = end of phase 1; 0.52.0 only moved fork content out of the bot). History: `CHANGELOG.md`; measurements:
+Working patch: **0.65.0** (worker-construction candidate, *not yet compiled or playtested*). The older 0.52 phase plan below is historical. History: `CHANGELOG.md`; measurements:
 `MEASUREMENTS.md`; what was learned: `AI_AGENTS_CONTEXT.md` "Movement: hard-learned facts".
 
-## Open problems -- start here
+## Current priorities (0.65.0 candidate)
+
+The original 0.51 movement pass remains the baseline. **Do not start the old phase-2 rewrite before testing
+construction.** Implementation detail and acceptance cases: [`BUILDING_DESIGN.md`](BUILDING_DESIGN.md).
+
+1. **[you/ai] Build + first construction playtest.** Compile the map and CSharp.lua; observe a *real worker*
+   accepting an order, walking, starting **and finishing** barracks. Test a destroyed barracks, rejected placements,
+   and the amount of gold/lumber before the order and when construction actually starts. Check pinned `-dump` logs.
+2. **[you/ai] Faction coverage.** Run Sunfury, Forsaken, Kezan Enterprise, Legion and regular WL factions.
+   Check town hall -> worker training and worker -> building orders. Initial production and late arrivals no longer
+   get free buildings automatically; missing build menus can therefore leave a faction unable to train.
+3. **[you/ai] HQ lost and zero CPs.** With one surviving worker, destroy its HQ and every owned CP. A reachable,
+   safe **allied CP** is the first fallback; if none exists, use the worker's safe local area. Also test an existing
+   hall with no workers, and no surviving worker/hall (perked-only emergency worker).
+4. **[you/ai] Forward bases / balance.** 10 owned CPs -> two bases total; 20 -> three bases total; absolute cap
+   **three including HQ**. Allied CPs can anchor a base around two walking edges behind the front. Each new base
+   has one hall and **two** military production buildings in total. Do not require workers to cross seas/portals.
+5. **[ai] Construction hardening after the playtests.** Generated build-menu compatibility (`ubui` / `utra`),
+   exact building footprints and path-corridor checks, free-cost timing on long-distance orders, incomplete
+   construction when a worker dies, retries/failure diagnostics, scheduler cost.
+6. **[ai] Economy and siege.** Ignore the food budget temporarily while a defended HQ is under siege; refine
+   worker numbers, production priority, autocast and the mix of scarce-unit spending.
+7. **[ai] Dynamic instances.** Runtime graph nodes/edges for Undercity and successor-faction content. Keep
+   generated routing immutable and add through `AiApi` rather than referencing the fork from `Ai/`.
+8. **[ai] Maintenance in separate, behavior-preserving patches.** Delete inactive frontier/wave fallback logic;
+   then split `AiSystem` and migrate to `BotBrain`. Keep movement regressions and load counters measurable.
+9. **[ai] Upstream contribution.** Test `Ai/` plus explicit `[BOT]` hooks against the unmodified map; review
+   scenario assists and generated data separately from behavior.
+10. **[ai] Release 1.0 gate, not now:** restrict or disable AI debug commands; check multiplayer release flags.
+   **Debug permissions are intentionally unchanged in this patch.**
+
+## Historical movement and phase notes (0.52 documentation; retain for reference)
+
+## Open problems -- historical observations
 
 Phase 1 (movement "good enough") is done (maintainer, 0.51). Next: **phase 2, restructure** (section below).
 
@@ -200,19 +233,11 @@ This code base is not the PR.
 
 ## Production follow-ups
 
-- [you/ai] **Bots that build with their workers** (maintainer, 0.59 playtest) -- today a bot never constructs: the
-  starter production is placed at 0:35 and, since 0.59, for a faction that arrives later
-  (`AiApi.GiveStarterProduction`). Proposed rules, checked every 3 min, building free for bots:
-  1. no worker -> train workers (at the town hall);
-  2. at least 2 kinds of unit production building, otherwise build them;
-  3. at least 1 building of each kind the faction has;
-  4. build near the worker-producing building, with a free ring of X around each building (X big enough that every
-     unit can walk around it -- never a fence that closes units in; `AiLegion.FindBuildSpot` checks only the spot);
-  5. at 10 CPs a new main building (one that trains workers) plus 2 production buildings per kind, at a CP closer to
-     the front (about 2 CPs behind it).
-  Open: the workers must really walk there and build (order `build` with the worker; a placement that fails ->
-  next spot), what X is in pathing cells, what "the front" is (`AiRoutes` territory distance?), and the CSharp.lua
-  limits (a new class `AiBuilder`, scheduled in `AiScheduler`).
+- [you/ai] **Worker construction, first implementation in 0.65.0, pending playtests.** The old proposal
+  for 3-minute instant-production checks was superseded by persistent `AiBuilder` projects and real worker build
+  orders; `AiBuildSites` handles HQ / owned-or-allied CP / worker-area anchors. See the top roadmap and
+  `BUILDING_DESIGN.md` for the limits, open cases and actual tests. No longer use `PlaceProduction` or the old
+  starter kit to grant missing buildings.
 - [ai] **Ignore the food cap while the HQ is under siege** (maintainer, 0.59 playtest): a bot whose HQ (or the capital
   it defends) is under attack trains past `AiBudget`'s cap until the threat is gone.
 
@@ -222,8 +247,8 @@ This code base is not the PR.
 - [you/ai] Gold mainly for "limited" units (elite / capped units), without a hard focus -- armies must stay mixed
   (maintainer, 0.46.2). Phase 3.
 
-- [ai] Units of buildings a bot doesn't have stay "never" (Quel'thalas' Academy / Consortium, Kul Tiras', Stormwind's
-  special units). Proposal: the starter kit also gives each bot its "Specialist" building(s).
+- [ai] Missing specialist-production buildings: verify worker build menus for the Academy, Consortium and similar
+  faction-specific structures. The new builder attempts them, but engine rejection must be checked in game.
 - [ai] Quest-locked heroes and units: `unit_scan.py` lists which quest unlocks what.
 - [ai] Rebuilding destroyed production buildings + HQ safety net (no barracks -> HQ trains basics).
 - [ai] Hero care teleports often (~40 in 65 min; Warsong's Chieftain 6x from -9952,1944).

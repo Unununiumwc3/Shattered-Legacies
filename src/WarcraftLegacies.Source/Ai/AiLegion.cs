@@ -64,23 +64,8 @@ namespace WarcraftLegacies.Source.Ai
         return;
       }
 
-      // remove the Legion Heralds (workers) at the Argus start -- they become the buildings below
-      var g = CreateGroup();
-      GroupEnumUnitsInRange(g, AiWorld.LegionStartX, AiWorld.LegionStartY, 1500f, null);
-      unit u;
-      var removed = 0;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        if (GetOwningPlayer(u) == legion && GetUnitTypeId(u) == AiWorld.LegionHeraldId)
-        {
-          RemoveUnit(u);
-          removed++;
-        }
-      }
-
-      DestroyGroup(g);
-
+      // 0.65: preserve the Legion Herald workers for AiBuilder. The bespoke Argus structures
+      // remain as a scenario exception until their native build menus are tested.
       // 0.34.3: each building gets its own open spot (searched outward from the start location, footprint
       // checked, kept apart from the others) -- the old fixed ring of 8 found only 1 walkable spot in Argus.
       // 5 barracks, 1 altar, 2 farms.
@@ -118,7 +103,7 @@ namespace WarcraftLegacies.Source.Ai
         placed++;
       }
 
-      SimpleBot.LogPin("Legion: Argus start -- " + I2S(removed) + " workers replaced by " + I2S(placed) + " of "
+      SimpleBot.LogPin("Legion: Argus start -- " + I2S(placed) + " of "
                        + I2S(types.Count) + " buildings (" + I2S(fixedUsed) + " on fixed spots)");
     }
 

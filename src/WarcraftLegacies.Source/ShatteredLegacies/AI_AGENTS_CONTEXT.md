@@ -7,7 +7,19 @@ Read this first. Then, depending on the task:
 
 "AI" in file and class names means the **bots**; this file is about **AI assistants** working on the code.
 
-## Handover (end of the 0.52-0.57 session) -- where things stand
+## 0.65.0 bot-construction candidate (unverified; see `../Ai/BUILDING_DESIGN.md`)
+
+The changes under `Ai/` in this patch replace worker-consuming starter production with native worker
+construction, project tracking and HQ / owned-or-allied CP recovery. Forward bases are capped at three **total**
+including the HQ. `SlBotSetup` still calls the existing `AiApi.GiveStarterProduction` hook for successor factions;
+its behavior changed from instant structure grants to requesting an early construction evaluation. The special
+Legion Argus base remains but no longer removes Herald workers. This is a **development candidate** awaiting a
+map build and playtests, not an observed fix to the Sunfury issue. Debug permissions remain as-is until 1.0.
+
+Historical notes below reflect 0.64.0 (latest previously verified release), not the new candidate.
+
+## Handover (end of the 0.52-0.57 session) -- historical state
+
 
 - **Released state**: `v0.64.0` on `botified-dev` (0.64.0: the Ashtongue's purification reworked -- Shattrath as the node, sites as tech buildings, Karabor rename; 0.63.2: the Hourglass survives WL's quests; 0.63.1: Hourglass / trigger for late picks, slot names; 0.63.0: Illidari -> Ashtongue Deathsworn -- the third full
   faction: conquest rule, purification, Karabor; 0.62.0: Kezan's carried oil). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and

@@ -604,6 +604,7 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.Add("hero revive", R2I(ReviveEvery / AiScheduler.SlotSeconds + 0.5f), 15, OnHeroReviveTick, true);
       RegisterWaveTasks();
       AiRoutes.Setup(); // 0.42: rock / area / waygate checks for the route planner
+      AiBuilder.Setup(); // [BOT] native worker construction, recovery and forward bases
       AiIncome.Setup(); // 0.44.2: CP income for computer slots (WL pays only human slots)
       AiLoad.Setup();   // 0.46: guard positions, order-latency probe
       AiScheduler.Start();
@@ -2563,8 +2564,6 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.AddWave(k++, "one-shots", AiMissions.RunOneShots);                  // v25: runestones
       AiScheduler.AddWave(k++, "kill targets", AiMissions.AssignKillTargets);         // v31/v34.2
       AiScheduler.AddWave(k++, "cp grants", AiMissions.RunCpGrants);                  // v31
-      AiScheduler.AddWave(k++, "starter kit", AiMissions.RunStarterKit);              // v32
-      AiScheduler.AddWave(k++, "starter production", AiMissions.RunStarterProduction); // 0.39.2
       AiScheduler.AddWave(k++, "ragnaros", AiMissions.RunRagnarosMission);
       AiScheduler.AddWave(k++, "hero visits", AiHeroVisits.Run);                      // 0.35.2
       AiScheduler.AddWave(k++, "hero care", AiHeroCare.Run);                          // 0.36
@@ -2999,7 +2998,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.64.0";
+    public const string Build = "0.65.0";
 
     public static void Setup()
     {

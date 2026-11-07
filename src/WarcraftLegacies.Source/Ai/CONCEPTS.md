@@ -73,8 +73,9 @@ from spending.
 
 ## 3. Where bots produce
 
-Today bots train in every production building they own, also buildings they got far from their start (starter kit,
-captured areas) -- units appear all over the map.
+Historically bots trained from buildings they already owned, including buildings granted by the starter kit. In
+0.65 the starter kit is retired; worker construction adds recovery near the HQ and up to two forward bases. Units
+may still come from any owned producer; this is separate from where new sites should be constructed.
 
 Options:
 - Produce only in the starting region: simple, predictable; new units walk far to the front.
@@ -83,6 +84,23 @@ Options:
   "rest" there) -- may already be enough. [you] decide after waves.
 
 Note: "home region" needs no configuration -- the territory (own + allied nodes) is known at runtime (0.43).
+
+### Construction policy implemented for first testing (0.65.0)
+
+`AiBuilder` owns project states, native build orders, worker training, and completion/cancellation tracking;
+`AiBuildSites` owns spatial decisions. The original faction HQ (captured on first evaluation) is the preferred
+recovery area while a friendly hall/CP supports it. On loss of that area, use the lowest walking-cost reachable,
+safe owned or **allied** CP. If no suitable CP exists, build locally near a surviving worker. This is not an
+instruction to restore a dead HQ by teleporting a worker.
+
+At 10 and 20 **owned** CPs the bot may have respectively two and three bases in total (including HQ); three is
+the hard cap. Expansion can use an allied CP behind the active main-theatre front if a worker can reach it on
+walking edges. The initial forward base has one hall and **two military producers total**, not two of every kind.
+No automatic ferry/portal transport of workers is part of the first version.
+
+Building checks reserve a wide walking ring and exclude crowded sites. This does **not** establish exact
+pathing-texture clearance or global walkability; those and WC3 cost timing are playtest follow-ups. See
+`BUILDING_DESIGN.md` for the implemented contract and next steps.
 
 ## 4. Quest objectives beyond "capture a CP"
 

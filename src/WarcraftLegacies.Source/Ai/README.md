@@ -7,7 +7,7 @@ Current version: see `AiSetup.Build` in `AiSystem.cs`, the `-version` chat comma
 Documents in this folder: `README.md` (this file: use, commands, how the bots move, what was already tried),
 `TODO.md` (the plan in phases and open work), `CONCEPTS.md` (designs), `CHANGELOG.md` (every version),
 `MEASUREMENTS.md` (numbers per game), `WORKAROUNDS.md` (what the bot needs outside `Ai/`), `ROUTES.md` (generated graph
-report), `AI_AGENTS_CONTEXT.md` (handover for AI assistants: rules, facts). These describe the bot only; the map it is
+report), `BUILDING_DESIGN.md` (0.65 construction plan and playtest matrix), `AI_AGENTS_CONTEXT.md` (handover). These describe the bot only; the map it is
 developed in (a fork) documents itself in its own folder.
 
 ## Installing into a WL fork
@@ -46,8 +46,25 @@ Heavy commands (`-debug1..4`, `-edges`, `-ids`, `-autodump`, `-tp`) only work wh
 - `-autopilot` hands your faction to the AI; type it again to take over. All players are told.
   - **Fair** (release build, `Access = Off`): the AI plays with your own resources — no bot bonuses, 60 s cooldown.
   - **Test** (`HostOnly`/`Everyone`): full bot treatment (gold subsidy, free techs, revives, missions, waves).
-- Bots get bonuses humans don't: gold subsidy, free techs, upgrades and heroes, free hero revives, starter production
-  buildings, scripted missions (Ragnaros, hero visits, kill targets, area clears).
+- Bots get bonuses humans don't: gold subsidy, free techs, upgrades and heroes, free hero revives,
+  worker-ordered construction with an order-time subsidy (requires playtest), scripted missions. The timed
+  instant-starter building grants have been retired.
+
+## Worker construction (0.65.0 candidate; build/playtest required)
+
+`AiBuilder` evaluates each controlled faction for workers, town halls, missing useful military producers and an
+altar. It orders a *real worker* to construct with `IssueBuildOrderById`, and tracks the project until Warcraft III
+reports construction finished or cancelled. `AiBuildSites` searches safe open ground with walking-component checks,
+not the old "destroy worker and spawn building" approach. This is deliberately a single concurrent project per bot.
+
+Production recovery prefers the remembered initial HQ while it is still friendly, then the nearest *reachable*
+owned or **allied CP** by walking-graph cost, then the surviving worker's position. At 10/20 **owned** CPs, perked
+bots may add a second/third production base near a friendly CP about two open walking edges behind the front. Three
+bases **including HQ** is the cap; each new base aims for one hall and two producers in total. Fair autopilot does
+not receive free expansions or resource subsidies.
+
+This behavior is **not yet verified in Warcraft III**. For unresolved worker build menus, cost timing, blocking
+paths, abort/retry behavior and the playtest matrix, see [`BUILDING_DESIGN.md`](BUILDING_DESIGN.md).
 
 ## How the bots move (0.51 -- end of phase 1)
 

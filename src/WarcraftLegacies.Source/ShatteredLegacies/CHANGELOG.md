@@ -4,6 +4,13 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.65.0 — first worker-construction candidate
+
+Version v0.65.0. Bot changes are detailed in `../Ai/CHANGELOG.md`: native worker construction, no regular
+instant starter grants, original-HQ and allied-CP recovery, and a cap of three total production bases.
+The Argus scenario's special base remains, but no longer consumes Herald workers. Build and playtest required.
+Debug commands intentionally unchanged until the 1.0 release gate.
+
 ## 0.64.0
 The Ashtongue's purification reworked (maintainer, 0.63 playtest). Version v0.64.0.
 - **Shattrath is the node**: every 8 s it draws up to 50 mana from each own / allied unit within 1500 (160 in all), a

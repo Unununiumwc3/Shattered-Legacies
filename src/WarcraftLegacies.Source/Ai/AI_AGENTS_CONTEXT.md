@@ -22,7 +22,25 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.52.0) -- read this, then `TODO.md` ("Open problems" first)
+## State of the work (0.65.0 candidate) -- `TODO.md` "Current priorities" first
+
+- **0.65 is a construction development patch, not a verified release.** New `AiBuilder.cs` manages one real
+  worker build order per bot, monitors native construct start/finish/cancel events, trains workers, and recovers
+  missing faction production. `AiBuildSites.cs` anchors on the remembered original HQ when safe, otherwise on a
+  *reachable* owned/allied CP, otherwise on the surviving worker. Native build orders can be refused by faction
+  build menus; see `BUILDING_DESIGN.md` for tests and limitations.
+- **Forward production**: at 10/20 owned CPs permit two/three total bases (HQ included), no more than three.
+  Allied CPs may anchor a new hall about two walking edges behind the army front; each expansion gets two
+  production buildings **total**. Factions that have no valid building worker need separate handling.
+- **Former worker-destruction starter kit and instant-production passes removed** from `AiMissions`; successor
+  calls to `AiApi.GiveStarterProduction` now request an early builder evaluation. The special Legion Argus
+  building handout remains, but Herald workers are preserved.
+- **Await a real map build and playtests** for worker/build-menu eligibility, free construction cost timing,
+  base recovery, narrow passages, and event callbacks. The submitted source archive doesn't include a full
+  project checkout; Git patch validation alone cannot verify runtime behavior. Debug permissions remain a 1.0
+  release item, unchanged.
+
+## Historical state of the work (0.52.0; the below documents the movement milestone)
 
 - **0.52.0 changed no bot logic**: the fork's content left `Ai/` (map title and pick exclusions now come through
   `AiApi.SetMapTitle` / `ExcludeFromBotPicks`), the tools moved to `tools/shattered-legacies/ai/`, and the docs here
@@ -61,7 +79,9 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
 |---|---|---|
 | `AiSystem.cs` | SimpleBot, QuestAutoComplete, Geography, AiState, AiSetup | core loop (combat round-robin 0.5 s, production tick 1 s -- one bot per tick, defense, heroes, graph targeting, logging), quest automation, landmass grid, shared runtime collections, setup + version |
 | `AiTech.cs` | AiTech | tech pools, building credits, free/event/quest upgrades, CP-capture counter |
-| `AiMissions.cs` | AiMissions | starter kit, Ragnaros, kill targets, area clears, one-shots, CP grants, Kul Tiras repair, palace handover, banned forms |
+| `AiMissions.cs` | AiMissions | Ragnaros, kill targets, area clears, one-shots, CP grants, Kul Tiras repair, palace handover, banned forms (former worker-consuming starter kit removed) |
+| `AiBuilder.cs` | AiBuilder, AiBuildState, AiBuildProject, AiBuildBase | worker training, native construction event lifecycle, missing-production recovery, forward base limits |
+| `AiBuildSites.cs` | AiBuildSites | original HQ / owned-or-allied CP fallback, walking graph checks, construction site and front selection |
 | `AiLegion.cs` | AiLegion | Legion summon/betrayal, Argus start base, node events (Sunwell), demon portal fix, all AI portals |
 | `AiWaveRunner.cs` | AiWaveRunner | invasion-wave runner; no waves configured since 0.37.1 (`AiWaves.All` empty) |
 | `AiGates.cs` | AiGates | gate removal (+ new gates on entering the map), named graph gates (greymane, tomb, thandol, oldgods), Old Gods rift, Emerald Portals, graph merge |

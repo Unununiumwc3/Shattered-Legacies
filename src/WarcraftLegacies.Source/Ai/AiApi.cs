@@ -75,14 +75,12 @@ namespace WarcraftLegacies.Source.Ai
       return AiAutopilot.TakeOverLeaver(p);
     }
 
-    // 0.58: a faction that arrives later on a bot (a fallback, a split) gets what every bot got at the start: one of
-    // each production building of its faction it does not own yet, around its base, and an altar if it has none
-    // (bots never construct; without this a successor without a preplaced barracks trained nothing). Bots only.
+    // 0.65: after a fallback/split, request construction for the arriving faction. No instant building grants.
     public static void GiveStarterProduction(player p)
     {
       if (SimpleBot.IsBot(p))
       {
-        AiMissions.PlaceProduction(p, true);
+        AiBuilder.Request(p);
       }
     }
 
