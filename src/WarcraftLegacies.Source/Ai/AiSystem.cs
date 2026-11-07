@@ -606,6 +606,7 @@ namespace WarcraftLegacies.Source.Ai
       AiRoutes.Setup(); // 0.42: rock / area / waygate checks for the route planner
       AiIncome.Setup(); // 0.44.2: CP income for computer slots (WL pays only human slots)
       AiLoad.Setup();   // 0.46: guard positions, order-latency probe
+      AiBuilder.Setup(); // builder TODO step 1: log only
       AiScheduler.Start();
 
       // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
