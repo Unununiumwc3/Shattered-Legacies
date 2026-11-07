@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
-using MacroTools.Legends;
-using MacroTools.Quests;
 using MacroTools.Shared;
-using MacroTools.ControlPoints;
-using MacroTools.GameTime;
-using WarcraftLegacies.Source.Factions.Legion.Quests;
 
 namespace WarcraftLegacies.Source.Ai
 {
+  // 0.59: STEP 1 LOGIC FOR "BOTS THAT BUILD WITH THEIR WORKERS". Logs the state every 3 min via AiScheduler (line 18).
+  // TODO item in Ai/TODO.md: bots build with their workers instead of manual starter production. This log is the first
+  // step: verify the proposed rules are triggered at the expected times. Rules:
+  // 1. workers == 0 -> RULE1 (train workers at the town hall)
+  // 2. prodKinds < 2 -> RULE2 (build production buildings until there are 2 kinds)
   internal static class AiBuilder
   {
     private static readonly UnitCategory[] ProductionCats =
@@ -122,7 +122,7 @@ namespace WarcraftLegacies.Source.Ai
           missingNames = missingNames + " " + GetObjectName(missing[m]);
         }
 
-        SimpleBot.Log("builder: " + SimpleBot.FacName(p) + " workers=" + workers + " halls=" + halls + " prodKinds=" + prodKinds + (workers == 0 ? " RULE1" : "") + (prodKinds < 2 ? " RULE2" : "") + " missing:" + missingNames);
+        SimpleBot.Log("builder: " + SimpleBot.FacName(p) + " workers=" + I2S(workers) + " halls=" + I2S(halls) + " prodKinds=" + I2S(prodKinds) + (workers == 0 ? " RULE1" : "") + (prodKinds < 2 ? " RULE2" : "") + " missing:" + missingNames);
       }
     }
   }
