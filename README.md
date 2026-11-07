@@ -38,7 +38,6 @@ and all contributors and artists listed in the commit history and in the in-game
 Thank you for building and open-sourcing it.
 
 The full commit history of the original project is preserved in this repository.
-## 
 
 ## License
 

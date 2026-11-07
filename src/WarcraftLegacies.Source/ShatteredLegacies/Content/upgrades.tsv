@@ -198,8 +198,8 @@ R070	main	used	Haruspex Adept Training	(troll)	Redt	orc	ReplaceableTextures\Comm
 R071	main	used	Hex Doctor Adept Training	(troll)	Rowd	orc	ReplaceableTextures\CommandButtons\BTNWitchDoctorAdept.blp	o043
 R074	main	used	Quest Completed: Quel'danil Lodge	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R075	main	used	Quest Completed: The Queen's Archive	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-R078	main	used	Elementalist Adept Training	(Draenei)	Rowt	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	o054
-R07C	main	used	Luminarch Adept Training	(Draenei)	Rowt	nightelf	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	o054
+R078	main	used	Elementalist Adept Training	(Draenei)	Rowt	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	o054,oZt9
+R07C	main	used	Luminarch Adept Training	(Draenei)	Rowt	nightelf	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	o054,oZt3
 R07U	main	used	Quest Completed: Shrine of the Wolf God	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R082	main	used	Quest Completed: The Way Forward	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R085	main	used	Quest Completed: Beyond the Dark Portal	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
@@ -372,16 +372,16 @@ RZri	main	used	No refugees from Legion yet	(Condition)	Roch	demon	ReplaceableTex
 RZrj	main	used	No refugees from Druids yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZrk	main	used	No refugees from Sentinels / The Exodar yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZs1	main	used	Sylvanas reaches level 6	(Forsaken condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZt0	main	used	Telredor purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZt1	main	used	Halaar purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZt2	main	used	Shattrath purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt0	main	used	Shattrath purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt1	main	used	Halaa purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZt2	main	used	Telredor purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZt3	main	used	Oshu'gun purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZt4	main	used	Karabor restored	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZy0	main	unused	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
 RZy1	main	unused	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
 RZy2	main	unused	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 RZy3	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
-RZy4	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
+RZy4	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	oZt3
 RZy5	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 Redc	main	used	Druid of the Claw Adept Training	(Druids)	Redc	nightelf	ReplaceableTextures\CommandButtons\BTNDOCAdeptTraining.blp	eaoe
 Redt	main	used	Druid of the Talon Advanced Training	(Druids)	Redt	nightelf	ReplaceableTextures\CommandButtons\BTNDOTAdeptTraining.blp	eaow
@@ -393,12 +393,12 @@ Reuv	main	used	Ultravision	(Light Blue Research)(Brown Research)	Reuv	nightelf	R
 Rews	main	used	Well Spring	-	Rews	nightelf	ReplaceableTextures\CommandButtons\BTNWellSpring.blp	edob
 Rhac	main	used	Improved Masonry	(Yellow/Purple/Orange/Green/Dark Green Research)	Rhac	human	ReplaceableTextures\CommandButtons\BTNStoneArchitecture.blp	h03O,h048,h06F,h07O,h0A3,hbla,hlum
 Rhan	main	used	Animal War Training	(Dark Green/Purple Research)	Rhan	human	ReplaceableTextures\CommandButtons\BTNAnimalWarTraining.blp	h06E,hbar
-Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+17
+Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+18
 Rhcd	main	used	Cloud	(Quel'thalas)	Rhcd	human	ReplaceableTextures\CommandButtons\BTNCloudOfFog.blp	h03J
 Rhfl	main	used	Flare	(Ironforge)	Rhfl	human	ReplaceableTextures\CommandButtons\BTNFlare.blp	h07C
 Rhfs	main	used	Fragmentation Shards	(Yellow Research)	Rhfs	human	ReplaceableTextures\CommandButtons\BTNFragmentationBombs.blp	h07C
 Rhhb	main	used	Storm Hammers	(Khaz Modan)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	hgra
-Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+17
+Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+18
 Rhpt	main	used	Priest Adept Training	(Quel'Thalas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	h034
 Rhri	main	used	Long Rifles	(Ironforge)	Rhri	human	ReplaceableTextures\CommandButtons\BTNDwarvenLongRifle.blp	h07C
 Rhse	main	used	Magic Sentry	-	Rhse	human	ReplaceableTextures\CommandButtons\BTNMagicalSentry.blp	h035

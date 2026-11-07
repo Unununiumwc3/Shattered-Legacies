@@ -38,7 +38,7 @@ def i(fid, value):
     return {"Id": fid, "Value": value}
 
 
-REAL = {"usca"}
+REAL = {"usca", "ussc"}
 
 
 def v(fid, value, level=None):

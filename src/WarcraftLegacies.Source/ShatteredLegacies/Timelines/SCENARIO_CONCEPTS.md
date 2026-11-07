@@ -276,16 +276,27 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
     conquered instead of defeated): the Ashtongue belong to the TEAM of whoever destroyed the Black Temple, then of
     whoever holds the Black Temple's CP (`n00I`). The old team's alliances are removed. Anti-abuse: the Ashtongue
     taking the CP themselves changes nothing; a later conquest by another player switches them again.
-  - **The sites** Telredor (the 24p's, placed at Zangarmarsh), Halaar, Shattrath and Oshu'gun become the Ashtongue's at
-    once and indestructible (they never change hands again) -- fel-tainted until purified.
-  - **Purification:** Ishanah, High Priestess of the Aldor (a hero), stands at Shattrath and cannot move until the work
-    is done. Purify (autocast, on -- bots too) draws mana from own and ALLIED units within 1,500 (production is
-    centred at the temple; units pass Shattrath on their way). 6,000 in all, at most 20 per second -> 5 minutes with
-    perfect mana; 2 per second by herself. Order: Telredor, Halaar, Shattrath, Oshu'gun -- each unlocks units at the
-    temple (Rangari; Elekk Knights; Luminarchs and Vindicators; Elementalists).
-  - **Final goal "Restoring Karabor to the Light"** (Outland cleansed of fel energy): the temple becomes the Temple of
-    Karabor, Xi'ri the naaru can be trained, Ishanah is free. "Karabor" as the faction's name: later (names are lookup
-    keys today).
+  - **The sites** (0.64) -- Shattrath, Halaa (the original map's "Halaar" is a typo), Telredor (placed at
+    Zangarmarsh), Oshu'gun -- become the Ashtongue's at once, whoever holds them, and indestructible: FEL-TAINTED
+    buildings without buttons. Halaa / Shattrath are conquered (WL's capital capture), not destroyed, before; one that
+    is gone anyway is built again.
+  - **Purification (0.64):** SHATTRATH is the node. Every 8 s it draws up to 50 mana from each own / allied unit within
+    1,500 (160 in all -- many units at once, slower; a mana-burn beam to each), +2 per second by itself, while
+    Ishanah's Purify (autocast) is on. Its mana pool IS the purification of the current step (no regeneration, its
+    maximum = the step's cost). The order: Shattrath 2,000, Halaa 2,400, Telredor 2,400, Oshu'gun 2,600, the temple
+    itself 2,600 = 12,000 -> 10 minutes with perfect mana. While mana flows the current site shows the Obsidian
+    Statue's replenish at the size of the bubble, a shield bubble (not at Shattrath -- it has its own; gone when the
+    step is done) and a ring of healing-light pillars. Each step done: the tainted building becomes the purified one --
+    it trains its units and researches its techs (Shattrath: Luminarchs, Vindicators, weapons, armour, the Luminarchs'
+    training; Halaa: Elekk Knights; Telredor: Rangari; Oshu'gun: Elementalists and their training). Every site has a
+    quest with a map marker.
+  - **Ishanah**, High Priestess of the Aldor, stands next to Shattrath: no move ability, invulnerable until Karabor is
+    restored; then a free Ishanah (level, skills, items kept) without Purify.
+  - **Final goal "Restoring Karabor to the Light"** (the fifth step: the temple itself): the Temple of the Deathsworn
+    becomes the Temple of Karabor (trains Xi'ri the naaru), Ishanah is free, the faction is called **Karabor**.
+  - **Start:** the Temple of the Deathsworn trains Defenders, Deathsworn and Seers; the Draenei Hut (Illidari) its
+    techs; Akama.
+  - **Food (0.64):** 30 from the temple, +6 for every Outland CP their team holds.
   - **Gold:** 10 per minute for every Outland CP their team holds -- they profit from defending their allies' land.
   - **Units:** the Illidari's draenei (Akama -- the same unit, levels kept -- Deathsworn, Seers, Draenei Huts) and the
     24p draenei as their own copies (distinct from WL's Exodar). Illidan is gone for good; naga and demons are not

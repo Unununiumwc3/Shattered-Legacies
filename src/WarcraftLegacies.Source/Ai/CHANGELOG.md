@@ -5,6 +5,16 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.64.0
+No bot logic change. Fork data: the Ashtongue's purified sites train (`SL_BUILDINGS`); their heroes are also registered
+under "Karabor" (the faction's name after its final goal).
+
+## 0.63.2
+No bot change.
+
+## 0.63.1
+No bot change.
+
 ## 0.63.0
 No bot logic change. Fork data: the Ashtongue's temples in `SL_BUILDINGS`, their heroes (Akama, Xi'ri) registered.
 The Ashtongue's mechanics (Purify, the conquest rule, the income) run by code -- bots need nothing.

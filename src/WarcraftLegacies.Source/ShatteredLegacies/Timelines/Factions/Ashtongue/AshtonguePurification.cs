@@ -4,30 +4,41 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
 {
-  // 0.63 (maintainer): Ishanah, High Priestess of the Aldor, purifies Outland from Shattrath. She cannot move until
-  // the work is done (a leash: she is put back when she leaves her spot). Purify (AZt0) is an autocast, on from the
-  // start -- bots too: while it is on she draws mana from own and ALLIED units within 1500 (up to 10 per second from
-  // each, at most 20 in all; healing-light pillars and drain beams) and turns it into purification; 2 per second she
-  // makes by herself. The sites in their order: Telredor 1000, Halaar 1250, Shattrath 1750, Oshu'gun 2000 -> 5
-  // minutes with perfect mana. Each purified site completes its quest (AshtongueFaction): its tech unlocks units at the
-  // temple. All four: Restoring Karabor to the Light (QuestRestoringKarabor). If she dies, she is back at her spot
-  // after 60 s.
+  // The purification of Outland (0.63; 0.64 reworked, maintainer). SHATTRATH is the node:
+  // - donations: every 8 s Shattrath draws up to 50 mana from each own / ALLIED unit within 1500 (at most 160 in all --
+  //   many units at once, slower; bots running past give too): a mana-burn beam from Shattrath to each donor. Plus 2
+  //   per second by itself. Only while Ishanah's Purify (autocast, on from the start) is on.
+  // - progress: Shattrath's mana pool IS the purification of the current step (no regeneration; its maximum = the
+  //   step's cost). Full -> the step is done, the pool starts again for the next one.
+  // - the steps, in this order: Shattrath, Halaa, Telredor, Oshu'gun, then the temple itself (Karabor). A finished
+  //   step replaces the site's fel-tainted building by its purified one (it trains and researches from then on).
+  // - while mana flows, the current site shows: the Obsidian Statue's replenish (life + mana) at the size of the
+  //   bubble, a shield bubble (not at Shattrath: it has its own; gone when the step is done) and a ring of healing-light
+  //   pillars. No mana flowing, no effects.
+  // - Ishanah stands next to Shattrath: she cannot move (no move ability) and cannot be hurt until Karabor is
+  //   restored; then she is replaced by a free Ishanah (level, skills, items kept) without Purify.
   internal static class AshtonguePurification
   {
     private const int OrderOn = 852150;  // faeriefireon (Purify, Faerie Fire based)
     private const int OrderOff = 852151; // faeriefireoff
     private const string Pillar = @"Abilities\Spells\Human\Resurrect\ResurrectTarget.mdl";
+    private const string Bubble = @"Abilities\Spells\Human\DivineShield\DivineShieldTarget.mdl";
+    private const string StatueLife = @"Abilities\Spells\Undead\ReplenishHealth\ReplenishHealthCaster.mdl";
+    private const string StatueMana = @"Abilities\Spells\Undead\ReplenishMana\ReplenishManaCaster.mdl";
+    private const string BurnTarget = @"Abilities\Spells\NightElf\ManaBurn\ManaBurnTarget.mdl";
 
     internal static player Owner;
     internal static unit Ishanah;
     internal static bool AutoOn = true;
     internal static bool Done;
-    internal static int Site;                         // the site being purified (0-3), 4 = all done
-    internal static float Progress;                   // of the current site
-    internal static List<ObjectiveCounter> Counters = new(); // per site (the quests)
+    internal static int Step;                         // 0-4, 5 = all done
     internal static float Clock;
+    internal static float LastFlow = -100f;           // when mana last came in (effects only while it flows)
+    internal static List<unit> Sites = new();         // per step: its building now (tainted, then purified)
+    internal static List<ObjectiveCounter> Counters = new(); // per step (the quests)
+    internal static effect BubbleFx;
 
-    internal static void Start(player p)
+    internal static void Start(player p, List<unit> sites)
     {
       if (Owner != null)
       {
@@ -35,22 +46,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
       }
 
       Owner = p;
+      Sites = sites;
       Ishanah = CreateUnit(p, AshtongueObjects.Ishanah, AshtongueConfig.IshanahX, AshtongueConfig.IshanahY, 270f);
-      SetUnitMoveSpeed(Ishanah, 0f);
+      UnitRemoveAbility(Ishanah, FourCC("Amov")); // rooted (the 0.63 leash let her slide)
+      SetUnitInvulnerable(Ishanah, true);
       IssueImmediateOrderById(Ishanah, OrderOn);
+      SetPool();
       var ordered = CreateTrigger();
       TriggerRegisterPlayerUnitEvent(ordered, p, EVENT_PLAYER_UNIT_ISSUED_ORDER, null);
       TriggerAddAction(ordered, () => AiApi.Safe("ashtongue purify toggle", OnOrder));
-      var died = CreateTrigger();
-      TriggerRegisterPlayerUnitEvent(died, p, EVENT_PLAYER_UNIT_DEATH, null);
-      TriggerAddAction(died, () => AiApi.Safe("ashtongue ishanah", OnDeath));
       var tick = CreateTimer();
       TimerStart(tick, 1f, true, () => AiApi.Safe("ashtongue purify", Tick));
-      var leash = CreateTimer();
-      TimerStart(leash, 0.5f, true, () => AiApi.Safe("ashtongue leash", Leash));
     }
 
     private static bool Alive(unit u) => u != null && GetUnitTypeId(u) != 0 && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f;
+
+    private static unit Shattrath => Sites.Count > 0 ? Sites[0] : null;
 
     private static void OnOrder()
     {
@@ -70,85 +81,64 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
       }
     }
 
-    private static void OnDeath()
+    // Shattrath's pool: maximum = the current step's cost
+    private static void SetPool()
     {
-      if (GetTriggerUnit() != Ishanah || Done)
+      if (Alive(Shattrath) && Step < AshtongueConfig.StepCost.Length)
       {
-        return;
-      }
-
-      var t = CreateTimer();
-      TimerStart(t, AshtongueConfig.IshanahReviveAfter, false, () =>
-      {
-        DestroyTimer(t);
-        AiApi.Safe("ashtongue ishanah revive", () =>
-        {
-          if (Alive(Ishanah) || GetUnitTypeId(Ishanah) == 0)
-          {
-            return;
-          }
-
-          ReviveHero(Ishanah, AshtongueConfig.IshanahX, AshtongueConfig.IshanahY, true);
-          SetUnitMoveSpeed(Ishanah, 0f);
-          IssueImmediateOrderById(Ishanah, AutoOn ? OrderOn : OrderOff);
-        });
-      });
-    }
-
-    // rooted until the work is done: put back on her spot when she wanders off (move speed 0 may not hold everywhere)
-    private static void Leash()
-    {
-      if (Done || !Alive(Ishanah))
-      {
-        return;
-      }
-
-      var dx = GetUnitX(Ishanah) - AshtongueConfig.IshanahX;
-      var dy = GetUnitY(Ishanah) - AshtongueConfig.IshanahY;
-      if (dx * dx + dy * dy > 64f * 64f)
-      {
-        SetUnitPosition(Ishanah, AshtongueConfig.IshanahX, AshtongueConfig.IshanahY);
-        IssueImmediateOrderById(Ishanah, ORDER_STOP);
+        BlzSetUnitMaxMana(Shattrath, AshtongueConfig.StepCost[Step]);
+        SetUnitState(Shattrath, UNIT_STATE_MANA, 0f);
       }
     }
 
     private static void Tick()
     {
       Clock += 1f;
-      if (Done || Site >= AshtongueConfig.Sites.Length || !Alive(Ishanah))
+      if (Done || Step >= AshtongueConfig.StepCost.Length || !Alive(Shattrath))
       {
         return;
       }
 
-      var gained = AshtongueConfig.PurifyTrickle;
-      if (AutoOn)
+      var gained = AshtongueConfig.Trickle;
+      if (AutoOn && R2I(Clock) % R2I(AshtongueConfig.DonationEvery) == 0)
       {
-        gained += Drain();
+        var donated = Donations();
+        if (donated > 0f)
+        {
+          LastFlow = Clock;
+        }
+
+        gained += donated;
       }
 
-      Progress += gained;
-      if (Site < Counters.Count)
+      var pool = GetUnitState(Shattrath, UNIT_STATE_MANA) + gained;
+      SetUnitState(Shattrath, UNIT_STATE_MANA, pool);
+      if (Step < Counters.Count)
       {
-        Counters[Site].Add(R2I(gained));
+        Counters[Step].Add(R2I(gained));
       }
 
-      if (Progress >= AshtongueConfig.SiteCost[Site])
+      Effects();
+      if (pool >= AshtongueConfig.StepCost[Step] - 0.5f)
       {
-        Purified(Site);
-        Progress = 0f;
-        Site++;
+        Finish(Step);
+        Step++;
+        SetPool();
+        if (Step >= AshtongueConfig.StepCost.Length)
+        {
+          Release();
+        }
       }
     }
 
-    // mana of own and allied units within reach -> purification (at most DrainCap per second)
-    private static float Drain()
+    // own and allied units within reach give up to 50 each, 160 in all -- mana-burn beams from Shattrath
+    private static float Donations()
     {
-      var x = GetUnitX(Ishanah);
-      var y = GetUnitY(Ishanah);
-      var left = AshtongueConfig.DrainCap;
-      var beams = 0;
+      var sx = GetUnitX(Shattrath);
+      var sy = GetUnitY(Shattrath);
+      var left = AshtongueConfig.DonationCap;
       var g = CreateGroup();
-      GroupEnumUnitsInRange(g, x, y, AshtongueConfig.PurifyRange, null);
+      GroupEnumUnitsInRange(g, sx, sy, AshtongueConfig.DonationRange, null);
       unit u;
       while ((u = FirstOfGroup(g)) != null)
       {
@@ -165,69 +155,159 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
           continue;
         }
 
-        var take = mana < AshtongueConfig.DrainPerUnit ? mana : AshtongueConfig.DrainPerUnit;
+        var take = mana < AshtongueConfig.DonationPerUnit ? mana : AshtongueConfig.DonationPerUnit;
         take = take < left ? take : left;
         SetUnitState(u, UNIT_STATE_MANA, mana - take);
         left -= take;
-        if (beams < 4)
-        {
-          beams++;
-          Beam(u);
-        }
+        Beam(Shattrath, u);
       }
 
       DestroyGroup(g);
-      var drained = AshtongueConfig.DrainCap - left;
-      if (drained > 0f && R2I(Clock) % 2 == 0)
-      {
-        // healing-light pillars around her, several at once
-        for (var i = 0; i < 3; i++)
-        {
-          var a = GetRandomReal(0f, 6.2832f);
-          var r = GetRandomReal(80f, 260f);
-          DestroyEffect(AddSpecialEffect(Pillar, x + r * Cos(a), y + r * Sin(a)));
-        }
-      }
-
-      return drained;
+      return AshtongueConfig.DonationCap - left;
     }
 
-    private static void Beam(unit from)
+    // a mana-burn beam from Shattrath to the donor -- heights from the units themselves (0.63's beams missed: fixed
+    // heights ignored the terrain)
+    private static void Beam(unit from, unit to)
     {
-      var l = AddLightningEx("DRAM", true, GetUnitX(from), GetUnitY(from), 60f, GetUnitX(Ishanah), GetUnitY(Ishanah),
-        80f);
+      var l = AddLightningEx("MBUR", true, GetUnitX(from), GetUnitY(from), BlzGetUnitZ(from) + 200f, GetUnitX(to),
+        GetUnitY(to), BlzGetUnitZ(to) + 60f);
+      DestroyEffect(AddSpecialEffectTarget(BurnTarget, to, "origin"));
       var t = CreateTimer();
-      TimerStart(t, 0.6f, false, () =>
+      TimerStart(t, 1.2f, false, () =>
       {
         DestroyTimer(t);
         DestroyLightning(l);
       });
     }
 
-    private static void Purified(int site)
+    // while mana flows (a donation in the last 9 s): the current site lights up
+    private static void Effects()
     {
-      var name = AshtongueConfig.Sites[site];
-      if (site < Counters.Count)
+      var site = Step < Sites.Count ? Sites[Step] : null;
+      var flowing = Clock - LastFlow <= AshtongueConfig.DonationEvery + 1f;
+      if (!flowing || !Alive(site))
       {
-        Counters[site].Add(AshtongueConfig.SiteCost[site]); // the quest completes (its counter rounds down)
+        DropBubble();
+        return;
+      }
+
+      var x = GetUnitX(site);
+      var y = GetUnitY(site);
+      var scale = Step == 0 ? 4f : AshtongueConfig.BubbleScale[Step];
+      if (Step > 0 && BubbleFx == null)
+      {
+        BubbleFx = AddSpecialEffect(Bubble, x, y);
+        BlzSetSpecialEffectScale(BubbleFx, AshtongueConfig.BubbleScale[Step]);
+      }
+
+      if (R2I(Clock) % 2 == 0)
+      {
+        // a ring of healing-light pillars at the bubble's size (at least 10)
+        var radius = 75f * scale;
+        for (var i = 0; i < 12; i++)
+        {
+          var a = 6.2832f * i / 12f + GetRandomReal(0f, 0.3f);
+          DestroyEffect(AddSpecialEffect(Pillar, x + radius * Cos(a), y + radius * Sin(a)));
+        }
+      }
+
+      if (R2I(Clock) % 4 == 0)
+      {
+        var life = AddSpecialEffect(StatueLife, x, y);
+        BlzSetSpecialEffectScale(life, scale);
+        DestroyEffect(life);
+        var mana = AddSpecialEffect(StatueMana, x, y);
+        BlzSetSpecialEffectScale(mana, scale);
+        DestroyEffect(mana);
+      }
+    }
+
+    private static void DropBubble()
+    {
+      if (BubbleFx != null)
+      {
+        DestroyEffect(BubbleFx);
+        BubbleFx = null;
+      }
+    }
+
+    // a step done: the site's tainted building -> its purified one (Shattrath keeps being the pool)
+    private static void Finish(int step)
+    {
+      DropBubble();
+      var name = AshtongueConfig.Steps[step];
+      if (step < Counters.Count)
+      {
+        Counters[step].Add(AshtongueConfig.StepCost[step]); // the quest completes (its counter rounds down)
+      }
+
+      var old = step < Sites.Count ? Sites[step] : null;
+      if (old != null && GetUnitTypeId(old) != 0)
+      {
+        var x = GetUnitX(old);
+        var y = GetUnitY(old);
+        var facing = GetUnitFacing(old);
+        RemoveUnit(old);
+        var n = CreateUnit(Owner, AshtongueConfig.Purified[step], x, y, facing);
+        SetUnitInvulnerable(n, true);
+        Sites[step] = n;
+        if (step == 0 && Step + 1 < AshtongueConfig.StepCost.Length)
+        {
+          BlzSetUnitMaxMana(n, AshtongueConfig.StepCost[step + 1]); // Shattrath stays the pool
+        }
+
+        for (var i = 0; i < 12; i++)
+        {
+          var a = 6.2832f * i / 12f;
+          DestroyEffect(AddSpecialEffect(Pillar, x + 300f * Cos(a), y + 300f * Sin(a)));
+        }
       }
 
       for (var j = 0; j < 24; j++)
       {
-        DisplayTimedTextToPlayer(Player(j), 0, 0, 12, "|cffffcc00" + name + " is purified|r -- the Light returns to Outland.");
+        DisplayTimedTextToPlayer(Player(j), 0, 0, 12, "|cffffcc00" + name + " is purified|r -- the Light returns to "
+                                                      + "Outland.");
       }
 
       AiApi.LogPin("Ashtongue: " + name + " purified");
     }
 
-    // Karabor restored: Ishanah is free
-    internal static void Release()
+    // Karabor restored: Ishanah is free -- a new Ishanah (move ability back), with her level, skills and items
+    private static void Release()
     {
       Done = true;
-      if (Alive(Ishanah))
+      DropBubble();
+      if (Ishanah == null || GetUnitTypeId(Ishanah) == 0)
       {
-        SetUnitMoveSpeed(Ishanah, GetUnitDefaultMoveSpeed(Ishanah));
+        return;
       }
+
+      var old = Ishanah;
+      var n = CreateUnit(Owner, AshtongueObjects.Ishanah, GetUnitX(old), GetUnitY(old), GetUnitFacing(old));
+      SetHeroXP(n, GetHeroXP(old), false);
+      int[] skills = { FourCC("AHhb"), FourCC("AHds"), FourCC("AHad"), FourCC("AHre") };
+      for (var s = 0; s < skills.Length; s++)
+      {
+        var level = GetUnitAbilityLevel(old, skills[s]);
+        for (var l = 0; l < level; l++)
+        {
+          SelectHeroSkill(n, skills[s]);
+        }
+      }
+
+      for (var slot = 0; slot < 6; slot++)
+      {
+        var item = UnitItemInSlot(old, slot);
+        if (item != null)
+        {
+          UnitAddItem(n, item);
+        }
+      }
+
+      UnitRemoveAbility(n, AshtongueConfig.PurifyAbility); // its work is done
+      RemoveUnit(old);
+      Ishanah = n;
     }
   }
 }

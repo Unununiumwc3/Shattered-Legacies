@@ -928,7 +928,7 @@ ABSS	main	used	Shadow Strike	(Void Toxin Real)	AEsh	-	-	nightelf	ReplaceableText
 ACac	main	used	Command Aura	(Grey - Darkspear Warlord)	ACac	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	nano,nfpu,nftk,ngnv,nkol,nmrv,+1
 ACad	main	used	Animate Dead	(Creep - Drak'Thul)	ACad	-	-	creeps	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	n03Y,nfod,nrvd
 ACat	main	used	Trueshot Aura	(Voone, Wanderer)	ACat	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNTrueShot.blp	n049,n07G,nitw
-ACav	main	used	Devotion Aura	(Stormwind - Capitals)	ACav	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNDevotion.blp	h00N,h00O,h00X,h02V,h03X,h03Y,+10
+ACav	main	used	Devotion Aura	(Stormwind - Capitals)	ACav	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNDevotion.blp	h00N,h00O,h00X,h02V,h03X,h03Y,+9
 ACbf	main	used	Breath of Frost	(crystal lord	ACbf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNBreathOfFrost.blp	nbdo
 ACbh	main	used	Bash	(Grey - Stonemaul Soldier ) (Fel Reaver)	ACbh	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNBash.blp	e003,n07A,n07Z,n099,nZk0,ngz1,+9
 ACbl	main	used	Bloodlust	(Neutral Hostile 1)	ACbl	-	-	creeps	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	ncks,nslv,nsrn
@@ -1233,7 +1233,6 @@ AZyc	main	used	Renewal	(draenei)	ACrj	-	-	human	ReplaceableTextures\CommandButto
 AZyd	main	used	Holy Light	(Paladin)	AHhb	-	-	human	ReplaceableTextures\CommandButtons\BTNHolyBolt.blp	hZy8
 AZye	main	used	Light's Edict	(Draenei)	ANhs	yes	-	orc	ReplaceableTextures\CommandButtons\BTNDevineBlessing.blp	HZy9
 AZyf	main	used	Army of Light	(Draenei)	ANrc	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNEarth Light Beam.blp	HZy9
-AZyg	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	hZyb
 AZyh	main	used	Army of Light Golem summon	(Draenei)	AUin	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNInfernal.blp	-
 Aabs	main	used	Absorb Mana	(Scourge-Destroyer)	Aabs	-	-	undead	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	u02W,ubsp
 Aakb	main	used	War Drums	(Kodo Beast)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	o06Q,okod
@@ -3449,7 +3448,7 @@ Ahrl	stock	used	Harvest	(Ghouls Lumber)	Ahrl	-	-	undead	ReplaceableTextures\Comm
 Aimp	stock	used	Vorpal Blades	-	Aimp	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNVorpalBlades.blp	ebal
 Aivs	stock	used	Invisibility	-	Aivs	-	-	human	ReplaceableTextures\CommandButtons\BTNInvisibility.blp	-
 Alam	stock	used	Sacrifice	(Acolyte)	Alam	-	-	undead	ReplaceableTextures\CommandButtons\BTNSacrifice.blp	-
-Aloc	stock	used	Locust	-	Aloc	-	-	undead	-	el06,h02W,h06H,n03J,n03R,n067,+19
+Aloc	stock	used	Locust	-	Aloc	-	-	undead	-	el06,h02W,h06H,n03J,n03R,n067,+20
 Amb2	stock	unused	Replenish Mana	-	Amb2	-	-	undead	ReplaceableTextures\CommandButtons\BTNReplenishManaOn.blp	-
 Ambb	stock	used	Mana Burn	(Neutral Hostile 3)	Ambb	-	-	creeps	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	-
 Ambd	stock	used	Mana Burn	(Neutral Hostile 1)	Ambd	-	-	creeps	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	-
@@ -3527,7 +3526,7 @@ Augh	stock	used	Shade	(Icon)	Augh	-	-	undead	ReplaceableTextures\PassiveButtons\
 Ausm	stock	used	Skeletal Mastery	(Icon)	Ausm	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNSkeletonMage.blp	-
 Auuf	stock	used	Incite Unholy Frenzy	-	Auuf	-	-	undead	ReplaceableTextures\CommandButtons\BTNUnholyFrenzy.blp	-
 Avng	stock	used	Spirit of Vengeance	-	Avng	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNAvengingWatcherOn.blp	-
-Avul	stock	used	Invulnerable	(Neutral)	Avul	-	-	other	-	Otch,el06,even,h00O,h02W,h03V,+48
+Avul	stock	used	Invulnerable	(Neutral)	Avul	-	-	other	-	Otch,el06,even,h00O,h02W,h03V,+57
 Awan	stock	used	Wander	(Neutral)	Awan	-	-	other	-	-
 Awh2	stock	unused	Gather	(Wisp Gold and Lumber - Ancient Spirits)	Awh2	-	-	creeps	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	-
 Awha	stock	used	Gather	(Wisp Gold and Lumber)	Awha	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	-

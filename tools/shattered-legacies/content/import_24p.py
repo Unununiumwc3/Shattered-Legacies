@@ -213,33 +213,43 @@ ASHTONGUE = {
     "third": "y",
     "force": True,
     "objects": [
-        ("o05B", "Defender", ["Fighter"], 200),
-        ("h09T", "Rangari", ["Marksman"], 200),     # Telredor purified
-        ("h09U", "ElekkKnight", ["Tank"], 12),      # Halaar purified
-        ("o05C", "Luminarch", ["Support"], 200),    # Shattrath purified
-        ("h09R", "Vindicator", ["Elite"], 8),       # Shattrath purified
-        ("o05D", "Elementalist", ["Support"], 200), # Oshu'gun purified
-        ("H0AK", "Xiri", ["Support"], 1),           # the final goal (Restoring Karabor to the Light)
+        ("o05B", "Defender", ["Fighter"], 200),     # the Temple of the Deathsworn
+        ("h09T", "Rangari", ["Marksman"], 200),     # Telredor (purified)
+        ("h09U", "ElekkKnight", ["Tank"], 12),      # Halaa (purified)
+        ("o05C", "Luminarch", ["Support"], 200),    # Shattrath (purified)
+        ("h09R", "Vindicator", ["Elite"], 8),       # Shattrath (purified)
+        ("o05D", "Elementalist", ["Support"], 200), # Oshu'gun (purified)
+        ("H0AK", "Xiri", ["Support"], 1),           # the Temple of Karabor (the final goal)
         ("H09S", "Ishanah", ["Support"], 1),        # the purifier (placed by code, never trained)
-        ("h0AG", "Telredor", [], 1),                # the 24p Telredor (placed by code at Zangarmarsh)
     ],
-    # their 24p requirements (the Exodar's buildings / techs) are replaced by the purification techs (set below)
-    "exclude": ["o053", "o051", "R04R", "R08L", "R082"],
+    # 0.64: the units come from the purified sites (ashtongue_objects.py -- each site a fel-tainted and a purified type),
+    # so they need no requirement; Telredor's 24p building is no longer copied (only its model is used)
+    "exclude": ["o053", "o051", "R04R", "R08L", "R082", "h0AG"],
     "drop": [],
     "zero_lumber": True,
-    # main-map objects the Ashtongue use: the Illidari's draenei (Akama, Deathsworn, Seer, the Draenei Hut); the
-    # hand-made temple, Purify and techs (ashtongue_objects.py)
+    # main-map objects the Ashtongue use: the Illidari's draenei (Akama, Deathsworn, Seer, the Draenei Hut and its two
+    # researches), WL's trainings of the copied Luminarch / Elementalist (their spells ask for them), the hand-made
+    # temples, sites and food (ashtongue_objects.py)
     "extra": [("Naka", "Akama", ["Assassin"], 1),
               ("ndrn", "Deathsworn", ["Assassin"], 12),
               ("ndrs", "Seer", ["Support"], 6),
               ("n08W", "DraeneiHut", ["Specialist"], 200),
+              ("YBPH", "DraeneiHutResearch1", [], 200), ("YBAA", "DraeneiHutResearch2", [], 200),
+              ("R07C", "LuminarchTraining", [], 200), ("R078", "ElementalistTraining", [], 200),
               ("oZt0", "TempleOfTheDeathsworn", ["TownHall"], 1),
-              ("oZt1", "TempleOfKarabor", ["TownHall"], 1)],
+              ("oZt1", "TempleOfKarabor", ["TownHall"], 1),
+              # no production categories: a bot's arrival production must not place a purified site somewhere
+              ("oZt2", "ShattrathTainted", [], 1), ("oZt3", "Shattrath", [], 1),
+              ("oZt4", "HalaaTainted", [], 1), ("oZt5", "Halaa", [], 1),
+              ("oZt6", "TelredorTainted", [], 1), ("oZt7", "Telredor", [], 1),
+              ("oZt8", "OshugunTainted", [], 1), ("oZt9", "Oshugun", [], 1),
+              ("oZta", "OutlandSupply", [], 200)],
     "set": {
-        "h09T": {"ureq": "=RZt0"}, "h09U": {"ureq": "=RZt1"}, "o05C": {"ureq": "=RZt2"},
-        "h09R": {"ureq": "=RZt2"}, "o05D": {"ureq": "=RZt3"}, "H0AK": {"ureq": "=RZt4", "upro": "Xi'ri"},
+        "o05B": {"ureq": ""}, "h09T": {"ureq": ""}, "h09U": {"ureq": ""}, "o05C": {"ureq": ""},
+        "h09R": {"ureq": ""}, "o05D": {"ureq": ""},
+        "H0AK": {"upro": "Xi'ri", "ureq": ""},
         # Ishanah, High Priestess of the Aldor: the 24p's Maraad (the Exodar's legend) made a priestess -- the
-        # Luminarch's model, the paladin's light skills; Purify (AZt0, autocast) by code
+        # Luminarch's model, the paladin's light skills; Purify (AZt0, autocast: the donations' on / off)
         "H09S": {"ureq": "", "upro": "Ishanah", "unam": "High Priestess of the Aldor",
                  "umdl": "war3mapImported\\DraeneiLuminary_NoGlow.mdl", "uhab": "=AHhb,=AHds,=AHad,=AHre",
                  "uabi": "=AInv,=AZt0"},

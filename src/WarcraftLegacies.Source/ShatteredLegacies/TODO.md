@@ -210,20 +210,20 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
   too late). Instead the Enterprise takes the town's shops, improves them (better items) and gets the profit for each
   item sold to other players -- like the Refugee Slave Camps, for items.
 
-### 3b. Illidari -> Ashtongue Deathsworn -- playtest 0.63
+### 3b. Illidari -> Ashtongue Deathsworn -- playtest 0.64
 
-- [you] **Playtest 0.63**: destroy the Black Temple (cheat its power generators and the temple away), take the
-  fallback at the Hourglass. Expect: an announcement; Illidan gone; the naga / demons removed or hostile; the Temple
-  of the Deathsworn on the Black Temple's spot (cannot be hurt, trains Defenders, Deathsworn, Seers -- the rest greyed
-  out until purified); Akama there with his level; Shattrath, Halaar, Oshu'gun and a Telredor at Zangarmarsh yours and
-  indestructible; Ishanah at Shattrath, rooted, Purify on (autocast border) -- mana beams from your / your allies'
-  units within 1500, light pillars, the quest counter "Purify Telredor" rising; your team = whoever destroyed the
-  temple; take the Black Temple CP with another player -> the Ashtongue switch to his team (announced); take it with
-  the Ashtongue -> nothing changes. Gold: +10 per minute per Outland CP of the team (income column).
-- [you] **Balance**: 6000 purification (1000 / 1250 / 1750 / 2000), 10 mana per unit per second, 20 in all, 2 by
-  herself (`AshtongueConfig`); the units the sites unlock; 10 gold per Outland CP.
-- [ai] **The faction's name "Karabor"** after the final goal: WL and the fork find factions by name (bot hero lists,
-  slave camps, catalog) -- make those use the faction object first, then rename.
+- [you] **Playtest 0.64**: Halaa is named Halaa and is taken over (not destroyed) when beaten before the Ashtongue
+  come; at the fallback: Shattrath, Halaa, Telredor, Oshu'gun as "(fel-tainted)" buildings of yours (indestructible,
+  no buttons; quest markers on all four and the temple); Ishanah next to Shattrath cannot move or be hurt; Shattrath's
+  mana bar is the purification (no regeneration); every 8 s mana-burn beams from Shattrath to your / your allies'
+  units within 1500; at the site being purified: the bubble (not at Shattrath), replenish effects, a ring of light
+  pillars -- only while mana flows; each step done: the site becomes its purified building (trains / researches);
+  the order Shattrath, Halaa, Telredor, Oshu'gun, temple; at the end: Temple of Karabor, Xi'ri, Ishanah moves (no
+  Purify), the scoreboard says Karabor. The temple trains Defenders, Deathsworn, Seers; the Draenei Hut works. Food:
+  30 + 6 per Outland CP of your team.
+- [you] **Balance**: 12,000 purification (2000 / 2400 / 2400 / 2600 / 2600), every 8 s up to 50 per unit and 160 in
+  all, 2 per second by itself (`AshtongueConfig`); 10 gold and 6 food per Outland CP.
+- ~~**The faction's name "Karabor"**~~ (0.64: `Faction.Name` -- WL re-keys its tables; the bot knows both names).
 - [ai] **Evil factions conquered instead of defeated** (maintainer): `Core/Conquest` is ready for it -- hook it into the
   elimination rule (`Rules/EliminationRule`): the seat = the faction's HQ CP; per faction: which ones are "evil".
 - [ai] **A "Hold <HQ>" quest for every faction** (maintainer): generated from the catalog's `Hq`, with map markers --

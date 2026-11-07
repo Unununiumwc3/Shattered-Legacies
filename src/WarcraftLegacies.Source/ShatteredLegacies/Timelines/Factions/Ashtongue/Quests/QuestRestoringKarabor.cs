@@ -2,13 +2,15 @@ using MacroTools.Factions;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.Objectives.QuestBased;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue.Quests
 {
-  // 0.63, the Ashtongue's final goal (maintainer): Outland cleansed of fel energy -- all four sites purified. The
-  // Temple of the Deathsworn becomes the Temple of Karabor (a type of the fork's: WL's Black Temple is never renamed),
-  // Xi'ri the naaru can be trained there, Ishanah is free to move. The faction's NAME stays "Ashtongue" for now: WL
-  // and the fork find factions by name (TODO.md).
+  // 0.63, the Ashtongue's final goal (maintainer): Outland cleansed of fel energy. 0.64: the fifth purification step
+  // is the temple itself (AshtonguePurification replaces it by the Temple of Karabor -- WL's Black Temple is never
+  // renamed); then the faction is called "Karabor" (Faction.Name: WL re-keys its tables; the fork's lookups by name
+  // know both names), Xi'ri can be trained, Ishanah is free.
   public sealed class QuestRestoringKarabor : QuestData
   {
     public QuestRestoringKarabor(QuestData[] sites) : base("Restoring Karabor to the Light",
@@ -21,54 +23,32 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
         AddObjective(new ObjectiveQuestComplete(sites[i]));
       }
 
-      ResearchId = AshtongueConfig.KaraborTech;
+      var temple = new ObjectiveCounter("Purify the temple (Shattrath's pool)", AshtongueConfig.StepCost[4],
+        AshtongueConfig.TempleX, AshtongueConfig.TempleY);
+      AddObjective(temple);
+      AshtonguePurification.Counters.Add(temple);
+      ResearchId = AshtongueConfig.StepTech[4];
     }
 
     protected override string RewardDescription =>
-      "The Temple of the Deathsworn becomes the Temple of Karabor; Xi'ri the naaru can be trained there; Ishanah "
-      + "can leave Shattrath";
+      "The temple becomes the Temple of Karabor and trains Xi'ri the naaru; Ishanah is free; the Ashtongue become "
+      + "Karabor";
 
     protected override void OnComplete(Faction whichFaction)
     {
-      var p = whichFaction.Player;
-      if (p == null)
+      whichFaction.Name = AshtongueConfig.FinalName;
+      if (whichFaction.Player != null)
       {
-        return;
+        SwapFaction.NameSlot(whichFaction.Player, whichFaction);
       }
 
-      ReplaceTemple(p);
-      AshtonguePurification.Release();
       for (var j = 0; j < 24; j++)
       {
         DisplayTimedTextToPlayer(Player(j), 0, 0, 20, "|cffffcc00Karabor is restored to the Light.|r The fel is "
-                                                      + "burned out of Outland; the Ashtongue's temple shines again.");
+                                                      + "burned out of Outland; the Ashtongue are Karabor's again.");
       }
 
-      AiApi.LogPin("Ashtongue: Karabor restored");
-    }
-
-    // the Temple of the Deathsworn -> the Temple of Karabor, same spot, same share of hit points
-    private static void ReplaceTemple(player p)
-    {
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        if (GetUnitTypeId(u) != AshtongueConfig.TempleOfTheDeathsworn)
-        {
-          continue;
-        }
-
-        var x = GetUnitX(u);
-        var y = GetUnitY(u);
-        RemoveUnit(u);
-        var k = CreateUnit(p, AshtongueConfig.TempleOfKarabor, x, y, 270f);
-        SetUnitInvulnerable(k, true);
-      }
-
-      DestroyGroup(g);
+      AiApi.LogPin("Ashtongue: Karabor restored -> " + AshtongueConfig.FinalName);
     }
   }
 }

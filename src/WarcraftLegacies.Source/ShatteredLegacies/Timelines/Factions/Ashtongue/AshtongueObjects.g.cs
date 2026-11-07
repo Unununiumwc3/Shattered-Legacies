@@ -12,6 +12,5 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
     internal const int Elementalist = 1868200245; // oZy5 (24p o05D)
     internal const int Xiri = 1213888825; // HZy9 (24p H0AK)
     internal const int Ishanah = 1213888865; // HZya (24p H09S)
-    internal const int Telredor = 1750759778; // hZyb (24p h0AG)
   }
 }

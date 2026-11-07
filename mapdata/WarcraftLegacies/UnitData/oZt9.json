@@ -1,0 +1,91 @@
+{
+  "OldId": "obar",
+  "NewId": "oZt9",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Oshu'gun"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "buildings\\other\\GoldMine\\GoldMine.mdl"
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\12x12Simple.tga"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNDraeneiDivineCitadel.blp"
+    },
+    {
+      "Id": "ugol",
+      "Value": 0
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "oZy5"
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "R078"
+    },
+    {
+      "Id": "uupt",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "ubui",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The naaru's fallen vessel. Trains Elementalists; researches their training."
+    },
+    {
+      "Id": "urac",
+      "Type": 3,
+      "Value": "other"
+    },
+    {
+      "Id": "ufma",
+      "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.2
+    },
+    {
+      "Id": "ussc",
+      "Type": 1,
+      "Value": 8.0
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Avul"
+    }
+  ]
+}

@@ -64,6 +64,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         faction.AddQuest(quest);
         _quests.Add(quest);
         quest.Trigger.ProgressChanged += _ => AiApi.Safe("turning point trigger", () => OnTriggerChanged(quest));
+        if (_allArmed && quest.HqLost != null)
+        {
+          quest.HqLost.Arm(); // 0.63.1: a faction registered after the arming (a late pick) -- its trigger was never armed
+        }
       }
     }
 
@@ -81,8 +85,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     }
 
     // called by the Hourglass once it exists (62 s, after the picks): the HQ units are found now
+    private static bool _allArmed;
+
     internal static void ArmAll()
     {
+      _allArmed = true;
       for (var i = 0; i < _quests.Count; i++)
       {
         if (_quests[i].HqLost != null)

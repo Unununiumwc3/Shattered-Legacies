@@ -1,10 +1,12 @@
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
 {
-  // Data of the Ashtongue Deathsworn (the Illidari's fallback, 0.63 -- concepts P16). Copies of the 24p draenei:
-  // import_24p.py (AshtongueObjects.g.cs); hand-made objects: ashtongue_objects.py (ids below).
+  // Data of the Ashtongue Deathsworn (the Illidari's fallback, 0.63; 0.64 the purification reworked -- concepts P16).
+  // Copies of the 24p draenei: import_24p.py (AshtongueObjects.g.cs); hand-made objects: ashtongue_objects.py (ids
+  // below).
   internal static class AshtongueConfig
   {
-    internal const string Name = "Ashtongue"; // "Ashtongue Deathsworn" in texts (the scoreboard cuts long names)
+    internal const string Name = "Ashtongue";       // "Ashtongue Deathsworn" in texts (the scoreboard cuts long names)
+    internal const string FinalName = "Karabor";    // the faction's name once Karabor is restored (0.64)
 
     // the Black Temple (o00F, WL's Fel Horde capital, the Illidari's HQ) and its CP (n00I) -- the seat (Conquest)
     internal const float TempleX = 7808f;
@@ -12,32 +14,40 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
     internal const float UnitsX = 7653f;                // open ground next to it (found offline, pathing map)
     internal const float UnitsY = -29564f;
     internal const int TempleOfTheDeathsworn = 1868198960; // oZt0 (hand-made)
-    internal const int TempleOfKarabor = 1868198961;       // oZt1 (hand-made)
-    internal const int PurifyAbility = 1096447024;         // AZt0 (hand-made)
+    internal const int TempleOfKarabor = 1868198961;       // oZt1
+    internal const int PurifyAbility = 1096447024;         // AZt0
+    internal const int OutlandSupply = 1868199009;         // oZta: food, one per Outland CP of the team
+    internal const int QuestDraenei = 1378891080;          // R05H "Quest Completed: The Draenei" (Akama, the hut)
 
-    // the purification sites, in their order (Telredor is placed by code: the 24p's, at Zangarmarsh)
-    internal static string[] Sites = { "Telredor", "Halaar", "Shattrath", "Oshu'gun" };
-    internal static int[] SiteCost = { 1000, 1250, 1750, 2000 }; // 6000 in all
-    internal static int[] SiteTech = { 1381659696, 1381659697, 1381659698, 1381659699 }; // RZt0-RZt3 (hand-made)
-    internal const int KaraborTech = 1381659700;                                         // RZt4
-    internal const float TelredorX = -2512f;            // Regions.TelredorUnlock's centre
-    internal const float TelredorY = -25920f;
+    // the purification, in its order (maintainer): Shattrath, Halaa, Telredor, Oshu'gun, then the temple itself.
+    // Each site: a fel-tainted building (no buttons) replaced by its purified one (trains, researches).
+    internal static string[] Steps = { "Shattrath", "Halaa", "Telredor", "Oshu'gun", "Karabor" };
+    internal static int[] StepCost = { 2000, 2400, 2400, 2600, 2600 }; // 12,000 (0.63: 6,000 -- "a bit quick")
+    internal static int[] Tainted = { 1868198962, 1868198964, 1868198966, 1868198968, TempleOfTheDeathsworn };
+    internal static int[] Purified = { 1868198963, 1868198965, 1868198967, 1868198969, TempleOfKarabor };
+    internal static int[] StepTech = { 1381659696, 1381659697, 1381659698, 1381659699, 1381659700 }; // RZt0-RZt4
+    // where they stand: the preplaced Shattrah (h0AH), Halaar (h0AE), Oshu'gun (h02Z); Telredor at Zangarmarsh
+    internal static float[] SiteXY = { -1632f, -28640f, -4576f, -29472f, -2512f, -25920f, -5120f, -30528f };
+    internal static float[] BubbleScale = { 0f, 4f, 3.5f, 4.5f, 6f }; // Shattrath has its own shield bubble
 
-    // Ishanah at Shattrath (rooted until Karabor is restored), Purify: up to 10 mana per second from each own / allied
-    // unit within 1500, at most 20 per second in all -> 6000 in 5 minutes when mana is fed perfectly (maintainer);
-    // plus 2 per second by herself, so a game without help ends too (about 50 minutes)
-    internal const float IshanahX = -1132f;             // next to Shattrath (found offline, pathing map)
+    // the donations: Shattrath draws mana from own and allied units within 1500 -- bigger steals, slower, many units
+    // at once (maintainer): every 8 s up to 50 from each unit, at most 160 in all -> 20 per second -> 10 minutes with
+    // perfect mana; 2 per second by itself (about 100 minutes without help). Shattrath's mana pool shows the step.
+    internal const float DonationRange = 1500f;
+    internal const float DonationEvery = 8f;
+    internal const float DonationPerUnit = 50f;
+    internal const float DonationCap = 160f;
+    internal const float Trickle = 2f;
+
+    // Ishanah next to Shattrath: cannot move and cannot be hurt until Karabor is restored
+    internal const float IshanahX = -1132f;             // found offline, pathing map
     internal const float IshanahY = -28640f;
-    internal const float PurifyRange = 1500f;
-    internal const float DrainPerUnit = 10f;
-    internal const float DrainCap = 20f;
-    internal const float PurifyTrickle = 2f;
-    internal const float IshanahReviveAfter = 60f;
 
-    // income: gold per minute for every Outland CP (Regions.InstanceOutland) held by the Ashtongue's team
+    // income: gold per minute and food for every Outland CP (Regions.InstanceOutland) held by the Ashtongue's team
     internal const int GoldPerOutlandCp = 10;
+    internal const float SupplyX = 21600f;              // the food dummies: the sealed corner (the Hourglasses' area)
+    internal const float SupplyY = 23500f;
 
-    // the start kit next to the temple (Akama is kept, revived or created)
     internal static int[] StartUnits = { AshtongueObjects.Defender, AshtongueObjects.Defender,
                                          AshtongueObjects.Defender, AshtongueObjects.Defender };
   }

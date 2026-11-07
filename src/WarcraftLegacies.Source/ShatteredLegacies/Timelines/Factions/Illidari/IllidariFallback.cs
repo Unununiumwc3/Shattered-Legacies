@@ -31,6 +31,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
     // map setup: remember who destroys the Black Temple (the fallback runs later, after the decision)
     internal static void Prepare()
     {
+      // 0.64 (maintainer): "Halaar" is a typo of the original map -- Halaa; and Halaa / Shattrath are conquered, not
+      // destroyed, before the Ashtongue come (WL's capitals: taken over at low life)
+      AllLegends.Draenei.Halaar.Capturable = true;
+      AllLegends.Draenei.Shattrah.Capturable = true;
+      Rename(AllLegends.Draenei.Halaar.Unit, "Halaa");
+      Rename(AllLegends.Draenei.Shattrah.Unit, "Shattrath");
+      var halaaCp = AiApi.SafeCp(UNIT_N0CV_HALAAR);
+      if (halaaCp != null)
+      {
+        Rename(halaaCp.Unit, "Halaa");
+      }
+
       var temple = AllLegends.FelHorde.BlackTemple.Unit;
       if (temple == null)
       {
@@ -47,6 +59,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
           Destroyer = GetOwningPlayer(killer);
         }
       });
+    }
+
+    private static void Rename(unit u, string name)
+    {
+      if (u != null && GetUnitTypeId(u) != 0)
+      {
+        BlzSetUnitName(u, name);
+      }
     }
 
     internal static void Run(player p, TurningPointDef def)
@@ -71,11 +91,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
       }
 
       LeaveBehind.ToNeutralHostile(p, keep);
+      SetPlayerTechResearched(p, AshtongueConfig.QuestDraenei, 1); // Akama and the Draenei Hut need it
       var temple = CreateUnit(p, AshtongueConfig.TempleOfTheDeathsworn, AshtongueConfig.TempleX,
         AshtongueConfig.TempleY, 270f);
       SetUnitInvulnerable(temple, true);
       Spawn.Units(p, AshtongueConfig.UnitsX, AshtongueConfig.UnitsY, AshtongueConfig.StartUnits);
-      var sites = TakeSites(p);
+      var siteUnits = TakeSites(p);
+      siteUnits.Add(temple); // the fifth step: the temple itself
 
       var start = new Point(AshtongueConfig.UnitsX, AshtongueConfig.UnitsY);
       if (akamaOurs && GetUnitState(akamaUnit, UNIT_STATE_LIFE) > 0.405f)
@@ -92,10 +114,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
       }
 
       Conquest.Register(p, UNIT_N00I_BLACK_TEMPLE, Destroyer);
-      AshtonguePurification.Start(p);
+      AshtonguePurification.Start(p, siteUnits);
       AshtongueIncome.Start(p);
       p.RepositionCamera(start);
-      AiApi.LogPin("Illidari fallback -> Ashtongue: " + I2S(sites) + " sites, destroyer "
+      AiApi.LogPin("Illidari fallback -> Ashtongue: " + I2S(siteUnits.Count) + " sites, destroyer "
                    + (Destroyer != null ? GetPlayerName(Destroyer) : "none"));
     }
 
@@ -119,41 +141,54 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
       DestroyGroup(g);
     }
 
-    // Shattrath, Halaar, Oshu'gun (whoever holds them) and the 24p Telredor: the Ashtongue's, indestructible
-    private static int TakeSites(player p)
+    // 0.64: the sites in their order (Shattrath, Halaa, Telredor, Oshu'gun) as the Ashtongue's FEL-TAINTED buildings,
+    // indestructible: the preplaced Shattrah (h0AH), Halaar (h0AE) and Oshu'gun (h02Z) are replaced on their spot,
+    // whoever held them; one that is gone (Halaa, destroyed early -- 0.63 playtest) is built again; Telredor is placed at
+    // Zangarmarsh
+    private static List<unit> TakeSites(player p)
     {
-      var taken = 0;
-      var types = new[] { UNIT_H0AH_SHATTRAH_DRAENEI_OTHER, UNIT_H0AE_HALAAR_DRAENEI_OTHER, UNIT_H02Z_OSHU_GUN_CREEP };
-      for (var i = 0; i < types.Length; i++)
+      var sites = new List<unit>();
+      var preplaced = new[] { UNIT_H0AH_SHATTRAH_DRAENEI_OTHER, UNIT_H0AE_HALAAR_DRAENEI_OTHER, 0,
+                              UNIT_H02Z_OSHU_GUN_CREEP };
+      for (var i = 0; i < 4; i++)
       {
-        unit u = null;
-        try
+        var x = AshtongueConfig.SiteXY[i * 2];
+        var y = AshtongueConfig.SiteXY[i * 2 + 1];
+        if (preplaced[i] != 0)
         {
-          u = AllPreplacedWidgets.Units.GetClosest(types[i], AshtongueConfig.IshanahX, AshtongueConfig.IshanahY);
+          var old = Preplaced(preplaced[i], x, y);
+          if (old != null && GetUnitTypeId(old) != 0)
+          {
+            x = GetUnitX(old);
+            y = GetUnitY(old);
+            RemoveUnit(old);
+          }
         }
-        catch (System.Exception)
+        else if (AiApi.FindBuildSpot(x, y, new List<float>(), new List<float>(), out var fx, out var fy))
         {
-          AiApi.Log("Illidari fallback: no preplaced site of type " + I2S(types[i]));
+          x = fx;
+          y = fy;
         }
 
-        if (u == null || GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-        {
-          continue;
-        }
-
-        SetUnitOwner(u, p, true);
-        SetUnitInvulnerable(u, true);
-        taken++;
+        var site = CreateUnit(p, AshtongueConfig.Tainted[i], x, y, 270f);
+        SetUnitInvulnerable(site, true);
+        sites.Add(site);
       }
 
-      if (AiApi.FindBuildSpot(AshtongueConfig.TelredorX, AshtongueConfig.TelredorY, new List<float>(),
-            new List<float>(), out var x, out var y))
-      {
-        SetUnitInvulnerable(CreateUnit(p, AshtongueObjects.Telredor, x, y, 270f), true);
-        taken++;
-      }
+      return sites;
+    }
 
-      return taken;
+    private static unit Preplaced(int type, float x, float y)
+    {
+      try
+      {
+        return AllPreplacedWidgets.Units.GetClosest(type, x, y);
+      }
+      catch (System.Exception)
+      {
+        AiApi.Log("Illidari fallback: no preplaced site of type " + I2S(type));
+        return null;
+      }
     }
   }
 }

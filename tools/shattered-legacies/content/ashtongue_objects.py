@@ -19,11 +19,11 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 MAP = os.path.join(ROOT, "mapdata", "WarcraftLegacies")
 BTN = "ReplaceableTextures\\CommandButtons\\"
 
-SITES = ["Telredor", "Halaar", "Shattrath", "Oshu'gun"]
+SITES = ["Shattrath", "Halaa", "Telredor", "Oshu'gun"]  # 0.64: this order (maintainer); then the temple
 CONDITIONS = [(f"RZt{i}", f"{SITES[i]} purified") for i in range(4)] + [("RZt4", "Karabor restored")]
 
 
-REAL = {"usca"}
+REAL = {"usca", "ussc"}
 
 
 def v(fid, value, level=None):
@@ -54,6 +54,30 @@ def black_temple():
     return {m["Id"]: m["Value"] for m in d["Modifications"]}
 
 
+def source(mapname, code):
+    """model / scale / pathing / selection size of a building the site copies"""
+    with open(os.path.join(ROOT, "mapdata", mapname, "UnitData", code + ".json"), encoding="utf-8-sig") as f:
+        d = json.load(f)
+    return {m["Id"]: m["Value"] for m in d["Modifications"] if m.get("Level") in (None, 0, 1)}
+
+
+def building(code, name, look, trains="", researches="", food=0, mana=0, extra=None, text=""):
+    mods = [v("unam", name), v("umdl", look.get("umdl", "")), v("upat", look.get("upat", "")),
+            v("uico", look.get("uico", BTN + "BTNDraeneiDivineCitadel.blp")), v("ugol", 0), v("ulum", 0),
+            v("utra", trains), v("ures", researches), v("uupt", ""), v("ubui", ""), v("ureq", ""), v("utub", text),
+            v("urac", "other"), v("ufma", food)]
+    if "usca" in look:
+        mods.append(v("usca", float(look["usca"])))
+    if "ussc" in look:
+        mods.append(v("ussc", float(look["ussc"])))
+    if mana:
+        mods += [v("umpm", mana), v("umpi", 0), v("umpr", 0.0)]  # a pool (the purification), no regeneration
+    mods += extra or []
+    write("UnitData", code, {"OldId": "obar", "NewId": code, "Unk": [0],
+                             "Modifications": mods + [v("uabi", "Avul")] if not any(m["Id"] == "uabi" for m in mods)
+                             else mods})
+
+
 def main():
     for code, name in CONDITIONS:
         write("UpgradeData", code, {"OldId": "Roch", "NewId": code, "Unk": [0], "Modifications": [
@@ -61,30 +85,52 @@ def main():
 
     write("AbilityData", "AZt0", {"OldId": "Afae", "NewId": "AZt0", "Unk": [0], "Modifications": [
         v("anam", "Purify"), v("atp1", "Purify", 1),
-        v("aub1", "Draws mana from your and your allies' units within 1500 and turns it into purification of "
-                  "the fel-tainted draenei sites -- Telredor, Halaar, Shattrath, Oshu'gun, in this order. Keep "
-                  "autocast on. Ishanah cannot leave Shattrath until Outland is cleansed.", 1),
+        v("aub1", "While on (autocast), Shattrath draws mana from your and your allies' units within 1500 and "
+                  "spends it on purifying the fel-tainted draenei sites: Shattrath, Halaa, Telredor, Oshu'gun, then "
+                  "the temple itself -- Karabor. Ishanah cannot leave Shattrath until the work is done.", 1),
         v("aart", BTN + "BTNSpell_Holy_Renew.blp"), v("amcs", 0, 1), v("aran", 1500.0, 1), v("acdn", 1.0, 1),
         v("adur", 0.01, 1), v("ahdu", 0.01, 1), v("atar", "self", 1), v("abpx", 0), v("abpy", 2),
         v("ahky", "P")]})
 
     bt = black_temple()
-    trains = ",".join([copy_id("o05B"), "ndrn", "ndrs", copy_id("h09T"), copy_id("h09U"), copy_id("o05C"),
-                       copy_id("h09R"), copy_id("o05D"), copy_id("H0AK")])
-    for code, name, tint, text in [
-            ("oZt0", "Temple of the Deathsworn", None,
-             "Akama's temple, raised on the ruins of the Black Temple. Trains the Ashtongue; the purified draenei "
-             "sites unlock more."),
-            ("oZt1", "Temple of Karabor", (255, 240, 190),
-             "Karabor, restored to the Light. Trains the Ashtongue and Xi'ri, the naaru.")]:
-        mods = [v("unam", name), v("umdl", bt.get("umdl", "")), v("usca", float(bt.get("usca", 1.0))),
-                v("upat", bt.get("upat", "")), v("uhpm", 7000), v("ufma", 100), v("ugol", 0), v("ulum", 0),
-                v("utra", trains), v("ures", ""), v("uupt", ""), v("ubui", ""), v("uabi", "Arev,Avul"),
-                v("ureq", ""), v("utub", text), v("uico", BTN + "BTNTempleOfTheDamned.blp"), v("urac", "other")]
-        if tint:
-            mods += [v("uclr", tint[0]), v("uclg", tint[1]), v("uclb", tint[2])]
-        write("UnitData", code, {"OldId": "oalt", "NewId": code, "Unk": [0], "Modifications": mods})
-    print("wrote 5 conditions, Purify, 2 temples")
+    start = ",".join([copy_id("o05B"), "ndrn", "ndrs"])
+    temple = {"umdl": bt.get("umdl", ""), "usca": bt.get("usca", 1.0), "upat": bt.get("upat", ""),
+              "uico": BTN + "BTNTempleOfTheDamned.blp"}
+    tint = [v("uclr", 255), v("uclg", 240), v("uclb", 190)]
+    building("oZt0", "Temple of the Deathsworn", temple, trains=start, food=30,
+             extra=[v("uabi", "Arev,Avul"), v("uhpm", 7000)],
+             text="Akama's temple, raised on the ruins of the Black Temple. Trains the Ashtongue; the purified draenei "
+                  "sites train more. Purified last of all, it becomes the Temple of Karabor.")
+    building("oZt1", "Temple of Karabor", temple, trains=start + "," + copy_id("H0AK"), food=30,
+             extra=[v("uabi", "Arev,Avul"), v("uhpm", 7000)] + tint,
+             text="Karabor, restored to the Light. Trains the Ashtongue and Xi'ri, the naaru.")
+
+    shattrath = source("WarcraftLegacies", "h0AH")
+    halaa = source("WarcraftLegacies", "h0AE")
+    telredor = source("WarcraftLegacies24p", "h0AG")
+    oshugun = source("WarcraftLegacies", "h02Z")
+    tainted = "Fel-tainted: purified by Ishanah's work at Shattrath (in its order), then it trains and researches."
+    # Shattrath's mana pool shows the purification of the current site (its maximum set by code to that site's cost)
+    building("oZt2", "Shattrath (fel-tainted)", shattrath, mana=2000, text=tainted)
+    building("oZt3", "Shattrath", shattrath, mana=2000,
+             trains=",".join([copy_id("o05C"), copy_id("h09R")]),
+             researches=",".join(["Rhme", "Rhar", "R07C", copy_id("R023")]),
+             text="The city of light. Its pool of mana is the purification under way. Trains Luminarchs and "
+                  "Vindicators; researches weapons, armour and the Luminarchs' training.")
+    building("oZt4", "Halaa (fel-tainted)", halaa, text=tainted)
+    building("oZt5", "Halaa", halaa, trains=copy_id("h09U"), text="Nagrand's draenei town. Trains Elekk Knights.")
+    building("oZt6", "Telredor (fel-tainted)", telredor, text=tainted)
+    building("oZt7", "Telredor", telredor, trains=copy_id("h09T"), text="The refuge of Zangarmarsh. Trains Rangari.")
+    building("oZt8", "Oshu'gun (fel-tainted)", oshugun, text=tainted)
+    building("oZt9", "Oshu'gun", oshugun, trains=copy_id("o05D"), researches="R078",
+             text="The naaru's fallen vessel. Trains Elementalists; researches their training.")
+
+    # food for the Outland CPs of the Ashtongue's team (AshtongueIncome places / removes one per CP): invisible
+    write("UnitData", "oZta", {"OldId": "otrb", "NewId": "oZta", "Unk": [0], "Modifications": [
+        v("unam", "Outland Supply"), v("umdl", "war3mapImported\\DUMMY.mdl"), v("upat", ""), v("ufma", 6),
+        v("uabi", "Aloc,Avul"), v("ugol", 0), v("ulum", 0), v("ubui", ""), v("ureq", ""), v("utra", ""),
+        v("ures", ""), v("ushu", ""), v("ucol", 0.0)]})
+    print("wrote 5 conditions, Purify, 2 temples, 8 site buildings, the food dummy")
 
 
 if __name__ == "__main__":

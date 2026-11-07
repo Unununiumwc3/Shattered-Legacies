@@ -4,6 +4,50 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.64.0
+The Ashtongue's purification reworked (maintainer, 0.63 playtest). Version v0.64.0.
+- **Shattrath is the node**: every 8 s it draws up to 50 mana from each own / allied unit within 1500 (160 in all), a
+  mana-burn beam to each (heights from the units -- 0.63's beams missed their targets); +2 per second by itself. Its
+  mana pool (no regeneration) is the purification of the current step.
+- **Order**: Shattrath, Halaa, Telredor, Oshu'gun, then the temple itself (= Karabor); 12,000 in all (0.63: 6,000)
+  -> 10 minutes with perfect mana.
+- **Effects** at the site being purified, only while mana flows: the Obsidian Statue's replenish (life + mana) at the
+  bubble's size, a shield bubble (not at Shattrath; gone when done), a ring of 12 healing-light pillars.
+- **Sites as tech buildings**: each site is a fel-tainted building (no buttons) until purified, then its purified
+  building trains its units and researches its techs (Shattrath: Luminarchs, Vindicators, weapons, armour, the
+  Luminarchs' training; Halaa: Elekk Knights; Telredor: Rangari; Oshu'gun: Elementalists + training). Quest markers on
+  every site and the temple.
+- **Halaa**: the original map's "Halaar" is renamed Halaa (and Shattrah -> Shattrath) in game; Halaa and Shattrath are
+  conquered (WL's capital capture) instead of destroyed before the Ashtongue come; a site that is gone is built again.
+- **Ishanah** cannot move (no move ability -- 0.63's leash let her slide) and cannot be hurt until Karabor is
+  restored; then a free Ishanah (level, skills, items) without Purify.
+- **Seers again**: the temple's card held 9 trains and an altar's buttons -- some were hidden. The temple trains
+  Defenders, Deathsworn, Seers; the sites train the rest. The Draenei Hut works (its requirement, "Quest Completed:
+  The Draenei", is granted).
+- **Food**: 30 from the temple, +6 per Outland CP of the team (invisible supplies).
+- **Karabor**: the faction is renamed when the final goal is reached (WL re-keys by `Faction.Name`; the bot knows both
+  names).
+
+## 0.63.2
+The Illidari's Hourglass, found (maintainer: the whole building was missing). Version v0.63.2.
+- **Cause**: WL's Illidari quest "Return to Outland" abandons the Broken Isles -- every building of the player
+  outside the Black Temple area is removed (refunded), the Hourglass with them (`QuestBlackTemple.AbandonBrokenIsles`).
+  The building existed until that quest completed. (0.63.1's late-pick fix stays: it was a real gap too.)
+- **Fix**: the Hourglass type is registered `NeverDelete` (WL's code then leaves it, or hands it to Neutral Hostile
+  instead), and a watch every 5 s gives a Hourglass that changed owner back to its player and places one that is gone
+  again (`Hourglass.Watch`). The only other WL code that clears a player's units this way: none found (Domination kills
+  mindless undead, Progenesis replaces workers).
+
+## 0.63.1
+Fixes from the 0.63 playtest (maintainer). Version v0.63.1.
+- **The Illidari had no Hourglass** -- and their fallback trigger was never armed: the Hourglass and the arming of the
+  HQ triggers ran once, 62 s into the game; a faction picked later (a slow pick in its dialog -- the Illidari slot has
+  one) got neither. Now a faction registered after that moment is armed at once, and every later faction change gives
+  the player an Hourglass if his faction has a turning point (`TimelineSystem.Attach`, `Hourglass.Late`). Only the
+  Hourglass and the arming ran on a fixed timer -- the turning-point quests attach on registration, as before.
+- **Units still said "Illidari"** when hovered: a slot that is not a human's carries the lobby's name (the faction,
+  "Illidari", "Kul Tiras"); after a swap it now carries the new faction's (`SwapFaction.NameSlot`). Humans keep theirs.
+
 ## 0.63.0
 The Illidari's fallback: the Ashtongue Deathsworn (maintainer's design). Version v0.63.0.
 - **Trigger**: the Black Temple (`o00F`) destroyed. **Effects** (`Timelines/Factions/Illidari/IllidariFallback`): a

@@ -18,6 +18,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       Refresh();
     }
 
+    // 0.64: with a place -- a minimap icon there (the Ashtongue's purification sites)
+    public ObjectiveCounter(string what, int target, float x, float y)
+    {
+      _what = what;
+      _target = target;
+      Position = new WCSharp.Shared.Data.Point(x, y);
+      DisplaysPosition = true;
+      Refresh();
+    }
+
     internal void Add(int n)
     {
       if (Progress == QuestProgress.Complete)

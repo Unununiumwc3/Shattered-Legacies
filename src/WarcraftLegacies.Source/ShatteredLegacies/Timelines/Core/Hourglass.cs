@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
+using MacroTools.UnitTypes;
 using WarcraftLegacies.Source.Ai;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
@@ -24,12 +25,56 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const float CreateAt = 62f; // after the faction picks (and where the mode vote used to end)
 
     private static readonly Dictionary<int, unit> _building = new(); // pid -> Hourglass
+    private static readonly Dictionary<int, float> _x = new();       // pid -> its place (0.63.2: to put it back)
+    private static readonly Dictionary<int, float> _y = new();
     private static int _placed;                                        // buildings placed in the grid so far
 
     internal static void Setup()
     {
+      // 0.63.2: WL code that clears a player's buildings must leave it alone (the Illidari's "Return to Outland"
+      // disposes every building outside the Black Temple -- the Hourglass too). NeverDelete keeps it from being
+      // removed (such code hands it to Neutral Hostile instead) -- the watch below gives it back.
+      UnitType.Register(new UnitType(HourglassData.BuildingType) { NeverDelete = true });
       var create = CreateTimer();
       TimerStart(create, CreateAt, false, () => AiApi.Safe("hourglass", Create));
+    }
+
+    // 0.63.2: every 5 s -- an Hourglass that changed owner goes back; one that is gone is placed again
+    private static void Watch()
+    {
+      foreach (var pid in new List<int>(_building.Keys))
+      {
+        var p = Player(pid);
+        if (GetPlayerSlotState(p) != PLAYER_SLOT_STATE_PLAYING && !AiApi.IsActive(p))
+        {
+          continue; // the player left
+        }
+
+        var u = _building[pid];
+        if (GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
+        {
+          var nu = CreateUnit(p, HourglassData.BuildingType, _x[pid], _y[pid], 270f);
+          Skin(nu, p);
+          _building[pid] = nu;
+          Refresh(p);
+          AiApi.Log("hourglass: P" + I2S(pid) + "'s Hourglass was gone -- placed again");
+        }
+        else if (GetOwningPlayer(u) != p)
+        {
+          SetUnitOwner(u, p, true);
+          AiApi.Log("hourglass: P" + I2S(pid) + "'s Hourglass had changed owner -- given back");
+        }
+      }
+    }
+
+    private static void Skin(unit u, player p)
+    {
+      // 0.57 (maintainer): every faction's Hourglass looks like its own control point tower
+      var defender = p.GetPlayerData().Faction?.ControlPointDefenderUnitTypeId;
+      if (defender != null && defender.Value != 0)
+      {
+        BlzSetUnitSkin(u, defender.Value);
+      }
     }
 
     internal static unit Get(int pid) => _building.ContainsKey(pid) ? _building[pid] : null;
@@ -44,14 +89,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       var x = CenterX + ColumnStep * side;
       var y = FirstRowY + RowStep * row;
       var u = CreateUnit(p, HourglassData.BuildingType, x, y, 270f);
-      // 0.57 (maintainer): every faction's Hourglass looks like its own control point tower
-      var defender = p.GetPlayerData().Faction?.ControlPointDefenderUnitTypeId;
-      if (defender != null && defender.Value != 0)
-      {
-        BlzSetUnitSkin(u, defender.Value);
-      }
-
+      Skin(u, p);
       _building[GetPlayerId(p)] = u;
+      _x[GetPlayerId(p)] = x;
+      _y[GetPlayerId(p)] = y;
     }
 
     // 0.55: a player who gets a faction mid-game (the free slot of a split) gets an Hourglass of his own, showing that
@@ -124,6 +165,30 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
       AiApi.Log("timelines: " + I2S(_building.Count) + " Hourglass building(s) created");
       TimelineSystem.ArmAll();
+      // 0.63.1 (maintainer: the Illidari had no Hourglass): a faction picked AFTER this moment (a slow pick in its
+      // dialog) got none -- every later faction change now gives the player one if his faction has a turning point
+      PlayerData.FactionChange += e => AiApi.Safe("hourglass late", () => Late(e.Player));
+      var watch = CreateTimer();
+      TimerStart(watch, 5f, true, () => AiApi.Safe("hourglass watch", Watch));
+    }
+
+    private static void Late(player p)
+    {
+      var fac = p.GetPlayerData().Faction;
+      if (fac == null)
+      {
+        return;
+      }
+
+      var defs = TimelineCatalog.FindAll(fac.Name);
+      for (var d = 0; d < defs.Count; d++)
+      {
+        if (defs[d].HasHourglass)
+        {
+          Give(p);
+          return;
+        }
+      }
     }
 
     // the player sees only his own faction's researches; WL's own (R0XZ) stays as WL limits it for its faction

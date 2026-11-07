@@ -9,7 +9,7 @@ Read this first. Then, depending on the task:
 
 ## Handover (end of the 0.52-0.57 session) -- where things stand
 
-- **Released state**: `v0.63.0` on `botified-dev` (0.63.0: Illidari -> Ashtongue Deathsworn -- the third full
+- **Released state**: `v0.64.0` on `botified-dev` (0.64.0: the Ashtongue's purification reworked -- Shattrath as the node, sites as tech buildings, Karabor rename; 0.63.2: the Hourglass survives WL's quests; 0.63.1: Hourglass / trigger for late picks, slot names; 0.63.0: Illidari -> Ashtongue Deathsworn -- the third full
   faction: conquest rule, purification, Karabor; 0.62.0: Kezan's carried oil). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
 - **0.63.0**: Illidari -> Ashtongue Deathsworn (full faction; `TODO.md` step 3b). **0.58.0-0.62.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
@@ -125,6 +125,23 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | the bot | `AiApi.TakeOver`, `RegisterHeroes`, production data (`SL_BUILDINGS` in `gen_ai_data.py`) | `Bot/SlBotSetup.cs` |
 
 ## Pitfalls learned the hard way (each cost a playtest)
+
+- **A building's command card holds about 11 buttons** -- an altar also shows revive / hero buttons: the 0.63 temple
+  trained 9 kinds and some (the Seer) were simply hidden. Spread production over buildings.
+- **Lightning between units**: give the heights from `BlzGetUnitZ` (+ an offset), not fixed numbers -- on uneven
+  terrain the beam misses (0.63).
+- **Rooting a hero**: `UnitRemoveAbility(u, 'Amov')` (it cannot be given back properly -- replace the unit with a
+  fresh one when it must move again); a leash that puts it back still lets it slide.
+
+- **WL quests clear a player's buildings** (0.63.2): the Illidari's "Return to Outland" removes every building outside
+  the Black Temple area -- the Hourglass was gone. A fork building a player must keep: `UnitType.Register(new
+  UnitType(id) { NeverDelete = true })` (WL then hands it to Neutral Hostile instead) plus a watch that gives it back.
+
+- **Nothing per faction on a fixed timer** (0.63.1): a faction can be registered late (a slow pick, a swap, a split).
+  The Hourglass and the arming of the HQ triggers ran once at 62 s -- the Illidari, picked later, had neither. Hook
+  per-faction setup on `FactionManager.FactionRegistered` / `PlayerData.FactionChange`, or handle "after the moment".
+- **Non-human slots carry the lobby's faction name** (0.63.1): shown when their units are hovered -- a swap renames
+  them (`SwapFaction.NameSlot`).
 
 - `dotnet build src\WarcraftLegacies.CLI` does not compile the map code -- a missing `using` shows up only at
   publish. Run `using_check.py`; the maintainer builds `src\WarcraftLegacies.Source` first.

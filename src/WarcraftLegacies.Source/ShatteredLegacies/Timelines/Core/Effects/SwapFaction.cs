@@ -46,9 +46,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       }
     }
 
-    // 0.57.3: a free slot (computer "NPC" in the lobby) carries its faction's name -- shown when its units are hovered
+    // 0.57.3: a free slot (computer "NPC" in the lobby) carries its faction's name -- shown when its units are hovered.
+    // 0.63.1 (maintainer: the Ashtongue's units still said "Illidari"): every slot that is not a human's carries the
+    // lobby's faction name ("Illidari", "Kul Tiras") -- after a swap it carries the new faction's. A human keeps his.
     internal static void NameSlot(player p, Faction faction)
     {
+      var human = GetPlayerController(p) == MAP_CONTROL_USER && GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING;
+      if (!human)
+      {
+        SetPlayerName(p, faction.Name);
+        return;
+      }
+
       for (var i = 0; i < SplitFaction.FreeSlotOrder.Length; i++)
       {
         if (SplitFaction.FreeSlotOrder[i] == GetPlayerId(p))

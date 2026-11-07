@@ -20,7 +20,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Draws mana from your and your allies' units within 1500 and turns it into purification of the fel-tainted draenei sites -- Telredor, Halaar, Shattrath, Oshu'gun, in this order. Keep autocast on. Ishanah cannot leave Shattrath until Outland is cleansed."
+      "Value": "While on (autocast), Shattrath draws mana from your and your allies' units within 1500 and spends it on purifying the fel-tainted draenei sites: Shattrath, Halaa, Telredor, Oshu'gun, then the temple itself -- Karabor. Ishanah cannot leave Shattrath until the work is done."
     },
     {
       "Id": "aart",

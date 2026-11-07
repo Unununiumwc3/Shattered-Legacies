@@ -23,12 +23,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
 
     public override void OnRegistered()
     {
+      // 0.64: the order (maintainer) -- Shattrath, Halaa, Telredor, Oshu'gun; the temple itself is the final quest
       var sites = new QuestData[]
       {
-        new QuestPurifySite(0, "Rangari can be trained at the temple"),
-        new QuestPurifySite(1, "Elekk Knights can be trained at the temple"),
-        new QuestPurifySite(2, "Luminarchs and Vindicators can be trained at the temple"),
-        new QuestPurifySite(3, "Elementalists can be trained at the temple"),
+        new QuestPurifySite(0, "Shattrath trains Luminarchs and Vindicators and researches weapons, armour and the "
+                               + "Luminarchs' training"),
+        new QuestPurifySite(1, "Halaa trains Elekk Knights"),
+        new QuestPurifySite(2, "Telredor trains Rangari"),
+        new QuestPurifySite(3, "Oshu'gun trains Elementalists and researches their training"),
       };
       for (var i = 0; i < sites.Length; i++)
       {

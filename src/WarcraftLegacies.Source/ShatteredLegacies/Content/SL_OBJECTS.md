@@ -91,7 +91,6 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZyd` |  | `24p:A043` | Ashtongue |
 | `AZye` | Light's Edict | `24p:A0ZG` | Ashtongue |
 | `AZyf` | Army of Light | `24p:A0ZH` | Ashtongue |
-| `AZyg` |  | `24p:Argl` | Ashtongue |
 | `AZyh` | Army of Light Golem summon | `24p:A0ZI` | Ashtongue |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
@@ -160,7 +159,6 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZy6` | Rangari | `24p:h09T` | Ashtongue |
 | `hZy7` | Elekk Knight | `24p:h09U` | Ashtongue |
 | `hZy8` | Vindicator | `24p:h09R` | Ashtongue |
-| `hZyb` | Telredor | `24p:h0AG` | Ashtongue |
 | `nZf0` | Deadeye | `24p:n07S` | Forsaken |
 | `nZf1` | Dark Ranger | `24p:n0BY` | Forsaken |
 | `nZf2` | Plague Construct | `24p:n07W` | Forsaken |

@@ -13,8 +13,21 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1852076654, 12, Assassin); // ndrn Deathsworn
       yield return new(1852076659, 6, Support); // ndrs Seer
       yield return new(1848653911, 200, Specialist); // n08W DraeneiHut
+      yield return new(1497518152, 200); // YBPH DraeneiHutResearch1
+      yield return new(1497514305, 200); // YBAA DraeneiHutResearch2
+      yield return new(1378891587, 200); // R07C LuminarchTraining
+      yield return new(1378891576, 200); // R078 ElementalistTraining
       yield return new(1868198960, 1, TownHall); // oZt0 TempleOfTheDeathsworn
       yield return new(1868198961, 1, TownHall); // oZt1 TempleOfKarabor
+      yield return new(1868198962, 1); // oZt2 ShattrathTainted
+      yield return new(1868198963, 1); // oZt3 Shattrath
+      yield return new(1868198964, 1); // oZt4 HalaaTainted
+      yield return new(1868198965, 1); // oZt5 Halaa
+      yield return new(1868198966, 1); // oZt6 TelredorTainted
+      yield return new(1868198967, 1); // oZt7 Telredor
+      yield return new(1868198968, 1); // oZt8 OshugunTainted
+      yield return new(1868198969, 1); // oZt9 Oshugun
+      yield return new(1868199009, 200); // oZta OutlandSupply
       yield return new(1868200243, 200, Fighter); // oZy3 Defender
       yield return new(1750759734, 200, Marksman); // hZy6 Rangari
       yield return new(1750759735, 12, Tank); // hZy7 ElekkKnight
@@ -23,7 +36,6 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1868200245, 200, Support); // oZy5 Elementalist
       yield return new(1213888825, 1, Support); // HZy9 Xiri
       yield return new(1213888865, 1, Support); // HZya Ishanah
-      yield return new(1750759778, 1); // hZyb Telredor
     }
   }
 }
