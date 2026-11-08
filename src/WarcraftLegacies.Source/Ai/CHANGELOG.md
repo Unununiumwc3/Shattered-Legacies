@@ -5,6 +5,19 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.65.1 — construction coverage/speed diagnostic fix (needs playtest)
+
+- Do not treat neutral passive map units/structures (P25–P27) as enemies when deciding whether construction
+  ground is safe. Neutral hostile creep camps now exclude only a 650-unit vicinity, versus the former blanket
+  1500-unit radius; player-owned enemies retain the broader safety distance.
+- Native WC3 peon-flagged units can act as builders even without a faction Builder category.
+- Visit a bot every ~16 instead of ~32 seconds in a 16-bot game; plan every 25 instead of 60 seconds.
+  Pending orders are checked for abandoned idle workers and time out in 120 instead of 180 seconds; failed
+  projects retry faster. Still only one project per bot.
+- Throttled per-faction `builder: <name> idle:` lines explain no workers, missing producers, rejected orders,
+  unsuitable anchors/sites, satisfied production and blocked forward expansion.
+- Based on the 0.65.0 5-, 10- and 12-minute dumps. No compilation/in-game verification of this fix yet.
+
 ## 0.65.0 — worker construction candidate (requires map build and playtest)
 
 - Added `AiBuilder` / `AiBuildSites` in `Ai/`: per-bot worker orders, native construct-start/finish/cancel

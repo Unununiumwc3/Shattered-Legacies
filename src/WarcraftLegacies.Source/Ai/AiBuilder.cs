@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
+using MacroTools.Shared;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -44,12 +45,15 @@ namespace WarcraftLegacies.Source.Ai
     internal readonly List<AiBuildBase> Forward = new();
     internal readonly Dictionary<int, float> UnbuildableUntil = new();
     internal float NextExpansion;
+    internal string LastReason = "";
+    internal float NextReasonLog;
+    internal string LastBuildFailure = "";
   }
 
   internal static class AiBuilder
   {
-    private const float PlanInterval = 60f;
-    private const float ProjectTimeout = 180f; // worker has this long to start construction
+    private const float PlanInterval = 25f; // per bot, not per scheduler tick
+    private const float ProjectTimeout = 120f; // long journeys get a chance; cancelled idle orders fail early
     private const float ConstructionTimeout = 600f; // or to finish after start
     private const float RejectedCooldown = 180f;
     private const int WantedWorkers = 2;
@@ -81,8 +85,9 @@ namespace WarcraftLegacies.Source.Ai
       TriggerAddAction(finished, OnConstructionFinish);
       TriggerAddAction(cancelled, OnConstructionCancel);
 
-      // One bot every 2 seconds; a 16-bot game revisits each pending order about every 32 seconds.
-      AiScheduler.Add("builder", 8, 5, Tick, true);
+      // One bot per second; with 16 bots an active construction order is revisited within 16 seconds.
+      // Kept separate from the faster production/combat slot where possible.
+      AiScheduler.Add("builder", 4, 3, Tick, true);
     }
 
     private static AiBuildState StateForEvent(unit building)
@@ -162,7 +167,7 @@ namespace WarcraftLegacies.Source.Ai
       }
       SimpleBot.LogPin("builder: completed " + GetObjectName(pr.Type));
       s.Project = null;
-      s.NextPlan = SimpleBot.Clock + 15f;
+      s.NextPlan = SimpleBot.Clock + 5f;
     }
 
     private static void OnConstructionCancel()
@@ -224,6 +229,9 @@ namespace WarcraftLegacies.Source.Ai
         s.BadUntil = 0f;
         s.NextPlan = 0f;
         s.NextExpansion = 0f;
+        s.LastReason = "";
+        s.NextReasonLog = 0f;
+        s.LastBuildFailure = "";
       }
       if (s.Project != null)
       {
@@ -249,9 +257,18 @@ namespace WarcraftLegacies.Source.Ai
         {
           Started(pr, building);
         }
-        else if (!Alive(pr.Worker, p) || SimpleBot.Clock - pr.OrderedAt > ProjectTimeout)
+        else if (!Alive(pr.Worker, p))
         {
-          Failed(s, "worker missing / never started");
+          Failed(s, "worker missing");
+        }
+        else if (SimpleBot.Clock - pr.OrderedAt >= 30f && GetUnitCurrentOrder(pr.Worker) == 0)
+        {
+          // Warcraft III can return 'accepted' and drop an impossible build order on the next frame.
+          Failed(s, "worker idle before construction");
+        }
+        else if (SimpleBot.Clock - pr.OrderedAt > ProjectTimeout)
+        {
+          Failed(s, "never started / unreachable site");
         }
         return;
       }
@@ -272,9 +289,26 @@ namespace WarcraftLegacies.Source.Ai
       s.BadX = pr.X;
       s.BadY = pr.Y;
       s.BadUntil = SimpleBot.Clock + RejectedCooldown;
+      if (why == "worker idle before construction")
+      {
+        // The native call may have accepted an unavailable build-menu order.
+        // Try another producer type on the next planning pass.
+        s.UnbuildableUntil[pr.Type] = SimpleBot.Clock + RejectedCooldown;
+      }
       SimpleBot.Log("builder: retry " + GetObjectName(pr.Type) + " (" + why + ")");
       s.Project = null;
-      s.NextPlan = SimpleBot.Clock + 20f;
+      s.NextPlan = SimpleBot.Clock + 5f;
+    }
+
+    private static void Explain(player p, AiBuildState s, string reason)
+    {
+      if (reason == s.LastReason && SimpleBot.Clock < s.NextReasonLog)
+      {
+        return;
+      }
+      s.LastReason = reason;
+      s.NextReasonLog = SimpleBot.Clock + 180f;
+      SimpleBot.Log("builder: " + SimpleBot.FacName(p) + " idle: " + reason);
     }
 
     private static bool Alive(unit u, player p)
@@ -287,10 +321,8 @@ namespace WarcraftLegacies.Source.Ai
     {
       var builderTypes = new List<int>();
       SimpleBot.AddCategory(fac, UnitCategory.Builder, builderTypes);
-      if (builderTypes.Count == 0)
-      {
-        return; // special factions with no build-capable units retain their scripted map mechanics
-      }
+      // Do not return here: some custom factions have native peon-flagged workers but no
+      // corresponding Builder category. Scan recognizes those workers as a fallback.
       var workers = new List<unit>();
       var halls = new List<unit>();
       var hallTypes = new List<int>();
@@ -303,6 +335,11 @@ namespace WarcraftLegacies.Source.Ai
         hallTypes.Add(s.HallType);
       }
       Scan(p, builderTypes, hallTypes, workers, halls);
+      if (workers.Count == 0 && builderTypes.Count == 0)
+      {
+        Explain(p, s, "no Builder category and no native worker found");
+        return;
+      }
       // WC3's town-hall flag is authoritative. Remember its actual rawcode even after it is lost;
       // a faction with no observed hall cannot safely guess a buildable hall from upgrade categories.
       if (halls.Count > 0)
@@ -354,6 +391,7 @@ namespace WarcraftLegacies.Source.Ai
           }
           s.NextPlan = SimpleBot.Clock + 120f;
         }
+        Explain(p, s, trained ? "no worker; town hall training/queued" : "no worker; no accepted train order");
         return;
       }
       // No buildable hall is present in some factions. Do not invent one.
@@ -366,18 +404,26 @@ namespace WarcraftLegacies.Source.Ai
             return;
           }
         }
+        Explain(p, s, "no town hall; " + s.LastBuildFailure);
+        // Other producers may still be recoverable if this faction cannot reconstruct a hall.
       }
       // Restore minimum troop production at the HQ before trying to expand. Includes altars after military sites.
       var all = ProductionTypes(fac);
+      var missing = 0;
       for (var i = 0; i < all.Count; i++)
       {
         if (GetPlayerTechCount(p, all[i], true) == 0)
         {
+          missing++;
           if (Build(p, s, workers, hallTypes, all[i], false, false, 0f, 0f))
           {
             return;
           }
         }
+      }
+      if (missing > 0)
+      {
+        Explain(p, s, "missing " + I2S(missing) + " producers; " + s.LastBuildFailure);
       }
       var altars = new List<int>();
       SimpleBot.AddCategory(fac, UnitCategory.Altar, altars);
@@ -392,6 +438,11 @@ namespace WarcraftLegacies.Source.Ai
       }
       if (!SimpleBot.HasPerks(p) || hallTypes.Count == 0 || all.Count == 0)
       {
+        if (missing == 0)
+        {
+          Explain(p, s, all.Count == 0 ? "no production types in faction+AiData" :
+            "production satisfied; no perk-based expansion");
+        }
         return; // fair autopilot performs recovery, but not free, CP-triggered bonus expansion
       }
       for (var i = s.Forward.Count - 1; i >= 0; i--)
@@ -432,6 +483,11 @@ namespace WarcraftLegacies.Source.Ai
       }
       if (halls.Count >= wantedBases)
       {
+        if (missing == 0)
+        {
+          Explain(p, s, "production satisfied; hall count " + I2S(halls.Count) +
+            "/" + I2S(wantedBases) + " at " + I2S(ownedCps) + " CPs");
+        }
         return;
       }
       if (SimpleBot.Clock < s.NextExpansion)
@@ -442,7 +498,14 @@ namespace WarcraftLegacies.Source.Ai
       // AiRoutes.StagePoint: last friendly node on the attack route. Own/allied CP ~two walk edges back.
       if (AiBuildSites.ForwardAnchor(p, hallTypes, workers, s.Forward, out var fx, out var fy))
       {
-        Build(p, s, workers, hallTypes, Cheapest(hallTypes), true, true, fx, fy);
+        if (!Build(p, s, workers, hallTypes, Cheapest(hallTypes), true, true, fx, fy))
+        {
+          Explain(p, s, "forward hall blocked; " + s.LastBuildFailure);
+        }
+      }
+      else
+      {
+        Explain(p, s, "no reachable safe forward CP");
       }
     }
 
@@ -458,7 +521,8 @@ namespace WarcraftLegacies.Source.Ai
         {
           continue;
         }
-        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) && SimpleBot.ListHas(builderTypes, GetUnitTypeId(u)))
+        if (!IsUnitType(u, UNIT_TYPE_STRUCTURE) &&
+            (SimpleBot.ListHas(builderTypes, GetUnitTypeId(u)) || IsUnitType(u, UNIT_TYPE_PEON)))
         {
           workers.Add(u);
         }
@@ -527,10 +591,20 @@ namespace WarcraftLegacies.Source.Ai
     private static bool Build(player p, AiBuildState s, List<unit> workers, List<int> hallTypes, int type, bool expansion,
       bool fixedAnchor, float fixedX, float fixedY)
     {
-      if (type == 0 || (s.UnbuildableUntil.ContainsKey(type) && SimpleBot.Clock < s.UnbuildableUntil[type]))
+      s.LastBuildFailure = "";
+      if (type == 0)
       {
+        s.LastBuildFailure = "unknown building type";
         return false;
       }
+      if (s.UnbuildableUntil.ContainsKey(type) && SimpleBot.Clock < s.UnbuildableUntil[type])
+      {
+        s.LastBuildFailure = GetObjectName(type) + " on cooldown";
+        return false;
+      }
+      var sawAnchor = false;
+      var sawSite = false;
+      var rejectedOrders = 0;
       // Try each worker; a worker may have been carried across a sea or may have a different build menu.
       for (var w = 0; w < workers.Count; w++)
       {
@@ -547,6 +621,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           continue;
         }
+        sawAnchor = true;
         // Retry distinct sites immediately for a rejected worker order; do not require a second worker.
         var skipX = 999999f;
         var skipY = 999999f;
@@ -557,6 +632,7 @@ namespace WarcraftLegacies.Source.Ai
           {
             break;
           }
+          sawSite = true;
           // Free construction for perked bots only. This copies the AiTech.FreeOrder top-up/restore
           // model. Validate in a WC3 playtest whether the charge happens on order or build start.
           var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD);
@@ -581,6 +657,7 @@ namespace WarcraftLegacies.Source.Ai
           }
           if (!accepted)
           {
+            rejectedOrders++;
             skipX = x;
             skipY = y;
             s.BadX = x;
@@ -604,8 +681,21 @@ namespace WarcraftLegacies.Source.Ai
           return true;
         }
       }
-      // An invalid faction/build-menu combination shouldn't be reissued dozens of times per minute.
-      s.UnbuildableUntil[type] = SimpleBot.Clock + RejectedCooldown;
+      // A map-owned neutral structure near the HQ used to make Safe() reject every site.
+      // Do not blacklist a building type when the underlying problem was simply the location.
+      if (rejectedOrders > 0)
+      {
+        s.LastBuildFailure = GetObjectName(type) + " order rejected by WC3 (" + I2S(rejectedOrders) + ")";
+        s.UnbuildableUntil[type] = SimpleBot.Clock + RejectedCooldown;
+      }
+      else if (!sawAnchor)
+      {
+        s.LastBuildFailure = "no reachable safe HQ/CP anchor for " + GetObjectName(type);
+      }
+      else if (!sawSite)
+      {
+        s.LastBuildFailure = "no open placement for " + GetObjectName(type);
+      }
       return false;
     }
   }

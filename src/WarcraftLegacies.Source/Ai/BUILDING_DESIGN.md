@@ -1,4 +1,4 @@
-# Worker construction — 0.65.0 first playable candidate (not yet verified)
+# Worker construction — 0.65.1 playtest hotfix (0.65.0 tested, not yet reliable)
 
 This describes the implementation in `AiBuilder.cs` and `AiBuildSites.cs`. `TODO.md` is the live roadmap. Old
 plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot has no dependency on fork classes.
@@ -6,11 +6,11 @@ plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot 
 ## Responsibilities and lifecycle
 
 - `AiBuilder.Setup` registers WC3 construct-start, construct-finish and construct-cancel events and one
-  deferrable `AiScheduler` task, every 8 scheduler slots (2 s). Each scheduled visit services **one bot** in
-  rotation; with 16 bots, a project's periodic failure check happens roughly every 32 seconds. One outstanding
+  deferrable `AiScheduler` task, every 4 scheduler slots (1 s). Each scheduled visit services **one bot** in
+  rotation; with 16 bots, a project's periodic failure check happens roughly every 16 seconds. One outstanding
   construction project per bot avoids issuing overlapping build orders.
-- On a planning visit (at most once per 60 s per bot), enumerate the faction's **Builder** category, actual
-  workers and buildings. Try to train workers if fewer than two exist. For perked bots with no viable native
+- On a planning visit (at most once per 25 s per bot), enumerate the faction's **Builder** category, actual
+  workers (including native `UNIT_TYPE_PEON` units absent from category data) and buildings. Try to train workers if fewer than two exist. For perked bots with no viable native
   worker-training order, the *emergency fallback* may place a single worker, never a completed building.
 - If the hall is missing, try the faction's TownHall/Keep/Castle categories or a previously observed hall type.
   Recover missing useful troop-producing structures (`AiData.Trains` + faction categories), then an altar.
@@ -18,7 +18,9 @@ plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot 
 - `IssueBuildOrderById(worker, structureType, x, y)` is the only normal mechanism used to create structures.
   Order refusal tries another distinct site/worker; a type rejected this cycle is cooled down for three minutes.
   A started project stays reserved until WC3 emits a *construct-finish* callback (or cancel/failure/timeout).
-  Death, cancellation, lost sites and stale orders trigger a retry elsewhere. On faction replacement any pending
+  Death, cancellation, lost sites and stale orders trigger a retry elsewhere. A pending order is checked for
+  worker idleness after 30 seconds, otherwise times out after 120 seconds; a native-idle rejection cools down
+  the type so the next available type can be tried. On faction replacement any pending
   project is invalidated; the next plan uses the new faction's units and building categories.
 - Existing `AiMissions` timed worker-consuming starter kit (0:20 / 3:00) and instantly completed production
   (0:35, successor `GiveStarterProduction`) are removed. The public API call now requests a builder evaluation.
@@ -86,6 +88,21 @@ and no nearby own hall/forward base. When a new town hall **finishes**, record t
 7. **Costs and load:** record gold/lumber before issuing, during travel, at actual start and finish; validate that
    perked builds are free while fair builds consume normal resources. Examine `-dump` for `TICK ERROR` and
    operation counts, then use a full multiplayer test with real CSharp.lua map build.
+
+
+## 0.65.0 observed failures and 0.65.1 diagnostics
+
+The first 16-bot playtest produced only four normal builder completions through 12:22. Frostwolf, Illidan and
+Skywall built; accepted Archive and Pavilion orders stalled for ~3 minutes before the first version retried.
+A key code problem: the original `Safe()` treated neutral passive map units as enemy threats. In the 5-minute
+dump, P27 alone owned 587 units and 1234 structures. This could reject HQ anchors and construction spots without
+any log. The 0.65.1 fix narrows those exclusions and logs one `builder: <faction> idle:` reason whenever it changes,
+or every three minutes, to distinguish missing categories from actual no-space/no-build-menu failures.
+
+The new native idle-order check is a heuristic: in the next test, verify that builders with valid long travel orders
+are not incorrectly cancelled. One-project-per-faction remains a throughput bottleneck, and the heuristic cannot
+replace generated worker build-menu data. A log with `production satisfied` means the builder believes the faction
+needs no HQ recovery; it is not a promise that the faction's unit production itself is functioning.
 
 ## Next milestones (not included)
 

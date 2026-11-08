@@ -147,12 +147,26 @@ namespace WarcraftLegacies.Source.Ai
       while ((u = FirstOfGroup(g)) != null)
       {
         GroupRemoveUnit(g, u);
-        if (GetUnitState(u, UNIT_STATE_LIFE) > 0.405f && GetOwningPlayer(u) != p
-            && !IsUnitAlly(u, p))
+        if (GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || IsUnitAlly(u, p))
         {
-          safe = false;
-          break;
+          continue;
         }
+        var ownerId = GetPlayerId(GetOwningPlayer(u));
+        if (ownerId >= 25)
+        {
+          continue; // neutral/passive map-owned units, buildings, CP scenery are NOT enemy armies
+        }
+        if (ownerId == 24)
+        {
+          // Neutral hostile creeps are a local danger, not a 1500-unit exclusion zone.
+          // A remote camp must not make an entire faction HQ unbuildable.
+          if (Dist2(x, y, GetUnitX(u), GetUnitY(u)) > 650f * 650f)
+          {
+            continue;
+          }
+        }
+        safe = false;
+        break;
       }
       DestroyGroup(g);
       return safe;
