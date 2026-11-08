@@ -5,6 +5,12 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.65.2 — construction in crowded bases (playtest candidate)
+
+- Search smaller lots starting at 256 units from the anchor. Prefer buildable terrain and let the native worker order test custom placements. Reuse each anchor's candidate list across worker menus in a planning pass.
+- Two different workers can recover different HQ buildings concurrently. Reserve their sites and keep expansion planning serialized. Visit one bot per half-second and retry idle orders and rejected types sooner.
+- Include the faction in start, completion and retry messages for comparison with the 0.65.1 dump.
+
 ## 0.65.1 — construction coverage/speed diagnostic fix (needs playtest)
 
 - Do not treat neutral passive map units/structures (P25–P27) as enemies when deciding whether construction

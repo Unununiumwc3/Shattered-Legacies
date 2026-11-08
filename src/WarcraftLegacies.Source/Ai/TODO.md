@@ -8,15 +8,15 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.65.1** (first construction playtest hotfix; needs re-test). The older 0.52 phase plan below is historical. History: `CHANGELOG.md`; measurements:
+Working patch: **0.65.2** (crowded-base placement and concurrent HQ construction; needs playtest). The older 0.52 phase plan below is historical. History: `CHANGELOG.md`; measurements:
 `MEASUREMENTS.md`; what was learned: `AI_AGENTS_CONTEXT.md` "Movement: hard-learned facts".
 
-## Current priorities (0.65.1 follow-up)
+## Current priorities (0.65.2)
 
 The original 0.51 movement pass remains the baseline. **Do not start the old phase-2 rewrite before testing
 construction.** Implementation detail and acceptance cases: [`BUILDING_DESIGN.md`](BUILDING_DESIGN.md).
 
-1. **[you/ai] Re-test construction coverage and speed (0.65.1).** The 0.65.0 dumps at 5:00, 10:00, 12:22
+1. **[you/ai] Re-test construction coverage and speed (0.65.2). Compare faction-tagged starts, finishes and first troops at 3 and 6 minutes. Verify two workers build different producers and cancellations free only their own reservation.** The 0.65.0 dumps at 5:00, 10:00, 12:22
    showed only Frostwolf, Illidan, Skywall accepting construction orders. Two projects occupied their only slot for
    >3 minutes before timing out. The initial 1500-unit safety check also treated neutral passive map objects as
    threats. 0.65.1 excludes passive neutrals, reduces scheduling/plan delays, adds native worker detection, and

@@ -1,4 +1,4 @@
-# Worker construction — 0.65.1 playtest hotfix (0.65.0 tested, not yet reliable)
+# Worker construction — 0.65.2 playtest candidate
 
 This describes the implementation in `AiBuilder.cs` and `AiBuildSites.cs`. `TODO.md` is the live roadmap. Old
 plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot has no dependency on fork classes.
@@ -6,20 +6,19 @@ plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot 
 ## Responsibilities and lifecycle
 
 - `AiBuilder.Setup` registers WC3 construct-start, construct-finish and construct-cancel events and one
-  deferrable `AiScheduler` task, every 4 scheduler slots (1 s). Each scheduled visit services **one bot** in
-  rotation; with 16 bots, a project's periodic failure check happens roughly every 16 seconds. One outstanding
-  construction project per bot avoids issuing overlapping build orders.
-- On a planning visit (at most once per 25 s per bot), enumerate the faction's **Builder** category, actual
+  deferrable `AiScheduler` task, every two scheduler slots (0.5 s). One bot per visit means about eight seconds between visits with 16 bots.
+  Reserve up to two HQ projects with distinct workers, types and sites. Plan expansions only after all outstanding projects finish.
+- On a planning visit (12 s nominal, or the next visit after an order or completion), enumerate the faction's **Builder** category, actual
   workers (including native `UNIT_TYPE_PEON` units absent from category data) and buildings. Try to train workers if fewer than two exist. For perked bots with no viable native
   worker-training order, the *emergency fallback* may place a single worker, never a completed building.
 - If the hall is missing, try the faction's TownHall/Keep/Castle categories or a previously observed hall type.
   Recover missing useful troop-producing structures (`AiData.Trains` + faction categories), then an altar.
   One of each useful producer type is the target; already owned structures are counted even when building.
 - `IssueBuildOrderById(worker, structureType, x, y)` is the only normal mechanism used to create structures.
-  Order refusal tries another distinct site/worker; a type rejected this cycle is cooled down for three minutes.
+  Order refusal tries another distinct site/worker; a type rejected this cycle is cooled down for 30 seconds.
   A started project stays reserved until WC3 emits a *construct-finish* callback (or cancel/failure/timeout).
   Death, cancellation, lost sites and stale orders trigger a retry elsewhere. A pending order is checked for
-  worker idleness after 30 seconds, otherwise times out after 120 seconds; a native-idle rejection cools down
+  worker idleness after eight seconds, otherwise times out after 120 seconds; a native-idle rejection cools down
   the type so the next available type can be tried. On faction replacement any pending
   project is invalidated; the next plan uses the new faction's units and building categories.
 - Existing `AiMissions` timed worker-consuming starter kit (0:20 / 3:00) and instantly completed production
@@ -52,10 +51,10 @@ and no nearby own hall/forward base. When a new town hall **finishes**, record t
 
 ## Placement, costs, and important limitations
 
-- `AiBuildSites.FindSpot` uses 16 directions on rings roughly 800–2400 WC3 world units from the anchor; it
-  requires walkable terrain at the centre and conservative 300/420-unit surroundings, no other structure within
-  620 units and no non-allied threat nearby. The worker and site must share an open walking component. This is
-  **not** a proof that a 32-unit pathing-cell corridor remains after constructing an irregular structure.
+- Search 12 rings from 256 to 2368 units. Sample a 128-unit buildable core, two opposing walkable approach
+  points, clearance from existing structures (256 units for any owner), threat safety and the worker's route component.
+  If no standard site exists, try walkable cores to accommodate custom placement rules. Cache up to four sites per
+  anchor/component for the pass and rotate the search on later passes. WC3 validates the actual building mask.
 - `AiData.Trains` describes *military production* and is not a worker build-menu table. The first implementation
   uses faction categories as candidates and native WC3 order acceptance to decide whether a worker can build
   each type. A higher-quality second pass should generate `ubui` worker->building and `utra` hall->worker tables

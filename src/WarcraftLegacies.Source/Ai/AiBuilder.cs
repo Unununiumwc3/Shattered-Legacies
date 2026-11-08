@@ -6,7 +6,7 @@ using MacroTools.Shared;
 namespace WarcraftLegacies.Source.Ai
 {
   // Regular bot construction. Never creates a building: the worker issues a real Warcraft III build order.
-  // One outstanding project per player prevents repeat orders while the worker is walking to its site.
+  // Projects reserve their workers, types and sites until completion or failure.
   // PlaceProduction / the old starter kit are historical and no longer run on the scheduler.
   internal sealed class AiBuildProject
   {
@@ -30,6 +30,15 @@ namespace WarcraftLegacies.Source.Ai
     internal float CreatedAt;
   }
 
+  internal sealed class AiBuildCandidates
+  {
+    internal float AnchorX;
+    internal float AnchorY;
+    internal int Component;
+    internal readonly List<float> X = new();
+    internal readonly List<float> Y = new();
+  }
+
   internal sealed class AiBuildState
   {
     internal string Faction = "";
@@ -41,7 +50,9 @@ namespace WarcraftLegacies.Source.Ai
     internal float BadX;
     internal float BadY;
     internal float BadUntil;
-    internal AiBuildProject Project;
+    internal readonly List<AiBuildProject> Projects = new();
+    internal readonly List<AiBuildCandidates> Sites = new();
+    internal int SearchPhase;
     internal readonly List<AiBuildBase> Forward = new();
     internal readonly Dictionary<int, float> UnbuildableUntil = new();
     internal float NextExpansion;
@@ -52,10 +63,10 @@ namespace WarcraftLegacies.Source.Ai
 
   internal static class AiBuilder
   {
-    private const float PlanInterval = 25f; // per bot, not per scheduler tick
+    private const float PlanInterval = 12f; // per bot, not per scheduler tick
     private const float ProjectTimeout = 120f; // long journeys get a chance; cancelled idle orders fail early
     private const float ConstructionTimeout = 600f; // or to finish after start
-    private const float RejectedCooldown = 180f;
+    private const float RejectedCooldown = 30f;
     private const int WantedWorkers = 2;
     private const float ExpansionInterval = 180f;
     private const int MaxBases = 3;             // including the original HQ, NOT three extra bases
@@ -85,49 +96,52 @@ namespace WarcraftLegacies.Source.Ai
       TriggerAddAction(finished, OnConstructionFinish);
       TriggerAddAction(cancelled, OnConstructionCancel);
 
-      // One bot per second; with 16 bots an active construction order is revisited within 16 seconds.
+      // One bot per half-second; 16 bots get a planning visit every eight seconds.
       // Kept separate from the faster production/combat slot where possible.
-      AiScheduler.Add("builder", 4, 3, Tick, true);
+      AiScheduler.Add("builder", 2, 1, Tick, true);
     }
 
-    private static AiBuildState StateForEvent(unit building)
+    private static AiBuildProject ProjectForEvent(unit building, out AiBuildState state)
     {
+      state = null;
       if (building == null)
       {
         return null;
       }
       var id = GetPlayerId(GetOwningPlayer(building));
-      if (id < 0 || id >= States.Length)
+      if (id < 0 || id >= States.Length || States[id] == null)
       {
         return null;
       }
-      var s = States[id];
-      var pr = s != null ? s.Project : null;
-      if (pr == null)
+      state = States[id];
+      for (var i = 0; i < state.Projects.Count; i++)
       {
-        return null;
+        var pr = state.Projects[i];
+        if (pr.Building == building)
+        {
+          return pr;
+        }
+        if (pr.Building == null && pr.Type == GetUnitTypeId(building))
+        {
+          var dx = pr.X - GetUnitX(building);
+          var dy = pr.Y - GetUnitY(building);
+          if (dx * dx + dy * dy <= 128f * 128f)
+          {
+            return pr;
+          }
+        }
       }
-      if (pr.Building == building)
-      {
-        return s; // cancellation can invalidate the unit's rawcode before the event callback
-      }
-      if (pr.Type != GetUnitTypeId(building))
-      {
-        return null;
-      }
-      var dx = pr.X - GetUnitX(building);
-      var dy = pr.Y - GetUnitY(building);
-      return dx * dx + dy * dy <= 450f * 450f ? s : null;
+      return null;
     }
 
     private static void OnConstructionStart()
     {
       var building = GetConstructingStructure();
-      var s = StateForEvent(building);
-      if (s != null && s.Project.Building == null)
+      var pr = ProjectForEvent(building, out var state);
+      if (pr != null && pr.Building == null)
       {
-        Started(s.Project, building);
-        SimpleBot.Log("builder: started " + GetObjectName(s.Project.Type));
+        Started(pr, building);
+        SimpleBot.Log("builder: " + state.Faction + " started " + GetObjectName(pr.Type));
       }
     }
 
@@ -151,12 +165,11 @@ namespace WarcraftLegacies.Source.Ai
     private static void OnConstructionFinish()
     {
       var building = GetConstructedStructure();
-      var s = StateForEvent(building);
-      if (s == null)
+      var pr = ProjectForEvent(building, out var s);
+      if (pr == null)
       {
         return;
       }
-      var pr = s.Project;
       if (pr.NewBase)
       {
         var b = new AiBuildBase();
@@ -165,18 +178,18 @@ namespace WarcraftLegacies.Source.Ai
         b.CreatedAt = SimpleBot.Clock;
         s.Forward.Add(b);
       }
-      SimpleBot.LogPin("builder: completed " + GetObjectName(pr.Type));
-      s.Project = null;
-      s.NextPlan = SimpleBot.Clock + 5f;
+      SimpleBot.LogPin("builder: " + s.Faction + " completed " + GetObjectName(pr.Type));
+      s.Projects.Remove(pr);
+      s.NextPlan = 0f;
     }
 
     private static void OnConstructionCancel()
     {
       var building = GetCancelledStructure();
-      var s = StateForEvent(building);
-      if (s != null)
+      var pr = ProjectForEvent(building, out var s);
+      if (pr != null)
       {
-        Failed(s, "cancelled");
+        Failed(s, pr, "cancelled");
       }
     }
 
@@ -216,12 +229,16 @@ namespace WarcraftLegacies.Source.Ai
       if (s.Faction != fac.Name)
       {
         // A fallback/split can reuse a player slot. Cancel the old faction's outstanding order.
-        if (s.Project != null && Alive(s.Project.Worker, p))
+        while (s.Projects.Count > 0)
         {
-          IssueImmediateOrder(s.Project.Worker, "stop");
+          var old = s.Projects[0];
+          s.Projects.RemoveAt(0);
+          if (Alive(old.Worker, p))
+          {
+            IssueImmediateOrder(old.Worker, "stop");
+          }
         }
         s.Faction = fac.Name;
-        s.Project = null;
         s.Forward.Clear();
         s.UnbuildableUntil.Clear();
         s.HomeSet = false;
@@ -233,59 +250,54 @@ namespace WarcraftLegacies.Source.Ai
         s.NextReasonLog = 0f;
         s.LastBuildFailure = "";
       }
-      if (s.Project != null)
+      for (var i = s.Projects.Count - 1; i >= 0; i--)
       {
-        CheckProject(p, s);
-        return;
+        CheckProject(p, s, s.Projects[i]);
       }
-      if (SimpleBot.Clock < s.NextPlan)
+      if (s.Projects.Count >= WantedWorkers || SimpleBot.Clock < s.NextPlan)
       {
         return;
       }
       s.NextPlan = SimpleBot.Clock + PlanInterval;
+      s.Sites.Clear();
+      s.SearchPhase = (s.SearchPhase + 1) % 16;
       Evaluate(p, fac, s);
     }
 
-    private static void CheckProject(player p, AiBuildState s)
+    private static void CheckProject(player p, AiBuildState s, AiBuildProject pr)
     {
-      var pr = s.Project;
       if (pr.Building == null)
       {
         // Fallback for a build that started before its trigger callback was observed.
-        var building = AiBuildSites.StructureNear(p, pr.Type, pr.X, pr.Y, 450f);
+        var building = AiBuildSites.StructureNear(p, pr.Type, pr.X, pr.Y, 128f);
         if (building != null)
         {
           Started(pr, building);
         }
         else if (!Alive(pr.Worker, p))
         {
-          Failed(s, "worker missing");
+          Failed(s, pr, "worker missing");
         }
-        else if (SimpleBot.Clock - pr.OrderedAt >= 30f && GetUnitCurrentOrder(pr.Worker) == 0)
+        else if (SimpleBot.Clock - pr.OrderedAt >= 8f && !IsUnitPaused(pr.Worker) && GetUnitCurrentOrder(pr.Worker) == 0)
         {
           // Warcraft III can return 'accepted' and drop an impossible build order on the next frame.
-          Failed(s, "worker idle before construction");
+          Failed(s, pr, "worker idle before construction");
         }
         else if (SimpleBot.Clock - pr.OrderedAt > ProjectTimeout)
         {
-          Failed(s, "never started / unreachable site");
+          Failed(s, pr, "never started / unreachable site");
         }
         return;
       }
       if (!Alive(pr.Building, p) || SimpleBot.Clock - pr.StartedAt > ConstructionTimeout)
       {
-        Failed(s, "building destroyed / construction timed out");
+        Failed(s, pr, "building destroyed / construction timed out");
       }
       // Otherwise wait for EVENT_PLAYER_UNIT_CONSTRUCT_FINISH; do not re-order a busy worker.
     }
 
-    private static void Failed(AiBuildState s, string why)
+    private static void Failed(AiBuildState s, AiBuildProject pr, string why)
     {
-      var pr = s.Project;
-      if (pr == null)
-      {
-        return;
-      }
       s.BadX = pr.X;
       s.BadY = pr.Y;
       s.BadUntil = SimpleBot.Clock + RejectedCooldown;
@@ -295,9 +307,9 @@ namespace WarcraftLegacies.Source.Ai
         // Try another producer type on the next planning pass.
         s.UnbuildableUntil[pr.Type] = SimpleBot.Clock + RejectedCooldown;
       }
-      SimpleBot.Log("builder: retry " + GetObjectName(pr.Type) + " (" + why + ")");
-      s.Project = null;
-      s.NextPlan = SimpleBot.Clock + 5f;
+      SimpleBot.Log("builder: " + s.Faction + " retry " + GetObjectName(pr.Type) + " (" + why + ")");
+      s.Projects.Remove(pr);
+      s.NextPlan = 0f;
     }
 
     private static void Explain(player p, AiBuildState s, string reason)
@@ -371,7 +383,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         trained = TrainWorker(p, builderTypes, halls);
       }
-      if (workers.Count == 0)
+      if (workers.Count == 0 && s.Projects.Count == 0)
       {
         // Perked bot with no viable training order: one emergency worker, not a free building.
         // Never do this while a town hall has a worker queued.
@@ -389,11 +401,37 @@ namespace WarcraftLegacies.Source.Ai
           {
             SimpleBot.LogPin("builder: " + SimpleBot.FacName(p) + " stranded -> one emergency worker");
           }
-          s.NextPlan = SimpleBot.Clock + 120f;
+          s.NextPlan = w != null ? 0f : SimpleBot.Clock + 30f;
         }
         Explain(p, s, trained ? "no worker; town hall training/queued" : "no worker; no accepted train order");
         return;
       }
+      for (var i = 0; i < s.Projects.Count; i++)
+      {
+        workers.Remove(s.Projects[i].Worker);
+      }
+      if (workers.Count == 0)
+      {
+        return;
+      }
+      // Enumeration order can put a distant worker ahead of one standing at the HQ.
+      // Give the local worker the first attempt, but retain workers with different build menus.
+      var closest = 0;
+      var bestDistance = -1f;
+      for (var i = 0; i < workers.Count; i++)
+      {
+        var dx = GetUnitX(workers[i]) - s.HomeX;
+        var dy = GetUnitY(workers[i]) - s.HomeY;
+        var distance = dx * dx + dy * dy;
+        if (bestDistance < 0f || distance < bestDistance)
+        {
+          closest = i;
+          bestDistance = distance;
+        }
+      }
+      var first = workers[0];
+      workers[0] = workers[closest];
+      workers[closest] = first;
       // No buildable hall is present in some factions. Do not invent one.
       if (halls.Count == 0 && hallTypes.Count > 0)
       {
@@ -435,6 +473,10 @@ namespace WarcraftLegacies.Source.Ai
       if (!haveAltar && altars.Count > 0 && Build(p, s, workers, hallTypes, Cheapest(altars), false, false, 0f, 0f))
       {
         return;
+      }
+      if (s.Projects.Count > 0)
+      {
+        return; // serialize expansion planning so hall and local producer caps include completions
       }
       if (!SimpleBot.HasPerks(p) || hallTypes.Count == 0 || all.Count == 0)
       {
@@ -536,12 +578,14 @@ namespace WarcraftLegacies.Source.Ai
 
     private static bool TrainWorker(player p, List<int> types, List<unit> halls)
     {
+      var busyHall = false;
       for (var h = 0; h < halls.Count; h++)
       {
         // Never overwrite an active training / upgrade order.
         if (GetUnitCurrentOrder(halls[h]) != 0)
         {
-          return true; // assume it may already be training; do not spawn an emergency worker
+          busyHall = true;
+          continue; // another hall may be idle
         }
         for (var i = 0; i < types.Count; i++)
         {
@@ -554,7 +598,7 @@ namespace WarcraftLegacies.Source.Ai
           }
         }
       }
-      return false;
+      return busyHall;
     }
 
     private static List<int> ProductionTypes(Faction f)
@@ -602,6 +646,15 @@ namespace WarcraftLegacies.Source.Ai
         s.LastBuildFailure = GetObjectName(type) + " on cooldown";
         return false;
       }
+      for (var i = 0; i < s.Projects.Count; i++)
+      {
+        if (s.Projects[i].Type == type
+            || (SimpleBot.ListHas(hallTypes, type) && SimpleBot.ListHas(hallTypes, s.Projects[i].Type)))
+        {
+          s.LastBuildFailure = GetObjectName(type) + " already ordered";
+          return false;
+        }
+      }
       var sawAnchor = false;
       var sawSite = false;
       var rejectedOrders = 0;
@@ -623,15 +676,30 @@ namespace WarcraftLegacies.Source.Ai
         }
         sawAnchor = true;
         // Retry distinct sites immediately for a rejected worker order; do not require a second worker.
-        var skipX = 999999f;
-        var skipY = 999999f;
-        for (var attempt = 0; attempt < 4; attempt++)
+        var comp = AiRoutes.CompAt(GetUnitX(worker), GetUnitY(worker));
+        AiBuildCandidates sites = null;
+        for (var k = 0; k < s.Sites.Count; k++)
         {
-          if (!AiBuildSites.FindSpot(p, worker, ax, ay, s.BadX, s.BadY, s.BadUntil,
-                skipX, skipY, out var x, out var y))
+          var cached = s.Sites[k];
+          if (cached.AnchorX == ax && cached.AnchorY == ay && cached.Component == comp)
           {
+            sites = cached;
             break;
           }
+        }
+        if (sites == null)
+        {
+          sites = new AiBuildCandidates();
+          sites.AnchorX = ax;
+          sites.AnchorY = ay;
+          sites.Component = comp;
+          AiBuildSites.FindSites(p, s, sites);
+          s.Sites.Add(sites);
+        }
+        for (var attempt = 0; attempt < sites.X.Count; attempt++)
+        {
+          var x = sites.X[attempt];
+          var y = sites.Y[attempt];
           sawSite = true;
           // Free construction for perked bots only. This copies the AiTech.FreeOrder top-up/restore
           // model. Validate in a WC3 playtest whether the charge happens on order or build start.
@@ -658,11 +726,6 @@ namespace WarcraftLegacies.Source.Ai
           if (!accepted)
           {
             rejectedOrders++;
-            skipX = x;
-            skipY = y;
-            s.BadX = x;
-            s.BadY = y;
-            s.BadUntil = SimpleBot.Clock + RejectedCooldown;
             continue;
           }
           var pr = new AiBuildProject();
@@ -675,7 +738,8 @@ namespace WarcraftLegacies.Source.Ai
           pr.RefundOnStart = delayedCost;
           pr.RefundGold = delayedCost ? costGold : 0;
           pr.RefundLumber = delayedCost ? costLumber : 0;
-          s.Project = pr;
+          s.Projects.Add(pr);
+          s.NextPlan = 0f;
           SimpleBot.Log("builder: " + SimpleBot.FacName(p) + " ordered " + GetObjectName(type)
                            + (expansion ? " forward" : " HQ") + " at " + I2S(R2I(x)) + "," + I2S(R2I(y)));
           return true;

@@ -7,7 +7,7 @@ namespace WarcraftLegacies.Source.Ai
   internal static class AiBuildSites
   {
     private const float Safety = 1500f;
-    private const float Clearance = 620f;
+    private const float Clearance = 256f;
 
     internal static unit StructureNear(player p, int type, float x, float y, float r)
     {
@@ -374,62 +374,74 @@ namespace WarcraftLegacies.Source.Ai
       return true;
     }
 
-    // Conservative clearance: open terrain around the footprint, no other structures in a wide ring,
-    // and no building in a narrow road. WC3 is the final authority on construction placement.
-    internal static bool FindSpot(player p, unit worker, float cx, float cy,
-      float badX, float badY, float badUntil, float skipX, float skipY, out float x, out float y)
+    // Collect a few distinct sites once per anchor and planning pass. WC3 checks the
+    // actual building mask, race-specific terrain requirements and obstructions.
+    internal static void FindSites(player p, AiBuildState state, AiBuildCandidates sites)
     {
-      x = 0f;
-      y = 0f;
-      var workerComp = AiRoutes.CompAt(GetUnitX(worker), GetUnitY(worker));
-      for (var radius = 800f; radius <= 2400f; radius += 320f)
+      CollectSites(p, state, sites, true);
+      if (sites.X.Count == 0)
       {
-        for (var a = 0; a < 16; a++)
-        {
-          var ang = a * 0.392699f;
-          var tx = cx + radius * Cos(ang);
-          var ty = cy + radius * Sin(ang);
-          if ((SimpleBot.Clock < badUntil && Dist2(tx, ty, badX, badY) < 500f * 500f)
-              || Dist2(tx, ty, skipX, skipY) < 500f * 500f)
-          {
-            continue;
-          }
-          if (AiRoutes.CompAt(tx, ty) != workerComp)
-          {
-            continue;
-          }
-          if (!FootprintOpen(tx, ty) || !StructureClear(tx, ty) || !Safe(p, tx, ty))
-          {
-            continue;
-          }
-          x = tx;
-          y = ty;
-          return true;
-        }
+        // Some custom structures permit normally unbuildable ground. Let the
+        // worker try walkable sites when the standard buildable-core search is empty.
+        CollectSites(p, state, sites, false);
       }
-      return false;
     }
 
-    private static bool FootprintOpen(float x, float y)
+    private static void CollectSites(player p, AiBuildState state, AiBuildCandidates sites, bool standard)
     {
-      // Pathing cells are 32 world units. Checking the 300/420 rings leaves a wide walking corridor;
-      // this is conservative, not a substitute for WC3's building-specific placement test.
-      if (IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY))
+      for (var ring = 0; ring < 12; ring++)
       {
-        return false;
-      }
-      for (var i = 0; i < 8; i++)
-      {
-        var angle = i * 0.785398f;
-        var dx = Cos(angle);
-        var dy = Sin(angle);
-        if (IsTerrainPathable(x + 300f * dx, y + 300f * dy, PATHING_TYPE_WALKABILITY)
-            || IsTerrainPathable(x + 420f * dx, y + 420f * dy, PATHING_TYPE_WALKABILITY))
+        var radius = 256f + 192f * ring;
+        for (var a = 0; a < 16; a++)
         {
-          return false;
+          var angle = ((a * 5 + state.SearchPhase) % 16) * 0.392699f +
+                      ((ring + state.SearchPhase) % 2) * 0.196350f;
+          var x = sites.AnchorX + radius * Cos(angle);
+          var y = sites.AnchorY + radius * Sin(angle);
+          if ((SimpleBot.Clock < state.BadUntil && Dist2(x, y, state.BadX, state.BadY) < 192f * 192f)
+              || !FootprintOpen(x, y, standard) || AiRoutes.CompAt(x, y) != sites.Component
+              || !StructureClear(x, y) || !Safe(p, x, y))
+          {
+            continue;
+          }
+          var reserved = false;
+          for (var k = 0; k < state.Projects.Count; k++)
+          {
+            var project = state.Projects[k];
+            reserved = reserved || Dist2(x, y, project.X, project.Y) < Clearance * Clearance;
+          }
+          if (!reserved)
+          {
+            sites.X.Add(x);
+            sites.Y.Add(y);
+            if (sites.X.Count == 4)
+            {
+              return;
+            }
+          }
         }
       }
-      return true;
+    }
+
+    private static bool FootprintOpen(float x, float y, bool standard)
+    {
+      // Test a small buildable core. Requiring an entire 840-unit clearing
+      // excluded usable lots between structures inside preplaced cities.
+      var pathing = standard ? PATHING_TYPE_BUILDABILITY : PATHING_TYPE_WALKABILITY;
+      for (var dx = -64; dx <= 64; dx += 64)
+      {
+        for (var dy = -64; dy <= 64; dy += 64)
+        {
+          if (IsTerrainPathable(x + dx, y + dy, pathing))
+          {
+            return false;
+          }
+        }
+      }
+      return (!IsTerrainPathable(x - 192f, y, PATHING_TYPE_WALKABILITY)
+              && !IsTerrainPathable(x + 192f, y, PATHING_TYPE_WALKABILITY))
+             || (!IsTerrainPathable(x, y - 192f, PATHING_TYPE_WALKABILITY)
+                 && !IsTerrainPathable(x, y + 192f, PATHING_TYPE_WALKABILITY));
     }
 
     private static bool StructureClear(float x, float y)
