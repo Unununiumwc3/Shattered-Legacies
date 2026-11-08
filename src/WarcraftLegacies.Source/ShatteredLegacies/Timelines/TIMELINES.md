@@ -189,7 +189,7 @@ faction by faction.
 | P23 Kul Tiras | fallback Kezan Enterprise (own team) | **fallback Kezan Enterprise** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | 0.59: 24p Trading Center + trade, Oil Refining, end goal on the scoreboard; 0.60: Refugee Slave Camps -- open: camps built one by one, what the end goal does, turtle concept |
 | P12 Druids | fallback Dream trees | placeholder | -- |
 | P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | placeholders (Exodar: Shattrath -- superseded) | -- |
-| P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | placeholders ("Dragonmaw" -- superseded) | Dragonmaw assets + 24p tech / unit / building trees |
+| P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | Twilight's Hammer at Dragonmaw Port, Old Gods team, 24p roster and tech tree | The Hour of Twilight brings back Deathwing. D12 is separate. |
 | P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
 | P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
 | P16 Illidari | fallback Ashtongue Deathsworn (full, 0.63) | **fallback Ashtongue** (0.63: Black Temple destroyed -> Temple of the Deathsworn, conquest rule, purification, Karabor) | faction name "Karabor"; balance |

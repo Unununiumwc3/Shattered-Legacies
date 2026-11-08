@@ -37,6 +37,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1868198965, new[] { 1750759735 } }, // oZt5: hZy7
       { 1868198967, new[] { 1750759734 } }, // oZt7: hZy6
       { 1868198969, new[] { 1868200245 } }, // oZt9: oZy5
+      { 1868199728, new[] { 1868199782 } }, // oZw0: oZwf
+      { 1868199729, new[] { 1868199782 } }, // oZw1: oZwf
+      { 1868199730, new[] { 1868199782 } }, // oZw2: oZwf
+      { 1868199732, new[] { 1868199780, 1851422516, 1868199783 } }, // oZw4: oZwd nZw4 oZwg
+      { 1868199734, new[] { 1851422515, 1968863025, 1851422513 } }, // oZw6: nZw3 uZw1 nZw1
+      { 1868199735, new[] { 1851422514, 1851422512, 1868199779 } }, // oZw7: nZw2 nZw0 oZwc
       { 1968858674, new[] { 1750754873, 1750754872, 1851418160 } }, // uZf2: hZf9 hZf8 nZf0
       { 1968858676, new[] { 1868195376, 1968858721, 1851418162 } }, // uZf4: oZf0 uZfa nZf2
       { 1968858677, new[] { 1750754913, 1968858681 } }, // uZf5: hZfa uZf9
@@ -49,15 +55,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     {
       { 1868196659, new[] { 1314548531, 1331325801, 1314548532 } }, // oZk3: NZk3 OZki NZk4
       { 1868198961, new[] { 1213888825 } }, // oZt1: HZy9
+      { 1868199731, new[] { 1331328872, 1213888304, 1331328873, 1431992114 } }, // oZw3: OZwh HZw0 OZwi UZw2
       { 1968858672, new[] { 1431987812, 1431987813 } }, // uZf0: UZfd UZfe
     };
 
     // unit/hero type -> requirements (research or unit type; met = GetPlayerTechCount >= 1)
     internal static readonly Dictionary<int, int[]> Requires = new()
     {
+      { 1213888304, new[] { 1381660471 } }, // HZw0: RZw7
       { 1314548531, new[] { 1381657394 } }, // NZk3: RZk2
       { 1314548532, new[] { 1381657395 } }, // NZk4: RZk3
+      { 1331328873, new[] { 1381660473 } }, // OZwi: RZw9
       { 1431987812, new[] { 1381656113 } }, // UZfd: RZf1
+      { 1431992114, new[] { 1381660513 } }, // UZw2: RZwa
       { 1700426346, new[] { 1381659242 } }, // eZrj: RZrj
       { 1700426347, new[] { 1381659243 } }, // eZrk: RZrk
       { 1747992911, new[] { 1378890834 } }, // h0AO: R04R
@@ -90,12 +100,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1851421241, new[] { 1381659193 } }, // nZr9: RZr9
       { 1851421288, new[] { 1381659240 } }, // nZrh: RZrh
       { 1851421289, new[] { 1381659241 } }, // nZri: RZri
+      { 1851422512, new[] { 1868199730 } }, // nZw0: oZw2
+      { 1851422514, new[] { 1868199730 } }, // nZw2: oZw2
+      { 1851422515, new[] { 1381660472 } }, // nZw3: RZw8
+      { 1851422516, new[] { 1868199733 } }, // nZw4: oZw5
       { 1868195376, new[] { 1381656114, 1378892120 } }, // oZf0: RZf2 R09X
       { 1868196712, new[] { 1381657399 } }, // oZkh: RZk7
       { 1868196715, new[] { 1868196708 } }, // oZkk: oZkd
       { 1868198454, new[] { 1381659190 } }, // oZr6: RZr6
       { 1868198455, new[] { 1381659191 } }, // oZr7: RZr7
       { 1868198497, new[] { 1381659233 } }, // oZra: RZra
+      { 1868199782, new[] { 1381660464 } }, // oZwf: RZw0
+      { 1868199783, new[] { 1868199730 } }, // oZwg: oZw2
       { 1868722036, new[] { 1378890834 } }, // obot: R04R
       { 1968858722, new[] { 1381656114 } }, // uZfb: RZf2
       { 1968858723, new[] { 1381656114 } }, // uZfc: RZf2
@@ -108,12 +124,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     // hero type -> skills in learning order (auras/passives first, attribute bonus last)
     internal static readonly Dictionary<int, int[]> HeroSkills = new()
     {
+      { 1213888304, new[] { 1095262562, 1096447841, 1093685060, 1214603628, 1096904043 } }, // HZw0: AHab AZwa A0OD Heal Aamk
       { 1213888825, new[] { 1093677875, 1096448357, 1096448358, 1093678677, 1096904043 } }, // HZy9: A033 AZye AZyf A06U Aamk
       { 1314548531, new[] { 1093685825, 1095660409, 1095656307, 1096444779, 1096904043 } }, // NZk3: A0RA ANsy ANcs AZkk Aamk
       { 1314548532, new[] { 1096444774, 1093685834, 1096444775, 1093684046, 1096904043 } }, // NZk4: AZkf A0RJ AZkg A0KN Aamk
       { 1331325801, new[] { 1096444772, 1093684530, 1096444773, 1093685058, 1096904043 } }, // OZki: AZkd A0M2 AZke A0OB Aamk
+      { 1331328872, new[] { 1093686083, 1096447801, 1093685067, 1095660134, 1096904043 } }, // OZwh: A0SC AZw9 A0OK ANrf Aamk
+      { 1331328873, new[] { 1093685071, 1093683523, 1093683782, 1095656038, 1096904043 } }, // OZwi: A0OO A0IC A0JF ANbf Aamk
       { 1431987812, new[] { 1095262562, 1096443504, 1093684811, 1096443505, 1096904043 } }, // UZfd: AHab AZfp A0NK AZfq Aamk
       { 1431987813, new[] { 1096443507, 1096443508, 1096443509, 1096443510, 1096904043 } }, // UZfe: AZfs AZft AZfu AZfv Aamk
+      { 1431992114, new[] { 1096447843, 1096447842, 1095262842, 1093677145, 1096904043 } }, // UZw2: AZwc AZwb AHbz A00Y Aamk
     };
   }
 }

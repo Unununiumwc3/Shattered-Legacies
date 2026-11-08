@@ -10,25 +10,23 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1782 | 17 | 495 | 1045 | 385 | 56 | 287 |
-| abilities | 1584 | 17 | 713 | 486 | 237 | 229 | 283 |
-| upgrades | 448 | 3 | 148 | 133 | 71 | 30 | 16 |
-| items | 87 | 13 | 81 | 28 | 2 | 4 | 223 |
+| units | 1816 | 15 | 495 | 1045 | 385 | 56 | 287 |
+| abilities | 1609 | 16 | 713 | 486 | 237 | 229 | 283 |
+| upgrades | 462 | 0 | 148 | 133 | 71 | 30 | 16 |
+| items | 89 | 13 | 81 | 28 | 2 | 4 | 223 |
 
 ## Unused in the main map
 
 Objects of the main map that nothing uses (no faction limit, not preplaced, not in the code, not made or referenced by anything used). Free to reuse under their id.
 
-### nightelf (11)
+### nightelf (9)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
 | `HZy4` | High Priestess of the Aldor (Draenei) | hero | main |  |  | unused |
 | `HZy3` | The Naaru (Draenei) | hero | main |  |  | unused |
-| `hZy5` | Telredor (Draenei) | building | main |  | o05A,oZy2 | unused |
 | `oZy0` | Defender (Draenei) | unit | main |  |  | unused |
 | `hZy1` | Elekk Knight (draenei) | unit | main |  |  | unused |
-| `oZy2` | Elementalist (draenei) | unit | main | hZy5 |  | unused |
 | `nZy0` | Lightforged Warframe (Draenei) | unit | main |  |  | unused |
 | `oZy1` | Luminarch (Draenei) | unit | main |  |  | unused |
 | `hZy0` | Rangari (draenei) | unit | main |  |  | unused |
@@ -520,7 +518,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `O026` | God King of the Zandalari Tribe (troll) | hero | 24p | o040 |  | 24p only |
 | `E01G` | Gronn Overlord (Gilneas) | hero | 24p |  |  | 24p only |
 | `Obla` | High Overlord of the Kor'kron (vassal) | hero | main | o020 |  | 24p only |
-| `O01P` | Leader of the Twilight's Hammer (Twilight Hammer) | hero | 24p | o03C |  | 24p only |
+| `O01P` | Leader of the Twilight's Hammer (Twilight Hammer) | hero | main | o03C |  | 24p only |
 | `O05S` | Overseer of Fenris Keep (gnoll) | hero | 24p | n0D8 |  | 24p only |
 | `O05O` | Ragefire Warlock (Warsong) | hero | 24p | o020 |  | 24p only |
 | `Ocb2` | Tauren Chieftain (Unused) | hero | stock |  |  | 24p only |
@@ -950,7 +948,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n0BY` | Dark Ranger (forsaken) | unit | main | h089,h08B,h08S |  | 24p only |
 | `n07S` | Deadeye (Forsaken, Cult) | unit | main | u011 |  | 24p only |
 | `o066` | Death Domain | unit | 24p |  |  | 24p only |
-| `u01Y` | Deathwing (twilight) | unit | 24p |  |  | 24p only |
+| `u01Y` | Deathwing (twilight) | unit | main |  |  | 24p only |
 | `n091` | Doomfire Abyssal (Legion-Archimond-Level 2) | unit | stock |  |  | different |
 | `h08N` | Dreadguard (Forsaken, Cult) | unit | 24p | u011 |  | 24p only |
 | `uubs` | Dreadnought (Scourge-Legion) | unit | stock | u009,u01A,ushp |  | 24p only |

@@ -1,0 +1,160 @@
+{
+  "OldId": "AOcr",
+  "NewId": "AZw9",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 2,
+      "Pointer": 1,
+      "Id": "Ocr1",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 3,
+      "Pointer": 1,
+      "Id": "Ocr1",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 4,
+      "Pointer": 1,
+      "Id": "Ocr1",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 2,
+      "Pointer": 2,
+      "Id": "Ocr2",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 3,
+      "Pointer": 2,
+      "Id": "Ocr2",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 4,
+      "Pointer": 2,
+      "Id": "Ocr2",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Level": 1,
+      "Pointer": 2,
+      "Id": "Ocr2",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Level": 1,
+      "Pointer": 1,
+      "Id": "Ocr1",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(Cho'gall)"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "W"
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "When this hero attacks, it has a 15% chance to hurl lightning at <AZwn,DataB1> targets, dealing damage to each of them. |n|n|cffffcc00Level 1|r - Deals <AZwn,DataA1> damage. |n|cffffcc00Level 2|r - Deals <AZwn,DataA2> damage.|n|cffffcc00Level 3|r - Deals <AZwn,DataA3> damage.|n|cffffcc00Level 4|r - Deals <AZwn,DataA4> damage."
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Thunder Fists - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "When this hero attacks, it has a 15% chance to hurl lightning at <AZwn,DataB1> targets, dealing <AZwn,DataA1> damage to each of them."
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "When this hero attacks, it has a 15% chance to hurl lightning at <AZwn,DataB2> targets, dealing <AZwn,DataA2> damage to each of them."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "When this hero attacks, it has a 15% chance to hurl lightning at <AZwn,DataB3> targets, dealing <AZwn,DataA3> damage to each of them."
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "When this hero attacks, it has a 15% chance to hurl lightning at <AZwn,DataB4> targets, dealing <AZwn,DataA4> damage to each of them."
+    },
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Thunder Fists"
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Thunder Fists - [|cffffcc00Level %d|r]"
+    },
+    {
+      "Id": "aart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\PASZeusStrike.blp"
+    },
+    {
+      "Id": "arar",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNZeusStrike.blp"
+    },
+    {
+      "Level": 1,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Thunder Fists - [|cffffcc00Level 1|r]"
+    },
+    {
+      "Level": 2,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Thunder Fists - [|cffffcc00Level 2|r]"
+    },
+    {
+      "Level": 3,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Thunder Fists - [|cffffcc00Level 3|r]"
+    },
+    {
+      "Id": "abpx",
+      "Value": 1
+    },
+    {
+      "Id": "arpx",
+      "Value": 1
+    }
+  ]
+}

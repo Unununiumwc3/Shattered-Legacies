@@ -1,0 +1,28 @@
+{
+  "OldId": "ntor",
+  "NewId": "nZw5",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Avul,A02S,Atsp,Aasl"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Level 1)"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Hurricane"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ]
+}

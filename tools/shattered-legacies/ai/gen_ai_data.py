@@ -22,6 +22,7 @@ WORKER_BASES = ("opeo", "hpea", "upeo", "ewsp", "uaco", "nmpe")  # stock workers
 SL_BUILDINGS = ["oZk0", "oZk1", "oZk2", "oZk3", "oZk4", "oZk6", "oZk7", "oZkc", "hZk1", "oZkj",  # Kezan (0.58, 0.59)
                 "oZq0", "oZq1", "oZq2", "oZq3", "oZq4", "oZq5",  # Refugee Slave Camps (0.60, kezan_objects.py)
                 "oZt0", "oZt1", "oZt3", "oZt5", "oZt7", "oZt9",  # the Ashtongue's temples / purified sites (0.63-0.64)
+                "oZw0", "oZw1", "oZw2", "oZw3", "oZw4", "oZw6", "oZw7",  # Twilight halls, altar and production
                 "uZf0", "hZf0", "hZf1", "hZf2", "uZf2", "uZf4", "uZf5", "uZf8", "uZf7", "hZf7"]  # 0.55 Forsaken (import_24p.py ids)
 ABIL = os.path.join(us.ROOT, "mapdata", "WarcraftLegacies", "AbilityData")
 BUILDING_CATS = {"TownHall", "Keep", "Castle", "GilneasManor", "Shipyard", "Lighthouse", "Farm", "Altar", "Specialist",

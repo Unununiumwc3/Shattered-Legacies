@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNChaosWarlord.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNChogall.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Dragonmaw (placeholder)"
+      "Value": "Fallback: Twilight's Hammer"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Dragonmaw (placeholder)"
+      "Value": "Fallback: Twilight's Hammer"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Placeholder until the orcs' fallback becomes the Twilight's Hammer."
+      "Value": "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree."
     }
   ]
 }

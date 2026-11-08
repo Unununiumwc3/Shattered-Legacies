@@ -255,7 +255,77 @@ ASHTONGUE = {
                  "uabi": "=AInv,=AZt0"},
     },
 }
-SETS = [FORSAKEN, KEZAN, ASHTONGUE]
+# The Old Gods branch of the 24p Twilight player (TwilightSetup.j). The alternative
+# Dragonmaw player shares some command cards in 24p, but has its own worker and heroes.
+# Its preplaced buildings here provide the models and icons for the port.
+TWILIGHT = {
+    "name": "TwilightHammer",
+    "third": "w",
+    "force": True,
+    "objects": [
+        ("o039", "GreatHall", ["TownHall"], 200),
+        ("o03A", "Stronghold", ["Keep"], 200),
+        ("o03B", "Fortress", ["Castle"], 200),
+        ("o03C", "AltarOfVisions", ["Altar"], 200),
+        ("o03D", "WarCamp", ["Barracks"], 200),
+        ("o03J", "WarMill", ["Research"], 200),
+        ("o03E", "GrimTotem", ["Magic"], 200),
+        ("o03F", "DragonHatchery", ["Specialist"], 200),
+        ("o03I", "TwilightDock", ["Shipyard"], 200),
+        ("o03G", "Lookout", ["Tower"], 200),
+        ("o03H", "ImprovedLookout", ["Tower"], 200),
+        ("u00Y", "VoodooLounge", ["Shop"], 200),
+        ("o03K", "Burrow", ["Farm"], 200),
+        ("n051", "NetherDragon", ["Flyer"], 4),
+        ("o04J", "VoidRider", ["Flyer"], 8),
+        ("n07X", "OgreMagi", ["Support"], 200),
+        ("o01H", "Enforcer", ["Fighter"], 200),
+        ("o04B", "Cultist", ["Builder"], 200),
+        ("n083", "Dragonspawn", ["Tank"], 200),
+        ("o04I", "Battlemaster", ["Elite"], 6),
+        ("o04K", "SkullCatapult", ["Siege"], 6),
+        ("n09O", "DeathKnight", ["Support"], 6),
+        ("u01T", "Herald", ["Support"], 200),
+        ("n087", "PhaseGrenadier", ["Marksman"], 200),
+        ("O01P", "Chogall", ["Support"], 1),
+        ("H08Q", "Azil", ["Support"], 1),
+        ("U01S", "Feludius", ["Support"], 1),
+        ("O04H", "Ignacious", ["Tank"], 1),
+        ("u01Y", "Deathwing", ["Flyer"], 1),
+        ("A0LN", "ThunderFists", None, 0),
+        ("A024", "ThunderFistsLightning", None, 0),
+        ("R05F", "Whispers", None, 0),
+        ("R06Y", "CursedFortress", None, 0),
+        ("R07Q", "Firelord", None, 0),
+        ("R07T", "Windlord", None, 0),
+        ("R04R", "TierFour", None, 0),
+        ("R06X", "OgreTraining", None, 0),
+        ("R06Z", "HeraldTraining", None, 0),
+    ],
+    "zero_lumber": True,
+    "exclude": ["o05P", "O01Q", "O00Y", "o05K", "o05L", "odes", "obot", "ojgn", "R006", "R00C",
+                "R08S"],
+    "drop": [],
+    "extra": [('obot', 'TransportShip', [], 12), ('h0AS', 'ScoutShip', [], 200), ('h0AP', 'Frigate', [], 12),
+              ('h0B2', 'Fireship', [], 200), ('h0AY', 'Galley', [], 200), ('h0B5', 'BoardingVessel', [], 200),
+              ('h0BC', 'Juggernaut', [], 6), ('h0AO', 'Bombard', [], 6)],
+    "set": {
+        "o03D": {"umdl": "war3mapImported\\DragonDungeon.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonDungeon.blp", "utra": "o01H,n087,o04K"},
+        "o03J": {"umdl": "war3mapImported\\DragonQuarry.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonQuarry.blp", "ures": "Rosp,R023,Rhme,Rhar,=R04R,=R09X"},
+        "o03E": {"umdl": "war3mapImported\\DragonArcaneTemple.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonArcaneTemple.blp"},
+        "o03H": {"umdl": "war3mapImported\\DragonTower.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonTower.blp"},
+        "o03G": {"umdl": "war3mapImported\\DragonTower.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonTower.blp"},
+        "o03K": {"umdl": "war3mapImported\\DragonNest.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonNest.blp"},
+        "o03I": {"umdl": "war3mapImported\\OrcBarrackAlphaV2_01.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNIronHordeSummoningCircle.blp", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO", "ures": "=R006,=R00C", "ureq": ""},
+        "o039": {"utra": "o04B,o04I"},
+        "o03A": {"utra": "o04B,o04I"},
+        "o03B": {"utra": "o04B,o04I"},
+        "o03C": {"utra": "O01P,H08Q,O04H,U01S"},
+        "o04B": {"ureq": ""},
+    },
+}
+
+SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT]
 
 
 def load(map_dir):

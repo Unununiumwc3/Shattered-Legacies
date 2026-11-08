@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
@@ -141,24 +142,27 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = -982f, Y = -29010f,                // Shattrath
         Announcement = "|cffffcc00The Exodar has fallen.|r Its people return to Outland -- the Naaru welcome them in Shattrath.",
       },
-      // superseded: Twilight's Hammer (Grim Batol, reusing the Dragonmaw assets and the 24p tech trees) (P1)
-      new TurningPointDef("Frostwolf", "Dragonmaw (placeholder)", TurningPointKind.Fallback, TurningPointSource.Timeline)
+      new TurningPointDef("Frostwolf", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
         Trigger = "Thunder Bluff and Darkspear Hold are lost",
-        Description = "Placeholder: a hero appears where the orcs would start again.",
+        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twilight's Hammer.",
         Decision = HourglassData.DecisionFrostwolf, Condition = HourglassData.ConditionFrostwolf,
         Hq = new[] { 1865429066, 1865429572 }, // o00J Thunder Bluff, o02D Darkspear Hold
-        X = 14442f, Y = -2578f,                // Wetlands, next to Grim Batol
-        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r The Dragonmaw rise in Grim Batol.",
+        HeroType = 0,
+        Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
+        X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,
+        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
-      new TurningPointDef("Warsong", "Dragonmaw (placeholder)", TurningPointKind.Fallback, TurningPointSource.Timeline)
+      new TurningPointDef("Warsong", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
         Trigger = "Stonemaul Keep and Orgrimmar are lost",
-        Description = "Placeholder: a hero appears where the orcs would start again.",
+        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twilight's Hammer.",
         Decision = HourglassData.DecisionWarsong, Condition = HourglassData.ConditionWarsong,
         Hq = new[] { 1865429044, 1865429314 }, // o004 Stonemaul Keep, o01B Orgrimmar
-        X = 14442f, Y = -2578f,
-        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r The Dragonmaw rise in Grim Batol.",
+        HeroType = 0,
+        Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
+        X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,
+        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
       // evil factions: shown on the Hourglass only (greyed out, "Not available yet"), names from the concepts
       new TurningPointDef("Scourge", "Knights of the Ebon Blade (not yet)", TurningPointKind.Fallback,

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MacroTools.Spells;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using MacroTools.UnitTraits;
 using WarcraftLegacies.Source.Factions.Gilneas.Spells;
 using WarcraftLegacies.Source.Shared.Spells;
@@ -41,7 +42,7 @@ public static class SharedSpellSetup
       BonusDamageLevel = 20,
       Duration = 20,
       ReviveEffect = "Heal Blue.mdx"
-    }, UNIT_O04H_CHAMPION_OF_THE_TWILIGHT_S_HAMMER_CREEP);
+    }, new[] { UNIT_O04H_CHAMPION_OF_THE_TWILIGHT_S_HAMMER_CREEP, TwilightHammerObjects.Ignacious });
 
     var demonSoulCooldown = new CooldownReset(ABILITY_A0HF_ABILITY_COOLDOWN_RESET);
     SpellRegistry.Register(demonSoulCooldown);

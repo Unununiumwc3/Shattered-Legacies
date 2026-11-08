@@ -1,0 +1,103 @@
+{
+  "OldId": "opeo",
+  "NewId": "oZwe",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Arlm,AZw3,Arep,AZw4"
+    },
+    {
+      "Id": "ubld",
+      "Value": 2
+    },
+    {
+      "Id": "ubui",
+      "Type": 3,
+      "Value": "oZw5,oZw9,oZw3,oZw6,oZwb,oZw8,oZw4,oZw0,oZw7,uZw0"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 8
+    },
+    {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
+      "Id": "ugor",
+      "Value": 7
+    },
+    {
+      "Id": "urtm",
+      "Value": 2
+    },
+    {
+      "Id": "umvs",
+      "Value": 180
+    },
+    {
+      "Id": "utyp",
+      "Type": 3,
+      "Value": "sapper,peon"
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "RZw5,Ropg,RZw4"
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Twilight Hammer, Worker)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.85
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Maddened followers of the Old Gods.|n|cfff5962dAbilities:|r Repair, Gather|n|n|cffffcc00Attacks land units and trees."
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Cultist"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Flagellant.mdl"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNEbonBladePeasant.blp"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Train Cultist"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ]
+}

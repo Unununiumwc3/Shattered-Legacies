@@ -84,6 +84,30 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZkx` |  | `24p:A0NJ` | KezanEnterprise |
 | `AZky` |  | `24p:A07A` | KezanEnterprise |
 | `AZkz` | Gunner Pilot | `24p:A0JX` | KezanEnterprise |
+| `AZw0` |  | `24p:Argl` | TwilightHammer |
+| `AZw1` | Structure Spiked Barricade | `24p:A0CF` | TwilightHammer |
+| `AZw2` | Self-Bloodlust | `24p:A0XM` | TwilightHammer |
+| `AZw3` |  | `24p:Ahar` | TwilightHammer |
+| `AZw4` | Self Destruct | `24p:A106` | TwilightHammer |
+| `AZw5` | Hardened Scales | `24p:A0M5` | TwilightHammer |
+| `AZw6` | Self-Bloodlust | `24p:A0EH` | TwilightHammer |
+| `AZw7` | Dark Regeneration | `24p:A0YY` | TwilightHammer |
+| `AZw8` | Shadow Infusion | `24p:A0AR` | TwilightHammer |
+| `AZw9` | Thunder Fists | `24p:A0LN` | TwilightHammer |
+| `AZwa` | Mind Destruction | `24p:ANfd` | TwilightHammer |
+| `AZwb` | Living Tornado | `24p:ANsg` | TwilightHammer |
+| `AZwc` | Chilling Aura | `24p:A0ON` | TwilightHammer |
+| `AZwd` |  | `24p:A0AG` | TwilightHammer |
+| `AZwe` |  | `24p:A02P` | TwilightHammer |
+| `AZwf` | Searing Breath | `24p:A0NH` | TwilightHammer |
+| `AZwg` | Summon Cultist | `24p:A0QT` | TwilightHammer |
+| `AZwh` | Seed Growth | `24p:A04C` | TwilightHammer |
+| `AZwi` |  | `24p:AIpl` | TwilightHammer |
+| `AZwj` |  | `24p:A0OL` | TwilightHammer |
+| `AZwk` |  | `24p:A0EY` | TwilightHammer |
+| `AZwl` |  | `24p:A0O5` | TwilightHammer |
+| `AZwm` |  | `24p:A08F` | TwilightHammer |
+| `AZwn` | Thunder Fists | `24p:A024` | TwilightHammer |
 | `AZy9` | Defender Shield | `24p:A0TF` | Ashtongue |
 | `AZya` | Self-Bloodlust | `24p:A0XM` | Ashtongue |
 | `AZyb` | Thick Skin | `24p:A0VI` | Ashtongue |
@@ -97,16 +121,24 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
 | `BZf3` | Acid Rain Target | `24p:B09O` | Forsaken |
 | `BZk0` | Mage Armour | `24p:B00A` | KezanEnterprise |
+| `BZw0` |  | `24p:B07V` | TwilightHammer |
+| `BZw1` |  | `24p:B01Y` | TwilightHammer |
+| `BZw2` | Searing Breath (Effect) | `24p:X00T` | TwilightHammer |
 | `BZy1` |  | `24p:B014` | Ashtongue |
+| `HZw0` | High Priestess | `24p:H08Q` | TwilightHammer |
 | `HZy9` | The Naaru | `24p:H0AK` | Ashtongue |
 | `HZya` | High Priestess of the Aldor | `24p:H09S` | Ashtongue |
 | `IZf0` | Summon Forsaken Acolyte | `24p:I00N` | Forsaken |
 | `IZf1` | Seeds of Regrowth | `24p:I00L` | Forsaken |
 | `IZk0` | Summon Engineer | `24p:I00X` | KezanEnterprise |
 | `IZk1` | Seeds of Regrowth | `24p:I00L` | KezanEnterprise |
+| `IZw0` | Summon Cultist | `24p:I008` | TwilightHammer |
+| `IZw1` | Seeds of Regrowth | `24p:I00L` | TwilightHammer |
 | `NZk3` | Chief Engineer | `24p:Ntin` | KezanEnterprise |
 | `NZk4` | Baron of Gadgetzan | `24p:Nalc` | KezanEnterprise |
 | `OZki` | Trade Prince of the Bilgewater Cartel | `24p:O04N` | KezanEnterprise |
+| `OZwh` | Leader of the Twilight's Hammer | `24p:O01P` | TwilightHammer |
+| `OZwi` | Fire Ascendant | `24p:O04H` | TwilightHammer |
 | `RZf0` | Quest Completed: Forsaken Independance | `24p:R04X` | Forsaken |
 | `RZf1` | Quest Completed: The Secret Buildup | `24p:R04Z` | Forsaken |
 | `RZf2` | Tier 4 | `24p:R04R` | Forsaken |
@@ -134,11 +166,23 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZka` | Solo Upgrade | `24p:Rguv` | KezanEnterprise |
 | `RZkb` |  | `24p:Ropm` | KezanEnterprise |
 | `RZkc` | Needs to be Made | `24p:R03N` | KezanEnterprise |
+| `RZw0` | Tier 4 | `24p:R04R` | TwilightHammer |
+| `RZw1` | Magi Adept Training | `24p:R06X` | TwilightHammer |
+| `RZw2` | Herald Adept Training | `24p:R06Z` | TwilightHammer |
+| `RZw3` | Spiritual Infusion | `24p:R023` | TwilightHammer |
+| `RZw4` | Solo Upgrade | `24p:Rguv` | TwilightHammer |
+| `RZw5` | Horde War Machine | `24p:R021` | TwilightHammer |
+| `RZw6` | Needs to be Made | `24p:R03N` | TwilightHammer |
+| `RZw7` | Quest Completed: Spread the Words of the Old God | `24p:R05F` | TwilightHammer |
+| `RZw8` | Quest Completed: The Cursed Fortress | `24p:R06Y` | TwilightHammer |
+| `RZw9` | Quest Completed: Gift of the Firelord | `24p:R07Q` | TwilightHammer |
+| `RZwa` | Quest Completed: Gift of the Windlord | `24p:R07T` | TwilightHammer |
 | `RZy3` | Solo Upgrade | `24p:Rguv` | Ashtongue |
 | `RZy4` | Spiritual Infusion | `24p:R023` | Ashtongue |
 | `RZy5` | Needs to be Made | `24p:R03N` | Ashtongue |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
+| `UZw2` | Windlord | `24p:U01S` | TwilightHammer |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
 | `hZf1` | Grim Estate | `24p:h08A` | Forsaken |
 | `hZf2` | Haunted Castle | `24p:h08B` | Forsaken |
@@ -168,6 +212,14 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZk1` |  | `24p:n062` | KezanEnterprise |
 | `nZk2` | Oil Rig | `24p:n0AQ` | KezanEnterprise |
 | `nZk5` | Trading Zeppelin | `24p:nzep` | KezanEnterprise |
+| `nZw0` |  | `24p:n051` | TwilightHammer |
+| `nZw1` |  | `24p:n07X` | TwilightHammer |
+| `nZw2` | Twilight Dragonspawn | `24p:n083` | TwilightHammer |
+| `nZw3` | Orcish Death Knight | `24p:n09O` | TwilightHammer |
+| `nZw4` | Phase Grenadier | `24p:n087` | TwilightHammer |
+| `nZw5` | Hurricane | `24p:n069` | TwilightHammer |
+| `nZw6` | Hurricane | `24p:n06A` | TwilightHammer |
+| `nZw7` | Hurricane | `24p:n06B` | TwilightHammer |
 | `nZy1` | Lightforged Warframe | `24p:n0DA` | Ashtongue |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `oZk0` |  | `24p:o03L` | KezanEnterprise |
@@ -190,6 +242,23 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
 | `oZkj` | Kezan Trading Center | `24p:o04M` | KezanEnterprise |
 | `oZkk` | Oil Tanker | `24p:o04S` | KezanEnterprise |
+| `oZw0` |  | `24p:o039` | TwilightHammer |
+| `oZw1` |  | `24p:o03A` | TwilightHammer |
+| `oZw2` |  | `24p:o03B` | TwilightHammer |
+| `oZw3` | Altar of Visions | `24p:o03C` | TwilightHammer |
+| `oZw4` | War Camp | `24p:o03D` | TwilightHammer |
+| `oZw5` |  | `24p:o03J` | TwilightHammer |
+| `oZw6` | Grim Totem | `24p:o03E` | TwilightHammer |
+| `oZw7` | Dragon Hatchery | `24p:o03F` | TwilightHammer |
+| `oZw8` | Twilight Dock | `24p:o03I` | TwilightHammer |
+| `oZw9` | Twilight Lookout | `24p:o03G` | TwilightHammer |
+| `oZwa` | Improved Twilight Lookout | `24p:o03H` | TwilightHammer |
+| `oZwb` | Twilight Burrow | `24p:o03K` | TwilightHammer |
+| `oZwc` | Void Rider | `24p:o04J` | TwilightHammer |
+| `oZwd` | Twilight Hammer Enforcer | `24p:o01H` | TwilightHammer |
+| `oZwe` | Cultist | `24p:o04B` | TwilightHammer |
+| `oZwf` | Battlemaster | `24p:o04I` | TwilightHammer |
+| `oZwg` | Skull Catapult | `24p:o04K` | TwilightHammer |
 | `oZy3` | Defender | `24p:o05B` | Ashtongue |
 | `oZy4` | Luminarch | `24p:o05C` | Ashtongue |
 | `oZy5` | Elementalist | `24p:o05D` | Ashtongue |
@@ -211,3 +280,6 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `uZfh` | Corsair | `24p:udes` | Forsaken |
 | `uZfi` | Banshee Spirits | `24p:u00O` | Forsaken |
 | `uZk0` | Fuel Transport Vehicle | `24p:u028` | KezanEnterprise |
+| `uZw0` | Voodoo Lounge | `24p:u00Y` | TwilightHammer |
+| `uZw1` | Herald | `24p:u01T` | TwilightHammer |
+| `uZw3` | Deathwing | `24p:u01Y` | TwilightHammer |
