@@ -5,6 +5,12 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.66.0 — worker build menus, hall tiers and altar queues (playtest candidate)
+
+- Build the local settlement from available worker commands and faction prerequisites. Cover support buildings and ordinary morphs before duplicating producers. Check footprint spacing, rally exits and shore access.
+- Reserve delayed construction funds from army spending. Start legal hall tiers without capture credits. Replace timed direct revival with free native altar recruitment and revival.
+- Remove the bot Legion starter grant. Stagger event-driven planning with round-robin service. Dump site probes and native build attempts.
+
 ## 0.65.2 — construction in crowded bases (playtest candidate)
 
 - Search smaller lots starting at 256 units from the anchor. Prefer buildable terrain and let the native worker order test custom placements. Reuse each anchor's candidate list across worker menus in a planning pass.

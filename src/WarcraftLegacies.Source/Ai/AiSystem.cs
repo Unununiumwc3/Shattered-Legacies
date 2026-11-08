@@ -373,7 +373,6 @@ namespace WarcraftLegacies.Source.Ai
     private const int FoodFloor = 100;             // 0.36: bots' food cap never below this (humans kill farms)
     public static int BotGoldBonus = 0;      // v13/v21/v24: flat gold per bot per production service; set live with -gold*
                                              // 0.43.1: default 0 (= Veteran); negative = bots lose gold (Recruit, Soldier)
-    private const float ReviveEvery = 180.0f; // v13: free hero revival for bots every 3 min
     private const float DiagEvery = 3.0f;
     internal const int DefendThreshold = 5;         // Rule 0: recall if >N enemies near an owned anchor
     private const float DefendRadius = 1500f;      // how close counts as "at my base/CP"
@@ -601,7 +600,6 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.Add("combat", R2I(Tick / AiScheduler.SlotSeconds + 0.5f), 0, OnCombatTick, false);
       AiScheduler.Add("production", R2I(ProdTick / AiScheduler.SlotSeconds + 0.5f), 1, OnProductionTick, false);
       AiScheduler.Add("legion events", 8, 3, AiLegion.OnEventCheck, true); // every 2 s
-      AiScheduler.Add("hero revive", R2I(ReviveEvery / AiScheduler.SlotSeconds + 0.5f), 15, OnHeroReviveTick, true);
       RegisterWaveTasks();
       AiRoutes.Setup(); // 0.42: rock / area / waygate checks for the route planner
       AiBuilder.Setup(); // [BOT] native worker construction, recovery and forward bases
@@ -609,10 +607,6 @@ namespace WarcraftLegacies.Source.Ai
       AiLoad.Setup();   // 0.46: guard positions, order-latency probe
       AiScheduler.Start();
 
-      // v34: a bot Legion starts in ARGUS (its map start): its workers there become buildings (the v24
-      // Northrend base is gone). Argus reaches Northrend through the portal until the summon.
-      var legionBase = CreateTimer();
-      TimerStart(legionBase, 3.0f, false, AiLegion.SpawnLegionBase);
       var portals = CreateTimer();
       TimerStart(portals, 2.0f, false, AiLegion.SetupPortals);
     }
@@ -660,13 +654,16 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
-    private static readonly Dictionary<string, float> _heroRefused = new(); // 0.38: "pid|hero" -> retry time
 
     private static void TrainSome(unit building, List<int> pool)
     {
       for (var i = 0; i < QueuePerBuilding; i++)
       {
-        IssueImmediateOrderById(building, pool[GetRandomInt(0, pool.Count - 1)]);
+        var type = pool[GetRandomInt(0, pool.Count - 1)];
+        if (AiBuilder.CanBuy(GetOwningPlayer(building), type))
+        {
+          IssueImmediateOrderById(building, type);
+        }
       }
     }
 
@@ -677,14 +674,39 @@ namespace WarcraftLegacies.Source.Ai
     // 0.38: new heroes are FREE for bots with perks (like researches and upgrades: AiTech.FreeOrder tops up the gold
     // for the order only). A bot without perks (fair autopilot) pays and returns true = SAVE gold this turn when an
     // available hero is too expensive. Candidates: AiConfig.Heroes (priority order, e.g. Arthas first), then every
-    // other hero this altar trains (AiData.AltarHeroes). A hero WC3 refuses anyway is skipped for 5 min.
-    private static bool TrainHeroes(unit altar, Faction faction, player p)
+    // other hero this altar trains (AiData.AltarHeroes). Native refusals are retried on later altar visits.
+    private static readonly Dictionary<string, unit> HeroOrders = new();
+
+    internal static void EndHeroOrder(player p, int type)
+    {
+      HeroOrders.Remove(I2S(GetPlayerId(p)) + "|" + I2S(type));
+    }
+
+    private static bool HeroQueued(player p, int type)
+    {
+      var key = I2S(GetPlayerId(p)) + "|" + I2S(type);
+      if (HeroOrders.TryGetValue(key, out var altar))
+      {
+        if (GetOwningPlayer(altar) == p && GetUnitState(altar, UNIT_STATE_LIFE) > 0.405f && GetUnitCurrentOrder(altar) != 0)
+        {
+          return true;
+        }
+        HeroOrders.Remove(key);
+      }
+      return false;
+    }
+
+    internal static bool TrainHeroes(unit altar, Faction faction, player p)
     {
       if (GetUnitCurrentOrder(altar) != 0)
       {
         return false; // altar already training or reviving something
       }
 
+      if (TryReviveAtAltar(p, altar))
+      {
+        return false;
+      }
       var cand = new List<int>();
       if (AiConfig.Heroes.TryGetValue(faction.Name, out var ids) && ids != null)
       {
@@ -707,7 +729,6 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      var pid = GetPlayerId(p);
       for (var i = 0; i < cand.Count; i++)
       {
         var hid = cand[i];
@@ -716,21 +737,17 @@ namespace WarcraftLegacies.Source.Ai
           continue; // v28: died permanently (e.g. Cenarius) -- WL would adopt a re-trained copy, so never train it
         }
 
-        if (HaveLiveHero(p, hid) || !RequirementsMet(p, hid))
+        if (HeroQueued(p, hid) || HaveHero(p, hid) || !RequirementsMet(p, hid))
         {
           continue; // already alive, or still locked (quest not done)
-        }
-
-        var key = I2S(pid) + "|" + I2S(hid);
-        if (_heroRefused.ContainsKey(key) && _clock < _heroRefused[key])
-        {
-          continue;
         }
 
         var perks = HasPerks(p);
         if (perks ? AiTech.FreeOrder(p, altar, hid) : IssueImmediateOrderById(altar, hid))
         {
-          return false; // trained a new hero, or revived a dead one; one per altar per cycle
+          HeroOrders[I2S(GetPlayerId(p)) + "|" + I2S(hid)] = altar;
+          Log("altar: " + FacName(p) + " training " + GetObjectName(hid));
+          return false;
         }
 
         if (!perks && GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) < GetUnitGoldCost(hid))
@@ -738,7 +755,6 @@ namespace WarcraftLegacies.Source.Ai
           return true; // available but too expensive right now -> save
         }
 
-        _heroRefused[key] = _clock + 300f; // refused for another reason (limit, hero cap ...)
       }
 
       return false;
@@ -808,7 +824,7 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         var t = avail[best];
-        if (IssueImmediateOrderById(building, t))
+        if (AiBuilder.CanBuy(GetOwningPlayer(building), t) && IssueImmediateOrderById(building, t))
         {
           queued++;
           AiStats.Planned(pid, t); // counts the order, so the next slot picks another type
@@ -820,7 +836,7 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static bool HaveLiveHero(player p, int heroType)
+    private static bool HaveHero(player p, int heroType)
     {
       // 0.37: a later form of the same legend counts too (AiConfig.HeroForms: Arthas UEAR -> N023 after "The
       // Ascension"), otherwise the bot would train the first form again
@@ -830,7 +846,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         var hu = all[i].Unit;
         if (hu != null && (all[i].UnitType == heroType || (later != 0 && all[i].UnitType == later))
-            && GetOwningPlayer(hu) == p && GetUnitState(hu, UNIT_STATE_LIFE) > 0.405f)
+            && GetOwningPlayer(hu) == p && GetUnitTypeId(hu) != 0)
         {
           return true;
         }
@@ -839,8 +855,6 @@ namespace WarcraftLegacies.Source.Ai
       return false;
     }
 
-    // v13: bring back bots' dead (non-perma) heroes for free every few minutes, at their start location.
-    // Bots are too gold-starved to pay altar revive costs, so heroes were staying dead.
     // 0.35.3: the bot's living altar nearest to (x, y), or null
     internal static unit FindAltar(player p, float x, float y)
     {
@@ -880,63 +894,28 @@ namespace WarcraftLegacies.Source.Ai
       return best;
     }
 
-    private static void OnHeroReviveTick()
+    private static bool TryReviveAtAltar(player p, unit altar)
     {
-      if (BotBreak)
-      {
-        return;
-      }
-
       var heroes = LegendaryHeroManager.GetAll();
-      for (var b = 0; b < Bots.Count; b++)
+      for (var i = 0; i < heroes.Count; i++)
       {
-        var p = Bots[b];
-        if (!HasPerks(p))
+        var hero = heroes[i].Unit;
+        if (hero == null || GetUnitTypeId(hero) == 0 || GetOwningPlayer(hero) != p
+            || GetUnitState(hero, UNIT_STATE_LIFE) > 0.405f || GetUnitAbilityLevel(hero, PermaDiesMarker) > 0
+            || PermaDead.Contains(heroes[i].UnitType) || HeroQueued(p, GetUnitTypeId(hero)))
         {
-          continue; // 0.35: fair autopilot -- heroes are revived at the altar like a player's
+          continue;
         }
-
-        var loc = GetPlayerStartLocation(p);
-        var hx = GetStartLocationX(loc);
-        var hy = GetStartLocationY(loc);
-        unit altar = null;
-        var altarLooked = false;
-        for (var i = 0; i < heroes.Count; i++)
+        var accepted = HasPerks(p) ? AiTech.FreeOrder(p, altar, 852039, hero)
+                                   : IssueTargetOrderById(altar, 852039, hero);
+        if (accepted)
         {
-          var hu = heroes[i].Unit;
-          if (hu == null || GetUnitTypeId(hu) == 0)
-          {
-            continue; // never had a unit, or WL already removed it (perma-death disposes the unit)
-          }
-
-          if (GetOwningPlayer(hu) != p || GetUnitState(hu, UNIT_STATE_LIFE) > 0.405f)
-          {
-            continue;
-          }
-
-          // v28: perma-death guard. 'LEgo' = WL's PermaDies marker ability (readable even though the C# property
-          // is set-only); PermaDead = types WL reported as permanently killed. Either -> stays dead.
-          if (GetUnitAbilityLevel(hu, PermaDiesMarker) > 0 || PermaDead.Contains(heroes[i].UnitType))
-          {
-            continue;
-          }
-
-          // 0.35.3: only with a living altar, and the hero appears at that altar (nearest to the start location)
-          if (!altarLooked)
-          {
-            altar = FindAltar(p, hx, hy);
-            altarLooked = true;
-          }
-
-          if (altar == null)
-          {
-            continue;
-          }
-
-          ReviveHero(hu, GetUnitX(altar), GetUnitY(altar), true);
-          Log("P" + I2S(GetPlayerId(p)) + " " + FacName(p) + ": free revive " + GetUnitName(hu) + " at " + GetUnitName(altar));
+          HeroOrders[I2S(GetPlayerId(p)) + "|" + I2S(GetUnitTypeId(hero))] = altar;
+          Log("altar: " + FacName(p) + " reviving " + GetUnitName(hero));
+          return true;
         }
       }
+      return false;
     }
 
     // v28: subscribe to every registered LegendaryHero's Died event (append-only list -> hook only the new ones;
@@ -1015,7 +994,8 @@ namespace WarcraftLegacies.Source.Ai
         if (perks)
         {
           var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + GoldBonusFor(p); // v13: subsidy; v31: per faction
-          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold < 0 ? 0 : gold); // 0.43.1: may be negative (easy votes)
+          var reserved = AiBuilder.Reserved(p, true);
+          SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold < reserved ? reserved : gold); // 0.43.1: may be negative (easy votes)
           var techLvl = R2I(_clock / 600f); // v21: 0 before 10 min, then +1 every 10 min
           if (techLvl > 5)
           {
@@ -1068,8 +1048,10 @@ namespace WarcraftLegacies.Source.Ai
 
         // v33: BUILDING/MISC pool -- one credit per 2 CPs captured (no timer); spent after the structure scan.
         var bCredits = perks ? caps / 2 - (_bSpent.ContainsKey(pid0) ? _bSpent[pid0] : 0) : 0;
-        unit upHall = null;
-        unit upOther = null;
+        var hallTypes = new List<int>();
+        AddCategory(faction, UnitCategory.TownHall, hallTypes);
+        AddCategory(faction, UnitCategory.Keep, hallTypes);
+        AddCategory(faction, UnitCategory.Castle, hallTypes);
 
         var barracks = new List<int>();
         AddCategory(faction, UnitCategory.Barracks, barracks);
@@ -1128,21 +1110,6 @@ namespace WarcraftLegacies.Source.Ai
             AiTech.TryQuestUpgrade(p, u, tid);  // v34: quest building upgrades (Stormwind's Construction Sites)
             AiTech.TryTimedUpgrade(p, u, tid);  // 0.36: timed building upgrades (Fel Horde demon gates)
           }
-          if (bCredits > 0 && AiUpgrades.BuildingUpgrades.ContainsKey(tid) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
-          {
-            if (IsUnitType(u, UNIT_TYPE_TOWNHALL))
-            {
-              if (upHall == null)
-              {
-                upHall = u;
-              }
-            }
-            else if (upOther == null)
-            {
-              upOther = u;
-            }
-          }
-
           // 0.38: collect first, train after the loop -- heroes before units (see below)
           if (ListHas(altars, tid) || AiData.AltarHeroes.ContainsKey(tid))
           {
@@ -1176,6 +1143,11 @@ namespace WarcraftLegacies.Source.Ai
         {
           var tu = trainers[ti];
           var ttid = GetUnitTypeId(tu);
+          if (perks && (hallTypes.Contains(ttid) || IsUnitType(tu, UNIT_TYPE_TOWNHALL))
+              && AiBuilder.NeedsHallQueue(p, tu))
+          {
+            continue;
+          }
           if (AiData.Trains.ContainsKey(ttid))
           {
             // 0.38: the building's REAL train list; 0.46: no casters while they are 35 % or more of the units
@@ -1200,7 +1172,7 @@ namespace WarcraftLegacies.Source.Ai
         }
         if (bCredits > 0)
         {
-          AiTech.SpendBuildingCredit(p, pid0, upHall, upOther);
+          AiTech.SpendBuildingCredit(p, pid0);
         }
       }
 
@@ -2799,6 +2771,7 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void RemoveBot(player p)
     {
+      AiBuilder.Release(p);
       // 0.35.2: by player id, not by object -- make sure the slot really leaves the bot list
       var id = GetPlayerId(p);
       for (var i = Bots.Count - 1; i >= 0; i--)
@@ -2998,7 +2971,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.65.2";
+    public const string Build = "0.66.0";
 
     public static void Setup()
     {

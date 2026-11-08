@@ -10,7 +10,7 @@ using WarcraftLegacies.Source.Factions.Legion.Quests;
 
 namespace WarcraftLegacies.Source.Ai
 {
-  // 0.35.0: split out of SimpleBot (AiSystem.cs) -- Legion summon and betrayal, Argus start base, node events (Sunwell), WL demon portal fix and all AI portals (ships + Argus hub).
+  // 0.35.0: split out of SimpleBot (AiSystem.cs) -- Legion summon and betrayal, node events (Sunwell), WL demon portal fix and all AI portals (ships + Argus hub).
   // Its own class because CSharp.lua turns every static member of a class into a Lua local of one function
   // (limit 200); SimpleBot had outgrown that. Shared state lives in SimpleBot / AiState as internal (not readonly).
   internal static class AiLegion
@@ -45,66 +45,6 @@ namespace WarcraftLegacies.Source.Ai
       }
 
       SimpleBot.Log("Legion betrayal: " + I2S(give.Count) + " northern CPs handed to the Scourge");
-    }
-
-    // A minimal, functional Legion base beside the Crystalsong Forest CP: a town hall, an altar, a couple of
-    // farms for food, and 5 producers -- all pulled from Legion's own faction categories. Bots only, so a
-    // human Legion is never handed free structures. Ids come from the faction, so a WL rename can't wrong-spawn.
-    internal static void SpawnLegionBase()
-    {
-      var legion = SimpleBot.PlayerOfFaction("Legion");
-      if (legion == null || !SimpleBot.IsBot(legion))
-      {
-        return;
-      }
-
-      var fac = legion.GetPlayerData().Faction;
-      if (fac == null)
-      {
-        return;
-      }
-
-      // 0.65: preserve the Legion Herald workers for AiBuilder. The bespoke Argus structures
-      // remain as a scenario exception until their native build menus are tested.
-      // 0.34.3: each building gets its own open spot (searched outward from the start location, footprint
-      // checked, kept apart from the others) -- the old fixed ring of 8 found only 1 walkable spot in Argus.
-      // 5 barracks, 1 altar, 2 farms.
-      // 0.39: a mix of production buildings (AiConfig.LegionArgusProduction) -- 5 Nether Pits only trained Felguards
-      var types = new List<int>();
-      for (var i = 0; i < AiConfig.LegionArgusProduction.Count; i++)
-      {
-        types.Add(AiConfig.LegionArgusProduction[i]);
-      }
-
-      AddFirstOf(fac, UnitCategory.Altar, types);
-      AddFirstOf(fac, UnitCategory.Farm, types);
-      AddFirstOf(fac, UnitCategory.Farm, types);
-      var placed = 0;
-      var fixedUsed = 0;
-      var usedX = new List<float>();
-      var usedY = new List<float>();
-      for (var i = 0; i < types.Count; i++)
-      {
-        // 0.36: fixed, offline-checked spots first (AiWorld.ArgusSpotX/Y); the ring search only as a fallback
-        if (i < AiWorld.ArgusSpotX.Length && FootprintWalkable(AiWorld.ArgusSpotX[i], AiWorld.ArgusSpotY[i], 144f))
-        {
-          SimpleBot._spotX = AiWorld.ArgusSpotX[i];
-          SimpleBot._spotY = AiWorld.ArgusSpotY[i];
-          fixedUsed++;
-        }
-        else if (!FindBuildSpot(AiWorld.LegionStartX, AiWorld.LegionStartY, usedX, usedY))
-        {
-          continue;
-        }
-
-        CreateUnit(legion, types[i], SimpleBot._spotX, SimpleBot._spotY, 270f);
-        usedX.Add(SimpleBot._spotX);
-        usedY.Add(SimpleBot._spotY);
-        placed++;
-      }
-
-      SimpleBot.LogPin("Legion: Argus start -- " + I2S(placed) + " of "
-                       + I2S(types.Count) + " buildings (" + I2S(fixedUsed) + " on fixed spots)");
     }
 
     // open ground for a ~512-wide building: rings 500..2000 out, 16 directions; centre and 4 corners walkable and
@@ -152,16 +92,6 @@ namespace WarcraftLegacies.Source.Ai
              && !IsTerrainPathable(x - h, y + h, PATHING_TYPE_WALKABILITY)
              && !IsTerrainPathable(x + h, y - h, PATHING_TYPE_WALKABILITY)
              && !IsTerrainPathable(x - h, y - h, PATHING_TYPE_WALKABILITY);
-    }
-
-    private static void AddFirstOf(Faction fac, UnitCategory cat, List<int> into)
-    {
-      var ids = new List<int>();
-      SimpleBot.AddCategory(fac, cat, ids);
-      if (ids.Count > 0)
-      {
-        into.Add(ids[0]);
-      }
     }
 
     // v15: fire a node's event once, when a bot of its ByFaction owns that control point.

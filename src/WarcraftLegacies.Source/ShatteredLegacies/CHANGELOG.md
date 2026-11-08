@@ -4,6 +4,10 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.66.0 — bot economy playtest
+
+Pass timeline HQs and fork worker menus to the bot. The Argus opening, worker construction and altar queues are described in `../Ai/BUILDING_DESIGN.md`.
+
 ## 0.65.2 — bot construction playtest candidate
 
 Worker placement and scheduling changes are documented in `../Ai/CHANGELOG.md`.

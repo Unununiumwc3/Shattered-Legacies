@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
@@ -17,6 +18,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       // Enterprise's heroes -- Gallywix first. 0.58: the Enterprise is a faction of its own with the 24p goblin tree
       // (KezanEnterpriseObjects); Katherine comes along by the fallback.
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
+      AiApi.AddBuildData(SlBuildData.Menus, SlBuildData.Products, SlBuildData.Upgrades, SlBuildData.Required, SlBuildData.HalfWidth);
+      foreach (var def in TimelineCatalog.All)
+      {
+        if (def.Hq.Length > 0)
+        {
+          AiApi.RegisterHeadquarters(def.Faction, def.Hq);
+        }
+      }
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int>
         { KezanEnterpriseObjects.Gallywix, KezanEnterpriseObjects.Gazlowe, KezanEnterpriseObjects.Noggenfogger });
       // 0.63: the Ashtongue -- Akama, and Xi'ri once Karabor is restored (Ishanah is placed by code, never trained)

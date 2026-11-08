@@ -8,35 +8,16 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.65.2** (crowded-base placement and concurrent HQ construction; needs playtest). The older 0.52 phase plan below is historical. History: `CHANGELOG.md`; measurements:
-`MEASUREMENTS.md`; what was learned: `AI_AGENTS_CONTEXT.md` "Movement: hard-learned facts".
+Working patch: **0.66.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
 
-## Current priorities (0.65.2)
+## Current priorities (0.66.0)
 
-The original 0.51 movement pass remains the baseline. **Do not start the old phase-2 rewrite before testing
-construction.** Implementation detail and acceptance cases: [`BUILDING_DESIGN.md`](BUILDING_DESIGN.md).
+1. **[you/ai] Production coverage.** Record the first research building, first higher-tier producer and second producer per type. Verify Legion constructs on Argus, and check late faction workers after a switch.
+2. **[you/ai] Hall and altar queues.** Verify immediate tier upgrades when legal, native revives with the original hero and prompt quest-unlocked recruitment.
+3. **[you/ai] Economy.** Test two overlapping zero-balance builds, cancellations, fair autopilot and regular troop costs.
+4. **[you/ai] Recovery and exits.** Check tight city lots, shoreline yards, loss of the opening base and strategic HQ/CP recovery. Check 10/20-CP forward bases.
+5. **[you/ai] Engine load.** Compare builder probes, orders, scheduler peaks and actual multiplayer responsiveness with 0.65.2.
 
-1. **[you/ai] Re-test construction coverage and speed (0.65.2). Compare faction-tagged starts, finishes and first troops at 3 and 6 minutes. Verify two workers build different producers and cancellations free only their own reservation.** The 0.65.0 dumps at 5:00, 10:00, 12:22
-   showed only Frostwolf, Illidan, Skywall accepting construction orders. Two projects occupied their only slot for
-   >3 minutes before timing out. The initial 1500-unit safety check also treated neutral passive map objects as
-   threats. 0.65.1 excludes passive neutrals, reduces scheduling/plan delays, adds native worker detection, and
-   records an `idle:` reason per faction. Check `-dump` after 3 and 6 minutes for **every faction**: missing
-   producers, no workers, no placement, rejected native orders, or already satisfied. Do not assume all factions
-   need new buildings; record actual missing producer types. Check construct-start and construct-finish events.
-2. **[you/ai] Faction coverage.** Run Sunfury, Forsaken, Kezan Enterprise, Legion and regular WL factions.
-   Check town hall -> worker training and worker -> building orders. Initial production and late arrivals no longer
-   get free buildings automatically; missing build menus can therefore leave a faction unable to train.
-3. **[you/ai] HQ lost and zero CPs.** With one surviving worker, destroy its HQ and every owned CP. A reachable,
-   safe **allied CP** is the first fallback; if none exists, use the worker's safe local area. Also test an existing
-   hall with no workers, and no surviving worker/hall (perked-only emergency worker).
-4. **[you/ai] Forward bases / balance.** 10 owned CPs -> two bases total; 20 -> three bases total; absolute cap
-   **three including HQ**. Allied CPs can anchor a base around two walking edges behind the front. Each new base
-   has one hall and **two** military production buildings in total. Do not require workers to cross seas/portals.
-5. **[ai] Construction hardening after coverage is measurable.** Generate worker -> build menu (`ubui`) and
-   hall -> worker (`utra`) data rather than relying on order acceptance and a short blacklist. Decide whether
-   several workers may build at once per faction; currently there is still **one pending project** per bot.
-   Test native order/cost timing, inaccessible pathing, construction completion, abandoned half-built structures,
-   and CPU impact (the scheduler's `builder` ops=0 is not a wall-time measurement).
 6. **[ai] Economy and siege.** Ignore the food budget temporarily while a defended HQ is under siege; refine
    worker numbers, production priority, autocast and the mix of scarce-unit spending.
 7. **[ai] Dynamic instances.** Runtime graph nodes/edges for Undercity and successor-faction content. Keep

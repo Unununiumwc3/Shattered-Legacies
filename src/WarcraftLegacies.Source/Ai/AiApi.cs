@@ -66,6 +66,24 @@ namespace WarcraftLegacies.Source.Ai
       Merge(AiData.HeroSkills, heroSkills);
     }
 
+    public static void AddBuildData(Dictionary<int, int[]> menus, Dictionary<int, int[]> products,
+      Dictionary<int, int[]> upgrades, Dictionary<int, int[]> required, Dictionary<int, int> halfWidth)
+    {
+      Merge(AiBuildData.Menus, menus);
+      Merge(AiBuildData.Products, products);
+      Merge(AiBuildData.Upgrades, upgrades);
+      Merge(AiBuildData.Required, required);
+      foreach (var entry in halfWidth)
+      {
+        AiBuildData.HalfWidth[entry.Key] = entry.Value;
+      }
+    }
+
+    public static void RegisterHeadquarters(string faction, int[] types)
+    {
+      AiBuildSites.Headquarters[faction] = types;
+    }
+
     // 0.54: the bot takes over a player and plays it from now on, with the full bot treatment -- the same as for a
     // leaving human (AiAutopilot.TakeOverLeaver). For a fork that hands a faction to a free slot mid-game. False if
     // the player has no faction (or it is defeated).

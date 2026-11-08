@@ -58,19 +58,6 @@ public static class AiWorld
   // 0.49: the v34 Argus hub constants (bot portal Argus <-> Northrend / Felwood, the Legion's host collected at Felwood,
   // WL's Demon Portal moved beside Quel'Danas) are gone -- the Legion arrives through WL's own Demon Portal at the
   // ritual's caster, and Argus <-> Tomb of Sargeras is a bot pseudo-portal (AiPortals).
-  //  * Legion start (bot only): its Argus workers are replaced by buildings around the start location.
-  public const float LegionStartX = 18816f;
-  public const float LegionStartY = -30784f;
-  public const int LegionHeraldId = 1966092356;          // u00D Legion Herald (worker)
-
-  // 0.36: fixed building spots for the bot Legion's Argus start (the ring search found room for only 3 of 8).
-  // Computed offline from mapdata PathingMap.json (tools/shattered-legacies/ai/map_query.py): each 288x288 footprint fully walkable,
-  // >= 200 from preplaced units, >= 384 apart, nearest first; a flood fill with all 8 placed (plus a one-unit lane
-  // around each) still reaches the Argus portal, Antoran Wastes, Nath'raxas Hold and the east. Order = placement
-  // order (5 barracks, altar, 2 farms). A spot that is not walkable at runtime falls back to the ring search.
-  public static readonly float[] ArgusSpotX = { 19352f, 18840f, 19736f, 19800f, 20568f, 19864f, 19096f, 19480f };
-  public static readonly float[] ArgusSpotY = { -31016f, -30120f, -30184f, -31336f, -30952f, -28712f, -28456f, -28456f };
-
   // v34.1: Kul Tiras' starting quest ("The Admiralty of Kul Tiras") crashes in WL's reward code (a '%' in the
   // City of Admirals text breaks WL's text replacement) BEFORE it hands over the base. The AI repairs that
   // step: Neutral-Passive units left in WL's Kul Tiras rescue area (Regions.Kultiras) are rescued for Kul Tiras.
@@ -261,9 +248,6 @@ public static class AiConfig
   public static readonly float[] FeathermoonSpotY = { -9904f, -9888f, -9504f };
   // 0.39: when the Scourge's "Plague of Undeath" lands, a bot Legion's army is moved to Alterac Mountains
   public const int AlteracCpId = 1848652089;
-  // 0.39: the bot Legion's Argus production buildings (instead of 5 Nether Pits): Nether Pit x2, Summoning Circle,
-  // Infernal Siegeworks, Demon Gate -> more unit variety from the start
-  public static readonly List<int> LegionArgusProduction = new() { 1848652881, 1848652881, 1966092342, 1848652878, 1852075367 };   // 0.38: the Legion's book quest -> summon (bot Legion)
   public const int GilneasCityCpId = 1848652854;           // "greymane" opens when a player owns it
   public const string TombQuestTitle = "Tomb of Sargeras"; // "tomb" opens when this shared quest is complete
 

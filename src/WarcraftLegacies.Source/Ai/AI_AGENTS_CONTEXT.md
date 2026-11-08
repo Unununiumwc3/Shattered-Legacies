@@ -22,23 +22,9 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## State of the work (0.65.0 candidate) -- `TODO.md` "Current priorities" first
+## Current development build (0.66.0)
 
-- **0.65 is a construction development patch, not a verified release.** New `AiBuilder.cs` manages one real
-  worker build order per bot, monitors native construct start/finish/cancel events, trains workers, and recovers
-  missing faction production. `AiBuildSites.cs` anchors on the remembered original HQ when safe, otherwise on a
-  *reachable* owned/allied CP, otherwise on the surviving worker. Native build orders can be refused by faction
-  build menus; see `BUILDING_DESIGN.md` for tests and limitations.
-- **Forward production**: at 10/20 owned CPs permit two/three total bases (HQ included), no more than three.
-  Allied CPs may anchor a new hall about two walking edges behind the army front; each expansion gets two
-  production buildings **total**. Factions that have no valid building worker need separate handling.
-- **Former worker-destruction starter kit and instant-production passes removed** from `AiMissions`; successor
-  calls to `AiApi.GiveStarterProduction` now request an early builder evaluation. The special Legion Argus
-  building handout remains, but Herald workers are preserved.
-- **Await a real map build and playtests** for worker/build-menu eligibility, free construction cost timing,
-  base recovery, narrow passages, and event callbacks. The submitted source archive doesn't include a full
-  project checkout; Git patch validation alone cannot verify runtime behavior. Debug permissions remain a 1.0
-  release item, unchanged.
+Read `BUILDING_DESIGN.md` and the current priorities in `TODO.md` for worker menus, first-copy coverage, duplicate producers, hall upgrades and the native altar queue. Regenerate construction tables with `tools/shattered-legacies/ai/gen_build_data.py` and verify them with `check_build_data.py`. Include the stock 1.36 UnitLoader and enum, the main map UnitData and WarcraftLegacies.Shared in the sparse checkout. A real map build and combined playtest are still required.
 
 ## Historical state of the work (0.52.0; the below documents the movement milestone)
 

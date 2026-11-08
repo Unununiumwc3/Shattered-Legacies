@@ -83,15 +83,9 @@ namespace WarcraftLegacies.Source.Ai
     }
     private static readonly Dictionary<int, int> _miscIdx = new();
 
-    internal static void SpendBuildingCredit(player p, int pid, unit hall, unit other)
+    internal static void SpendBuildingCredit(player p, int pid)
     {
       var spent = SimpleBot._bSpent.ContainsKey(pid) ? SimpleBot._bSpent[pid] : 0;
-      if (TryFreeUpgrade(p, hall, spent) || TryFreeUpgrade(p, other, spent))
-      {
-        SimpleBot._bSpent[pid] = spent + 1;
-        return;
-      }
-
       var mi = _miscIdx.ContainsKey(pid) ? _miscIdx[pid] : 0;
       if (mi < AiUpgrades.MiscAll.Count)
       {
@@ -102,36 +96,14 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    private static bool TryFreeUpgrade(player p, unit b, int salt)
-    {
-      if (b == null)
-      {
-        return false;
-      }
-
-      var opts = AiUpgrades.BuildingUpgrades[GetUnitTypeId(b)];
-      for (var k = 0; k < opts.Count; k++)
-      {
-        var target = opts[(salt + k) % opts.Count]; // vary the branch (e.g. which demon gate) between upgrades
-        if (FreeOrder(p, b, target))
-        {
-          SimpleBot.Log("P" + I2S(GetPlayerId(p)) + " " + SimpleBot.FacName(p) + ": building upgrade " + GetUnitName(b) + " -> "
-              + GetObjectName(target));
-          return true;
-        }
-      }
-
-      return false;
-    }
-
     // Issue an order that costs resources for free: top up, order, restore. Returns WC3's accept/refuse.
-    internal static bool FreeOrder(player p, unit u, int orderId)
+    internal static bool FreeOrder(player p, unit u, int orderId, unit target = null)
     {
       var gold = GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD);
       var wood = GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER);
       SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold + 10000);
       SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, wood + 10000);
-      var ok = IssueImmediateOrderById(u, orderId);
+      var ok = target == null ? IssueImmediateOrderById(u, orderId) : IssueTargetOrderById(u, orderId, target);
       SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, gold);
       SetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER, wood);
       return ok;

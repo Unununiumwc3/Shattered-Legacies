@@ -215,6 +215,7 @@ namespace WarcraftLegacies.Source.Ai
             + " would-defer=" + I2S(WouldDefer) + " deferred=" + I2S(DeferredRuns));
       o.Add("orders total=" + I2S(SimpleBot.OrdersIssued) + " near(<2k)=" + I2S(OrdNear) + " mid(2-8k)=" + I2S(OrdMid)
             + " far(>8k)=" + I2S(OrdFar) + " idle-at-target(<300)=" + I2S(OrdIdleAtTarget));
+      o.Add("builder site probes=" + I2S(AiBuilder.SiteProbes) + " native build orders=" + I2S(AiBuilder.BuildOrders));
       var sorted = Sorted();
       for (var i = 0; i < sorted.Count; i++)
       {

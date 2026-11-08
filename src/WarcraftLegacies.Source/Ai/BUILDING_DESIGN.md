@@ -1,93 +1,29 @@
-# Worker construction — 0.65.2 playtest candidate
+# Worker construction and altar production — 0.66.0 playtest
 
-This describes the implementation in `AiBuilder.cs` and `AiBuildSites.cs`. `TODO.md` is the live roadmap. Old
-plans in `CONCEPTS.md` and historical changelogs remain useful context. The bot has no dependency on fork classes.
+## Planning
 
-## Responsibilities and lifecycle
+Starting workers establish a local base. If its supporting hall and friendly CP are lost after construction has begun, a safe owned strategic HQ on the worker's walking component is a recovery option. The timeline catalog supplies HQ types through AiApi. For factions without an override, the bot checks owned essential capitals. The existing friendly CP and local-worker fallbacks still apply. Legion Heralds build on Argus through the same system.
 
-- `AiBuilder.Setup` registers WC3 construct-start, construct-finish and construct-cancel events and one
-  deferrable `AiScheduler` task, every two scheduler slots (0.5 s). One bot per visit means about eight seconds between visits with 16 bots.
-  Reserve up to two HQ projects with distinct workers, types and sites. Plan expansions only after all outstanding projects finish.
-- On a planning visit (12 s nominal, or the next visit after an order or completion), enumerate the faction's **Builder** category, actual
-  workers (including native `UNIT_TYPE_PEON` units absent from category data) and buildings. Try to train workers if fewer than two exist. For perked bots with no viable native
-  worker-training order, the *emergency fallback* may place a single worker, never a completed building.
-- If the hall is missing, try the faction's TownHall/Keep/Castle categories or a previously observed hall type.
-  Recover missing useful troop-producing structures (`AiData.Trains` + faction categories), then an altar.
-  One of each useful producer type is the target; already owned structures are counted even when building.
-- `IssueBuildOrderById(worker, structureType, x, y)` is the only normal mechanism used to create structures.
-  Order refusal tries another distinct site/worker; a type rejected this cycle is cooled down for 30 seconds.
-  A started project stays reserved until WC3 emits a *construct-finish* callback (or cancel/failure/timeout).
-  Death, cancellation, lost sites and stale orders trigger a retry elsewhere. A pending order is checked for
-  worker idleness after eight seconds, otherwise times out after 120 seconds; a native-idle rejection cools down
-  the type so the next available type can be tried. On faction replacement any pending
-  project is invalidated; the next plan uses the new faction's units and building categories.
-- Existing `AiMissions` timed worker-consuming starter kit (0:20 / 3:00) and instantly completed production
-  (0:35, successor `GiveStarterProduction`) are removed. The public API call now requests a builder evaluation.
-  The bespoke Legion **Argus** base remains a scenario exception but does **not** consume Herald workers.
+Each pass first tries to restore a hall, military producers, altars, research buildings and the remaining legal worker menu. Ordinary building upgrade paths are considered for missing upgraded types. After first copies, buildings with a unit train list are eligible for a second copy, subject to the faction limit. This includes altars, shipyards and halls which train units. Hall tiers count as one family. A temporarily unavailable order is retried on a later visit. Forward bases still use the CP thresholds and get two local military producers.
 
-## HQ and allied control-point fallback
+A hall with a worker available attempts its next legal tier immediately and for free. A faction with no worker first tries to train one. Regular troops cannot occupy a hall queue needed for recovery or a legal upgrade. Check the current worker's actual build menu, the player's object limits and prerequisites before assigning construction.
 
-The home coordinate is captured from the faction's first observed town hall, else a worker, else player start.
-For a *worker* to construct, `AiBuildSites` chooses:
+Construction, worker/hero training, hall upgrades, research, quest progress and hero revival events wake individual factions. The scheduler alternates queued requests with round-robin visits, servicing one faction per half-second. Each visit can issue up to eight native worker build attempts and probe 384 sites. It can accept one new project. Two projects may be active per faction. A single surviving worker chains projects as construction finishes.
 
-1. **Original HQ area**, as long as it has an owned hall or supporting owned/allied CP, is safe, and lies on the
-   worker's current open walking component.
-2. Otherwise, the **nearest reachable safe owned or allied CP** by cost along open walking graph edges. This is
-   *not* Euclidean distance, which can cross impassable terrain. The CP is an anchor: the bot still orders its
-   own worker to construct a building on open ground around it.
-3. With no eligible CP, use the **worker's own vicinity**, provided it is safe. This also covers zero owned CPs.
+## Placement and costs
 
-This policy does not move workers between continents by ferry or portal. If no safe reachable spot exists,
-construction is deferred instead of spawning a building into an impassable location.
+The search rotates near and farther rings within 2368 units. Square pathing textures supply footprint widths. Unknown or irregular masks use a 96-unit half-width estimate. Placement reserves a 64-unit lane between estimated footprints and samples an outward walkable exit toward the staging point or anchor. Shipyards look for both water and a reachable shore. The native order validates the building mask. Inspect worker access and newly produced unit movement in the map.
 
-## Forward production
+Computer bots and test-mode autopilot receive the normal resource subsidy for workers, structures, upgrades and altar orders. For a worker order, the bot leaves the uncharged portion of the grant available during travel. Regular army training checks its costs against the unreserved balance. Arrival consumes the grant. Failure releases outstanding funds. Native construction cancellation refunds are recovered using the map's 100% refund setting. Fair human autopilot uses its own resources.
 
-Owned CPs determine the desired total base count: 0–9 = 1, 10–19 = 2, 20+ = **3 maximum including HQ**.
-These are ceilings, not mandatory builds. Perked bots only. `AiRoutes.StagePoint` identifies the main army's
-friendly staging node; a BFS of live open walking edges considers owned/allied CPs within one to four hops,
-preferably about two hops behind it. Candidates need a worker on the same walking component, a safe site,
-and no nearby own hall/forward base. When a new town hall **finishes**, record that forward base and add up to
-**two** military production buildings nearby in later construction projects (two total, not per type).
+Dead eligible legends have priority at idle altars. The bot targets the existing dead hero with the native revival order. Once a hero is available, new recruitment uses the altar's train order. Both use the altar's normal queue and time. Permanent death, ownership and quest restrictions apply.
 
-## Placement, costs, and important limitations
+## Combined playtest
 
-- Search 12 rings from 256 to 2368 units. Sample a 128-unit buildable core, two opposing walkable approach
-  points, clearance from existing structures (256 units for any owner), threat safety and the worker's route component.
-  If no standard site exists, try walkable cores to accommodate custom placement rules. Cache up to four sites per
-  anchor/component for the pass and rotate the search on later passes. WC3 validates the actual building mask.
-- `AiData.Trains` describes *military production* and is not a worker build-menu table. The first implementation
-  uses faction categories as candidates and native WC3 order acceptance to decide whether a worker can build
-  each type. A higher-quality second pass should generate `ubui` worker->building and `utra` hall->worker tables
-  (e.g. dedicated `AiBuildData.g.cs` plus fork-provided data through `AiApi`) if playtests show repeated refusals.
-- Perked bots receive a temporary gold/lumber top-up at order time, restored immediately. If the order did
-  **not** consume resources, `AiBuilder` refunds the building cost on native construction start. This attempts
-  to cover both immediate-charge and delayed-charge versions of WC3. **It is not yet verified**. A delayed
-  cost still requires the bot to have enough of its *own* resources on arrival for construction to begin;
-  otherwise the project times out. Fair autopilot receives no subsidy. Playtest both timing and zero-gold cases
-  before considering this a completed free-building implementation.
-- An incomplete structure whose worker dies might need assistance/reassignment; the first version relies on a
-  construction timeout and player-tech counts and may not recover every race-specific building behavior.
-- Construction data and placement are in `Ai/`. No new hardcoded faction rawcodes or map-specific exception
-  classes are introduced.
-
-## Acceptance / playtest matrix
-
-1. **First barracks:** choose a starting bot with a worker but without a military producer. Observe worker
-   training where needed, `IssueBuildOrderById`, travel, construct start, finish, and a new army unit produced.
-2. **Production destroyed:** destroy one of each producer type and the HQ; confirm recovery. With a surviving
-   worker and **zero owned CPs**, compare (a) nearby allied CP, (b) no friendly CP, (c) unsafe location.
-3. **No workers:** with an available town hall test worker training; with neither workers nor halls, compare
-   perked bot and fair autopilot. Confirm no timed magic building grant returns.
-4. **Late faction:** assign Sunfury, Forsaken, Kezan Enterprise and Ashtongue to bot slots, including a faction
-   switch while a construction order is in progress. Confirm the new faction builds *its own* building types.
-5. **Expansion:** 9→10 and 19→20 CP boundaries, ally CP closer than own, disconnected islands, closed rocks.
-   Ensure at most three bases including HQ, and two producers total per new base. Destroy/rebuild a forward hall.
-6. **Bad site/build-menu:** water, mountain, narrow road, crowded HQ, enemy defence, building worker that cannot
-   construct a particular faction building. Confirm rejected orders back off rather than flooding the scheduler.
-7. **Costs and load:** record gold/lumber before issuing, during travel, at actual start and finish; validate that
-   perked builds are free while fair builds consume normal resources. Examine `-dump` for `TICK ERROR` and
-   operation counts, then use a full multiplayer test with real CSharp.lua map build.
-
+- Start Stormwind and Legion with other bots. Look for a worker-built Nether Pit on Argus and Stormwind's local hall upgrade, Blacksmith and Smithy. At zero gold/wood, watch a free project start while regular troops still require their gold.
+- Use one worker, then five. Record the order of first copies, upgrades, and second producers. Cancel one of two concurrent projects during travel and after construction starts. Compare gold/wood and the other worker's orders.
+- Kill a revivable hero while an altar is busy. Watch the existing hero enter the next available altar's queue. Unlock a second hero through a quest. Check a permanent death, two altars, an altar destroyed during revival and a faction switch.
+- Compare faction-tagged builder and altar messages, the two builder counters and scheduler load in dumps at 3 and 7 minutes. The offline menu test is `python3 tools/shattered-legacies/ai/check_build_data.py`.
 
 ## 0.65.0 observed failures and 0.65.1 diagnostics
 
@@ -103,7 +39,7 @@ are not incorrectly cancelled. One-project-per-faction remains a throughput bott
 replace generated worker build-menu data. A log with `production satisfied` means the builder believes the faction
 needs no HQ recovery; it is not a promise that the faction's unit production itself is functioning.
 
-## Next milestones (not included)
+## Earlier milestones listed for 0.65.1
 
 Exact build-menu data generation, building-specific footprints/pathing masks and corridor checks, direct rescue
 of abandoned incomplete structures, richer construction failure instrumentation, worker transport between islands,
