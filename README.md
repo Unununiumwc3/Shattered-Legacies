@@ -29,6 +29,33 @@ cherry-pick only.
 Known issues and plans are tracked in the two TODO files (`Ai/TODO.md` for the bots,
 `ShatteredLegacies/TODO.md` for everything else).
 
+## Restoring models and textures on Windows
+
+Run these commands in PowerShell at the repository root on the branch used to publish the map. `fsck` verifies the local LFS objects. Fetching downloads the objects for the checked-out commit, and checkout fills pointer files in the working tree. Empty include and exclude settings override local download filters for the fetch.
+
+```powershell
+git branch --show-current
+git lfs install --local
+git -c lfs.fetchexclude= lfs fsck --objects HEAD
+git -c lfs.fetchinclude= -c lfs.fetchexclude= lfs fetch origin HEAD
+git lfs checkout
+git -c lfs.fetchexclude= lfs fsck --objects HEAD
+```
+
+For Elate (`o02N`), the MDX names `SilithidFlyerSkin.BLP` at the archive root. Verify the two working files against the hashes at `9794d98`:
+
+```powershell
+$imports = 'mapdata/WarcraftLegacies/Imports'
+Get-FileHash "$imports/war3mapImported/SilithidWasp.mdx", "$imports/SilithidFlyerSkin.BLP"
+```
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| SilithidWasp.mdx | 260058 | 252199ce8dbcf3522c12862305586f8f54cb9866951885bf1cfa711b6a2a0825 |
+| SilithidFlyerSkin.BLP | 85186 | f0fae36bf93c9a926e8e9a999ffe221ca1d078cfa9a2df22ed53cc78141e7d12 |
+
+LFS checkout preserves modified files. Back up local asset edits before restoring any individual file. If both hashes match, publish a fresh map and inspect the exact playable archive for `war3mapImported/SilithidWasp.mdx` and root-level `SilithidFlyerSkin.BLP`.
+
 ## Credits
 
 All of the original map, game design and code comes from

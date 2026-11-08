@@ -1,4 +1,4 @@
-# Worker construction and altar production — 0.67.0 playtest
+# Worker construction and altar production — 0.68.0 playtest
 
 ## Planning
 
@@ -9,6 +9,8 @@ Each pass first tries to restore a hall, military producers, altars, research bu
 A hall with a worker available attempts its next legal tier immediately and for free. A faction with no worker first tries to train one. Regular troops cannot occupy a hall queue needed for recovery or a legal upgrade. Check the current worker's actual build menu, the player's object limits and prerequisites before assigning construction.
 
 Construction, worker/hero training, hall upgrades, research, quest progress and hero revival events wake individual factions. The scheduler alternates queued requests with round-robin visits, servicing one faction per half-second. Each visit can issue up to eight native worker build attempts and probe 384 sites. It can accept one new project. Two projects may be active per faction. A single surviving worker chains projects as construction finishes.
+
+The generator fills missing stock hall links from an unambiguous adjacent faction tier. Explicit map overrides take priority. The three preplaced Demon Gates use their object-data menus independently of worker construction. On a production visit an idle gate takes a free branch once Stronghold exists. After Fortress, it waits for the full cost of the most expensive legal upgrade on its branch and issues a native paid order. Tied choices rotate. Food cap and elapsed time do not gate this decision.
 
 ## Placement and costs
 

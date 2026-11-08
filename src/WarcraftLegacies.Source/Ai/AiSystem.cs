@@ -1008,8 +1008,8 @@ namespace WarcraftLegacies.Source.Ai
           {
             AiTech.TryEventResearch(p, u, tid); // v32: event researches first, while the building's queue is free
             AiTech.TryQuestUpgrade(p, u, tid);  // v34: quest building upgrades (Stormwind's Construction Sites)
-            AiTech.TryTimedUpgrade(p, u, tid);  // 0.36: timed building upgrades (Fel Horde demon gates)
           }
+          AiTech.TryGateUpgrade(p, u, tid);
           // 0.38: collect first, train after the loop -- heroes before units (see below)
           if (ListHas(altars, tid) || AiData.AltarHeroes.ContainsKey(tid) || GetUnitAbilityLevel(u, FourCC("Arev")) > 0)
           {
@@ -2877,7 +2877,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.67.0";
+    public const string Build = "0.68.0";
 
     public static void Setup()
     {

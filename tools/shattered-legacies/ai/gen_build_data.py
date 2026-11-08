@@ -38,6 +38,24 @@ def generate():
 
     menus = {c: ids(c, "ubui") for c in objects if ids(c, "ubui")}
     buildings = {b for menu in menus.values() for b in menu}
+    # Some stock campaign objects omit their melee upgrade menu in the loader.
+    # Only fill an absent link when the faction declares an unambiguous next hall
+    # tier. Explicit map overrides (including an empty upgrade list) take priority.
+    for faction, entries in us.object_infos(us.load_consts()).items():
+        tiers = {}
+        for name, value, categories in entries:
+            match = re.search(r"_T([123])$", name)
+            if match and set(categories) & {"TownHall", "Keep", "Castle"}:
+                tiers.setdefault(int(match[1]), set()).add(us.code(value))
+        for tier in (1, 2):
+            sources, targets = tiers.get(tier, set()), tiers.get(tier + 1, set())
+            if len(sources) == len(targets) == 1:
+                source, target = next(iter(sources)), next(iter(targets))
+                if not ids(source, "uupt") and "uupt" not in us.udata(source):
+                    objects[source]["uupt"] = target
+
+    # Preplaced Demon Gates have a native upgrade menu but no worker builds them.
+    buildings.add("n081")
     # Include all morph tiers, including halls acquired already upgraded.
     pending = list(buildings)
     while pending:

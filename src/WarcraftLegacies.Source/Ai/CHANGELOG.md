@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.68.0 — hall and gate upgrades (playtest candidate)
+
+Generate missing hall upgrade links from faction tier declarations and validate both links in each family. Preplaced Demon Gates now use their native menus, prerequisites and gold costs on ordinary production visits.
+
 ## 0.67.0 — bot playtest candidate
 
 - Track native altar orders through start, finish and cancel. Alternate new recruitment and revival when both have work. Reserve food for eligible heroes and restore missing altars early.

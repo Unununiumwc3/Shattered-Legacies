@@ -8,9 +8,13 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.67.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.68.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
 
-## 0.67.0 playtest and follow-up
+## 0.68.0 playtest and follow-up
+
+- Confirm a Keep becomes a Castle after the altar prerequisite. Check a different faction with two successive upgrades.
+- Check three surviving Demon Gates after Stronghold and Fortress. Record branch, gold before and after the paid order and whether a lost gate stays lost.
+- Investigate repeated refusals per hero and altar. The 25-minute 0.67.0 dump records 144 starts, 123 finishes and 2,972 refusals. See `MEASUREMENTS.md`.
 
 - Follow a dead hero and a newly unlocked hero through the altar section of consecutive dumps. Distinguish a missing altar, queued order, native finish, cancellation, expiry and food pressure.
 - Compare direction changes after neutral captures with `back_forth.py` and the new expansion node/hop/cost lines. Evaluate kill quests separately before tuning the graph.
@@ -252,8 +256,6 @@ This code base is not the PR.
 - [you/ai] **Difficulty modes** (maintainer, 0.48): define them by the bots' mechanics -- food (floor / budget), free
   heroes, free tech, gold -- and how quickly / how much is given. Better descriptions in the vote, and a text
   announcement after the vote that tells the humans what the bots get (e.g. free heroes).
-- [you/ai] **Fel Horde: unfocused Demon Gate** -- the building can be upgraded twice; use it when the Fel Horde
-  bot needs a buff (free upgrades).
 
 - [you] **Strength scale**: re-decide with bots that have income (0.44.2+) and the unit budget (0.46).
 - [you/ai] Bonus gold in bursts / gold depot: the unit budget (0.46) already makes bots save gold while capped and

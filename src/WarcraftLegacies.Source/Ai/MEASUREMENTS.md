@@ -3,12 +3,26 @@
 Load and game-state numbers per version, so they survive between chats. Every refactor phase is compared with the
 game before it (TODO.md, "Refactor"): units on the map, orders per minute, LOAD, at 10/20/30/45 min.
 
+## Lordaeron autopilot, 0.67.0
+
+Stitched the five 5-minute snapshots through 25:00 in each build with `back_forth.py`. These are sampled event histories from different matches. A turn-back measures the angle between objectives as seen from the army.
+
+| Recorded measure | 0.66.0 | 0.67.0 |
+|---|---:|---:|
+| Target changes | 463 | 347 |
+| Changes with measurable angles | 408 | 313 |
+| Changes over 120 degrees | 109 | 88 |
+| Neutral target gone, over 120 degrees before 10:00 | 39 | 26 |
+| Stalled movement samples at 25:00 | 5% | 5% |
+
+The 0.67.0 scheduler deferred zero tasks with enforcement off. At 27:39 the heartbeat recorded 2,487 units and 1,430 orders/minute. The dumps through 25:00 contain no pinned tick error. Of 144 accepted altar orders, 144 started and 123 had finished at 25:00. Four reservations expired and 2,972 attempts were refused. A later snapshot is needed to evaluate endgame hero availability.
+
 How to add a game (Ubuntu, repo root):
 
 1. In the game: `-autodump` at the start (single human only). Play at least 45 min.
 2. Copy `Documents\Warcraft III\CustomMapData\WLAI_dump_*.txt` (and `WLAI_heartbeat.txt`) of THIS game into an
    empty folder, e.g. `~/Downloads/game1/` -- delete the old dumps in CustomMapData first, the names repeat.
-3. `python3 tools/ai/dump_summary.py ~/Downloads/game1/WLAI_*.txt --append "<players, strength vote, notes>"`
+3. `python3 tools/shattered-legacies/ai/dump_summary.py ~/Downloads/game1/WLAI_*.txt --append "<players, strength vote, notes>"`
    appends a block below. Commit this file with the next drop (or on its own: `git commit -m "measurements"`).
 
 Notes: "real s per game min" needs the file times of the copy (60 = real time; higher = the engine falls behind).

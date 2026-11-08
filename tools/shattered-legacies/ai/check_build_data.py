@@ -26,6 +26,24 @@ for faction, objects in infos.items():
         assert candidates & options, (faction, category)
     tested += 1
 
+# Check both edges of each declared three-tier faction hall family.
+chains = 0
+for faction, entries in infos.items():
+    tiers = {name[-1]: us.code(value) for name, value, cats in entries
+             if re.search(r"_T[123]$", name) and set(cats) & {"TownHall", "Keep", "Castle"}}
+    if set(tiers) == {"1", "2", "3"}:
+        for source, target in (("1", "2"), ("2", "3")):
+            assert tiers[target] in tables["Upgrades"].get(tiers[source], []), (faction, tiers)
+        chains += 1
+assert chains >= 21
+assert set(tables["Upgrades"]["n081"]) == {"n000", "n05F"}
+for gate in tables["Upgrades"]["n081"]:
+    assert len(tables["Upgrades"][gate]) == 3
+    assert "o02Z" in required[gate]
+    for target in tables["Upgrades"][gate]:
+        assert "o030" in required[target]
+print(f"{chains} complete hall chains and both Demon Gate branches verified.")
+
 # Shared peasant menu; Stormwind's Smithy requires BOTH Keep and Blacksmith.
 assert {"h06F", "h06A", "h06K", "h06T", "hars"} <= set(menus["hpea"])
 assert set(required["h06A"]) == {"h06M", "h06F"}
