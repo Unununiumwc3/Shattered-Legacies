@@ -12,7 +12,14 @@ namespace WarcraftLegacies.Source.Ai
   internal static class AiStats
   {
     private static readonly Dictionary<int, Dictionary<int, int>> _trained = new(); // pid -> type -> count
-    private static readonly Dictionary<int, Dictionary<int, int>> _ordered = new(); // pid -> type -> orders given
+    private sealed class TrainingOrder
+    {
+      internal unit Building;
+      internal int Type;
+      internal float Issued;
+    }
+    private static readonly List<TrainingOrder>[] Pending = new List<TrainingOrder>[24];
+
     private static trigger _trig;
 
     // Unit categories only (WL's buildings have their own); Builder is left out on purpose.
@@ -37,6 +44,7 @@ namespace WarcraftLegacies.Source.Ai
     private static void OnTrained()
     {
       var u = GetTrainedUnit();
+      Dequeue(GetTriggerUnit(), GetUnitTypeId(u));
       var p = GetOwningPlayer(u);
       if (!SimpleBot.IsBot(p))
       {
@@ -55,21 +63,53 @@ namespace WarcraftLegacies.Source.Ai
       d[t] = (d.ContainsKey(t) ? d[t] : 0) + 1;
     }
 
-    // 0.38: orders the production gave per type (for "least trained first"; finished counts lag behind)
-    internal static int Count(int pid, int typeId)
+    internal static void Planned(int pid, unit building, int type)
     {
-      return _ordered.ContainsKey(pid) && _ordered[pid].ContainsKey(typeId) ? _ordered[pid][typeId] : 0;
+      if (Pending[pid] == null)
+      {
+        Pending[pid] = new List<TrainingOrder>();
+      }
+      Pending[pid].Add(new TrainingOrder { Building = building, Type = type, Issued = SimpleBot.Clock });
     }
 
-    internal static void Planned(int pid, int typeId)
+    internal static void Dequeue(unit building, int type)
     {
-      if (!_ordered.ContainsKey(pid))
+      var pid = GetPlayerId(GetOwningPlayer(building));
+      if (pid >= 24 || Pending[pid] == null)
       {
-        _ordered[pid] = new Dictionary<int, int>();
+        return;
       }
+      var orders = Pending[pid];
+      for (var i = 0; i < orders.Count; i++)
+      {
+        if (orders[i].Building == building && orders[i].Type == type)
+        {
+          orders.RemoveAt(i);
+          return;
+        }
+      }
+    }
 
-      var d = _ordered[pid];
-      d[typeId] = (d.ContainsKey(typeId) ? d[typeId] : 0) + 1;
+    internal static void CountPending(player p, Dictionary<int, int> counts)
+    {
+      var orders = Pending[GetPlayerId(p)];
+      if (orders == null)
+      {
+        return;
+      }
+      for (var i = orders.Count - 1; i >= 0; i--)
+      {
+        var order = orders[i];
+        if (GetUnitTypeId(order.Building) == 0 || GetOwningPlayer(order.Building) != p
+            || GetUnitState(order.Building, UNIT_STATE_LIFE) <= 0.405f
+            || (SimpleBot.Clock - order.Issued > 45f && GetUnitCurrentOrder(order.Building) == 0))
+        {
+          orders.RemoveAt(i);
+          continue;
+        }
+        var type = order.Type;
+        counts[type] = (counts.ContainsKey(type) ? counts[type] : 0) + 1;
+      }
     }
 
     internal static void Lines(List<string> o)
@@ -97,6 +137,11 @@ namespace WarcraftLegacies.Source.Ai
         o.Add(line + " | total " + I2S(total) + ", " + I2S(d.Count) + " types"
               + (SimpleBot.GetDiag(pid).Saving ? " | SAVING for a hero" : ""));
 
+        o.Add("  altars=" + I2S(AiAltars.AltarCount[pid]) + " hero orders accepted/start/finish/cancel/expired/refused="
+          + I2S(AiAltars.HeroAccepted[pid]) + "/" + I2S(AiAltars.HeroStarted[pid]) + "/" + I2S(AiAltars.HeroFinished[pid])
+          + "/" + I2S(AiAltars.HeroCancelled[pid]) + "/" + I2S(AiAltars.HeroExpired[pid]) + "/" + I2S(AiAltars.HeroRefused[pid])
+          + " last=" + (AiAltars.AltarReason[pid] ?? "none"));
+        AiAltars.Dump(o, p, fac);
         var seen = new List<int>();
         var never = "";
         var nCount = 0;

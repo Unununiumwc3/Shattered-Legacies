@@ -46,6 +46,8 @@ namespace WarcraftLegacies.Source.Ai
     internal Faction CurrentFaction;
     internal unit Upgrading;
     internal int MorphFrom;
+    internal unit DrainForUpgrade;
+    internal float DrainUntil;
     internal bool HasWorkers;
     internal int CancelGold;
     internal int CancelWood;
@@ -106,11 +108,14 @@ namespace WarcraftLegacies.Source.Ai
       var cancelled = CreateTrigger();
       var changed = CreateTrigger();
       var trained = CreateTrigger();
+      var starting = CreateTrigger();
       var unqueued = CreateTrigger();
       var revived = CreateTrigger();
       for (var i = 0; i < 24; i++)
       {
         var p = Player(i);
+        TriggerRegisterPlayerUnitEvent(starting, p, EVENT_PLAYER_UNIT_TRAIN_START, null);
+        TriggerRegisterPlayerUnitEvent(revived, p, EVENT_PLAYER_HERO_REVIVE_START, null);
         TriggerRegisterPlayerUnitEvent(unqueued, p, EVENT_PLAYER_UNIT_TRAIN_CANCEL, null);
         TriggerRegisterPlayerUnitEvent(revived, p, EVENT_PLAYER_HERO_REVIVE_FINISH, null);
         TriggerRegisterPlayerUnitEvent(revived, p, EVENT_PLAYER_HERO_REVIVE_CANCEL, null);
@@ -123,19 +128,27 @@ namespace WarcraftLegacies.Source.Ai
         TriggerRegisterPlayerUnitEvent(finished, p, EVENT_PLAYER_UNIT_CONSTRUCT_FINISH, null);
         TriggerRegisterPlayerUnitEvent(cancelled, p, EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL, null);
       }
-      TriggerAddAction(unqueued, () => SimpleBot.EndHeroOrder(GetTriggerPlayer(), GetTrainedUnitType()));
+      TriggerAddAction(starting, () => AiAltars.HeroEvent(GetTriggerPlayer(), GetTrainedUnitType(), true, false));
+      TriggerAddAction(unqueued, () =>
+      {
+        AiStats.Dequeue(GetTriggerUnit(), GetTrainedUnitType());
+        AiAltars.HeroEvent(GetTriggerPlayer(), GetTrainedUnitType(), false, false);
+      });
       TriggerAddAction(revived, () =>
       {
         var hero = GetRevivingUnit();
-        SimpleBot.EndHeroOrder(GetOwningPlayer(hero), GetUnitTypeId(hero));
-        Request(GetOwningPlayer(hero));
+        if (hero != null)
+        {
+          AiAltars.HeroEvent(GetOwningPlayer(hero), GetUnitTypeId(hero),
+            GetTriggerEventId() == EVENT_PLAYER_HERO_REVIVE_START, GetTriggerEventId() == EVENT_PLAYER_HERO_REVIVE_FINISH);
+        }
       });
       TriggerAddAction(trained, () =>
       {
         var u = GetTrainedUnit();
         if (IsUnitType(u, UNIT_TYPE_HERO))
         {
-          SimpleBot.EndHeroOrder(GetOwningPlayer(u), GetUnitTypeId(u));
+          AiAltars.HeroEvent(GetOwningPlayer(u), GetUnitTypeId(u), false, true);
           Request(GetOwningPlayer(u));
         }
         else if (AiBuildData.Menus.ContainsKey(GetUnitTypeId(u)))
@@ -226,6 +239,12 @@ namespace WarcraftLegacies.Source.Ai
     {
       return GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) - Reserved(p, true) >= GetUnitGoldCost(type)
           && GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) - Reserved(p, false) >= GetUnitWoodCost(type);
+    }
+
+    internal static bool NeedsUpgradeQueue(player p, unit building)
+    {
+      var s = States[GetPlayerId(p)];
+      return s != null && s.DrainForUpgrade == building && SimpleBot.Clock < s.DrainUntil;
     }
 
     internal static bool NeedsHallQueue(player p, unit hall)
@@ -404,6 +423,7 @@ namespace WarcraftLegacies.Source.Ai
         s.CurrentFaction = fac;
         fac.QuestProgressChanged += OnQuestChanged;
         s.Upgrading = null;
+        s.DrainForUpgrade = null;
         s.Faction = fac.Name;
         s.Forward.Clear();
         s.UnbuildableUntil.Clear();
@@ -595,7 +615,7 @@ namespace WarcraftLegacies.Source.Ai
         }
         for (var i = 0; i < altars.Count; i++)
         {
-          SimpleBot.TrainHeroes(altars[i], fac, p);
+          AiAltars.TrainHeroes(altars[i], fac, p);
         }
       }
       if (workers.Count == 0 && builderTypes.Count == 0)
@@ -615,24 +635,6 @@ namespace WarcraftLegacies.Source.Ai
       }
       if (workers.Count == 0 && s.Projects.Count == 0)
       {
-        // Perked bot with no viable training order: one emergency worker, not a free building.
-        // Never do this while a town hall has a worker queued.
-        if (!trained && SimpleBot.HasPerks(p))
-        {
-          var x = s.HomeX;
-          var y = s.HomeY;
-          if (AiBuildSites.EmergencyAnchor(p, x, y, out var ax, out var ay))
-          {
-            x = ax;
-            y = ay;
-          }
-          var w = CreateUnit(p, builderTypes[0], x, y, 270f);
-          if (w != null)
-          {
-            SimpleBot.LogPin("builder: " + SimpleBot.FacName(p) + " stranded -> one emergency worker");
-          }
-          s.NextPlan = w != null ? 0f : SimpleBot.Clock + 30f;
-        }
         Explain(p, s, trained ? "no worker; town hall training/queued" : "no worker; no accepted train order");
         return;
       }
@@ -692,10 +694,8 @@ namespace WarcraftLegacies.Source.Ai
       var missing = 0;
       for (var wanted = 1; wanted <= 2; wanted++)
       {
-        if (wanted == 2 && s.Projects.Count > 0)
-        {
-          return; // finish first copies before committing another worker to duplicates
-        }
+        // First-copy and prerequisite orders have already had their turn. Build() reserves
+        // each type, so another free worker can start a different producer's second copy.
         for (var i = 0; i < types.Count; i++)
         {
           var type = types[i];
@@ -951,7 +951,12 @@ namespace WarcraftLegacies.Source.Ai
         }
         else
         {
-          if (!s.Anchors.TryGetValue(worker, out var anchor))
+          AiBuildCandidates anchor = null;
+          if (s.Anchors.ContainsKey(worker))
+          {
+            anchor = s.Anchors[worker];
+          }
+          else
           {
             if (AiBuildSites.HomeAnchor(p, s.Established, hallTypes, s.HomeX, s.HomeY, worker, out ax, out ay))
             {

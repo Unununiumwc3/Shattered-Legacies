@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.GameTime;
+using MacroTools.Factions;
+using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Rules
 {
-  // 0.53, the fork's defeat rule (maintainer): a player is eliminated only when he holds NO control point for more
-  // than 5 turns -- one CP is enough to live; WL's food and essential-legend conditions do not apply. A faction that
-  // still has an unused fallback is not eliminated: the fallback starts instead (TimelineSystem.ForceFallback).
-  // Called from WL's PlayerElimination ([SL] hook) for the players WL checks there (humans, from turn 20, every turn);
-  // bots and leavers taken over by bots are not checked, as in WL.
   public static class EliminationRule
   {
-    internal const int GraceTurns = 5; // defeat on the 6th turn in a row without a CP
+    internal const int GraceTurns = 5;
 
     private static readonly Dictionary<int, int> _graceUntil = new(); // pid -> last turn without the check
 
@@ -23,39 +20,67 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Rules
       p.GetPlayerData().EliminationTurns = 0;
     }
 
-    // replaces WL's ProcessPlayerElimination; always handles the player (returns true)
-    public static bool Process(player p)
+    private static Dictionary<Team, int> EmptyTurns = new();
+
+    public static void ProcessTeams()
     {
-      var data = p.GetPlayerData();
-      var pid = GetPlayerId(p);
-      if (_graceUntil.ContainsKey(pid) && GameTimeManager.Turn <= _graceUntil[pid])
+      var totals = new Dictionary<Team, int>();
+      var eligible = new List<Faction>();
+      for (var id = 0; id < 24; id++)
       {
-        data.EliminationTurns = 0;
-        return true;
-      }
-
-      if (data.ControlPoints.Count > 0)
-      {
-        data.EliminationTurns = 0;
-        return true;
-      }
-
-      if (data.EliminationTurns >= GraceTurns)
-      {
-        data.EliminationTurns = 0;
-        if (!TimelineSystem.ForceFallback(p))
+        var p = Player(id);
+        var data = p.GetPlayerData();
+        if (data.Team == null || data.Faction == null || !AiApi.IsActive(p)
+            || data.Faction.ScoreStatus == ScoreStatus.Defeated)
         {
-          data.Faction?.Defeat();
+          continue;
         }
-
-        return true;
+        eligible.Add(data.Faction);
+        if (!totals.ContainsKey(data.Team))
+        {
+          totals[data.Team] = 0;
+        }
+        totals[data.Team] += data.ControlPoints.Count;
       }
+      var next = new Dictionary<Team, int>();
+      foreach (var entry in totals)
+      {
+        next[entry.Key] = entry.Value > 0 ? 0 : (EmptyTurns.ContainsKey(entry.Key) ? EmptyTurns[entry.Key] : 0) + 1;
+      }
+      EmptyTurns = next;
 
-      var left = GraceTurns - data.EliminationTurns;
-      DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffff6600You hold no control point.|r Capture one within " + I2S(left)
-        + (left == 1 ? " turn" : " turns") + ", or you are defeated -- if your fallback is still unused, it starts instead.");
-      data.EliminationTurns++;
-      return true;
+      var doomed = new List<Faction>();
+      foreach (var faction in eligible)
+      {
+        var p = faction.Player;
+        var data = p.GetPlayerData();
+        var turns = next[data.Team];
+        var id = GetPlayerId(p);
+        data.EliminationTurns = turns;
+        if (turns == 0 || (_graceUntil.ContainsKey(id) && GameTimeManager.Turn <= _graceUntil[id]))
+        {
+          continue;
+        }
+        if (turns >= GraceTurns)
+        {
+          doomed.Add(faction);
+        }
+        else
+        {
+          DisplayTimedTextToPlayer(p, 0, 0, 20, "Your team holds no control points. Turns until fallback or defeat: "
+            + I2S(GraceTurns - turns));
+        }
+      }
+      foreach (var faction in doomed)
+      {
+        var p = faction.Player;
+        if (p != null && p.GetPlayerData().Faction == faction && faction.ScoreStatus != ScoreStatus.Defeated
+            && !TimelineSystem.ForceFallback(p))
+        {
+          AiApi.StopBot(p);
+          faction.Defeat();
+        }
+      }
     }
   }
 }

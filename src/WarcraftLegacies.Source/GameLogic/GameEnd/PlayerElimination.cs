@@ -1,89 +1,13 @@
-﻿using MacroTools.Extensions;
-using MacroTools.GameTime;
-using MacroTools.Localization;
-using WCSharp.Shared;
+﻿using MacroTools.GameTime;
+using WarcraftLegacies.Source.ShatteredLegacies.Rules;
 
 namespace WarcraftLegacies.Source.GameLogic.GameEnd;
 
-/// <summary>
-/// Evaluates and applies turn-based elimination rules for players.
-/// </summary>
-/// <remarks>
-/// Once the <see cref="EliminationStartTurn"/> is reached, players who remain below the control point and food thresholds may be defeated.
-/// The thresholds are <see cref="EliminationControlPointThreshold"/> control points and <see cref="EliminationFoodThreshold"/> food used.
-/// A player is defeated after <see cref="EliminationGraceTurns"/> consecutive turns below these thresholds if their team does not control an essential legend.
-/// </remarks>
 public static class PlayerElimination
 {
-  private const int EliminationStartTurn = 20;
-  private const int EliminationGraceTurns = 3;
-
-  private const int EliminationControlPointThreshold = 5;
-  private const int EliminationFoodThreshold = 105;
-
-  /// <summary>
-  /// Registers the player elimination rule with the turn manager.
-  /// </summary>
-  /// <remarks>
-  /// Elimination checks begin once the <see cref="EliminationStartTurn"/> turn is reached.
-  /// </remarks>
   public static void Setup()
   {
-    GameTimeManager.RegisterOnTurnRepeating(EliminationStartTurn, static () =>
-    {
-      foreach (var player in Util.EnumeratePlayers(playerslotstate.Playing, mapcontrol.User))
-      {
-        ProcessPlayerElimination(player);
-      }
-    });
-  }
-
-  private static void ProcessPlayerElimination(player player)
-  {
-    // [SL] (0.53): the fork's rule -- no CP for more than 5 turns, an unused fallback starts instead of the defeat
-    if (WarcraftLegacies.Source.ShatteredLegacies.Rules.EliminationRule.Process(player))
-    {
-      return;
-    }
-
-    var playerData = player.GetPlayerData();
-
-    if (!ShouldEliminate(player, playerData))
-    {
-      playerData.EliminationTurns = 0;
-      return;
-    }
-
-    if (playerData.EliminationTurns >= EliminationGraceTurns)
-    {
-      playerData.Faction?.Defeat();
-      return;
-    }
-
-    ShowEliminationWarning(player, playerData);
-
-    playerData.EliminationTurns++;
-  }
-
-  private static bool ShouldEliminate(player player, PlayerData playerData)
-  {
-    return playerData.ControlPoints.Count <= EliminationControlPointThreshold
-           && player.FoodUsed <= EliminationFoodThreshold
-           && playerData.Team?.DoesTeamHaveEssentialLegend() != true;
-  }
-
-  private static void ShowEliminationWarning(player player, PlayerData playerData)
-  {
-    var turnsRemaining = EliminationGraceTurns - playerData.EliminationTurns;
-    var turnText = Loc.Get(turnsRemaining == 1 ? "turn" : "turns");
-
-    var message = Loc.Format(
-      "You have met the threshold for being eliminated from the game. Unless you raise your Control Point count above {cpThreshold}, raise food used above {foodThreshold} or your team retakes/gains an essential Legend, you will be defeated in {turns} {turnWord}.",
-      ("{cpThreshold}", EliminationControlPointThreshold.ToString()),
-      ("{foodThreshold}", EliminationFoodThreshold.ToString()),
-      ("{turns}", turnsRemaining.ToString()),
-      ("{turnWord}", turnText));
-
-    player.DisplayTextTo(message);
+    // [SL] Evaluate the team standings once per turn, before any fallback transfers ownership.
+    GameTimeManager.RegisterOnTurnRepeating(20, EliminationRule.ProcessTeams);
   }
 }

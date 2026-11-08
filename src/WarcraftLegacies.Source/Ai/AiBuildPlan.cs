@@ -9,8 +9,9 @@ namespace WarcraftLegacies.Source.Ai
   {
     internal static bool OnMenu(unit worker, int type)
     {
-      if (AiBuildData.Menus.TryGetValue(GetUnitTypeId(worker), out var menu))
+      if (AiBuildData.Menus.ContainsKey(GetUnitTypeId(worker)))
       {
+        var menu = AiBuildData.Menus[GetUnitTypeId(worker)];
         for (var i = 0; i < menu.Length; i++)
         {
           if (menu[i] == type)
@@ -25,8 +26,9 @@ namespace WarcraftLegacies.Source.Ai
     // Specific-only=false includes WC3's dependency equivalents and upgraded halls.
     internal static int Missing(player p, int type)
     {
-      if (AiBuildData.Required.TryGetValue(type, out var requirements))
+      if (AiBuildData.Required.ContainsKey(type))
       {
+        var requirements = AiBuildData.Required[type];
         for (var i = 0; i < requirements.Length; i++)
         {
           var required = requirements[i];
@@ -50,18 +52,19 @@ namespace WarcraftLegacies.Source.Ai
       // Establish the first fighting producer and an altar early. The remaining
       // menu entries include prerequisite, supply, shop, tower and naval buildings.
       var types = new List<int>();
+      SimpleBot.AddCategory(faction, UnitCategory.Altar, types);
       for (var i = 0; i < military.Count; i++)
       {
         types.Add(military[i]);
       }
-      SimpleBot.AddCategory(faction, UnitCategory.Altar, types);
       SimpleBot.AddCategory(faction, UnitCategory.Research, types);
       for (var w = 0; w < workers.Count; w++)
       {
-        if (!AiBuildData.Menus.TryGetValue(GetUnitTypeId(workers[w]), out var menu))
+        if (!AiBuildData.Menus.ContainsKey(GetUnitTypeId(workers[w])))
         {
           continue;
         }
+        var menu = AiBuildData.Menus[GetUnitTypeId(workers[w])];
         for (var i = 0; i < menu.Length; i++)
         {
           if (p.GetPlayerData().GetObjectLimit(menu[i]) > 0 && !types.Contains(menu[i]))
@@ -87,10 +90,11 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static int NextHallTier(player p, unit hall)
     {
-      if (!AiBuildData.Upgrades.TryGetValue(GetUnitTypeId(hall), out var options))
+      if (!AiBuildData.Upgrades.ContainsKey(GetUnitTypeId(hall)))
       {
         return 0;
       }
+      var options = AiBuildData.Upgrades[GetUnitTypeId(hall)];
       for (var i = 0; i < options.Length; i++)
       {
         var type = options[i];
@@ -126,11 +130,12 @@ namespace WarcraftLegacies.Source.Ai
         var source = buildings[i];
         var from = GetUnitTypeId(source);
         // Only ordinary upgrade paths. Scripted, timed and quest transformations have their own handlers.
-        if (halls.Contains(from) || IsUnitType(source, UNIT_TYPE_TOWNHALL) || GetUnitCurrentOrder(source) != 0
-            || !AiUpgrades.BuildingUpgrades.TryGetValue(from, out var options))
+        if (halls.Contains(from) || IsUnitType(source, UNIT_TYPE_TOWNHALL)
+            || !AiUpgrades.BuildingUpgrades.ContainsKey(from))
         {
           continue;
         }
+        var options = AiUpgrades.BuildingUpgrades[from];
         for (var k = 0; k < options.Count; k++)
         {
           var target = options[k];
@@ -139,8 +144,19 @@ namespace WarcraftLegacies.Source.Ai
           {
             continue;
           }
+          if (GetUnitCurrentOrder(source) != 0)
+          {
+            // Give one eligible building time to finish training so its upgrade can take the queue.
+            if (s.DrainForUpgrade == source || s.DrainForUpgrade == null || SimpleBot.Clock >= s.DrainUntil)
+            {
+              s.DrainForUpgrade = source;
+              s.DrainUntil = SimpleBot.Clock + 45f;
+            }
+            continue;
+          }
           if (AiTech.FreeOrder(p, source, target))
           {
+            s.DrainForUpgrade = null;
             s.Upgrading = source;
             s.MorphFrom = from;
             SimpleBot.Log("builder: " + s.Faction + " upgrading " + GetUnitName(source) + " to " + GetObjectName(target));

@@ -13,6 +13,16 @@ namespace WarcraftLegacies.Source.Ai
     // True for a computer slot the bot plays (also a taken-over leaver, also an autopilot human).
     public static bool IsBot(player p) => SimpleBot.IsBot(p);
 
+    public static void StopBot(player p)
+    {
+      AiState.TakenOver.Remove(GetPlayerId(p));
+      AiState.Autopilot.Remove(GetPlayerId(p));
+      if (SimpleBot.IsBot(p))
+      {
+        SimpleBot.RemoveBot(p);
+      }
+    }
+
     // True when the bot gives this player its bonuses (real bots, test-mode autopilot; false for fair autopilot).
     public static bool HasPerks(player p) => SimpleBot.HasPerks(p);
 

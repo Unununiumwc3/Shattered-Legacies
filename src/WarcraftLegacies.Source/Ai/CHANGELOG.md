@@ -5,6 +5,13 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.67.0 — bot playtest candidate
+
+- Track native altar orders through start, finish and cancel. Alternate new recruitment and revival when both have work. Reserve food for eligible heroes and restore missing altars early.
+- Fix upgrade lookups that could abort the builder tick in Lua. Let independent producers advance while other construction finishes. Train replacement workers at a hall.
+- Prefer limited troops below their cap and balance living plus queued regular troops. Limit saving for scarce units to a short window.
+- On losing a target, compare ordinary neutral CPs close in strategic score using the army's current route cost and a bounded penalty for turning back. Dump the two best routes when there is a choice.
+
 ## 0.66.0 — worker build menus, hall tiers and altar queues (playtest candidate)
 
 - Build the local settlement from available worker commands and faction prerequisites. Cover support buildings and ordinary morphs before duplicating producers. Check footprint spacing, rally exits and shore access.

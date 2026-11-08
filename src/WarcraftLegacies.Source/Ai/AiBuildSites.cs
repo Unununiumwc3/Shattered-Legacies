@@ -274,35 +274,6 @@ namespace WarcraftLegacies.Source.Ai
       return Safe(p, x, y);
     }
 
-    internal static bool EmergencyAnchor(player p, float hx, float hy, out float x, out float y)
-    {
-      x = hx;
-      y = hy;
-      var cps = ControlPointManager.Instance.GetAllControlPoints();
-      var best = -1;
-      var bestD = 0f;
-      for (var i = 0; i < cps.Count; i++)
-      {
-        var u = cps[i].Unit;
-        if (!FriendlyCp(u, p))
-        {
-          continue;
-        }
-        var d = Dist2(hx, hy, GetUnitX(u), GetUnitY(u));
-        if ((best < 0 || d < bestD) && Safe(p, GetUnitX(u), GetUnitY(u)))
-        {
-          best = i;
-          bestD = d;
-        }
-      }
-      if (best >= 0)
-      {
-        x = GetUnitX(cps[best].Unit);
-        y = GetUnitY(cps[best].Unit);
-      }
-      return !IsTerrainPathable(x, y, PATHING_TYPE_WALKABILITY);
-    }
-
     // BFS limited to four OPEN walking edges (never portal/ferry edges). All search nodes are static map nodes.
     private static int[] WalkingHops(int from)
     {

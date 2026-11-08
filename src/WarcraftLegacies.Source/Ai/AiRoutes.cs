@@ -1077,6 +1077,11 @@ namespace WarcraftLegacies.Source.Ai
         best = cur;
       }
 
+      if (cur >= 0 && curUnit == null && OrdinaryExpansion(best, cands[best]))
+      {
+        best = NextExpansion(pid, here, best, cands);
+      }
+
       var path = new List<int>();
       var n = best;
       while (n >= 0 && path.Count <= AiRouteData.Nodes)
@@ -1106,6 +1111,63 @@ namespace WarcraftLegacies.Source.Ai
       _lastFront[AiTheatres.S(pid)] = _front[best];
       _lastQuest[AiTheatres.S(pid)] = _questNodes.Contains(best);
       return cands[best];
+    }
+
+    private static bool OrdinaryExpansion(int node, unit target)
+    {
+      return target != null && AiRouteData.NodeType[node] != 0 && GetUnitTypeId(target) == AiRouteData.NodeType[node]
+          && IsNeutral(target) && !_questNodes.Contains(node);
+    }
+
+    private static int FirstHop(int here, int node)
+    {
+      while (_prev[node] >= 0 && _prev[node] != here)
+      {
+        node = _prev[node];
+      }
+      return node;
+    }
+
+    // After a capture, compare nearby strategic alternatives using the already computed army routes.
+    // Retracing the last walking edge costs at most 600 extra. A substantially shorter return still wins.
+    private static int NextExpansion(int pid, int here, int original, unit[] candidates)
+    {
+      var previous = _path[AiTheatres.S(pid)];
+      var at = previous == null ? -1 : previous.IndexOf(here);
+      var back = at > 0 ? previous[at - 1] : -1;
+      var ceiling = _score[original] * 1.25f + 400f;
+      var best = -1;
+      var second = -1;
+      var bestCost = 0f;
+      var secondCost = 0f;
+      for (var i = 0; i < candidates.Length; i++)
+      {
+        if (!_done[i] || _score[i] < 0f || _score[i] > ceiling || !OrdinaryExpansion(i, candidates[i]))
+        {
+          continue;
+        }
+        var hop = FirstHop(here, i);
+        var cost = _dist[i] + (hop == back && _prevEdge[hop] >= 0 ? 600f : 0f);
+        if (best < 0 || cost < bestCost || (cost == bestCost && _score[i] < _score[best]))
+        {
+          second = best;
+          secondCost = bestCost;
+          best = i;
+          bestCost = cost;
+        }
+        else if (second < 0 || cost < secondCost)
+        {
+          second = i;
+          secondCost = cost;
+        }
+      }
+      if (second >= 0)
+      {
+        SimpleBot.Log("expansion " + SimpleBot.FacName(Player(pid)) + " from " + I2S(here)
+          + " node/hop/cost " + I2S(best) + "/" + I2S(FirstHop(here, best)) + "/" + I2S(R2I(bestCost))
+          + " runner " + I2S(second) + "/" + I2S(FirstHop(here, second)) + "/" + I2S(R2I(secondCost)));
+      }
+      return best >= 0 ? best : original;
     }
 
     // own territory: CPs held by p, area nodes where p has a structure. 0.43.1: NOT the allies' -- with them every bot

@@ -22,9 +22,9 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.66.0)
+## Current development build (0.67.0)
 
-Read `BUILDING_DESIGN.md` and the current priorities in `TODO.md` for worker menus, first-copy coverage, duplicate producers, hall upgrades and the native altar queue. Regenerate construction tables with `tools/shattered-legacies/ai/gen_build_data.py` and verify them with `check_build_data.py`. Include the stock 1.36 UnitLoader and enum, the main map UnitData and WarcraftLegacies.Shared in the sparse checkout. A real map build and combined playtest are still required.
+Native altar lifecycle counters and expansion route choices are in the dump. Read `BUILDING_DESIGN.md` and the current priorities in `TODO.md` for worker menus, first-copy coverage, duplicate producers, hall upgrades and the native altar queue. Regenerate construction tables with `tools/shattered-legacies/ai/gen_build_data.py` and verify them with `check_build_data.py`. Include the stock 1.36 UnitLoader and enum, the main map UnitData and WarcraftLegacies.Shared in the sparse checkout. A real map build and combined playtest are still required.
 
 ## Historical state of the work (0.52.0; the below documents the movement milestone)
 

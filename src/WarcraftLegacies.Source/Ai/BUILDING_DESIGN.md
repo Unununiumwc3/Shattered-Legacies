@@ -1,4 +1,4 @@
-# Worker construction and altar production — 0.66.0 playtest
+# Worker construction and altar production — 0.67.0 playtest
 
 ## Planning
 
@@ -16,7 +16,7 @@ The search rotates near and farther rings within 2368 units. Square pathing text
 
 Computer bots and test-mode autopilot receive the normal resource subsidy for workers, structures, upgrades and altar orders. For a worker order, the bot leaves the uncharged portion of the grant available during travel. Regular army training checks its costs against the unreserved balance. Arrival consumes the grant. Failure releases outstanding funds. Native construction cancellation refunds are recovered using the map's 100% refund setting. Fair human autopilot uses its own resources.
 
-Dead eligible legends have priority at idle altars. The bot targets the existing dead hero with the native revival order. Once a hero is available, new recruitment uses the altar's train order. Both use the altar's normal queue and time. Permanent death, ownership and quest restrictions apply.
+Idle altars try dead eligible legends first, then alternate successful revivals with available new recruits. The bot targets the existing dead hero with the native revival order. Once a hero is available, new recruitment uses the altar's train order. Both use the altar's normal queue and time. Permanent death, ownership and quest restrictions apply.
 
 ## Combined playtest
 

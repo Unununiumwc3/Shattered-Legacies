@@ -26,7 +26,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static bool TakeOverLeaver(player p)
     {
       var fac = p.GetPlayerData().Faction;
-      if (fac == null)
+      if (fac == null || fac.ScoreStatus == ScoreStatus.Defeated)
       {
         return false;
       }

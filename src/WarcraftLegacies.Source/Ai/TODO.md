@@ -8,7 +8,13 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.66.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.67.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.67.0 playtest and follow-up
+
+- Follow a dead hero and a newly unlocked hero through the altar section of consecutive dumps. Distinguish a missing altar, queued order, native finish, cancellation, expiry and food pressure.
+- Compare direction changes after neutral captures with `back_forth.py` and the new expansion node/hop/cost lines. Evaluate kill quests separately before tuning the graph.
+- Custom ability work for units, heroes and buildings: catalog map-specific active spells and their native orders. Test valid ally/enemy targets already in range, hostile clusters for point AoE, combat-only no-target casts and enabling supported autocasts. Stagger evaluations across a 5–10 second rotation and measure scheduler peaks before widening coverage.
 
 ## Current priorities (0.66.0)
 

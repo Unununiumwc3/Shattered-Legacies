@@ -420,7 +420,7 @@ namespace WarcraftLegacies.Source.Ai
     // v28: hero types that died PERMANENTLY (from LegendaryHero.Died). Never re-train / revive these.
     public static HashSet<int> PermaDead = new();
     private static int _legendsHooked;
-    private static readonly int PermaDiesMarker = FourCC("LEgo"); // WL adds this dummy ability to PermaDies heroes
+    internal static readonly int PermaDiesMarker = FourCC("LEgo"); // WL adds this dummy ability to PermaDies heroes
     private static int _defWorst;      // enemies near the anchor FindDefenseTarget picked (for the log)
     private static int _defCreeps;     // ...of which neutral (creeps)
     private static int _lastCreepCount;
@@ -667,99 +667,6 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
-    // Heroes train at Altars by unit-type. No public API maps an UNtrained hero to its faction, so we read
-    // faction-correct ids from AiConfig (source-derived) -- no id spray. Trains any config hero the bot
-    // lacks alive (a dead one gets revived instead), one per altar per cycle, gold-gated; WC3's hero limit
-    // self-caps. Fallback: a faction missing from AiConfig simply trains no heroes (no crash, no spray).
-    // 0.38: new heroes are FREE for bots with perks (like researches and upgrades: AiTech.FreeOrder tops up the gold
-    // for the order only). A bot without perks (fair autopilot) pays and returns true = SAVE gold this turn when an
-    // available hero is too expensive. Candidates: AiConfig.Heroes (priority order, e.g. Arthas first), then every
-    // other hero this altar trains (AiData.AltarHeroes). Native refusals are retried on later altar visits.
-    private static readonly Dictionary<string, unit> HeroOrders = new();
-
-    internal static void EndHeroOrder(player p, int type)
-    {
-      HeroOrders.Remove(I2S(GetPlayerId(p)) + "|" + I2S(type));
-    }
-
-    private static bool HeroQueued(player p, int type)
-    {
-      var key = I2S(GetPlayerId(p)) + "|" + I2S(type);
-      if (HeroOrders.TryGetValue(key, out var altar))
-      {
-        if (GetOwningPlayer(altar) == p && GetUnitState(altar, UNIT_STATE_LIFE) > 0.405f && GetUnitCurrentOrder(altar) != 0)
-        {
-          return true;
-        }
-        HeroOrders.Remove(key);
-      }
-      return false;
-    }
-
-    internal static bool TrainHeroes(unit altar, Faction faction, player p)
-    {
-      if (GetUnitCurrentOrder(altar) != 0)
-      {
-        return false; // altar already training or reviving something
-      }
-
-      if (TryReviveAtAltar(p, altar))
-      {
-        return false;
-      }
-      var cand = new List<int>();
-      if (AiConfig.Heroes.TryGetValue(faction.Name, out var ids) && ids != null)
-      {
-        for (var i = 0; i < ids.Count; i++)
-        {
-          cand.Add(ids[i]);
-        }
-      }
-
-      var atid = GetUnitTypeId(altar);
-      if (AiData.AltarHeroes.ContainsKey(atid))
-      {
-        var more = AiData.AltarHeroes[atid];
-        for (var i = 0; i < more.Length; i++)
-        {
-          if (!ListHas(cand, more[i]))
-          {
-            cand.Add(more[i]);
-          }
-        }
-      }
-
-      for (var i = 0; i < cand.Count; i++)
-      {
-        var hid = cand[i];
-        if (PermaDead.Contains(hid))
-        {
-          continue; // v28: died permanently (e.g. Cenarius) -- WL would adopt a re-trained copy, so never train it
-        }
-
-        if (HeroQueued(p, hid) || HaveHero(p, hid) || !RequirementsMet(p, hid))
-        {
-          continue; // already alive, or still locked (quest not done)
-        }
-
-        var perks = HasPerks(p);
-        if (perks ? AiTech.FreeOrder(p, altar, hid) : IssueImmediateOrderById(altar, hid))
-        {
-          HeroOrders[I2S(GetPlayerId(p)) + "|" + I2S(hid)] = altar;
-          Log("altar: " + FacName(p) + " training " + GetObjectName(hid));
-          return false;
-        }
-
-        if (!perks && GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) < GetUnitGoldCost(hid))
-        {
-          return true; // available but too expensive right now -> save
-        }
-
-      }
-
-      return false;
-    }
-
     // 0.38: all requirements of a unit/hero type met (AiData.Requires: researches or unit types)
     internal static bool RequirementsMet(player p, int typeId)
     {
@@ -780,15 +687,16 @@ namespace WarcraftLegacies.Source.Ai
       return true;
     }
 
-    // 0.38: train from the building's REAL list (AiData.Trains): only types whose requirements are met, the type
-    // this bot has trained least first (random among equals) -> an even mix instead of random category pools.
-    private static void TrainFromTable(unit building, int[] list, player p, bool noCasters)
+    // Rank legal units by scarcity in the current army, including queued orders.
+    private static readonly float[] NextSavingWindow = new float[24];
+    private static readonly float[] SaveUntil = new float[24];
+    private static void TrainFromTable(unit building, int[] list, player p, bool noCasters, Dictionary<int, int> counts)
     {
       var pid = GetPlayerId(p);
       var avail = new List<int>();
       for (var i = 0; i < list.Length; i++)
       {
-        if (noCasters && AiCaster.IsCaster(list[i]))
+        if (noCasters && p.GetPlayerData().GetObjectLimit(list[i]) >= Faction.Unlimited && AiCaster.IsCaster(list[i]))
         {
           if (pid >= 0 && pid < 24)
           {
@@ -798,7 +706,7 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        if (RequirementsMet(p, list[i]))
+        if (p.GetPlayerData().GetObjectLimit(list[i]) > 0 && RequirementsMet(p, list[i]))
         {
           avail.Add(list[i]);
         }
@@ -812,47 +720,55 @@ namespace WarcraftLegacies.Source.Ai
         var start = GetRandomInt(0, avail.Count - 1);
         var best = -1;
         var bestN = 0;
+        var bestLimited = false;
         for (var k = 0; k < avail.Count; k++)
         {
           var idx = (start + k) % avail.Count;
-          var n = AiStats.Count(pid, avail[idx]);
-          if (best < 0 || n < bestN)
+          var type = avail[idx];
+          var limit = p.GetPlayerData().GetObjectLimit(type);
+          var n = counts.ContainsKey(type) ? counts[type] : 0;
+          if (n >= limit)
+          {
+            continue;
+          }
+          var limited = limit < Faction.Unlimited;
+          if (best < 0 || (limited && !bestLimited) || (limited == bestLimited && n < bestN))
           {
             best = idx;
             bestN = n;
+            bestLimited = limited;
           }
         }
 
+        if (best < 0)
+        {
+          break;
+        }
         var t = avail[best];
-        if (AiBuilder.CanBuy(GetOwningPlayer(building), t) && IssueImmediateOrderById(building, t))
+        var canBuy = AiBuilder.CanBuy(p, t);
+        if (bestLimited && !canBuy && Clock >= NextSavingWindow[pid] && p.GetPlayerData().ControlPoints.Count > 0
+            && GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) < GetUnitGoldCost(t)
+            && GetPlayerState(p, PLAYER_STATE_RESOURCE_LUMBER) >= GetUnitWoodCost(t)
+            && GetPlayerState(p, PLAYER_STATE_RESOURCE_FOOD_CAP) - GetPlayerState(p, PLAYER_STATE_RESOURCE_FOOD_USED) >= GetFoodUsed(t))
+        {
+          SaveUntil[pid] = Clock + 12f;
+          NextSavingWindow[pid] = Clock + 60f;
+        }
+        if (!bestLimited && Clock < SaveUntil[pid])
+        {
+          return;
+        }
+        if (canBuy && IssueImmediateOrderById(building, t))
         {
           queued++;
-          AiStats.Planned(pid, t); // counts the order, so the next slot picks another type
+          AiStats.Planned(pid, building, t);
+          counts[t] = bestN + 1;
         }
         else
         {
           avail.RemoveAt(best); // not possible right now (gold, food, limit) -> try another type
         }
       }
-    }
-
-    private static bool HaveHero(player p, int heroType)
-    {
-      // 0.37: a later form of the same legend counts too (AiConfig.HeroForms: Arthas UEAR -> N023 after "The
-      // Ascension"), otherwise the bot would train the first form again
-      var later = AiConfig.HeroForms.ContainsKey(heroType) ? AiConfig.HeroForms[heroType] : 0;
-      var all = LegendaryHeroManager.GetAll();
-      for (var i = 0; i < all.Count; i++)
-      {
-        var hu = all[i].Unit;
-        if (hu != null && (all[i].UnitType == heroType || (later != 0 && all[i].UnitType == later))
-            && GetOwningPlayer(hu) == p && GetUnitTypeId(hu) != 0)
-        {
-          return true;
-        }
-      }
-
-      return false;
     }
 
     // 0.35.3: the bot's living altar nearest to (x, y), or null
@@ -892,30 +808,6 @@ namespace WarcraftLegacies.Source.Ai
 
       DestroyGroup(g);
       return best;
-    }
-
-    private static bool TryReviveAtAltar(player p, unit altar)
-    {
-      var heroes = LegendaryHeroManager.GetAll();
-      for (var i = 0; i < heroes.Count; i++)
-      {
-        var hero = heroes[i].Unit;
-        if (hero == null || GetUnitTypeId(hero) == 0 || GetOwningPlayer(hero) != p
-            || GetUnitState(hero, UNIT_STATE_LIFE) > 0.405f || GetUnitAbilityLevel(hero, PermaDiesMarker) > 0
-            || PermaDead.Contains(heroes[i].UnitType) || HeroQueued(p, GetUnitTypeId(hero)))
-        {
-          continue;
-        }
-        var accepted = HasPerks(p) ? AiTech.FreeOrder(p, altar, 852039, hero)
-                                   : IssueTargetOrderById(altar, 852039, hero);
-        if (accepted)
-        {
-          HeroOrders[I2S(GetPlayerId(p)) + "|" + I2S(GetUnitTypeId(hero))] = altar;
-          Log("altar: " + FacName(p) + " reviving " + GetUnitName(hero));
-          return true;
-        }
-      }
-      return false;
     }
 
     // v28: subscribe to every registered LegendaryHero's Died event (append-only list -> hook only the new ones;
@@ -1078,6 +970,8 @@ namespace WarcraftLegacies.Source.Ai
 
         var altarUnits = new List<unit>();
         var trainers = new List<unit>();
+        var counts = new Dictionary<int, int>();
+        AiStats.CountPending(p, counts);
         var armyFood = 0; // 0.46: for the unit budget (heroes not counted)
         var armyUnits = 0; // 0.46: for the caster cap
         var casterUnits = 0;
@@ -1092,6 +986,8 @@ namespace WarcraftLegacies.Source.Ai
           {
             if (!IsUnitType(u, UNIT_TYPE_HERO) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
             {
+              var type = GetUnitTypeId(u);
+              counts[type] = (counts.ContainsKey(type) ? counts[type] : 0) + 1;
               armyFood = armyFood + GetUnitFoodUsed(u);
               armyUnits++;
               if (AiCaster.Learn(u))
@@ -1103,6 +999,10 @@ namespace WarcraftLegacies.Source.Ai
             continue;
           }
 
+          if (GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
+          {
+            continue;
+          }
           var tid = GetUnitTypeId(u);
           if (perks)
           {
@@ -1111,7 +1011,7 @@ namespace WarcraftLegacies.Source.Ai
             AiTech.TryTimedUpgrade(p, u, tid);  // 0.36: timed building upgrades (Fel Horde demon gates)
           }
           // 0.38: collect first, train after the loop -- heroes before units (see below)
-          if (ListHas(altars, tid) || AiData.AltarHeroes.ContainsKey(tid))
+          if (ListHas(altars, tid) || AiData.AltarHeroes.ContainsKey(tid) || GetUnitAbilityLevel(u, FourCC("Arev")) > 0)
           {
             altarUnits.Add(u);
           }
@@ -1127,10 +1027,12 @@ namespace WarcraftLegacies.Source.Ai
         // 0.38: heroes first. If a hero is available (requirements met) but the gold is short, the bot SAVES this
         // turn (no units). Before, units ate all gold every turn: Quel'thalas never had more than ~110 gold, so
         // Rommath / Lor'themar never came although "The Blood Elves" was done.
+        AiAltars.FoodNeeded[pid0] = 0;
+        AiAltars.AltarCount[pid0] = altarUnits.Count;
         var saving = false;
         for (var ai = 0; ai < altarUnits.Count; ai++)
         {
-          if (TrainHeroes(altarUnits[ai], faction, p))
+          if (AiAltars.TrainHeroes(altarUnits[ai], faction, p))
           {
             saving = true;
           }
@@ -1139,10 +1041,14 @@ namespace WarcraftLegacies.Source.Ai
         GetDiag(pid0).Saving = saving;
         // 0.46: unit budget per CP (AiBudget) -- bots only; heroes above are not affected
         var capped = perks && !AiBudget.Allows(p, pid0, faction, armyFood);
-        for (var ti = 0; ti < trainers.Count && !saving && !capped; ti++)
+        for (var ti = 0; ti < trainers.Count && !saving && !capped && AiAltars.FoodNeeded[pid0] == 0; ti++)
         {
           var tu = trainers[ti];
           var ttid = GetUnitTypeId(tu);
+          if (perks && AiBuilder.NeedsUpgradeQueue(p, tu))
+          {
+            continue;
+          }
           if (perks && (hallTypes.Contains(ttid) || IsUnitType(tu, UNIT_TYPE_TOWNHALL))
               && AiBuilder.NeedsHallQueue(p, tu))
           {
@@ -1151,7 +1057,7 @@ namespace WarcraftLegacies.Source.Ai
           if (AiData.Trains.ContainsKey(ttid))
           {
             // 0.38: the building's REAL train list; 0.46: no casters while they are 35 % or more of the units
-            TrainFromTable(tu, AiData.Trains[ttid], p, perks && AiCaster.TooMany(casterUnits, armyUnits));
+            TrainFromTable(tu, AiData.Trains[ttid], p, perks && AiCaster.TooMany(casterUnits, armyUnits), counts);
           }
           else if (fighters.Count > 0 && ListHas(barracks, ttid))
           {
@@ -2758,7 +2664,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static void AddBot(player p)
     {
       var i = GetPlayerId(p);
-      if (IsBot(p))
+      if (IsBot(p) || p.GetPlayerData().Faction?.ScoreStatus == ScoreStatus.Defeated)
       {
         return;
       }
@@ -2971,7 +2877,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.66.0";
+    public const string Build = "0.67.0";
 
     public static void Setup()
     {
