@@ -11,6 +11,14 @@ namespace WarcraftLegacies.Source.Factions.Sentinels.Quests;
 
 public sealed class QuestMaievOutland : QuestData
 {
+  private readonly ObjectiveCastSpell _chase = new(ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL, true);
+  internal bool UsedAtVault { get; private set; }
+
+  internal static void ReturnToOutland(LegendaryHero maiev)
+  {
+    maiev.Unit?.SetPosition(-5252, -27597);
+  }
+
   private readonly LegendaryHero _maiev;
   private readonly Capital _vaultOfTheWardens;
   private readonly List<unit> _rescueUnits;
@@ -24,7 +32,7 @@ public sealed class QuestMaievOutland : QuestData
   {
     _maiev = maiev;
     _vaultOfTheWardens = vaultOfTheWardens;
-    AddObjective(new ObjectiveCastSpell(ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL, true));
+    AddObjective(_chase);
     AddObjective(new ObjectiveControlLegend(maiev, true));
     AddObjective(new ObjectiveControlCapital(vaultOfTheWardens, true));
     _rescueUnits = rescueRect.PrepareUnitsForRescue(RescuePreparationMode.HideAll);
@@ -40,7 +48,8 @@ public sealed class QuestMaievOutland : QuestData
   /// <inheritdoc/>
   protected override void OnComplete(Faction completingFaction)
   {
-    _maiev.Unit?.SetPosition(-5252, -27597);
+    UsedAtVault = _chase.Caster != null && _chase.Caster == _vaultOfTheWardens.Unit;
+    ReturnToOutland(_maiev);
     if (_vaultOfTheWardens.Unit != null)
     {
       _vaultOfTheWardens.Unit.RemoveAbility(ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL);

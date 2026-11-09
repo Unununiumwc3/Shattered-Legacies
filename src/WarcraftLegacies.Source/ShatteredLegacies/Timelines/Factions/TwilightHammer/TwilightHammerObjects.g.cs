@@ -37,10 +37,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
     internal const int ThunderFistsLightning = 1096447854; // AZwn (24p A024)
     internal const int Whispers = 1381660471; // RZw7 (24p R05F)
     internal const int CursedFortress = 1381660472; // RZw8 (24p R06Y)
-    internal const int Firelord = 1381660473; // RZw9 (24p R07Q)
-    internal const int Windlord = 1381660513; // RZwa (24p R07T)
+    internal const int FlameRite = 1381660473; // RZw9 (24p R07Q)
+    internal const int FrostRite = 1381660513; // RZwa (24p R07T)
     internal const int TierFour = 1381660464; // RZw0 (24p R04R)
     internal const int OgreTraining = 1381660465; // RZw1 (24p R06X)
+    internal const int AntiMagicShell = 1096447855; // AZwo (24p Aams)
+    internal const int SpiritualInfusion = 1381660467; // RZw3 (24p R023)
     internal const int HeraldTraining = 1381660466; // RZw2 (24p R06Z)
 
     // main-map id (WL's creep version under the 24p id) -> the faction's copy, in pairs

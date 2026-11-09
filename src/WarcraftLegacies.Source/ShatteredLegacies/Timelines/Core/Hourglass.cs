@@ -113,7 +113,28 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       var fac = p.GetPlayerData().Faction;
       if (_building.ContainsKey(GetPlayerId(p)))
       {
+        RefreshChase(p);
         SetLimits(p, fac == null ? new List<TurningPointDef>() : TimelineCatalog.FindAll(fac.Name));
+      }
+    }
+
+    internal static void RefreshChase(player p)
+    {
+      var glass = Get(GetPlayerId(p));
+      if (glass == null)
+      {
+        return;
+      }
+      var chase = ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL;
+      var ready = TimelineSystem.AbilityReady(p, chase);
+      var shown = GetUnitAbilityLevel(glass, chase) > 0;
+      if (ready && !shown)
+      {
+        UnitAddAbility(glass, chase);
+      }
+      else if (!ready && shown)
+      {
+        UnitRemoveAbility(glass, chase);
       }
     }
 
@@ -213,7 +234,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     {
       for (var d = 0; d < defs.Count; d++)
       {
-        if ((wl ? defs[d].WlResearch : defs[d].Decision) == research)
+        if ((wl || defs[d].HourglassAbility == 0) && (wl ? defs[d].WlResearch : defs[d].Decision) == research)
         {
           return true;
         }

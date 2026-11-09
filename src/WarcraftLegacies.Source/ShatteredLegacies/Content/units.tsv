@@ -114,7 +114,7 @@ UZa2	main	used	hero	The Dark Ranger	(Forsaken)	Hvwd	undead	Units\Undead\EvilSylv
 UZa3	main	used	hero	Queen of the Forsaken	(Forsaken)	Hvwd	undead	war3mapImported\Hero_DarkRangerBoss2.mdl	main	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,AZg1,AZg2,AZg3,AZs1,AZs3,AZs4,Aamk,Ault	-
 UZfd	main	used	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	main	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	uZf0	-	-	-	-	A0NK,AHab,AInv,AZfp,AZfq,Aamk	RZf1
 UZfe	main	used	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	main	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	uZf0	-	-	-	-	AInv,AZfs,AZft,AZfu,AZfv,Aamk	-
-UZw2	main	used	hero	Windlord	(Twilight)	Uktl	orc	war3mapImported\Hero_WindlordV1.mdl	main	ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp	-	oZw3	-	-	-	-	A00Y,A0GK,A11J,AHbz,AInv,AZwb,AZwc,Aamk	RZwa
+UZw2	main	used	hero	Water Ascendant	(Twilight)	Uktl	orc	Units\Creeps\RevenantOfTheWaves\RevenantOfTheWaves.mdl	stock	ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp	-	oZw3	-	-	-	-	A00Y,A0GK,A11J,AHbz,AInv,AZwb,AZwc,Aamk	RZwa
 Uanb	main	used	hero	King of Azjol-Nerub	(Scourge)	Uanb	undead	units\undead\Anubarak\Anubarak	stock	ReplaceableTextures\CommandButtons\BTNanubarakhd.blp	Scourge	uaod	-	-	-	-	AInv,AUcb,AUim,AUls,AUts,Aamk	-
 Uear	main	used	hero	Champion of the Scourge	(Scourge)	Uear	undead	units\undead\EvilArthas\UndeadArthas	stock	ReplaceableTextures\CommandButtons\BTNArthasV1.blp	Scourge	uaod	-	-	-	-	A08V,A0LR,A0SC,A10C,A10N,AInv,Aamk,ZB02,ZB06	R01K
 Uktl	main	used	hero	Archlich of the Scourge	(Scourge-Lich)	Uktl	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	Scourge	-	-	-	-	-	A00F,A00J,A13R,AInv,AUan,AUdd,AUfn,Aamk	-
@@ -252,7 +252,7 @@ h01V	main	used	building	Barn	(Lordaeron Other)	hhou	human	war3mapImported\Buildi
 h01W	main	used	building	Elven Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
 h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
 h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	o04B,o04I	-	-	-	A04O	halt
+h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	-	-	-	-	A04O	halt
 h021	main	used	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
 h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+9	-	-	A041,Ahrp	-
 h023	main	used	building	Keep	(Gilneas T2)	hkee	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasKeep.blp	Gilneas	-	hpea,o01V	-	-	-	-	-
@@ -1042,7 +1042,7 @@ nZri	main	used	unit	Fel Guard	(Refugee, Legion)	nfgu	undead	units\demon\Felgaurd
 nZw0	main	used	unit	Nether Dragon	(Twilight)	nndr	orc	units\creeps\NetherDragon\NetherDragon	stock	ReplaceableTextures\CommandButtons\BTNNetherDragon.blp	-	oZw7	-	-	-	-	Advm	oZw2
 nZw1	main	used	unit	Ogre Magi	(twilight)	nomg	orc	war3mapImported\Ogre Mage.mdl	main	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	oZw6	-	-	-	-	AZwj,AZwk,Aion,Awfb	-
 nZw2	main	used	unit	Twilight Dragonspawn	(twilight)	nbdo	orc	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNpurpleDragonSpawn.blp	-	oZw7	-	-	-	-	A020,A0CH,AZw5	oZw2
-nZw3	main	used	unit	Orcish Death Knight	(Twilight)	nchr	orc	war3mapImported\DeathSeerV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathSeer.blp	-	oZw6	-	-	-	-	A0OM,AZw7,Aams,Aion	RZw8
+nZw3	main	used	unit	Orcish Death Knight	(Twilight)	nchr	orc	war3mapImported\DeathSeerV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathSeer.blp	-	oZw6	-	-	-	-	A0OM,AZw7,AZwo,Aion	RZw8
 nZw4	main	used	unit	Phase Grenadier	(Twilight)	nftr	orc	war3mapImported\TwilightCultist.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkSoldier.blp	-	oZw4	-	-	-	-	Aslo	oZw5
 nZw5	main	used	unit	Hurricane	(Level 1)	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	A02S,Aasl,Atsp,Avul	-
 nZw6	main	used	unit	Hurricane	(Level 2)	ntor	other	Abilities\Spells\Other\Tornado\TornadoElemental	stock	ReplaceableTextures\CommandButtons\BTNTornado.blp	-	-	-	-	-	-	A0H8,Aasl,Atsp,Avul	-
@@ -1515,13 +1515,13 @@ o047	main	used	building	Bazaar	(Creep Shop)	ovln	orc	war3mapImported\VoodooLoung
 o048	main	used	building	Improved Watch Tower	(Creep Tower 2)	owtw	orc	war3mapImported\WatchTowerGurubashiV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsWatchTower.blp	-	-	-	-	-	-	-	-
 o049	main	used	building	Golden Dock	(Creep Shipyard)	oshy	orc	war3mapImported\ShipyardGurubashiV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsShipyard.blp	-	o04A	-	-	-	-	-	R04R
 o04A	main	used	unit	Gatherer	(Creep, Zandalari, Worker)	opeo	orc	war3mapImported\TrollGathererAlternateV2.mdl	main	ReplaceableTextures\CommandButtons\BTNIceTrollWitchDoctor.blp	-	o00K,o00N,o00Q,o018,o02G,o03R,o03Y,o03Z	-	o03R,o040,o041,o042,o043,o044,o045,o046,o047,o049,o04X	-	-	Arep	-
-o04B	main	used	unit	Cultist	(Creep Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	h01Z,o039,o03A,o03B	-	o039,o03C,o03D,o03E,o03F,o03G,o03I,o03J,o03K,u00Y	-	-	Arep	-
+o04B	main	used	unit	Cultist	(Creep Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	o039,o03A,o03B	-	o039,o03C,o03D,o03E,o03F,o03G,o03I,o03J,o03K,u00Y	-	-	Arep	-
 o04C	main	used	unit	Seraphim	(Scarlet)	odkt	human	war3mapImported\Seraphim.mdl	main	ReplaceableTextures/CommandButtons/BTNRedLioness3.blp	Scarlet Crusade	n035	-	-	-	-	A020,A03O,A0QH,ACsk,Aion	-
 o04D	main	used	unit	Scout	(Creep)	ohun	orc	units\orc\HeadHunter\HeadHunter	stock	ReplaceableTextures\CommandButtons\BTNHeadhunter.blp	-	-	-	-	-	-	A05H,ACsf,Aion,Aotr	o042
 o04E	main	used	unit	Boneseer	(Creep)	ohun	orc	war3mapImported\TrollBonecaster.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollShadowIce.blp	-	o00K,o03R,o03Y,o03Z	-	-	-	-	A07C,A0GK,A0OP,A0OQ,A0OU,A0TR,ACrk,Aion	o03Z
 o04F	main	used	unit	Hex Doctor	(Creep)	odoc	orc	war3mapImported\ZandalariWitchDoctor.mdl	main	ReplaceableTextures\CommandButtons\BTNWitchDoctor.blp	-	-	-	-	-	-	A0P1,A0U6,Ahea,Aion	-
 o04G	main	used	unit	Haruspex	(Creep)	oshm	orc	war3mapImported\TrollHexerMaskedV2.mdl	main	ReplaceableTextures\CommandButtons\BTNIceTrollShadowPriest.blp	-	-	-	-	-	-	A0D1,A0OZ,A0P3,Aion	-
-o04I	main	used	unit	Battlemaster	(Creep)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	h01Z,o004,o039,o03A,o03B	-	-	-	-	A01T,A0EH,A0GK,A0IT,A0NQ,ACsk,Aion	o03B
+o04I	main	used	unit	Battlemaster	(Creep)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	o004,o039,o03A,o03B	-	-	-	-	A01T,A0EH,A0GK,A0IT,A0NQ,ACsk,Aion	o03B
 o04J	main	used	unit	Void Rider	(Creep)	owyv	orc	war3mapImported\NetherDragonRiderV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNWyvernRider.blp	-	o03F	-	-	-	-	A069,Adtg,Aven	-
 o04K	main	used	unit	Skull Catapult	(Creep)	ocat	orc	war3mapImported\CatapultWC1.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapultWC1.blp	-	o03D	-	-	-	-	-	-
 o04L	main	used	unit	Peon	(Warsong Worker)	opeo	orc	war3mapImported\WarsongPeon.mdl	main	ReplaceableTextures\CommandButtons\BTNPeon.blp	Warsong	o004,o00C,o00J,o01B,o02D,o02R,o02S	-	n03E,o006,o009,o00C,o01S,o01T,o020,o028,o02Q,o02T,o05G	-	-	A041,Arep,Sca5	-
@@ -1637,7 +1637,7 @@ oZw3	main	used	building	Altar of Visions	(twilight)	oalt	orc	war3mapImported\Alt
 oZw4	main	used	building	War Camp	(twilight)	obar	orc	war3mapImported\DragonDungeon.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp	-	oZwe	nZw4,oZwd,oZwg	-	-	-	Aspi	-
 oZw5	main	used	building	War Mill	(twilight)	ofor	orc	war3mapImported\DragonQuarry.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonQuarry.blp	-	oZwe	-	-	R04R,R09X,RZw3,Rhar,Rhme,Rosp	-	Arlm,Aspi	-
 oZw6	main	used	building	Grim Totem	(twilight)	osld	orc	war3mapImported\DragonArcaneTemple.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonArcaneTemple.blp	-	oZwe	nZw1,nZw3,uZw1	-	RZw1,RZw2	-	Aspi	oZw1
-oZw7	main	used	building	Dragon Hatchery	(twilight)	obea	orc	war3mapImported\DragonRoostNetherIllidariV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackDragonRoost.blp	-	oZwe	nZw0,nZw2,oZwc	-	-	-	Aspi	oZw1
+oZw7	main	used	building	Dragon Hatchery	(twilight)	obea	orc	war3mapImported\DragonRoostNetherIllidariV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackDragonRoost.blp	-	oZwe	nZw0,nZw2,oZwc	-	Rovs	-	Aspi	oZw1
 oZw8	main	used	building	Twilight Dock	(twilight)	oshy	orc	war3mapImported\OrcBarrackAlphaV2_01.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeSummoningCircle.blp	-	oZwe	h0AO,h0AP,h0AS,h0AY,h0B2,h0B5,h0BC,obot	-	R006,R00C	-	Abds,Ane2	-
 oZw9	main	used	building	Twilight Lookout	(twilight)	owtw	orc	war3mapImported\DragonTower.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonTower.blp	-	oZwe	-	-	-	-	Arbr,Aspi	oZw5
 oZwa	main	used	building	Improved Twilight Lookout	(twilight)	owtw	orc	war3mapImported\DragonTower.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonTower.blp	-	-	-	-	-	-	Arbr,Aspi	RZw0

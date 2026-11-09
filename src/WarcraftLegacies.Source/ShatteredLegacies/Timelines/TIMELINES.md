@@ -140,7 +140,7 @@ some areas at runtime -- `CleanupNeutralPassiveUnits`).
 | Kul Tiras | Boralus Keep `h046` | same | -- |
 | Druids | Nordrassil `n002`, Cenarion Hold `n06D` (+1) | both listed | the World Tree consumed / Nordrassil falls |
 | Sentinels / Exodar | Auberdine `e00J`, Feathermoon `e00M` / Exodar Regalis `e01X` | same | -- |
-| Frostwolf / Warsong | Thunder Bluff `o00J`, Darkspear Hold `o02D` / Stonemaul Keep `o004`, Orgrimmar `o01B` | same | orc HQ falls |
+| Frostwolf / Warsong | Thunder Bluff `o00J`, Darkspear Hold `o02D` / Stonemaul Keep `o004`, Orgrimmar `o01B` | Orgrimmar only for either pick | lose Orgrimmar after holding it |
 | Scourge | Frozen Throne `u000` | same | Lich King Arthas dies (Ebon Blade) |
 | Legion | Legion Stronghold `u00G` | same | all Argus CPs; Archimonde while the Legion controls him |
 | Fel Horde | Kil'sorrow Fortress `o017`, Black Temple `o00F`, Hellfire Citadel `o008` | all three | -- |
@@ -159,7 +159,7 @@ check for conflicts; other numbers = a player slot at start). Rows for designs t
 | Kezan Enterprise (Kul Tiras) | `Regions.KezanUnlock` (-2400..608, -8000..-5184) | Kezan `n04Z` (-960,-7168); quests: Gadgetzan `n05C` (-8832,-13184), the goblin towns (Goblin Empire) | the base preplaced in KezanUnlock (owner 27, WL's creep goblins -> the 24p copies by `MainEquivalents`) | 0.58: `HideNonStructures`; no other WL rescue / cleanup covers it |
 | Dream trees (Druids) | Twilight Grove, Duskwood | Duskwood `n00V` (12160,-16384, owner 20 at start); quest: Hinterlands `n01A` (16256,4352) | druid buildings (copies) | Duskwood starts owned by slot 20 -- which faction? |
 | Maiev's Watchers (Sentinels, Draenei) | Warden's Cage, Outland | Warden's Cage `md03` (5440,-31040, owner 27) | `Regions.MaievStartUnlock` (-6016..-4896, -28416..-27104), the Sentinels' Maiev quests | MaievStartUnlock belongs to a Sentinels quest -> reuse or second rectangle |
-| Twilight's Hammer (orc slot) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | the capital must stay WL's |
+| Twilight's Hammer (orc slot) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | the quest transfers the registered capital and opens its tunnels to Dragonmaw Port |
 | Forsaken (Quel'thalas betrayal, D3) | Undercity (under Lordaeron City) | Lordaeron City `n01G` (9088,8576, owner 27), Tirisfal `n01F` (6784,10112, owner 9 = Lordaeron) | 24p Forsaken buildings (e.g. Plaguetorium `u011`) | Tirisfal / Brill are Lordaeron's at start -> own small rectangle |
 | Knights of the Ebon Blade (Scourge) | Eastern Plaguelands (Acherus) | Havenshire `n04W` (20608,9344, owner 27), Corin's Crossing `n03P` (17536,9088, owner 9) | Scourge buildings (copies) | Havenshire is owner 27 (rescue?) |
 | Mag'har (Fel Horde) | Kil'sorrow Fortress (maintainer, 0.63; was Nagrand / Garadar) | Nagrand `n00B` (-2944,-27904), Halaar `n0CV` (-4352,-29312) | orc buildings (copies) | none found |
@@ -188,8 +188,8 @@ faction by faction.
 | P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
 | P23 Kul Tiras | fallback Kezan Enterprise (own team) | **fallback Kezan Enterprise** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | 0.59: 24p Trading Center + trade, Oil Refining, end goal on the scoreboard; 0.60: Refugee Slave Camps -- open: camps built one by one, what the end goal does, turtle concept |
 | P12 Druids | fallback Dream trees | placeholder | -- |
-| P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | placeholders (Exodar: Shattrath -- superseded) | -- |
-| P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | Twilight's Hammer at Dragonmaw Port, Old Gods team, 24p roster and tech tree | The Hour of Twilight brings back Deathwing. D12 is separate. |
+| P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | Sentinels: Chase Illidan at the Hourglass after both HQs fall and Driven by Vengeance was used at the Vault; Exodar remains a placeholder | -- |
+| P1 Frostwolf / Warsong | fallback Twilight's Hammer, Found the Horde (D12) | Twillight at Dragonmaw Port, Old Gods team, 24p roster and tech tree | The Hour of Twilight brings back Deathwing. D12 is separate. |
 | P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
 | P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
 | P16 Illidari | fallback Ashtongue Deathsworn (full, 0.63) | **fallback Ashtongue** (0.63: Black Temple destroyed -> Temple of the Deathsworn, conquest rule, purification, Karabor) | faction name "Karabor"; balance |

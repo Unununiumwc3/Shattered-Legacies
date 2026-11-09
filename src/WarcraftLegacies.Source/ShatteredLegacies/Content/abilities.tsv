@@ -1241,6 +1241,7 @@ AZwk	main	used	Bloodlust	(Twilight Hammer Ogre)	Ablo	-	-	orc	ReplaceableTextures
 AZwl	main	used	Lightning Shield	(twilight)	Alsh	-	-	orc	ReplaceableTextures\CommandButtons\BTNLightningShield.blp	uZw1
 AZwm	main	used	Devour Magic	(Twilight)	Advm	-	-	orc	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	uZw1
 AZwn	main	used	Thunder Fists	(Cho'gall - DUMMY CAST)	ANfl	-	-	orc	ReplaceableTextures\CommandButtons\BTNMonsoon.blp	-
+AZwo	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3
 AZy0	main	unused	Defender Shield	(Attachment)	AId1	-	yes	other	-	oZy0
 AZy1	main	unused	Self-Bloodlust	(Self Cast - Warsong)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	-
 AZy2	main	unused	Thick Skin	(Roanauk)	Ansk	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	hZy1
@@ -1262,7 +1263,7 @@ Aabs	main	used	Absorb Mana	(Scourge-Destroyer)	Aabs	-	-	undead	ReplaceableTextur
 Aakb	main	used	War Drums	(Kodo Beast)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	o06Q,okod
 Aam2	main	used	Anti-magic Shell	(Scourge) - Banshee)	Aam2	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	uban
 Aamk	main	used	Attribute Bonus	(All Heroes)	Aamk	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNStatUp.blp	E002,E005,E00A,E00F,E00H,E016,+108
-Aams	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3,nnsw
+Aams	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nnsw
 Aap1	main	used	Disease Cloud	(Red - Abomination/Zombie)	Aap1	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	n08G,nfgl,nzom,uZfc,uabo
 Aap2	main	used	Disease Cloud	(Plague Ward)	Aap2	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	uplg
 Aap3	main	used	Disease Cloud	(Neutral Hostile)	Aap3	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	nenp,nepl,nmpg

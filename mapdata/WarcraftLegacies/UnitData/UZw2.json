@@ -98,22 +98,22 @@
     {
       "Id": "unam",
       "Type": 3,
-      "Value": "Windlord"
+      "Value": "Water Ascendant"
     },
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Mystical Hero, Excels at slowing the enemies around him. |n|cfff5962dCan learn:|R Blizzard, Frost Armor, Chilling Aura, Living Tornado|n|n|cffffcc00Attacks land and air units."
+      "Value": "A water ascendant of the Twilight cult. Learns Blizzard, Frost Bite, Chilling Aura and Living Tornado."
     },
     {
       "Id": "upro",
       "Type": 3,
-      "Value": "Al-Akir"
+      "Value": "Feludius"
     },
     {
       "Id": "umdl",
       "Type": 3,
-      "Value": "war3mapImported\\Hero_WindlordV1.mdl"
+      "Value": "Units\\Creeps\\RevenantOfTheWaves\\RevenantOfTheWaves.mdl"
     },
     {
       "Id": "uico",
@@ -128,17 +128,17 @@
     {
       "Id": "uawt",
       "Type": 3,
-      "Value": "Revive Al-Akir"
+      "Value": "Revive Feludius"
     },
     {
       "Id": "utip",
       "Type": 3,
-      "Value": "Summon Al-Akir"
+      "Value": "Summon Feludius"
     },
     {
       "Id": "utpr",
       "Type": 3,
-      "Value": "Revive Al-Akir"
+      "Value": "Revive Feludius"
     },
     {
       "Id": "ua1m",

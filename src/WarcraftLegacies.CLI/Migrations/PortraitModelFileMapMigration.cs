@@ -1,11 +1,12 @@
 ﻿using War3Api.Object;
 using War3Net.Build;
+using War3Net.CodeAnalysis.Jass.Extensions;
 using Warcraft.Cartographer.Migrations;
 
 namespace WarcraftLegacies.CLI.Migrations;
 
 /// <summary>
-/// Sets the Art Portrait Model File to an empty string for all units in the map.
+/// Sets the Art Portrait Model File to an empty string except Grim Batol, which uses a separate stock portrait.
 /// </summary>
 public sealed class PortraitModelFileMapMigration : IMapMigration
 {
@@ -13,7 +14,10 @@ public sealed class PortraitModelFileMapMigration : IMapMigration
   {
     foreach (var unit in objectDatabase.GetUnits())
     {
-      unit.ArtPortraitModelFile = "";
+      if (unit.Key != UNIT_H01Z_GRIM_BATOL_CREEP_TWILIGHT.InvertEndianness())
+      {
+        unit.ArtPortraitModelFile = "";
+      }
     }
 
     var unitData = objectDatabase.GetAllData().UnitData;

@@ -1,5 +1,7 @@
 using MacroTools.Factions;
 using MacroTools.Quests;
+using WarcraftLegacies.Source.Objectives.LegendBased;
+using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.Objectives.QuestBased;
 using WarcraftLegacies.Source.Objectives.UnitBased;
 
@@ -11,6 +13,7 @@ internal sealed class QuestHourOfTwilight : QuestData
     "Gather the cult at Grim Batol. When the highlands answer to the Old Gods, Deathwing will return.",
     @"ReplaceableTextures\CommandButtons\BTNDeathwing.blp")
   {
+    AddObjective(new ObjectiveControlCapital(AllLegends.Neutral.GrimBatol, false));
     AddObjective(new ObjectiveResearch(TwilightHammerObjects.TierFour, TwilightHammerObjects.Fortress));
     var holdHighlands = new ObjectiveQuestComplete(fortress);
     if (fortress.Progress == QuestProgress.Complete)
@@ -20,11 +23,11 @@ internal sealed class QuestHourOfTwilight : QuestData
     AddObjective(holdHighlands);
   }
 
-  protected override string RewardDescription => "Deathwing joins your army at Dragonmaw Port";
+  protected override string RewardDescription => "Deathwing emerges over Grim Batol and joins your army";
 
   protected override void OnComplete(Faction whichFaction)
   {
     CreateUnit(whichFaction.Player, TwilightHammerObjects.Deathwing,
-      TwilightHammerFallback.StartX, TwilightHammerFallback.StartY, 270f);
+      17344f, -3456f, 270f);
   }
 }

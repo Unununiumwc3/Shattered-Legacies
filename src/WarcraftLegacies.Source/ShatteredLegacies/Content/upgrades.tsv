@@ -297,8 +297,8 @@ RZc5	main	used	Boralus Keep lost	(Hourglass condition)	Roch	demon	ReplaceableTex
 RZc6	main	used	Nordrassil and Cenarion Hold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZc7	main	used	Auberdine and Feathermoon Stronghold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZc8	main	used	Exodar Regalis lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZc9	main	used	Thunder Bluff and Darkspear Hold lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZcA	main	used	Stonemaul Keep and Orgrimmar lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZc9	main	used	Orgrimmar lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcA	main	used	Orgrimmar lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcB	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcC	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcD	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -313,10 +313,10 @@ RZd3	main	used	Fallback: Valiance Expedition (placeholder)	(Hourglass of Fate)	R
 RZd4	main	used	Fallback: Dwarven Expedition (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	nZh0
 RZd5	main	used	Fallback: Kezan Enterprise	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	nZh0
 RZd6	main	used	Fallback: Dream trees (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNKeeperOfTheGrove.blp	nZh0
-RZd7	main	used	Fallback: Maiev's Watchers (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	nZh0
+RZd7	main	used	Fallback: Chase Illidan to Outland	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	nZh0
 RZd8	main	used	Fallback: Draenei of Shattrath (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroArchMage.blp	nZh0
-RZd9	main	used	Fallback: Twilight's Hammer	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
-RZdA	main	used	Fallback: Twilight's Hammer	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
+RZd9	main	used	Fallback: Twillight	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
+RZdA	main	used	Fallback: Twillight	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
 RZdB	main	used	Fallback: Knights of the Ebon Blade (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
 RZdC	main	used	Fallback: Dreadlord Insurgents (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDreadLord.blp	nZh0
 RZdD	main	used	Fallback: Mag'har (not yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	nZh0
@@ -384,10 +384,10 @@ RZw3	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	Replace
 RZw4	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
 RZw5	main	used	Horde War Machine	(Warsong-Quest)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNBundleOfLumber.blp	-
 RZw6	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
-RZw7	main	used	Quest Completed: Spread the Words of the Old God	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZw7	main	used	Quest Completed: Voices in the Quarry	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZw8	main	used	Quest Completed: The Cursed Fortress	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-RZw9	main	used	Quest Completed: Gift of the Firelord	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
-RZwa	main	used	Quest Completed: Gift of the Windlord	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZw9	main	used	Quest Completed: Rite of Embers	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZwa	main	used	Quest Completed: Rite of Rime	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZy0	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
 RZy1	main	used	Spiritual Infusion	(Warsong-Frostwolf-Fel Horde)	Rhan	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
 RZy2	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
@@ -426,7 +426,7 @@ Ropg	main	used	Pillage	(Pink/Grey Research)	Ropg	orc	ReplaceableTextures\Command
 Rorb	main	used	Reinforced Defenses	(Frostwolf/Fel Horde/Warsong)	Rorb	orc	ReplaceableTextures\CommandButtons\BTNReinforcedBurrows.blp	o009,o031,o042,oZk5,ofor
 Rosp	main	used	Spiked Barricades	(Frostwolf/Fel Horde/Warsong)	Rosp	orc	ReplaceableTextures\CommandButtons\BTNSpikedBarricades.blp	o009,o031,o03J,oZk5,oZw5,ofor
 Rost	main	used	Shaman Adept Training	(Frostwolf)	Rost	orc	ReplaceableTextures\CommandButtons\BTNShamanAdept.blp	osld
-Rovs	main	used	Envenomed Spears	(Warsong)	Rovs	orc	ReplaceableTextures\CommandButtons\BTNEnvenomedSpear.blp	o02Q
+Rovs	main	used	Envenomed Spears	(Warsong)	Rovs	orc	ReplaceableTextures\CommandButtons\BTNEnvenomedSpear.blp	o02Q,oZw7
 Rowd	main	used	Witch Doctor Adept Training	(Frostwolf)	Rowd	orc	ReplaceableTextures\CommandButtons\BTNWitchDoctorAdept.blp	osld
 Rows	main	used	Improved Pulverize	(Frostwolf)	Rows	orc	ReplaceableTextures\CommandButtons\BTNSmash.blp	otto
 Rowt	main	used	Spirit Walker Adept Training	(Frostwolf)	Rowt	orc	ReplaceableTextures\CommandButtons\BTNSpiritWalkerAdeptTraining.blp	osld

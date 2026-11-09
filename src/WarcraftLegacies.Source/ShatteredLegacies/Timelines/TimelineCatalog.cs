@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using MacroTools.Extensions;
+using WarcraftLegacies.Source.Factions.Sentinels.Quests;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
@@ -19,6 +21,24 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
   // Hourglass only (NotYet). 0.53: Decision / Condition = the Hourglass researches (Core/HourglassData.g.cs).
   internal static class TimelineCatalog
   {
+    private static bool CanReturnToOutland(player p)
+    {
+      var maiev = AllLegends.Sentinels.Maiev.Unit;
+      var faction = p.GetPlayerData().Faction;
+      if (maiev == null || !maiev.Alive || maiev.Owner != p || faction == null)
+      {
+        return false;
+      }
+      foreach (var quest in faction.GetAllQuests())
+      {
+        if (quest is QuestMaievOutland chase && chase.UsedAtVault)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
     internal static List<TurningPointDef> All = new()
     {
       // WL runs it (automatic when the Violet Citadel falls) -- no Hourglass
@@ -121,14 +141,26 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Announcement = "|cffffcc00Nordrassil is lost.|r The druids walk the Emerald Dream to its great trees in the Eastern Kingdoms.",
       },
       // concepts: Maiev's Watchers for both picks of the slot (P19)
-      new TurningPointDef("Sentinels", "Maiev's Watchers (placeholder)", TurningPointKind.Fallback,
+      new TurningPointDef("Sentinels", "Chase Illidan to Outland", TurningPointKind.Fallback,
         TurningPointSource.Timeline)
       {
         Trigger = "Auberdine and Feathermoon Stronghold are lost",
-        Description = "Placeholder: a hero appears where Maiev's Watchers would start in Outland.",
+        Description = "After using Chase Illidan at the Vault for Driven by Vengeance, use it at the Hourglass to return Maiev to her existing outpost when both Sentinel headquarters fall.",
+        RequireTriggerForForcedFallback = true,
+        HourglassAbility = ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL,
+        Prerequisite = CanReturnToOutland,
+        HeroType = 0,
+        Run = (p, def) =>
+        {
+          if (CanReturnToOutland(p))
+          {
+            QuestMaievOutland.ReturnToOutland(AllLegends.Sentinels.Maiev);
+            p.RepositionCamera(Regions.MaievStartUnlock.Center);
+          }
+        },
         Decision = HourglassData.DecisionSentinels, Condition = HourglassData.ConditionSentinels,
         Hq = new[] { 1697656906, 1697656909 }, // e00J Auberdine, e00M Feathermoon Stronghold
-        X = 5802f, Y = -31282f,                // Warden's Cage (Outland)
+        X = -5252f, Y = -27597f,               // Driven by Vengeance outpost
         Announcement = "|cffffcc00The Sentinels are broken.|r Maiev Shadowsong leads her Watchers into Outland.",
       },
       // superseded: the Draenei pick takes Maiev's Watchers too (P19)
@@ -144,10 +176,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       },
       new TurningPointDef("Frostwolf", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
-        Trigger = "Thunder Bluff and Darkspear Hold are lost",
-        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twilight's Hammer.",
+        Trigger = "Orgrimmar is lost",
+        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.",
         Decision = HourglassData.DecisionFrostwolf, Condition = HourglassData.ConditionFrostwolf,
-        Hq = new[] { 1865429066, 1865429572 }, // o00J Thunder Bluff, o02D Darkspear Hold
+        Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
         HeroType = 0,
         Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
         X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,
@@ -155,10 +187,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       },
       new TurningPointDef("Warsong", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
-        Trigger = "Stonemaul Keep and Orgrimmar are lost",
-        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twilight's Hammer.",
+        Trigger = "Orgrimmar is lost",
+        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.",
         Decision = HourglassData.DecisionWarsong, Condition = HourglassData.ConditionWarsong,
-        Hq = new[] { 1865429044, 1865429314 }, // o004 Stonemaul Keep, o01B Orgrimmar
+        Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
         HeroType = 0,
         Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
         X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,

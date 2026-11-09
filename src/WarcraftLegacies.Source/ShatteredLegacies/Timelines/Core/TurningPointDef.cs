@@ -12,6 +12,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     public readonly TurningPointKind Kind;
     public readonly TurningPointSource Source;
     public int[] Hq = new int[0];                  // HQ building / CP unit types -- ALL must be lost (0.62: then for good)
+    public bool RequireTriggerForForcedFallback;
+    public System.Func<player, bool>? Prerequisite;
+    public int HourglassAbility;
     public string Trigger = "";                    // the trigger as quest objective text ("Lose Silvermoon Palace ...")
     public string Description = "";                // quest text
     public int Decision;                           // decision research at the Hourglass (HourglassData); 0 = none

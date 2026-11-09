@@ -13,9 +13,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     private List<unit> _units;
     private bool _hadHq;
 
-    public ObjectiveHqLost(int[] types, string text)
+    private bool _lost;
+    private readonly System.Func<player, bool>? _prerequisite;
+
+    public ObjectiveHqLost(int[] types, string text, System.Func<player, bool>? prerequisite = null)
     {
       _types = types;
+      _prerequisite = prerequisite;
       SetDescription(text);
     }
 
@@ -76,10 +80,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       if (held > 0)
       {
         _hadHq = true;
-        return 0; // 0.62: a lost HQ stays lost for the turning point (no "-1: held again" any more)
+      }
+      else if (_hadHq)
+      {
+        _lost = true;
       }
 
-      if (!_hadHq || Progress == QuestProgress.Complete)
+      if (!_lost || Progress == QuestProgress.Complete || (_prerequisite != null && !_prerequisite(p)))
       {
         return 0; // never held -> not "lost"; or already lost
       }

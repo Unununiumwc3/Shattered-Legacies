@@ -73,12 +73,12 @@
     },
     {
       "Id": "urev",
-      "Value": 1
+      "Value": 0
     },
     {
       "Id": "utra",
       "Type": 3,
-      "Value": "o04B,o04I"
+      "Value": ""
     },
     {
       "Id": "utyp",
@@ -112,6 +112,11 @@
       "Id": "unsf",
       "Type": 3,
       "Value": " (Creep/Twilight)"
+    },
+    {
+      "Id": "upor",
+      "Type": 3,
+      "Value": "Buildings\\Human\\Castle\\Castle.mdl"
     },
     {
       "Id": "umdl",

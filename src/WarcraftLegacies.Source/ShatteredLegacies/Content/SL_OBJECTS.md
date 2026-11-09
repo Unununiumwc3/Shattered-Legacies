@@ -108,6 +108,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZwl` |  | `24p:A0O5` | TwilightHammer |
 | `AZwm` |  | `24p:A08F` | TwilightHammer |
 | `AZwn` | Thunder Fists | `24p:A024` | TwilightHammer |
+| `AZwo` |  | `24p:Aams` | TwilightHammer |
 | `AZy9` | Defender Shield | `24p:A0TF` | Ashtongue |
 | `AZya` | Self-Bloodlust | `24p:A0XM` | Ashtongue |
 | `AZyb` | Thick Skin | `24p:A0VI` | Ashtongue |
@@ -173,16 +174,16 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZw4` | Solo Upgrade | `24p:Rguv` | TwilightHammer |
 | `RZw5` | Horde War Machine | `24p:R021` | TwilightHammer |
 | `RZw6` | Needs to be Made | `24p:R03N` | TwilightHammer |
-| `RZw7` | Quest Completed: Spread the Words of the Old God | `24p:R05F` | TwilightHammer |
+| `RZw7` | Quest Completed: Voices in the Quarry | `24p:R05F` | TwilightHammer |
 | `RZw8` | Quest Completed: The Cursed Fortress | `24p:R06Y` | TwilightHammer |
-| `RZw9` | Quest Completed: Gift of the Firelord | `24p:R07Q` | TwilightHammer |
-| `RZwa` | Quest Completed: Gift of the Windlord | `24p:R07T` | TwilightHammer |
+| `RZw9` | Quest Completed: Rite of Embers | `24p:R07Q` | TwilightHammer |
+| `RZwa` | Quest Completed: Rite of Rime | `24p:R07T` | TwilightHammer |
 | `RZy3` | Solo Upgrade | `24p:Rguv` | Ashtongue |
 | `RZy4` | Spiritual Infusion | `24p:R023` | Ashtongue |
 | `RZy5` | Needs to be Made | `24p:R03N` | Ashtongue |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
-| `UZw2` | Windlord | `24p:U01S` | TwilightHammer |
+| `UZw2` | Water Ascendant | `24p:U01S` | TwilightHammer |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
 | `hZf1` | Grim Estate | `24p:h08A` | Forsaken |
 | `hZf2` | Haunted Castle | `24p:h08B` | Forsaken |

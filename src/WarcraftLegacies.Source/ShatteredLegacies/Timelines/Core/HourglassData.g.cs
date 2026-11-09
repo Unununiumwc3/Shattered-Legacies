@@ -21,13 +21,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionKultiras = 1381655349; // RZc5
     internal const int DecisionDruids = 1381655606; // RZd6 Fallback: Dream trees (placeholder)
     internal const int ConditionDruids = 1381655350; // RZc6
-    internal const int DecisionSentinels = 1381655607; // RZd7 Fallback: Maiev's Watchers (placeholder)
+    internal const int DecisionSentinels = 1381655607; // RZd7 Fallback: Chase Illidan to Outland
     internal const int ConditionSentinels = 1381655351; // RZc7
     internal const int DecisionExodar = 1381655608; // RZd8 Fallback: Draenei of Shattrath (placeholder)
     internal const int ConditionExodar = 1381655352; // RZc8
-    internal const int DecisionFrostwolf = 1381655609; // RZd9 Fallback: Twilight's Hammer
+    internal const int DecisionFrostwolf = 1381655609; // RZd9 Fallback: Twillight
     internal const int ConditionFrostwolf = 1381655353; // RZc9
-    internal const int DecisionWarsong = 1381655617; // RZdA Fallback: Twilight's Hammer
+    internal const int DecisionWarsong = 1381655617; // RZdA Fallback: Twillight
     internal const int ConditionWarsong = 1381655361; // RZcA
     internal const int DecisionScourge = 1381655618; // RZdB Fallback: Knights of the Ebon Blade (not yet)
     internal const int ConditionScourge = 1381655362; // RZcB

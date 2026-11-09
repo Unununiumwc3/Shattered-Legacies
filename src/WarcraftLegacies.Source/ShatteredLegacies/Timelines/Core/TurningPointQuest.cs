@@ -14,7 +14,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal readonly TurningPointDef Def;
     internal readonly Objective Trigger;
     internal readonly ObjectiveHqLost HqLost; // null when the trigger is another objective
-    internal readonly ObjectiveResearch Decided;
+    internal readonly Objective Decided;
     internal bool TriggerRan;                 // OnTrigger effects done (once)
 
     public TurningPointQuest(TurningPointDef def, string icon)
@@ -27,11 +27,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       }
       else
       {
-        HqLost = new ObjectiveHqLost(def.Hq, def.Trigger) { ResearchId = def.Condition };
+        HqLost = new ObjectiveHqLost(def.Hq, def.Trigger, def.Prerequisite) { ResearchId = def.Condition };
         Trigger = HqLost;
       }
 
-      Decided = new ObjectiveResearch(def.Decision, HourglassData.BuildingType);
+      Decided = def.HourglassAbility != 0
+        ? new ObjectiveHourglassCast(def.HourglassAbility, this)
+        : new ObjectiveResearch(def.Decision, HourglassData.BuildingType);
       AddObjective(Trigger);
       AddObjective(Decided);
     }

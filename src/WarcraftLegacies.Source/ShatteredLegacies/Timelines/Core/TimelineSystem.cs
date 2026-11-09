@@ -106,6 +106,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         var q = _quests[i];
         if (q.HqLost != null && q.HqLost.Armed && q.Progress != QuestProgress.Complete)
         {
+          if (q.Def.HourglassAbility != 0 && PlayerOf(q) is { } owner)
+          {
+            Hourglass.RefreshChase(owner);
+          }
           q.HqLost.Poll(); // sets the objective's progress -> OnTriggerChanged
         }
       }
@@ -113,6 +117,20 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
     private static player PlayerOf(TurningPointQuest q) =>
       q.Trigger.EligibleFactions.Count > 0 ? q.Trigger.EligibleFactions[0].Player : null;
+
+    internal static bool AbilityReady(player p, int ability)
+    {
+      foreach (var q in _quests)
+      {
+        if (q.Def.HourglassAbility == ability && PlayerOf(q) == p && q.Trigger.Progress == QuestProgress.Complete
+            && q.Progress != QuestProgress.Complete && q.Progress != QuestProgress.Failed
+            && (q.Def.Prerequisite == null || q.Def.Prerequisite(p)))
+        {
+          return true;
+        }
+      }
+      return false;
+    }
 
     private static void OnTriggerChanged(TurningPointQuest q)
     {
@@ -151,13 +169,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         Later(() => def.OnTrigger(p, def)); // outside the event that fired the trigger (e.g. a hero's death)
       }
 
+      if (q.Def.HourglassAbility != 0)
+      {
+        Hourglass.Refresh(p);
+      }
+
       if (AiApi.IsBot(p) && AiApi.HasPerks(p))
       {
         q.Decided.Progress = QuestProgress.Complete; // bots decide at once -> the quest completes
         return;
       }
 
-      DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00" + q.Def.Title + " is possible now.|r Research it at the "
+      DisplayTimedTextToPlayer(p, 0, 0, 20, "|cffffcc00" + q.Def.Title + " is possible now.|r Use the "
         + "Hourglass of Fate in the north-east corner of the map when you want to start it.");
       AiApi.LogPin("turning point ready for P" + I2S(GetPlayerId(p)) + " " + q.Def.Faction + ": " + q.Def.Title
                    + " (human decides)");
@@ -202,6 +225,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
           continue;
         }
 
+        if (q.Def.RequireTriggerForForcedFallback)
+        {
+          q.HqLost?.Poll();
+          if (q.Trigger.Progress != QuestProgress.Complete || (q.Def.Prerequisite != null && !q.Def.Prerequisite(p)))
+          {
+            continue;
+          }
+          if (q.Progress == QuestProgress.Complete)
+          {
+            return true; // Poll already committed the bot's decision.
+          }
+        }
         q.Trigger.Progress = QuestProgress.Complete;
         q.Decided.Progress = QuestProgress.Complete;
         AiApi.LogPin("turning point forced for P" + I2S(GetPlayerId(p)) + " " + q.Def.Faction + " (no CP left)");

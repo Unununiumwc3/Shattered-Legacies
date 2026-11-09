@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Maiev's Watchers (placeholder)"
+      "Value": "Fallback: Chase Illidan to Outland"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Maiev's Watchers (placeholder)"
+      "Value": "Fallback: Chase Illidan to Outland"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Placeholder: Maiev Shadowsong leads her Watchers into Outland."
+      "Value": "After Driven by Vengeance, return Maiev to her existing Outland outpost."
     }
   ]
 }
