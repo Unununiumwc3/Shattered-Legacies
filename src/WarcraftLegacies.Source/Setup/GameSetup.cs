@@ -1,5 +1,6 @@
 ﻿using MacroTools.Cinematics;
 using MacroTools.ControlPoints;
+using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.GameModes;
 using MacroTools.GameTime;
@@ -57,6 +58,7 @@ public static class GameSetup
     FactionStartingResources.Setup();
     FactionMultiboard.Setup();
     PlayerSetup.Setup();
+    Regions.MaievStartUnlock.PrepareUnitsForRescue(RescuePreparationMode.HideAll);
     FactionChoiceDialogSetup.Setup();
     SharedQuestSetup.Setup();
     SharedSpellSetup.Setup();

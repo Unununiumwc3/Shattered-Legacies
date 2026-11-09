@@ -45,7 +45,7 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1213888304, 1, Support); // HZw0 Azil
       yield return new(1431992114, 1, Support); // UZw2 Feludius
       yield return new(1331328873, 1, Tank); // OZwi Ignacious
-      yield return new(1968863027, 1, Flyer); // uZw3 Deathwing
+      yield return new(1431992184, 1, Flyer); // UZwx Deathwing
       yield return new(1381660464, 200); // RZw0 research
       yield return new(1383035760, 200); // Rosp research
       yield return new(1381660467, 200); // RZw3 research

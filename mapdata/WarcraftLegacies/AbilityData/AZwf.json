@@ -10,7 +10,7 @@
       "Pointer": 3,
       "Id": "Hfs3",
       "Type": 2,
-      "Value": 1
+      "Value": 2.0
     },
     {
       "Id": "areq",
@@ -51,7 +51,7 @@
       "Pointer": 1,
       "Id": "Hfs1",
       "Type": 2,
-      "Value": 5
+      "Value": 10.0
     },
     {
       "Id": "ansf",
@@ -62,7 +62,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Deathwing's breath is so hot it burns the earth itself"
+      "Value": "Attacks ignite the ground for 10 initial and 2 lingering damage per interval."
     },
     {
       "Id": "abpx",
@@ -77,7 +77,7 @@
       "Level": 1,
       "Id": "atp1",
       "Type": 3,
-      "Value": "Searing Breath"
+      "Value": "Searing Breath - Level 1"
     },
     {
       "Id": "anam",
@@ -88,6 +88,169 @@
       "Id": "amat",
       "Type": 3,
       "Value": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl"
+    },
+    {
+      "Id": "aher",
+      "Value": 1
+    },
+    {
+      "Id": "alev",
+      "Value": 3
+    },
+    {
+      "Id": "arlv",
+      "Value": 6
+    },
+    {
+      "Id": "alsk",
+      "Value": 5
+    },
+    {
+      "Id": "arhk",
+      "Value": "R",
+      "Type": 3
+    },
+    {
+      "Id": "ahky",
+      "Value": "R",
+      "Type": 3
+    },
+    {
+      "Id": "arpx",
+      "Value": 3
+    },
+    {
+      "Id": "arpy",
+      "Value": 0
+    },
+    {
+      "Id": "abpy",
+      "Value": 2
+    },
+    {
+      "Id": "aret",
+      "Value": "Learn Searing Breath - [Level %d]",
+      "Type": 3
+    },
+    {
+      "Level": 2,
+      "Pointer": 3,
+      "Id": "Hfs3",
+      "Type": 2,
+      "Value": 4.0
+    },
+    {
+      "Level": 3,
+      "Pointer": 3,
+      "Id": "Hfs3",
+      "Type": 2,
+      "Value": 6.0
+    },
+    {
+      "Level": 2,
+      "Id": "atar",
+      "Type": 3,
+      "Value": "enemies,ground,neutral,structure"
+    },
+    {
+      "Level": 3,
+      "Id": "atar",
+      "Type": 3,
+      "Value": "enemies,ground,neutral,structure"
+    },
+    {
+      "Level": 2,
+      "Id": "ahdu",
+      "Type": 2,
+      "Value": 25
+    },
+    {
+      "Level": 3,
+      "Id": "ahdu",
+      "Type": 2,
+      "Value": 25
+    },
+    {
+      "Level": 2,
+      "Id": "adur",
+      "Type": 2,
+      "Value": 60
+    },
+    {
+      "Level": 3,
+      "Id": "adur",
+      "Type": 2,
+      "Value": 60
+    },
+    {
+      "Level": 2,
+      "Id": "amcs",
+      "Value": 0
+    },
+    {
+      "Level": 3,
+      "Id": "amcs",
+      "Value": 0
+    },
+    {
+      "Level": 2,
+      "Id": "aeff",
+      "Type": 3,
+      "Value": "BZw2"
+    },
+    {
+      "Level": 3,
+      "Id": "aeff",
+      "Type": 3,
+      "Value": "BZw2"
+    },
+    {
+      "Level": 2,
+      "Pointer": 1,
+      "Id": "Hfs1",
+      "Type": 2,
+      "Value": 20.0
+    },
+    {
+      "Level": 3,
+      "Pointer": 1,
+      "Id": "Hfs1",
+      "Type": 2,
+      "Value": 30.0
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Attacks ignite the ground for 20 initial and 4 lingering damage per interval."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Attacks ignite the ground for 30 initial and 6 lingering damage per interval."
+    },
+    {
+      "Level": 2,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Searing Breath - Level 2"
+    },
+    {
+      "Level": 3,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Searing Breath - Level 3"
+    },
+    {
+      "Id": "arar",
+      "Value": "ReplaceableTextures\\CommandButtons\\PASMoltenBoulder.blp",
+      "Type": 3
+    },
+    {
+      "Id": "arut",
+      "Value": "Level 1: Attacks ignite the ground for 10 initial and 2 lingering damage per interval.|nLevel 2: Attacks ignite the ground for 20 initial and 4 lingering damage per interval.|nLevel 3: Attacks ignite the ground for 30 initial and 6 lingering damage per interval.",
+      "Type": 3
     }
   ]
 }

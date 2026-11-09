@@ -16,7 +16,7 @@ public sealed class QuestExpedition : QuestData
   public override string RewardFlavour =>
     $"After months of digging, excavating, and tomb raiding, {_heroEnteringExpeditionRegion.CompletingUnitName} and the Explorer's League have finally unearthed an artifact from Ul'dum: {GetObjectName(_rewardArtifactItemTypeId)}.";
 
-  protected override string RewardDescription => $"The Artifact {GetObjectName(_rewardArtifactItemTypeId)} appears at Uldum";
+  protected override string RewardDescription => $"The Artifact {GetObjectName(_rewardArtifactItemTypeId)} is uncovered at Uldum, or its location is revealed if already discovered";
 
   public QuestExpedition(int rewardArtifactItemTypeId) : base("Secrets of Uldum",
     "Uldum was once a vast jungle, until the Forge of Origination stationed there wiped the slate clean. Now, buried under the sands lies a veritable trove of ancient relics.",
@@ -31,6 +31,12 @@ public sealed class QuestExpedition : QuestData
 
   protected override void OnComplete(Faction whichFaction)
   {
+    var existing = ArtifactManager.GetFromTypeId(_rewardArtifactItemTypeId);
+    if (existing != null)
+    {
+      existing.Ping(whichFaction.Player);
+      return;
+    }
     var uldumPosition = ControlPointManager.Instance.GetFromUnitType(UNIT_N0BD_ULDUM).Unit.GetPosition();
     var rewardItem = item.Create(_rewardArtifactItemTypeId, uldumPosition.X, uldumPosition.Y);
     var rewardArtifact = new Artifact(rewardItem);

@@ -1,6 +1,6 @@
 {
-  "OldId": "ubdd",
-  "NewId": "uZw3",
+  "OldId": "Udre",
+  "NewId": "UZwx",
   "Unk": [
     0
   ],
@@ -8,7 +8,7 @@
     {
       "Id": "uabi",
       "Type": 3,
-      "Value": "AZwd,AZwe,AZwf,ACrk"
+      "Value": "AInv,ACrk"
     },
     {
       "Id": "uacq",
@@ -64,7 +64,7 @@
     },
     {
       "Id": "uhpm",
-      "Value": 4800
+      "Value": 1750
     },
     {
       "Id": "ulev",
@@ -80,7 +80,7 @@
     },
     {
       "Id": "ua1r",
-      "Value": 850
+      "Value": 500
     },
     {
       "Id": "uhpr",
@@ -98,12 +98,12 @@
     },
     {
       "Id": "ua2s",
-      "Value": 7
+      "Value": 6
     },
     {
       "Id": "ua1g",
       "Type": 3,
-      "Value": "air,debris,ground,item,nonancient,structure,ward"
+      "Value": "ground,structure,debris,item,ward"
     },
     {
       "Id": "upgr",
@@ -113,24 +113,24 @@
     {
       "Id": "umvh",
       "Type": 2,
-      "Value": 750
+      "Value": 325.0
     },
     {
       "Id": "umvf",
       "Type": 2,
-      "Value": 120
+      "Value": 150.0
     },
     {
       "Id": "uaen",
-      "Value": 1
+      "Value": 3
     },
     {
       "Id": "umpi",
-      "Value": 1350
+      "Value": 450
     },
     {
       "Id": "umpm",
-      "Value": 1350
+      "Value": 450
     },
     {
       "Id": "umpr",
@@ -190,12 +190,12 @@
     {
       "Id": "utip",
       "Type": 3,
-      "Value": "Revive Sapphiron"
+      "Value": "Deathwing"
     },
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "Flying demi-hero, has the following abilities: Freazing Breath, Breat of Frost and Frost Breath.|n|n|cffffcc00Attacks land and air units.|r"
+      "Value": "Flying strength hero. Learns Breath of Fire, Flame Strike, Command Aura and Searing Breath."
     },
     {
       "Id": "unam",
@@ -240,7 +240,113 @@
     {
       "Id": "upor",
       "Type": 3,
-      "Value": ".mdl"
+      "Value": "war3mapImported\\Deathwing.mdl"
+    },
+    {
+      "Id": "uhab",
+      "Value": "AZwe,AZwd,AZwp,AZwf,Aamk",
+      "Type": 3
+    },
+    {
+      "Id": "upro",
+      "Value": "Deathwing",
+      "Type": 3
+    },
+    {
+      "Id": "upru",
+      "Value": 1
+    },
+    {
+      "Id": "upra",
+      "Value": "STR",
+      "Type": 3
+    },
+    {
+      "Id": "ustr",
+      "Value": 32
+    },
+    {
+      "Id": "ustp",
+      "Value": 3.5,
+      "Type": 2
+    },
+    {
+      "Id": "uagi",
+      "Value": 15
+    },
+    {
+      "Id": "uagp",
+      "Value": 1.4,
+      "Type": 2
+    },
+    {
+      "Id": "uint",
+      "Value": 24
+    },
+    {
+      "Id": "uinp",
+      "Value": 2.5,
+      "Type": 2
+    },
+    {
+      "Id": "umvt",
+      "Value": "fly",
+      "Type": 3
+    },
+    {
+      "Id": "utar",
+      "Value": "air",
+      "Type": 3
+    },
+    {
+      "Id": "ua1w",
+      "Value": "missile",
+      "Type": 3
+    },
+    {
+      "Id": "ua2w",
+      "Value": "missile",
+      "Type": 3
+    },
+    {
+      "Id": "ua2r",
+      "Value": 500
+    },
+    {
+      "Id": "ua2g",
+      "Value": "air",
+      "Type": 3
+    },
+    {
+      "Id": "ua1c",
+      "Value": 3.0,
+      "Type": 2
+    },
+    {
+      "Id": "ua2c",
+      "Value": 3.0,
+      "Type": 2
+    },
+    {
+      "Id": "ua2b",
+      "Value": 98
+    },
+    {
+      "Id": "ua2d",
+      "Value": 2
+    },
+    {
+      "Id": "ua2z",
+      "Value": 900
+    },
+    {
+      "Id": "ua1z",
+      "Value": 900
+    },
+    {
+      "Id": "ua2m",
+      "Value": "Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl",
+      "Type": 3
     }
   ]
 }

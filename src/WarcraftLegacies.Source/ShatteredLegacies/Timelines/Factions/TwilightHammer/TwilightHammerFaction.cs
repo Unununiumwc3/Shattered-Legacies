@@ -1,5 +1,9 @@
 using System.Collections.Generic;
 using MacroTools.Factions;
+using MacroTools.Quests;
+using WarcraftLegacies.Source.Objectives.ControlPointBased;
+using WarcraftLegacies.Source.Objectives.LegendBased;
+using WarcraftLegacies.Source.Shared;
 using MacroTools.DummyCasters;
 using WarcraftLegacies.Source.Objectives.UnitBased;
 using WCSharp.Events;
@@ -36,15 +40,44 @@ public sealed class TwilightHammerFaction : Faction
       new ObjectiveResearch(TwilightHammerObjects.SpiritualInfusion, TwilightHammerObjects.WarMill)));
 
     var fortress = AddQuest(new QuestCursedFortress());
-    AddQuest(new QuestTwilightUnlock("Rite of Embers",
-      "Train the ogre magi at the Grim Totem to tend the council's braziers. Ignacious will answer their summons.",
+    var blade = AddQuest(new QuestWindseeker());
+    var fire = AddQuest(new QuestTwilightUnlock("Gift of the Firelord",
+      "Extinguish Ironforge's Great Forge and claim Blackrock Depths to earn Ignacious's allegiance.",
       "BTNHeroAvatarOfFlame", TwilightHammerObjects.FlameRite, "Ignacious joins the Altar of Visions",
-      new ObjectiveResearch(TwilightHammerObjects.OgreTraining, TwilightHammerObjects.GrimTotem)));
-    AddQuest(new QuestTwilightUnlock("Rite of Rime",
+      new ObjectiveControlLevel(UNIT_N024_BLACKROCK_DEPTHS, 1), new ForgeDestroyed()));
+    var rime = AddQuest(new QuestTwilightUnlock("Rite of Rime",
       "Train the heralds at the Grim Totem to bind the waters beneath the port. Feludius will rise from the depths.",
       "BTNFrostRevenant2", TwilightHammerObjects.FrostRite, "Feludius joins the Altar of Visions",
       new ObjectiveResearch(TwilightHammerObjects.HeraldTraining, TwilightHammerObjects.GrimTotem)));
-    AddQuest(new QuestHourOfTwilight(fortress));
+    AddQuest(new QuestHourOfTwilight(fortress, blade, fire, rime));
+  }
+
+  private sealed class ForgeDestroyed : Objective
+  {
+    internal ForgeDestroyed()
+    {
+      SetDescription("The Great Forge is destroyed");
+    }
+
+    public override void OnAdd(Faction faction)
+    {
+      var forge = AllLegends.Ironforge.GreatForge.Unit;
+      if (forge != null && forge.Alive)
+      {
+        var death = trigger.Create();
+        death.RegisterUnitEvent(forge, unitevent.Death);
+        death.AddAction(() => Progress = QuestProgress.Complete);
+      }
+      else
+      {
+        // The fallback may arrive long after Ironforge falls. Award after quest registration.
+        timer.Create().Start(0, false, () =>
+        {
+          Progress = QuestProgress.Complete;
+          DestroyTimer(GetExpiredTimer());
+        });
+      }
+    }
   }
 
   private static void ThunderFists()

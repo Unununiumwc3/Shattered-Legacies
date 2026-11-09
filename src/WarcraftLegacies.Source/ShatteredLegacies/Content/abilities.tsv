@@ -973,7 +973,7 @@ ACr2	main	used	Rejuvenation	(Seer)	ACr2	-	-	creeps	ReplaceableTextures\CommandBu
 ACrd	main	used	Call Voidwalker	(Pink - Stormreaver Warlock)	ACrd	-	-	creeps	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	nhhr,nrvd
 ACrf	main	used	Rain of Fire	(Doom Guard)	ACrf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	nbal
 ACrg	main	used	Rain of Fire	(Spellbook)	ACrg	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	-
-ACrk	main	used	Resistant Skin	(1/1 position)	ACrk	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNThickFur.blp	N00D,bHN1,e01A,e022,eZrj,edry,+67
+ACrk	main	used	Resistant Skin	(1/1 position)	ACrk	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNThickFur.blp	N00D,UZwx,bHN1,e01A,e022,eZrj,+67
 ACrn	main	used	Reincarnation	(Neutral Hostile) (demi)	ACrn	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNReincarnation.blp	nwna
 ACro	main	used	Roar	(Feral Wolf/Misha)	ACro	-	-	creeps	ReplaceableTextures\CommandButtons\BTNBattleRoar.blp	n08K,ngz4,nwwd
 ACsa	main	used	Searing Arrows	(Neutral hostile - Priestess of the Moon)	ACsa	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSearingArrowsOn.blp	ncim,nskf
@@ -1230,9 +1230,9 @@ AZw9	main	used	Thunder Fists	(Cho'gall)	AOcr	yes	-	orc	ReplaceableTextures\Comma
 AZwa	main	used	Mind Destruction	(Azil)	ANfd	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCorpseExplode.blp	HZw0
 AZwb	main	used	Living Tornado	(al-akir)	ANsg	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNTornado.blp	UZw2
 AZwc	main	used	Chilling Aura	(Twilight)	AOae	yes	-	undead	ReplaceableTextures\CommandButtons\PASFrostAura.blp	UZw2
-AZwd	main	used	Flame Strike	(deathwing)	ANfs	-	-	orc	ReplaceableTextures\CommandButtons\BTNWallOfFire.blp	uZw3
-AZwe	main	used	Breath of Fire	(worgen blood shaman)	ANcf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNFireForTheCannon.blp	uZw3
-AZwf	main	used	Searing Breath	(twilight)	Abof	-	-	orc	ReplaceableTextures\CommandButtons\PASMoltenBoulder.blp	uZw3
+AZwd	main	used	Flame Strike	(deathwing)	ANfs	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWallOfFire.blp	UZwx
+AZwe	main	used	Breath of Fire	(worgen blood shaman)	ANcf	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNFireForTheCannon.blp	UZwx
+AZwf	main	used	Searing Breath	(twilight)	Abof	yes	-	orc	ReplaceableTextures\CommandButtons\PASMoltenBoulder.blp	UZwx
 AZwg	main	used	Summon Cultist	-	AHwe	-	yes	human	ReplaceableTextures\CommandButtons\BTNPeon.blp	IZw0
 AZwh	main	used	Seed Growth	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNNightElfBuild.blp	IZw1
 AZwi	main	used	Lesser Clarity Potion	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNLesserClarityPotion.blp	-
@@ -1242,6 +1242,7 @@ AZwl	main	used	Lightning Shield	(twilight)	Alsh	-	-	orc	ReplaceableTextures\Comm
 AZwm	main	used	Devour Magic	(Twilight)	Advm	-	-	orc	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	uZw1
 AZwn	main	used	Thunder Fists	(Cho'gall - DUMMY CAST)	ANfl	-	-	orc	ReplaceableTextures\CommandButtons\BTNMonsoon.blp	-
 AZwo	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3
+AZwp	main	used	Command Aura	(Kargath, Garithos)	ACac	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	UZwx
 AZy0	main	unused	Defender Shield	(Attachment)	AId1	-	yes	other	-	oZy0
 AZy1	main	unused	Self-Bloodlust	(Self Cast - Warsong)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	-
 AZy2	main	unused	Thick Skin	(Roanauk)	Ansk	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	hZy1
@@ -1262,7 +1263,7 @@ AZyh	main	used	Army of Light Golem summon	(Draenei)	AUin	yes	-	nightelf	Replacea
 Aabs	main	used	Absorb Mana	(Scourge-Destroyer)	Aabs	-	-	undead	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	u02W,ubsp
 Aakb	main	used	War Drums	(Kodo Beast)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	o06Q,okod
 Aam2	main	used	Anti-magic Shell	(Scourge) - Banshee)	Aam2	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	uban
-Aamk	main	used	Attribute Bonus	(All Heroes)	Aamk	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNStatUp.blp	E002,E005,E00A,E00F,E00H,E016,+108
+Aamk	main	used	Attribute Bonus	(All Heroes)	Aamk	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNStatUp.blp	E002,E005,E00A,E00F,E00H,E016,+109
 Aams	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nnsw
 Aap1	main	used	Disease Cloud	(Red - Abomination/Zombie)	Aap1	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	n08G,nfgl,nzom,uZfc,uabo
 Aap2	main	used	Disease Cloud	(Plague Ward)	Aap2	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	uplg
@@ -3227,7 +3228,7 @@ AImx	stock	used	Spell Immunity	(Item)	AImx	-	yes	other	ReplaceableTextures\Comma
 AImz	stock	unused	Item Mana Bonus (100)	-	AImz	-	yes	other	-	-
 AInd	stock	unused	Reanimation	(special campaign item)	AInd	-	yes	other	ReplaceableTextures\CommandButtons\BTNWandSkull.blp	-
 AInm	stock	unused	Item Strength Gain	(+2)	AInm	-	yes	other	ReplaceableTextures\CommandButtons\BTNTome.blp	-
-AInv	stock	used	Inventory	(Hero)	AInv	-	-	other	-	E002,E005,E00A,E00F,E00H,E00P,+123
+AInv	stock	used	Inventory	(Hero)	AInv	-	-	other	-	E002,E005,E00A,E00F,E00H,E00P,+124
 AIob	stock	used	Item Attack Frost Bonus	-	AIob	-	yes	other	ReplaceableTextures\CommandButtons\BTNOrbOfFrost.blp	ofro
 AIos	stock	unused	Item Slow	(Orb Version)	AIos	-	yes	other	ReplaceableTextures\CommandButtons\BTNSlow.blp	-
 AIp1	stock	unused	Generic Item-Rejuv Effect	-	AIp1	-	yes	other	ReplaceableTextures\CommandButtons\BTNMinorRejuvPotion.blp	-

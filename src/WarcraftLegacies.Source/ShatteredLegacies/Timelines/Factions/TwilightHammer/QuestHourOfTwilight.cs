@@ -9,21 +9,25 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
 
 internal sealed class QuestHourOfTwilight : QuestData
 {
-  internal QuestHourOfTwilight(QuestData fortress) : base("The Hour of Twilight",
-    "Gather the cult at Grim Batol. When the highlands answer to the Old Gods, Deathwing will return.",
+  internal QuestHourOfTwilight(params QuestData[] prerequisites) : base("The Hour of Twilight",
+    "Unite the ascendants, follow the vision of Thunderfury, and hold Grim Batol with a tier-four cult to awaken Deathwing.",
     @"ReplaceableTextures\CommandButtons\BTNDeathwing.blp")
   {
+    Global = true;
     AddObjective(new ObjectiveControlCapital(AllLegends.Neutral.GrimBatol, false));
     AddObjective(new ObjectiveResearch(TwilightHammerObjects.TierFour, TwilightHammerObjects.Fortress));
-    var holdHighlands = new ObjectiveQuestComplete(fortress);
-    if (fortress.Progress == QuestProgress.Complete)
+    foreach (var quest in prerequisites)
     {
-      holdHighlands.Progress = QuestProgress.Complete;
+      var objective = new ObjectiveQuestComplete(quest);
+      if (quest.Progress == QuestProgress.Complete)
+      {
+        objective.Progress = QuestProgress.Complete;
+      }
+      AddObjective(objective);
     }
-    AddObjective(holdHighlands);
   }
 
-  protected override string RewardDescription => "Deathwing emerges over Grim Batol and joins your army";
+  protected override string RewardDescription => "Reach Twillight's end goal. Deathwing emerges over Grim Batol as a hero.";
 
   protected override void OnComplete(Faction whichFaction)
   {

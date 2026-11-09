@@ -13,6 +13,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     // building type -> unit types it trains (faction units; no heroes, builders, ships)
     internal static readonly Dictionary<int, int[]> Trains = new()
     {
+      { 1747988826, new[] { 1868199782 } }, // h01Z: oZwf
       { 1750754864, new[] { 1851418161 } }, // hZf0: nZf1
       { 1750754866, new[] { 1851418161 } }, // hZf2: nZf1
       { 1750754871, new[] { 1851418161 } }, // hZf7: nZf1
@@ -134,6 +135,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1431987812, new[] { 1095262562, 1096443504, 1093684811, 1096443505, 1096904043 } }, // UZfd: AHab AZfp A0NK AZfq Aamk
       { 1431987813, new[] { 1096443507, 1096443508, 1096443509, 1096443510, 1096904043 } }, // UZfe: AZfs AZft AZfu AZfv Aamk
       { 1431992114, new[] { 1096447843, 1096447842, 1095262842, 1093677145, 1096904043 } }, // UZw2: AZwc AZwb AHbz A00Y Aamk
+      { 1431992184, new[] { 1096447856, 1096447845, 1096447844, 1096447846, 1096904043 } }, // UZwx: AZwp AZwe AZwd AZwf Aamk
     };
   }
 }

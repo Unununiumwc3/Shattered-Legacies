@@ -291,9 +291,31 @@ From the 0.60 playtest (maintainer):
 - [ai] **Katherine's ultimate without its level** after the fallback to Kezan: probably every hero that stays with its
   faction through a fallback (the level requirement of hero skills -- `SwapFaction`, the faction's object levels?).
   Investigate with one hero, then fix for all fallbacks.
-- [ai] **Preplaced quest buildings visible from the start** (the Well of Eternity, Jaina's sanctum and its units):
-  probably since the NPC / player slot changes (0.57.1). Try first: ONE NPC slot for all hidden units; otherwise at
-  least make such buildings invulnerable until they change to their quest's faction.
+- [playtest] Twillight and Maiev. Before the relevant choice, try attacking the neutral Dragonmaw port and
+  Grim Batol reward buildings, including the Dungeon at (17312, -3808). Take the fallback and check that only the port
+  converts. Capture the Grim Batol point and check the capital, workshops and towers. Attack the transferred buildings,
+  train a Death Knight, and train a Battlemaster from Grim Batol after tier four. Test both tunnel mouths in both
+  directions before and after the quest. Check Maiev's outpost with both Sentinel and Draenei openings.
+- [playtest] Complete Gift of the Firelord with the Great Forge destroyed before and after taking Twillight. Earn
+  Thunderfury at Suramar and test both reward orders with Ironforge's expedition. Finish The Hour of Twilight, spend
+  Deathwing's skill points and check damage, aura, Searing Breath and Attribute Bonus. Tune after a multiplayer run.
+- [design, next] Keep the opening pick or a lobby preselection. Split the playable faction (roster, heroes and tech)
+  from each offer (start, betrayal, fallback, site, team, trigger and what becomes of the old holdings). Move one
+  existing path first and check ownership, allies/vision, scoreboard and bot control before converting more paths.
+- [design, next] Shared alternative factions are exclusive and first-come. Two eligible slots can share two fallbacks.
+  Test both claim orders and simultaneous choices. A committed claim must leave a usable fallback for each slot that
+  still needs one. An opening pick can consume the same pool.
+- [content, next] Port the 24p Dark Trolls and Hakkar. First offer the betrayal to Frostwolf and Warsong. Configure a
+  starting offer later using the same roster. Inventory the existing troll quests and placements first so the betrayal
+  cannot duplicate a previous reward or take a player's holdings. Protect the designated neutral buildings, hide and
+  protect reserved troops, and release each group once on transfer.
+- [map, next] Apply the same policy to additional named sites after checking their original rewards. Existing hidden
+  buildings may stay hidden. Visible future buildings should resist attacks until claimed. Keep active creeps and
+  public landmarks separate from reserved units. Verify the Theramore opening as Dalaran and Gilneas and the Sunfury
+  garrison before and after Quel'Thalas takes its fallback. Review the Quel'Thalas split separately.
+- [reference] The donor Twilight Citadel is 24p unit `h05U`, based on `hars`, model
+  `war3mapImported\DarkShrineX2.mdl`. Its training list contains the Battlemaster and Cultist. The current path uses
+  Grim Batol for tier-four Battlemaster production. A separate Citadel HQ is a future design choice.
 - [ai] **Detect invisible** is possible with the Forsaken's towers: needs a rework -- a research for it, and / or the
   same for other factions.
 - [ai] (polish) **Kezan's trade ships** sometimes sail through islands -- why do they ignore land at times? (an order

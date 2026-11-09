@@ -283,4 +283,4 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `uZk0` | Fuel Transport Vehicle | `24p:u028` | KezanEnterprise |
 | `uZw0` | Voodoo Lounge | `24p:u00Y` | TwilightHammer |
 | `uZw1` | Herald | `24p:u01T` | TwilightHammer |
-| `uZw3` | Deathwing | `24p:u01Y` | TwilightHammer |
+| `UZwx` | Deathwing | `24p:u01Y` | TwilightHammer |

@@ -115,6 +115,7 @@ UZa3	main	used	hero	Queen of the Forsaken	(Forsaken)	Hvwd	undead	war3mapImported
 UZfd	main	used	hero	Grand Apothecary	(Forsaken)	Uktl	undead	war3mapImported\GrandApothecary.mdl	main	ReplaceableTextures\CommandButtons\BTNPutress.blp	-	uZf0	-	-	-	-	A0NK,AHab,AInv,AZfp,AZfq,Aamk	RZf1
 UZfe	main	used	hero	Master of the Royal Apothecary Society	(Forsaken)	Uktl	undead	war3mapImported\NecromancerFar.mdl	main	ReplaceableTextures\CommandButtons\BTNKalecgos.blp	-	uZf0	-	-	-	-	AInv,AZfs,AZft,AZfu,AZfv,Aamk	-
 UZw2	main	used	hero	Water Ascendant	(Twilight)	Uktl	orc	Units\Creeps\RevenantOfTheWaves\RevenantOfTheWaves.mdl	stock	ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp	-	oZw3	-	-	-	-	A00Y,A0GK,A11J,AHbz,AInv,AZwb,AZwc,Aamk	RZwa
+UZwx	main	used	hero	Deathwing	(twilight)	Udre	undead	war3mapImported\Deathwing.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathwing.blp	-	-	-	-	-	-	ACrk,AInv,AZwd,AZwe,AZwf,AZwp,Aamk	-
 Uanb	main	used	hero	King of Azjol-Nerub	(Scourge)	Uanb	undead	units\undead\Anubarak\Anubarak	stock	ReplaceableTextures\CommandButtons\BTNanubarakhd.blp	Scourge	uaod	-	-	-	-	AInv,AUcb,AUim,AUls,AUts,Aamk	-
 Uear	main	used	hero	Champion of the Scourge	(Scourge)	Uear	undead	units\undead\EvilArthas\UndeadArthas	stock	ReplaceableTextures\CommandButtons\BTNArthasV1.blp	Scourge	uaod	-	-	-	-	A08V,A0LR,A0SC,A10C,A10N,AInv,Aamk,ZB02,ZB06	R01K
 Uktl	main	used	hero	Archlich of the Scourge	(Scourge-Lich)	Uktl	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	Scourge	-	-	-	-	-	A00F,A00J,A13R,AInv,AUan,AUdd,AUfn,Aamk	-
@@ -252,7 +253,7 @@ h01V	main	used	building	Barn	(Lordaeron Other)	hhou	human	war3mapImported\Buildi
 h01W	main	used	building	Elven Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
 h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
 h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	-	-	-	-	A04O	halt
+h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	oZwf	-	-	-	A04O	halt
 h021	main	used	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
 h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+9	-	-	A041,Ahrp	-
 h023	main	used	building	Keep	(Gilneas T2)	hkee	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasKeep.blp	Gilneas	-	hpea,o01V	-	-	-	-	-
@@ -1645,7 +1646,7 @@ oZwb	main	used	building	Twilight Burrow	(twilight)	ocbw	orc	war3mapImported\Drag
 oZwc	main	used	unit	Void Rider	(twilight)	owyv	orc	war3mapImported\NetherDragonRiderV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNWyvernRider.blp	-	oZw7	-	-	-	-	A069,Adtg,Aven	-
 oZwd	main	used	unit	Twilight Hammer Enforcer	(twilight)	ogru	orc	war3mapImported\BonechewerGrunt.mdl	main	ReplaceableTextures\CommandButtons\BTNBonechewerGrunt.blp	-	oZw4	-	-	-	-	A01K,A020,Aion	-
 oZwe	main	used	unit	Cultist	(Twilight Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	oZw0,oZw1,oZw2	-	oZw0,oZw3,oZw4,oZw5,oZw6,oZw7,oZw8,oZw9,oZwb,uZw0	-	-	AZw3,AZw4,Arep,Arlm	-
-oZwf	main	used	unit	Battlemaster	(Twilight)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	oZw0,oZw1,oZw2	-	-	-	-	A01T,A0GK,A0IT,A0NQ,ACsk,AZw6,Aion	RZw0
+oZwf	main	used	unit	Battlemaster	(Twilight)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	h01Z,oZw0,oZw1,oZw2	-	-	-	-	A01T,A0GK,A0IT,A0NQ,ACsk,AZw6,Aion	RZw0
 oZwg	main	used	unit	Skull Catapult	(Twilight)	ocat	orc	war3mapImported\CatapultWC1.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapultWC1.blp	-	oZw4	-	-	-	-	-	oZw2
 oZy0	main	unused	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdherent.mdl	main	ReplaceableTextures\CommandButtons\BTNArchimonde.blp	-	-	-	-	-	-	A020,A0BG,AZy0,Adtg,Aion	-
 oZy1	main	unused	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNZodiac Warrior.blp	-	-	-	-	-	-	A0TH,A0YJ,AZy3,Aion	RZt2
@@ -1780,7 +1781,6 @@ uZfi	main	used	unit	Banshee Spirits	-	uloc	orc	Abilities\Spells\Undead\Possessio
 uZk0	main	used	unit	Fuel Transport Vehicle	(Goblin)	uobs	orc	war3mapImported\Explode-O-Truck.mdl	main	ReplaceableTextures\CommandButtons\BTNSeigeEngine.blp	-	hZk1	-	-	-	-	AZk2,AZk3,AZkb,AZkc,AZq0	oZkd
 uZw0	main	used	building	Voodoo Lounge	(twilight)	utom	orc	war3mapImported\VoodooLoungeUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNFelOrcVoodooLounge.blp	-	oZwe	-	-	-	-	Aall,Apit	-
 uZw1	main	used	unit	Herald	(twilight)	unec	orc	war3mapImported\HeraldOfTwilight.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcWarlock.blp	-	oZw6	-	-	-	-	AZw8,AZwl,AZwm,Aion	-
-uZw3	main	used	unit	Deathwing	(twilight)	ubdd	undead	war3mapImported\Deathwing.mdl	main	ReplaceableTextures\CommandButtons\BTNDeathwing.blp	-	-	-	-	-	-	ACrk,AZwd,AZwe,AZwf	-
 uabo	main	used	unit	Abomination	(Scourge)	uabo	undead	units\undead\Abomination\Abomination	stock	ReplaceableTextures\CommandButtons\BTNAbomination.blp	Scourge	uslh	-	-	-	-	A127,Aap1,Aiun	R008,unp2
 uaco	main	used	unit	Acolyte	(Scourge, Worker)	uaco	undead	units\undead\Acolyte\Acolyte	stock	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	Scourge	ZBFT,o016,u000,u01M,u02L,unp1,unp2,unpl	-	u006,u00F,uaod,ubon,ugrv,unpl,usep,ushp,uslh,utod,utom,uzig	-	ushd	A041,Arst,Auns	-
 uaod	main	used	building	Altar of Darkness	(Scourge Altar)	uaod	undead	buildings\undead\AltarOfDarkness\AltarOfDarkness	stock	ReplaceableTextures\CommandButtons\BTNAltarOfDarkness.blp	Scourge	uaco	U001,U00A,Uanb,Uear,ubdd	-	-	-	-	-
@@ -2771,6 +2771,7 @@ n08N	24p	different	building	Steamwheedle Port (20gold/min)	-	ncop	other	building
 n08O	24p	different	building	Western Hillsbrad (15gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n08P	24p	changed	unit	Ny'alothan Tentacle	-	nfgt	creeps	war3mapImported\Unit_Ny'alothaTentacle.mdl	main	ReplaceableTextures\CommandButtons\BTNTentacle.blp	-	-	-	-	-	-	Aloc,Avul	-
 n08Q	24p	different	building	Tol Barad (20gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
+n08R	24p	changed	unit	Grim Batol Tunnels	-	nwgt	other	Doodads\Dungeon\Structures\DungeonArchway45\DungeonArchway45.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	Avul,Awrp	-
 n08S	24p	different	building	Northern Silverpine Forest (20gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
 n08T	24p	different	building	Dragonmaw Port (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n08U	24p	different	building	Southern Ashenvale (10gold/min)	-	ncop	other	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-

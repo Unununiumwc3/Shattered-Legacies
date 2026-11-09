@@ -1,0 +1,172 @@
+{
+  "OldId": "ACac",
+  "NewId": "AZwp",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 1000
+    },
+    {
+      "Id": "abpx",
+      "Value": 2
+    },
+    {
+      "Id": "abpy",
+      "Value": 2
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(Kargath, Garithos)"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Nearby friendly units gain 10% attack damage."
+    },
+    {
+      "Id": "aher",
+      "Value": 1
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Id": "arlv",
+      "Value": 1
+    },
+    {
+      "Id": "alsk",
+      "Value": 2
+    },
+    {
+      "Id": "arhk",
+      "Value": "E",
+      "Type": 3
+    },
+    {
+      "Id": "ahky",
+      "Value": "E",
+      "Type": 3
+    },
+    {
+      "Id": "arpx",
+      "Value": 2
+    },
+    {
+      "Id": "arpy",
+      "Value": 0
+    },
+    {
+      "Id": "aret",
+      "Value": "Learn Command Aura - [Level %d]",
+      "Type": 3
+    },
+    {
+      "Id": "anam",
+      "Value": "Command Aura",
+      "Type": 3
+    },
+    {
+      "Level": 2,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 1000
+    },
+    {
+      "Level": 3,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 1000
+    },
+    {
+      "Level": 4,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 1000
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Nearby friendly units gain 15% attack damage."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Nearby friendly units gain 20% attack damage."
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Nearby friendly units gain 25% attack damage."
+    },
+    {
+      "Id": "arar",
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCommand.blp",
+      "Type": 3
+    },
+    {
+      "Id": "Cac1",
+      "Value": 0.1,
+      "Level": 1,
+      "Type": 2
+    },
+    {
+      "Id": "atp1",
+      "Value": "Command Aura - Level 1",
+      "Level": 1,
+      "Type": 3
+    },
+    {
+      "Id": "Cac1",
+      "Value": 0.15,
+      "Level": 2,
+      "Type": 2
+    },
+    {
+      "Id": "atp1",
+      "Value": "Command Aura - Level 2",
+      "Level": 2,
+      "Type": 3
+    },
+    {
+      "Id": "Cac1",
+      "Value": 0.2,
+      "Level": 3,
+      "Type": 2
+    },
+    {
+      "Id": "atp1",
+      "Value": "Command Aura - Level 3",
+      "Level": 3,
+      "Type": 3
+    },
+    {
+      "Id": "Cac1",
+      "Value": 0.25,
+      "Level": 4,
+      "Type": 2
+    },
+    {
+      "Id": "atp1",
+      "Value": "Command Aura - Level 4",
+      "Level": 4,
+      "Type": 3
+    },
+    {
+      "Id": "arut",
+      "Value": "Level 1: Nearby friendly units gain 10% attack damage.|nLevel 2: Nearby friendly units gain 15% attack damage.|nLevel 3: Nearby friendly units gain 20% attack damage.|nLevel 4: Nearby friendly units gain 25% attack damage.",
+      "Type": 3
+    }
+  ]
+}

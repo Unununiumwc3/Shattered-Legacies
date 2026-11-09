@@ -15,6 +15,8 @@ Re-running gives the same ids (they are kept in tools/shattered-legacies/content
 name / learn title (0.60); objects dropped from a set lose their file, their id stays reserved (0.60).
 HOW TO ADD A FACTION and WL's rules a copied faction must follow: tools/shattered-legacies/content/README.md.
 """
+from deathwing import configure as configure_deathwing
+
 import glob
 import json
 import os
@@ -320,7 +322,7 @@ TWILIGHT = {
         "o03K": {"umdl": "war3mapImported\\DragonNest.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNDragonNest.blp"},
         "o03I": {"umdl": "war3mapImported\\OrcBarrackAlphaV2_01.mdl", "uico": "ReplaceableTextures\\CommandButtons\\BTNIronHordeSummoningCircle.blp", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO", "ures": "=R006,=R00C", "ureq": ""},
         "o03F": {"ures": "=Rovs"},
-        "R07Q": {"gnam": "Quest Completed: Rite of Embers"},
+        "R07Q": {"gnam": "Quest Completed: Gift of the Firelord"},
         "R07T": {"gnam": "Quest Completed: Rite of Rime"},
         "R05F": {"gnam": "Quest Completed: Voices in the Quarry"},
         "U01S": {"unam": "Water Ascendant", "upro": "Feludius",
@@ -486,6 +488,8 @@ def main():
                         m["Value"] = new_value
             if kind == "AbilityData":
                 learn_title(d)
+            if s is TWILIGHT:
+                configure_deathwing(d)
             written[oid] = d
             out = os.path.join(MAIN, kind, mapping[oid] + ".json")
             with open(out, "w", encoding="utf-8", newline="\n") as f:

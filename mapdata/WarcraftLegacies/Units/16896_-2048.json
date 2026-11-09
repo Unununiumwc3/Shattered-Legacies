@@ -32,7 +32,7 @@
     "AbilityData": [],
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
-    "WaygateDestinationRegionId": -1,
+    "WaygateDestinationRegionId": 48,
     "CreationNumber": 2214
   }
 ]

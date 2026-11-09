@@ -1,7 +1,6 @@
 using MacroTools.Factions;
-using MacroTools.PreplacedWidgets;
 using MacroTools.Quests;
-using WarcraftLegacies.Source.Objectives.ControlPointBased;
+using MacroTools.ControlPoints;
 using WarcraftLegacies.Source.Shared;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
@@ -9,73 +8,55 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
 internal sealed class QuestCursedFortress : QuestData
 {
   internal QuestCursedFortress() : base("The Cursed Fortress",
-    "Secure the highland roads. From Grim Batol, Cho'gall can send his Death Knights through the mountain to Dragonmaw Port.",
+    "Take Grim Batol to bring its workshops and drake towers into the cult.",
     @"ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp")
   {
     ResearchId = TwilightHammerObjects.CursedFortress;
-    AddObjective(new ObjectiveControlLevel(UNIT_N03X_GRIM_BATOL, 1));
-    AddObjective(new ObjectiveControlLevel(UNIT_N08T_DRAGONMAW_PORT, 1));
-    AddObjective(new ObjectiveControlLevel(UNIT_N04V_NORTHERN_HIGHLANDS, 1));
-    AddObjective(new ObjectiveControlLevel(UNIT_N09F_SOUTHERN_HIGHLANDS, 1));
-    AddObjective(new ClaimableFortress());
+    AddObjective(new HoldGrimBatol());
   }
 
   protected override string RewardDescription =>
-    "Claim Grim Batol, open its tunnels to Dragonmaw Port, and train Orcish Death Knights at the Grim Totem";
+    "Claim Grim Batol, its workshops and towers. Train Orcish Death Knights at the Grim Totem and tier-four Battlemasters at Grim Batol.";
 
   protected override void OnComplete(Faction faction)
   {
     var p = faction.Player;
     var capital = AllLegends.Neutral.GrimBatol;
-    if (p == null || capital.Unit == null || !CanClaim(capital.Unit.Owner, p))
+    if (p == null)
     {
       return;
     }
-    if (capital.Unit.Owner != p)
+    if (capital.Unit != null && capital.Unit.Alive &&
+        (capital.Unit.Owner == player.NeutralPassive || capital.Unit.Owner == player.NeutralAggressive))
     {
       capital.Unit.SetOwner(p);
+      capital.Unit.IsInvulnerable = false;
     }
 
-    // Both existing mouths are at Grim Batol in the base map. Place the lower mouth at the port.
-    var tunnels = AllPreplacedWidgets.Units;
-    var mountain = tunnels.GetClosest(UNIT_N08R_GRIM_BATOL_TUNNELS, 16761f, -2484f);
-    var port = tunnels.GetClosest(UNIT_N08R_GRIM_BATOL_TUNNELS, 16569f, -2772f);
-    SetUnitPosition(mountain, 16744f, -2404f);
-    SetUnitPosition(port, 22208f, -4032f);
-    SetUnitScale(mountain, 1f, 1f, 1f);
-    SetUnitScale(port, 1f, 1f, 1f);
-    WaygateSetDestination(mountain, 22400f, -4160f);
-    WaygateSetDestination(port, 16900f, -2260f);
-    WaygateActivate(mountain, true);
-    WaygateActivate(port, true);
-    capital.ChangedOwner += _ =>
-    {
-      var open = capital.Unit != null && capital.Unit.Owner == p;
-      WaygateActivate(mountain, open);
-      WaygateActivate(port, open);
-    };
+    TwilightHammerFallback.ClaimHighlands(p, faction);
   }
 
-  private static bool CanClaim(player owner, player claimant) =>
-    owner == claimant || owner == player.NeutralPassive || owner == player.NeutralAggressive;
-
-  private sealed class ClaimableFortress : Objective
+  private sealed class HoldGrimBatol : Objective
   {
-    internal ClaimableFortress()
+    internal HoldGrimBatol()
     {
-      SetDescription("Secure the capital of Grim Batol if another player holds it");
+      SetDescription("Your team controls Grim Batol");
+      var point = ControlPointManager.Instance.GetFromUnitType(UNIT_N03X_GRIM_BATOL);
+      TargetWidget = point.Unit;
+      Position = new(point.Unit.X, point.Unit.Y);
+      DisplaysPosition = true;
     }
 
     public override void OnAdd(Faction faction)
     {
-      var capital = AllLegends.Neutral.GrimBatol;
+      var point = ControlPointManager.Instance.GetFromUnitType(UNIT_N03X_GRIM_BATOL);
       void Refresh()
       {
-        var p = faction.Player;
-        Progress = p != null && capital.Unit != null && capital.Unit.Alive && CanClaim(capital.Unit.Owner, p)
+        Progress = IsPlayerOnSameTeamAsAnyEligibleFaction(point.Owner)
           ? QuestProgress.Complete : QuestProgress.Incomplete;
       }
-      capital.ChangedOwner += _ => Refresh();
+
+      point.OwnerAllianceChanged += _ => Refresh();
       // QuestData.Add evaluates initial objectives before Faction subscribes to completion rewards.
       var firstCheck = CreateTimer();
       TimerStart(firstCheck, 0f, false, () =>

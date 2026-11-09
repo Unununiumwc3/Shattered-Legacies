@@ -16,6 +16,7 @@ public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit
 {
   private readonly bool _heroOnly;
   private readonly rect _targetRect;
+  private readonly int _unitType;
 
   /// <summary>
   /// Initializes a new instance of the <see cref="ObjectiveAnyUnitInRect"/> class.
@@ -23,12 +24,18 @@ public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit
   /// <param name="targetRect">Where the player has to move a unit.</param>
   /// <param name="rectName">A user-friendly name for the area.</param>
   /// <param name="heroOnly">If true, can only be completed with a hero.</param>
-  public ObjectiveAnyUnitInRect(Rectangle targetRect, string rectName, bool heroOnly)
+  /// <param name="unitType">Optional unit type required for this visit.</param>
+  public ObjectiveAnyUnitInRect(Rectangle targetRect, string rectName, bool heroOnly, int unitType = 0)
   {
     _targetRect = targetRect.Rect;
     SetDescription(
       heroOnly ? "You have a hero at {rect}" : "You have a unit at {rect}",
       ("{rect}", Loc.Get(rectName)));
+    _unitType = unitType;
+    if (unitType != 0)
+    {
+      SetDescription("{unit} is at {rect}", ("{unit}", GetObjectName(unitType)), ("{rect}", Loc.Get(rectName)));
+    }
     _heroOnly = heroOnly;
     DisplaysPosition = true;
     PingPath = "MinimapQuestTurnIn";
@@ -65,7 +72,7 @@ public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit
   public string CompletingUnitName => CompletingUnit != null ? CompletingUnit.GetProperName() : Loc.Get("an unknown hero");
 
   private bool IsUnitValid(unit whichUnit) => EligibleFactions.Contains(whichUnit.Owner) &&
-                                              whichUnit.Alive &&
+                                              whichUnit.Alive && (_unitType == 0 || whichUnit.UnitType == _unitType) &&
                                               (whichUnit.IsUnitType(unittype.Hero) || !_heroOnly) &&
                                               !whichUnit.IsControlPoint() && whichUnit.IsSelectable();
 

@@ -32,14 +32,14 @@
       "Pointer": 1,
       "Id": "Hfs1",
       "Type": 2,
-      "Value": 15
+      "Value": 15.0
     },
     {
       "Level": 1,
       "Pointer": 3,
       "Id": "Hfs3",
       "Type": 2,
-      "Value": 10
+      "Value": 10.0
     },
     {
       "Id": "ansf",
@@ -50,6 +50,204 @@
       "Id": "ahky",
       "Type": 3,
       "Value": "W"
+    },
+    {
+      "Id": "aher",
+      "Value": 1
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Id": "arlv",
+      "Value": 1
+    },
+    {
+      "Id": "alsk",
+      "Value": 2
+    },
+    {
+      "Id": "arhk",
+      "Value": "W",
+      "Type": 3
+    },
+    {
+      "Id": "arpx",
+      "Value": 1
+    },
+    {
+      "Id": "arpy",
+      "Value": 0
+    },
+    {
+      "Id": "abpx",
+      "Value": 1
+    },
+    {
+      "Id": "abpy",
+      "Value": 2
+    },
+    {
+      "Id": "aret",
+      "Value": "Learn Flame Strike - [Level %d]",
+      "Type": 3
+    },
+    {
+      "Id": "anam",
+      "Value": "Flame Strike",
+      "Type": 3
+    },
+    {
+      "Level": 2,
+      "Id": "amcs",
+      "Value": 150
+    },
+    {
+      "Level": 3,
+      "Id": "amcs",
+      "Value": 150
+    },
+    {
+      "Level": 4,
+      "Id": "amcs",
+      "Value": 150
+    },
+    {
+      "Level": 2,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 65
+    },
+    {
+      "Level": 3,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 65
+    },
+    {
+      "Level": 4,
+      "Id": "acdn",
+      "Type": 2,
+      "Value": 65
+    },
+    {
+      "Level": 2,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 900
+    },
+    {
+      "Level": 3,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 900
+    },
+    {
+      "Level": 4,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 900
+    },
+    {
+      "Level": 2,
+      "Pointer": 1,
+      "Id": "Hfs1",
+      "Type": 2,
+      "Value": 25.0
+    },
+    {
+      "Level": 3,
+      "Pointer": 1,
+      "Id": "Hfs1",
+      "Type": 2,
+      "Value": 35.0
+    },
+    {
+      "Level": 4,
+      "Pointer": 1,
+      "Id": "Hfs1",
+      "Type": 2,
+      "Value": 45.0
+    },
+    {
+      "Level": 2,
+      "Pointer": 3,
+      "Id": "Hfs3",
+      "Type": 2,
+      "Value": 15.0
+    },
+    {
+      "Level": 3,
+      "Pointer": 3,
+      "Id": "Hfs3",
+      "Type": 2,
+      "Value": 20.0
+    },
+    {
+      "Level": 4,
+      "Pointer": 3,
+      "Id": "Hfs3",
+      "Type": 2,
+      "Value": 25.0
+    },
+    {
+      "Id": "arar",
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp",
+      "Type": 3
+    },
+    {
+      "Id": "atp1",
+      "Value": "Flame Strike - Level 1",
+      "Level": 1,
+      "Type": 3
+    },
+    {
+      "Id": "aub1",
+      "Value": "Burns the target area for 15 damage per interval, then 10 lingering damage per interval.",
+      "Level": 1,
+      "Type": 3
+    },
+    {
+      "Id": "atp1",
+      "Value": "Flame Strike - Level 2",
+      "Level": 2,
+      "Type": 3
+    },
+    {
+      "Id": "aub1",
+      "Value": "Burns the target area for 25 damage per interval, then 15 lingering damage per interval.",
+      "Level": 2,
+      "Type": 3
+    },
+    {
+      "Id": "atp1",
+      "Value": "Flame Strike - Level 3",
+      "Level": 3,
+      "Type": 3
+    },
+    {
+      "Id": "aub1",
+      "Value": "Burns the target area for 35 damage per interval, then 20 lingering damage per interval.",
+      "Level": 3,
+      "Type": 3
+    },
+    {
+      "Id": "atp1",
+      "Value": "Flame Strike - Level 4",
+      "Level": 4,
+      "Type": 3
+    },
+    {
+      "Id": "aub1",
+      "Value": "Burns the target area for 45 damage per interval, then 25 lingering damage per interval.",
+      "Level": 4,
+      "Type": 3
+    },
+    {
+      "Id": "arut",
+      "Value": "Level 1: Burns the target area for 15 damage per interval, then 10 lingering damage per interval.|nLevel 2: Burns the target area for 25 damage per interval, then 15 lingering damage per interval.|nLevel 3: Burns the target area for 35 damage per interval, then 20 lingering damage per interval.|nLevel 4: Burns the target area for 45 damage per interval, then 25 lingering damage per interval.",
+      "Type": 3
     }
   ]
 }
