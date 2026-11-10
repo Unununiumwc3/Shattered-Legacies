@@ -60,20 +60,5 @@ public static class FactionChoiceDialogSetup
       RequiresCheats = false
     };
     new FactionChoiceDialogPresenter(sentinels, draenei).Run(player.Create(18));
-    var frostwolf = new FactionChoice
-    {
-      Faction = new FrostwolfFaction(),
-      Difficulty = FactionLearningDifficulty.Basic,
-      StartingArea = Regions.FrostwolfStartPos
-    };
-    var warsong = new FactionChoice
-
-    {
-      Faction = new WarsongFaction(),
-      Difficulty = FactionLearningDifficulty.Advanced,
-      StartingArea = Regions.FrostwolfStartPos,
-      RequiresCheats = false
-    };
-    new FactionChoiceDialogPresenter(frostwolf, warsong).Run(player.Create(0));
   }
 }

@@ -202,7 +202,7 @@ public static class AiConfig
   public const int LordaeronCityCpId = 1848652103;
 
   // 0.37: Old Gods rift (AiGates.OpenOldGodsRift, portal phase "oldgods", graph gate "oldgods")
-  public static readonly List<string> OldGodsFactions = new() { "Ahn'qiraj", "Black Empire", "Skywall" };
+  public static readonly List<string> OldGodsFactions = new() { "Ahn'qiraj", "Black Empire" };
   public const int NordrassilCpId = 1848652112;             // n01P -- an Old Gods faction taking it opens the rift
   public const float RiftMawX = -27768f;                    // 0.39.5: landing ring fully clear (Highlands -> Maw failed)                    // Maw of Gor'ma end (Black Empire realm, west edge)
   public const float RiftMawY = -7864f;                     // 0.38: 530 south -- the old spot stood on a Silithid
@@ -372,6 +372,8 @@ public static class AiConfig
     { "Dalaran", new List<int> { UNIT_H09N_MATRIARCH_OF_TIRISFAL_DALARAN, UNIT_HAAH_THE_FALLEN_GUARDIAN_DALARAN, UNIT_HANT_GRAND_MAGUS_OF_THE_KIRIN_TOR_DALARAN, UNIT_HJAI_ARCHMAGE_OF_DALARAN_DALARAN } },
     { "Druids", new List<int> { UNIT_E00A_ANCIENT_GUARDIAN_DRUIDS, UNIT_ECEN_DEMIGOD_OF_THE_NIGHT_ELVES_DRUIDS, UNIT_EFUR_ARCHDRUID_DRUIDS, UNIT_H04U_DEMIGOD_DRUIDS } },
     { "Fel Horde", new List<int> { UNIT_N03D_WARCHIEF_OF_THE_FEL_HORDE_FEL, UNIT_NBBC_WARCHIEF_OF_THE_BLACKROCK_CLAN_FEL, UNIT_NMAG_LORD_OF_OUTLAND_FEL, UNIT_U02D_DEATH_KNIGHT_LORD_FEL_HORDE } },
+    { "Tauren Tribes", new List<int> { UNIT_OCBH_CHIEFTAIN_OF_THE_BLOODHOOF_TAUREN_TRIBES, UNIT_OREX_BEASTMASTER_TAUREN_TRIBES, UNIT_MD25_DARKSPEAR_CHAMPION_TAUREN_TRIBES, UNIT_TP83_GRIMTOTEM_MATRIARCH_TAUREN_TRIBES } },
+    { "Orcish Horde", new List<int> { UNIT_OTHR_WARCHIEF_OF_THE_HORDE_FROSTWOLF, UNIT_OGRH_CHIEFTAIN_OF_THE_WARSONG_CLAN_ORCISH_HORDE, UNIT_ORKN_CHIEFTAIN_OF_THE_DARKSPEAR_TRIBE_FROSTWOLF, UNIT_O06L_WARLORD_OF_THE_WARSONG_CLAN_ORCISH_HORDE } },
     { "Frostwolf", new List<int> { UNIT_OCBH_CHIEFTAIN_OF_THE_BLOODHOOF_FROSTWOLF, UNIT_OREX_BEASTMASTER_FROSTWOLF, UNIT_ORKN_CHIEFTAIN_OF_THE_DARKSPEAR_TRIBE_FROSTWOLF, UNIT_OTHR_WARCHIEF_OF_THE_HORDE_FROSTWOLF } },
     { "Gilneas", new List<int> { UNIT_E01E_ANCIENT_GUARDIAN_GILNEAS, UNIT_HHKL_KING_OF_GILNEAS_GILNEAS, UNIT_HPB2_GILNEAN_LORD_GILNEAS, UNIT_TGGN_PRINCESS_OF_GILNEAS_GILNEAS } },
     { "Illidan", new List<int> { UNIT_EEVI_DEMON_HUNTER_ILLIDARI_HYBRID_ILLIDAN, UNIT_HVSH_SEA_WITCH_ILLIDARI, UNIT_NAKA_ELDER_SAGE_ILLIDARI, UNIT_U00S_HIGH_WARLORD_ILLIDARI } },
@@ -845,7 +847,6 @@ public static class AiGraph
     new Edge(1848652374, 1848652889), // Echo Isles <-> Nazjatar (ship)
     new Edge(1848653104, 1848656184), // Zuldazar <-> Nazmir
     new Edge(1848656184, 1848653123), // Nazmir <-> Gadgetzan (ship)
-    new Edge(1848656184, 1848652890), // Nazmir <-> Kezan (ship -- v34.2)
     // 0.39.4: new CPs (maintainer's spots) -- connected to the two nearest nodes; check with -edges
     // 0.39.5 (maintainer): walls removed above; new links
     new Edge(1848721715, 1851016791), // Ramkahen <-> Throne of the Four Winds
@@ -888,9 +889,6 @@ public static class AiGraph
     // v34.1: Balor <-> Western Stranglethorn. Given as x-4853 y-14342; that point is open sea near Zandalar,
     // while x+4853 y-14342 is walkable on the Kul Tiras island 2000 from Balor -> sign typo assumed.
     new PortalLink(4853f, -14342f, 8447f, -18608f, "hbot", "Ship to Stranglethorn", "Ship to Balor", "ship"),
-    // v34.2: Nazmir <-> Kezan. Given as x-1201 y9903 for the Kezan side; that is the Broken Isles, while
-    // x-1201 y-9903 is walkable on Kezan's own island (same ground area as the Kezan CP) -> sign typo assumed.
-    new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "ship"),
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
     // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
     new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "ship"),

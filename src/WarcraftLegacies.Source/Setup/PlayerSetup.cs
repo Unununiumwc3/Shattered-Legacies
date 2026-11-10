@@ -11,7 +11,8 @@ using WarcraftLegacies.Source.Factions.Legion;
 using WarcraftLegacies.Source.Factions.Lordaeron;
 using WarcraftLegacies.Source.Factions.Quelthalas;
 using WarcraftLegacies.Source.Factions.Scourge;
-using WarcraftLegacies.Source.Factions.Skywall;
+using WarcraftLegacies.Source.Factions.OrcishHorde;
+using WarcraftLegacies.Source.Factions.TaurenTribes;
 using WarcraftLegacies.Source.Factions.Stormwind;
 
 namespace WarcraftLegacies.Source.Setup;
@@ -26,13 +27,13 @@ public static class PlayerSetup
     SetupPlayer(player.Create(4), new IronforgeFaction());
     SetupPlayer(player.Create(6), new FelHordeFaction());
     player.Create(7).GetPlayerData().SetTeam(TeamSetup.NorthAlliance);
-    player.Create(0).GetPlayerData().SetTeam(TeamSetup.Kalimdor);
-    SetupPlayer(player.Create(8), new SkywallFaction());
+    SetupPlayer(player.Create(0), new OrcishHordeFaction());
+    SetupPlayer(player.Create(5), new TaurenTribesFaction());
     SetupPlayer(player.Create(9), new LordaeronFaction());
     SetupPlayer(player.Create(11), new DruidsFaction());
     SetupPlayer(player.Create(12), new BlackEmpireFaction());
     SetupPlayer(player.Create(16), new AhnqirajFaction());
-    player.Create(18).GetPlayerData().SetTeam(TeamSetup.Kalimdor);
+    player.Create(18).GetPlayerData().SetTeam(TeamSetup.NightElves);
     player.Create(15).GetPlayerData().SetTeam(TeamSetup.Outland);
     SetupPlayer(player.Create(22), new KultirasFaction());
     SetupPlayer(player.Create(23), new LegionFaction());

@@ -26,7 +26,7 @@ public sealed class SentinelsFaction : Faction
   public SentinelsFaction() : base("Sentinels", playercolor.Mint,
     @"ReplaceableTextures\CommandButtons\BTNPriestessOfTheMoon.blp")
   {
-    TraditionalTeam = TeamSetup.Kalimdor;
+    TraditionalTeam = TeamSetup.NightElves;
     UndefeatedResearch = UPGRADE_R05Y_SENTINELS_EXISTS;
     StartingGold = new StartingGold
     {
@@ -57,6 +57,8 @@ public sealed class SentinelsFaction : Faction
   public override void OnRegistered()
   {
     RegisterQuests();
+    AddQuest(new QuestBreakTheBluff());
+    AddQuest(new QuestRazeOrgrimmar());
     RegisterDialogue();
     RegisterPowers();
     SentinelsSpells.Setup();

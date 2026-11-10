@@ -47,7 +47,7 @@
     "Position": {
       "X": -8499.734,
       "Y": -10982.152,
-      "Z": 77.29895
+      "Z": 46.586647
     },
     "Rotation": 2.5481806,
     "Scale": {
@@ -61,26 +61,5 @@
     "MapItemTableId": -1,
     "ItemTableSets": [],
     "CreationNumber": 23700
-  },
-  {
-    "TypeId": 829706060,
-    "Variation": 0,
-    "Position": {
-      "X": -8619.137,
-      "Y": -10934.191,
-      "Z": 67.80561
-    },
-    "Rotation": 4.2236967,
-    "Scale": {
-      "X": 1,
-      "Y": 1,
-      "Z": 1
-    },
-    "SkinId": 829706060,
-    "State": 2,
-    "Life": 255,
-    "MapItemTableId": -1,
-    "ItemTableSets": [],
-    "CreationNumber": 23701
   }
 ]

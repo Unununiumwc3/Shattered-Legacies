@@ -42,7 +42,7 @@
   "LoadingScreenSubtitle": "Bot prototype based on Warcraft Legacies",
   "GameDataSet": 2,
   "PrologueScreenPath": "",
-  "PrologueScreenText": "\uFFFD",
+  "PrologueScreenText": "�",
   "PrologueScreenTitle": "",
   "PrologueScreenSubtitle": "",
   "FogStyle": 0,
@@ -76,13 +76,13 @@
       "Controller": 1,
       "Race": 2,
       "Flags": 1,
-      "Name": "Frostwolf Clan",
+      "Name": "Orcish Horde",
       "StartPosition": {
-        "X": -10048,
-        "Y": 2048
+        "X": -2752,
+        "Y": -8896
       },
       "AllyLowPriorityFlags": 4456450,
-      "AllyHighPriorityFlags": 332032,
+      "AllyHighPriorityFlags": 262144,
       "EnemyLowPriorityFlags": 262144,
       "EnemyHighPriorityFlags": 262144
     },
@@ -106,7 +106,7 @@
       "Controller": 1,
       "Race": 1,
       "Flags": 1,
-      "Name": "Quel\u0027thalas",
+      "Name": "Quel'thalas",
       "StartPosition": {
         "X": 17728,
         "Y": 12672
@@ -147,6 +147,21 @@
       "EnemyHighPriorityFlags": 0
     },
     {
+      "Id": 5,
+      "Controller": 1,
+      "Race": 2,
+      "Flags": 1,
+      "Name": "Tauren Tribes",
+      "StartPosition": {
+        "X": -9472,
+        "Y": -11136
+      },
+      "AllyLowPriorityFlags": 0,
+      "AllyHighPriorityFlags": 0,
+      "EnemyLowPriorityFlags": 0,
+      "EnemyHighPriorityFlags": 0
+    },
+    {
       "Id": 6,
       "Controller": 1,
       "Race": 2,
@@ -173,21 +188,6 @@
       },
       "AllyLowPriorityFlags": 262144,
       "AllyHighPriorityFlags": 262664,
-      "EnemyLowPriorityFlags": 0,
-      "EnemyHighPriorityFlags": 0
-    },
-    {
-      "Id": 8,
-      "Controller": 1,
-      "Race": 4,
-      "Flags": 1,
-      "Name": "Skywall",
-      "StartPosition": {
-        "X": -12416,
-        "Y": -19712
-      },
-      "AllyLowPriorityFlags": 1,
-      "AllyHighPriorityFlags": 32768,
       "EnemyLowPriorityFlags": 0,
       "EnemyHighPriorityFlags": 0
     },
@@ -286,7 +286,7 @@
       "Controller": 1,
       "Race": 3,
       "Flags": 1,
-      "Name": "Ahn\u0027Qiraj",
+      "Name": "Ahn'Qiraj",
       "StartPosition": {
         "X": -23232,
         "Y": -19584
@@ -360,7 +360,7 @@
   "Forces": [
     {
       "Flags": 7,
-      "Players": -5095384,
+      "Players": -5095416,
       "Name": "Scourge, Legion"
     },
     {
@@ -370,8 +370,8 @@
     },
     {
       "Flags": 7,
-      "Players": 264193,
-      "Name": "Frostwolf, Druids, Sentinels"
+      "Players": 264192,
+      "Name": "Night Elves"
     },
     {
       "Flags": 7,
@@ -380,8 +380,8 @@
     },
     {
       "Flags": 7,
-      "Players": 69888,
-      "Name": "Skywall, Black Empire, Ahn\u0027qiraj"
+      "Players": 69632,
+      "Name": "Old Gods"
     },
     {
       "Flags": 7,
@@ -392,6 +392,11 @@
       "Flags": 0,
       "Players": 533504,
       "Name": "NPC"
+    },
+    {
+      "Flags": 7,
+      "Players": 33,
+      "Name": "Horde"
     }
   ],
   "UpgradeData": [
@@ -8648,7 +8653,7 @@
     },
     {
       "Index": 6,
-      "Name": "C\u0027Thun",
+      "Name": "C'Thun",
       "ItemSets": [
         {
           "Items": [

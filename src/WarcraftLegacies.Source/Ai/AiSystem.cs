@@ -307,6 +307,11 @@ namespace WarcraftLegacies.Source.Ai
           // Crusade, whose deadlines are not shifted) is not the bot's business; starting quests without a deadline
           // only for factions of the game start (a later faction's starting quest is a real goal -- e.g. "A Once Great
           // People" of the Scarlet Crusade, the Forsaken's "The Banshee's Rise")
+          // Both opening campaigns resolve through their live assault or caravan, including failure rewards.
+          if (q == f.StartingQuest && (f.Name == "Orcish Horde" || f.Name == "Tauren Tribes"))
+          {
+            continue;
+          }
           var deadline = DeadlineOf(q);
           var due = deadline > 0
             ? deadline > arrival && turn >= deadline - 1

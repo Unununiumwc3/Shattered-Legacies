@@ -57,6 +57,7 @@ public static class GameSetup
     TeamSetup.Setup();
     FactionStartingResources.Setup();
     FactionMultiboard.Setup();
+    OrgrimmarSetup.Setup();
     PlayerSetup.Setup();
     Regions.MaievStartUnlock.PrepareUnitsForRescue(RescuePreparationMode.HideAll);
     FactionChoiceDialogSetup.Setup();

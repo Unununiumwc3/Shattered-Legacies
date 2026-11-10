@@ -7,8 +7,7 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari;
-using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
-using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Skywall;
 using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthalas;
 
@@ -113,24 +112,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = 3468f, Y = 22662f,                 // Storm Peaks
         Announcement = "|cffffcc00Ironforge has fallen.|r The Explorers' League digs for hope in the Storm Peaks.",
       },
-      // 0.39.5 (maintainer): Kul Tiras keeps Katherine and becomes a mercenary faction on Kezan. 0.58: rebuilt -- a
-      // faction of its own (KezanEnterpriseFaction, the 24p goblin tree), the base on Kezan hidden until then
-      // (Timelines/Factions/Kultiras/KultirasFallback.cs).
-      new TurningPointDef("Kul'tiras", "Kezan Enterprise", TurningPointKind.Fallback, TurningPointSource.Timeline)
-      {
-        Trigger = "Boralus Keep is lost",
-        Description = "If Boralus falls, Katherine Proudmoore rallies the survivors on Kezan and the goblins join her: "
-                      + "the Kezan Enterprise, on its own team.",
-        Decision = HourglassData.DecisionKultiras, Condition = HourglassData.ConditionKultiras,
-        Hq = new[] { 1747989558 },             // h046 Boralus Keep
-        X = KezanEnterpriseConfig.StartX, Y = KezanEnterpriseConfig.StartY, // Kezan (maintainer: the right spot)
-        HeroType = 0,                          // no placeholder hero: Katherine leads them
-        Run = (p, def) => KultirasFallback.Run(p, def),
-        Prepare = () => KultirasFallback.Prepare(),
-        Announcement = "|cffffcc00The Proudmoore dynasty is shattered.|r Driven to piracy by tragedy, Katherine rallies the "
-                       + "survivors under the skull and crossbones -- while the opportunistic Goblins of Kezan join the global "
-                       + "conflict for gold and glory!",
-      },
+      // Kezan's island is used by Countdown to Extinction in this playtest.
+      // Leave its offer unregistered so neither preparation nor forced fallback touches it.
       // concepts: Dream trees -> South Alliance, trigger = the World Tree consumed / Nordrassil falls (P12)
       new TurningPointDef("Druids", "Dream trees (placeholder)", TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
@@ -175,21 +158,21 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = -982f, Y = -29010f,                // Shattrath
         Announcement = "|cffffcc00The Exodar has fallen.|r Its people return to Outland -- the Naaru welcome them in Shattrath.",
       },
-      new TurningPointDef("Frostwolf", TurningPointKind.Fallback, TwilightHammerFallback.Path)
+      new TurningPointDef("Orcish Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)
       {
         Trigger = "Orgrimmar is lost",
         Description = TwilightHammerFallback.OfferDescription,
-        Decision = HourglassData.DecisionFrostwolf, Condition = HourglassData.ConditionFrostwolf,
+        Decision = HourglassData.DecisionOrcishHorde, Condition = HourglassData.ConditionOrcishHorde,
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
         Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
-      new TurningPointDef("Warsong", TurningPointKind.Fallback, TwilightHammerFallback.Path)
+      new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, SkywallFallback.Path)
       {
-        Trigger = "Orgrimmar is lost",
-        Description = TwilightHammerFallback.OfferDescription,
-        Decision = HourglassData.DecisionWarsong, Condition = HourglassData.ConditionWarsong,
-        Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
+        Trigger = "Thunder Bluff is lost",
+        Description = "Regroup at the Lost City of the Tol'vir as Skywall, still allied with the Horde.",
+        Hq = new[] { UNIT_O00J_THUNDER_BLUFF_FROSTWOLF_OTHER }, RequireTriggerForForcedFallback = true,
+        Decision = HourglassData.DecisionTauren, Condition = HourglassData.ConditionTauren,
+        Announcement = "|cffffcc00Thunder Bluff has fallen.|r Skywall answers the call of the Tauren.",
       },
       // evil factions: shown on the Hourglass only (greyed out, "Not available yet"), names from the concepts
       new TurningPointDef("Scourge", "Knights of the Ebon Blade (not yet)", TurningPointKind.Fallback,

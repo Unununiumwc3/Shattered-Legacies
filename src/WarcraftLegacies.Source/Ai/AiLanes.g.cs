@@ -9,22 +9,21 @@ namespace WarcraftLegacies.Source.Ai
   //   3: Ship to Gadgetzan <-> Ship to Nazmir: 3 points, 3385 long, from -5184,-11712 to -7488,-14144
   //   4: Ship to Stormwind <-> Ship to Kul Tiras: 3 points, 3203 long, from 6592,-12352 to 7616,-10048
   //   5: Ship to Stranglethorn <-> Ship to Balor: 4 points, 5705 long, from 4800,-14528 to 8256,-18880
-  //   6: Ship to Kezan <-> Ship to Nazmir: 2 points, 2083 long, from -1600,-11968 to -1216,-9920
-  //   7: Ship to Menethil <-> Ship to Tol Barad: 4 points, 1717 long, from 11328,-2112 to 12992,-2240
+  //   6: Ship to Menethil <-> Ship to Tol Barad: 4 points, 1717 long, from 11328,-2112 to 12992,-2240
   internal static class AiLaneData
   {
-    internal static int Lanes = 8;
-    internal static int[] LaneStart = { 0, 3, 7, 10, 13, 16, 20, 22 };
-    internal static int[] LaneCount = { 3, 4, 3, 3, 3, 4, 2, 4 };
+    internal static int Lanes = 7;
+    internal static int[] LaneStart = { 0, 3, 7, 10, 13, 16, 20 };
+    internal static int[] LaneCount = { 3, 4, 3, 3, 3, 4, 4 };
     internal static float[] LaneX =
     {
       -2368f, -3008f, -4416f, -6080f, -5568f, -5184f, -4288f, -7616f, -6976f, -5056f, -5184f, -5824f, -7488f, 6592f, 6720f, 7616f,
-      4800f, 5824f, 7872f, 8256f, -1600f, -1216f, 11328f, 12736f, 12864f, 12992f
+      4800f, 5824f, 7872f, 8256f, 11328f, 12736f, 12864f, 12992f
     };
     internal static float[] LaneY =
     {
       3648f, 3648f, 4928f, 2496f, 2368f, 2112f, 2112f, -4544f, -4416f, -4416f, -11712f, -12096f, -14144f, -12352f, -10048f, -10048f,
-      -14528f, -16704f, -18752f, -18880f, -11968f, -9920f, -2112f, -2112f, -2240f, -2240f
+      -14528f, -16704f, -18752f, -18880f, -2112f, -2112f, -2240f, -2240f
     };
   }
 }

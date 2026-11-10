@@ -15,7 +15,7 @@ public sealed class QuestEmissary : QuestData
   /// Initializes a new instance of the <see cref="QuestEmissary"/> class.
   /// </summary>
   public QuestEmissary() : base("Emissary of the Firelands",
-    "Ragnaros and the Firelands will join the Old Gods, we need to make contact with them.",
+    "Take control of Un'Goro Crater to make contact with Ragnaros and the Firelands.",
     @"ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp")
   {
     AddObjective(new ObjectiveControlPoint(UNIT_N025_UN_GORO_CRATER));

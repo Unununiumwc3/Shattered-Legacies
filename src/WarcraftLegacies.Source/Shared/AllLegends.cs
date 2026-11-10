@@ -6,6 +6,7 @@ using WarcraftLegacies.Source.Factions.Draenei;
 using WarcraftLegacies.Source.Factions.Druids;
 using WarcraftLegacies.Source.Factions.FelHorde;
 using WarcraftLegacies.Source.Factions.Frostwolf;
+using WarcraftLegacies.Source.Factions.OrcishHorde;
 using WarcraftLegacies.Source.Factions.Gilneas;
 using WarcraftLegacies.Source.Factions.Illidari;
 using WarcraftLegacies.Source.Factions.Ironforge;
@@ -20,6 +21,7 @@ using WarcraftLegacies.Source.Factions.Skywall;
 using WarcraftLegacies.Source.Factions.Stormwind;
 using WarcraftLegacies.Source.Factions.Sunfury;
 using WarcraftLegacies.Source.Factions.Warsong;
+using WarcraftLegacies.Source.Factions.TaurenTribes;
 
 namespace WarcraftLegacies.Source.Shared;
 
@@ -48,7 +50,9 @@ public static class AllLegends
   /// <summary>
   /// Contains references to all Frostwolf <see cref="Legend"/>s.
   /// </summary>
-  public static FrostwolfLegends Frostwolf { get; }
+  private static FrostwolfLegends? _frostwolf;
+  public static FrostwolfLegends Frostwolf => _frostwolf ??= new FrostwolfLegends();
+  public static OrcishHordeLegends Orc { get; }
 
   /// <summary>
   /// Contains references to all Ironforge <see cref="Legend"/>s.
@@ -98,7 +102,9 @@ public static class AllLegends
   /// <summary>
   /// Contains references to all Warsong <see cref="Legend"/>s.
   /// </summary>
-  public static WarsongLegends Warsong { get; }
+  private static WarsongLegends? _warsong;
+  public static WarsongLegends Warsong => _warsong ??= new WarsongLegends();
+  public static TaurenTribesLegends Tauren { get; }
 
   public static AhnqirajLegends Ahnqiraj { get; }
 
@@ -123,7 +129,7 @@ public static class AllLegends
     Draenei = new DraeneiLegends();
     Druids = new DruidsLegends();
     FelHorde = new FelHordeLegends();
-    Frostwolf = new FrostwolfLegends();
+    Orc = new OrcishHordeLegends();
     Ironforge = new IronforgeLegends();
     Kultiras = new KultirasLegends();
     Legion = new LegionLegends();
@@ -133,7 +139,7 @@ public static class AllLegends
     Scourge = new ScourgeLegends();
     Sentinels = new SentinelsLegends();
     Stormwind = new StormwindLegends();
-    Warsong = new WarsongLegends();
+    Tauren = new TaurenTribesLegends();
     Neutral = new NeutralLegends();
     Gilneas = new GilneasLegends();
     Ahnqiraj = new AhnqirajLegends();
@@ -152,7 +158,7 @@ public static class AllLegends
     Draenei.RegisterLegends();
     Druids.RegisterLegends();
     FelHorde.RegisterLegends();
-    Frostwolf.RegisterLegends();
+    Orc.RegisterLegends();
     Ironforge.RegisterLegends();
     Kultiras.RegisterLegends();
     Legion.RegisterLegends();
@@ -162,7 +168,7 @@ public static class AllLegends
     Scourge.RegisterLegends();
     Sentinels.RegisterLegends();
     Stormwind.RegisterLegends();
-    Warsong.RegisterLegends();
+    Tauren.RegisterLegends();
     Ahnqiraj.RegisterLegends();
     BlackE.RegisterLegends();
     Skywall.RegisterLegends();

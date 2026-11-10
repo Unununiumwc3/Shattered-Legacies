@@ -21,7 +21,7 @@ public sealed class SkywallFaction : Faction
     @"ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp")
   {
     ControlPointDefenderUnitTypeId = UNIT_NECP_CONTROL_POINT_DEFENDER_SKYWALL_TOWER;
-    TraditionalTeam = TeamSetup.OldGods;
+    TraditionalTeam = TeamSetup.Horde;
     StartingGold = new StartingGold
     {
       Instant = 200,
@@ -29,7 +29,7 @@ public sealed class SkywallFaction : Faction
       Turns = 10
     };
     IntroText = () => Loc.Format(
-      "You are playing as the {faction}.\n\nAt the start, clear Uldum and take control of Tanaris.\n\nCoordinate with your Qiraji ally to push back the Horde before the Druids can intervene.\n\nYou have a powerful event in the Burning of the World Tree. Use it at the right time to surprise the Druids and possibly attack them from behind.",
+      "You are playing as the {faction}.\n\nRegroup at the Lost City of the Tol'vir and secure Uldum to reclaim the Vortex Pinnacle. Your allies in the Horde retain shared vision.",
       ("{faction}", $"{PrefixCol}{Loc.Get("Elementals of Skywall")}|r"));
 
     Nicknames = new List<string>
@@ -53,7 +53,7 @@ public sealed class SkywallFaction : Faction
     SkywallTraits.Setup();
     SkywallSpells.Setup();
     RegisterQuests();
-    RegisterFactionDependentInitializer<DruidsFaction, AhnqirajFaction>(RegisterInvasionRelatedQuests);
+    // The original Fireland Invasion also rewards Ahn'Qiraj. Park it for this Horde arrival.
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
   }
 
@@ -63,7 +63,7 @@ public sealed class SkywallFaction : Faction
     StartingQuest = newQuest;
     AddQuest(new QuestEmissary());
     AddQuest(new QuestThroneWind(Regions.ThroneoftheFourWind));
-    AddQuest(new QuestShimmering(Regions.SkywallShimmering_Unlock));
+    // Shimmering Flats is the Tauren opening camp in the western campaign.
     AddQuest(new QuestSubduing());
     AddQuest(new QuestKillDruids(AllLegends.Druids.Nordrassil));
   }

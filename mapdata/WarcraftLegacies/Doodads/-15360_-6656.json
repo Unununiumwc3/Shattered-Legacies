@@ -1,53 +1,11 @@
 [
   {
-    "TypeId": 1936215873,
-    "Variation": 0,
-    "Position": {
-      "X": -15516.646,
-      "Y": -6818.666,
-      "Z": 327.45425
-    },
-    "Rotation": 1.0488942,
-    "Scale": {
-      "X": 1.0000001,
-      "Y": 1.0000001,
-      "Z": 1.0000001
-    },
-    "SkinId": 1936215873,
-    "State": 2,
-    "Life": 255,
-    "MapItemTableId": -1,
-    "ItemTableSets": [],
-    "CreationNumber": 19901
-  },
-  {
-    "TypeId": 1429614660,
-    "Variation": 0,
-    "Position": {
-      "X": -15616,
-      "Y": -6848,
-      "Z": 313.75
-    },
-    "Rotation": 4.712389,
-    "Scale": {
-      "X": 0.99999994,
-      "Y": 0.99999994,
-      "Z": 0.99999994
-    },
-    "SkinId": 1429614660,
-    "State": 2,
-    "Life": 255,
-    "MapItemTableId": -1,
-    "ItemTableSets": [],
-    "CreationNumber": 4001
-  },
-  {
     "TypeId": 1496723524,
     "Variation": 0,
     "Position": {
-      "X": -15552,
-      "Y": -6720,
-      "Z": 300.1875
+      "X": -15360,
+      "Y": -6784,
+      "Z": 218
     },
     "Rotation": 4.712389,
     "Scale": {
@@ -60,56 +18,14 @@
     "Life": 255,
     "MapItemTableId": -1,
     "ItemTableSets": [],
-    "CreationNumber": 4000
-  },
-  {
-    "TypeId": 1496723524,
-    "Variation": 0,
-    "Position": {
-      "X": -15680,
-      "Y": -6720,
-      "Z": 274.375
-    },
-    "Rotation": 4.712389,
-    "Scale": {
-      "X": 0.99999994,
-      "Y": 0.99999994,
-      "Z": 0.99999994
-    },
-    "SkinId": 1496723524,
-    "State": 2,
-    "Life": 255,
-    "MapItemTableId": -1,
-    "ItemTableSets": [],
-    "CreationNumber": 3997
-  },
-  {
-    "TypeId": 1802654284,
-    "Variation": 9,
-    "Position": {
-      "X": -15447.73,
-      "Y": -6689.7266,
-      "Z": 284.89325
-    },
-    "Rotation": 3.5234706,
-    "Scale": {
-      "X": 1.8499992,
-      "Y": 1.8499992,
-      "Z": 1.8599992
-    },
-    "SkinId": 1802654284,
-    "State": 6,
-    "Life": 255,
-    "MapItemTableId": -1,
-    "ItemTableSets": [],
-    "CreationNumber": 3631
+    "CreationNumber": 8535
   },
   {
     "TypeId": 1802654284,
     "Variation": 8,
     "Position": {
       "X": -15363.126,
-      "Y": -6687.457,
+      "Y": -6943.457,
       "Z": 307.01868
     },
     "Rotation": 3.5234706,
@@ -130,8 +46,8 @@
     "Variation": 0,
     "Position": {
       "X": -15623.593,
-      "Y": -6669.9404,
-      "Z": 262.89175
+      "Y": -6925.9404,
+      "Z": 277.34674
     },
     "Rotation": 4.712389,
     "Scale": {

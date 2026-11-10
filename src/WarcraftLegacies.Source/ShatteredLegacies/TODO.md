@@ -7,7 +7,17 @@ into the upstream PR: `Ai/` + `[BOT]` hooks) is in `../Ai/TODO.md`. Fork code us
 
 Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (how, incl. the faction template).
 
-## Handoff after the 0.68 Twillight playtest
+## Western 2v2v2 integration for playtest
+
+The western port takes Orcish Horde, Tauren Tribes and their Kalimdor openings from Warcraft Legacies 5.0.4 (`a0c73082c268f65142781c287bc746e36c7d94c9`). Start with Orcish Horde and Tauren versus Druids and Sentinels (the Draenei lobby alternative remains), versus Black Empire and Ahn'qiraj. The Orcs share the existing Twillight claim with Fel Horde. Only Tauren can claim Skywall.
+
+- Play through the Tauren caravan from Shimmering Flats to Thunder Bluff and the Orcish landing to Orgrimmar with both human and bot control. Check recruitment, income, scoreboard teams, alliance vision and the paths through the changed terrain.
+- Lose Thunder Bluff before and after taking it. Only the second case should enable Skywall. Check the protected Lost City camp, the Hourglass, bot production, Vortex and Throne quest deadlines and control points already held by opponents.
+- Playtest Orcish Horde's upstream Kezan reward before deciding how to separate Kezan. Keep the Kul Tiras fallback implementation dormant. The Tauren Earthmother's Cradle reward and Skywall's overlapping Shimmering Flats and joint Firelands invasion quests are parked for design review.
+- Check the two Old Gods openings, original interiors, public tunnels and Un'Goro outpost. Verify both orders of the Orcish Horde / Fel Horde shared Twillight claim, including a late Tauren-to-Skywall arrival.
+- Dark Trolls/Hakkar, the Quel'Thalas split, Sunfury balance and Ironforge artifact rewards remain separate follow-ups.
+
+## Historical handoff after the 0.68 Twillight playtest
 
 - The maintainer passed the Twillight playtest at `15484d14de1ac0db9ed07ec30839473abe2f44a3`.
 - Implemented the first reassignment pilot. Frostwolf and Warsong retain their Orgrimmar offers. Fel Horde

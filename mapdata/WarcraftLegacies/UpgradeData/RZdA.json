@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNChogall.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroAvatarOfFlame.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Twillight"
+      "Value": "Fallback: Skywall"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Twillight"
+      "Value": "Fallback: Skywall"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree."
+      "Value": "Regroup at the Lost City of the Tol'vir as Skywall. Your Horde allegiance continues."
     }
   ]
 }
