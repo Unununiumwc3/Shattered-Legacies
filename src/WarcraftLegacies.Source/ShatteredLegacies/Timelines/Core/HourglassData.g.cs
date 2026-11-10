@@ -33,7 +33,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionScourge = 1381655362; // RZcB
     internal const int DecisionLegion = 1381655619; // RZdC Fallback: Dreadlord Insurgents (not yet)
     internal const int ConditionLegion = 1381655363; // RZcC
-    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Mag'har (not yet)
+    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Twillight
     internal const int ConditionFelHorde = 1381655364; // RZcD
     internal const int DecisionIllidari = 1381655621; // RZdE Fallback: Ashtongue Deathsworn
     internal const int ConditionIllidari = 1381655365; // RZcE

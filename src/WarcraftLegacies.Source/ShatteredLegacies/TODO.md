@@ -7,6 +7,18 @@ into the upstream PR: `Ai/` + `[BOT]` hooks) is in `../Ai/TODO.md`. Fork code us
 
 Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (how, incl. the faction template).
 
+## Handoff after the 0.68 Twillight playtest
+
+- The maintainer passed the Twillight playtest at `15484d14de1ac0db9ed07ec30839473abe2f44a3`.
+- Implemented the first reassignment pilot. Frostwolf and Warsong retain their Orgrimmar offers. Fel Horde
+  can claim the same Twillight arrival after Kil'sorrow Fortress dies. See **Reassigning the Twillight fallback**
+  in `Timelines/TIMELINES.md` for the catalog entry and execution trace.
+- Playtest the shared path in both claim orders, once with a bot and once with competing human researches.
+  Check that capturing the Kil'sorrow CP or losing all CPs with the fortress alive cannot unlock Fel Horde.
+  After the first claim, check for one Cho'gall and one port transfer, correct scoreboard team, vision and bot orders.
+- Next pool milestone needs a second playable destination for the remaining slot. Exercise both claim orders
+  with two options before connecting the same pool to opening picks.
+
 ## Order of the work
 
 The structure comes first, so that every later faction is the same template filled with different content.
@@ -291,22 +303,20 @@ From the 0.60 playtest (maintainer):
 - [ai] **Katherine's ultimate without its level** after the fallback to Kezan: probably every hero that stays with its
   faction through a fallback (the level requirement of hero skills -- `SwapFaction`, the faction's object levels?).
   Investigate with one hero, then fix for all fallbacks.
-- [playtest] Twillight and Maiev. Before the relevant choice, try attacking the neutral Dragonmaw port and
+- [0.68 Twillight passed; Maiev separate] Original test coverage. Before the relevant choice, try attacking the neutral Dragonmaw port and
   Grim Batol reward buildings, including the Dungeon at (17312, -3808). Take the fallback and check that only the port
   converts. Capture the Grim Batol point and check the capital, workshops and towers. Attack the transferred buildings,
   train a Death Knight, and train a Battlemaster from Grim Batol after tier four. Test both tunnel mouths in both
   directions before and after the quest. Check Maiev's outpost with both Sentinel and Draenei openings.
-- [playtest] Complete Gift of the Firelord with the Great Forge destroyed before and after taking Twillight. Earn
+- [0.68 Twillight passed] Original campaign checks. Complete Gift of the Firelord with the Great Forge destroyed before and after taking Twillight. Earn
   Thunderfury at Suramar and test both reward orders with Ironforge's expedition. Finish The Hour of Twilight, spend
   Deathwing's skill points and check damage, aura, Searing Breath and Attribute Bonus. Tune after a multiplayer run.
-- [design, next] Keep the opening pick or a lobby preselection. Split the playable faction (roster, heroes and tech)
-  from each offer (start, betrayal, fallback, site, team, trigger and what becomes of the old holdings). Move one
-  existing path first and check ownership, allies/vision, scoreboard and bot control before converting more paths.
+- [next] After the shared-fallback playtest, extend offer configuration to betrayals and opening picks.
 - [design, next] Shared alternative factions are exclusive and first-come. Two eligible slots can share two fallbacks.
   Test both claim orders and simultaneous choices. A committed claim must leave a usable fallback for each slot that
   still needs one. An opening pick can consume the same pool.
 - [content, next] Port the 24p Dark Trolls and Hakkar. First offer the betrayal to Frostwolf and Warsong. Configure a
-  starting offer later using the same roster. Inventory the existing troll quests and placements first so the betrayal
+  starting offer later using the same roster. Inspect `Factions/Frostwolf/Quests/QuestDarkspear.cs` (Echo Isles rescue and Vol'jin unlock), the other troll recruitment quests, `mapdata/WarcraftLegacies24p/` and `tools/shattered-legacies/content/import_24p.py` first so the betrayal
   cannot duplicate a previous reward or take a player's holdings. Protect the designated neutral buildings, hide and
   protect reserved troops, and release each group once on transfer.
 - [map, next] Apply the same policy to additional named sites after checking their original rewards. Existing hidden

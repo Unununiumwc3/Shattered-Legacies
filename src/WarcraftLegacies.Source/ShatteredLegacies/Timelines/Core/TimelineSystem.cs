@@ -55,7 +55,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       for (var d = 0; d < defs.Count; d++)
       {
         var def = defs[d];
-        if (!def.IsQuest || HasQuest(def))
+        if (!def.IsQuest || def.Path?.Claimed == true || HasQuest(def))
         {
           continue; // a definition belongs to one faction, once
         }
@@ -135,7 +135,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     private static void OnTriggerChanged(TurningPointQuest q)
     {
       var p = PlayerOf(q);
-      if (p == null || q.Progress == QuestProgress.Complete)
+      if (p == null || q.Progress == QuestProgress.Complete || q.Def.Path?.Claimed == true)
       {
         return;
       }
@@ -219,7 +219,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       for (var i = 0; i < _quests.Count; i++)
       {
         var q = _quests[i];
-        if (q.Def.Kind != TurningPointKind.Fallback || q.Progress == QuestProgress.Complete
+        if (q.Def.Kind != TurningPointKind.Fallback || q.Def.Path?.Claimed == true || q.Progress == QuestProgress.Complete
             || q.Trigger.EligibleFactions.Count == 0 || q.Trigger.EligibleFactions[0] != fac)
         {
           continue;
@@ -257,7 +257,30 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       }
 
       var def = quest.Def;
+      // Reserve before another research or bot decision can queue the same arrival.
+      if (def.Path != null && !def.Path.TryClaim())
+      {
+        return;
+      }
+
       Later(() => ApplyEffects(def, p));
+      if (def.Path == null)
+      {
+        return;
+      }
+
+      foreach (var other in _quests)
+      {
+        if (other != quest && other.Def.Path == def.Path)
+        {
+          other.Progress = QuestProgress.Failed;
+          var owner = PlayerOf(other);
+          if (owner != null)
+          {
+            Hourglass.Refresh(owner);
+          }
+        }
+      }
     }
 
     private static void ApplyEffects(TurningPointDef def, player p)

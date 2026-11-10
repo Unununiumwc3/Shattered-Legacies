@@ -65,9 +65,9 @@ TURNING_POINTS = [
     ("Legion", "Legion", "RZdC", "RZcC", "Fallback: Dreadlord Insurgents (not yet)",
      "Planned: the dreadlords fight on from a hidden lair. Not in this version.", "Not available yet",
      "BTNHeroDreadLord"),
-    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Mag'har (not yet)",
-     "Planned: the orcs of Nagrand who never drank the blood. Not in this version.", "Not available yet",
-     "BTNHeroBlademaster"),
+    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Twillight",
+     "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree.", "Kil'sorrow Fortress destroyed",
+     "BTNChogall"),
     ("Illidari", "Illidan", "RZdE", "RZcE", "Fallback: Ashtongue Deathsworn",
      "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn "
      "to whoever holds the Black Temple's CP: purify Telredor, Halaar, Shattrath and Oshu'gun and restore Karabor to "

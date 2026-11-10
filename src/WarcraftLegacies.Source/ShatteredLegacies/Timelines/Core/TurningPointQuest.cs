@@ -40,6 +40,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
     protected override string RewardDescription => Def != null ? Def.Announcement : ""; // null while the base constructor runs
 
+    public override string PenaltyFlavour => Def?.Path?.Claimed == true
+      ? "Another faction has already claimed " + Def.Name + "." : "";
+
     protected override void OnComplete(Faction whichFaction)
     {
       TimelineSystem.RunEffects(this, whichFaction);

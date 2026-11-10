@@ -7,6 +7,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   {
     internal const int PlaceholderHeroType = 1447571505; // VH01 Marin Noggenfogger, Baron of Gadgetzan
 
+    internal readonly ExclusivePath? Path;
     public readonly string Faction;                // WL faction name
     public readonly string Name;                   // the successor, e.g. "Sunfury" (quest title "Fallback: <Name>")
     public readonly TurningPointKind Kind;
@@ -37,6 +38,17 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       Name = name;
       Kind = kind;
       Source = source;
+    }
+
+    internal TurningPointDef(string faction, TurningPointKind kind, ExclusivePath path)
+      : this(faction, path.Name, kind, TurningPointSource.Timeline)
+    {
+      Path = path;
+      Prepare = path.Prepare;
+      Run = path.Run;
+      X = path.X;
+      Y = path.Y;
+      HeroType = 0;
     }
 
     // run by the timelines (quest + Hourglass decision)

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
+using WarcraftLegacies.Source.Objectives.LegendBased;
 using WarcraftLegacies.Source.Factions.Sentinels.Quests;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
@@ -174,26 +175,20 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = -982f, Y = -29010f,                // Shattrath
         Announcement = "|cffffcc00The Exodar has fallen.|r Its people return to Outland -- the Naaru welcome them in Shattrath.",
       },
-      new TurningPointDef("Frostwolf", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
+      new TurningPointDef("Frostwolf", TurningPointKind.Fallback, TwilightHammerFallback.Path)
       {
         Trigger = "Orgrimmar is lost",
-        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.",
+        Description = TwilightHammerFallback.OfferDescription,
         Decision = HourglassData.DecisionFrostwolf, Condition = HourglassData.ConditionFrostwolf,
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
-        HeroType = 0,
-        Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
-        X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,
         Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
-      new TurningPointDef("Warsong", TwilightHammerFaction.FactionName, TurningPointKind.Fallback, TurningPointSource.Timeline)
+      new TurningPointDef("Warsong", TurningPointKind.Fallback, TwilightHammerFallback.Path)
       {
         Trigger = "Orgrimmar is lost",
-        Description = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.",
+        Description = TwilightHammerFallback.OfferDescription,
         Decision = HourglassData.DecisionWarsong, Condition = HourglassData.ConditionWarsong,
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
-        HeroType = 0,
-        Prepare = TwilightHammerFallback.Prepare, Run = TwilightHammerFallback.Run,
-        X = TwilightHammerFallback.StartX, Y = TwilightHammerFallback.StartY,
         Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
       // evil factions: shown on the Hourglass only (greyed out, "Not available yet"), names from the concepts
@@ -209,10 +204,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Decision = HourglassData.DecisionLegion, Condition = HourglassData.ConditionLegion,
         Hq = new[] { 1966092359 },             // u00G Legion Stronghold
       },
-      new TurningPointDef("Fel Horde", "Mag'har (not yet)", TurningPointKind.Fallback, TurningPointSource.NotYet)
+      new TurningPointDef("Fel Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)
       {
         Decision = HourglassData.DecisionFelHorde, Condition = HourglassData.ConditionFelHorde,
-        Hq = new[] { 1865429303, 1865429062, 1865429048 }, // o017, o00F, o008
+        Description = TwilightHammerFallback.OfferDescription,
+        MakeTrigger = () => new ObjectiveCapitalDead(AllLegends.FelHorde.KilsorrowFortress)
+          { ResearchId = HourglassData.ConditionFelHorde },
+        RequireTriggerForForcedFallback = true,
+        Announcement = "|cffffcc00Kil'sorrow Fortress has fallen.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
       },
       // 0.63 (maintainer): the Black Temple destroyed -> Akama's Ashtongue Deathsworn, sworn to whoever destroyed it, then
       // to whoever holds its CP (Timelines/Factions/Illidari/IllidariFallback.cs)

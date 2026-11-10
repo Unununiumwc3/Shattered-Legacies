@@ -234,7 +234,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     {
       for (var d = 0; d < defs.Count; d++)
       {
-        if ((wl || defs[d].HourglassAbility == 0) && (wl ? defs[d].WlResearch : defs[d].Decision) == research)
+        if (defs[d].Path?.Claimed != true && (wl || defs[d].HourglassAbility == 0) && (wl ? defs[d].WlResearch : defs[d].Decision) == research)
         {
           return true;
         }

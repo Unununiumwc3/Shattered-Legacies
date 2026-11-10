@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroBlademaster.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNChogall.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Mag'har (not yet)"
+      "Value": "Fallback: Twillight"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Mag'har (not yet)"
+      "Value": "Fallback: Twillight"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: the orcs of Nagrand who never drank the blood. Not in this version."
+      "Value": "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree."
     }
   ]
 }

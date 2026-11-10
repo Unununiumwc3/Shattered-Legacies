@@ -7,6 +7,44 @@ Open work and its order: `../TODO.md`. (Until 0.51.1 this file was `FALLBACKS.md
 "Enslaved" rule, the team wrappers, the old per-faction tables -- is in git history: `git show
 v0.51.1:src/WarcraftLegacies.Source/ShatteredLegacies/FALLBACKS.md`.)
 
+## Reassigning the Twillight fallback
+
+Edit the offer in `TimelineCatalog.All`. For example, the Fel Horde entry begins with
+`new TurningPointDef("Fel Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)`.
+The first argument names the registered **source** faction. The third selects the shared **destination**.
+The initializer supplies the source's trigger, decision and condition IDs, and announcement. To move this
+offer intact, change the source name. If the new offer uses a different trigger, update the initializer and
+the matching tooltip in `tools/shattered-legacies/timelines/gen_hourglass.py`, then rerun that script from
+the repository root. Give concurrently visible offers distinct research IDs and button positions.
+
+| Opening faction | Hourglass decision / condition | Unlock |
+|---|---|---|
+| Frostwolf | `RZd9` / `RZc9` | Lose Orgrimmar after holding it |
+| Warsong | `RZdA` / `RZcA` | Lose Orgrimmar after holding it |
+| Fel Horde | `RZdD` / `RZcD` | Kil'sorrow Fortress (`o017`) is destroyed. The nearby CP (`n09Y`), Hellfire Citadel and Black Temple do not count. |
+
+1. `FactionChoiceDialogSetup` supplies the Frostwolf/Warsong opening choice. `PlayerSetup` assigns Fel Horde.
+   Registration attaches the matching turning-point quest. Its trigger grants the requirement for that
+   player's Hourglass research. Bots with perks decide when the trigger fires. The defeat rule checks
+   the same trigger before it can force any of these three offers.
+2. Completing a decision claims the shared path synchronously, before the swap runs on the next timer tick.
+   Competing Twillight quests close and their buttons disappear. Other destinations use their own claim state.
+3. `TwilightHammerFallback.Run` keeps the Hourglass. `SwapFaction` assigns and registers one
+   `TwilightHammerFaction`, copies object levels and keeps slot colour. Old heroes are removed.
+   `LeaveBehind` disposes of remaining holdings under WL's rules, including neutralizing protected assets.
+   `ChangeTeam.JoinOrAlone` joins living Old Gods or creates a solo pact. `UnallyOutsideTeam` clears
+   old alliance and vision flags in both directions. The multiboard renders on faction and team changes.
+4. At Dragonmaw Port, only the designated neutral buildings convert. The player receives the hall, altar,
+   four Cultists and Cho'gall. Wetlands and Dragonmaw Port CPs transfer only from neutral owners.
+   Campaign quests attach after the transfer. Grim Batol's reward waits for its territorial quest,
+   pre-transfer reward buildings retain their protection, and the public tunnels stay open.
+5. The same player slot retains control. The timeline refreshes the Hourglass, gives arrival income and
+   elimination grace, and schedules starter production for a bot. `AiBuilder` detects the new faction,
+   clears old projects and replans with its new tech tree.
+
+The pilot has one exclusive destination. Whichever eligible player completes the decision first gets it.
+A two-destination pool and opening picks that consume it remain roadmap work.
+
 ## 1. The model: turning points
 
 A **turning point** is any deviation from WL's default history: a fallback, a sub path, a betrayal or a pick
@@ -143,7 +181,7 @@ some areas at runtime -- `CleanupNeutralPassiveUnits`).
 | Frostwolf / Warsong | Thunder Bluff `o00J`, Darkspear Hold `o02D` / Stonemaul Keep `o004`, Orgrimmar `o01B` | Orgrimmar only for either pick | lose Orgrimmar after holding it |
 | Scourge | Frozen Throne `u000` | same | Lich King Arthas dies (Ebon Blade) |
 | Legion | Legion Stronghold `u00G` | same | all Argus CPs; Archimonde while the Legion controls him |
-| Fel Horde | Kil'sorrow Fortress `o017`, Black Temple `o00F`, Hellfire Citadel `o008` | all three | -- |
+| Fel Horde | Kil'sorrow Fortress `o017`, Black Temple `o00F`, Hellfire Citadel `o008` | Kil'sorrow Fortress only | destroy the fortress |
 | Illidari | (none) | none | the Black Citadel |
 | Skywall / Black Empire / Ahn'qiraj | Vortex Pinnacle `nelc` / N'Zoth `U01Z` / C'Thun `U00R` | same | -- |
 
@@ -159,7 +197,7 @@ check for conflicts; other numbers = a player slot at start). Rows for designs t
 | Kezan Enterprise (Kul Tiras) | `Regions.KezanUnlock` (-2400..608, -8000..-5184) | Kezan `n04Z` (-960,-7168); quests: Gadgetzan `n05C` (-8832,-13184), the goblin towns (Goblin Empire) | the base preplaced in KezanUnlock (owner 27, WL's creep goblins -> the 24p copies by `MainEquivalents`) | 0.58: `HideNonStructures`; no other WL rescue / cleanup covers it |
 | Dream trees (Druids) | Twilight Grove, Duskwood | Duskwood `n00V` (12160,-16384, owner 20 at start); quest: Hinterlands `n01A` (16256,4352) | druid buildings (copies) | Duskwood starts owned by slot 20 -- which faction? |
 | Maiev's Watchers (Sentinels, Draenei) | Warden's Cage, Outland | Warden's Cage `md03` (5440,-31040, owner 27) | `Regions.MaievStartUnlock` (-6016..-4896, -28416..-27104), the Sentinels' Maiev quests | MaievStartUnlock belongs to a Sentinels quest -> reuse or second rectangle |
-| Twilight's Hammer (orc slot) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | controlling the Grim Batol point grants the hill workshops and towers, claims the neutral capital and unlocks Orcish Death Knights. The two tunnels connect the foot and top of the hill from turn one |
+| Twilight's Hammer (Frostwolf / Warsong or Fel Horde) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | controlling the Grim Batol point grants the hill workshops and towers, claims the neutral capital and unlocks Orcish Death Knights. The two tunnels connect the foot and top of the hill from turn one |
 | Forsaken (Quel'thalas betrayal, D3) | Undercity (under Lordaeron City) | Lordaeron City `n01G` (9088,8576, owner 27), Tirisfal `n01F` (6784,10112, owner 9 = Lordaeron) | 24p Forsaken buildings (e.g. Plaguetorium `u011`) | Tirisfal / Brill are Lordaeron's at start -> own small rectangle |
 | Knights of the Ebon Blade (Scourge) | Eastern Plaguelands (Acherus) | Havenshire `n04W` (20608,9344, owner 27), Corin's Crossing `n03P` (17536,9088, owner 9) | Scourge buildings (copies) | Havenshire is owner 27 (rescue?) |
 | Mag'har (Fel Horde) | Kil'sorrow Fortress (maintainer, 0.63; was Nagrand / Garadar) | Nagrand `n00B` (-2944,-27904), Halaar `n0CV` (-4352,-29312) | orc buildings (copies) | none found |
@@ -193,7 +231,7 @@ faction by faction.
 | P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
 | P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
 | P16 Illidari | fallback Ashtongue Deathsworn (full, 0.63) | **fallback Ashtongue** (0.63: Black Temple destroyed -> Temple of the Deathsworn, conquest rule, purification, Karabor) | faction name "Karabor"; balance |
-| P7 Fel Horde | fallback Mag'har | Hourglass only | -- |
+| P7 Fel Horde | Mag'har planned | shared Twillight fallback on destruction of Kil'sorrow Fortress | first claim gets Dragonmaw Port |
 | P9 Skywall / P13 Black Empire | fallbacks **open** (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers) | Hourglass only | -- |
 | P17 Ahn'qiraj | fallback Brood of Nozdormu | Hourglass only | dragon models (24p) |
 

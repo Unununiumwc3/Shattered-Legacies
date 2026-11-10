@@ -14,6 +14,9 @@ internal static class TwilightHammerFallback
   internal const float StartX = 22080f;
   internal const float StartY = -3904f;
 
+  internal static readonly ExclusivePath Path = new(TwilightHammerFaction.FactionName, Prepare, Run, StartX, StartY);
+  internal const string OfferDescription = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.";
+
   // Only these neutral buildings belong to the start. The portal, the capital and player holdings stay in play.
   private static readonly int[] PortBuildings =
   {
