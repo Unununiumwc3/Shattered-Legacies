@@ -9,6 +9,7 @@ public static class OrcishHordeObjectInfo
 
   public static IEnumerable<ObjectInfo> GetAllObjectLimits()
   {
+    yield return new(UPGRADE_R05O_BUILD_ORGRIMMAR_WARSONG, 1);
     yield return new(UNIT_OGRE_GREAT_HALL_ORCISH_HORDE_T1, Unlimited, TownHall);
     yield return new(UNIT_OSTR_STRONGHOLD_ORCISH_HORDE_T2, Unlimited, Keep);
     yield return new(UNIT_OFRT_FORTRESS_ORCISH_HORDE_T3, Unlimited, Castle);

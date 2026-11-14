@@ -45,5 +45,7 @@ public sealed class QuestArgusControl : QuestData
   {
     _legionTeleporter1.SetWaygateDestination(Regions.NorthrendLegionLanding.Center);
     _legionTeleporter2.SetWaygateDestination(Regions.AlteracLegionLanding.Center);
+    _legionTeleporter1.WaygateActive = true;
+    _legionTeleporter2.WaygateActive = true;
   }
 }

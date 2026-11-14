@@ -1,3 +1,4 @@
+using WarcraftLegacies.Source.Ai;
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -147,6 +148,9 @@ public sealed class LongMarchCaravan
     _thunderBluffTarget = thunderBluff.Center;
     _campExitPoint = new Point(-10499.6f, -11050.0f);
 
+    AiApi.RegisterEscort(taurenTribes.Player, () =>
+      _concluded || taurenTribes.Player.GetPlayerData().Faction != taurenTribes
+        ? null : _kodos.FirstOrDefault(kodo => kodo.Alive));
     _stage = Stage.CampExit;
 
     _thunderBluffRescueUnits = thunderBluff.PrepareUnitsForRescue(RescuePreparationMode.HideNonStructures);
@@ -627,6 +631,7 @@ public sealed class LongMarchCaravan
   private void Conclude()
   {
     _concluded = true;
+    AiApi.GiveStarterProduction(_taurenTribes.Player);
     _orderTimer?.Dispose();
     _orderTimer = null;
     _ambushTimer?.Dispose();

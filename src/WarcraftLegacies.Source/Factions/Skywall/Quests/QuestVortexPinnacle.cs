@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Localization;
@@ -23,7 +24,7 @@ public sealed class QuestVortexPinnacle : QuestData
   /// </summary>
   /// <param name="rescueRect">Units in this area will start invulnerable and be rescued when the quest is complete.</param>
   public QuestVortexPinnacle(Rectangle rescueRect) : base("The Vortex Pinnacle",
-    "We have lost contact with the Elemental Realm, conquer Uldum to access the Vortex Pinnacle.",
+    "Secure Uldum and establish a Great Alcazar to summon Al-Akir.",
     @"ReplaceableTextures\CommandButtons\BTNFrostRevenant2.blp")
   {
     AddObjective(new ObjectiveControlPoint(UNIT_N0BD_ULDUM));
@@ -39,7 +40,7 @@ public sealed class QuestVortexPinnacle : QuestData
 
   /// <inheritdoc />
   protected override string RewardDescription => Loc.Format(
-    "Gain Control of all buildings in the Vortex Pinnacle, learn to train Al-Akir from the {altar}",
+    "Learn to train Al-Akir from the {altar}",
     ("{altar}", GetObjectName(UNIT_N078_ALTAR_OF_ELEMENTS_SKYWALL_ALTAR)));
 
   /// <inheritdoc />
@@ -49,10 +50,10 @@ public sealed class QuestVortexPinnacle : QuestData
       ? player.NeutralAggressive
       : completingFaction.Player;
 
-    rescuer.RescueGroup(_rescueUnits);
+    rescuer.RescueGroup(_rescueUnits.Where(u => u.Alive && u.Owner == player.NeutralPassive).ToList());
   }
 
   /// <inheritdoc />
   protected override void OnComplete(Faction completingFaction) =>
-    completingFaction.Player.RescueGroup(_rescueUnits);
+    completingFaction.Player.RescueGroup(_rescueUnits.Where(u => u.Alive && u.Owner == player.NeutralPassive).ToList());
 }

@@ -57,7 +57,7 @@ TURNING_POINTS = [
      "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree.", "Orgrimmar lost",
      "BTNChogall"),
     ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Skywall",
-     "Regroup at the Lost City of the Tol'vir as Skywall. Your Horde allegiance continues.", "Thunder Bluff lost",
+     "Claim the Lost City and Vortex Pinnacle as Skywall. Join the team of Thunder Bluff's conqueror.", "Thunder Bluff lost",
      "BTNHeroAvatarOfFlame"),
     ("Scourge", "Scourge", "RZdB", "RZcB", "Fallback: Knights of the Ebon Blade (not yet)",
      "Planned: when Lich King Arthas dies, his death knights break free. Not in this version.",

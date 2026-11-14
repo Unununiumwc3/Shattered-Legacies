@@ -1,5 +1,7 @@
 # Timelines -- how they are built
 
+**Current handoff: [0.69.0 changes and playtest checklist](../PLAYTEST-0.69.md).**
+
 **What** is planned lives in `SCENARIO_CONCEPTS.md` (vocabulary, ground rules, decision register D1-D17, every slot)
 and its flow in `timeline-overview.drawio`. This file is the **how**: the turning-point model, the WL mechanics it
 reuses, the template for adding content to a faction, the data the engine needs, and the status per faction.

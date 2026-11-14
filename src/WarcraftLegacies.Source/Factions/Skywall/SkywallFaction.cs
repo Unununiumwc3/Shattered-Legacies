@@ -29,7 +29,7 @@ public sealed class SkywallFaction : Faction
       Turns = 10
     };
     IntroText = () => Loc.Format(
-      "You are playing as the {faction}.\n\nRegroup at the Lost City of the Tol'vir and secure Uldum to reclaim the Vortex Pinnacle. Your allies in the Horde retain shared vision.",
+      "You are playing as the {faction}.\n\nYou hold the Lost City of the Tol'vir and the Vortex Pinnacle. Secure Uldum to unlock Al-Akir. Your Hourglass arrival joins the conqueror of Thunder Bluff when there is one.",
       ("{faction}", $"{PrefixCol}{Loc.Get("Elementals of Skywall")}|r"));
 
     Nicknames = new List<string>

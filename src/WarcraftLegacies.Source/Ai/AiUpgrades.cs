@@ -559,6 +559,8 @@ public static class AiUpgrades
     new EventResearch(1378891334, 1752393849, 0f),   // Northrend Expedition     @ Shipyard (hshy, Lordaeron)
     new EventResearch(1378891335, 1865429588, 0f),   // Northrend Expedition     @ Shipyard (o02T, Warsong)
     new EventResearch(1378892110, 1848653402, 0f),   // Flight Path              @ Flight Path (n06Z)
+    new EventResearch(1378891087, UNIT_OGRE_GREAT_HALL_ORCISH_HORDE_T1, 0f),
+    new EventResearch(1378891087, UNIT_OSTR_STRONGHOLD_ORCISH_HORDE_T2, 0f),
     new EventResearch(1378891087, 1868984948, 0f),   // Build Orgrimmar          @ ofrt
     new EventResearch(1378891087, 1865429587, 0f),   // Build Orgrimmar          @ o02S
     new EventResearch(1381193525, 1850035267, 900f), // Fireland Invasion (Sulfuron Spire) @ Vortex Pinnacle -- 15 min

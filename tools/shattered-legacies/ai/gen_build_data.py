@@ -27,6 +27,13 @@ def generate():
         texture = re.search(r'unit.PathingPathingMapRaw = "(.*?)";', body)
         if texture:
             stock[codes[name]]["upat"] = texture.group(1)
+    for name, body in re.findall(r"var unit = new Unit\(UnitType\.(\w+), db\);(.*?)return unit;", loader, re.S):
+        for field, prop in (("ua1g", "CombatAttack1TargetsAllowedRaw"),
+                            ("ua2g", "CombatAttack2TargetsAllowedRaw"),
+                            ("uaen", "CombatAttacksEnabledRaw")):
+            match = re.search(r"unit\." + prop + r' = "?([^";]+)"?;', body)
+            if match:
+                stock[codes[name]][field] = match[1]
     assert "hpea" in stock and stock["hpea"]["ubui"]
     objects = {}
     for code in sorted(set(stock) | {p.stem for p in Path(us.MAP).glob("*.json")}):
@@ -65,7 +72,7 @@ def generate():
                 pending.append(b)
     tables = {"Menus": menus}
     for name, field in (("Products", "utra"), ("Upgrades", "uupt"), ("Required", "ureq")):
-        tables[name] = {c: ids(c, field) for c in sorted(buildings) if ids(c, field)}
+        tables[name] = {c: ids(c, field) for c in sorted(objects if name == "Products" else buildings) if ids(c, field)}
     levels = {}
     for c, reqs in tables["Required"].items():
         amounts = str(objects.get(c, {}).get("urqa", "")).split(",")
@@ -88,6 +95,16 @@ def generate():
             base = {k: [v for v in vs if v[1] != "Z"] for k, vs in rows.items() if k[1] != "Z"}
             data = {k: vs for k, vs in rows.items() if vs != base.get(k)} if fork else base
             blocks.append(block(name, name + " from effective object data", {k:v for k,v in data.items() if v}))
+        if not fork:
+            air_attackers = []
+            for code, data in sorted(objects.items()):
+                enabled = int(data.get("uaen", 0))
+                if any(enabled & (1 << attack) and "air" in str(data.get(field, "")).split(",")
+                       for attack, field in enumerate(("ua1g", "ua2g"))):
+                    air_attackers.append(int.from_bytes(code.encode("latin1"), "big"))
+            blocks.append("    internal static readonly HashSet<int> AirAttackers = new()\n    {\n      "
+                          + "\n      ".join(", ".join(map(str, air_attackers[i:i + 8])) + ","
+                                             for i in range(0, len(air_attackers), 8)) + "\n    };")
         sizes = [f"      {{ {int.from_bytes(c.encode('latin1'), 'big')}, {size} }}, // {c}"
                  for c, size in sorted(half.items()) if (c[1] == "Z") == fork]
         blocks.append("    internal static readonly Dictionary<int, int> HalfWidth = new()\n    {\n"

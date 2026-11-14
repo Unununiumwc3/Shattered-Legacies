@@ -389,15 +389,13 @@ namespace WarcraftLegacies.Source.Ai
       while ((u = FirstOfGroup(g)) != null)
       {
         GroupRemoveUnit(g, u);
-        if (GetUnitTypeId(u) != TeleporterType || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
+        if (GetUnitTypeId(u) != TeleporterType || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f
+            || !WaygateIsActive(u) || IsUnitHidden(u))
         {
           continue;
         }
 
-        var dx = GetUnitX(u) - 22939f;
-        var dy = GetUnitY(u) - (-29345f);
-        var north = dx * dx + dy * dy < 300f * 300f;
-        if (AiRoutes.AddPortalEdge(u, north ? 3587f : 11000f, north ? 20680f : 6424f))
+        if (AiRoutes.AddPortalEdge(u, WaygateGetDestinationX(u), WaygateGetDestinationY(u)))
         {
           n++;
         }

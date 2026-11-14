@@ -17,6 +17,29 @@ namespace WarcraftLegacies.Source.Ai
   {
     private static readonly HashSet<int> _oneShotDone = new();
 
+    private static readonly Dictionary<int, System.Func<unit>> Escorts = new();
+
+    internal static void RegisterEscort(player owner, System.Func<unit> target)
+    {
+      Escorts[GetPlayerId(owner)] = target;
+    }
+
+    internal static unit EscortTarget(player owner)
+    {
+      var pid = GetPlayerId(owner);
+      if (!Escorts.TryGetValue(pid, out var target))
+      {
+        return null;
+      }
+      var escort = target();
+      if (escort == null || !escort.Alive)
+      {
+        Escorts.Remove(pid);
+        return null;
+      }
+      return escort;
+    }
+
     // Regular building recovery and successor-faction production are owned by AiBuilder.
     // The former 0:20/3:00 starter kit removed workers and spawned completed buildings; that
     // bypass is retired. Keep Cheapest for the unrelated one-off quest support below.
@@ -570,7 +593,7 @@ namespace WarcraftLegacies.Source.Ai
         var dx = GetUnitX(u) - ca.X;
         var dy = GetUnitY(u) - ca.Y;
         var dd = dx * dx + dy * dy;
-        if (best == null || dd < bestD)
+        if (AiArmy.CanFight(u) && (best == null || dd < bestD))
         {
           best = u;
           bestD = dd;
@@ -943,7 +966,7 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
-      return u;
+      return AiArmy.CanFight(u) ? u : null;
     }
 
     // One-shots: when a non-excluded bot owns the trigger CP (or any CP within radius), send a small force to

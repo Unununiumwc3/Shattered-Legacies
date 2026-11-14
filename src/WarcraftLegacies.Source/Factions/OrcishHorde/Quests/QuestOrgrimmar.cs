@@ -3,6 +3,7 @@ using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Objectives.FactionBased;
+using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.Objectives.QuestBased;
 using WarcraftLegacies.Source.Objectives.TurnBased;
 using WarcraftLegacies.Source.Objectives.UnitBased;
@@ -15,23 +16,15 @@ public sealed class QuestOrgrimmar : QuestData
 {
   private readonly List<unit> _rescueUnits;
 
-  public QuestOrgrimmar(Rectangle rescueRect, Faction faction, QuestData countdownToExtinction) : base("To Tame a Land",
+  public QuestOrgrimmar(Rectangle rescueRect) : base("To Tame a Land",
     "This new continent is ripe for the taking. If the Horde is to survive, a new city needs to be built.",
     @"ReplaceableTextures\CommandButtons\BTNFortress.blp")
   {
-    AddObjective(new ObjectiveBuildInRect(Regions.Orgrimmar, "in Orgrimmar", UNIT_OALT_ALTAR_OF_STORMS_ORCISH_HORDE_ALTAR));
-    AddObjective(new ObjectiveBuildInRect(Regions.Orgrimmar, "in Orgrimmar", UNIT_OFOR_WAR_MILL_ORCISH_HORDE_RESEARCH));
-    AddObjective(new ObjectiveBuildInRect(Regions.Orgrimmar, "in Orgrimmar", UNIT_OBAR_WAR_CAMP_ORCISH_HORDE_BARRACKS));
-    AddObjective(new ObjectiveExpire(15, Title));
+    AddObjective(new ObjectiveResearch(UPGRADE_R05O_BUILD_ORGRIMMAR_WARSONG, UNIT_OGRE_GREAT_HALL_ORCISH_HORDE_T1));
     AddObjective(new ObjectiveSelfExists());
-    AddObjective(new ObjectiveFactionQuestResolved(countdownToExtinction, faction)
-    {
-      ShowsInPopups = false,
-      ShowsInQuestLog = false,
-      Progress = QuestProgress.Undiscovered
-    });
     ResearchId = UPGRADE_R05R_QUEST_COMPLETED_TO_TAME_A_LAND;
-    _rescueUnits = rescueRect.PrepareUnitsForRescue(RescuePreparationMode.HideAll);
+    _rescueUnits = rescueRect.PrepareUnitsForRescue(RescuePreparationMode.HideAll,
+      u => u.UnitType != UNIT_H00L_HORIZONTAL_WOODEN_GATE_GATE_OPEN);
   }
 
   /// <inheritdoc/>
@@ -52,6 +45,7 @@ public sealed class QuestOrgrimmar : QuestData
 
     if (whichPlayer != null)
     {
+      AllLegends.Orc.Orgrimmar.Unit.Rescue(whichPlayer);
       whichPlayer.PlayMusicThematic("war3mapImported\\OrgrimmarTheme.mp3");
 
       foreach (var unit in _rescueUnits)

@@ -22,6 +22,27 @@ namespace WarcraftLegacies.Source.Ai
     internal const int StructureFood = 8;
     internal const float EnemyFactor = 1.5f;
 
+    // Don't commit the whole army to a flying boss when only a token force can hit it.
+    internal static bool CanFight(unit target)
+    {
+      if (!IsUnitType(target, UNIT_TYPE_FLYING))
+      {
+        return true;
+      }
+      var attackers = 0;
+      var airFood = 0;
+      for (var i = 0; i < Units.Count; i++)
+      {
+        var u = Units[i];
+        if (u.Alive && AiBuildData.AirAttackers.Contains(GetUnitTypeId(u)))
+        {
+          attackers++;
+          airFood += Food(u);
+        }
+      }
+      return attackers >= 3 && airFood >= 6;
+    }
+
     internal static bool Smart = true;
     internal static List<unit> Units = new();
 

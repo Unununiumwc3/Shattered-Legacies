@@ -67,6 +67,11 @@ public static class OrgrimmarSetup
     {
       foreach (var unit in AllPreplacedWidgets.Units.GetAll(typeId).Where(u => Regions.Orgrimmar.Contains(u.GetPosition())))
       {
+        if (unit.UnitType == UNIT_H00L_HORIZONTAL_WOODEN_GATE_GATE_OPEN)
+        {
+          unit.Dispose();
+          continue;
+        }
         unit.IsPaused = false;
         unit.IsVisible = true;
       }

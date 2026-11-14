@@ -78,8 +78,8 @@
       "Flags": 1,
       "Name": "Orcish Horde",
       "StartPosition": {
-        "X": -2752,
-        "Y": -8896
+        "X": -9120,
+        "Y": -2848
       },
       "AllyLowPriorityFlags": 4456450,
       "AllyHighPriorityFlags": 262144,

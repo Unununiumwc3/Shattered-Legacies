@@ -346,7 +346,7 @@ namespace WarcraftLegacies.Source.Ai
 
       var cu = _creep[i];
       if (GetUnitState(cu, UNIT_STATE_LIFE) <= 0.405f || GetOwningPlayer(cu) != Player(24) || IsUnitHidden(cu)
-          || BlzIsUnitInvulnerable(cu))
+          || BlzIsUnitInvulnerable(cu) || !AiArmy.CanFight(cu))
       {
         return null;
       }
@@ -535,7 +535,17 @@ namespace WarcraftLegacies.Source.Ai
         return false; // 0.50: a ferry pier held by an enemy is no entry
       }
 
-      var owner = _pOwner[pe];
+      var gate = _pUnit[pe];
+      if (GetUnitTypeId(gate) == 0 || GetUnitState(gate, UNIT_STATE_LIFE) <= 0.405f)
+      {
+        return false;
+      }
+      if ((PrivateGate(gate) || GetUnitTypeId(gate) == FourCC("n06Z")) && (!WaygateIsActive(gate) || IsUnitHidden(gate)))
+      {
+        return false;
+      }
+      var liveOwner = GetPlayerId(GetOwningPlayer(gate));
+      var owner = PrivateGate(gate) && liveOwner < 24 ? liveOwner : -1;
       if (owner < 0 || p == null)
       {
         return true;

@@ -3,8 +3,8 @@
     "TypeId": 1701996399,
     "Variation": 0,
     "Position": {
-      "X": -2720,
-      "Y": -8608,
+      "X": -9120,
+      "Y": -2848,
       "Z": 139.78513
     },
     "Rotation": 4.712389,
@@ -37,6 +37,6 @@
     },
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 4
+    "CreationNumber": 900341
   }
 ]

@@ -739,6 +739,7 @@ public static class AiGraph
     // 0.39: 6 -> 15 -- the Scourge still marched into Argus at the start (0.38.1 test)
     new Edge(1848656454, 1848652370, 0f, "prelegion", 15f), // Antoran Wastes <-> Crystalsong Forest (portal, until the summon)
     new Edge(1848656454, 1848652622, 0f, "legion", 6f),    // Antoran Wastes <-> Quel'Danas (demon portal, after the summon)
+    new Edge(1848656184, 1848652890), // Nazmir <-> restored Kezan (ship)
     // 0.39.4: new CPs (maintainer's spots) -- connected to the two nearest nodes; check with -edges
     new Edge(1848721717, 1848652097), // 0.39.4: Seradane (new CP n1A5) <-> Hinterlands
     new Edge(1848721719, 1848652886), // 0.39.4: Dragonmaw Gates (new CP n1A7) <-> Northern Highlands
@@ -847,6 +848,7 @@ public static class AiGraph
     new Edge(1848652374, 1848652889), // Echo Isles <-> Nazjatar (ship)
     new Edge(1848653104, 1848656184), // Zuldazar <-> Nazmir
     new Edge(1848656184, 1848653123), // Nazmir <-> Gadgetzan (ship)
+    new Edge(1848656184, 1848652890), // Nazmir <-> restored Kezan (ship)
     // 0.39.4: new CPs (maintainer's spots) -- connected to the two nearest nodes; check with -edges
     // 0.39.5 (maintainer): walls removed above; new links
     new Edge(1848721715, 1851016791), // Ramkahen <-> Throne of the Four Winds
@@ -889,6 +891,7 @@ public static class AiGraph
     // v34.1: Balor <-> Western Stranglethorn. Given as x-4853 y-14342; that point is open sea near Zandalar,
     // while x+4853 y-14342 is walkable on the Kul Tiras island 2000 from Balor -> sign typo assumed.
     new PortalLink(4853f, -14342f, 8447f, -18608f, "hbot", "Ship to Stranglethorn", "Ship to Balor", "ship"),
+    new PortalLink(-1843f, -11951f, -1201f, -9903f, "hbot", "Ship to Kezan", "Ship to Nazmir", "ship"),
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
     // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
     new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "ship"),

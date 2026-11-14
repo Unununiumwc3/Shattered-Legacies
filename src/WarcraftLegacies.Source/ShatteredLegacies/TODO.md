@@ -1,5 +1,7 @@
 # TODO -- Shattered Legacies (fork content)
 
+**Current handoff: [0.69.0 changes and playtest checklist](PLAYTEST-0.69.md).**
+
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work. Finished items go to
 `CHANGELOG.md`. **This file holds everything that exists only in Shattered Legacies**: timelines, new factions, map
 content, the fork's win rule and game length, balance, known issues, the maintainer's ideas. Bot work (what would go

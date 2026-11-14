@@ -24,34 +24,7 @@ namespace WarcraftLegacies.Source.Factions.OrcishHorde;
 
 public sealed class OrcishHordeFaction : Faction
 {
-  private static readonly Dialogue _trollDialogue09 = new(
-    @"Sound\Dialogue\TutorialCampaign\Demo05\D05Troll09.flac",
-    "This island be sinking quick, we come with you, man!",
-    "Troll");
-
-  private static readonly Dialogue _trollDialogue10 = new(
-    @"Sound\Dialogue\TutorialCampaign\Demo05\D05Troll10.flac",
-    "We don't have much time.",
-    "Troll");
-
-  private static readonly Dialogue _trollDialogue11 = new(
-    @"Sound\Dialogue\TutorialCampaign\Demo05\D05Troll11.flac",
-    "You got a way off the island?",
-    "Troll");
-
-  private static readonly Dialogue _trollDialogue12 = new(
-    @"Sound\Dialogue\TutorialCampaign\Demo05\D05Troll12.flac",
-    "Eh, where the others go? Dey go with you?",
-    "Troll");
-
-  /// <summary>
-  /// One line is drawn at random (without replacement) each time a troll group is rescued, so with only 3
-  /// rescue spots but 4 lines, one goes unused each playthrough for a bit of variety.
-  /// </summary>
-  private readonly List<Dialogue> _unusedTrollDialogue = new()
-  {
-    _trollDialogue09, _trollDialogue10, _trollDialogue11, _trollDialogue12
-  };
+  private QuestData _bloodPact;
 
   /// <inheritdoc />
   public OrcishHordeFaction() : base("Orcish Horde", playercolor.Red, @"ReplaceableTextures\CommandButtons\BTNThrall.blp")
@@ -66,7 +39,7 @@ public sealed class OrcishHordeFaction : Faction
     };
     CinematicMusic = "SadMystery";
     IntroText = () => Loc.Format(
-      "You are playing as the battle-hardened {faction}.\n\nYou begin stranded on an island off the coast of Kalimdor, your fleet battered by the crossing. Protect your Great Hall and hold out against the murlocs of the Sea Witch until the ships are seaworthy again. Save all that you can, for whatever survives will sail with you to the mainland.\n\nOnce you reach Durotar, it falls to you to found Orgrimmar, a new home for the Horde.\n\nThe Night Elves will not welcome you. Stand with your Tauren allies, drive into Ashenvale, and burn the World Tree if you must.",
+      "You are playing as the battle-hardened {faction}.\n\nYou begin in Durotar. Build your army and research Build Orgrimmar at your main building to claim the city and unlock Grom Hellscream.\n\nOrgrimmar will be the new home of the Horde.\n\nThe Night Elves will not welcome you. Stand with your Tauren allies, drive into Ashenvale, and burn the World Tree if you must.",
       ("{faction}", $"{PrefixCol}{Loc.Get("Orcish Horde")}|r"));
     Nicknames = new List<string>
     {
@@ -121,23 +94,6 @@ public sealed class OrcishHordeFaction : Faction
           }
         }));
 
-    TriggeredDialogueManager.Add(new TriggeredDialogue(
-      new Dialogue(@"Sound\Dialogue\OrcCampaign\Orc05\O05Grom26.flac",
-        "Yes! I feel the power once again! Come, my warriors; drink from the dark waters, and you will be reborn!",
-        "Grom Hellscream"),
-      new[] { this },
-      new List<Objective>
-      {
-        new ObjectiveControlLegend(AllLegends.Orc.GromHellscream, false)
-        {
-          EligibleFactions = new List<Faction> { this }
-        },
-        new ObjectiveControlCapital(AllLegends.Neutral.FountainOfBlood, false)
-        {
-          EligibleFactions = new List<Faction> { this }
-        }
-      }));
-
     TriggeredDialogueManager.Add(
       new TriggeredDialogue(new DialogueSequence(new Dialogue(
             @"Sound\Dialogue\OrcCampaign\Orc08\O08Grom33",
@@ -146,10 +102,7 @@ public sealed class OrcishHordeFaction : Faction
         new[] { this },
         new[]
         {
-          new ObjectiveControlLegend(AllLegends.Orc.GromHellscream, false)
-          {
-            EligibleFactions = new List<Faction> { this }
-          }
+          new ObjectiveQuestComplete(_bloodPact)
         }));
   }
 
@@ -188,23 +141,9 @@ public sealed class OrcishHordeFaction : Faction
 
   private void RegisterQuests()
   {
-    var greatHall = AllPreplacedWidgets.Units.GetClosest(UNIT_OGRE_GREAT_HALL_ORCISH_HORDE_T1, -2720f, -8544f);
-
-    var shipPositions = new List<Point> { new(-2368f, -9600f), new(-3136f, -9664f) };
-    var shipPeons = shipPositions.Select(SetupShipRepairPeon).ToList();
-
-    var quest = new QuestCountdownToExtinction(greatHall, Regions.Darkspear_Isles, Regions.Horde_Landing_Durotar,
-      Regions.DurotarUnlock)
-    {
-      ShipPositions = shipPositions,
-      ShipPeons = shipPeons
-    };
-    StartingQuest = AddQuest(quest);
-
-    new SeaWitchAssault(this, quest, greatHall, Regions.Darkspear_Isles, Regions.Sea_Witch_Spawn_1,
-      Regions.Sea_Witch_Spawn_2, Regions.Sea_Witch_Spawn_3);
-
-    var questOrgrimmar = AddQuest(new QuestOrgrimmar(Regions.Orgrimmar, this, quest));
+    Player.RescueGroup(Regions.DurotarUnlock.PrepareUnitsForRescue(RescuePreparationMode.HideNonStructures));
+    var questOrgrimmar = AddQuest(new QuestOrgrimmar(Regions.Orgrimmar));
+    StartingQuest = questOrgrimmar;
 
     var questCrossroads = new QuestCrossroads(Regions.Crossroads);
     questCrossroads.AddObjective(new ObjectiveQuestResolved(questOrgrimmar)
@@ -224,88 +163,14 @@ public sealed class OrcishHordeFaction : Faction
     });
     AddQuest(questSenjinIsles);
 
+    _bloodPact = AddQuest(new QuestBreakBloodPact(questOrgrimmar));
+
     var questSlayCenarius = AddQuest(new QuestSlayCenarius(questOrgrimmar));
     var questDemolishElfCities = AddQuest(new QuestDemolishElfCities(questSlayCenarius));
     var questThrallMaelstrom = AddQuest(new QuestThrallMaelstrom(AllLegends.Orc.Thrall, questOrgrimmar));
     var questWarsongHold = AddQuest(new QuestWarsongHold(questDemolishElfCities));
     AddQuest(new QuestFreeNerzhul(AllLegends.Scourge.TheFrozenThrone, AllLegends.Orc.Thrall, questWarsongHold, questDemolishElfCities));
 
-    RegisterTrollRescue(Regions.Troll_Rescue_1);
-    RegisterTrollRescue(Regions.Troll_Rescue_2);
-    RegisterTrollRescue(Regions.Troll_Rescue_3);
-
-    SetupInitialTowerAssault();
-  }
-
-  private const float InitialTowerAssaultMurlocHealth = 200f;
-
-  private static void SetupInitialTowerAssault()
-  {
-    var tower = AllPreplacedWidgets.Units.GetClosest(UNIT_OWTW_WATCH_TOWER_ORCISH_HORDE_TOWER, -2488.3f, -9027.9f);
-    var murlocOne = AllPreplacedWidgets.Units.GetClosest(UNIT_O07B_MURLOC_TIDERUNNER_ORCISH_HORDE, -2438.3f,
-      -8977.9f);
-    var murlocTwo = AllPreplacedWidgets.Units.GetClosest(UNIT_O07B_MURLOC_TIDERUNNER_ORCISH_HORDE, -2538.3f,
-      -9077.9f);
-
-    GameTimeManager.RegisterOnTurn(1, () =>
-    {
-      murlocOne.Life = InitialTowerAssaultMurlocHealth;
-      murlocTwo.Life = InitialTowerAssaultMurlocHealth;
-      murlocOne.IssueOrder(ORDER_ATTACK, tower);
-      murlocTwo.IssueOrder(ORDER_ATTACK, tower);
-    });
-  }
-
-  private static unit SetupShipRepairPeon(Point ship)
-  {
-    var peon = AllPreplacedWidgets.Units.GetClosest(UNIT_OPEO_PEON_ORCISH_HORDE_WORKER, ship.X, ship.Y);
-    peon.IsInvulnerable = true;
-    GameTimeManager.RegisterOnTurn(1, () => peon.SetAnimation("work"));
-    return peon;
-  }
-
-  private void RegisterTrollRescue(Rectangle rescueRegion)
-  {
-    var sentryWard = AllPreplacedWidgets.Units.GetClosest(UNIT_OEYE_SENTRY_WARD_FROSTWOLF_WITCH_DOCTOR,
-      rescueRegion.Center.X, rescueRegion.Center.Y);
-    sentryWard.IsInvulnerable = true;
-
-    var alreadyRescued = false;
-    var enterTrigger = trigger.Create();
-    enterTrigger.RegisterEnterRegion(rescueRegion.Region);
-    enterTrigger.AddAction(() =>
-    {
-      if (alreadyRescued || @event.Unit.Owner != Player)
-      {
-        return;
-      }
-
-      var rescuedUnits = GlobalGroup.EnumUnitsInRect(rescueRegion)
-        .Where(rescuable => rescuable.Owner == player.NeutralPassive ||
-                             rescuable.UnitType == UNIT_OEYE_SENTRY_WARD_FROSTWOLF_WITCH_DOCTOR)
-        .ToList();
-      if (rescuedUnits.Count == 0)
-      {
-        return;
-      }
-
-      alreadyRescued = true;
-      Player.RescueGroup(rescuedUnits);
-      PlayRandomTrollDialogue();
-    });
-  }
-
-  private void PlayRandomTrollDialogue()
-  {
-    if (_unusedTrollDialogue.Count == 0)
-    {
-      return;
-    }
-
-    var index = GetRandomInt(0, _unusedTrollDialogue.Count - 1);
-    var dialogue = _unusedTrollDialogue[index];
-    _unusedTrollDialogue.RemoveAt(index);
-    Player?.QueueDialogue(dialogue);
   }
 
   private void RegisterResearches()

@@ -1295,7 +1295,15 @@ namespace WarcraftLegacies.Source.Ai
         diag.HomeLm = homeLm;
 
         var defend = AiDefense.Pick(p, pid, tx, ty); // 0.43.2: reach + hysteresis (was FindDefenseTarget(p): anywhere)
-        if (defend != null)
+        var escort = AiMissions.EscortTarget(p);
+        if (escort != null)
+        {
+          state = "escort";
+          NoteTarget(p, pid, escort, "escort");
+          TrackStuck(p, pid, null);
+          IssueAttackToPoint(p, pid, GetUnitX(escort), GetUnitY(escort), true, GetUnitX(escort), GetUnitY(escort));
+        }
+        else if (defend != null)
         {
           // Rule 0: base/CP under attack -> recall, overriding whatever offense was committed.
           Committed[pid] = defend;

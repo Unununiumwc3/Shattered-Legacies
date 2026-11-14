@@ -16,9 +16,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     // Products from effective object data
     internal static readonly Dictionary<int, int[]> Products = new()
     {
+      { 1747988826, new[] { 1868199782 } }, // h01Z: oZwf
       { 1750754864, new[] { 1851418161, 1968858673 } }, // hZf0: nZf1 uZf1
       { 1750754865, new[] { 1968858673 } }, // hZf1: uZf1
       { 1750754866, new[] { 1851418161, 1968858673 } }, // hZf2: nZf1 uZf1
+      { 1750754871, new[] { 1851418161, 1968858673 } }, // hZf7: nZf1 uZf1
+      { 1750756145, new[] { 1968859952, 1851419442 } }, // hZk1: uZk0 nZk2
+      { 1750759733, new[] { 1865430337, 1868200242 } }, // hZy5: o05A oZy2
       { 1868196656, new[] { 1868196712, 1868196709 } }, // oZk0: oZkh oZke
       { 1868196657, new[] { 1868196712, 1868196709 } }, // oZk1: oZkh oZke
       { 1868196658, new[] { 1868196712, 1868196709 } }, // oZk2: oZkh oZke
@@ -27,6 +31,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1868196662, new[] { 1868196710, 1868196711 } }, // oZk6: oZkf oZkg
       { 1868196663, new[] { 1851419441, 1750756149, 1750756148 } }, // oZk7: nZk1 hZk5 hZk4
       { 1868196707, new[] { 1868722036, 1747992915, 1747992912, 1747993138, 1747992921, 1747993141, 1747993155, 1747992911 } }, // oZkc: obot h0AS h0AP h0B2 h0AY h0B5 h0BC h0AO
+      { 1868196714, new[] { 1851419445, 1868196715 } }, // oZkj: nZk5 oZkk
+      { 1868198192, new[] { 1750757936, 1750757937, 1851421234, 1851421235, 1750757940 } }, // oZq0: hZr0 hZr1 nZr2 nZr3 hZr4
+      { 1868198193, new[] { 1868198455 } }, // oZq1: oZr7
+      { 1868198194, new[] { 1868198454, 1851421241, 1868198497 } }, // oZq2: oZr6 nZr9 oZra
+      { 1868198195, new[] { 1750757986, 1750757987, 1750757988, 1750757990 } }, // oZq3: hZrb hZrc hZrd hZrf
+      { 1868198196, new[] { 1750757991, 1851421288, 1851421289 } }, // oZq4: hZrg nZrh nZri
+      { 1868198197, new[] { 1700426346, 1700426347 } }, // oZq5: eZrj eZrk
+      { 1868198960, new[] { 1868200243, 1852076654, 1852076659 } }, // oZt0: oZy3 ndrn ndrs
+      { 1868198961, new[] { 1868200243, 1852076654, 1852076659, 1213888825 } }, // oZt1: oZy3 ndrn ndrs HZy9
+      { 1868198963, new[] { 1868200244, 1750759736 } }, // oZt3: oZy4 hZy8
+      { 1868198965, new[] { 1750759735 } }, // oZt5: hZy7
+      { 1868198967, new[] { 1750759734 } }, // oZt7: hZy6
+      { 1868198969, new[] { 1868200245 } }, // oZt9: oZy5
       { 1868199728, new[] { 1868199781, 1868199782 } }, // oZw0: oZwe oZwf
       { 1868199729, new[] { 1868199781, 1868199782 } }, // oZw1: oZwe oZwf
       { 1868199730, new[] { 1868199781, 1868199782 } }, // oZw2: oZwe oZwf
@@ -41,6 +58,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       { 1968858677, new[] { 1750754913, 1968858681 } }, // uZf5: hZfa uZf9
       { 1968858679, new[] { 1968858727, 1969385332, 1968858728 } }, // uZf7: uZfg ubot uZfh
       { 1968858680, new[] { 1851418163, 1968858723, 1968858722 } }, // uZf8: nZf3 uZfc uZfb
+      { 1968858726, new[] { 1968858673 } }, // uZff: uZf1
     };
 
     // Upgrades from effective object data

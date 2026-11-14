@@ -11,6 +11,8 @@ namespace WarcraftLegacies.Source.Ai
     // --- players ---------------------------------------------------------------------------------------------
 
     // True for a computer slot the bot plays (also a taken-over leaver, also an autopilot human).
+    public static void RegisterEscort(player p, System.Func<unit> target) => AiMissions.RegisterEscort(p, target);
+
     public static bool IsBot(player p) => SimpleBot.IsBot(p);
 
     public static void StopBot(player p)

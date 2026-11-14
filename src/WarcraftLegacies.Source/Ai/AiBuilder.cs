@@ -107,6 +107,7 @@ namespace WarcraftLegacies.Source.Ai
       var finished = CreateTrigger();
       var cancelled = CreateTrigger();
       var changed = CreateTrigger();
+      var acquired = CreateTrigger();
       var trained = CreateTrigger();
       var starting = CreateTrigger();
       var unqueued = CreateTrigger();
@@ -114,6 +115,7 @@ namespace WarcraftLegacies.Source.Ai
       for (var i = 0; i < 24; i++)
       {
         var p = Player(i);
+        TriggerRegisterPlayerUnitEvent(acquired, p, EVENT_PLAYER_UNIT_CHANGE_OWNER, null);
         TriggerRegisterPlayerUnitEvent(starting, p, EVENT_PLAYER_UNIT_TRAIN_START, null);
         TriggerRegisterPlayerUnitEvent(revived, p, EVENT_PLAYER_HERO_REVIVE_START, null);
         TriggerRegisterPlayerUnitEvent(unqueued, p, EVENT_PLAYER_UNIT_TRAIN_CANCEL, null);
@@ -128,6 +130,16 @@ namespace WarcraftLegacies.Source.Ai
         TriggerRegisterPlayerUnitEvent(finished, p, EVENT_PLAYER_UNIT_CONSTRUCT_FINISH, null);
         TriggerRegisterPlayerUnitEvent(cancelled, p, EVENT_PLAYER_UNIT_CONSTRUCT_CANCEL, null);
       }
+      TriggerAddAction(acquired, () =>
+      {
+        var owner = GetOwningPlayer(GetTriggerUnit());
+        var id = GetPlayerId(owner);
+        if (id < States.Length && IsUnitType(GetTriggerUnit(), UNIT_TYPE_STRUCTURE) && States[id] != null)
+        {
+          States[id].HomeSet = false;
+          Request(owner);
+        }
+      });
       TriggerAddAction(starting, () => AiAltars.HeroEvent(GetTriggerPlayer(), GetTrainedUnitType(), true, false));
       TriggerAddAction(unqueued, () =>
       {
@@ -582,11 +594,11 @@ namespace WarcraftLegacies.Source.Ai
           s.HomeX = GetStartLocationX(start);
           s.HomeY = GetStartLocationY(start);
         }
-        s.HomeSet = true;
+        s.HomeSet = initial != null;
       }
       if (SimpleBot.HasPerks(p))
       {
-        if (workers.Count > 0)
+        if (workers.Count >= WantedWorkers)
         {
           var local = 0;
           var nearest = -1f;
@@ -631,7 +643,7 @@ namespace WarcraftLegacies.Source.Ai
       var trained = false;
       if (workers.Count < WantedWorkers)
       {
-        trained = TrainWorker(p, builderTypes, halls);
+        trained = TrainWorker(p, builderTypes, structures);
       }
       if (workers.Count == 0 && s.Projects.Count == 0)
       {
@@ -847,6 +859,23 @@ namespace WarcraftLegacies.Source.Ai
       var busyHall = false;
       for (var h = 0; h < halls.Count; h++)
       {
+        if (!AiBuildData.Products.TryGetValue(GetUnitTypeId(halls[h]), out var menu))
+        {
+          continue;
+        }
+        var trainsWorker = false;
+        for (var i = 0; i < types.Count; i++)
+        {
+          if (System.Array.IndexOf(menu, types[i]) >= 0)
+          {
+            trainsWorker = true;
+            break;
+          }
+        }
+        if (!trainsWorker)
+        {
+          continue;
+        }
         // Never overwrite an active training / upgrade order.
         if (GetUnitCurrentOrder(halls[h]) != 0)
         {
