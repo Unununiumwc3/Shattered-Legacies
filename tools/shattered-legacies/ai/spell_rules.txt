@@ -1,0 +1,88 @@
+# Bot spellcasting (0.70.0): every Channel-based ability (ANcl) that a unit or hero carries needs ONE row here.
+# gen_spells.py reads this file + the map data and writes Ai/AiSpells.g.cs (WL) and
+# ShatteredLegacies/Bot/SlAiSpells.g.cs (abilities only fork units carry). Unlisted abilities are never cast.
+#
+# Columns (whitespace separated, the note runs to the end of the line):
+#   id      ability id (as in mapdata/WarcraftLegacies/AbilityData)
+#   kind    unit    = cast on a unit already inside cast range
+#           point   = cast on a point inside cast range (AoE: where it hits the most)
+#           instant = no target ("click"), cast where the caster stands
+#           skip    = never cast by the bot (utility, quest, travel, sacrifice, no effect in code, ...)
+#   who     enemy | ally | self   (self = point on the caster's own spot, or a self buff)
+#   min     least worth inside the area, enemy or ally (unit 1, hero 3); "-" = default (3 for areas, 1 for units)
+#   radius  area used to count targets; "-" = the ability's own area (aare), else 300
+#   flags   "-" or: mana = prefer targets that have mana; hurt = ally target only below 70 % life
+#
+# Common to all: only in a BIG FIGHT (5+ enemy and 5+ friendly units within 2000, heroes count 3), cooldown ready,
+# enough mana, the caster neither channelling, travelling nor on a mission. No chasing: targets inside cast range only.
+#
+# id   kind     who    min  radius  flags  note
+A00F   skip     -      -    -       -      Rend Soul (Kel'Thuzad): DeathPact class -- kills an allied unit
+A00Y   skip     -      -    -       -      Teleport (Tidehunter / Water Ascendant): travel, order "stop", no code
+A01D   skip     -      -    -       -      Lunar Sanctuary (Tyrande): no Spell registered in code -- no effect
+A01F   point    enemy  -    -       -      Solar Judgement (Arthas / Crown Prince): bolts on enemies in the area
+A01N   point    enemy  -    -       -      Mass Ensnare (Skywall Ballista Carrier): MassAnySpell, enemies
+A02T   skip     -      -    -       -      Dark Summoning (Nathrezim): recalls own units -- utility
+A041   skip     -      -    -       -      Self Destruct (workers)
+A04H   point    enemy  -    -       -      Resurgent Flame Strike (Kael'thas): repeated flame strike
+A097   instant  enemy  -    400     -      Exact Justice (Uther): channel, allies invulnerable, damage at the end
+A0A0   skip     -      -    -       -      Dark Pact (Archimonde): kills an own unit (sacrifice)
+A0DG   point    ally   -    -       -      Mass Simulacrum (Antonidas): copies of allied units in the area
+A0EP   skip     -      -    -       -      Summon Granite Golems (the Sunwell, a building): not an army caster
+A0FA   point    enemy  -    -       -      Siphoning Ritual (Kael'thas): channel, drains enemies in the area
+A0FD   point    enemy  -    -       -      Mass Banish (Kael'thas): banishes organic units in the area
+A0GP   point    enemy  -    -       -      Scattershot (Lady Ashvane): MassAnySpell, enemies
+A0J5   skip     -      -    -       -      Chase Illidan to Outland (Vault of the Wardens): quest
+A0LR   skip     -      -    -       -      Ascend (Champion of the Scourge): quest / form change
+A0OC   skip     -      -    -       -      Extract Vial (the Sunwell): quest
+A0OD   point    enemy  -    -       -      Seismic Shard (Azil): MassAnySpell, enemies
+A0PY   skip     -      -    -       -      Summon Ragnaros: quest (the bot has its own Ragnaros mission)
+A0RB   skip     -      -    -       -      Portal to Argus (Dimensional Generator): travel
+A0SR   skip     -      -    -       -      Portal to Tempest Keep (Dimensional Generator): travel
+A0UB   skip     -      -    -       -      Portal to Northrend (Legion Teleporter): travel (bot pseudo-portal)
+A0UC   skip     -      -    -       -      Portal to Alterac (Legion Teleporter): travel (bot pseudo-portal)
+A0W9   skip     -      -    -       -      Death Pact (Death Knight): kills an allied unit
+A0WP   skip     -      -    -       -      Dark Ritual (Lich): kills an allied unit
+A0YX   point    self   -    -       -      Ancestral Legion (Cairne): summons remembered Tauren next to him
+A104   point    enemy  -    -       -      Storm Surge (Skywall Elemental Lord): damage + purge, enemies
+A10C   skip     -      -    -       -      Death Pact (Arthas): kills an allied unit
+A10L   point    enemy  -    -       -      Enchanted Bolts (Dalaran): MassAnySpell, enemies
+A10M   point    enemy  -    -       -      Inspire Madness (Tichondrius): enemies in the area
+A10N   point    enemy  -    300     -      Apocalypse (Arthas): a line of projectiles towards the point
+A126   skip     -      -    -       -      Self Destruct (Deeprun Tram and others)
+A13R   point    ally   -    -       -      Mass Frost Armor (Kel'Thuzad): frost armor in the area
+A14F   skip     -      -    -       -      Glaive Trap: no Spell registered in code -- no effect
+A14G   skip     -      -    -       -      Watcher's Focus: no Spell registered in code -- no effect
+A14K   skip     -      -    -       -      Sunfire Barrage (Anasterian): no Spell registered in code -- no effect
+A14L   instant  self   -    600     -      Bestial Wrath (Rexxar): buffs Rexxar and his beasts
+A14Q   point    enemy  1    150     -      Wild Throw (Rexxar): Stormbolt projectile towards the point
+A14S   skip     -      -    -       -      Corruption Mine: no Spell registered in code -- no effect
+A14Y   unit     ally   -    -       hurt   Spirit Mend (Magatha): heals an ally
+A14Z   point    ally   -    -       -      Grimtotem Ward (Magatha): ward with auras for allies
+A151   instant  enemy  -    450     -      Wrath of the Earth Mother (Magatha): damages enemies, heals allies around her
+A156   skip     -      -    -       -      Tree of Renewal: no Spell registered in code -- no effect
+A159   skip     -      -    -       -      Lord of the Forest: no Spell registered in code -- no effect
+A15R   skip     -      -    -       -      Undying Grove: no Spell registered in code -- no effect
+A15S   skip     -      -    -       -      Spirits of the Forest: no Spell registered in code -- no effect
+A15T   skip     -      -    -       -      Root Tap: no Spell registered in code -- no effect
+A16H   skip     -      -    -       -      Light of the Goddess: no Spell registered in code -- no effect
+A16I   skip     -      -    -       -      Mass Wind Walk: escape; no Spell registered in code
+A16K   skip     -      -    -       -      Elune's Protection: no Spell registered in code -- no effect
+A16U   unit     enemy  -    -       -      Sunstrike (Sunwalker): damages the target, heals allies around it
+Aygf   unit     enemy  -    -       mana   Chain Mana Burn (Illidan)
+CK02   skip     -      -    -       -      Way Gate Travel: travel
+LLLN   skip     -      -    -       -      Free Yogg-Saron: quest (AiMissions.RunYogg)
+MD23   unit     enemy  -    -       mana   Chain Mana Burn (Za'qul)
+MD24   point    enemy  -    -       -      Siphoning Ritual (Zon'ozz): channel, drains enemies in the area
+MD28   point    enemy  -    -       -      Voodoo Hex (Rokhan): InspireMadness class, enemies
+MD29   point    enemy  -    -       -      Mass Banish (Za'qul): banishes organic units in the area
+TP10   instant  enemy  -    450     -      Stormguard (Falstad): gryphons orbit him and hit enemies
+TP49   point    enemy  1    150     -      Muradin's Stormbolt: projectile towards the point
+YBBS   unit     enemy  -    -       -      Blink Strike (Deathsworn): ShadowAssault on an enemy
+ZB02   instant  enemy  -    400     -      Reap (Arthas): kills nearby enemy units for Strength
+ZB06   point    enemy  -    -       -      Mass Death Coil (Arthas / Teron): death coil in the area
+ZBCM   unit     enemy  -    -       mana   Chain Mana Burn (Rommath)
+ZBIB   skip     -      -    -       -      Ice Block (Lich): freezes EVERY unit in the area, friend and foe
+ZBIM   point    enemy  -    -       -      Inspire Madness (C'Thun): enemies in the area
+ZBST   point    enemy  1    300     -      Spawn Tentacle (C'Thun): summons a tentacle at the point
+ZBUE   point    ally   -    -       -      Unstable Evolution (C'Thun): empowers own non-hero units in the area

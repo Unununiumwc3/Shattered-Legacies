@@ -19,6 +19,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       // (KezanEnterpriseObjects); Katherine comes along by the fallback.
       AiApi.AddProductionData(SlAiData.Trains, SlAiData.AltarHeroes, SlAiData.Requires, SlAiData.HeroSkills);
       AiApi.AddBuildData(SlBuildData.Menus, SlBuildData.Products, SlBuildData.Upgrades, SlBuildData.Required, SlBuildData.HalfWidth);
+      AiApi.AddSpellData(SlAiSpells.Id, SlAiSpells.Kind, SlAiSpells.Who, SlAiSpells.Min, SlAiSpells.Radius, SlAiSpells.Flags,
+        SlAiSpells.Order, SlAiSpells.CarrierType, SlAiSpells.CarrierRow); // 0.70.0: fork Channel spells (gen_spells.py)
       foreach (var def in TimelineCatalog.All)
       {
         if (def.Hq.Length > 0)

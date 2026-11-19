@@ -8,7 +8,24 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.68.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.70.0** (bot spellcasting). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.70.0 playtest: bot spellcasting (`AiSpells`)
+
+Play with `-spells ab` (bit 5: half the bots cast, half do not), `-autodump` on. Then, from the dumps:
+- **Movement first** (the maintainer's concern): compare the TRACK section's turnarounds per bot between the two
+  halves (`back_forth.py`; causes `cast` and `re-chain` are new). The halves must not differ outside big fights.
+  If they do: `-spells off` restores 0.68 behaviour exactly.
+- SPELLS section: casts per bot and per spell, "big fight yes/no", refused orders, "switched off" (a spell WC3
+  refused 3x in a row is off for 120 s and pinned once in PINNED -- a pinned spell needs a look at its order string).
+- Watch a big fight with a caster hero: Kael'thas (Flame Strike, Mass Banish, Siphoning Ritual), Arthas (Apocalypse,
+  Reap, Mass Death Coil), Magatha (Spirit Mend, Grimtotem Ward). Point spells should land on enemy clusters, heals on
+  hurt allies, nothing on a marching army. Report a hero that stands after a cast (re-chain) or a channel cut short.
+- LOAD: the scheduler line `task spells` (max / sum) next to `combat`; area scans vs reused.
+- Not covered on purpose: 13 Channel spells with no code behind them (they do nothing for humans either: Lunar
+  Sanctuary, Sunfire Barrage, Tree of Renewal, Light of the Goddess, ... -- `spell_rules.txt`), sacrifice and travel
+  spells, Ice Block (freezes friend and foe). Spells on stock abilities stay with WC3's own AI.
+- Next (separate patch): autocast on for bot units whose autocast starts off (below, "Autocast").
 
 ## 0.68.0 playtest and follow-up
 
@@ -18,7 +35,6 @@ Working patch: **0.68.0**. See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the 
 
 - Follow a dead hero and a newly unlocked hero through the altar section of consecutive dumps. Distinguish a missing altar, queued order, native finish, cancellation, expiry and food pressure.
 - Compare direction changes after neutral captures with `back_forth.py` and the new expansion node/hop/cost lines. Evaluate kill quests separately before tuning the graph.
-- Custom ability work for units, heroes and buildings: catalog map-specific active spells and their native orders. Test valid ally/enemy targets already in range, hostile clusters for point AoE, combat-only no-target casts and enabling supported autocasts. Stagger evaluations across a 5–10 second rotation and measure scheduler peaks before widening coverage.
 
 ## Current priorities (0.66.0)
 

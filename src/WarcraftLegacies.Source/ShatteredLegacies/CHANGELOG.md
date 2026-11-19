@@ -4,6 +4,11 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.70.0 — bot spellcasting (playtest candidate)
+
+Bots cast WL's Channel-based hero and unit spells in big fights (`../Ai/CHANGELOG.md`). `Bot/SlBotSetup` hands the
+fork's spell table (`Bot/SlAiSpells.g.cs`, empty today: every cast spell belongs to a WL faction) to the bot.
+
 ## 0.68.0 — hall and gate upgrades (playtest candidate)
 
 The bot hall and Demon Gate changes are in `../Ai/CHANGELOG.md`. The project README includes a Windows asset recovery procedure and hashes for the Elate model and texture.

@@ -101,6 +101,7 @@ public static class AiDebug
     RegisterLoose("-commit", AiRoutes.OnCommitCommand, Level.Control);    // 0.48.4: -commit on|off|ab|ab2
     RegisterLoose("-wake", AiWake.OnCommand, Level.Control);              // 0.48.5: -wake on|off (sleeping creeps)
     RegisterLoose("-ferry", AiFerries.OnCommand, Level.Control);          // 0.50: -ferry on|off (bot ferries)
+    RegisterLoose("-spells", AiSpells.OnCommand, Level.Control);          // 0.70.0: -spells on|off|ab|ab2
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
     Register("-gold50", () => SetGold(50), Level.Control);
@@ -950,6 +951,8 @@ public static class AiDebug
       AiLoad.Lines(o);      // 0.46: order latency, unit budget, guard positions A/B
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
+
+    Section(o, "spells", () => AiSpells.Lines(o)); // 0.70.0: bot spellcasting (casts, refusals, re-chains)
 
     o.Add("## BOTS");
     for (var b = 0; b < SimpleBot.BotCount; b++)

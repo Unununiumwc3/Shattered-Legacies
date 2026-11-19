@@ -300,6 +300,7 @@ namespace WarcraftLegacies.Source.Ai
 
     // 0.44.3: units standing idle at a waygate exit lost their queued chain in the teleport -- give them the rest of
     // the way NOW (every service), not after the 20-s heartbeat (0.44.1 long game: 1048 found at exits).
+    // 0.70.0: the same for units idle after a bot spell (AiSpells: the cast order replaced their chain).
     internal static void ExitPass(int pid)
     {
       if (pid < 0 || pid >= 24 || !_hasFinal[AiTheatres.S(pid)])
@@ -311,26 +312,50 @@ namespace WarcraftLegacies.Source.Ai
       for (var i = 0; i < Units.Count; i++)
       {
         var u = Units[i];
-        if (GetUnitCurrentOrder(u) != 0 || !AiRoutes.NearWaygateExit(GetUnitX(u), GetUnitY(u)))
+        if (GetUnitCurrentOrder(u) != 0)
         {
           continue;
         }
 
+        var exit = AiRoutes.NearWaygateExit(GetUnitX(u), GetUnitY(u));
+        if (!exit && !AiSpells.Rechain(u))
+        {
+          continue;
+        }
+
+        var kind = exit ? AiTrack.KExit : AiTrack.KRechain;
         if (grp != null && grp.Contains(u) || _whole[AiTheatres.S(pid)])
         {
-          Issue(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)], AiTrack.KExit);
+          if (!exit && IsNear(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)], AtTarget))
+          {
+            continue; // already at its point -- nothing to re-chain
+          }
+
+          Issue(u, _fx[AiTheatres.S(pid)], _fy[AiTheatres.S(pid)], kind);
         }
         else if (_hasStage[AiTheatres.S(pid)])
         {
-          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AiTrack.KExit);
+          if (!exit && IsNear(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], AtStage))
+          {
+            continue;
+          }
+
+          Issue(u, _stageX[AiTheatres.S(pid)], _stageY[AiTheatres.S(pid)], kind);
         }
         else
         {
           continue;
         }
 
-        AiRoutes.ExitIdle++;
-        OrdExit++;
+        if (exit)
+        {
+          AiRoutes.ExitIdle++;
+          OrdExit++;
+        }
+        else
+        {
+          AiSpells.Rechained++;
+        }
       }
     }
 
@@ -672,6 +697,12 @@ namespace WarcraftLegacies.Source.Ai
     // 0.48.3: kind = why the order was given (AiTrack.K...; measurement only)
     internal static void Issue(unit u, float x, float y, int kind)
     {
+      if (AiSpells.Channelling(u))
+      {
+        AiSpells.Protected++; // 0.70.0: casting / channelling a bot spell -- re-chained once it is idle (ExitPass)
+        return;
+      }
+
       AiTrack.Ordered(u, x, y, kind);
       if (AiRoutes.Chain(GetOwningPlayer(u), u, x, y))
       {

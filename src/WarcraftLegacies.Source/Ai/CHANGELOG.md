@@ -5,6 +5,33 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.70.0 — bot spellcasting in big fights (playtest candidate)
+
+- **Bots cast WL's Channel-based spells** (`AiSpells`). WC3's computer AI already casts spells built on stock
+  abilities (by their base); Channel (`ANcl`) is a dummy it never casts, so heroes like Kael'thas, Arthas, Uther or
+  Magatha never used their custom spells. The bot now orders them with the order string from the ability data.
+- **Only in a big fight**: 5+ enemy and 5+ friendly worth within ~2000 of the caster (heroes count 3; structures
+  do not count). One unit search per 1000-cell, kept 3 s and shared by every caster there -- a marching army is
+  never touched.
+- **No chasing**: unit-target spells only on targets already inside cast range (enemy: heroes first, then the
+  weakest; ally heals only below 70 % life); point spells on the spot inside cast range that hits the most enemies
+  (or allies) in the area, at least 3 worth; no-target spells when enough enemies (or allies) stand around the caster.
+  Skill learned, cooldown ready, enough mana; never on a unit that is casting something else, moving, on a mission,
+  at sea or doing the ritual.
+- **Movement hooks** (`AiArmy`): a unit channelling a bot spell gets no army order (`Issue` skips it); a unit whose
+  chain was replaced by a cast is re-chained by `ExitPass` once idle, instead of waiting for the 20-s heartbeat.
+  `-spells off` = exactly the 0.68 movement.
+- **Data**: `tools/shattered-legacies/ai/gen_spells.py` writes `AiSpells.g.cs` from the map data and the reviewed
+  `spell_rules.txt` (one row per carried Channel ability: kind, enemy / ally / self, area). 35 of 69 carried Channel
+  spells are cast; skipped: travel, quest, sacrifice (Death Pact, Dark Pact, Dark Ritual, Rend Soul), Ice Block
+  (freezes friend and foe) and 13 spells with no code behind them. The generator also refuses a spell whose order
+  string is shared with another ability of the same unit, changes with the level, or does not match its target type.
+  Fork-only spells go to `ShatteredLegacies/Bot/SlAiSpells.g.cs` (none today) through `AiApi.AddSpellData`.
+- **Measuring**: dump section SPELLS (casts per bot / spell, big-fight checks, refusals, re-chains, channel
+  protection; A/B line); a spell refused 3x in a row is off for 120 s and pinned once. New turnaround causes in
+  TRACK: `cast`, `re-chain`. `-spells on|off|ab|ab2` (slot bit 5), default on. Scheduler task `spells` (every
+  0.25 s, at most 3 checks; heroes every 2 s, other casters every 5 s).
+
 ## 0.68.0 — hall and gate upgrades (playtest candidate)
 
 Generate missing hall upgrade links from faction tier declarations and validate both links in each family. Preplaced Demon Gates now use their native menus, prerequisites and gold costs on ordinary production visits.

@@ -91,6 +91,14 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // 0.70.0: Channel spells of a fork's units for the bot's spellcasting (AiSpells); same columns as AiSpellData
+    // (tools/shattered-legacies/ai/gen_spells.py writes both). A row for an ability already in the table replaces it.
+    public static void AddSpellData(int[] id, int[] kind, int[] who, int[] min, int[] radius, int[] flags,
+      string[] order, int[] carrierType, int[] carrierRow)
+    {
+      AiSpellBook.Add(id, kind, who, min, radius, flags, order, carrierType, carrierRow);
+    }
+
     public static void RegisterHeadquarters(string faction, int[] types)
     {
       AiBuildSites.Headquarters[faction] = types;

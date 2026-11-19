@@ -42,7 +42,7 @@ Historical notes below reflect 0.64.0 (latest previously verified release), not 
   `using_check.py`, `scope_check.py`, a tree-sitter C# syntax pass, `tools/shattered-legacies/content/check_json.py`
   after map data changes, `git apply --check` on a clean copy of the base.
 - **Generators** (never edit their output): `gen_hourglass.py` (Hourglass), `import_24p.py` (24p objects, object
-  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `kezan_objects.py` (Oil Refining), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `content_index.py` (`Content/`).
+  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `kezan_objects.py` (Oil Refining), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `gen_spells.py` (bot spell table, 0.70; rules in `spell_rules.txt`), `content_index.py` (`Content/`).
 
 ## The project in one paragraph
 

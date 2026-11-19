@@ -46,7 +46,9 @@ namespace WarcraftLegacies.Source.Ai
     internal const int KPortal = 9;
     internal const int KHero = 10;
     internal const int KEngine = 11;
-    private const int Kinds = 12;
+    internal const int KCast = 12;    // 0.70.0: the bot cast a spell (AiSpells) -- replaces the unit's chain
+    internal const int KRechain = 13; // 0.70.0: idle after a cast, chained again (AiArmy.ExitPass)
+    private const int Kinds = 14;
     private const float MinStep = 300f;
     private const float Jump = 4500f;
     private const float TurnWindow = 25f;
@@ -60,7 +62,7 @@ namespace WarcraftLegacies.Source.Ai
     private static string[] _kn = new string[]
     {
       "change", "advance", "rest", "idle-away", "refill", "exit", "defend", "whole", "def-rest", "portal", "hero",
-      "engine",
+      "engine", "cast", "re-chain",
     };
 
     private static Dictionary<unit, AiTrackUnit> _u = new();

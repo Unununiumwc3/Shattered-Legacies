@@ -22,7 +22,15 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.68.0)
+## Current development build (0.70.0)
+
+0.70.0 adds bot spellcasting (`AiSpells.cs`, data `AiSpells.g.cs` from `tools/shattered-legacies/ai/gen_spells.py` +
+the reviewed `spell_rules.txt`): WL's Channel-based spells, cast only in big fights, targets inside cast range. Its
+two movement hooks are in `AiArmy` (`Issue` skips a channelling caster, `ExitPass` re-chains after a cast);
+`-spells off` restores 0.68 movement. A new Channel ability on a unit needs a row in `spell_rules.txt` (the
+generator lists unreviewed ones); re-run `gen_spells.py` after map data changes. Playtest plan: `TODO.md` 0.70.0.
+
+## Previous development build (0.68.0)
 
 The 0.67.0 movement and altar results are in `MEASUREMENTS.md`. `check_build_data.py` now checks both edges of all 21 declared hall chains and the Demon Gate branches. Native altar lifecycle counters and expansion route choices are in the dump. Read `BUILDING_DESIGN.md` and the current priorities in `TODO.md` for worker menus, first-copy coverage, duplicate producers, hall upgrades and the native altar queue. Regenerate construction tables with `tools/shattered-legacies/ai/gen_build_data.py` and verify them with `check_build_data.py`. Include the stock 1.36 UnitLoader and enum, the main map UnitData and WarcraftLegacies.Shared in the sparse checkout. A real map build and combined playtest are still required.
 
@@ -92,6 +100,8 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
 | `AiScheduler.cs` | AiScheduler, AiTask | 0.40: the one timer for all periodic bot work (0.25-s slots, period + fixed phase per task), load counters and budget |
 | `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |
 | `AiHeroSkills.cs` | AiHeroSkills | bot heroes learn skills (level-up event + wave tick) |
+| `AiSpells.cs` | AiSpellBook, AiSpellFight, AiSpells | 0.70: bots cast WL's Channel spells in big fights (spell table + fork rows, big-fight gate with a per-cell unit cache, casting, channel protection / re-chain for AiArmy, `-spells`, dump SPELLS) |
+| `AiSpells.g.cs` | AiSpellData | GENERATED (`tools/shattered-legacies/ai/gen_spells.py` from map data + `spell_rules.txt`): one row per cast Channel spell, carrier unit types |
 | `AiStats.cs` | AiStats | what bots train (train-finish event) -> dump section TRAINED (0.38) |
 | `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |
 | `AiConfig.cs` | AiConfig, AiGraph, AiWorld, ... | data: CP graph edges, portals, quest rules, kill targets, coordinates |
@@ -109,6 +119,7 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
 | `tools/shattered-legacies/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
 | `tools/shattered-legacies/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/shattered-legacies/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
+| `tools/shattered-legacies/ai/gen_spells.py` + `spell_rules.txt` | | 0.70: writes `AiSpells.g.cs` (and the fork's `SlAiSpells.g.cs`) from the Channel abilities units carry and the reviewed rules; `--check` reports unreviewed / clashing spells |
 | `tools/shattered-legacies/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) from WL's ObjectInfo + map data (and the fork's production data in the fork's folder); run after every WL update |
 | `tools/shattered-legacies/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
 | `tools/shattered-legacies/ai/map_query.py` | | offline map checks from `mapdata/` (walkable, nearest walkable, preplaced units, rects) |
@@ -273,6 +284,9 @@ What cost the most games to find out. Details and numbers: `README.md` "Already 
   budget per CP (now 30 + 5), caster cap. The latency probe samples orders to IDLE units -- its numbers change meaning
   when the idle population changes (0.48.4), compare with care. Stopwatch (turn vs real time) is the honest measure:
   0.48.5 multiplayer ~5 s behind at 20 min.
+- **Spells (0.70)**: WC3's computer AI casts spells by their BASE ability, so only Channel-based (`ANcl`) spells
+  need the bot; `AiSpells` orders them (order string = `Ncl6`). Never order a unit that is casting something else
+  (the engine's own Blizzard would be cut); a cast drops the queued chain (re-chain, `AiArmy.ExitPass`).
 - **Spells by order**: a bot could not cast WL's Legion ritual A00J (a Death and Decay variant inside the Book's item
   spellbook) -- "volcano" (its object-data order string) and "deathanddecay" were both refused. The bot performs the
   ritual itself and completes WL's quest (`AiRitual`, 0.51). Changed order strings work only for Channel-based abilities.

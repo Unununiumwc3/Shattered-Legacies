@@ -21,6 +21,7 @@ namespace WarcraftLegacies.Source.Ai
     internal const int BitSpread = 2;
     internal const int BitRegroup = 3;
     internal const int BitCommit = 4; // 0.48.4
+    internal const int BitSpells = 5; // 0.70.0: bot spellcasting (AiSpells)
 
     internal static int Half(int pid, int bit)
     {

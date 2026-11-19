@@ -100,6 +100,9 @@ scheduler with 0.25-s slots (`AiScheduler`). Per service, in this order:
    (hero visits, stranded heroes, Ragnaros) travel the same way (`AiRoutes.MoveVia`).
 8. **Production** (separate 1-s task): every building trains from its own list, only below the unit budget
    (`AiBudget`, 30 + 5 food per held CP).
+9. **Spells** (separate task, 0.70, `AiSpells`): in a big fight only, casters cast WL's Channel spells on targets
+   already inside cast range. A cast replaces the unit's chain; `AiArmy.ExitPass` re-chains it once idle, and a
+   channelling caster gets no army order. Spells on stock abilities are cast by WC3's own AI as before.
 
 **Portals and passages -- how they open** (each open waygate of a neutral owner is a one-way graph edge, read every
 30 s; rocks every 15 s):
@@ -204,6 +207,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default off (0.46.3: no difference in any game phase) |
 | `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
 | `-ferry on\|off` | control | Bot ferries: board, sail, land (default, 0.50) / instant crossing |
+| `-spells on\|off\|ab\|ab2` | control | Bot spellcasting (0.70): WL's Channel spells in big fights only (5+ enemy and 5+ friendly within 2000, heroes 3), targets inside cast range; default on, slot bit 5. `off` = 0.68 movement exactly |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default ON (0.48.4: with them, units out of orders walk back to where they were trained) |
 | `-commit on\|off\|ab\|ab2` | control | Commit on re-plan: keep the valid target when the new best one is farther from the group on foot (slot bit 4); default on (0.48.4) |
@@ -226,7 +230,7 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 the multiplayer lag indicator; since 0.40 also the scheduler, orders by distance and one line per periodic task; since
 0.41-0.44 the army orders line (change / idle-away / rest / refill / exit, chains, stalled %), switches per bot, bot
 income paid), **ROUTES** (0.42+: per bot target / score / front / next node; waygates, creep camps, gather counters),
-**BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
+**SPELLS** (0.70: casts per bot / spell, big-fight checks, refusals, re-chains), **BOTS** (target, reason, frontiers, army by landmass, heroes), **WAVES**,
 **PERMADEAD**, **EVENT LOG** (last 300 changes), **NODES**, **EDGES**.
 
 ## Measuring a game
