@@ -22,7 +22,10 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.70.0)
+## Current development build (0.70.1)
+
+0.70.1 fixes a map-init crash (since 0.69.0) from a `Func<unit>` escort callback -- see "Delegate types" in the
+hard-learned list and `tools/shattered-legacies/ai/delegate_check.py`.
 
 0.70.0 adds bot spellcasting (`AiSpells.cs`, data `AiSpells.g.cs` from `tools/shattered-legacies/ai/gen_spells.py` +
 the reviewed `spell_rules.txt`): WL's Channel-based spells, cast only in big fights, targets inside cast range. Its
@@ -119,6 +122,7 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
 | `tools/shattered-legacies/ai/back_forth.py` | | 0.48.3: stitches one game's dumps (event log + trail): target turn-backs by cause, defence ping-pong, followed units; `--unit U3`, `--bot 11` |
 | `tools/shattered-legacies/ai/lua_check.py` | | compile-check a built `war3map.lua` with Lua 5.3 |
 | `tools/shattered-legacies/ai/scope_check.py` | | C# scope errors tree-sitter misses (local hides a type, CS0841; nested re-declaration, CS0136) |
+| `tools/shattered-legacies/ai/delegate_check.py` | | 0.70.1: run on a built `war3map.lua` -- finds CSharp.lua delegate-type prefix collisions (the 0.69.0 init crash) |
 | `tools/shattered-legacies/ai/gen_spells.py` + `spell_rules.txt` | | 0.70: writes `AiSpells.g.cs` (and the fork's `SlAiSpells.g.cs`) from the Channel abilities units carry and the reviewed rules; `--check` reports unreviewed / clashing spells |
 | `tools/shattered-legacies/ai/gen_ai_data.py` | | writes `AiData.g.cs` (WL factions) from WL's ObjectInfo + map data (and the fork's production data in the fork's folder); run after every WL update |
 | `tools/shattered-legacies/ai/unit_scan.py` | | per faction: every unit/hero, can the AI train it, why not, which quest unlocks it |
@@ -284,6 +288,12 @@ What cost the most games to find out. Details and numbers: `README.md` "Already 
   budget per CP (now 30 + 5), caster cap. The latency probe samples orders to IDLE units -- its numbers change meaning
   when the idle population changes (0.48.4), compare with care. Stopwatch (turn vs real time) is the honest measure:
   0.48.5 multiplayer ~5 s behind at 20 min.
+- **Delegate types in fields / signatures (0.70.1)**: CSharp.lua caches delegate types (reflection metadata) in a
+  tree keyed by their type arguments. If one delegate's arguments are a prefix of another's -- `Func<unit>` (unit)
+  vs `Action<unit>` (unit, Void) -- the shorter one can come back nameless and map init dies with "invalid value
+  (nil) at index N in table for 'concat'" (0.69.0: escort `Func<unit>`; no control points, no scoreboard). Give a
+  new callback a distinctive signature (a parameter) and run `tools/shattered-legacies/ai/delegate_check.py` on
+  the built `artifacts/war3map.lua`.
 - **Spells (0.70)**: WC3's computer AI casts spells by their BASE ability, so only Channel-based (`ANcl`) spells
   need the bot; `AiSpells` orders them (order string = `Ncl6`). Never order a unit that is casting something else
   (the engine's own Blizzard would be cut); a cast drops the queued chain (re-chain, `AiArmy.ExitPass`).

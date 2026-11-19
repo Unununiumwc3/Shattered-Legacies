@@ -148,7 +148,7 @@ public sealed class LongMarchCaravan
     _thunderBluffTarget = thunderBluff.Center;
     _campExitPoint = new Point(-10499.6f, -11050.0f);
 
-    AiApi.RegisterEscort(taurenTribes.Player, () =>
+    AiApi.RegisterEscort(taurenTribes.Player, _ =>
       _concluded || taurenTribes.Player.GetPlayerData().Faction != taurenTribes
         ? null : _kodos.FirstOrDefault(kodo => kodo.Alive));
     _stage = Stage.CampExit;

@@ -8,7 +8,12 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.70.0** (bot spellcasting). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.70.1** (bot spellcasting + init crash fix). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.70.1: before the playtest
+
+- After each build: `python3 tools/shattered-legacies/ai/delegate_check.py artifacts/war3map.lua` (0 new collisions).
+- Tauren Long March: the bot still escorts the caravan (`AiApi.RegisterEscort`, now `Func<player, unit>`).
 
 ## 0.70.0 playtest: bot spellcasting (`AiSpells`)
 

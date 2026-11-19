@@ -17,9 +17,14 @@ namespace WarcraftLegacies.Source.Ai
   {
     private static readonly HashSet<int> _oneShotDone = new();
 
-    private static readonly Dictionary<int, System.Func<unit>> Escorts = new();
+    // 0.70.1: Func<player, unit>, NOT Func<unit>. CSharp.lua caches delegate types by their type arguments in one
+    // tree: Func<unit> -> (unit), and Action<unit> / Func<unit, bool> -> (unit, ...) share the (unit) node, so a
+    // Func<unit> asked for after those got the bare node -- no type name -- and building this class's metadata threw
+    // "invalid value (nil) at index 7 in table for 'concat'" at map init (0.69.0/0.70.0: AiSetup aborted, no control
+    // points, no scoreboard). tools/shattered-legacies/ai/delegate_check.py finds such pairs in a built war3map.lua.
+    private static readonly Dictionary<int, System.Func<player, unit>> Escorts = new();
 
-    internal static void RegisterEscort(player owner, System.Func<unit> target)
+    internal static void RegisterEscort(player owner, System.Func<player, unit> target)
     {
       Escorts[GetPlayerId(owner)] = target;
     }
@@ -31,7 +36,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         return null;
       }
-      var escort = target();
+      var escort = target(owner);
       if (escort == null || !escort.Alive)
       {
         Escorts.Remove(pid);

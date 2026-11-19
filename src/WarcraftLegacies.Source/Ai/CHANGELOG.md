@@ -5,6 +5,21 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.70.1 — fix: map init crashed (no control points, no scoreboard, nothing buildable)
+
+- **Cause** (since 0.69.0): `AiMissions`' caravan escort was a `Func<unit>`. CSharp.lua caches delegate types for the
+  reflection metadata in one tree keyed by their type arguments; `Action<unit>` / `Func<unit, bool>` (elsewhere in
+  WL) had already made `(unit)` a bare node of that tree, so `Func<unit>` got that node -- no type name -- and the
+  first access to `AiMissions` (registering the "sulfuron barracks" wave task) threw "invalid value (nil) at index 7
+  in table for 'concat'". `AiSetup.Setup` aborted, and with it everything GameSetup runs after the bot.
+  Reproduced and verified with the map's own CSharp.lua runtime (lua 5.3, the old signature fails in both build
+  orders, the new one passes in all).
+- **Fix**: the escort is a `Func<player, unit>` (owner in, unit to escort out): `AiApi.RegisterEscort`,
+  `AiMissions`, and the Tauren Long March caravan's lambda (`_ =>`).
+- **New check**: `tools/shattered-legacies/ai/delegate_check.py <war3map.lua>` lists delegate signatures that are a
+  prefix of another (the crash pattern) and fails on new ones. Two older WL pairs (`Func<string>`/`Action<string>`,
+  `Func<int>`/`Action<int>`) are listed as known: they load in a safe order today.
+
 ## 0.70.0 — bot spellcasting in big fights (playtest candidate)
 
 - **Bots cast WL's Channel-based spells** (`AiSpells`). WC3's computer AI already casts spells built on stock
