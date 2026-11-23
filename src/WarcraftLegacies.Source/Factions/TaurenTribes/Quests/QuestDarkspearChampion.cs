@@ -11,7 +11,10 @@ public sealed class QuestDarkspearChampion : QuestData
 {
   private const int FallbackTurn = 8;
 
-  public QuestDarkspearChampion(QuestData countdownToExtinction, QuestData orgrimmarQuest, Faction orcishHorde) : base(
+  // 0.70.2: no "Countdown to Extinction" gate any more -- Shattered Legacies 0.69.0 gave the Orcish Horde back its
+  // Durotar start, so that quest no longer exists and asking the Horde for it threw at map init (Tauren Tribes'
+  // setup, P5: every later faction missing from the scoreboard). Orgrimmar (or the fallback turn) is the gate.
+  public QuestDarkspearChampion(QuestData orgrimmarQuest, Faction orcishHorde) : base(
     "The Darkspear Champion",
     "Rokhan, champion of the Darkspear trolls, has promised to stand with the Tauren once the Horde has a foothold in Kalimdor.",
     @"ReplaceableTextures\CommandButtons\BTNshadowhunterhd.blp")
@@ -21,12 +24,6 @@ public sealed class QuestDarkspearChampion : QuestData
       new ObjectiveTurn(FallbackTurn),
       $"The Orcish Horde completes {orgrimmarQuest.Title}, or turn {FallbackTurn} begins"));
     AddObjective(new ObjectiveSelfExists());
-    AddObjective(new ObjectiveFactionQuestResolved(countdownToExtinction, orcishHorde)
-    {
-      ShowsInPopups = false,
-      ShowsInQuestLog = false,
-      Progress = QuestProgress.Undiscovered
-    });
     ResearchId = UPGRADE_RT17_QUEST_COMPLETED_THE_DARKSPEAR_CHAMPION_TAUREN_TRIBES;
   }
 

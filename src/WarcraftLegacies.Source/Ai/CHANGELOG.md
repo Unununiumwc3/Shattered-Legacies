@@ -5,6 +5,11 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.70.2 — map version only
+
+Fork fix: Tauren Tribes' Darkspear Champion asked for a removed Orcish Horde quest (see
+`../ShatteredLegacies/CHANGELOG.md`). No bot change.
+
 ## 0.70.1 — fix: map init crashed (no control points, no scoreboard, nothing buildable)
 
 - **Cause** (since 0.69.0): `AiMissions`' caravan escort was a `Func<unit>`. CSharp.lua caches delegate types for the

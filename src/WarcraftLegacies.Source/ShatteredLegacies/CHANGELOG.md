@@ -4,6 +4,15 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.70.2 — fix: factions after Tauren Tribes missing (map init crash since 0.69.0)
+
+0.69.0 gave the Orcish Horde back its Durotar start and removed "Countdown to Extinction", but Tauren Tribes'
+"The Darkspear Champion" (`TaurenTribesFaction.RegisterOrcishHordeQuests`) still asked the Horde for that quest:
+"Orcish Horde does not have a QuestData of type ...QuestCountdownToExtinction" while P5 registered, so player setup
+stopped there -- every faction after it (P7 and up) was never created and missing from the scoreboard. The quest
+was only a hidden gate ("the island phase is over"); it is gone, Rokhan still unlocks when the Horde completes
+Orgrimmar or at turn 8. Checked: every other cross-faction `GetQuestByType` asks for a quest that faction creates.
+
 ## 0.70.1 — fix: map init crash since 0.69.0
 
 The caravan escort hook (`AiApi.RegisterEscort`, used by the Tauren Long March) crashed CSharp.lua's type metadata

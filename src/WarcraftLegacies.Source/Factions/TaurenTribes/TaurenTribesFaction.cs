@@ -162,7 +162,7 @@ public sealed class TaurenTribesFaction : Faction
 
   private void RegisterOrcishHordeQuests(OrcishHordeFaction orcishHorde)
   {
-    AddQuest(new QuestDarkspearChampion(orcishHorde.GetQuestByType<QuestCountdownToExtinction>(), orcishHorde.GetQuestByType<QuestOrgrimmar>(), orcishHorde));
+    AddQuest(new QuestDarkspearChampion(orcishHorde.GetQuestByType<QuestOrgrimmar>(), orcishHorde));
   }
 
   private void RegisterOrcishHordeResearches(OrcishHordeFaction orcishHorde)
