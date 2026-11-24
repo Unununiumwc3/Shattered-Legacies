@@ -8,7 +8,14 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.70.1** (bot spellcasting + init crash fix). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.70.3** (bot spellcasting, playtest fixes). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.70.3 playtest
+
+- SPELLS: Muradin's Stormbolt / Solar Judgement now cast ("point spells cast on the unit instead" > 0, no pins).
+- Tauren Long March: no fight on the hill at the camp exit; the army walks with the kodos (LOAD: "escort orders
+  aimed ahead"); note when the caravan reaches Thunder Bluff (0.70.2: 9:09). Then decide on the remaining
+  WL 5.0.4 creep differences along the route (`ShatteredLegacies/CHANGELOG.md` 0.70.3).
 
 ## 0.70.1: before the playtest
 

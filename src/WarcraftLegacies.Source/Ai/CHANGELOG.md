@@ -5,6 +5,20 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.70.3 — spells refused as point orders, Tauren escort
+
+From the 0.70.2 playtest (30 min, 16 bots): **spells work** -- 186 casts of 12 spells (Blink Strike 68, Mass Frost
+Armor 38, Sunstrike 24, Mass Ensnare 19, Chain Mana Burn 17, Mass Banish 10, ...). Movement unharmed: TRACK counts
+2 turnarounds with cause `cast` and 3 `re-chain` of ~9,500.
+- **Point orders refused**: Muradin's Stormbolt and Solar Judgement were refused every time (0 casts / 6 refused,
+  switched off and pinned). Both are point-target Channel spells with a stock UNIT-target order string
+  (`thunderbolt`, `creepthunderbolt`); every point spell with a stock point order (`flamestrike`, `deathanddecay`,
+  ...) works. A refused point order is now retried as the same cast on the unit at the chosen point (self spells:
+  on the caster). Also covers Wild Throw, Apocalypse and Ancestral Legion (same order strings). Dump SPELLS: "point
+  spells cast on the unit instead".
+- **Escort aims ahead**: a moving escort (the Tauren caravan's kodo, 170/s) is aimed 500 ahead along its facing
+  instead of where it stands -- the army trailed behind it between services. Dump LOAD: "escort orders aimed ahead".
+
 ## 0.70.2 — map version only
 
 Fork fix: Tauren Tribes' Darkspear Champion asked for a removed Orcish Horde quest (see

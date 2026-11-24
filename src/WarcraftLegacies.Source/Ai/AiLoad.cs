@@ -738,7 +738,8 @@ namespace WarcraftLegacies.Source.Ai
       AiProbe.Lines(o);
       o.Add(AiBudget.Line());
       o.Add(AiGuard.Line());
-      o.Add("attack groups: units left out (no way to the target) " + I2S(AiArmy.Unreachable));
+      o.Add("attack groups: units left out (no way to the target) " + I2S(AiArmy.Unreachable)
+            + "; escort orders aimed ahead of a moving escort (0.70.3) " + I2S(SimpleBot.EscortLeads));
       o.Add(AiCaster.Line());
       o.Add(AiRegroup.Line());
       AiObserve.Lines(o);

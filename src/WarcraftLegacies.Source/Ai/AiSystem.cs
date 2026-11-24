@@ -360,6 +360,9 @@ namespace WarcraftLegacies.Source.Ai
     private const float ProductionEvery = 15.0f;
     private const float ProdTick = 1.0f;           // v12: production timer interval; one bot per tick
     private const float HeartbeatEvery = 20.0f;    // v12: re-issue attack-move at most this often per bot
+    private const float EscortLead = 500f;         // 0.70.3: aim this far ahead of a moving escort (caravan)
+    private const int OrderMove = 851986;
+    internal static int EscortLeads;               // 0.70.3: escort orders aimed ahead of a moving escort
 
     // 0.39 refactor, lever 1 (engine load): with an UNCHANGED target, the heartbeat only orders IDLE units (new units
     // after their rally point, units that finished a fight). A new target still orders the whole army.
@@ -1303,7 +1306,19 @@ namespace WarcraftLegacies.Source.Ai
           state = "escort";
           NoteTarget(p, pid, escort, "escort");
           TrackStuck(p, pid, null);
-          IssueAttackToPoint(p, pid, GetUnitX(escort), GetUnitY(escort), true, GetUnitX(escort), GetUnitY(escort));
+          // 0.70.3: a moving escort is aimed EscortLead ahead (its facing): a bot is serviced every few seconds and
+          // the Tauren caravan walks 170/s, so aiming at where the kodo stands left the army trailing behind it.
+          var ex = GetUnitX(escort);
+          var ey = GetUnitY(escort);
+          if (GetUnitCurrentOrder(escort) == OrderMove)
+          {
+            var face = GetUnitFacing(escort) * 0.0174533f;
+            ex += Cos(face) * EscortLead;
+            ey += Sin(face) * EscortLead;
+            EscortLeads++;
+          }
+
+          IssueAttackToPoint(p, pid, ex, ey, true, ex, ey);
         }
         else if (defend != null)
         {
@@ -2892,7 +2907,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.70.2";
+    public const string Build = "0.70.3";
 
     public static void Setup()
     {

@@ -4,6 +4,17 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.70.3 — Long March: hill archers at the camp exit removed
+
+The ported Long March (WL 5.0.4) starts at a camp whose exit, in the fork's 4.8.2 creep layout, is overlooked by
+three centaur archers on a hill (Neutral Hostile `ncer` -11057,-10743, `ncea` -11204,-10694 and -11318,-10940).
+WL 5.0.4 removed them when it added the march; the fork kept them, so the Tauren started by fighting ranged creeps
+they could hardly reach and the caravan took ~7.5 minutes (0.70.2 playtest: escort 1:26 -> 9:09). Removed like in
+WL 5.0.4 (their two map cells: `mapdata/WarcraftLegacies/Units/-10752_-10240.json`, `-11264_-10752.json`).
+Not changed (still differs from WL 5.0.4, decide after the next playtest): the Thousand Needles camp has two more
+centaurs (`ncks`, `ncen`), and leg two passes five centaurs on the valley floor at about -13500,-9950 where WL 5.0.4
+has three on a hill at about -13400,-9000. Bot side: `../Ai/CHANGELOG.md` 0.70.3.
+
 ## 0.70.2 — fix: factions after Tauren Tribes missing (map init crash since 0.69.0)
 
 0.69.0 gave the Orcish Horde back its Durotar start and removed "Countdown to Extinction", but Tauren Tribes'

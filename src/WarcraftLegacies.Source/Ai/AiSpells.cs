@@ -277,6 +277,7 @@ namespace WarcraftLegacies.Source.Ai
     private static Dictionary<unit, float> _rechain = new();
     private static List<unit> _near = new();
     private static int _cursor;
+    private static unit _pointUnit; // PickPoint: the unit at the chosen centre (fallback target)
     private static Dictionary<int, int> _castsOf = new();   // row -> casts
     private static Dictionary<int, int> _refusedOf = new(); // row -> refused orders
     private static Dictionary<int, int> _failRun = new();   // row -> refusals in a row
@@ -292,6 +293,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static int Offs;
     internal static int Protected;
     internal static int Rechained;
+    internal static int PointAsTarget; // 0.70.3: point orders WC3 refused, cast on the unit at the point instead
 
     internal static void Setup()
     {
@@ -561,7 +563,24 @@ namespace WarcraftLegacies.Source.Ai
           }
         }
 
-        return Done(u, pid, r, IssuePointOrderById(u, order, tx, ty), tx, ty, lvl, ab);
+        var ok = IssuePointOrderById(u, order, tx, ty);
+        if (!ok)
+        {
+          // 0.70.3: WC3 refuses a POINT order whose order string belongs to a stock unit-target spell ("thunderbolt",
+          // "creepthunderbolt": Muradin's Stormbolt, Solar Judgement 0 casts / 6 refused in the 0.70.2 playtest);
+          // the same cast ordered on the unit standing at the point is the fallback.
+          var at = who == 3 ? u : _pointUnit;
+          if (at != null)
+          {
+            ok = IssueTargetOrderById(u, order, at);
+            if (ok)
+            {
+              PointAsTarget++;
+            }
+          }
+        }
+
+        return Done(u, pid, r, ok, tx, ty, lvl, ab);
       }
 
       // no target: enemies (self buffs too) or allies around the caster
@@ -632,6 +651,7 @@ namespace WarcraftLegacies.Source.Ai
       var y = GetUnitY(u);
       var best = 0;
       var tried = 0;
+      _pointUnit = null;
       for (var i = 0; i < _near.Count && tried < Candidates; i++)
       {
         var c = _near[i];
@@ -649,6 +669,7 @@ namespace WarcraftLegacies.Source.Ai
           best = w;
           tx = cx;
           ty = cy;
+          _pointUnit = c;
         }
       }
 
@@ -766,7 +787,7 @@ namespace WarcraftLegacies.Source.Ai
             + " reused " + I2S(AiSpellFight.Reused));
       o.Add("casts " + I2S(Casts) + " in " + I2S(Fights) + " fight checks; refused " + I2S(Refused) + ", switched off "
             + I2S(Offs) + "x; army orders skipped while channelling " + I2S(Protected) + "; re-chained after a cast "
-            + I2S(Rechained));
+            + I2S(Rechained) + "; point spells cast on the unit instead (0.70.3) " + I2S(PointAsTarget));
       var s = "casts per bot:";
       for (var pid = 0; pid < 24; pid++)
       {
