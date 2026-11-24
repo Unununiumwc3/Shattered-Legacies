@@ -13,8 +13,14 @@
 #   radius  area used to count targets; "-" = the ability's own area (aare), else 300
 #   flags   "-" or: mana = prefer targets that have mana; hurt = ally target only below 70 % life
 #
-# Common to all: only in a BIG FIGHT (5+ enemy and 5+ friendly units within 2000, heroes count 3), cooldown ready,
-# enough mana, the caster neither channelling, travelling nor on a mission. No chasing: targets inside cast range only.
+# Common to all (0.71.0): enemy-targeted unit / point spells in a BIG FIGHT (3+ enemy and 3+ friendly worth within
+# 2000, heroes count 3); self buffs, ally spells and no-target spells already in a skirmish (1+ enemy worth within
+# 2000 -- they check their own targets around the caster). Cooldown ready, enough mana, the caster neither
+# channelling, travelling nor on a mission. No chasing: targets inside cast range only.
+#
+# 0.71.0: item-based unit abilities (base AI..., no order string) may have a row too -- kind "instant" only; the bot
+# orders them by their ability id. Not listed = never cast. "instant self ... hurt" = only while the caster is
+# below 70 % life; "instant ally ... hurt" = counts hurt allies only.
 #
 # id   kind     who    min  radius  flags  note
 A00F   skip     -      -    -       -      Rend Soul (Kel'Thuzad): DeathPact class -- kills an allied unit
@@ -86,3 +92,22 @@ ZBIB   skip     -      -    -       -      Ice Block (Lich): freezes EVERY unit 
 ZBIM   point    enemy  -    -       -      Inspire Madness (C'Thun): enemies in the area
 ZBST   point    enemy  1    300     -      Spawn Tentacle (C'Thun): summons a tentacle at the point
 ZBUE   point    ally   -    -       -      Unstable Evolution (C'Thun): empowers own non-hero units in the area
+#
+# 0.71.0: item-based abilities (no-target; ordered by their id -- if WC3 refuses that, the dump shows "refused")
+A0H1   instant  self   -    -       hurt   Storming Brew (Thane): AIdb heal, self at level 1
+TPWC   instant  ally   2    -       hurt   Archmage's Council (Antonidas): AIdb area heal
+A12R   instant  ally   2    -       hurt   Wise Council (Kirin Tor hero): AIdb area heal
+A0UE   instant  ally   4    -       hurt   Divine Intervention: AIdb area heal, 6 min cooldown -- 4+ hurt allies
+A0PF   instant  ally   2    -       hurt   Fel Energy (fel orcs): AIra area life + mana
+A033   instant  ally   3    -       -      Wise Council (council heroes): AImr area mana
+A0OF   instant  ally   3    -       -      Wise Council: AImr area mana
+A07X   instant  enemy  3    600     -      Rally (Hapm / Hlgr): AIsa area speed buff
+A0KQ   instant  enemy  3    600     -      Call to the Hunt: AIsa area speed buff
+A03S   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0NG   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0GQ   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0OA   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
+A13B   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
+A0IY   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
+SLS8   instant  self   -    -       hurt   Nature Vitality: AIhx self heal
+A0WW   instant  enemy  3    800     -      Summon Goliathon: AIfu summon in a fight

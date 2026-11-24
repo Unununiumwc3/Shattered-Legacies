@@ -154,14 +154,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
       {
         var x = AshtongueConfig.SiteXY[i * 2];
         var y = AshtongueConfig.SiteXY[i * 2 + 1];
+        unit old = null;
         if (preplaced[i] != 0)
         {
-          var old = Preplaced(preplaced[i], x, y);
+          old = Preplaced(preplaced[i], x, y);
           if (old != null && GetUnitTypeId(old) != 0)
           {
             x = GetUnitX(old);
             y = GetUnitY(old);
-            RemoveUnit(old);
+            ShowUnit(old, false); // 0.71.0: out of the way first, removed once the new site stands
+          }
+          else
+          {
+            old = null;
           }
         }
         else if (AiApi.FindBuildSpot(x, y, new List<float>(), new List<float>(), out var fx, out var fy))
@@ -171,11 +176,32 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
         }
 
         var site = CreateUnit(p, AshtongueConfig.Tainted[i], x, y, 270f);
+        PinSite(site, x, y);
+        if (old != null)
+        {
+          RemoveUnit(old);
+        }
+
         SetUnitInvulnerable(site, true);
         sites.Add(site);
       }
 
       return sites;
+    }
+
+    // 0.71.0: CreateUnit puts a structure on the nearest free spot -- Shattrath (no pathing texture) and Halaa were
+    // pushed away by the units around them when the Ashtongue arrived (playtest). The site goes back to its spot.
+    private static void PinSite(unit site, float x, float y)
+    {
+      var dx = GetUnitX(site) - x;
+      var dy = GetUnitY(site) - y;
+      if (dx * dx + dy * dy > 16f * 16f)
+      {
+        AiApi.Log("Illidari fallback: " + GetUnitName(site) + " was placed " + I2S(R2I(SquareRoot(dx * dx + dy * dy)))
+                  + " away from its spot -- moved back");
+        SetUnitX(site, x);
+        SetUnitY(site, y);
+      }
     }
 
     private static unit Preplaced(int type, float x, float y)

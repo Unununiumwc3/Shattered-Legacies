@@ -29,6 +29,32 @@ namespace WarcraftLegacies.Source.Ai
       Escorts[GetPlayerId(owner)] = target;
     }
 
+    // 0.71.0: where the escort is heading (the caravan's next stop), pushed by the mechanic whenever it changes --
+    // a plain call, no delegate. The army walks AHEAD of the escort towards it (SimpleBot, state "escort").
+    private static readonly Dictionary<int, float> EscortGoalX = new();
+    private static readonly Dictionary<int, float> EscortGoalY = new();
+
+    internal static void SetEscortGoal(player owner, float x, float y)
+    {
+      var pid = GetPlayerId(owner);
+      EscortGoalX[pid] = x;
+      EscortGoalY[pid] = y;
+    }
+
+    internal static bool EscortGoal(int pid, out float x, out float y)
+    {
+      x = 0f;
+      y = 0f;
+      if (!EscortGoalX.ContainsKey(pid))
+      {
+        return false;
+      }
+
+      x = EscortGoalX[pid];
+      y = EscortGoalY[pid];
+      return true;
+    }
+
     internal static unit EscortTarget(player owner)
     {
       var pid = GetPlayerId(owner);

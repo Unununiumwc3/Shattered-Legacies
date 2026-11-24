@@ -14,6 +14,9 @@ namespace WarcraftLegacies.Source.Ai
     // target(owner) = the unit to escort now, or null when there is none (0.70.1: Func<player, unit> -- see AiMissions)
     public static void RegisterEscort(player p, System.Func<player, unit> target) => AiMissions.RegisterEscort(p, target);
 
+    // 0.71.0: the escort's next stop (call it whenever it changes); the army walks ahead of the escort towards it
+    public static void SetEscortGoal(player p, float x, float y) => AiMissions.SetEscortGoal(p, x, y);
+
     public static bool IsBot(player p) => SimpleBot.IsBot(p);
 
     public static void StopBot(player p)

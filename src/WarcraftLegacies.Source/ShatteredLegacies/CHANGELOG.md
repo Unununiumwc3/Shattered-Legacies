@@ -4,6 +4,23 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.71.0 — Long March creeps like WL 5.0.4, spell order strings, Halaa / Shattrath placement
+
+- **Long March creeps**: the rest of the WL 5.0.4 layout along the route. Thousand Needles camp: the extra `ncks` and
+  `ncen` removed (cells `-11776_-10240`, `-12288_-10752`); leg two: the five centaurs on the valley floor at about
+  -13500,-9950 (cell `-13312_-9728`) replaced by WL 5.0.4's three on the hill (`ncea` -13309,-8989; `ncer`
+  -13382,-9036 and -13494,-8942; cells `-12800_-8704`, `-13312_-8704`).
+- **Order strings (Ncl6) of nine Channel spells** (every level): the stock UNIT-target orders made WC3 refuse the bot's
+  point orders. Muradin's Stormbolt (TP49), Wild Throw (A14Q) `thunderbolt` -> `shockwave`; Solar Judgement (A01F),
+  Apocalypse (A10N) `creepthunderbolt` -> `carrionswarm`; Ancestral Legion (A0YX) `creepthunderbolt` ->
+  `breathoffire`; Spawn Tentacle (ZBST) `slow` -> `clusterrockets`; Inspire Madness (A10M, ZBIM), Voodoo Hex (MD28)
+  `darkconversion` -> `stampede`. No C# listens to these orders; no carrier has another ability with the new order
+  (`gen_spells.py` checks). Players cast them as before.
+- **Halaa and Shattrath stay on their spot** when the Ashtongue take them over (`IllidariFallback.TakeSites`): the old
+  building is hidden before the fel-tainted one is created, removed after it; a site that CreateUnit pushed to a free
+  spot (Shattrath has no pathing texture: the units around it pushed it away) is moved back and logged.
+- `ObjectiveHostilesInAreaAreDead` keeps the creeps it counts (`Targets`, `[SL]` marker) -- read by the bot.
+
 ## 0.70.3 — Long March: hill archers at the camp exit removed
 
 The ported Long March (WL 5.0.4) starts at a camp whose exit, in the fork's 4.8.2 creep layout, is overlooked by

@@ -22,7 +22,17 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.70.1)
+## Current development build (0.71.0)
+
+0.71.0: `AiAutocast.cs` switches autocast on for bot / autopilot units (table `AiAutocast.g.cs`, also written by
+`gen_spells.py`; the base -> "on" order map `AUTOCAST` is in the generator). `AiSpellFight.Level` has two fight levels
+(big 3+/3+ for enemy-targeted unit / point spells, skirmish 1+ enemy for self / ally / no-target ones).
+`spell_rules.txt` may list item-based no-target abilities (order "" = by ability id). `AiQuestCreeps.cs` makes the
+creeps of open `ObjectiveHostilesInAreaAreDead` objectives priority candidates in `AiRoutes.Plan`;
+`AiHomeFirst.cs` filters Plan's candidates to the home landmass in turns 1-8. `AiAb` bits 5+ are XORs of low bits.
+The Long March calls `AiApi.SetEscortGoal` (vanguard).
+
+## Development build 0.70.1
 
 0.70.1 fixes a map-init crash (since 0.69.0) from a `Func<unit>` escort callback -- see "Delegate types" in the
 hard-learned list and `tools/shattered-legacies/ai/delegate_check.py`.
@@ -104,6 +114,10 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
 | `AiApi.cs` | AiApi | **the bot's public surface** for code outside `Ai/` (players, logging, `Safe`, build spots, data hooks `RegisterHeroes` / `AddProductionData`) |
 | `AiHeroSkills.cs` | AiHeroSkills | bot heroes learn skills (level-up event + wave tick) |
 | `AiSpells.cs` | AiSpellBook, AiSpellFight, AiSpells | 0.70: bots cast WL's Channel spells in big fights (spell table + fork rows, big-fight gate with a per-cell unit cache, casting, channel protection / re-chain for AiArmy, `-spells`, dump SPELLS) |
+| `AiAutocast.cs` | AiAutocast | 0.71: autocast on for every autocast ability of bot / autopilot units (once per unit and ability; heroes once learned), dump SPELLS "autocast" |
+| `AiAutocast.g.cs` | AiAutocastData | GENERATED (`gen_spells.py`): autocast abilities (custom by base), their "on" order, carrier unit types (stock defaults included) |
+| `AiQuestCreeps.cs` | AiQuestCreeps | 0.71: creeps of open quests' `ObjectiveHostilesInAreaAreDead` = priority route candidates (fed by `AiRoutes.QuestNodes`), `-questcreeps` |
+| `AiHomeFirst.cs` | AiHomeFirst | 0.71: opening (turns 1-8) home-landmass filter on `AiRoutes.Plan` candidates, `-home` (bit 6) |
 | `AiSpells.g.cs` | AiSpellData | GENERATED (`tools/shattered-legacies/ai/gen_spells.py` from map data + `spell_rules.txt`): one row per cast Channel spell, carrier unit types |
 | `AiStats.cs` | AiStats | what bots train (train-finish event) -> dump section TRAINED (0.38) |
 | `AiHeroCare.cs` | AiHeroCare, AiStandings | stranded bot heroes (walk back / to the altar); team CP standings (dump TEAMS, 80/90 pins) |

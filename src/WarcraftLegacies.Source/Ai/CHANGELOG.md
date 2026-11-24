@@ -5,6 +5,49 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.71.0 — autocast, wider spell use, quest creeps, opening home-first, Tauren vanguard
+
+From the 0.70.3 playtest (16 bots): 111 casts by 15:00, but the big-fight gate turned down ~74 % of the checks,
+Muradin's Stormbolt still 0 casts / 9 refused, autocast abilities never on (also under `-autopilot`), Illidan bots
+left their island at ~6:00, Ironforge never went for the Gnomeregan creeps (quest expires turn 8), the Tauren army
+trailed the caravan.
+- **Autocast on** (`AiAutocast.cs`, table `AiAutocast.g.cs` from `gen_spells.py`): every autocast ability a bot
+  (or autopilot) unit carries is switched on once -- Heal, Inner Fire ("Powered Up Ammunition"), Slow, Curse,
+  Frost Armor, Abolish Magic, Raise Dead, searing / cold / poison / black arrows, Bloodlust, Faerie Fire,
+  Replenish, Spell Steal, Web, Parasite, ... (103 abilities, custom ones by their base, on 187 unit types incl.
+  stock defaults). WC3 then casts them itself: no decision of ours. Heroes once learned, research-gated abilities
+  once researched (retried every 20 s). Not switched: toggles / forms, Mana Shield, repair, Unstable Concoction.
+  Follows `-spells` (off = no autocast either). Dump SPELLS: "autocast" line.
+- **Spells in more fights**: two fight levels (one count per map cell and bot, as before). Enemy-targeted unit /
+  point spells need a big fight of **3+ enemy and 3+ friendly worth** (was 5 / 5; a hero is worth 3); self buffs,
+  ally spells and no-target spells already in a **skirmish** (1+ enemy worth within 2000) -- they still check their
+  own targets around the caster. Dump: "big fight / skirmish / no".
+- **Refused order strings fixed in the data**: point / no-target Channel spells whose Ncl6 belongs to a stock
+  UNIT-target spell got a point order (Muradin's Stormbolt, Wild Throw `shockwave`; Solar Judgement, Apocalypse
+  `carrionswarm`; Ancestral Legion `breathoffire`; Spawn Tentacle `clusterrockets`; Inspire Madness x2, Voodoo Hex
+  `stampede`). `gen_spells.py` now reports such a spell as a PROBLEM (and checks order clashes against stock unit
+  defaults too). The 0.70.3 fallback (cast on the unit at the point) stays.
+- **Item-based spells**: no-target unit abilities built on item abilities (base `AI..`, no order string) can have a
+  row in `spell_rules.txt`; the bot orders them by their ability id. 17 rows: Storming Brew (self heal below 70 %),
+  Archmage's / Wise Council heals, Divine Intervention, Fel Energy, Emergency Repairs, Nature Vitality, Rally, Call to
+  the Hunt, Carnage, Summon Goliathon. Untested in the engine: a refusal shows per spell in SPELLS ("refused") and
+  switches the spell off after 3.
+- **Quest creeps** (`AiQuestCreeps.cs`): the planner asks the faction's open quests which creeps they want dead
+  (`ObjectiveHostilesInAreaAreDead`, now exposes `Targets`) and treats those camps as priority route targets -- also
+  outside the CPs the bot holds, plain distance x 0.6 instead of distance + 3000, strength check 1.0 food per creep
+  level (other camps 1.5). Same planner, routes and blacklist; no kill state, no wake event. `-questcreeps on|off`;
+  dump ROUTES "quest creeps" line.
+- **Opening home-first** (`AiHomeFirst.cs`): turns 1-8, while the army stands on its home landmass and the planner
+  has a target there, targets on other landmasses are dropped from that plan. A filter on the candidates only --
+  routes, chains, gathering, defence, missions untouched, an army that already left is never pulled back; quest CPs
+  and quest creeps exempt; no home target -> no filter. `-home on|off|ab|ab2` (slot bit 6); dump ROUTES "home-first".
+- **A/B bits 5+ fixed**: `AiAb.Half` used `pid / 32` for bit 5 -- 0 for every slot, so `-spells ab` switched all bots
+  on and `ab2` none (0.70.0-0.70.3). Bits 5+ are now the XOR of two low bits (5: 0+1, 6: 0+2, 7: 1+2).
+- **Tauren vanguard**: the Long March tells the bot where the caravan goes next (`AiApi.SetEscortGoal`, called by
+  `LongMarchCaravan.SetCurrentTarget`); the army is aimed up to 1000 ahead of the kodo along that line (600 / 300
+  when the point is not walkable or on another cliff level) and clears the creeps before the kodos arrive. Without
+  a goal: the 0.70.3 facing lead.
+
 ## 0.70.3 — spells refused as point orders, Tauren escort
 
 From the 0.70.2 playtest (30 min, 16 bots): **spells work** -- 186 casts of 12 spells (Blink Strike 68, Mass Frost

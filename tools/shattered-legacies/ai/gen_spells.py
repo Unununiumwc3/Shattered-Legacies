@@ -2,6 +2,10 @@
   src/WarcraftLegacies.Source/Ai/AiSpells.g.cs                      WL's Channel abilities (class AiSpellData)
   src/WarcraftLegacies.Source/ShatteredLegacies/Bot/SlAiSpells.g.cs  abilities only fork units carry (SlAiSpells;
                                                                     handed to the bot by SlBotSetup -> AiApi.AddSpellData)
+  src/WarcraftLegacies.Source/Ai/AiAutocast.g.cs                    0.71.0: every autocast ability units carry and the
+                                                                    order that switches it on (AiAutocastData, AUTOCAST)
+0.71.0: spell_rules.txt may also list item-based no-target abilities (base AI..., no order string): order "" -> the
+bot orders them by their ability id. A point / no-target Channel spell with a stock unit-target order is a PROBLEM.
 Why only Channel (ANcl): WC3's computer AI casts abilities by their BASE ability -- a custom spell built on a stock
 ability (Storm Bolt, Blizzard, ...) is already cast by the engine. Channel is a dummy the engine never casts; the bot
 orders it with the order string from the ability's data (Ncl6, the only order string WC3 lets a map change).
@@ -23,8 +27,41 @@ MAPD = os.path.join(ROOT, "mapdata", "WarcraftLegacies")
 RULES = os.path.join(HERE, "spell_rules.txt")
 OUT = os.path.join(SRC, "WarcraftLegacies.Source", "Ai", "AiSpells.g.cs")
 SL_OUT = os.path.join(SRC, "WarcraftLegacies.Source", "ShatteredLegacies", "Bot", "SlAiSpells.g.cs")
+AC_OUT = os.path.join(SRC, "WarcraftLegacies.Source", "Ai", "AiAutocast.g.cs")
+UNIT_LOADER = os.path.join(SRC, "War3Api.Object", "Generated", "1.36.0.20257", "UnitLoader.cs")
+UNIT_ENUM = os.path.join(SRC, "War3Api.Object", "Generated", "1.36.0.20257", "Enums", "UnitType.cs")
 LOADER = os.path.join(SRC, "War3Api.Object", "Generated", "1.36.0.20257", "AbilityLoader.cs")
 ENUM = os.path.join(SRC, "War3Api.Object", "Generated", "1.36.0.20257", "Enums", "AbilityType.cs")
+
+# 0.71.0: autocast abilities by base -> the order that turns autocast ON (computer players without a melee AI
+# script never switch it on). Written by hand: War3Api's data leaves several "on" orders empty (bloodlust, cold
+# arrows, faerie fire). Not here on purpose: toggles and forms (immolation, defend, divine shield, burrow, root,
+# bear / raven / sphinx form, ...), mana shield (a toggle, not autocast), repair (workers), and Unstable
+# Concoction (the unit blows itself up).
+AUTOCAST = {
+    "Ahea": "healon", "Anhe": "healon", "Anh1": "healon", "Anh2": "healon",
+    "Ainf": "innerfireon", "ACif": "innerfireon",
+    "Aslo": "slowon", "ACsw": "slowon",
+    "Acrs": "curseon", "ACcs": "curseon",
+    "Aadm": "autodispelon", "Andm": "autodispelon", "ACdm": "autodispelon", "ACd2": "autodispelon",
+    "Arai": "raisedeadon", "ACrd": "raisedeadon",
+    "AUfu": "frostarmoron", "ACf2": "frostarmoron", "ACfu": "frostarmoron",
+    "ANba": "blackarrowon", "ACbk": "blackarrowon",
+    "ANpa": "parasiteon", "ACpa": "parasiteon",
+    "Aren": "renewon",
+    "Arpb": "replenishon", "Arpl": "replenishlifeon", "Arpm": "replenishmanaon",
+    "Arst": "restorationon",
+    "Asps": "spellstealon",
+    "Aweb": "webon", "ACwb": "webon",
+    "Apsh": "phaseshifton",
+    "AUcb": "carrionscarabson",
+    "Avng": "vengeanceon",
+    "AEpa": "poisonarrows",
+    "AHfa": "flamingarrows", "ACsa": "flamingarrows",
+    "AHca": "coldarrows", "ACcw": "coldarrows", "ANfa": "coldarrows",
+    "Ablo": "bloodluston", "ACbl": "bloodluston", "ACbb": "bloodluston",
+    "Afae": "faeriefireon", "Afa2": "faeriefireon", "ACff": "faeriefireon",
+}
 
 KINDS = {"unit": 1, "point": 2, "instant": 3}
 WHO = {"enemy": 1, "ally": 2, "self": 3}
@@ -32,6 +69,13 @@ FLAGS = {"mana": 1, "hurt": 2}
 GROUND, ORGANIC = 4, 8  # from the ability's targets allowed (atar, level 1): no "air" -> ground only; "organic"
 # Channel defaults (WC3 1.36, War3Api LoadIllidanChannel): target type 0, order "channel", range 500, area 0
 CHANNEL_DEFAULT = {"Ncl2": 0, "Ncl6": "channel", "aran": 500.0, "aare": 0.0}
+# 0.71.0: order strings of stock UNIT-target spells. WC3 checks a script order against the stock spell that owns
+# the order string: a point / no-target Channel ability with one of these is refused for every order (Muradin's
+# Stormbolt "thunderbolt": 0 casts / 9 refused in the 0.70.3 playtest). Such a Channel ability needs another Ncl6.
+UNIT_ORDERS = {"thunderbolt", "creepthunderbolt", "slow", "darkconversion", "firebolt", "hex", "polymorph",
+               "entanglingroots", "frostnova", "deathcoil", "manaburn", "holybolt", "drain", "charm",
+               "chainlightning", "forkedlightning", "shadowstrike", "banish", "doom", "faeriefire", "cripple",
+               "curse", "purge", "sleep"}
 # target type (Ncl2) each kind accepts: 0 no target, 1 unit, 2 point, 3 unit or point
 NCL2_OK = {"unit": (1, 3), "point": (2, 3), "instant": (0,)}
 
@@ -96,19 +140,6 @@ def carriers():
     return out
 
 
-def unit_lists():
-    """unit ids per order string: {unit: [ability ids]} for every carried ability"""
-    out = {}
-    for f in glob.glob(os.path.join(MAPD, "UnitData", "*.json")):
-        d = load_json(f)
-        uid = os.path.basename(f)[:-5]
-        for m in d.get("Modifications", []):
-            if m["Id"] in ("uabi", "uhab"):
-                out.setdefault(uid, [])
-                out[uid] += [a.strip() for a in str(m["Value"]).split(",") if len(a.strip()) == 4]
-    return out
-
-
 def stock_orders():
     """stock ability code -> its order string (War3Api's AbilityLoader: TextOrderStringUseTurnOnRaw)"""
     names = {name: code for code, name in re.findall(r"\('(\w{4})'\)\.</summary>\s*(\w+) =",
@@ -121,6 +152,62 @@ def stock_orders():
         if code and o and o.group(1):
             out[code] = o.group(1)
     return out
+
+
+def stock_unit_abilities():
+    """stock unit code -> (normal abilities, hero skills) from War3Api's UnitLoader (the defaults a map keeps
+    unless it changes uabi / uhab)"""
+    names = {name: code for code, name in re.findall(r"\('(\w{4})'\)\.</summary>\s*(\w+) =",
+                                                     open(UNIT_ENUM, encoding="utf-8-sig").read())}
+    out = {}
+    text = open(UNIT_LOADER, encoding="utf-8-sig").read()
+    for m in re.finditer(r"protected virtual \w+ Load(\w+)\(ObjectDatabaseBase db\)\s*\{(.*?)\n        \}", text, re.S):
+        code = names.get(m.group(1))
+        if not code:
+            continue
+        lists = []
+        for key in ("AbilitiesNormalRaw", "AbilitiesHeroRaw"):
+            o = re.search(r'unit\.' + key + r' = "([^"]*)"', m.group(2))
+            lists.append([a.strip() for a in (o.group(1) if o else "").split(",") if len(a.strip()) == 4])
+        out[code] = tuple(lists)
+    return out
+
+
+def all_unit_abilities():
+    """every unit type of the map (stock and custom) -> abilities it carries (uabi + uhab, stock defaults where
+    the map leaves the field unchanged)"""
+    stock = stock_unit_abilities()
+    out = {u: n + h for u, (n, h) in stock.items()}
+    for f in glob.glob(os.path.join(MAPD, "UnitData", "*.json")):
+        d = load_json(f)
+        uid = os.path.basename(f)[:-5]
+        n, h = stock.get(d.get("OldId", uid), ([], []))
+        for m in d.get("Modifications", []):
+            vals = [a.strip() for a in str(m["Value"]).split(",") if len(a.strip()) == 4]
+            if m["Id"] == "uabi":
+                n = vals
+            elif m["Id"] == "uhab":
+                h = vals
+        out[uid] = n + h
+    return out
+
+
+def autocast_table(ab):
+    """rows (ability id, on-order, [unit types]) for every autocast ability some unit type carries"""
+    per_unit = all_unit_abilities()
+    order = {}
+    for a, base in AUTOCAST.items():
+        order[a] = base
+    for a, d in ab.items():
+        base = d.get("OldId", a)
+        if base in AUTOCAST:
+            order[a] = AUTOCAST[base]
+    rows = {}
+    for uid in sorted(per_unit):
+        for a in per_unit[uid]:
+            if a in order:
+                rows.setdefault(a, []).append(uid)
+    return [(a, order[a], rows[a]) for a in sorted(rows)]
 
 
 def object_units(folder):
@@ -182,7 +269,7 @@ def main():
     check_only = "--check" in sys.argv
     ab = abilities()
     carry = carriers()
-    per_unit = unit_lists()
+    per_unit = all_unit_abilities()  # 0.71.0: with stock defaults (clash check)
     stock = stock_orders()
     rules = read_rules()
     refs = code_refs()
@@ -202,19 +289,33 @@ def main():
         if a not in rules:
             problems.append(f"{a} ({field(ab[a], 'anam')}) is carried by {', '.join(u for u, _ in carry[a][:3])} "
                             f"but has no row in spell_rules.txt -- never cast until reviewed")
+    # 0.71.0: item-based unit abilities (base AI..., no order string: ordered by their id) may have a row too --
+    # no-target ones only (Storming Brew, Emergency Repairs, ...)
+    items = sorted(a for a in rules if a in ab and ab[a].get("OldId", "").startswith("AI") and a in carry)
     for a in sorted(rules):
-        if a not in ab or ab[a].get("OldId") != "ANcl":
-            problems.append(f"spell_rules.txt lists {a}, which is not a Channel ability of the map")
+        if a not in ab or (ab[a].get("OldId") != "ANcl" and not ab[a].get("OldId", "").startswith("AI")):
+            problems.append(f"spell_rules.txt lists {a}, which is not a Channel or item-based ability of the map")
         elif a not in carry:
             notes.append(f"{a}: listed, but no unit carries it")
 
     wl, sl = [], []
-    for a in channel:
+    for a in channel + items:
         r = rules.get(a)
         if r is None or r["kind"] == "skip":
             continue
         d = ab[a]
         name = str(field(d, "anam") or a)
+        if a in items:
+            if r["kind"] != "instant":
+                problems.append(f"{a} {name}: item-based abilities are no-target only (rule says {r['kind']}) -- not cast")
+                continue
+            units = [u for u, _ in carry[a]]
+            fork_only = all(u in sl_units and u not in wl_units for u in units)
+            row = (a, KINDS["instant"], WHO[r["who"]], r["min"], r["radius"], r["flags"], "",
+                   f"{name} -- instant {r['who']} (item-based {d.get('OldId')}); on {' '.join(units[:4])}"
+                   f"{' ...' if len(units) > 4 else ''}", units)
+            (sl if fork_only else wl).append(row)
+            continue
         orders = {str(field(d, "Ncl6", lv) or CHANNEL_DEFAULT["Ncl6"]) for lv in range(1, (levels(d) if a in HERO_SKILLS else 1) + 1)}
         if len(orders) > 1:
             problems.append(f"{a} {name}: the order string changes with the level ({sorted(orders)}) -- not cast")
@@ -224,6 +325,10 @@ def main():
         ncl2 = CHANNEL_DEFAULT["Ncl2"] if ncl2 is None else int(ncl2)
         if ncl2 not in NCL2_OK[r["kind"]]:
             problems.append(f"{a} {name}: rule says {r['kind']} but the target type (Ncl2) is {ncl2} -- not cast")
+            continue
+        if r["kind"] != "unit" and order in UNIT_ORDERS:
+            problems.append(f"{a} {name}: {r['kind']} spell with the unit-target order \"{order}\" -- WC3 refuses "
+                            f"it; give Ncl6 a point / no-target order -- not cast")
             continue
         U = a.upper()
         if not re.search(r"ABILITY_" + U + r"_\w+", refs) and str(be(a)) not in refs:
@@ -255,7 +360,7 @@ def main():
         print("note:", n)
     for p in problems:
         print("PROBLEM:", p)
-    print(f"{len(channel)} carried Channel abilities: {len(wl)} cast by the bot (WL), {len(sl)} (fork), "
+    print(f"{len(channel)} carried Channel abilities + {len(items)} item-based: {len(wl)} cast by the bot (WL), {len(sl)} (fork), "
           f"{sum(1 for a in channel if rules.get(a, {}).get('kind') == 'skip')} skipped by rule")
     if check_only:
         sys.exit(1 if problems else 0)
@@ -288,7 +393,7 @@ def main():
                 "    // 1 = prefer targets with mana, 2 = ally target only below 70 % life, 4 = ground targets only,\n"
                 "    // 8 = organic targets only (4 / 8 from the ability's targets allowed)\n"
                 f"    internal static int[] Flags = {arr('int', [str(r[5]) for r in rows])};\n\n"
-                "    // order string (Channel: Ncl6)\n"
+                "    // order string (Channel: Ncl6); \"\" = item-based, ordered by the ability id\n"
                 f"    internal static string[] Order = {arr('string', [json.dumps(r[6]) for r in rows])};\n\n"
                 "    // who carries what: unit type -> row (one entry per pair)\n"
                 f"    internal static int[] CarrierType = {arr('int', [str(be(u)) for r in rows for u in r[8]])};\n\n"
@@ -301,7 +406,33 @@ def main():
     sl_out = render("WarcraftLegacies.Source.ShatteredLegacies.Bot", "SlAiSpells",
                     "// Generated by tools/shattered-legacies/ai/gen_spells.py: Channel abilities that only Shattered Legacies\n"
                     "// units carry. Handed to the bot at setup (SlBotSetup -> AiApi.AddSpellData).", sl)
-    for path, text in ((OUT, out), (SL_OUT, sl_out)):
+    ac = autocast_table(ab)
+
+    def arr_ac(t, vals):
+        per = 6 if t == "string" else 10
+        chunks = [", ".join(vals[i:i + per]) for i in range(0, len(vals), per)]
+        return "new " + t + "[]\n    {\n      " + ",\n      ".join(chunks) + ",\n    }"
+
+    ac_lines = [f"  //   {i:3d} {a} {o} -- {str(field(ab[a], 'anam') or '') if a in ab else 'stock'}; "
+                f"on {' '.join(us[:4])}{' ...' if len(us) > 4 else ''}" for i, (a, o, us) in enumerate(ac)]
+    ac_out = ("// <auto-generated>\n"
+              "// Generated by tools/shattered-legacies/ai/gen_spells.py (0.71.0) from the map data: every autocast\n"
+              "// ability a unit type carries (custom ones by their base) and the order that turns autocast on.\n"
+              "// Read by AiAutocast. DO NOT EDIT -- change AUTOCAST in gen_spells.py and re-run it.\n"
+              "// </auto-generated>\n"
+              "namespace WarcraftLegacies.Source.Ai\n{\n"
+              "  // One column per array, one row per ability:\n" + "\n".join(ac_lines) + "\n"
+              "  internal static class AiAutocastData\n  {\n"
+              "    // ability id\n"
+              f"    internal static int[] Id = {arr_ac('int', [str(be(a)) for a, _, _ in ac])};\n\n"
+              "    // order string that turns autocast on\n"
+              f"    internal static string[] Order = {arr_ac('string', [json.dumps(o) for _, o, _ in ac])};\n\n"
+              "    // who carries what: unit type -> row (one entry per pair)\n"
+              f"    internal static int[] CarrierType = {arr_ac('int', [str(be(u)) for _, _, us in ac for u in us])};\n\n"
+              f"    internal static int[] CarrierRow = {arr_ac('int', [str(i) for i, (_, _, us) in enumerate(ac) for u in us])};\n"
+              "  }\n}\n")
+    print(f"{len(ac)} autocast abilities on {len({u for _, _, us in ac for u in us})} unit types")
+    for path, text in ((OUT, out), (SL_OUT, sl_out), (AC_OUT, ac_out)):
         open(path, "w", encoding="utf-8", newline="\n").write(text)
         print(f"wrote {os.path.relpath(path, ROOT)}")
 

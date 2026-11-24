@@ -15,6 +15,10 @@ public sealed class ObjectiveHostilesInAreaAreDead : Objective
   private readonly string _areaName;
   private readonly int _maxKillCount;
   private int _currentKillCount;
+  private readonly List<unit> _targets = new(); // [SL] (0.71.0)
+
+  /// <summary>[SL] (0.71.0): the creeps this objective counts (dead ones included) -- the bot's quest targets.</summary>
+  public List<unit> Targets => _targets;
 
   private int CurrentKillCount
   {
@@ -55,6 +59,7 @@ public sealed class ObjectiveHostilesInAreaAreDead : Objective
       foreach (var unit in unitsInAreas)
       {
         _maxKillCount++;
+        _targets.Add(unit); // [SL] (0.71.0)
         PlayerUnitEventsHelper.RegisterDiesOrChangesOwnerOnce(() =>
         {
           CurrentKillCount++;

@@ -22,9 +22,20 @@ namespace WarcraftLegacies.Source.Ai
     internal const int BitRegroup = 3;
     internal const int BitCommit = 4; // 0.48.4
     internal const int BitSpells = 5; // 0.70.0: bot spellcasting (AiSpells)
+    internal const int BitHome = 6;   // 0.71.0: opening home-first (AiHomeFirst)
 
     internal static int Half(int pid, int bit)
     {
+      // 0.71.0: bits 5+ of a slot number below 24 are always 0 (pid / 32) -- "ab" switched EVERY bot on, "ab2" none
+      // (-spells ab in 0.70). From bit 5 on the half is the XOR of two low bits (5: bits 0+1, 6: 0+2, 7: 1+2):
+      // still half of the slots, and independent of every single-bit split.
+      if (bit >= 5)
+      {
+        var a = bit == 7 ? 1 : 0;
+        var b = bit == 5 ? 1 : 2;
+        return (Half(pid, a) + Half(pid, b)) % 2;
+      }
+
       var d = 1;
       for (var k = 0; k < bit; k++)
       {

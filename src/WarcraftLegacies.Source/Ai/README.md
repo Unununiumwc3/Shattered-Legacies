@@ -207,7 +207,9 @@ Levels: **read** (everyone, cheap), **heavy** (single-human games only), **game-
 | `-gather on\|off\|ab\|ab2` | control | Gather points: routes longer than 5 nodes wait at the last own node (80 % of the group or 60 s); default off (0.46.3: no difference in any game phase) |
 | `-spread on\|off\|ab\|ab2` | control | Spread chain points: each unit its own spot around a node (test); default off (0.46.3: more stalled late) |
 | `-ferry on\|off` | control | Bot ferries: board, sail, land (default, 0.50) / instant crossing |
-| `-spells on\|off\|ab\|ab2` | control | Bot spellcasting (0.70): WL's Channel spells in big fights only (5+ enemy and 5+ friendly within 2000, heroes 3), targets inside cast range; default on, slot bit 5. `off` = 0.68 movement exactly |
+| `-spells on\|off\|ab\|ab2` | control | Bot spellcasting (0.70) and autocast (0.71): Channel and item-based spells; enemy-targeted ones in big fights (3+ enemy and 3+ friendly within 2000, heroes 3), self / ally / no-target ones in any fight; targets inside cast range; autocast switched on. Default on, slot bit 5. `off` = 0.68 movement exactly, no autocast |
+| `-questcreeps on\|off` | control | 0.71: creeps an open quest wants dead are priority route targets (default on) |
+| `-home on\|off\|ab\|ab2` | control | 0.71: opening home-first -- turns 1-8, targets on the home landmass before others while the army is at home (default on, slot bit 6) |
 | `-pportal on\|off` | control | Portals: pseudo-portals -- bots teleport by trigger at the waygate (default, 0.46) or click the waygate (0.45) |
 | `-guard on\|off\|ab\|ab2` | control | Guard positions removed for bots: all / none / ab / ab2 (slot bit 0); default ON (0.48.4: with them, units out of orders walk back to where they were trained) |
 | `-commit on\|off\|ab\|ab2` | control | Commit on re-plan: keep the valid target when the new best one is farther from the group on foot (slot bit 4); default on (0.48.4) |

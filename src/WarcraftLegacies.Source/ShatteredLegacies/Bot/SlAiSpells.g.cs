@@ -28,7 +28,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
     // 8 = organic targets only (4 / 8 from the ability's targets allowed)
     internal static int[] Flags = new int[0];
 
-    // order string (Channel: Ncl6)
+    // order string (Channel: Ncl6); "" = item-based, ordered by the ability id
     internal static string[] Order = new string[0];
 
     // who carries what: unit type -> row (one entry per pair)

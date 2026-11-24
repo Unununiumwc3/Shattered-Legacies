@@ -360,9 +360,9 @@ namespace WarcraftLegacies.Source.Ai
     private const float ProductionEvery = 15.0f;
     private const float ProdTick = 1.0f;           // v12: production timer interval; one bot per tick
     private const float HeartbeatEvery = 20.0f;    // v12: re-issue attack-move at most this often per bot
-    private const float EscortLead = 500f;         // 0.70.3: aim this far ahead of a moving escort (caravan)
+    private const float EscortLead = 1000f;        // 0.71.0: vanguard distance ahead of the escort (0.70.3: 500)
     private const int OrderMove = 851986;
-    internal static int EscortLeads;               // 0.70.3: escort orders aimed ahead of a moving escort
+    internal static int EscortLeads;               // 0.70.3: escort orders aimed ahead of the escort
 
     // 0.39 refactor, lever 1 (engine load): with an UNCHANGED target, the heartbeat only orders IDLE units (new units
     // after their rally point, units that finished a fight). A new target still orders the whole army.
@@ -614,6 +614,7 @@ namespace WarcraftLegacies.Source.Ai
       AiIncome.Setup(); // 0.44.2: CP income for computer slots (WL pays only human slots)
       AiLoad.Setup();   // 0.46: guard positions, order-latency probe
       AiSpells.Setup(); // 0.70.0: bots cast WL's Channel spells in big fights
+      AiAutocast.Setup(); // 0.71.0: autocast on for every autocast ability of bot units
       AiScheduler.Start();
 
       var portals = CreateTimer();
@@ -1184,6 +1185,7 @@ namespace WarcraftLegacies.Source.Ai
         else if (!IsUnitType(u, UNIT_TYPE_PEON) && !AiFerries.InTransit(u) && !AiFerries.IsBoat(u)) // 0.50: at sea
         {
           AiSpells.Note(u); // 0.70.0: casters of Channel spells (type lookup; checked by the "spells" task)
+          AiAutocast.Note(u); // 0.71.0: autocast abilities (type lookup; switched on by the "autocast" task)
           army++;
           var ux = GetUnitX(u);
           var uy = GetUnitY(u);
@@ -1306,11 +1308,38 @@ namespace WarcraftLegacies.Source.Ai
           state = "escort";
           NoteTarget(p, pid, escort, "escort");
           TrackStuck(p, pid, null);
-          // 0.70.3: a moving escort is aimed EscortLead ahead (its facing): a bot is serviced every few seconds and
-          // the Tauren caravan walks 170/s, so aiming at where the kodo stands left the army trailing behind it.
+          // 0.71.0: VANGUARD -- the army walks ahead of the escort along the way to its next stop (AiApi.SetEscortGoal,
+          // the Long March's camp exit / Thousand Needles / Mulgore / Thunder Bluff), up to EscortLead, and clears the
+          // creeps there before the kodos arrive. 0.70.3 aimed 500 ahead along the kodo's FACING: on the winding
+          // canyon road the point swung around (16 whole-army turnarounds) and the army still trailed. Without a goal:
+          // the facing, as 0.70.3.
           var ex = GetUnitX(escort);
           var ey = GetUnitY(escort);
-          if (GetUnitCurrentOrder(escort) == OrderMove)
+          if (AiMissions.EscortGoal(pid, out var gx, out var gy))
+          {
+            // the straight line may cross a mesa (Thousand Needles): take the farthest of EscortLead / 600 / 300
+            // that is walkable on the escort's cliff level (as the caravan's own ambush spawns), else the escort
+            var dx = gx - ex;
+            var dy = gy - ey;
+            var dist = SquareRoot(dx * dx + dy * dy);
+            var cliff = GetTerrainCliffLevel(ex, ey);
+            var lead = dist < EscortLead ? dist : EscortLead;
+            while (dist > 1f && lead >= 300f)
+            {
+              var px = ex + dx / dist * lead;
+              var py = ey + dy / dist * lead;
+              if (!IsTerrainPathable(px, py, PATHING_TYPE_WALKABILITY) && GetTerrainCliffLevel(px, py) == cliff)
+              {
+                ex = px;
+                ey = py;
+                EscortLeads++;
+                break;
+              }
+
+              lead = lead > 600f ? 600f : lead - 300f;
+            }
+          }
+          else if (GetUnitCurrentOrder(escort) == OrderMove)
           {
             var face = GetUnitFacing(escort) * 0.0174533f;
             ex += Cos(face) * EscortLead;
@@ -2907,7 +2936,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.70.3";
+    public const string Build = "0.71.0";
 
     public static void Setup()
     {

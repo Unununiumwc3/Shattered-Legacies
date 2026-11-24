@@ -8,7 +8,24 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.70.3** (bot spellcasting, playtest fixes). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.71.0** (autocast, wider spell use, quest creeps, opening home-first, Tauren vanguard). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.71.0 playtest
+
+- SPELLS: the "autocast" line (switched on per bot, refused); watch a Priest / "Powered Up Ammunition" carrier, also
+  under `-autopilot`. "big fight / skirmish / no"; Muradin's Stormbolt and Solar Judgement with casts and no
+  refusals; the item-based rows (Storming Brew, ...): casts or "refused" -- if refused, ordering by ability id does
+  not work and those rows go back to skip.
+- LOAD: `task spells` and `task autocast` next to `combat` (the fear: deciding / scanning cost). 0.70.3 at 15:00:
+  spells ~12 % of combat.
+- ROUTES: "quest creeps" (picked > 0 for Ironforge before turn 8: Gnomeregan done in time?) and "home-first"
+  (filtered plans; Illidan stays on the island until turn 8 or nothing is left there). For a fair comparison:
+  `-home ab` (bit 6 now really splits the slots).
+- Tauren: the army walks ahead of the kodos (LOAD "escort orders aimed ahead"), the caravan no longer stops for
+  creeps; time at Thunder Bluff (0.70.3: 4:26).
+- Halaa / Shattrath when the Ashtongue spawn: on their spot (LOG "placed ... away from its spot -- moved back" says
+  how far CreateUnit pushed them).
+- Movement: TRACK turnarounds with cause `cast` / `re-chain` (more casts now) -- must stay rare.
 
 ## 0.70.3 playtest
 

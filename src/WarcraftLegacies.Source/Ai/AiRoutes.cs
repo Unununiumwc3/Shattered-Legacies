@@ -339,6 +339,11 @@ namespace WarcraftLegacies.Source.Ai
     // the creep to attack at node i for bot p, or null
     private static unit CreepAt(player p, int pid, int i, BotDiag d)
     {
+      if (Creeps && AiQuestCreeps.Has(i))
+      {
+        return QuestCreepAt(pid, i, d); // 0.71.0: an open quest wants these dead -- also outside the bot's CPs
+      }
+
       if (!Creeps || _creep == null || _creep[i] == null || _ownerCp[i] < 0)
       {
         return null;
@@ -362,6 +367,27 @@ namespace WarcraftLegacies.Source.Ai
         return null;
       }
 
+      d.Neutral++;
+      return cu;
+    }
+
+    // 0.71.0: the quest creep at node i (AiQuestCreeps, checked alive by QuestNodes this plan); the camp strength
+    // check of CreepAt (all creeps of the area, when CheckCreeps has run; braver: FoodPerLevel 1.0 instead of 1.5 --
+    // the quest expires) and the stuck blacklist still apply
+    private static unit QuestCreepAt(int pid, int i, BotDiag d)
+    {
+      var cu = AiQuestCreeps.At(i);
+      if (cu == null || SimpleBot.IsBlacklisted(pid, cu))
+      {
+        return null;
+      }
+
+      if (_creepLevel != null && AiArmy.ArmyFood(pid) < _creepLevel[i] * AiQuestCreeps.FoodPerLevel)
+      {
+        return null;
+      }
+
+      AiQuestCreeps.Candidates++;
       d.Neutral++;
       return cu;
     }
@@ -1030,6 +1056,11 @@ namespace WarcraftLegacies.Source.Ai
         _score[i] = Score(i, cand);
       }
 
+      if (cands != null)
+      {
+        AiHomeFirst.Filter(pid, d, _score, _questNodes, _armyX, _armyY, _armyKnown); // 0.71.0: opening, home first
+      }
+
       if (cands == null)
       {
         NullNoCandidate++; // 0.48.1: nothing to attack on the allowed lands
@@ -1120,6 +1151,11 @@ namespace WarcraftLegacies.Source.Ai
       _lastCost[AiTheatres.S(pid)] = _score[best];
       _lastFront[AiTheatres.S(pid)] = _front[best];
       _lastQuest[AiTheatres.S(pid)] = _questNodes.Contains(best);
+      if (AiQuestCreeps.Has(best) && cands[best] == AiQuestCreeps.At(best))
+      {
+        AiQuestCreeps.Picked(pid, cands[best]);
+      }
+
       return cands[best];
     }
 
@@ -1212,6 +1248,11 @@ namespace WarcraftLegacies.Source.Ai
           s = fromArmy;
         }
 
+        if (IsCreep(cand) && AiQuestCreeps.Has(i))
+        {
+          return s * AiQuestCreeps.Bias; // 0.71.0: quest creeps -- no CreepCost, ahead of other camps and far CPs
+        }
+
         return s + (IsCreep(cand) ? CreepCost : LeftoverCost); // 0.44.3 / 0.44.1
       }
 
@@ -1237,6 +1278,7 @@ namespace WarcraftLegacies.Source.Ai
     private static void QuestNodes(Faction fac)
     {
       _questNodes.Clear();
+      AiQuestCreeps.Clear(); // 0.71.0: quest creeps of this faction, refreshed with the quest CPs
       var quests = fac.GetAllQuests();
       for (var q = 0; q < quests.Count; q++)
       {
@@ -1249,6 +1291,7 @@ namespace WarcraftLegacies.Source.Ai
         var objs = qd.Objectives;
         for (var k = 0; k < objs.Count; k++)
         {
+          AiQuestCreeps.Note(objs[k]); // 0.71.0: creeps the objective wants dead (multi-area ones have no Position)
           var pos = objs[k].Position;
           if (objs[k].Progress == QuestProgress.Complete || pos == null)
           {
@@ -1262,6 +1305,8 @@ namespace WarcraftLegacies.Source.Ai
           }
         }
       }
+
+      AiQuestCreeps.Done();
     }
 
     private static bool Near(int node, float x, float y, float r)
@@ -2242,6 +2287,8 @@ namespace WarcraftLegacies.Source.Ai
             + AiAb.Name(GatherMode) + " started=" + I2S(GatherStarted) + " assembled=" + I2S(GatherAssembled)
             + " timeout=" + I2S(GatherTimeout) + " (arrived at timeout avg "
             + I2S(GatherTimeout > 0 ? R2I(100f * GatherTimeoutShare / GatherTimeout) : 0) + "%)");
+      o.Add(AiQuestCreeps.Line()); // 0.71.0
+      o.Add(AiHomeFirst.Line());   // 0.71.0
       var caps = new int[24];
       for (var k = 0; k < 24; k++)
       {

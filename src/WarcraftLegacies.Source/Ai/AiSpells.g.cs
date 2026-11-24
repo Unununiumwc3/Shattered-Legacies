@@ -41,6 +41,23 @@ namespace WarcraftLegacies.Source.Ai
   //   32 ZBIM Inspire Madness -- point enemy; on U00R
   //   33 ZBST Spawn Tentacle -- point enemy; on U00R
   //   34 ZBUE Unstable Evolution -- point ally; on U00R
+  //   35 A033 Wise Council -- instant ally (item-based AImr); on H09M HZy3 HZy9 Hvsh ...
+  //   36 A03S Carnage -- instant self (item-based AIpv); on Ogrh Opgh
+  //   37 A07X Rally -- instant enemy (item-based AIsa); on Hapm Hlgr
+  //   38 A0GQ Carnage -- instant self (item-based AIpv); on o01L
+  //   39 A0H1 Storming Brew -- instant self (item-based AIdb); on h01L
+  //   40 A0IY Emergency Repairs -- instant self (item-based AIh1); on n06N
+  //   41 A0KQ Call to the Hunt -- instant enemy (item-based AIsa); on o01V
+  //   42 A0NG Carnage -- instant self (item-based AIpv); on o000
+  //   43 A0OA Emergency Repairs -- instant self (item-based AIh1); on h08Z h09H hZk4 hZk5 ...
+  //   44 A0OF Wise Council -- instant ally (item-based AImr); on H05Y
+  //   45 A0PF Fel Energy -- instant ally (item-based AIra); on o008 o00F o013 o017 ...
+  //   46 A0UE Divine Intervention -- instant ally (item-based AIdb); on H00Y
+  //   47 A0WW Summon Goliathon -- instant enemy (item-based AIfu); on H098
+  //   48 A12R Wise Council -- instant ally (item-based AIdb); on H098
+  //   49 A13B Emergency Repairs -- instant self (item-based AIh1); on h09I
+  //   50 SLS8 Nature Vitality -- instant self (item-based AIhx); on emtg
+  //   51 TPWC Archmage's Council -- instant ally (item-based AIdb); on Hant
   internal static class AiSpellData
   {
     // ability id
@@ -49,7 +66,9 @@ namespace WarcraftLegacies.Source.Ai
       1093677382, 1093677390, 1093678152, 1093679415, 1093682247, 1093682753, 1093682756, 1093683024, 1093685060, 1093687640,
       1093742644, 1093742668, 1093742669, 1093742670, 1093743442, 1093743692, 1093743697, 1093743705, 1093743706, 1093743921,
       1093744213, 1098475366, 1296314931, 1296314932, 1296314936, 1296314937, 1414541616, 1414542393, 1497514579, 1514287154,
-      1514287158, 1514292045, 1514293581, 1514296148, 1514296645,
+      1514287158, 1514292045, 1514293581, 1514296148, 1514296645, 1093677875, 1093677907, 1093678936, 1093683025, 1093683249,
+      1093683545, 1093684049, 1093684807, 1093685057, 1093685062, 1093685318, 1093686597, 1093687127, 1093743186, 1093743426,
+      1397510968, 1414551363,
     };
 
     // 1 = unit target, 2 = point target, 3 = no target
@@ -58,7 +77,9 @@ namespace WarcraftLegacies.Source.Ai
       2, 2, 2, 3, 2, 2, 2, 2, 2, 2,
       2, 2, 2, 2, 2, 3, 2, 1, 2, 3,
       1, 1, 1, 2, 2, 2, 3, 2, 1, 3,
-      2, 1, 2, 2, 2,
+      2, 1, 2, 2, 2, 3, 3, 3, 3, 3,
+      3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+      3, 3,
     };
 
     // 1 = enemy, 2 = ally, 3 = self
@@ -67,7 +88,9 @@ namespace WarcraftLegacies.Source.Ai
       1, 1, 1, 1, 2, 1, 1, 1, 1, 3,
       1, 1, 1, 1, 2, 3, 1, 2, 2, 1,
       1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 2,
+      1, 1, 1, 1, 2, 2, 3, 1, 3, 3,
+      3, 1, 3, 3, 2, 2, 2, 1, 2, 3,
+      3, 2,
     };
 
     // least worth inside the area (unit 1, hero 3); 0 = default
@@ -76,7 +99,9 @@ namespace WarcraftLegacies.Source.Ai
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-      0, 0, 0, 1, 0,
+      0, 0, 0, 1, 0, 3, 0, 3, 0, 0,
+      0, 3, 0, 0, 3, 2, 4, 3, 2, 0,
+      0, 2,
     };
 
     // area used to count targets; 0 = the ability's own area of effect
@@ -85,7 +110,9 @@ namespace WarcraftLegacies.Source.Ai
       0, 0, 0, 400, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 300, 0, 600, 150, 0, 0, 450,
       0, 0, 0, 0, 0, 0, 450, 150, 0, 400,
-      0, 0, 0, 300, 0,
+      0, 0, 0, 300, 0, 0, 400, 600, 400, 0,
+      0, 600, 400, 0, 0, 0, 0, 800, 0, 0,
+      0, 0,
     };
 
     // 1 = prefer targets with mana, 2 = ally target only below 70 % life, 4 = ground targets only,
@@ -95,18 +122,23 @@ namespace WarcraftLegacies.Source.Ai
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
       8, 9, 9, 0, 0, 0, 0, 0, 12, 0,
-      0, 9, 0, 0, 0,
+      0, 9, 0, 0, 0, 0, 0, 0, 0, 2,
+      2, 0, 0, 2, 0, 2, 2, 0, 2, 2,
+      2, 2,
     };
 
-    // order string (Channel: Ncl6)
+    // order string (Channel: Ncl6); "" = item-based, ordered by the ability id
     internal static string[] Order = new string[]
     {
-      "creepthunderbolt", "flamestrike", "flamestrike", "corrosivebreath", "farsight", "forceofnature",
-      "deathanddecay", "flamestrike", "flamestrike", "creepthunderbolt", "flamestrike", "flamestrike",
-      "darkconversion", "creepthunderbolt", "flamestrike", "roar", "thunderbolt", "healingwave",
+      "carrionswarm", "flamestrike", "flamestrike", "corrosivebreath", "farsight", "forceofnature",
+      "deathanddecay", "flamestrike", "flamestrike", "breathoffire", "flamestrike", "flamestrike",
+      "stampede", "carrionswarm", "flamestrike", "roar", "shockwave", "healingwave",
       "healingward", "tranquility", "firebolt", "chainlightning", "chainlightning", "forceofnature",
-      "darkconversion", "deathanddecay", "channel", "thunderbolt", "chainlightning", "howlofterror",
-      "flamestrike", "chainlightning", "darkconversion", "slow", "blizzard",
+      "stampede", "deathanddecay", "channel", "shockwave", "chainlightning", "howlofterror",
+      "flamestrike", "chainlightning", "stampede", "clusterrockets", "blizzard", "",
+      "", "", "", "", "", "",
+      "", "", "", "", "", "",
+      "", "", "", "",
     };
 
     // who carries what: unit type -> row (one entry per pair)
@@ -116,7 +148,10 @@ namespace WarcraftLegacies.Source.Ai
       1211119697, 1213888304, 1331913320, 1848653907, 1211119950, 1433692515, 1311781427, 1432707442, 1429221425, 1429221453,
       1433105516, 1332897144, 1332897144, 1414543411, 1414543411, 1414543411, 1984967990, 1164277353, 1164277357, 1160786244,
       1429221456, 1296314933, 1160786244, 1211118136, 1215128178, 1852076654, 1311781427, 1432707442, 1311781427, 1429221956,
-      1432707442, 1211118662, 1429221458, 1429221458, 1429221458,
+      1432707442, 1211118662, 1429221458, 1429221458, 1429221458, 1211119949, 1213888819, 1213888825, 1215722344, 1315007587,
+      1447571505, 1332179560, 1332766568, 1214345325, 1215063922, 1865429324, 1747988812, 1848653390, 1865429334, 1865429040,
+      1747990618, 1747990856, 1750756148, 1750756149, 1848653362, 1851419441, 1211118937, 1865429048, 1865429062, 1865429299,
+      1865429303, 1865429594, 1865429808, 1211117657, 1211119928, 1211119928, 1747990857, 1701672039, 1214344820,
     };
 
     internal static int[] CarrierRow = new int[]
@@ -125,7 +160,10 @@ namespace WarcraftLegacies.Source.Ai
       8, 8, 9, 10, 11, 12, 13, 13, 14, 14,
       14, 15, 16, 17, 18, 19, 20, 21, 21, 22,
       23, 24, 25, 26, 27, 28, 29, 29, 30, 30,
-      30, 31, 32, 33, 34,
+      30, 31, 32, 33, 34, 35, 35, 35, 35, 35,
+      35, 36, 36, 37, 37, 38, 39, 40, 41, 42,
+      43, 43, 43, 43, 43, 43, 44, 45, 45, 45,
+      45, 45, 45, 46, 47, 48, 49, 50, 51,
     };
   }
 }

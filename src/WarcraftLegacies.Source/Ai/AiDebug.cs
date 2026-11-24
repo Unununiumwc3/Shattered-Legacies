@@ -92,6 +92,8 @@ public static class AiDebug
     RegisterLoose("-route", AiRoutes.OnRouteCommand, Level.Control);      // 0.42: -route on|off (route planner)
     RegisterLoose("-chain", AiRoutes.OnChainCommand, Level.Control);      // 0.44: -chain on|off (movement chains)
     RegisterLoose("-creeps", AiRoutes.OnCreepsCommand, Level.Control);    // 0.44.3: -creeps on|off (creep camps)
+    RegisterLoose("-questcreeps", AiQuestCreeps.OnCommand, Level.Control); // 0.71.0: -questcreeps on|off
+    RegisterLoose("-home", AiHomeFirst.OnCommand, Level.Control);         // 0.71.0: -home on|off|ab|ab2 (opening)
     RegisterLoose("-gather", AiRoutes.OnGatherCommand, Level.Control);    // 0.45.0: -gather on|off (gather points)
     RegisterLoose("-pportal", AiPortals.OnCommand, Level.Control);        // 0.46: -pportal on|off (pseudo-portals)
     RegisterLoose("-guard", AiGuard.OnCommand, Level.Control);            // 0.46: -guard on|off|ab|ab2
@@ -953,6 +955,7 @@ public static class AiDebug
     });
 
     Section(o, "spells", () => AiSpells.Lines(o)); // 0.70.0: bot spellcasting (casts, refusals, re-chains)
+    Section(o, "autocast", () => AiAutocast.Lines(o)); // 0.71.0: autocast switched on
 
     o.Add("## BOTS");
     for (var b = 0; b < SimpleBot.BotCount; b++)

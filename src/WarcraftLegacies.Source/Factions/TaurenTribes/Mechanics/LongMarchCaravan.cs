@@ -197,6 +197,10 @@ public sealed class LongMarchCaravan
       : target;
     _currentTarget = target;
     _legLength = Math.Max(MathEx.GetDistanceBetweenPoints(_legStart, _currentTarget), 1f);
+    if (_taurenTribes.Player != null)
+    {
+      AiApi.SetEscortGoal(_taurenTribes.Player, target.X, target.Y); // [SL] (0.71.0): bot army walks ahead (vanguard)
+    }
   }
 
   private void FormUpKodoLine(List<unit> living)
