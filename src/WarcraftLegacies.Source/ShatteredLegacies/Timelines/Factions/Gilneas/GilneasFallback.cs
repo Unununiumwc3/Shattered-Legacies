@@ -32,7 +32,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas
       }
 
       _prepared = true;
-      _units = StartArea.Prepare(Regions.Gilneas);
+      // 0.77.0: Greymane's Gate stays VISIBLE, closed and invulnerable -- the wall is shut until Gilneas joins
+      // (gates are no longer removed, AiGraph.RemoveGates); everything else waits hidden
+      _units = Regions.Gilneas.PrepareUnitsForRescue(RescuePreparationMode.HideAll, u => !IsGate(u));
+      _units.AddRange(Regions.Gilneas.PrepareUnitsForRescue(RescuePreparationMode.Invulnerable, IsGate));
+    }
+
+    private static bool IsGate(unit u)
+    {
+      var t = GetUnitTypeId(u);
+      return t == UNIT_H02K_GREYMANE_S_GATE_GATE_CLOSED || t == UNIT_H02M_GREYMANE_S_GATE_GATE_OPEN;
     }
 
     internal static void Run(player p, TurningPointDef def)

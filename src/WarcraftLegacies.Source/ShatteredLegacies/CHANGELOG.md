@@ -4,6 +4,29 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.77.0 — WL 5.0.4: the UI / localisation fixes and an alignment audit; gates stay
+
+Bot changes: `../Ai/CHANGELOG.md` 0.77.0 (gates).
+- **Gates stay in the game** (maintainer): the bot's map-wide gate removal is switched off (kept in the code). Bots keep
+  their own gates open. **Greymane's Gate** stays visible, closed and invulnerable until Gilneas joins (Stormwind's
+  fallback) -- then it is Gilneas' and can be attacked; the announcement says "Gilneas joins the war effort".
+- **WL 5.0.4 UI fixes** (#4146 / #4199 / #4189): illusions keep their caster's name (no new name from the name pool);
+  the faction pick dialog only takes the picker's and neutral units into account; the strings of the artifact and power
+  books, pager, commands, cheats, settings, floating texts, quest rewards and objectives (Build, Cast from, Start
+  casting, Don't control), the "BIG" income, the refund message, the Titanforged label and the unrevivable tooltip go
+  through the translation table -- Chinese clients now see WL's Chinese there (the table had them, the code did not
+  ask). Not taken: WL's localised LEGEND names (the bots compare legends by name; a name that differs between an
+  English and a Chinese client would desync a mixed game).
+- **WL 5.0.4 balance / data fixes**: 74 objects that WL 5 changed and the fork never touched, taken as they are --
+  gate icons, leftover "Breaking Bad Blood" (Warsong) upgrades removed from ~60 buildings, Seradane 6000 life, Old
+  God / Exodar scale, the Control Point Defender's model path (renamed import), the Temple of the Moon's trainees and
+  researches, Windfury without the Shadowpriest requirement, the Sulfuron Spire's pathing; leveled values of Reap,
+  Apocalypse, Devour, Mass spells, Gryphon Orbit, Second Wind, Summoning Mastery, Permanent Metamorphosis and the
+  Legion's health-on-hit computed per level as in WL 5 (the last two scaled wrongly before).
+- **Audit tool** `tools/shattered-legacies/upstream/audit.py`: three-way comparison against WL 4.8.2 and 5.0.4; the
+  result and what is left on purpose are in `UPSTREAM.md` ("Audit 0.77.0").
+- Chinese overlays rebuilt for the changed objects.
+
 ## 0.76.0 — Skywall conquered, not defeated; Gilneas becomes Stormwind's fallback
 
 Bot changes: `../Ai/CHANGELOG.md` 0.76.0 (quest runner).

@@ -5,6 +5,18 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.77.0 — gates stay; bots keep their gates open
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.77.0.
+- **Gate removal off, not gone** (maintainer): since v26 the bot removed every gate unit (and gate doodad) on the map
+  for everybody. The code stays, switched off: `AiGraph.RemoveGates = false` (in `AiConfig.cs`; `true` = the old
+  removal again).
+- **Bots open their own gates and keep them open** (`AiGates.KeepBotGatesOpen`, every 30 s): every gate on the map is
+  listed once (preplaced + new ones); a closed gate that a bot owns gets its open order (the gates' Robo-Goblin-based
+  morph). Gates of players and of Neutral Passive are left alone. Dump: "gates (0.77.0 ...)" in the portal section.
+- Known: a player's CLOSED gate on a bot's route is not opened or attacked by the bot (not done yet).
+- Bot data regenerated (Temple of the Moon trains as in WL 5.0.4).
+
 ## 0.76.0 — quest runner
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.76.0 (Skywall conquered not defeated, Gilneas = Stormwind's

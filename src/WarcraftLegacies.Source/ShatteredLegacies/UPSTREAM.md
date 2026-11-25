@@ -84,6 +84,28 @@ Fork deviations inside bundle 1 (deliberate):
 Not from WL 5 but often named with it (fork roadmap): Dark Trolls / Hakkar (24p), the Quel'Thalas split, Sunfury
 balance.
 
+## Audit 0.77.0 (`tools/shattered-legacies/upstream/audit.py`)
+
+Three-way against WL 4.8.2 (base) and WL 5.0.4, after 0.77.0:
+
+| | object data | C# code |
+|---|---|---|
+| aligned with 5.0.4 | 3,792 | (the rest) |
+| WL 5 changed, fork untouched ("take") | 0 (74 taken in 0.77.0) | 50 -- all left on purpose, below |
+| both changed | 20 -- the fork's Ncl6 order strings (bot casting, 0.70), the orc fork ids (0.73), Grim Batol (Twilight), `e012` (`RZn0`), Warsong's War Camp / Kezan's Scrapyard | 48 -- hand-merged files (fork rules, bundles 1-4) |
+| fork-only change | 16 (Ncl6 orders, Kezan units, Book of Medivh item) | 18 |
+| ID collision | 6 (table below; `A01D` = WL 5's Lunar Sanctuary, taken in 0.69) | -- |
+| gone in WL 5, kept here | 376 (Ahn'Qiraj, Black Empire, Skywall, Frostwolf / Warsong leftovers ...) | 74 |
+| new in WL 5, missing | 9: the Tauren Tribes' WL 5 buildings (`OTBE`, `OTHL`, `OTKO`, `OTNT`, `OTSL`, `OTWC`, `OTWL` -- Earthmother's Cradle, #4168), the vertical wooden gate (`h009` ...), `Augh` | 8: Earthmother's Cradle, South Kalimdor guard, `AhnQirajSetup`, Sulfuron Spire setup, `CheatBenchmark`, the 24p project |
+
+Code left on purpose ("take" but not taken): the dead Frostwolf / Warsong files (the fork plays the Orcish Horde);
+generated War3Api stock classes; WL 5's Spanish table (entries removed); 7v7 (`TeamSetup`, `GameModes`, `Forfeit`'s 5
+votes -- only its localised team name was taken); `FelHordeObjectInfo` (WL 5's renamed constants); Draenei
+(`DraeneiLegends`, kept as they are); Feathermoon and the rocks / turn research of the South Kalimdor guard; the
+Illidari's WL 5 Kil'jaeden's Command; Kezan ambience; the Darkspear Isles shore; WL 5's vertical gate and Old Gods unit
+types; `NeutralLegends` (C'Thun / N'Zoth as neutral legends -- here they belong to factions); `IronforgeSpells` (needs
+WL 5's shared Stormbolt).
+
 ## ID collisions of the 0.69 port (repaired in 0.73.0)
 
 WL 5 reused the ids of objects it removed (Ahn'Qiraj, Skywall). This map still has those objects, so a WL 5 object

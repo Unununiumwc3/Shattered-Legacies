@@ -36,6 +36,12 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   clear. Skywall: take the Vortex Pinnacle CP with another team -> Skywall changes sides; its halls stay; it never
   dies. Stormwind Keep lost -> Gilneas (North Alliance, Gilneas CPs, Genn); Dalaran has no Gilneas choice and no
   Greymane Wall; nobody walks into Gilneas before.
+- **0.77.0 playtest**: gates stand everywhere again; a bot's gate opens within 30 s and stays open (dump "gates"); the
+  Greymane Wall is shut (gate invulnerable) until Stormwind falls, then Gilneas holds it. Illusions keep their
+  caster's name. Chinese client: books, commands, quest rewards translated.
+- **Decide**: Earthmother's Cradle as the Tauren's reward for beating the Old Gods (discussed 2026-11-25: needs WL 5's
+  Tauren buildings and the Un'Goro camp placed into this map's terrain).
+- [ai] Gates, next: a player's closed gate on a bot's route (ask an ally? attack an enemy's?).
 - [ai] Quest runner, next: objectives "hostiles in an area dead" as army targets, so quests like Illidan's Broken
   Isles get cleared too; bots using closable gates (discussed 2026-11-25).
 - [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it

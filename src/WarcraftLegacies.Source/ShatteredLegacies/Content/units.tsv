@@ -141,7 +141,7 @@ e00C	main	used	unit	Crow	(Dalaran - Medivh)	edtm	nightelf	war3mapImported\Raven.
 e00J	main	used	building	Auberdine	(Sentinels Other)	eshy	nightelf	buildings\NightElf\NightElfShipyard\NightElfShipyard	stock	ReplaceableTextures\CommandButtons\BTNNightElfShipyard.blp	-	-	ewsp,h045,h04L	-	RV01,RV02	-	A0C9,A0GN,A0HN,A0HO	-
 e00L	main	used	building	War Academy	(Sentinels Barracks)	eaom	nightelf	buildings\other\BarrowDens\BarrowDens.mdl	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	Sentinels	ewsp	earc,ebal,esen	-	Reib,Remg,Roen	-	-	-
 e00M	main	used	building	Feathermoon Stronghold	(Sentinels Other)	edob	nightelf	buildings\other\BarrowDens\BarrowDens.mdl	stock	ReplaceableTextures\CommandButtons\BTNBearDen.blp	-	-	e00N,ewsp,h04L	-	-	-	A0C9,A0GN,A0HL	-
-e00N	main	used	unit	Keeper of the Grove	(Druids-Elite)	emtg	nightelf	units\nightelf\HeroKeeperoftheGrove\HeroKeeperoftheGrove.mdl	stock	ReplaceableTextures\CommandButtons\BTNcenraiushd.blp	Druids	e00M,e01W,etoa,etoe,etol,h09K,n002,n04F,+4	-	-	-	-	A07C,A0CO,A0FQ,A14X,ACsk,Acyc,Aien,Ault	etoe,RK01
+e00N	main	used	unit	Keeper of the Grove	(Druids-Elite)	emtg	nightelf	units\nightelf\HeroKeeperoftheGrove\HeroKeeperoftheGrove.mdl	stock	ReplaceableTextures\CommandButtons\BTNcenraiushd.blp	Druids	e00M,e01W,etoa,etoe,etol,h09K,n002,n04F,+3	-	-	-	-	A07C,A0CO,A0FQ,A14X,ACsk,Acyc,Aien,Ault	etoe,RK01
 e00Q	main	used	building	Nordrassil Ancient Protector	(Sentinels Other)	etrp	nightelf	buildings\nightelf\AncientProtector\AncientProtector	stock	ReplaceableTextures\CommandButtons\BTNTreant.blp	-	-	-	-	-	-	Aro2	-
 e00R	main	used	building	Altar of Watchers	(Sentinels Altar)	eate	nightelf	war3mapImported\AltarOfWatchersV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNAltarOfElders.blp	Sentinels	ewsp	E002,E025,Etyr,Ewrd	-	-	-	-	-
 e00T	main	used	building	Watcher's Bastion	(Sentinels Siege)	edob	nightelf	war3mapImported\Towered_Hunters_Hall_v3.mdl	main	ReplaceableTextures\CommandButtons\BTNHunterTower.blp	Sentinels	ewsp	h08V,n034	-	-	-	-	n06P
@@ -227,7 +227,7 @@ h00I	main	used	building	Windmill	(Lordaeron Other)	hhou	human	war3mapImported\Bu
 h00J	main	used	unit	Clergyman	(Stormwind)	hmpr	human	war3mapImported\ClericWC1.mdl	main	ReplaceableTextures\CommandButtons\BTNClericWC1.blp	Stormwind	h02R,h040,hars	-	-	-	-	A02E,A02F,A0BA,A0VF,Ahea,Aihn	-
 h00K	main	used	building	Horizontal Wooden Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NZ	-
 h00L	main	used	building	Horizontal Wooden Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NZ	-
-h00M	main	used	building	Horizontal Wooden Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
+h00M	main	used	building	Horizontal Wooden Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\Gate\Gate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
 h00N	main	used	building	Goldshire	(Stormwind)	hkee	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindTownhall.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	-
 h00O	main	used	building	Utgarde Keep	(Scourge Other)	hcas	human	war3mapImported\Dragons Reach.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulMain3.blp	-	-	h00P,h02G,h061	-	-	-	ACav,Avul	halt
 h00P	main	used	unit	Mammoth Rider	(Scourge	hkni	human	war3mapImported\VrykulmammothRider6Lumber3.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulWarMammoth.blp	Scourge	h00O	-	-	-	-	A020,A0R1,Ahan,Aihn	-
@@ -258,9 +258,9 @@ h01S	main	used	building	Tavern	(Ironforge Farm)	hhou	human	war3mapImported\Dwarv
 h01T	main	used	building	Inn	(Lordaeron Other)	hhou	human	war3mapImported\Building_Inn.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	Gilneas	-	-	-	-	-	-	-
 h01U	main	used	building	Aerie Peak	(Ironforge)	hcas	human	buildings\human\GryphonAviary\GryphonAviary.mdl	stock	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h019,h01L,h037	-	-	-	A0K5,AEsb	-
 h01V	main	used	building	Barn	(Lordaeron Other)	hhou	human	war3mapImported\Building_Barn.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h01W	main	used	building	Elven Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
-h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NV	-
-h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
+h01W	main	used	building	Elven Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NV	-
+h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NV	-
+h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
 h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	oZwf	-	-	-	A04O	halt
 h021	main	used	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
 h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+10	-	-	A041,Ahrp	-
@@ -275,20 +275,20 @@ h02C	main	used	building	Castle	(Gilneas T3)	hcas	human	war3mapImported\GilneasTo
 h02D	main	used	unit	Geomancer	(Dalaran)	hmpr	human	war3mapImported\MageDalaranV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNPriest.blp	Dalaran	h036	-	-	-	-	A02R,A0FW,A0K6,A0ZU,A16B,Aihn	h066
 h02F	main	used	building	Household	(Gilneas Farm)	hhou	human	war3mapImported\GilneasFarm.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasFarm.blp	Gilneas	hpea	-	-	-	-	-	h01R
 h02G	main	used	unit	Vrykul Warrior	(Scourge)	hcth	human	war3mapImported\VrykulWarriorV5Optimized.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulHarpooner.blp	Scourge	h00O	-	-	-	-	A020,A0R1,Ahan,Aihn	-
-h02H	main	used	building	Stormwind Harbour Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NX	-
-h02I	main	used	building	Stormwind Harbour Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h02J	main	used	building	Stormwind Harbour Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NX	-
-h02K	main	used	building	Greymane's Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O0	-
-h02L	main	used	building	Greymane's Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h02M	main	used	building	Greymane's Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O0	-
+h02H	main	used	building	Stormwind Harbour Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NX	-
+h02I	main	used	building	Stormwind Harbour Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
+h02J	main	used	building	Stormwind Harbour Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0NX	-
+h02K	main	used	building	Greymane's Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0O0	-
+h02L	main	used	building	Greymane's Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
+h02M	main	used	building	Greymane's Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0O0	-
 h02N	main	used	building	Lumber Mill	(Dalaran Research)	hlum	human	war3mapImported\LumberMillDalaranV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneLumberMill.blp	Dalaran	h022	-	-	R006,R00C,R04R,R09X,RDTP,Rhar,Rhme	-	-	-
 h02O	main	used	unit	Bladesman	(Stormwind)	hcth	human	StormwindSergeant.mdl	main	ReplaceableTextures\CommandButtons\BTNpikeman.blp	Stormwind	h05E,h05Z,h06E	-	-	-	-	A0BG,Adef,Aihn,S01J	-
 h02P	main	used	building	Holding	(Sunfury T1)	htow	human	war3mapImported\BE_TownHall1.mdl	main	ReplaceableTextures\CommandButtons\BTNBE_TownHall1.blp	Sunfury	n0E2	n0E2,n0E7	-	-	-	-	-
 h02Q	main	used	unit	Pegasus Knight	(Lordaeron)	hdhw	human	war3mapImported\Unit_PegasusKnight1.mdl	main	ReplaceableTextures\CommandButtons\BTNMystical Knight on Pegasus Lordaeron.blp	Lordaeron	h06C	-	-	-	-	A0BJ,A0VV	R09X
 h02R	main	used	building	Northshire Abbey	(Stormwind Other)	hcas	human	war3mapImported\Building_NorthshireAbbey.mdl	main	ReplaceableTextures\CommandButtons\BTNCastle.blp	-	-	h00J,n05L,n093	-	R005,R02E	-	A0K7,AUau	-
-h02S	main	used	building	Gates of Ahn'Qiraj	(Gate - Open)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O1	-
-h02T	main	used	building	Gates of Ahn'Qiraj	(Gate - Dead)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
-h02U	main	used	building	Gates of Ahn'Qiraj	(Gate - Closed)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O1	-
+h02S	main	used	building	Gates of Ahn'Qiraj	(Gate - Open)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0O1	-
+h02T	main	used	building	Gates of Ahn'Qiraj	(Gate - Dead)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
+h02U	main	used	building	Gates of Ahn'Qiraj	(Gate - Closed)	hhou	unknown	Doodads\Cinematic\SargerasGate\SargerasGate.mdl	stock	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A0O1	-
 h02V	main	used	building	Stromgarde Keep	(Stormwind Other)	hcas	human	war3mapImported\StormwindTownhall.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindCastle.blp	-	-	h019,h05F,hpea	-	-	-	A0GD,ACav	halt
 h02W	main	used	unit	Dummy	(Warsong)	hfoo	commoner	war3mapImported\DUMMY.mdl	missing	UI\Minimap\Minimap-Tower	-	-	-	-	-	-	Aloc,Avul	-
 h02X	main	used	building	Altar of Kings	(Gilneas Altar)	halt	human	war3mapImported\GilneasAltar.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasAltar.blp	Gilneas	hpea	E01E,Hhkl,Hpb2,TGGN	-	-	-	-	h01R
@@ -330,7 +330,7 @@ h040	main	used	building	Imperial Quarters	(Stormwind controlled)	halt	human	Dood
 h041	main	used	unit	Marine	(KulTiras)	hfoo	human	CaptainKulTirasV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNTheCaptain.blp	Kul'tiras	h06R	-	-	-	-	A0BG,Adef,Aihn	-
 h042	main	used	building	Pinnacle	(Ironforge Magic)	harm	human	war3mapImported\DwarvenMysticHall.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenMysticHall.blp	Ironforge	h019	n00C,tp05	-	R00V,TP42	-	-	h07F
 h044	main	used	building	Altar of Knowledge	(Dalaran Altar)	halt	human	war3mapImported\Building_DalaranAltar.mdl	main	ReplaceableTextures\CommandButtons\BTNAltarOfKings.blp	Dalaran	h022	H09N,Haah,Hant,Hjai	-	-	-	-	-
-h045	main	used	unit	Warden	(Sentinels-Elite)	hspt	nightelf	units\nightelf\herowarden\herowarden.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	Sentinels	e00J,n04G,n06J,n06O,n06P	-	-	-	-	A00A,A00T,A08P,A15V,A15W,A15X,A15Y,Aien,Ault	n06P,RV02
+h045	main	used	unit	Warden	(Sentinels-Elite)	hspt	nightelf	units\nightelf\herowarden\herowarden.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	Sentinels	e00J,n04G,n06J,n06O,n06P,o029	-	-	-	-	A00A,A00T,A08P,A15V,A15W,A15X,A15Y,Aien,Ault	n06P,RV02
 h046	main	used	building	Boralus Keep	(KulTiras)	hcas	human	war3mapImported\KultirasTownHallV1.mdl	main	ReplaceableTextures\CommandButtons\BTNKultirasCastle.blp	-	-	h01E,n07G	-	-	-	A0HN,A0TO	-
 h048	main	used	building	Forgeworks	(Ironforge Research)	hbla	human	war3mapImported\DwarvenForge.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenForge.blp	Ironforge	h019	-	-	R006,R00C,R00N,R04R,R09X,Rhac,Rhar,Rhme	-	A0T3,A0VH	-
 h04B	main	used	building	Rock	(Dalaran Geomancer Rock)	hwtw	human	Doodads\LordaeronSummer\Terrain\LoardaeronRockChunks\LoardaeronRockChunks3.mdl	stock	ReplaceableTextures\CommandButtons\BTNGolemThunderclap.blp	-	-	-	-	-	-	-	-
@@ -338,14 +338,14 @@ h04C	main	used	unit	Vanguard	(Stormwind)	hcth	human	stormwindfootman.mdl	main	Re
 h04D	main	used	unit	Al'ar	(Quelthalas-Anasterian-Level 2)	hphx	human	units\human\phoenix\phoenix	stock	ReplaceableTextures\CommandButtons\BTNMarkOfFire.blp	-	-	-	-	-	-	A0IM,ACmi,ACrk,Aphx,Apxf	-
 h04E	main	used	unit	Protector	(Gilneas)	hcth	human	war3mapImported\Sir Ferdal(Gilneas).mdl	main	ReplaceableTextures\CommandButtons\BTNTheCaptain.blp	Gilneas	h03Q	-	-	-	-	A020,Aihn	-
 h04I	main	used	building	Gilneas Castle	(Gilneas Other)	hcas	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasCastle.blp	-	-	hpea,o01V	-	-	-	-	-
-h04L	main	used	unit	Priestess of the Moon	(Sentinels-Elite)	hcth	nightelf	units\nightelf\HeroMoonPriestess\HeroMoonPriestess.mdl	stock	ReplaceableTextures\CommandButtons\BTNtyrandehd.blp	Sentinels	e00J,e00M,e01W,n04F,n04G,n06J,n06O,n06P,+1	-	-	-	-	A09Q,A16H,A16I,A16K,A16M,A16N,A16O,AEst,Aien	n06P,RV01
+h04L	main	used	unit	Priestess of the Moon	(Sentinels-Elite)	hcth	nightelf	units\nightelf\HeroMoonPriestess\HeroMoonPriestess.mdl	stock	ReplaceableTextures\CommandButtons\BTNtyrandehd.blp	Sentinels	e00J,e00M,e01W,n04F,n04G,n06J,n06O,n06P,+2	-	-	-	-	A09Q,A16H,A16I,A16K,A16M,A16N,A16O,AEst,Aien	n06P,RV01
 h04M	main	used	unit	Cleric	(Gilneas)	hmpr	human	war3mapImported\GilneasMage.mdl	main	ReplaceableTextures\CommandButtons\BTNMilitia.blp	Gilneas	h03D	-	-	-	-	A0ML,A0MV,A0MX,Aihn	-
 h04N	main	used	building	Improved Cannon Tower	(Gilneas Tower)	hctw	human	war3mapImported\GilneasTower.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasTowerCannon.blp	Gilneas	-	-	-	-	-	-	R02R
 h04O	main	used	unit	Bomber	(KulTiras)	hgyr	human	FlyingMachineKulTirasV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNFlyingMachine.blp	Kul'tiras	h07P	-	-	-	-	A0GE,Agyv	R06T,R09X
 h04P	main	used	building	The Nexus	-	hwtw	unknown	Doodads\Ruins\Props\DalaranVioletCitadelRuin\DalaranVioletCitadelRuin.mdl	stock	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	-	-	n0AC	-	-	-	A0L2,Adtg	-
-h04R	main	used	building	Diagonal Wooden Gate	(Gate - Open)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A03U	-
-h04S	main	used	building	Diagonal Wooden Gate	(Gate - Closed)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A03U	-
-h04T	main	used	building	Diagonal Wooden Gate	(Gate - Dead)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
+h04R	main	used	building	Diagonal Wooden Gate	(Gate - Open)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A03U	-
+h04S	main	used	building	Diagonal Wooden Gate	(Gate - Closed)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	A03U	-
+h04T	main	used	building	Diagonal Wooden Gate	(Gate - Dead)	hhou	unknown	war3mapImported\Gate_45_RightAlternate.mdl	main	ReplaceableTextures/CommandButtons/BTNGate.blp	-	-	-	-	-	-	-	-
 h04V	main	used	building	Arcane Vault	(Quelthalas Shop)	hvlt	human	buildings\human\ArcaneVault\ArcaneVault	stock	ReplaceableTextures\CommandButtons\BTNArcaneVault.blp	Quel'thalas	nbee	-	-	-	-	Aall,Apit	-
 h04W	main	used	unit	Siege Tank	(KulTiras)	hmtt	human	SiegeEngineKulTirasV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNSeigeEngineWithMissles.blp	Kul'tiras	h07P	-	-	-	-	A0GH	R00L
 h04X	main	used	unit	Harvest-Witch	(Gilneas)	hcth	human	war3mapImported\VrykulHuntressRider.mdl	main	ReplaceableTextures/CommandButtons/BTNHeroRangerGiln.blp	Gilneas	h03D	-	-	-	-	A0QZ,A0YZ,A134,Aien,TP19	-
@@ -1000,7 +1000,7 @@ n0CY	main	used	unit	Black Hole	-	ntor	human	war3mapImported\BlackHole.mdl	main	R
 n0CZ	main	used	unit	Dreadnaught	(Ironforge)	nbal	human	war3mapImported\DwarfDreadNaughtRocket.mdl	main	ReplaceableTextures\CommandButtons\BTNDreadnaughtDwarf.blp	Ironforge	harm	-	-	-	-	-	-
 n0D0	main	unused	unit	Dalaran Shield Level 1	-	ntor	human	war3mapImported\Dalaran Shield.mdl	main	ReplaceableTextures\CommandButtons\BTNNetherShield.blp	-	-	-	-	-	-	A11Q,A13M,Aloc	-
 n0D1	main	used	unit	Murloc Sorcerer	(Creep-Loch Modan)	Nmsr	creeps	Units\Creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	AInv,ANrf	-
-n0D6	main	used	building	Control Point Defender	(Warsong)	nbt1	orc	war3mapImported\WatchTowerHumanV1.03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	-	-	-	-	-	-	A0ZQ	-
+n0D6	main	used	building	Control Point Defender	(Warsong)	nbt1	orc	war3mapImported\WatchTowerHumanV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	-	-	-	-	-	-	A0ZQ	-
 n0D8	main	used	building	Vendor-hall	(Scarlet Shop)	nmrk	human	war3mapImported\StromgardeTradeHouse.mdl	main	ReplaceableTextures\CommandButtons\BTNScarletTradeHouse.blp	Scarlet Crusade	h022	-	-	-	-	Aall,Apit	-
 n0D9	main	used	building	Slipstream Portal	(Stormwind - Khadgar)	nwgt	human	doodads\cinematic\ShimmeringPortal\ShimmeringPortal.mdl	stock	ReplaceableTextures\CommandButtons\BTNPortal.blp	-	-	-	-	-	-	A012,Avul,Awrp	-
 n0DJ	main	used	unit	Toxic Cloud	(level 1)	ntor	human	war3mapImported\Radioactivecloud.mdl	main	ReplaceableTextures/CommandButtons/BTNToxicGoo.blp	-	-	-	-	-	-	A11T,Aloc	-
@@ -1124,7 +1124,7 @@ ncnt	main	used	building	Centaur Tent	-	ncnt	other	buildings\other\CentaurTent\Ce
 ncpn	main	used	unit	Fel Peon	(Fel, Worker)	ncpn	orc	units\demon\ChaosPeon\ChaosPeon	stock	ReplaceableTextures\CommandButtons\BTNChaosPeon.blp	Fel Horde	o008,o00F,o013,o017,o02Y,o02Z,o030	-	n0AP,o02V,o02W,o02X,o02Y,o031,o032,o033,o034,ocbw,u00Q	-	-	A041,A08C,Arep	-
 nct1	main	used	building	Centaur Tent	(2)	nct1	other	buildings\other\CentaurTent1\CentaurTent1	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
 nct2	main	used	building	Centaur Tent	(3)	nct2	other	buildings\other\CentaurTent2\CentaurTent2	stock	ReplaceableTextures\CommandButtons\BTNGenericCreepBuilding.blp	-	-	-	-	-	-	-	-
-nctl	main	used	building	Corrupted Tree of Life	-	nctl	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNCorruptedTreeOfLife.blp	-	-	o000	-	Renb	-	Aeat,Aro1,Atol	-
+nctl	main	used	building	Corrupted Tree of Life	-	nctl	nightelf	buildings\demon\CorruptedTreeofLife\CorruptedTreeofLife	stock	ReplaceableTextures\CommandButtons\BTNCorruptedTreeOfLife.blp	-	-	-	-	Renb	-	Aeat,Aro1,Atol	-
 ndfl	main	used	building	Defiled Fountain of Life	(Fel Horde)	ndfl	orc	buildings\other\FountainOfLifeDefiled\FountainOfLifeDefiled	stock	ReplaceableTextures\CommandButtons\BTNFountainOfLifeDefiled.blp	-	-	-	-	-	-	A0BN	-
 ndgt	main	used	building	Kirin Tor Tower	(Dalaran Tower)	ndgt	human	war3mapImported\Building_DalaranWatchtower.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneGuardTowerA.blp	Dalaran	-	-	-	-	-	-	h066
 ndmg	main	used	building	Demon Gate	(Legion Siege)	ndmg	undead	war3mapImported\DemonGateV2_01.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonGate.blp	Legion	u00D	n04O,n04U,n0DO	-	-	-	A126	R04B
@@ -1402,7 +1402,7 @@ nwzd	main	used	unit	Dark Wizard	-	nwzd	creeps	units\creeps\BanditMage\BanditMage
 nwzg	main	used	unit	Renegade Wizard	-	nwzg	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
 nwzr	main	used	unit	Rogue Wizard	-	nwzr	creeps	units\creeps\BanditMage\BanditMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	-	-
 nzom	main	used	unit	Zombie	(Scourge)	nzom	undead	units\creeps\Zombie\Zombie	stock	ReplaceableTextures\CommandButtons\BTNZombie.blp	-	-	-	-	-	-	Aap1,Aiun	-
-o000	main	used	unit	Royalty	(Cthun Elites)	ogru	naga	war3mapImported\BloodBeetle.mdl	main	ReplaceableTextures\CommandButtons\BTNSilithid.blp	Ahn'qiraj	n05A,nctl,u020,u021,u022	-	-	-	-	A0NG,A0XG,A0Y2,A0Y3,ACmp,ACrk,Aion	u022
+o000	main	used	unit	Royalty	(Cthun Elites)	ogru	naga	war3mapImported\BloodBeetle.mdl	main	ReplaceableTextures\CommandButtons\BTNSilithid.blp	Ahn'qiraj	n05A,u020,u021,u022	-	-	-	-	A0NG,A0XG,A0Y2,A0Y3,ACmp,ACrk,Aion	u022
 o001	main	used	unit	Tol'vir Statue	(Cthun Tol'vir Statue)	odkt	naga	war3mapImported\ObsidianSphinx.mdl	main	ReplaceableTextures\CommandButtons\BTNObsidianStatue.blp	Ahn'qiraj	o00D	-	-	-	-	AL1A,AZ2A,AZ3A,Alit	RZZL,u022
 o002	main	used	building	Improved Watch Tower	(Frostwolf Tower 2)	owtw	orc	buildings\orc\WatchTower\WatchTower	stock	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	Frostwolf,Orcish Horde	-	-	-	-	-	Arbr,Aspi	-
 o003	main	used	building	Portable Cannon	(Ironforge Engineer)	osp2	human	war3mapImported\Unit_DwarfTurret.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarfTurret.blp	-	-	-	-	-	-	-	-
@@ -1461,7 +1461,7 @@ o01Y	main	used	unit	Sentinel Standard	(Light Blue - Shandris)(Level 2)	osp1	nigh
 o01Z	main	used	unit	Sentinel Standard	(Light Blue - Shandris)(Level 1)	osp1	nightelf	Objects\InventoryItems\NightElfCaptureFlag\NightElfCaptureFlag.mdl	stock	ReplaceableTextures\CommandButtons\BTNNightElfCaptureFlag.blp	-	-	-	-	-	-	A0LB	-
 o020	main	used	building	Altar of Conquerors	(Warsong Altar)	oalt	orc	war3mapImported\AltarofStormsHumanV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Warsong	o04L	MD25,O005,O06L,Ogrh,VSWS	-	-	-	Abds,Aspi	-
 o028	main	used	building	Burrow	(Warsong Farm)	otrb	orc	buildings\orc\TrollBurrow\TrollBurrow	stock	ReplaceableTextures\CommandButtons\BTNTrollBurrow.blp	Warsong	o04L	-	-	-	-	A0CF,Arbr,Aspi	-
-o029	main	used	building	Temple of The Moon	(Sentinels Other)	oalt	nightelf	buildings\nightelf\MoonWell\MoonWell.mdl	stock	ReplaceableTextures\CommandButtons\BTNMoonWell.blp	-	-	e00N,ewsp	-	-	-	-	-
+o029	main	used	building	Temple of The Moon	(Sentinels Other)	oalt	nightelf	buildings\nightelf\MoonWell\MoonWell.mdl	stock	ReplaceableTextures\CommandButtons\BTNMoonWell.blp	-	-	ewsp,h045,h04L	-	RV01,RV02	-	-	-
 o02A	main	used	unit	Ward of Gale	(Skywall)	osp1	naga	AirEssence.mdl	main	ReplaceableTextures\CommandButtons\BTNWindOrb.blp	-	-	-	-	-	-	A0NN,A0X2	-
 o02D	main	used	building	Darkspear Hold	(Frostwolf Other)	otto	orc	buildings\orc\VoodooLounge\VoodooLounge.mdl	stock	ReplaceableTextures\CommandButtons\BTNTaurenTotem.blp	-	-	n03F,o00G,opeo	-	RZ03,RZo1,Ropg	-	A0C9,A0GM,Aspi	ostr
 o02F	main	used	unit	Mangonel	(Lordaeron)	ocat	human	war3mapImported\Siege_Onager.mdl	main	ReplaceableTextures\CommandButtons\BTNOnager.blp	Lordaeron	h094,o00E	-	-	-	-	-	-
@@ -1565,7 +1565,7 @@ o05E	main	used	unit	Lurking Tempest	(Skywall)	oshm	naga	war3mapImported\StormEle
 o05F	main	used	building	Naval Battery	(KulTiras Tower)	oshy	human	war3mapImported\Naval Battery.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
 o05G	main	used	building	Siege Workshop	(Orcish Horde Siege)	obea	orc	war3mapImported\OrcMill.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcBlacksmith.blp	Orcish Horde,Warsong	o04L,opeo	e01M,ocat	-	RZ01	-	Abds,Aspi	ostr,ofor,R05R
 o05I	main	used	building	Missile Battery	(Creep Tower)	oshy	human	war3mapImported\GoblinTowerInduwer.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonTower.blp	-	-	-	-	-	-	-	-
-o05K	main	used	unit	Pillager	(Creep)	ogru	orc	war3mapImported\BlackrockRaiderV2.mdl	main	ReplaceableTextures\CommandButtons\BTNBonechewerGrunt.blp	-	o03D	-	-	-	-	A020,A0LQ,Aion	-
+o05K	main	used	unit	Pillager	(Creep)	ogru	orc	war3mapImported\BlackrockRaiderV2.mdl	main	ReplaceableTextures\CommandButtons\BTNThrall.blp	-	o03D	-	-	-	-	A020,A0LQ,Aion	-
 o05L	main	used	unit	Dragon Hunter	(Creep)	ohun	orc	war3mapImported\SpearmanWC1v2.mdl	main	ReplaceableTextures\CommandButtons\BTNSpearmanWC1v2.blp	-	o03D	-	-	-	-	A05H,Aion	o068
 o05N	main	used	unit	Healing Flower	(Druids)	osp2	nightelf	war3mapImported\Petal Ward.mdl	main	ReplaceableTextures\CommandButtons\BTNHealingPlants.blp	-	-	-	-	-	-	A0HR	-
 o05Q	main	used	building	GreymaneTower	(Gilneas Real Tower)	owtw	human	war3mapImported\GilneasTower.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasTowerGuard.blp	-	-	-	-	-	-	A0J1	-

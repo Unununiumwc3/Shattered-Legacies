@@ -111,7 +111,8 @@ public sealed class FactionMultiboard
       var income = R2I(playerData.TotalIncome);
       var hasBonus = playerData.BonusIncome > 0;
       var incomePrefix = hasBonus ? "|cffffcc00" : "";
-      var incomeText = income <= 999 ? $"{incomePrefix}{income}" : $"{incomePrefix}BIG";
+      // WL 5.0.4: "BIG" stands in for a figure the column has no room for, so it is looked up
+      var incomeText = income <= 999 ? $"{incomePrefix}{income}" : incomePrefix + Loc.Get("BIG");
 
       incomeMbi.SetText(incomeText);
     }

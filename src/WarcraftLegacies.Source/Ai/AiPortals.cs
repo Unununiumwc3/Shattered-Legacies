@@ -503,6 +503,7 @@ namespace WarcraftLegacies.Source.Ai
       // 0.48.2: own line -- the dump cuts long lines (these parts were lost in 0.48.1)
       o.Add("portal states: Dark Portal " + DarkPortalState + "; bot portals:" + BotPortals + "; Legion teleporters "
             + LegionTeleporterState + "; Dalaran Way Gates " + DalaranGates);
+      o.Add(AiGates.GateLine());
 
       // WL's own waygates (not the AI pairs of Neutral Extra): where, owner, active, hidden, destination
       var g = CreateGroup();

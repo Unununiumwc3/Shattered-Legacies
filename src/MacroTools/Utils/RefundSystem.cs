@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MacroTools.Localization;
+using System.Collections.Generic;
 using System.Linq;
 using MacroTools.Extensions;
 using WCSharp.Shared.Data;
@@ -63,8 +64,9 @@ public static class RefundSystem
   {
     foreach (var kvp in _globalTotals)
     {
-      DisplayTextToPlayer(kvp.Key, 0, 0,
-        $"|cff00ff00You received {kvp.Value} gold refunded from removed buildings.|r");
+      DisplayTextToPlayer(kvp.Key, 0, 0, Loc.Format( // WL 5.0.4: localised
+        "|cff00ff00You received {gold} gold refunded from removed buildings.|r",
+        ("{gold}", kvp.Value.ToString())));
     }
 
     _globalTotals.Clear();

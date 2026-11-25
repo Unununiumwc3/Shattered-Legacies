@@ -922,6 +922,22 @@ public static class AiGraph
   // Gate unit-types (closed AND open variants of every wall-gate family in the map). Bot-owned gates of these
   // exact types are removed so a bot can never wall its own army in. This is a strict id set -- the "DEMON_GATE"
   // unit spawners and the Dark Portal Waygate are deliberately NOT here, so nothing but real gates is touched.
+  // 0.77.0 (maintainer): gates stay in the game. The gate removal (AiGates.SweepBotGates / SweepDestructibleGates: every
+  // gate unit and gate doodad on the map removed) is kept but OFF; bots open the gates they own and keep them open
+  // (AiGates.KeepBotGatesOpen). true = the old removal again. (In AiGraph with the gate type lists.)
+  public const bool RemoveGates = false;
+
+  // closed forms of the gates (each opens with the Robo-Goblin-based morph, A0NZ / A0O0 ...)
+  public static readonly HashSet<int> ClosedGateTypes = new()
+  {
+    1747988555, // h00K Horizontal Wooden
+    1747988823, // h01W Elven
+    1747989064, // h02H Stormwind Harbour
+    1747989067, // h02K Greymane's
+    1747989077, // h02U Ahn'Qiraj
+    1747989587, // h04S Diagonal Wooden
+  };
+
   public static readonly List<int> GateTypes = new()
   {
     // WL custom gates use LOWERCASE-h codes (confirmed via -id: h01W 'Elven Gate' = 1747988823). These are the

@@ -65,6 +65,9 @@ public sealed class LegendaryHero : Legend
   {
     get
     {
+      // [SL] (0.77.0): NOT WL 5.0.4's localised name here -- the bots compare legends by name, and a name that
+      // differs between an English and a Chinese client would desync a mixed game. Players read the unit's own
+      // (localised) proper name anyway.
       if (!string.IsNullOrEmpty(_name))
       {
         return _name;
@@ -314,7 +317,9 @@ public sealed class LegendaryHero : Legend
     Unit.RemoveAbility(_dummyPermadies);
     if (_diesWithout != null)
     {
-      var tooltip = "When this unit dies, it will be unrevivable unless any of the following capitals are under your control:\n";
+      // The tooltip is composed around the capitals' own names, which are localized separately, so each stated
+      // part goes through the table on its own rather than the whole sentence.
+      var tooltip = Loc.Get("When this unit dies, it will be unrevivable unless any of the following capitals are under your control:\n");
       foreach (var unit in _diesWithout)
       {
         if (unit == null)
@@ -325,7 +330,7 @@ public sealed class LegendaryHero : Legend
         tooltip = tooltip + " - " + unit.Name + "|n";
       }
 
-      tooltip += "\nUsing this ability pings each of these capitals on the minimap.";
+      tooltip += Loc.Get("\nUsing this ability pings each of these capitals on the minimap.");
       Unit.AddAbility(_dummyDieswithout);
       Unit.GetAbility(_dummyDieswithout).SetTooltipNormalExtended_aub1(0, tooltip);
       return;

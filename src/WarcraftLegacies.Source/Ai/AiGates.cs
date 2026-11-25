@@ -29,7 +29,7 @@ namespace WarcraftLegacies.Source.Ai
     // touched -- bridges and tree/stone walls are excluded, so this cannot delete a bridge deck.
     internal static void SweepDestructibleGates()
     {
-      if (_destGatesSwept)
+      if (!AiGraph.RemoveGates || _destGatesSwept)
       {
         return;
       }
@@ -82,6 +82,16 @@ namespace WarcraftLegacies.Source.Ai
     private static void OnUnitEntersMap()
     {
       var u = GetTriggerUnit();
+      if (!AiGraph.RemoveGates)
+      {
+        if (_gateSet != null && _gateSet.Contains(GetUnitTypeId(u)))
+        {
+          _gates.Add(u); // 0.77.0: a new gate -- kept, opened if a bot owns it
+        }
+
+        return;
+      }
+
       if (_gateSet != null && _gateSet.Contains(GetUnitTypeId(u)))
       {
         SimpleBot.Log("gate watch: new gate " + GetUnitName(u) + " removed at " + I2S(R2I(GetUnitX(u))) + ","
@@ -90,8 +100,90 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // ---- 0.77.0: gates stay; bots open their own and keep them open --------------------------------------------
+    // Every gate on the map (preplaced ones from AllPreplacedWidgets, new ones from the "enters the map" watch) is
+    // listed once. Every 30 s a gate that a bot owns and that is closed gets its open order: the closed form's
+    // morph (Robo-Goblin base) -- whichever of the two morph orders the current form accepts. Gates of players and
+    // neutral gates are not touched. Dump: "gates" in the portal / gate section.
+    private static readonly List<unit> _gates = new();
+    private static bool _gatesListed;
+    private static float _lastOpen = -100f;
+    internal static int GatesOpened;
+
+    internal static void KeepBotGatesOpen()
+    {
+      if (AiGraph.RemoveGates || SimpleBot._clock - _lastOpen < 30f)
+      {
+        return;
+      }
+
+      _lastOpen = SimpleBot._clock;
+      if (!_gatesListed)
+      {
+        _gatesListed = true;
+        _gateSet = new HashSet<int>();
+        for (var i = 0; i < AiGraph.GateTypes.Count; i++)
+        {
+          _gateSet.Add(AiGraph.GateTypes[i]);
+          if (MacroTools.PreplacedWidgets.AllPreplacedWidgets.Units.TryGetAll(AiGraph.GateTypes[i], out var pre))
+          {
+            for (var k = 0; k < pre.Count; k++)
+            {
+              _gates.Add(pre[k]);
+            }
+          }
+        }
+
+        WatchNewGates();
+      }
+
+      for (var i = _gates.Count - 1; i >= 0; i--)
+      {
+        var g = _gates[i];
+        if (GetUnitTypeId(g) == 0)
+        {
+          _gates.RemoveAt(i); // removed (a dead gate is a new unit of the "dead" type)
+          continue;
+        }
+
+        if (GetUnitState(g, UNIT_STATE_LIFE) <= 0.405f || IsUnitHidden(g) || !SimpleBot.IsBot(GetOwningPlayer(g))
+            || !AiGraph.ClosedGateTypes.Contains(GetUnitTypeId(g)))
+        {
+          continue;
+        }
+
+        if (IssueImmediateOrderById(g, 852156) || IssueImmediateOrderById(g, 852157)) // robogoblin / unrobogoblin
+        {
+          GatesOpened++;
+          SimpleBot.Log("gates: " + SimpleBot.FacName(GetOwningPlayer(g)) + " opens " + GetUnitName(g) + " at "
+                        + I2S(R2I(GetUnitX(g))) + "," + I2S(R2I(GetUnitY(g))));
+        }
+      }
+    }
+
+    internal static string GateLine()
+    {
+      var closed = 0;
+      for (var i = 0; i < _gates.Count; i++)
+      {
+        if (GetUnitTypeId(_gates[i]) != 0 && AiGraph.ClosedGateTypes.Contains(GetUnitTypeId(_gates[i])))
+        {
+          closed++;
+        }
+      }
+
+      return "gates (0.77.0, removal " + (AiGraph.RemoveGates ? "ON" : "off") + "): " + I2S(_gates.Count) + " known, "
+             + I2S(closed) + " closed now, opened by bots " + I2S(GatesOpened);
+    }
+
     internal static void SweepBotGates()
     {
+      if (!AiGraph.RemoveGates)
+      {
+        KeepBotGatesOpen();
+        return;
+      }
+
       if (_lastGateSweep >= 0f && SimpleBot._clock - _lastGateSweep < 300f)
       {
         return;

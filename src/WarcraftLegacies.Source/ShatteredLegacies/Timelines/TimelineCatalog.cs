@@ -107,8 +107,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         HeroType = 0,                          // Genn Greymane leads them (GilneasFallback)
         Prepare = () => GilneasFallback.Prepare(),
         Run = (p, def) => GilneasFallback.Run(p, def),
-        Announcement = "|cffffcc00Stormwind has fallen.|r Its survivors find refuge behind the Greymane Wall -- Gilneas "
-                       + "opens its gates and joins the North Alliance.",
+        Announcement = "|cffffcc00Stormwind has fallen.|r Its survivors find refuge behind the Greymane Wall. King Genn "
+                       + "Greymane opens the gates at last -- |cffffcc00Gilneas joins the war effort|r of the North "
+                       + "Alliance.",
       },
       // superseded: Dwarven Expedition (name open) -- base near the Storm Peaks, frost dwarves, a quest at Ulduar (P5)
       new TurningPointDef("Ironforge", "Explorers' League (placeholder)", TurningPointKind.Fallback,

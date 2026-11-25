@@ -309,8 +309,8 @@ RT19	main	used	Quest Completed: The Dunemaul Ogres	(Tauren Tribes)	Robs	orc	Repl
 RT20	main	used	Quest Concluded: The Long March	(Tauren Tribes)	Roch	other	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RT21	main	used	Quest Concluded: Stonemaul Diplomacy	(Tauren Tribes)	Roch	other	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RTL3	main	used	Improved Seed of Madness	(Cthun - Warrior)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNSeedOfMonstrosity.blp	u01H
-RV01	main	used	Priestesses of the Moon	(Sentinels)	Rnsb	nightelf	ReplaceableTextures\CommandButtons\BTNtyrandehd.blp	e00J,n06J,n06O,n06P
-RV02	main	used	Wardens	(Sentinels)	Rnsb	nightelf	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	e00J,n06J,n06O,n06P
+RV01	main	used	Priestesses of the Moon	(Sentinels)	Rnsb	nightelf	ReplaceableTextures\CommandButtons\BTNtyrandehd.blp	e00J,n06J,n06O,n06P,o029
+RV02	main	used	Wardens	(Sentinels)	Rnsb	nightelf	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	e00J,n06J,n06O,n06P,o029
 RV03	main	used	Wardens of the Vault	(Sentinels)	Roch	other	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	-
 RYDT	main	used	Heavy Boulders	(Illidari)	Rhde	naga	ReplaceableTextures\CommandButtons\BTNObsidianBoulder.blp	nnsg
 RYEN	main	used	Ensnare	(Illidari)	Rhde	naga	ReplaceableTextures\CommandButtons\BTNEnsnare.blp	nnsg
