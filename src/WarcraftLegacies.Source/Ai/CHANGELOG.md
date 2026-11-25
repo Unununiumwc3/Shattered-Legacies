@@ -5,6 +5,23 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.76.0 — quest runner
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.76.0 (Skywall conquered not defeated, Gilneas = Stormwind's
+fallback).
+- **Quest runner** (`AiQuestRunner`, design of 2026-11-25): bots finish "bring a unit to a place" quests without one-off
+  code. Every incomplete quest of a bot is read; an objective that implements `IObjectiveVisit` (legend reaches /
+  stands in an area, a unit or hero (of a level) in an area -- six WL objective types) names the place and who may go.
+  The unit is sent **only when every other objective of that quest is complete** (maintainer). It is kept out of the
+  army (`AiState.MissionUnits`), walks the route graph (ferries, portals) and stops giving orders once inside the area.
+  Released when done, failed, dead, below 35 % life, or slower than 2.5x its walking time + 90 s; each failure pauses
+  the job (60 s, doubling), 4 failures = given up for the game; a dead legend is waited for. At most 2 jobs per bot.
+  Quests with a hand-made hero visit (`AiConfig.HeroVisits`) or their own code (`AiConfig.QuestRunnerSkip`: Book of
+  Medivh, Under the Burning Sky, Lord of the Firelands) are left alone. Dump: section "quest runner".
+- Example and limit: Illidan's "Broken Isles" needs the Broken Isles' hostiles dead first -- the runner sends Illidan to
+  the Tomb of Sargeras entrance once they are; it does not clear areas itself.
+- Dalaran's quest rule "The Greymane Wall" removed (the quest is gone).
+
 ## 0.75.0 — version only
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.75.0 (bundle 4, Chinese, new texts). No bot change.

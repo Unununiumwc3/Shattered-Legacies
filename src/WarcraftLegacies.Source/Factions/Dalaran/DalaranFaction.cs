@@ -78,7 +78,7 @@ public sealed class DalaranFaction : Faction
       throw new ArgumentNullException(nameof(pickedFaction), "pickedFaction cannot be null.");
     }
 
-    FactionChoiceDialogPresenter.ReplaceRegionUnitsWithFactionEquivalents(Regions.Gilneas, pickedFaction);
+    // [SL] (0.76.0): Gilneas' region is kept for Stormwind's Gilneas fallback (GilneasFallback) -- not Dalaran's
   }
 
   private void RegisterObjectLevels()
@@ -93,7 +93,7 @@ public sealed class DalaranFaction : Faction
     StartingQuest = AddQuest(new QuestShadowfang(Regions.ShadowfangUnlock));
     AddQuest(new QuestSouthshore(Regions.SouthshoreUnlock));
     AddQuest(new QuestDalaran(Regions.Dalaran));
-    AddQuest(new QuestGilneas(Regions.Gilneas));
+    // [SL] (0.76.0): "The Greymane Wall" removed -- Gilneas is Stormwind's fallback now and stays closed until then
 
     QuestNewGuardian newGuardian = new(Artifacts.BookOfMedivh, AllLegends.Dalaran.Jaina,
       AllLegends.Dalaran.Dalaran);

@@ -6,8 +6,15 @@ using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.Objectives.LegendBased;
 
-public sealed class ObjectiveLegendReachRect : Objective
+public sealed class ObjectiveLegendReachRect : Objective, IObjectiveVisit
 {
+
+  // [SL] (0.76.0): read by the bot's quest runner
+  public rect VisitRect => _targetRect;
+  public Legend? VisitLegend => _legend;
+  public int VisitUnitType => 0;
+  public int VisitMinLevel => 0;
+  public bool VisitHeroOnly => true;
   private readonly TriggerWrapper _entersRect = new();
 
   private readonly Legend _legend;

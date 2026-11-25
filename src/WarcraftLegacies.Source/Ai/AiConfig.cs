@@ -92,7 +92,7 @@ public static class AiConfig
   public static readonly List<QuestRule> QuestRules = new()
   {
     // Dalaran's Greymane Wall (normally: hold Hinterlands + Jintha'Alor + Arathi) -> Gilneas City & co.
-    new QuestRule("Dalaran", "The Greymane Wall", 900f) { UnlessPlayed = "Gilneas" },
+    // 0.76.0: "The Greymane Wall" is gone -- Gilneas is Stormwind's fallback now (Timelines/Factions/Gilneas)
     // Stormwind Keep (h00X) destroyed or taken by an enemy -> Galen Trollbane's Stromgarde forces join.
     // v32 fix: the keep is preplaced Neutral-Passive and handed over later; "not Stormwind's" fired at 0:29.
     new QuestRule("Stormwind", "Stromgarde", 0f) { CapitalLost = 1747988568 },
@@ -238,6 +238,15 @@ public static class AiConfig
   public const int MawCpId = 1850560327;
   public const int NZothType = 1429221722;            // U01Z, Black Empire's immobile Old God (Essential)
   public const string BookQuestTitle = "Book of Medivh";
+
+  // 0.76.0: quests the quest runner (AiQuestRunner) leaves alone -- they have their own bot code. Hero visits
+  // (HeroVisits) are skipped anyway.
+  public static readonly HashSet<string> QuestRunnerSkip = new()
+  {
+    BookQuestTitle,          // AiRitual carries the Book and channels the summoning
+    "Under the Burning Sky", // the Legion's summoning (AiRitual)
+    "Lord of the Firelands", // the Ragnaros mission (AiMissions.RunRagnarosMission)
+  };
   // 0.39: Emerald Portals (n07F) -- the preplaced dead pair is replaced by an AI portal pair ("always")
   public const int EmeraldPortalType = 1848653638;
   // 0.39: Feathermoon -- 3 building spots in Regions.FeathermoonUnlock (first = maintainer's spot; walkable, clear)

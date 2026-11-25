@@ -1,3 +1,4 @@
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
 using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Announcement = "|cffffcc00Sylvanas has risen as a banshee.|r In the frozen north the Forsaken gather -- slaves of "
                        + "the Lich King, for now.",
       },
-      // superseded: Gilneas takes Dalaran's Theramore / Jaina's Sanctum path (concepts, P8)
+      // Gilneas' own fallback (0.76.0: Gilneas only exists as Stormwind's fallback); still a placeholder
       new TurningPointDef("Gilneas", "Gilneans on Darkshore (placeholder)", TurningPointKind.Fallback,
         TurningPointSource.Timeline)
       {
@@ -92,16 +93,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = -17238f, Y = 6446f,                // Darkshore
         Announcement = "|cffffcc00Gilneas has fallen.|r The night elves' ships carry the survivors to the shores of Darkshore.",
       },
-      // concepts: Valiance Expedition, Bolvar -> Lich King (P2)
-      new TurningPointDef("Stormwind", "Valiance Expedition (placeholder)", TurningPointKind.Fallback,
-        TurningPointSource.Timeline)
+      // 0.76.0 (maintainer): Stormwind -> Gilneas, on the North Alliance (Timelines/Factions/Gilneas/GilneasFallback.cs).
+      // Replaces the Valiance Expedition placeholder; Gilneas is no longer a pick of the Dalaran slot.
+      new TurningPointDef("Stormwind", "Gilneas", TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
         Trigger = "Stormwind Keep is lost",
-        Description = "Placeholder: a hero appears where the Valiance Expedition would land in Northrend.",
+        Description = "If Stormwind falls, its survivors sail to Gilneas: you play the Kingdom of Gilneas behind the "
+                      + "Greymane Wall, led by Genn Greymane, and join the North Alliance. Everything left in Stormwind "
+                      + "is lost.",
         Decision = HourglassData.DecisionStormwind, Condition = HourglassData.ConditionStormwind,
         Hq = new[] { 1747988568 },             // h00X Stormwind Keep
-        X = -7382f, Y = 15342f,                // Borean Tundra
-        Announcement = "|cffffcc00Stormwind has fallen.|r Bolvar Fordragon leads the Valiance Expedition north, to Northrend.",
+        X = 7168f, Y = 512f,                   // Gilneas City
+        HeroType = 0,                          // Genn Greymane leads them (GilneasFallback)
+        Prepare = () => GilneasFallback.Prepare(),
+        Run = (p, def) => GilneasFallback.Run(p, def),
+        Announcement = "|cffffcc00Stormwind has fallen.|r Its survivors find refuge behind the Greymane Wall -- Gilneas "
+                       + "opens its gates and joins the North Alliance.",
       },
       // superseded: Dwarven Expedition (name open) -- base near the Storm Peaks, frost dwarves, a quest at Ulduar (P5)
       new TurningPointDef("Ironforge", "Explorers' League (placeholder)", TurningPointKind.Fallback,

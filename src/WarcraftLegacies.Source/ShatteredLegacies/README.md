@@ -91,6 +91,8 @@ ShatteredLegacies/
 | `GameLogic/DisplayIntroText.cs`, `GameLogic/InfoQuests.cs`, `Setup/HintSetup.cs` | fork title and notice | 0.39.9 |
 | `GameLogic/GameEnd/PlayerElimination.cs` | the fork's defeat rule replaces WL's (`Rules/EliminationRule`) | 0.53 |
 | `Setup/FactionChoiceDialogSetup.cs` | no Sunfury pick for the Illidari slot (Sunfury = Quel'thalas' fallback) | 0.53 |
+| `Setup/FactionChoiceDialogSetup.cs`, `Factions/Dalaran/DalaranFaction.cs`, `Factions/Gilneas/GilneasFaction.cs` | no Gilneas pick for the Dalaran slot; Dalaran no longer takes Gilneas (no "The Greymane Wall", no unit replacement in `Regions.Gilneas`); `GilneasFaction(asFallback: true)` without the pick's start quests and Book of Medivh (Gilneas = Stormwind's fallback) | 0.76.0 |
+| `Objectives/IObjectiveVisit.cs` + `ObjectiveLegendReachRect`, `ObjectiveLegendInRect`, `ObjectiveAnyUnitInRect`, `ObjectiveAnyUnitReachRect`, `ObjectiveHeroWithLevelInRect`, `ObjectiveAnyHeroWithLevelReachRect` | read-only "where / who" properties for the bot's quest runner | 0.76.0 |
 | `MacroTools/Factions/Faction.cs` | `SetPlayerColor` (a successor keeps the player's colour, scoreboard included) | 0.53 |
 | `Objectives/TurnBased/ObjectiveExpire.cs` | `ExpirationOffset`: deadlines of a faction that arrives mid-game count from its arrival | 0.53 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | only living creeps count (a WL bug: corpses could never die again) -- could go upstream | 0.53 |

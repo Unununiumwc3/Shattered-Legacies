@@ -36,10 +36,11 @@ TURNING_POINTS = [
      "while Quel'thalas fights on in another slot under the AI.",
      "Sylvanas Windrunner slain by the Scourge", "BTNBanshee"),
     ("Gilneas", "Gilneas", "RZd2", "RZc2", "Fallback: Gilneans on Darkshore (placeholder)",
-     "Placeholder until Gilneas takes Dalaran's Theramore path.", "Gilneas Castle lost", "BTNJaina"),
-    ("Stormwind", "Stormwind", "RZd3", "RZc3", "Fallback: Valiance Expedition (placeholder)",
-     "Placeholder: Bolvar Fordragon leads the Valiance Expedition to Northrend.", "Stormwind Keep lost",
-     "BTNHeroPaladin"),
+     "Placeholder: the night elves carry the Gilneans to Darkshore.", "Gilneas Castle lost", "BTNJaina"),
+    ("Stormwind", "Stormwind", "RZd3", "RZc3", "Fallback: Gilneas",
+     "Stormwind's survivors sail to Gilneas: you play the Kingdom of Gilneas behind the Greymane Wall, with Genn "
+     "Greymane, and join the North Alliance. Everything left in Stormwind is lost.", "Stormwind Keep lost",
+     "BTNGreymane"),
     ("Ironforge", "Ironforge", "RZd4", "RZc4", "Fallback: Dwarven Expedition (placeholder)",
      "Placeholder: the dwarves dig for hope in the Storm Peaks.", "The Great Forge lost", "BTNHeroMountainKing"),
     ("Kultiras", "Kul'tiras", "RZd5", "RZc5", "Fallback: Kezan Enterprise",
@@ -57,7 +58,9 @@ TURNING_POINTS = [
      "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree.", "Orgrimmar lost",
      "BTNChogall"),
     ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Skywall",
-     "Claim the Lost City and Vortex Pinnacle as Skywall. Join the team of Thunder Bluff's conqueror.", "Thunder Bluff lost",
+     "Claim the Lost City and Vortex Pinnacle as Skywall. Skywall cannot be defeated: it serves whoever holds the "
+     "Vortex Pinnacle (first Thunder Bluff's conqueror) and changes sides when another faction takes it.",
+     "Thunder Bluff lost",
      "BTNHeroAvatarOfFlame"),
     ("Scourge", "Scourge", "RZdB", "RZcB", "Fallback: Knights of the Ebon Blade (not yet)",
      "Planned: when Lich King Arthas dies, his death knights break free. Not in this version.",
@@ -72,8 +75,9 @@ TURNING_POINTS = [
      "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn "
      "to whoever holds the Black Temple's CP: purify Telredor, Halaar, Shattrath and Oshu'gun and restore Karabor to "
      "the Light.", "Black Temple destroyed", "BTNDranaiAkama"),
-    ("Skywall", "Skywall", "RZdF", "RZcF", "Fallback (not decided yet)",
-     "Planned: the Earthen Ring or Ramkahen. Not in this version.", "Not available yet", "BTNHeroAvatarOfFlame"),
+    ("Skywall", "Skywall", "RZdF", "RZcF", "Conquered, not defeated",
+     "Skywall cannot lose: whoever takes the Vortex Pinnacle gains its service. Its halls cannot be destroyed.",
+     "Not available", "BTNHeroAvatarOfFlame"),
     ("BlackEmpire", "Black Empire", "RZdG", "RZcG", "Fallback (not decided yet)",
      "Planned: Xal'atath or the Titan Watchers. Not in this version.", "Not available yet", "BTNFacelessOne"),
     ("Ahnqiraj", "Ahn'qiraj", "RZdH", "RZcH", "Fallback: Brood of Nozdormu (not yet)",

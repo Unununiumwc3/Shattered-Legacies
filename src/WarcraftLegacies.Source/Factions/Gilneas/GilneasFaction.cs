@@ -16,10 +16,17 @@ namespace WarcraftLegacies.Source.Factions.Gilneas;
 
 public sealed class GilneasFaction : Faction
 {
+  // [SL] (0.76.0): Gilneas is no longer a pick of the Dalaran slot but Stormwind's fallback (ShatteredLegacies/
+  // Timelines/Factions/Gilneas/GilneasFallback.cs). As a fallback it starts in Gilneas itself (the fallback hands the
+  // region over), so the pick's start quests (Shadowfang Keep, Southshore, Gilneas City, Dalaran) and the unit
+  // replacement in Dalaran's regions are left out, and the Book of Medivh stays Dalaran's.
+  private readonly bool _asFallback;
+
   /// <inheritdoc />
-  public GilneasFaction()
+  public GilneasFaction(bool asFallback = false)
     : base("Gilneas", playercolor.Pink, @"ReplaceableTextures\CommandButtons\BTNGreymane.blp")
   {
+    _asFallback = asFallback;
     TraditionalTeam = TeamSetup.NorthAlliance;
     StartingGold = new StartingGold
     {
@@ -41,7 +48,11 @@ public sealed class GilneasFaction : Faction
       "dogs"
     };
     ProcessObjectInfo(GilneasObjectInfo.GetAllObjectLimits());
-    RegisterFactionDependentInitializer<LegionFaction>(RegisterBookOfMedivhQuest);
+    if (!asFallback)
+    {
+      RegisterFactionDependentInitializer<LegionFaction>(RegisterBookOfMedivhQuest);
+    }
+
     RegisterFactionDependentInitializer<DruidsFaction>(RegisterDruidsQuests);
   }
 
@@ -49,8 +60,17 @@ public sealed class GilneasFaction : Faction
   public override void OnRegistered()
   {
     RegisterObjectLevels();
-    ReplaceWithFactionUnits(this);
-    RegisterQuests();
+    if (_asFallback)
+    {
+      AddQuest(new QuestCrowley());
+      AddQuest(new QuestExtractSunwellVial(AllLegends.Quel.Sunwell, Artifacts.SunwellVial));
+    }
+    else
+    {
+      ReplaceWithFactionUnits(this);
+      RegisterQuests();
+    }
+
     GilneasSpells.Setup();
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
   }

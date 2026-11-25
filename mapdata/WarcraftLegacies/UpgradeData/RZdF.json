@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback (not decided yet)"
+      "Value": "Conquered, not defeated"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback (not decided yet)"
+      "Value": "Conquered, not defeated"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: the Earthen Ring or Ramkahen. Not in this version."
+      "Value": "Skywall cannot lose: whoever takes the Vortex Pinnacle gains its service. Its halls cannot be destroyed."
     }
   ]
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using MacroTools.Legends;
+using System.Linq;
 using MacroTools.Extensions;
 using MacroTools.Localization;
 using MacroTools.Quests;
@@ -10,8 +11,15 @@ namespace WarcraftLegacies.Source.Objectives.UnitBased;
 /// <summary>
 /// Completed when an eligible player enters the provided <see cref="Rectangle"/> with a hero of the appropriate level.
 /// </summary>
-public sealed class ObjectiveHeroWithLevelInRect : Objective, IHasCompletingUnit
+public sealed class ObjectiveHeroWithLevelInRect : Objective, IHasCompletingUnit, IObjectiveVisit
 {
+
+  // [SL] (0.76.0): read by the bot's quest runner
+  public rect VisitRect => _targetRect;
+  public Legend? VisitLegend => null;
+  public int VisitUnitType => 0;
+  public int VisitMinLevel => _targetLevel;
+  public bool VisitHeroOnly => true;
   private readonly rect _targetRect;
   private readonly int _targetLevel;
 

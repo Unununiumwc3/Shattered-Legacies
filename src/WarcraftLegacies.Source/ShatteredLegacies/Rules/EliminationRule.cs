@@ -57,7 +57,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Rules
         var turns = next[data.Team];
         var id = GetPlayerId(p);
         data.EliminationTurns = turns;
-        if (turns == 0 || (_graceUntil.ContainsKey(id) && GameTimeManager.Turn <= _graceUntil[id]))
+        // 0.76.0: a conquered vassal that cannot lose (Skywall) is never doomed -- it changes sides instead
+        if (turns == 0 || (_graceUntil.ContainsKey(id) && GameTimeManager.Turn <= _graceUntil[id])
+            || Conquest.Undefeatable.Contains(p))
         {
           continue;
         }

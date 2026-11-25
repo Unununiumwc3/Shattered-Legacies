@@ -960,6 +960,7 @@ public static class AiDebug
 
     Section(o, "spells", () => { AiSpells.Lines(o); AiCastLog.Lines(o); }); // 0.70.0: bot spellcasting (casts, refusals, re-chains)
     Section(o, "autocast", () => AiAutocast.Lines(o)); // 0.71.0: autocast switched on
+    Section(o, "quest runner", () => AiQuestRunner.Lines(o)); // 0.76.0
 
     o.Add("## BOTS");
     for (var b = 0; b < SimpleBot.BotCount; b++)

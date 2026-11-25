@@ -4,6 +4,24 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.76.0 — Skywall conquered, not defeated; Gilneas becomes Stormwind's fallback
+
+Bot changes: `../Ai/CHANGELOG.md` 0.76.0 (quest runner).
+- **Skywall** (maintainer): a conquered vassal like the Ashtongue (`Core/Conquest.cs`), with the **Vortex Pinnacle CP**
+  (`nVXP`) as its seat. At the fallback it serves Thunder Bluff's conqueror; whoever takes the Vortex Pinnacle later
+  gets its service -- Skywall joins that player's whole team and leaves the old one. It **cannot lose the game**
+  (`EliminationRule`: an undefeatable vassal is never doomed) and its HQ buildings (Holdfast / Fortified Burg / Great
+  Alcazar, the Vortex Pinnacle, the Sulfuron Spire) are indestructible while it owns them, also ones built or upgraded
+  later. Hourglass texts updated.
+- **Gilneas -> Stormwind's fallback** (maintainer): no longer a pick of the Dalaran slot (Dalaran always plays
+  Dalaran). Stormwind Keep lost -> the player becomes the Kingdom of Gilneas behind the Greymane Wall: the region with
+  its buildings, defenders and five CPs (Gilneas City, Keel Harbor, Duskhaven, Blackwald, Tempest Reach), Genn Greymane,
+  Liberation of Gilneas researched (worgen), team **North Alliance**. Stormwind's heroes and everything left there are
+  lost. Replaces the Valiance Expedition placeholder. Until then Gilneas waits hidden and neutral -- Dalaran's "The
+  Greymane Wall" (which handed Gilneas to Dalaran) is gone, so the North Alliance no longer gets Gilneas early (a nerf
+  against the Scourge). Movement: nothing new -- the region was closed this way before the Greymane Wall too; hidden
+  neutral CPs are no bot targets and the route gate "greymane" opens only once a player holds Gilneas City.
+
 ## 0.75.0 — WL 5.0.4 alignment, bundle 4: hotfixes and Chinese; new lobby and loading texts
 
 No bot changes (`../Ai/CHANGELOG.md` 0.75.0: version only).

@@ -1,4 +1,5 @@
-﻿using MacroTools.Extensions;
+﻿using MacroTools.Legends;
+using MacroTools.Extensions;
 using MacroTools.Localization;
 using MacroTools.Quests;
 using MacroTools.Wrappers;
@@ -9,8 +10,15 @@ namespace WarcraftLegacies.Source.Objectives.UnitBased;
 /// <summary>
 /// Defines an <see cref="Objective"/> that completes when ANY hero of a certain level or higher enters a specific region.
 /// </summary>
-public sealed class ObjectiveAnyHeroWithLevelReachRect : Objective, IHasCompletingUnit
+public sealed class ObjectiveAnyHeroWithLevelReachRect : Objective, IHasCompletingUnit, IObjectiveVisit
 {
+
+  // [SL] (0.76.0): read by the bot's quest runner
+  public rect VisitRect => _targetRect;
+  public Legend? VisitLegend => null;
+  public int VisitUnitType => 0;
+  public int VisitMinLevel => _targetLevel;
+  public bool VisitHeroOnly => true;
   private readonly TriggerWrapper _entersRect = new();
 
   private readonly rect _targetRect;

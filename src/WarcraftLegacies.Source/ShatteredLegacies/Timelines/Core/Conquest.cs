@@ -15,15 +15,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   // - the start: Register(vassal, seat, overlord) -- the overlord's team (the Ashtongue: who destroyed the Black
   //   Temple), or a team of its own when there is none.
   // Checked every 2 s (a CP has no event of its own here).
+  // 0.76.0: second user, Skywall (seat: the Vortex Pinnacle CP) -- registered UNDEFEATABLE: it is never defeated
+  // (EliminationRule), only conquered; its halls are indestructible (SkywallFallback).
   internal static class Conquest
   {
     internal static List<player> Vassals = new();
     internal static List<int> Seats = new();
     internal static List<player> Holders = new(); // per vassal: who held the seat at the last check
+    internal static HashSet<player> Undefeatable = new();
     internal static bool Running;
 
-    internal static void Register(player vassal, int seatCp, player overlord)
+    internal static void Register(player vassal, int seatCp, player overlord, bool undefeatable = false)
     {
+      if (undefeatable)
+      {
+        Undefeatable.Add(vassal);
+      }
+
       Vassals.Add(vassal);
       Seats.Add(seatCp);
       var cp = AiApi.SafeCp(seatCp);

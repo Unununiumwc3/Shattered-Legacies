@@ -2,7 +2,6 @@
 using WarcraftLegacies.Source.Factions.Dalaran;
 using WarcraftLegacies.Source.Factions.Draenei;
 using WarcraftLegacies.Source.Factions.Frostwolf;
-using WarcraftLegacies.Source.Factions.Gilneas;
 using WarcraftLegacies.Source.Factions.Illidari;
 using WarcraftLegacies.Source.Factions.Sentinels;
 using WarcraftLegacies.Source.Factions.Sunfury;
@@ -36,14 +35,9 @@ public static class FactionChoiceDialogSetup
       Difficulty = FactionLearningDifficulty.Basic,
       StartingArea = Regions.DalaStartPos
     };
-    var gilneas = new FactionChoice
-    {
-      Faction = new GilneasFaction(),
-      Difficulty = FactionLearningDifficulty.Advanced,
-      StartingArea = Regions.DalaStartPos,
-      RequiresCheats = false
-    };
-    new FactionChoiceDialogPresenter(dalaran, gilneas).Run(player.Create(7));
+    // [SL] (0.76.0): Gilneas is Stormwind's fallback, not a pick (ShatteredLegacies/Timelines/Factions/Gilneas) -- the
+    // Dalaran slot always plays Dalaran (one choice: no dialog)
+    new FactionChoiceDialogPresenter(dalaran).Run(player.Create(7));
 
     var sentinels = new FactionChoice
     {

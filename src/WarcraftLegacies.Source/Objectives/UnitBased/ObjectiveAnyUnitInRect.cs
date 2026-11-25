@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using MacroTools.Legends;
+using System.Linq;
 using MacroTools.ControlPoints;
 using MacroTools.Extensions;
 using MacroTools.Factions;
@@ -12,8 +13,15 @@ namespace WarcraftLegacies.Source.Objectives.UnitBased;
 /// <summary>
 /// Completed when an eligible player moves a unit into the specified <see cref="Rectangle"/>.
 /// </summary>
-public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit
+public sealed class ObjectiveAnyUnitInRect : Objective, IHasCompletingUnit, IObjectiveVisit
 {
+
+  // [SL] (0.76.0): read by the bot's quest runner
+  public rect VisitRect => _targetRect;
+  public Legend? VisitLegend => null;
+  public int VisitUnitType => _unitType;
+  public int VisitMinLevel => 0;
+  public bool VisitHeroOnly => _heroOnly;
   private readonly bool _heroOnly;
   private readonly rect _targetRect;
   private readonly int _unitType;

@@ -32,8 +32,12 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   Nordrassil destroyed; Ahn'Qiraj's Spell Conduction; Old Gods tentacles.
 - **WL 5.0.4 alignment**: the four bundles are in. Left: the open Cenarion Hold decision, the parked Earthmother's
   Cradle, and the object-data audit of the remaining factions (`UPSTREAM.md`).
-- [ai] **Quest runner** (design discussed 2026-11-25, not built): a general way for bots to finish "bring a hero / unit
-  to X" quests (Illidan -> Tomb of Sargeras) instead of one-off code.
+- **0.76.0 playtest**: dump "quest runner" (who was sent where, done / failed); Illidan's Broken Isles once its area is
+  clear. Skywall: take the Vortex Pinnacle CP with another team -> Skywall changes sides; its halls stay; it never
+  dies. Stormwind Keep lost -> Gilneas (North Alliance, Gilneas CPs, Genn); Dalaran has no Gilneas choice and no
+  Greymane Wall; nobody walks into Gilneas before.
+- [ai] Quest runner, next: objectives "hostiles in an area dead" as army targets, so quests like Illidan's Broken
+  Isles get cleared too; bots using closable gates (discussed 2026-11-25).
 - [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it
   when Antonidas happens to stand beside the generator in a fight).
 

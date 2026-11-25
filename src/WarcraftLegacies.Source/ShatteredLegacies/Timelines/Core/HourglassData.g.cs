@@ -13,7 +13,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionForsaken = 1381655369; // RZcI
     internal const int DecisionGilneas = 1381655602; // RZd2 Fallback: Gilneans on Darkshore (placeholder)
     internal const int ConditionGilneas = 1381655346; // RZc2
-    internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Valiance Expedition (placeholder)
+    internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Gilneas
     internal const int ConditionStormwind = 1381655347; // RZc3
     internal const int DecisionIronforge = 1381655604; // RZd4 Fallback: Dwarven Expedition (placeholder)
     internal const int ConditionIronforge = 1381655348; // RZc4
@@ -37,7 +37,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionFelHorde = 1381655364; // RZcD
     internal const int DecisionIllidari = 1381655621; // RZdE Fallback: Ashtongue Deathsworn
     internal const int ConditionIllidari = 1381655365; // RZcE
-    internal const int DecisionSkywall = 1381655622; // RZdF Fallback (not decided yet)
+    internal const int DecisionSkywall = 1381655622; // RZdF Conquered, not defeated
     internal const int ConditionSkywall = 1381655366; // RZcF
     internal const int DecisionBlackEmpire = 1381655623; // RZdG Fallback (not decided yet)
     internal const int ConditionBlackEmpire = 1381655367; // RZcG
