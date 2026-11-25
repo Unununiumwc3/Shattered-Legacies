@@ -30,6 +30,30 @@ internal static class TwilightHammerFallback
   };
   private static List<unit>? _port;
 
+  // 0.74.0 (maintainer): a starting army like the Scarlet Crusade's (Tyr's Hand: ~45 units and 5 workers) --
+  // Cho'gall and 5 Cultists plus 38 of the Twilight's Hammer's own units, beside the Great Hall
+  private static readonly int[] ArmyTypes =
+  {
+    TwilightHammerObjects.Enforcer, TwilightHammerObjects.PhaseGrenadier, TwilightHammerObjects.Dragonspawn,
+    TwilightHammerObjects.OgreMagi, TwilightHammerObjects.Herald, TwilightHammerObjects.DeathKnight,
+    TwilightHammerObjects.Battlemaster, TwilightHammerObjects.VoidRider
+  };
+  private static readonly int[] ArmyCounts = { 10, 8, 6, 4, 4, 2, 2, 2 };
+
+  private static int[] StartArmy()
+  {
+    var list = new List<int>();
+    for (var k = 0; k < ArmyTypes.Length; k++)
+    {
+      for (var i = 0; i < ArmyCounts[k]; i++)
+      {
+        list.Add(ArmyTypes[k]);
+      }
+    }
+
+    return list.ToArray();
+  }
+
   private static List<unit>? _highlandBuildings;
 
   internal static void Prepare()
@@ -100,7 +124,8 @@ internal static class TwilightHammerFallback
     CreateUnit(p, TwilightHammerObjects.GreatHall, 22464f, -3264f, 270f);
     CreateUnit(p, TwilightHammerObjects.AltarOfVisions, 22016f, -3584f, 270f);
     var worker = TwilightHammerObjects.Cultist;
-    Spawn.Units(p, StartX, StartY, new[] { worker, worker, worker, worker, TwilightHammerObjects.Chogall });
+    Spawn.Units(p, StartX, StartY, new[] { worker, worker, worker, worker, worker, TwilightHammerObjects.Chogall });
+    Spawn.Units(p, StartX + 176f, StartY - 304f, StartArmy()); // open ground south-east of the start (PathingMap)
     twilight.AddCampaignQuests();
     p.RepositionCamera(new Point(StartX, StartY));
   }

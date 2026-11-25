@@ -1,0 +1,61 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZn0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "gba1",
+      "Type": 2,
+      "Value": 150
+    },
+    {
+      "Id": "gba2",
+      "Type": 2,
+      "Value": 10
+    },
+    {
+      "Id": "glob",
+      "Value": 0
+    },
+    {
+      "Id": "gmo1",
+      "Type": 2,
+      "Value": 300
+    },
+    {
+      "Id": "grac",
+      "Type": 3,
+      "Value": "other"
+    },
+    {
+      "Level": 1,
+      "Id": "gar1",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNSteelRanged.blp"
+    },
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(Druids)"
+    },
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "Quest Completed: Wrath of the Wild"
+    },
+    {
+      "Id": "gef1",
+      "Type": 3,
+      "Value": "rhpx"
+    },
+    {
+      "Id": "gef2",
+      "Type": 3,
+      "Value": "ratx"
+    }
+  ]
+}

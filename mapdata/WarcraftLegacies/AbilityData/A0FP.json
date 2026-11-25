@@ -45,7 +45,7 @@
     {
       "Id": "areq",
       "Type": 3,
-      "Value": "YB01"
+      "Value": ""
     },
     {
       "Id": "arqa",
@@ -88,7 +88,7 @@
       "Level": 1,
       "Id": "aub1",
       "Type": 3,
-      "Value": "Increases a friendly unit\u0027s attack speed by 20% and movement speed by 20%. |nLasts 60 seconds."
+      "Value": "Increases a friendly unit's attack speed by 20% and movement speed by 20%. |nLasts 60 seconds."
     },
     {
       "Id": "auar",

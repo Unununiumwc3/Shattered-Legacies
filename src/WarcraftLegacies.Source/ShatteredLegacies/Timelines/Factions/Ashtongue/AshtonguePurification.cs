@@ -15,6 +15,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
   // - while mana flows, the current site shows: the Obsidian Statue's replenish (life + mana) at the size of the
   //   bubble, a shield bubble (not at Shattrath: it has its own; gone when the step is done) and a ring of healing-light
   //   pillars. No mana flowing, no effects.
+  // - 0.74.0 (maintainer): Shattrath is the hub -- while a site after it (Halaa, Telredor, Oshu'gun, the temple) is
+  //   being purified, a blue drain-mana channel runs from Shattrath to it (the purification never stops: Shattrath's
+  //   own trickle keeps it going).
   // - Ishanah stands next to Shattrath: she cannot move (no move ability) and cannot be hurt until Karabor is
   //   restored; then she is replaced by a free Ishanah (level, skills, items kept) without Purify.
   internal static class AshtonguePurification
@@ -37,6 +40,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
     internal static List<unit> Sites = new();         // per step: its building now (tainted, then purified)
     internal static List<ObjectiveCounter> Counters = new(); // per step (the quests)
     internal static effect BubbleFx;
+    private static lightning _channel; // 0.74.0: Shattrath -> the site under purification
 
     internal static void Start(player p, List<unit> sites)
     {
@@ -96,8 +100,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
       Clock += 1f;
       if (Done || Step >= AshtongueConfig.StepCost.Length || !Alive(Shattrath))
       {
+        DropChannel();
         return;
       }
+
+      Channel();
 
       var gained = AshtongueConfig.Trickle;
       if (AutoOn && R2I(Clock) % R2I(AshtongueConfig.DonationEvery) == 0)
@@ -223,6 +230,37 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
       }
     }
 
+    // the drain-mana channel from Shattrath to the current site (steps 1-4); follows both ends every second
+    private static void Channel()
+    {
+      var site = Step > 0 && Step < Sites.Count ? Sites[Step] : null;
+      if (!Alive(site))
+      {
+        DropChannel();
+        return;
+      }
+
+      float x1 = GetUnitX(Shattrath), y1 = GetUnitY(Shattrath), z1 = BlzGetUnitZ(Shattrath) + 250f;
+      float x2 = GetUnitX(site), y2 = GetUnitY(site), z2 = BlzGetUnitZ(site) + 150f;
+      if (_channel == null)
+      {
+        _channel = AddLightningEx("DRAM", true, x1, y1, z1, x2, y2, z2);
+      }
+      else
+      {
+        MoveLightningEx(_channel, true, x1, y1, z1, x2, y2, z2);
+      }
+    }
+
+    private static void DropChannel()
+    {
+      if (_channel != null)
+      {
+        DestroyLightning(_channel);
+        _channel = null;
+      }
+    }
+
     private static void DropBubble()
     {
       if (BubbleFx != null)
@@ -236,6 +274,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
     private static void Finish(int step)
     {
       DropBubble();
+      DropChannel(); // the next tick draws it to the next site
       var name = AshtongueConfig.Steps[step];
       if (step < Counters.Count)
       {
@@ -250,6 +289,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
         var facing = GetUnitFacing(old);
         RemoveUnit(old);
         var n = CreateUnit(Owner, AshtongueConfig.Purified[step], x, y, facing);
+        Illidari.IllidariFallback.PinSite(n, x, y);
         SetUnitInvulnerable(n, true);
         Sites[step] = n;
         if (step == 0 && Step + 1 < AshtongueConfig.StepCost.Length)
@@ -278,6 +318,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue
     {
       Done = true;
       DropBubble();
+      DropChannel();
       if (Ishanah == null || GetUnitTypeId(Ishanah) == 0)
       {
         return;

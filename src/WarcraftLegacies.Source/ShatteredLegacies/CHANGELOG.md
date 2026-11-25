@@ -4,6 +4,36 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.74.0 — WL 5.0.4 alignment, bundle 3: Night Elves; Outland sites, Twilight's Hammer army
+
+Bot changes: `../Ai/CHANGELOG.md` 0.74.0 (revive fixed, Cenarius' ghost for bots).
+- **Halaa / Shattrath in the wrong place** (Ashtongue fallback): the site buildings (`oZt2`-`oZt9`, temples `oZt0` /
+  `oZt1`) are built on the barracks, whose placement forbids unbuildable ground -- CreateUnit put Shattrath and Halaa
+  hundreds away. 0.71.0 then moved them back with SetUnitX/Y, which on a structure moves the click circle but not
+  the model; the purified building came on the displaced spot again. Now the site buildings copy the preplaced
+  buildings' placement and collision (`ashtongue_objects.py`: "upap", "ucol"), so they stand on their spot; no more
+  moving (a displacement is only logged).
+- **Shattrath, the hub**: while Halaa, Telredor, Oshu'gun or the temple is being purified, a blue drain-mana channel
+  runs from Shattrath to it (`AshtonguePurification.Channel`).
+- **Twilight's Hammer starting army** (like the Scarlet Crusade's at Tyr's Hand): Cho'gall, 5 Cultists and 10
+  Enforcers, 8 Phase Grenadiers, 6 Dragonspawn, 4 Ogre Magi, 4 Heralds, 2 Orcish Death Knights, 2 Battlemasters and
+  2 Void Riders at Dragonmaw Port.
+- **Bundle 3 -- Night Elves** (WL 5.0.4):
+  - **Immortality by region** (#4184): a unit is saved (once) only inside the region of a World Tree its team holds --
+    Kalimdor (Nordrassil), Broken Isles (Shaladrassil), Northrend (Vordrassil), Eastern Kingdoms (Seradane, new in
+    the list); everywhere when the team holds all four. Druids 25 % / 45 % (were 20 / 40). The "Immortality is
+    active" research (`YB01`) is gone, as in WL 5 (`A0FP` Haste, unused, no longer requires it).
+  - **Wrath of the Wild** (Druids, #4172): Orgrimmar destroyed -> Malfurion +2000 XP and +5 attributes, 500 gold,
+    Siege Ancient limit 4 -> 8, Siege Ancients +150 life / +10 damage. Its research is the fork's `RZn0` (WL 5 uses
+    `R05A`, which is the Druids' "War of the Shifting Sands" here -- the seventh collision, `UPSTREAM.md`).
+  - **Return to the Fold** (Sentinels, #4189): Redeemed Highborne limit 6, +6 from the quest; texts as in WL 5.
+  - **Income and intro texts** (#4189): Druids 190, Sentinels 195 (were 155 / 145); WL 5's intros, with the Old Gods
+    and this map's Feathermoon (rebuilt, no southern guard) added.
+  - **Not taken**: Cenarion Hold to Neutral Passive (WL 5 empties southern Kalimdor; here it is the Druids' outpost
+    against Ahn'Qiraj -- your call), Feathermoon's "southern passes open at turn 15" (the South Kalimdor guard is not
+    wanted; the fork's rebuild objectives stay).
+- **Cenarius** returns as his ghost for bots too (bot change; players always had WL's mechanic).
+
 ## 0.73.0 — WL 5.0.4 alignment, bundle 2: Dalaran; repairs of the 0.69 port
 
 Bot changes: `../Ai/CHANGELOG.md` 0.73.0. Playtest of 0.72.0 (maintainer, 2026-11-25).

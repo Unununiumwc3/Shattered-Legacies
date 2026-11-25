@@ -33,7 +33,8 @@ public static class SentinelsObjectInfo
     yield return new(UNIT_EBAL_GLAIVE_THROWER_SENTINELS, 8, Siege);
     yield return new(UNIT_EHPR_HIPPOGRYPH_RIDER_SENTINELS, 8, new List<UnitCategory> { Flyer, Marksman });
     yield return new(UNIT_N034_GUILD_RANGER_SENTINELS, 12, Marksman);
-    yield return new(UNIT_NNMG_REDEEMED_HIGHBORNE_SENTINELS, 12, new List<UnitCategory> { Destroyer, Support }); // [SL] (0.72.0): WL 5.0.4: 6, tied to its reworked Return to the Fold (not ported yet)
+    yield return new(UNIT_NNMG_REDEEMED_HIGHBORNE_SENTINELS, 6, new List<UnitCategory> { Destroyer, Support },
+      "completing the quest Return to the Fold"); // [SL] (0.74.0): WL 5.0.4 (#4189)
     yield return new(UNIT_E022_MOON_RIDER_SENTINELS, 2, new List<UnitCategory> { Flyer, Marksman, Support });
     yield return new(UNIT_ECHM_CHIMAERA_SENTINELS, 6, new List<UnitCategory> { Flyer, Siege, Marksman });
     yield return new(UNIT_H045_WARDEN_SENTINELS_ELITE, 0, new List<UnitCategory> { Elite, Fighter, AntiMage });

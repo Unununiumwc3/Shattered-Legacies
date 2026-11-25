@@ -36,13 +36,14 @@ public sealed class SentinelsFaction : Faction
     StartingGold = new StartingGold
     {
       Instant = 200,
-      Income = 145,
+      Income = 195, // [SL] (0.74.0): WL 5.0.4 (#4189)
       Turns = 10
     };
     CinematicMusic = "Comradeship";
     ControlPointDefenderUnitTypeId = UNIT_H03F_CONTROL_POINT_DEFENDER_SENTINELS;
     IntroText = () => Loc.Format(
-      "You are playing as the ever-watchful {faction}.\n\nThe Druids are slowly waking from their slumber, and it falls to you to drive back the Old Gods' invaders from Kalimdor until then.\n\nYour first mission is to race down the coast to Feathermoon Stronghold, a powerful Sentinel bastion on the southern half of the continent.\n\nOnce you have secured your holdings, gather your army and destroy the Old Gods. Be cautious—they will outnumber you if given time to establish a foothold in Azeroth.",
+      // [SL] (0.74.0): WL 5.0.4's text (#4189); Feathermoon as in this map (rebuilt, no southern guard) and the Old Gods
+      "You are playing as the ever-watchful {faction}.\n\nYou begin on Teldrassil, sharing the island with the Druids' slumbering city of Darnassus. Across the water, wild creatures gone mad threaten Darkshore. Clear them out and secure Darkshore and the Grove of the Ancients to rally Auberdine and Astranaar to your side.\n\nThe orcs of the Horde will soon land on Kalimdor's shores, and the Tauren are already migrating north to join them. The Druids are still waking from their slumber, so until they are ready, the defense of Kalimdor falls to you.\n\nIn the far south, rebuild Feathermoon Stronghold to bring it back to your cause -- beyond it, the Old Gods stir in Silithus. Gather your army and strike at the heart of the Horde: Orgrimmar and Thunder Bluff.",
       ("{faction}", $"{PrefixCol}{Loc.Get("Sentinels")}|r"));
     Nicknames = new List<string>
     {
@@ -210,17 +211,37 @@ public sealed class SentinelsFaction : Faction
       Loc.Get("Your Control Points increase your units' movement speed by 15% in a large radius."),
       "ANA_HealingButterfliesFixed"));
 
-    var worldTrees = new List<Capital>
+    var worldTreeProtections = new List<WorldTreeProtection>
     {
-      AllLegends.Druids.Nordrassil,
-      AllLegends.Neutral.Shaladrassil,
-      AllLegends.Druids.Vordrassil
+      new()
+      {
+        WorldTree = AllLegends.Druids.Nordrassil,
+        RegionName = "Kalimdor",
+        Regions = new[] { Regions.ImmortalityKalimdor }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Neutral.Shaladrassil,
+        RegionName = "Broken Isles",
+        Regions = new[] { Regions.ImmortalityBrokenIsles }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Druids.Vordrassil,
+        RegionName = "Northrend",
+        Regions = new[] { Regions.ImmortalityNorthrend }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Neutral.Seradane,
+        RegionName = "Eastern Kingdoms",
+        Regions = new[] { Regions.ImmortalityEasternKingdoms1, Regions.ImmortalityEasternKingdoms2 }
+      }
     };
-    AddPower(new Immortality(25, 45, worldTrees)
+    AddPower(new Immortality(25, 45, worldTreeProtections) // [SL] (0.74.0): WL 5.0.4 Immortality regions (#4184)
     {
       IconName = "ArcaneRessurection",
-      Effect = @"Abilities\Spells\Human\Heal\HealTarget.mdl",
-      ResearchId = UPGRADE_YB01_IMMORTALITY_POWER_IS_ACTIVE
+      Effect = @"Abilities\Spells\Human\Heal\HealTarget.mdl"
     });
   }
 

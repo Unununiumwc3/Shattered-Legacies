@@ -189,18 +189,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Illidari
       return sites;
     }
 
-    // 0.71.0: CreateUnit puts a structure on the nearest free spot -- Shattrath (no pathing texture) and Halaa were
-    // pushed away by the units around them when the Ashtongue arrived (playtest). The site goes back to its spot.
-    private static void PinSite(unit site, float x, float y)
+    // 0.71.0: CreateUnit puts a structure on the nearest free spot -- Shattrath and Halaa landed 951 / 454 away. 0.74.0:
+    // the cause was the site buildings' placement data (the barracks base forbids unbuildable ground); they now copy
+    // the preplaced buildings' placement, so CreateUnit puts them on the spot. No more SetUnitX/Y: on a structure it
+    // moves the click circle but not the model (playtest) -- only logged.
+    internal static void PinSite(unit site, float x, float y)
     {
       var dx = GetUnitX(site) - x;
       var dy = GetUnitY(site) - y;
       if (dx * dx + dy * dy > 16f * 16f)
       {
         AiApi.Log("Illidari fallback: " + GetUnitName(site) + " was placed " + I2S(R2I(SquareRoot(dx * dx + dy * dy)))
-                  + " away from its spot -- moved back");
-        SetUnitX(site, x);
-        SetUnitY(site, y);
+                  + " away from its spot");
       }
     }
 

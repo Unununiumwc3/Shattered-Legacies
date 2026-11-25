@@ -386,6 +386,7 @@ RZka	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\Comm
 RZkb	main	used	Backpack	(Orc)	Ropm	orc	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
 RZkc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
 RZko	main	used	Improved Oil Refining	(Kezan Enterprise)	Rhar	orc	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZq0
+RZn0	main	used	Quest Completed: Wrath of the Wild	(Druids)	Roch	other	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZo0	main	used	Improved Frenzy	(Orcish Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNAbility_Warrior_Rampage.blp	obar
 RZo1	main	used	Blademasters	(Orcish Horde)	Rnsb	orc	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	o01B,o02D,ofrt,ogre,ostr
 RZr0	main	used	No refugees from Stormwind yet	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -480,7 +481,6 @@ TP38	main	used	Improved Chassis	(Ironforge)	Rhse	human	ReplaceableTextures\Comma
 TP41	main	used	Potent Stormbrew	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNOtherBarrel.blp	h07C
 TP42	main	used	Rune Smith Adept Training	(Ironforge)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNHeavenlyDemolisher.blp	h042
 VP31	main	used	Masters of Lightning	(Ironforge)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNZeusStrike.blp	hgra
-YB01	main	used	Immortality Power is active	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 YBAA	main	used	Split Healing Wave	(Illidari)	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNFieryWave.blp	n08W
 YBPH	main	used	Kingslayer	(Illidari)	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNBlightDagger.blp	n08W
 ZB12	main	used	Cleaving Attack	(C'thun)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNCleavingAttack.blp	u01H

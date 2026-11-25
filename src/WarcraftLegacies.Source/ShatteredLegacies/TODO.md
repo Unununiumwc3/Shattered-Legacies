@@ -21,8 +21,15 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   Gates open"). Geomancers / Mages: Teleport after Teleportation. Check AQ's Ouro (Shifting Sands), C'Thun's
   Progenesis, Skywall's Frost Bite, and the Orcish Horde's Frenzy / Improved Frenzy (Fortress) / Blademasters.
 - **Draenei**: kept as they are for now (maintainer, 2026-11-25); the fallback plan in `UPSTREAM.md` waits.
-- **Next bundles**: 3 Night Elves (Immortality regions, Wrath of the Wild, Sentinels quest changes, income), 4 hotfix
-  sync. One bundle per build, with the bot work.
+- **Bundle 3 playtest (0.74.0)**: Immortality card lists the four regions (green = held); a unit outside them is not
+  saved; a unit is saved once. Druids: destroy Orgrimmar -> Wrath of the Wild (Siege Ancients 8, +150 life). Sentinels:
+  Return to the Fold -> 12 Redeemed Highborne. Cenarius dies -> his ghost comes back (bot and player).
+- **Ashtongue**: Shattrath / Halaa stand on their spot (fallback and after purification), click circle = model; the
+  blue channel from Shattrath to the site being purified.
+- **Decide**: Cenarion Hold to Neutral Passive (WL 5) or kept as the Druids' outpost against Ahn'Qiraj (`UPSTREAM.md`).
+- **Next bundle**: 4 hotfix sync. With the bot work.
+- [ai] **Quest runner** (design discussed 2026-11-25, not built): a general way for bots to finish "bring a hero / unit
+  to X" quests (Illidan -> Tomb of Sargeras) instead of one-off code.
 - [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it
   when Antonidas happens to stand beside the generator in a fight).
 

@@ -73,6 +73,16 @@
       "Value": 0
     },
     {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "_"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 225.0
+    },
+    {
       "Id": "usca",
       "Type": 1,
       "Value": 1.2

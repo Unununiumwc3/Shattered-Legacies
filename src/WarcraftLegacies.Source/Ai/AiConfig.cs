@@ -173,11 +173,9 @@ public static class AiConfig
   };
 
   // v32: a perma-dead legend that WL brings back in a NEW FORM is removed again when a BOT owns it.
-  // Cenarius -> his revivable ghost (E00H): for bots Cenarius stays dead after his first death.
-  public static readonly HashSet<int> BannedNewForms = new()
-  {
-    1160785992, // E00H Demigod of the Night Elves (Druids-GHOST)
-  };
+  // 0.74.0 (maintainer): empty -- bots keep WL's mechanic like players: Cenarius returns as his revivable ghost
+  // (E00H, CenariusGhost) after his first death. Was: E00H (v32, Cenarius stayed dead for bots).
+  public static readonly HashSet<int> BannedNewForms = new();
 
   // v32: Ragnaros summoning pedestal (n02B). WL's neutral quest "Lord of the Firelands" completes when a hero
   // of level >= 10 stands in its rect; the pedestal then belongs to that hero's owner. A bot that owns one of

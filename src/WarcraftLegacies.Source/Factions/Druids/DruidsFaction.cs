@@ -33,13 +33,14 @@ public sealed class DruidsFaction : Faction
     StartingGold = new StartingGold
     {
       Instant = 200,
-      Income = 155,
+      Income = 190, // [SL] (0.74.0): WL 5.0.4 (#4189)
       Turns = 10
     };
     CinematicMusic = "DarkAgents";
     ControlPointDefenderUnitTypeId = UNIT_E01Y_CONTROL_POINT_DEFENDER_DRUIDS;
     IntroText = () => Loc.Format(
-      "You are playing as the ancient {faction}.\n\nYou begin isolated in the deepest parts of Mount Hyjal near the World Tree.\n\nThe Old Gods are gathering to burn Ashenvale forest and the World Tree. Cenarius has emerged from his seclusion to stop them. Use him to awaken Malfurion from his slumber as soon as possible.\n\nGather your forces and strike before the Old Gods can organize their efforts.",
+      // [SL] (0.74.0): WL 5.0.4's text (#4189); the last line is the fork's (the Old Gods stay in this map)
+      "You are playing as the ancient {faction}.\n\nYou begin isolated in the deepest parts of Mount Hyjal, near the World Tree. Cenarius has emerged from his seclusion. Use him to carry the Horn of Cenarius to the Barrow Den and awaken Malfurion from his slumber as soon as possible.\n\nThe Horde is coming to Kalimdor. Soon orcish axes will bite into Ashenvale, and the Tauren migrating north already covet the World Tree itself. Heal the forest and awaken the Ancients of Hyjal to rebuild your strength before they arrive.\n\nStand with the Sentinels, and when you are ready, let the wild answer: bring down Orgrimmar and humble Thunder Bluff.\n\nBeware the south as well: the Old Gods stir beneath Silithus.",
       ("{faction}", $"{PrefixCol}{Loc.Get("Druids of the Cenarion Circle")}|r"));
 
     Nicknames = new List<string>
@@ -56,6 +57,7 @@ public sealed class DruidsFaction : Faction
   {
     RegisterQuests();
     AddQuest(new QuestSubdueTheTauren());
+    AddQuest(new QuestWrathOfTheWild()); // [SL] (0.74.0): WL 5.0.4 (#4172)
     RegisterDialogue();
     RegisterPowers();
     RegisterResearches(); // [SL] (0.72.0): WL 5.0.4 elite choice (Keepers of the Grove / Heartwood Ancients)
@@ -143,17 +145,37 @@ public sealed class DruidsFaction : Faction
 
   private void RegisterPowers()
   {
-    var worldTrees = new List<Capital>
+    var worldTreeProtections = new List<WorldTreeProtection>
     {
-      AllLegends.Druids.Nordrassil,
-      AllLegends.Neutral.Shaladrassil,
-      AllLegends.Druids.Vordrassil
+      new()
+      {
+        WorldTree = AllLegends.Druids.Nordrassil,
+        RegionName = "Kalimdor",
+        Regions = new[] { Regions.ImmortalityKalimdor }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Neutral.Shaladrassil,
+        RegionName = "Broken Isles",
+        Regions = new[] { Regions.ImmortalityBrokenIsles }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Druids.Vordrassil,
+        RegionName = "Northrend",
+        Regions = new[] { Regions.ImmortalityNorthrend }
+      },
+      new()
+      {
+        WorldTree = AllLegends.Neutral.Seradane,
+        RegionName = "Eastern Kingdoms",
+        Regions = new[] { Regions.ImmortalityEasternKingdoms1, Regions.ImmortalityEasternKingdoms2 }
+      }
     };
-    AddPower(new Immortality(20, 40, worldTrees)
+    AddPower(new Immortality(25, 45, worldTreeProtections) // [SL] (0.74.0): WL 5.0.4 Immortality regions (#4184)
     {
       IconName = "ArcaneRessurection",
-      Effect = @"Abilities\Spells\Human\Heal\HealTarget.mdl",
-      ResearchId = UPGRADE_YB01_IMMORTALITY_POWER_IS_ACTIVE
+      Effect = @"Abilities\Spells\Human\Heal\HealTarget.mdl"
     });
   }
 

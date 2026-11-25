@@ -140,7 +140,7 @@ namespace WarcraftLegacies.Source.Ai
         o.Add("  altars=" + I2S(AiAltars.AltarCount[pid]) + " hero orders accepted/start/finish/cancel/expired/refused="
           + I2S(AiAltars.HeroAccepted[pid]) + "/" + I2S(AiAltars.HeroStarted[pid]) + "/" + I2S(AiAltars.HeroFinished[pid])
           + "/" + I2S(AiAltars.HeroCancelled[pid]) + "/" + I2S(AiAltars.HeroExpired[pid]) + "/" + I2S(AiAltars.HeroRefused[pid])
-          + " free revives=" + I2S(AiAltars.FreeRevives[pid]) + " last=" + (AiAltars.AltarReason[pid] ?? "none"));
+          + " last=" + (AiAltars.AltarReason[pid] ?? "none"));
         AiAltars.Dump(o, p, fac);
         var seen = new List<int>();
         var never = "";

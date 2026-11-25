@@ -50,6 +50,11 @@ This file is the ledger: what WL changed after 4.8.2, what is ported, what is wa
 | -- Dalaran Shield + Power Generator, tidy-up (#4103, #4129) | 0.73.0 | 5.0.4 versions (dev's later cooldown / cancel changes not taken); the generator stands at WL 5's spot (9216,4736) in the fork's 4.8.2 city |
 | -- Clickable Dalaran Way Gates (#4087) | 0.73.0 | data was already in (0.69); bot support: `AiPortals.AddDalaranGates` (owner + allies use an operational pair; bots do not build gates) |
 | -- Dalaran caster teleport (#4185) | 0.73.0 | `RDTP` at the Hall of the Arcane, Teleport on Geomancers |
+| **Bundle 3 -- Night Elves** | **0.74.0** | |
+| -- Immortality regions, `WorldTreeProtection`, save once (#4184) | 0.74.0 | `YB01` removed as in WL 5; `A0FP` (fork-only Haste, unused) loses its requirement |
+| -- Druid quest Wrath of the Wild, Siege Ancient limit 4 (#4172) | 0.74.0 | research under the fork id `RZn0` (WL 5: `R05A`, a collision) |
+| -- Return to the Fold: Redeemed Highborne 6 (+6), texts (#4189) | 0.74.0 | |
+| -- Druids / Sentinels income 190 / 195, intro texts (#4189) | 0.74.0 | intros: Old Gods and the fork's Feathermoon added |
 
 Fork deviations inside bundle 1 (deliberate):
 - Bot order strings (Ncl6) changed so the bot's script orders are not refused: Sunfire Barrage `shockwave`,
@@ -64,10 +69,8 @@ Fork deviations inside bundle 1 (deliberate):
 
 | Bundle | What (WL PR) | Interacts with | Notes |
 |---|---|---|---|
-| 3 Night Elves | Immortality regions, `WorldTreeProtection` (#4184) | Druids, Sentinels powers | replaces the `Capital` list of the Immortality power |
-| 3 Night Elves | Druid quest Wrath of the Wild (#4172), Siege Ancient limit 4 | Druids | |
-| 3 Night Elves | Sentinels quest changes: Feathermoon, Scepter of the Queen / Return to the Fold, Redeemed Highborne 6 (#4172, #4189) | Sentinels, Illidari (Scepter) | |
-| 3 Night Elves | Druids / Sentinels income and intro texts (#4189), Cenarion Hold to Neutral Passive | Druids | balance |
+| open | Cenarion Hold to Neutral Passive, invulnerable (5.0.4 `DruidsFaction`) | Druids vs Ahn'Qiraj | WL 5 empties southern Kalimdor; here Cenarion Hold is the Druids' outpost in Silithus -- **maintainer to decide** |
+| not wanted | Feathermoon opens at turn 15 (`SouthKalimdorGuardSystem.UnlockTurn`) | -- | follows from "South Kalimdor guard: not wanted"; the fork's rebuild objectives stay |
 | 4 Sync | Hotfixes 5.0.1-5.0.4: Boralus quest, Kil'jaeden's Command, `Team`, `FactionManager` lobby language (#4198, #4199, #4203) | small, separate | no own playtest -- check in any game |
 | 4 Sync | Spell Conduction without buffs (#4080, Ahn'qiraj), tentacle hits not the primary target twice (#4097, Old Gods) | Old Gods | the fork keeps these factions, so the fixes apply |
 | 4 Sync | `InfoQuests` texts of the new kits | -- | text only |
@@ -81,7 +84,7 @@ balance.
 
 WL 5 reused the ids of objects it removed (Ahn'Qiraj, Skywall). This map still has those objects, so a WL 5 object
 under such an id overwrites one of ours. The 0.69 port did that five times; 0.73.0 restored the 4.8.2 data and gave
-WL 5's objects fork ids. **When porting from WL 5: map these ids, and check every other `M` (modified) object file
+WL 5's objects fork ids. **Also check every id a ported quest or unit REFERS to** (`R05A`, 0.74.0). **When porting from WL 5: map these ids, and check every other `M` (modified) object file
 for a changed base / name before copying** (the remaining ones -- `A01D`, `A09Q`, `n049`, `o006`, `ocat`, `owyv` --
 are harmless: same role or a dead faction).
 
@@ -92,6 +95,7 @@ are harmless: same role or a dead faction).
 | `R003` | Improved Frenzy | Progenesis (C'Thun) | `RZo0` (requires `ofrt`, not WL 5's `o02S`) |
 | `RZ02` | Blademasters | Shadow Weaver Adept Training (Ahn'Qiraj) | `RZo1` |
 | `n00K` | Darkspear Isles (CP of the island start) | Tunnels of Ahn'Qiraj | not used (no island start) |
+| `R05A` | Quest Completed: Wrath of the Wild (Druids) | Quest Completed: The War of the Shifting Sands (Druids' C'Thun quest) | `RZn0` (0.74.0; found with bundle 3 -- the 0.69 port had kept 4.8.2's file) |
 
 ## The Draenei (The Exodar) -- from start to fallback
 

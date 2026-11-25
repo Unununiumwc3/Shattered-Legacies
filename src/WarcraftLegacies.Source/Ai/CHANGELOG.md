@@ -5,6 +5,25 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.74.0 — heroes are revived again (altar), Cenarius' ghost for bots
+
+Maintainer's notes on 0.73.0. Map / content side: `../ShatteredLegacies/CHANGELOG.md` 0.74.0.
+- **0.73.0's instant free revive taken back** -- the revive time was never the problem, a revive that never came
+  was. Bots revive at the altar again (WC3's revive time; free for bots with perks, `AiTech.FreeOrder`).
+- **Why heroes were not revived** (`AiAltars.TrainHeroes`), two causes:
+  - after each revive the next turn went to a NEW hero first; when the bot was saving gold for that new hero, the
+    function returned before the revive at its end -- with one altar the dead hero never came back (autopilot).
+    Dead heroes now come first, always.
+  - an altar that is busy was skipped: altars that also train units or research (the Ashtongue's Temple of the
+    Deathsworn / Temple of Karabor, capitals with a revive ability) were never idle, so they never revived. The
+    order is now given anyway; WC3 queues it behind what the altar is doing (one hero job per altar at a time).
+  - Food: WC3 needs free food for a revive too; a refused revive still reserves the food ("waiting for food").
+- **Cenarius for bots like for players** (`AiConfig.BannedNewForms` empty): since v32 the bot removed Cenarius'
+  ghost (E00H) when a bot owned it, so for bots Cenarius stayed dead after his first death. WL 5.0.4 (and this map
+  for players) brings him back as the revivable ghost; bots now keep him too.
+- Bot data regenerated: Farmers can build Dalaran's Way Gates (the builder does not pick them), Power Generator size,
+  Siege Ancients' upgrade list.
+
 ## 0.73.0 — skills learned round robin, free instant revive, faster casters, Dalaran Way Gates
 
 From the 0.72.0 playtest (dumps 5:00-35:00). Map / content side: `../ShatteredLegacies/CHANGELOG.md` 0.73.0.

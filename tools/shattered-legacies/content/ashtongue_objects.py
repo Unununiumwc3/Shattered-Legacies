@@ -66,6 +66,12 @@ def building(code, name, look, trains="", researches="", food=0, mana=0, extra=N
             v("uico", look.get("uico", BTN + "BTNDraeneiDivineCitadel.blp")), v("ugol", 0), v("ulum", 0),
             v("utra", trains), v("ures", researches), v("uupt", ""), v("ubui", ""), v("ureq", ""), v("utub", text),
             v("urac", "other"), v("ufma", food)]
+    # 0.74.0: placement as the building the site copies -- the barracks base forbids unbuildable ground ("upap"
+    # unbuildable), so CreateUnit put Shattrath / Halaa hundreds away from their spot (and moving a structure later
+    # moves its click circle, not its model)
+    mods.append(v("upap", look.get("upap", "_")))
+    if "ucol" in look:
+        mods.append(v("ucol", float(look["ucol"])))
     if "usca" in look:
         mods.append(v("usca", float(look["usca"])))
     if "ussc" in look:
@@ -95,6 +101,7 @@ def main():
     bt = black_temple()
     start = ",".join([copy_id("o05B"), "ndrn", "ndrs"])
     temple = {"umdl": bt.get("umdl", ""), "usca": bt.get("usca", 1.0), "upat": bt.get("upat", ""),
+              "upap": bt.get("upap", "_"), "ucol": bt.get("ucol", 200),
               "uico": BTN + "BTNTempleOfTheDamned.blp"}
     tint = [v("uclr", 255), v("uclg", 240), v("uclb", 190)]
     building("oZt0", "Temple of the Deathsworn", temple, trains=start, food=30,

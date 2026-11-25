@@ -2178,7 +2178,6 @@ A0FD	24p	changed	Mass Banish	(Quel'thalas - Kael'thas)	ANcl	yes	-	human	Replacea
 A0FM	24p	24p only	Wickerbeast Form	(Kul'tiras - Thornspeaker)	Abrf	-	-	human	ReplaceableTextures\CommandButtons\BTNBearForm.blp	-
 A0FN	24p	different	Shield Wall	(Red Skeleton - Shield Wall)	ACav	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNDevotion.blp	-
 A0FO	24p	changed	Siphon Mana	(Green - High Elven Magus)	AHdr	-	-	human	ReplaceableTextures\CommandButtons\BTNManaDrain.blp	n063
-A0FP	24p	changed	Haste	(Brown - Keeper of the Grove)	Ablo	-	-	nightelf	ReplaceableTextures\CommandButtons\ATCDruidSpeed.blp	e00N
 A0FQ	24p	changed	Banish	(Keeper of the Grove)	ACbn	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNBanish.blp	e00N
 A0FR	24p	24p only	Transfer Fuel	(main supply)	Ambt	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNManaRechargeOn.blp	h04Z
 A0FS	24p	changed	Arcane Barrage	(yogg)	ACbz	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSparkFlare.blp	n077
