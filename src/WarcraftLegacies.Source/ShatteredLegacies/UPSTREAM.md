@@ -55,6 +55,13 @@ This file is the ledger: what WL changed after 4.8.2, what is ported, what is wa
 | -- Druid quest Wrath of the Wild, Siege Ancient limit 4 (#4172) | 0.74.0 | research under the fork id `RZn0` (WL 5: `R05A`, a collision) |
 | -- Return to the Fold: Redeemed Highborne 6 (+6), texts (#4189) | 0.74.0 | |
 | -- Druids / Sentinels income 190 / 195, intro texts (#4189) | 0.74.0 | intros: Old Gods and the fork's Feathermoon added |
+| **Bundle 4 -- hotfix sync and Chinese** | **0.75.0** | |
+| -- 5.0.1 (#4198): Boralus quest expires at turn 11 (was 8); scoreboard team names (`Team`) | 0.75.0 | Violet Citadel neutral passive: the fork had it already |
+| -- client language lobby bug (#4199): `FactionManager`, locale merge / string table, tooltip migration | 0.75.0 | data parts (o006, vP53, RT14, the Tauren dream catcher model) were already in |
+| -- 5.0.4 (#4203): Kil'jaeden's Command counts a destroyed Nordrassil; Redeemed Highborne Adept Training in the Sentinels' limits | 0.75.0 | the fork's Kil'jaeden's Command (4.8.2 shape: Scourge / Druids / Ahn'Qiraj) got the same rule for its capital target; Elune's Protection, Stonemaul altar, Orgrimmar Outskirts, Siege Ancient requirement, Arcane Annihilator limit were already in |
+| -- Spell Conduction checks at damage time, no buffs (#4080, Ahn'Qiraj); tentacle attacks skip the primary target (#4097, Old Gods) | 0.75.0 | |
+| -- Chinese: runtime table (#4146), object-text overlays and multilingual build (#4147, #4157), `-language zh` | 0.75.0 | from the maintainer's add-on (made on 0.68); overlays rebuilt for this map by `localization/build_overlays.py` (`LOCALIZATION.md`) |
+| -- credits list of WL 5.0.4 | 0.75.0 | in the fork's credits quest |
 
 Fork deviations inside bundle 1 (deliberate):
 - Bot order strings (Ncl6) changed so the bot's script orders are not refused: Sunfire Barrage `shockwave`,
@@ -70,11 +77,8 @@ Fork deviations inside bundle 1 (deliberate):
 | Bundle | What (WL PR) | Interacts with | Notes |
 |---|---|---|---|
 | open | Cenarion Hold to Neutral Passive, invulnerable (5.0.4 `DruidsFaction`) | Druids vs Ahn'Qiraj | WL 5 empties southern Kalimdor; here Cenarion Hold is the Druids' outpost in Silithus -- **maintainer to decide** |
-| not wanted | Feathermoon opens at turn 15 (`SouthKalimdorGuardSystem.UnlockTurn`) | -- | follows from "South Kalimdor guard: not wanted"; the fork's rebuild objectives stay |
-| 4 Sync | Hotfixes 5.0.1-5.0.4: Boralus quest, Kil'jaeden's Command, `Team`, `FactionManager` lobby language (#4198, #4199, #4203) | small, separate | no own playtest -- check in any game |
-| 4 Sync | Spell Conduction without buffs (#4080, Ahn'qiraj), tentacle hits not the primary target twice (#4097, Old Gods) | Old Gods | the fork keeps these factions, so the fixes apply |
-| 4 Sync | `InfoQuests` texts of the new kits | -- | text only |
-| low | Chinese runtime localization + overlay build (#4146, #4147, #4157), locale CLI commands | build | large, no gameplay |
+| not wanted | Feathermoon opens at turn 15 (`SouthKalimdorGuardSystem.UnlockTurn`); Feathermoon buildings at full life (5.0.4) | -- | follows from "South Kalimdor guard: not wanted"; the fork's rebuild objectives (and the damaged buildings) stay |
+| not wanted | `AhnQirajSetup` (5.0.4: Gates of Ahn'Qiraj and C'Thun invulnerable) | -- | decision of 2026-11-24 |
 | parked | Earthmother's Cradle (#4168, Tauren reward) | Skywall (Shimmering Flats, Firelands) | design review first |
 
 Not from WL 5 but often named with it (fork roadmap): Dark Trolls / Hakkar (24p), the Quel'Thalas split, Sunfury

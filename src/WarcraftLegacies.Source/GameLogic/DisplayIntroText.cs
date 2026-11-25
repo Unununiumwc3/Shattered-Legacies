@@ -41,12 +41,12 @@ public static class DisplayIntroText
     {
       foreach (var player in Util.EnumeratePlayers())
       {
-        // [SL] (0.39.9): fork title and notice instead of WL's intro (requested by the original maintainer)
-        player.DisplayTimedTextTo(displayTime - 1, $@"|cffffcc00Shattered Legacies: Botified Realm|r
-  |cffaaaaaaUnofficial prototype based on Warcraft Legacies. This is not the official version.|r
-
-  {Loc.Get("If you are a new player, look at the Quest (F9) tab to see your objectives.")}
-  ");
+        // [SL] (0.39.9): fork title and notice instead of WL's intro (requested by the original maintainer);
+        // 0.75.0: the maintainer's text, translated (SlText)
+        player.DisplayTimedTextTo(displayTime - 1, $"|cffffcc00{Loc.Get(SlText.Title)}|r\n"
+                                                   + $"|cffaaaaaa{Loc.Get(SlText.IntroNotice)}|r\n\n"
+                                                   + Loc.Get(SlText.IntroTurningPoints) + "\n"
+                                                   + Loc.Get(SlText.IntroNewPlayer));
       }
     });
   }

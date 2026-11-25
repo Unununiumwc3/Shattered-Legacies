@@ -38,6 +38,29 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     return (map, additionalFiles);
   }
 
+  private MapInfo? DeserializeLocalizedInfo()
+  {
+    var info = JsonHelper.DeserializeIfExist<MapInfo>(options.MapDataPaths.InfoPath);
+    var overlay = options.MapDataPaths.GetLocalizedRootFilePath(options.MapDataPaths.InfoPath);
+    if (info == null || !options.MapDataPaths.IsLocalized || !File.Exists(overlay))
+    {
+      return info;
+    }
+    var text = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(overlay))!;
+    foreach (var entry in text)
+    {
+      switch (entry.Key)
+      {
+        case "MapName": info.MapName = entry.Value; break;
+        case "MapDescription": info.MapDescription = entry.Value; break;
+        case "LoadingScreenTitle": info.LoadingScreenTitle = entry.Value; break;
+        case "LoadingScreenText": info.LoadingScreenText = entry.Value; break;
+        default: throw new InvalidOperationException($"Locale Info.json may only override display text: {entry.Key}");
+      }
+    }
+    return info;
+  }
+
   private Map ConvertToMap()
   {
     var map = new Map
@@ -48,7 +71,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
       PreviewIcons = JsonHelper.DeserializeIfExist<MapPreviewIcons>(options.MapDataPaths.PreviewIconsPath),
       Regions = DeserializeRegions(),
       ShadowMap = JsonHelper.DeserializeIfExist<MapShadowMap>(options.MapDataPaths.ShadowMapPath),
-      Info = JsonHelper.DeserializeIfExist<MapInfo>(options.MapDataPaths.InfoPath),
+      Info = DeserializeLocalizedInfo(),
       Doodads = DeserializeDoodads(),
       Units = DeserializeUnits(),
       Triggers = GenerateEmptyMapTriggers(),
@@ -72,7 +95,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var mapDoodads = new MapDoodads(MapWidgetsFormatVersion.v8, MapWidgetsSubVersion.v11, true);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.DoodadsPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedFiles(options.MapDataPaths.DoodadsPath))
     {
       mapDoodads.Doodads.AddRange(JsonHelper.Deserialize<DoodadData[]>(file));
     }
@@ -87,7 +110,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var mapUnits = new MapUnits(MapWidgetsFormatVersion.v8, MapWidgetsSubVersion.v11, true);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.UnitsPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedFiles(options.MapDataPaths.UnitsPath))
     {
       mapUnits.Units.AddRange(JsonHelper.Deserialize<UnitData[]>(file));
     }
@@ -102,7 +125,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var mapRegions = new MapRegions(MapRegionsFormatVersion.v5);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.RegionsPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedFiles(options.MapDataPaths.RegionsPath))
     {
       mapRegions.Regions.Add(JsonHelper.Deserialize<Region>(file));
     }
@@ -118,7 +141,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var sounds = new MapSounds(MapSoundsFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(directory))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedFiles(directory))
     {
       sounds.Sounds.AddRange(JsonHelper.Deserialize<Sound>(file));
     }
@@ -133,9 +156,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new UpgradeObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.UpgradeDataPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(options.MapDataPaths.UpgradeDataPath))
     {
-      var objectModification = JsonHelper.Deserialize<LevelObjectModification>(file);
+      var objectModification = ReadLevelObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseUpgrades.Add(objectModification);
@@ -158,9 +181,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new ItemObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(directory))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(directory))
     {
-      var objectModification = JsonHelper.Deserialize<SimpleObjectModification>(file);
+      var objectModification = ReadObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseItems.Add(objectModification);
@@ -183,7 +206,7 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new DoodadObjectData(ObjectDataFormatVersion.v3);
-    var files = Directory.EnumerateFiles(directory, "*", SearchOption.AllDirectories);
+    var files = options.MapDataPaths.EnumerateLocalizedFiles(directory, "*", SearchOption.AllDirectories);
     foreach (var file in files)
     {
       var objectModification = JsonHelper.Deserialize<VariationObjectModification>(file);
@@ -209,9 +232,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new DestructableObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(directory))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(directory))
     {
-      var objectModification = JsonHelper.Deserialize<SimpleObjectModification>(file);
+      var objectModification = ReadObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseDestructables.Add(objectModification);
@@ -234,9 +257,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new BuffObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(directory))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(directory))
     {
-      var objectModification = JsonHelper.Deserialize<SimpleObjectModification>(file);
+      var objectModification = ReadObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseBuffs.Add(objectModification);
@@ -258,9 +281,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new AbilityObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.AbilityDataPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(options.MapDataPaths.AbilityDataPath))
     {
-      var objectModification = JsonHelper.Deserialize<LevelObjectModification>(file);
+      var objectModification = ReadLevelObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseAbilities.Add(objectModification);
@@ -274,6 +297,115 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     return objectData;
   }
 
+  /// <summary>
+  /// Reads one object record, letting the locale overlay replace individual fields rather than the whole record.
+  /// <para>
+  /// A translation only has to list the fields it changes, so the overlay stays a sparse diff and every field it
+  /// leaves out keeps its base value. A field the overlay adds is kept even when the base record has none, which
+  /// is what allows a translation to supply text the base map data inherits from the game.
+  /// </para>
+  /// </summary>
+  private static SimpleObjectModification ReadObjectRecord(LocalizedObjectFile file)
+  {
+    if (file.OverlayPath is null)
+    {
+      return JsonHelper.Deserialize<SimpleObjectModification>(file.EffectivePath);
+    }
+
+    if (file.BasePath is null)
+    {
+      return JsonHelper.Deserialize<SimpleObjectModification>(file.OverlayPath);
+    }
+
+    var baseRecord = JsonHelper.Deserialize<SimpleObjectModification>(file.BasePath);
+    var overlayRecord = JsonHelper.Deserialize<SimpleObjectModification>(file.OverlayPath);
+
+    var merged = new Dictionary<(int Id, int Level, ObjectDataType Type), SimpleObjectDataModification>();
+    var order = new List<(int Id, int Level, ObjectDataType Type)>();
+
+    foreach (var modification in baseRecord.Modifications)
+    {
+      var key = (modification.Id, 0, modification.Type);
+      merged[key] = modification;
+      order.Add(key);
+    }
+
+    foreach (var modification in overlayRecord.Modifications)
+    {
+      var key = (modification.Id, 0, modification.Type);
+      if (!merged.ContainsKey(key))
+      {
+        order.Add(key);
+      }
+
+      merged[key] = modification;
+    }
+
+    return new SimpleObjectModification
+    {
+      OldId = baseRecord.OldId,
+      NewId = baseRecord.NewId,
+      Unk = baseRecord.Unk,
+      Modifications = order.Select(key => merged[key]).ToList()
+    };
+  }
+
+  /// <summary>
+  /// Reads one level-based object record, letting the locale overlay replace individual fields per level.
+  /// </summary>
+  private static LevelObjectModification ReadLevelObjectRecord(LocalizedObjectFile file)
+  {
+    if (file.OverlayPath is null)
+    {
+      return JsonHelper.Deserialize<LevelObjectModification>(file.EffectivePath);
+    }
+
+    if (file.BasePath is null)
+    {
+      return JsonHelper.Deserialize<LevelObjectModification>(file.OverlayPath);
+    }
+
+    var baseRecord = JsonHelper.Deserialize<LevelObjectModification>(file.BasePath);
+    LevelObjectModification overlayRecord;
+    try
+    {
+      overlayRecord = JsonHelper.Deserialize<LevelObjectModification>(file.OverlayPath);
+    }
+    catch (System.Text.Json.JsonException exception)
+    {
+      throw new System.InvalidOperationException($"Failed to read overlay '{file.OverlayPath}'.", exception);
+    }
+
+    var merged = new Dictionary<(int Id, int Level, ObjectDataType Type), LevelObjectDataModification>();
+    var order = new List<(int Id, int Level, ObjectDataType Type)>();
+
+    foreach (var modification in baseRecord.Modifications)
+    {
+      var key = (modification.Id, modification.Level, modification.Type);
+      merged[key] = modification;
+      order.Add(key);
+    }
+
+    foreach (var modification in overlayRecord.Modifications)
+    {
+      var key = (modification.Id, modification.Level, modification.Type);
+      if (!merged.ContainsKey(key))
+      {
+        order.Add(key);
+      }
+
+      merged[key] = modification;
+    }
+
+    return new LevelObjectModification
+    {
+      OldId = baseRecord.OldId,
+      NewId = baseRecord.NewId,
+      Unk = baseRecord.Unk,
+      Modifications = order.Select(key => merged[key]).ToList()
+    };
+  }
+
   private UnitObjectData? DeserializeUnitData()
   {
     if (!options.IncludeFromMap.HasFlag(IncludeFromMap.UnitData))
@@ -282,9 +414,9 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     var objectData = new UnitObjectData(ObjectDataFormatVersion.v3);
-    foreach (var file in Directory.EnumerateFiles(options.MapDataPaths.UnitDataPath))
+    foreach (var file in options.MapDataPaths.EnumerateLocalizedObjectFiles(options.MapDataPaths.UnitDataPath))
     {
-      var objectModification = JsonHelper.Deserialize<SimpleObjectModification>(file);
+      var objectModification = ReadObjectRecord(file);
       if (objectModification.NewId == 0)
       {
         objectData.BaseUnits.Add(objectModification);
@@ -296,6 +428,20 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
     }
 
     return objectData;
+  }
+
+  /// <summary>
+  /// Adds a file that lives directly in the map data root, honouring the locale overlay.
+  /// </summary>
+  private void AddRootFile(List<PathData> additionalFiles, string relativePath)
+  {
+    var basePath = Path.Combine(options.MapDataPaths.RootPath, relativePath);
+
+    additionalFiles.Add(new PathData
+    {
+      AbsolutePath = options.MapDataPaths.GetEffectiveRootFilePath(basePath),
+      RelativePath = relativePath
+    });
   }
 
   private List<PathData> GetAdditionalFiles()
@@ -315,29 +461,17 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.Minimap))
     {
-      additionalFiles.Add(new PathData
-      {
-        AbsolutePath = Path.Combine(options.MapDataPaths.RootPath, MapData.Minimap),
-        RelativePath = MapData.Minimap
-      });
+      AddRootFile(additionalFiles, MapData.Minimap);
     }
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.GameplayConstants))
     {
-      additionalFiles.Add(new PathData
-      {
-        AbsolutePath = Path.Combine(options.MapDataPaths.RootPath, MapData.GameplayConstants),
-        RelativePath = MapData.GameplayConstants
-      });
+      AddRootFile(additionalFiles, MapData.GameplayConstants);
     }
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.GameInterface))
     {
-      additionalFiles.Add(new PathData
-      {
-        AbsolutePath = Path.Combine(options.MapDataPaths.RootPath, MapData.GameInterface),
-        RelativePath = MapData.GameInterface
-      });
+      AddRootFile(additionalFiles, MapData.GameInterface);
     }
 
     return additionalFiles;
@@ -362,32 +496,45 @@ public sealed class MapDataToMapConverter(MapDataToMapConverterOptions options)
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.Minimap))
     {
-      fileDirectories.Add(new DirectoryEnumerationOptions
-      {
-        Path = options.MapDataPaths.RootPath,
-        SearchPattern = MapData.Minimap
-      });
+      AddRootFileDirectory(fileDirectories, MapData.Minimap);
     }
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.GameplayConstants))
     {
-      fileDirectories.Add(new DirectoryEnumerationOptions
-      {
-        Path = options.MapDataPaths.RootPath,
-        SearchPattern = MapData.GameplayConstants
-      });
+      AddRootFileDirectory(fileDirectories, MapData.GameplayConstants);
     }
 
     if (options.IncludeFromMap.HasFlag(IncludeFromMap.GameInterface))
     {
-      fileDirectories.Add(new DirectoryEnumerationOptions
-      {
-        Path = options.MapDataPaths.RootPath,
-        SearchPattern = MapData.GameInterface
-      });
+      AddRootFileDirectory(fileDirectories, MapData.GameInterface);
     }
 
     return fileDirectories;
+  }
+
+  /// <summary>
+  /// Adds a root-level file to the output, honouring the locale overlay.
+  /// </summary>
+  private void AddRootFileDirectory(List<DirectoryEnumerationOptions> fileDirectories, string relativePath)
+  {
+    var basePath = Path.Combine(options.MapDataPaths.RootPath, relativePath);
+    var localizedPath = options.MapDataPaths.GetLocalizedRootFilePath(basePath);
+
+    if (File.Exists(localizedPath))
+    {
+      fileDirectories.Add(new DirectoryEnumerationOptions
+      {
+        Path = Path.GetDirectoryName(localizedPath)!,
+        SearchPattern = Path.GetFileName(localizedPath)
+      });
+      return;
+    }
+
+    fileDirectories.Add(new DirectoryEnumerationOptions
+    {
+      Path = options.MapDataPaths.RootPath,
+      SearchPattern = relativePath
+    });
   }
 
   private static MapTriggers GenerateEmptyMapTriggers()

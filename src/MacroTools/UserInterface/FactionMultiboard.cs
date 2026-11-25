@@ -4,6 +4,7 @@ using MacroTools.ControlPoints;
 using MacroTools.Exceptions;
 using MacroTools.Extensions;
 using MacroTools.Factions;
+using MacroTools.Localization;
 using WCSharp.Shared;
 
 namespace MacroTools.UserInterface;
@@ -15,7 +16,7 @@ namespace MacroTools.UserInterface;
 public sealed class FactionMultiboard
 {
   private const int ColumnCount = 3;
-  private const string Title = "Scoreboard";
+  private static string Title => Loc.Get("Scoreboard");
 
   private const int ColumnFaction = 0;
   private const int ColumnCp = 1;
@@ -132,7 +133,7 @@ public sealed class FactionMultiboard
   {
     var row = _rowsByTeam[team];
     var mbi = _multiboard.GetItem(row, ColumnTeam);
-    mbi.SetText($"---{team.Name}{SubString("-----------------------------------------", 0, 19 - StringLength(team.Name))}");
+    mbi.SetText($"---{team.LocalizedName}{SubString("-----------------------------------------", 0, Math.Max(0, 19 - StringLength(team.LocalizedName)))}");
     mbi.SetWidth(WidthTeam);
     mbi.SetVisibility(true, false);
     _multiboard.GetItem(row, ColumnCp).SetVisibility(false, false);

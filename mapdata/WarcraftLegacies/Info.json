@@ -5,7 +5,7 @@
   "GameVersion": "2.0.4.23745",
   "MapName": "Shattered Legacies: Botified Realm",
   "MapAuthor": "Based on Warcraft Legacies by Technopig, Vampirika, Madsen",
-  "MapDescription": "Unofficial exploration/prototype based on Warcraft Legacies. This is NOT the official version and is not affiliated with the Warcraft Legacies team. It experiments with a graph-based bot system built with the help of LLMs.",
+  "MapDescription": "When your capital falls, your faction does not. Every faction carries more than one story: rise again as something new, betray your allies, or break away and fight alone. Play with friends, against bots, or both.",
   "RecommendedPlayers": "16 Players ",
   "CameraBounds": {
     "BottomLeft": {
@@ -37,7 +37,7 @@
   "Tileset": 89,
   "LoadingScreenBackgroundNumber": 99,
   "LoadingScreenPath": "",
-  "LoadingScreenText": "|cffff8000Unofficial exploration / prototype. This is NOT the official Warcraft Legacies.|r\r\n\r\nAn experiment in making a graph-based bot system work with the help of LLMs.\r\n\r\nBased on Warcraft Legacies, created by:\r\nFounders: Lordsebas, YakaryBovine\r\nDevelopers: Technopig, Madsen, Vampirika\r\nProgrammers: alrun3\r\n\r\nPlease do not report bugs from this version to the Warcraft Legacies team.",
+  "LoadingScreenText": "Azeroth's history no longer follows a fixed path. A faction that loses its capital does not simply die. It falls back, changes, and rises as something new. Allies can turn traitor. Factions can break from their team and fight for themselves.\r\n\r\nWhen a turning point appears, you choose your faction's path in the Hourglass of Fate (top right corner). Bots choose automatically.\r\n\r\nYou only lose if you hold no Control Point for more than 5 turns. Bots take over empty slots and players who leave.\r\n\r\n|cffff8000Unofficial map, not the official Warcraft Legacies. Please do not report bugs to the WL team.|r\r\nBased on Warcraft Legacies by Lordsebas, YakaryBovine, Technopig, Madsen, Vampirika, alrun3 and all contributors and artists.",
   "LoadingScreenTitle": "Shattered Legacies: Botified Realm",
   "LoadingScreenSubtitle": "Bot prototype based on Warcraft Legacies",
   "GameDataSet": 2,

@@ -3829,14 +3829,14 @@ Hssa	stock	unused	hero	High King	-	Hssa	human	units\human\BloodElfSpellThief\Blo
 Nal2	stock	used	hero	Alchemist	(Morph level 2)	Nal2	creeps	Units\Creeps\HeroGoblinAlchemist\HeroGoblinAlchemist	stock	ReplaceableTextures\CommandButtons\BTNHeroAlchemist.blp	-	-	-	-	-	-	AInv,ANab,ANcr,ANhs,ANtm	TALT
 Nal3	stock	used	hero	Alchemist	(Morph level 3)	Nal3	creeps	Units\Creeps\HeroGoblinAlchemist\HeroGoblinAlchemist	stock	ReplaceableTextures\CommandButtons\BTNHeroAlchemist.blp	-	-	-	-	-	-	AInv,ANab,ANcr,ANhs,ANtm	TALT
 Nalm	stock	used	hero	Alchemist	(Morph level 1)	Nalm	creeps	Units\Creeps\HeroGoblinAlchemist\HeroGoblinAlchemist	stock	ReplaceableTextures\CommandButtons\BTNHeroAlchemist.blp	-	-	-	-	-	-	AInv,ANab,ANcr,ANhs,ANtm	TALT
-Nbrn	stock	unused	hero	Dark Ranger	-	Nbrn	creeps	Units\Creeps\BansheeRanger\BansheeRanger	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	TALT
+Nbrn	stock	used	hero	Dark Ranger	-	Nbrn	creeps	Units\Creeps\BansheeRanger\BansheeRanger	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	TALT
 Nbst	stock	unused	hero	Beastmaster	-	Nbst	creeps	Units\Creeps\Beastmaster\Beastmaster	stock	ReplaceableTextures\CommandButtons\BTNBeastMaster.blp	-	-	-	-	-	-	AInv,ANsg,ANsq,ANst,ANsw	TALT
 Nfir	stock	unused	hero	Firelord	-	Nfir	creeps	Units\Creeps\HeroFlameLord\HeroFlameLord	stock	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	-	-	-	-	-	-	AInv,ANia,ANlm,ANso,ANvc	TALT
 Nkjx	stock	unused	hero	Warlock	(Cinematic)	Nkjx	undead	units\other\KiljaedenCinema\KiljaedenCinema	stock	ReplaceableTextures\CommandButtons\BTNKiljaedin.blp	-	-	-	-	-	-	-	-
 Nklj	stock	unused	hero	Warlock	-	Nklj	undead	units\demon\Kiljaeden\Kiljaeden	stock	ReplaceableTextures\CommandButtons\BTNKiljaedin.blp	-	-	-	-	-	-	-	-
 Nmsr	stock	unused	hero	Murloc Sorcerer	-	Nmsr	creeps	Units\Creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	AInv,ANrf	-
 Nngs	stock	unused	hero	Sea Witch	-	Nngs	creeps	units\naga\HeroNagaSeawitch\HeroNagaSeawitch	stock	ReplaceableTextures\CommandButtons\BTNNagaSeaWitch.blp	-	-	-	-	-	-	AInv,ANfa,ANfl,ANms,ANto	TALT
-Npbm	stock	unused	hero	Brewmaster	-	Npbm	creeps	Units\Creeps\PandarenBrewmaster\PandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNPandarenBrewmaster.blp	-	-	-	-	-	-	AInv,ANbf,ANdb,ANdh,ANef	TALT
+Npbm	stock	used	hero	Brewmaster	-	Npbm	creeps	Units\Creeps\PandarenBrewmaster\PandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNPandarenBrewmaster.blp	-	-	-	-	-	-	AInv,ANbf,ANdb,ANdh,ANef	TALT
 Npld	stock	unused	hero	Pit Lord	-	Npld	undead	units\demon\PitLord\PitLord	stock	ReplaceableTextures\CommandButtons\BTNPitLord.blp	-	-	-	-	-	-	AHtc,AInv,ANrn,AOeq,AOsh	-
 Nplh	stock	unused	hero	Pit Lord	-	Nplh	creeps	units\demon\HeroPitLord\HeroPitLord	stock	ReplaceableTextures\CommandButtons\BTNPitLord.blp	-	-	-	-	-	-	AInv,ANca,ANdo,ANht,ANrf	TALT
 Nsjs	stock	unused	hero	Brewmaster	-	Nsjs	orc	Units\Creeps\PandarenBrewmaster\PandarenBrewmaster	stock	ReplaceableTextures\CommandButtons\BTNPandarenBrewmaster.blp	-	-	-	-	-	-	AInv,ANcf,Aamk,Acdb,Acdh,Acef	-
@@ -3858,7 +3858,7 @@ Udre	stock	unused	hero	Dreadlord	-	Udre	undead	units\undead\HeroDreadLord\HeroDr
 Udth	stock	unused	hero	Dreadlord	-	Udth	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AEsh,AInv,AUcs,AUdd,AUsl	-
 Ulic	stock	unused	hero	Lich	-	Ulic	undead	units\undead\HeroLich\HeroLich	stock	ReplaceableTextures\CommandButtons\BTNLichVersion2.blp	-	-	-	-	-	-	AInv,AUdd,AUdr,AUfn,AUfu	-
 Usyl	stock	unused	hero	Dark Ranger	-	Usyl	undead	Units\Undead\EvilSylvanas\EvilSylvanas	stock	ReplaceableTextures\CommandButtons\BTNBansheeRanger.blp	-	-	-	-	-	-	AInv,ANba,ANch,ANdr,ANsi	-
-Uvar	stock	unused	hero	Dreadlord	-	Uvar	undead	units\undead\Tichondrius\Tichondrius	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,ANdo,ANrf,AUav,AUsl	-
+Uvar	stock	used	hero	Dreadlord	-	Uvar	undead	units\undead\Tichondrius\Tichondrius	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,ANdo,ANrf,AUav,AUsl	-
 Uvng	stock	unused	hero	Dreadlord	-	Uvng	undead	units\undead\HeroDreadLord\HeroDreadLord	stock	ReplaceableTextures\CommandButtons\BTNHeroDreadlord.blp	-	-	-	-	-	-	AInv,AUav,AUcs,AUin,AUsl	-
 ebsh	stock	unused	unit	Night Elf Battleship	-	ebsh	nightelf	units\creeps\NightElfBattleship\NightElfBattleship	stock	ReplaceableTextures\CommandButtons\BTNNightElfBattleCruiser.blp	-	-	-	-	-	-	Ault	-
 edes	stock	unused	unit	Night Elf Frigate	-	edes	nightelf	units\nightelf\NightElfDestroyerShip\NightElfDestroyerShip	stock	ReplaceableTextures\CommandButtons\BTNNightElfDestroyer.blp	-	-	-	-	-	-	Ault	-

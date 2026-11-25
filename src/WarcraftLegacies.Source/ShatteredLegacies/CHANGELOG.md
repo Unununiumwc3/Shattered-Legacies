@@ -4,6 +4,25 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.75.0 — WL 5.0.4 alignment, bundle 4: hotfixes and Chinese; new lobby and loading texts
+
+No bot changes (`../Ai/CHANGELOG.md` 0.75.0: version only).
+- **Chinese** (WL 5.0.4 #4146 / #4147 / #4157, from the maintainer's add-on made on 0.68): Chinese clients get WL's
+  Chinese runtime text (2,584 entries) and object text (overlays `*Data.zhCN/`), `-language zh`; one map for English
+  and Chinese clients with `tools/shattered-legacies/localization/publish.py`. The add-on's overlays were made before
+  0.73.0 -- they would have given this map's Shifting Sands, Frost Bite, Progenesis, ... WL 5's Frenzy / Teleport
+  text; rebuilt with the new `localization/build_overlays.py` (`LOCALIZATION.md`). The add-on's separate
+  `UPSTREAM-5.0.4-STATUS.md` was not taken (`UPSTREAM.md` is the ledger).
+- **New texts** (maintainer), English and Chinese: lobby description, loading screen (`Info.json`, `zhCN/Info.json`),
+  the start message, a new F9 entry "How Shattered Legacies works" (fallbacks, betrayals, the Hourglass, defeat, bots),
+  five hints. WL's hint "a leaver's units are refunded" is gone (a bot takes over). The credits quest has WL 5.0.4's
+  longer artist list and is translated too.
+- **Hotfixes 5.0.1-5.0.4** (#4198, #4199, #4203): Boralus expires at turn 11 (was 8); lobby language bug
+  (`FactionManager`); Kil'jaeden's Command counts a destroyed Nordrassil as done; Redeemed Highborne Adept Training
+  in the Sentinels' limits. Not taken: `AhnQirajSetup`, Feathermoon at full life (both not wanted). The rest was in.
+- **Ahn'Qiraj / Old Gods fixes** (#4080, #4097): Spell Conduction checks at damage time instead of buffs; the
+  tentacle attack no longer hits its primary target twice.
+
 ## 0.74.0 — WL 5.0.4 alignment, bundle 3: Night Elves; Outland sites, Twilight's Hammer army
 
 Bot changes: `../Ai/CHANGELOG.md` 0.74.0 (revive fixed, Cenarius' ghost for bots).

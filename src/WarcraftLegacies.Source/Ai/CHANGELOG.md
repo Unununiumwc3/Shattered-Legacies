@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.75.0 — version only
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.75.0 (bundle 4, Chinese, new texts). No bot change.
+
 ## 0.74.0 — heroes are revived again (altar), Cenarius' ghost for bots
 
 Maintainer's notes on 0.73.0. Map / content side: `../ShatteredLegacies/CHANGELOG.md` 0.74.0.

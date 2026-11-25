@@ -66,5 +66,6 @@ public static class SentinelsObjectInfo
     yield return new(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, Unlimited);
     yield return new(UPGRADE_RV02_WARDENS_SENTINELS, Unlimited);
     yield return new(UPGRADE_RV03_WARDENS_OF_THE_VAULT_SENTINELS, Unlimited);
+    yield return new(UPGRADE_RH01_REDEEMED_HIGHBORNE_ADEPT_TRAINING_SENTINELS, Unlimited); // [SL] (0.75.0): WL 5.0.4 hotfix (#4203)
   }
 }

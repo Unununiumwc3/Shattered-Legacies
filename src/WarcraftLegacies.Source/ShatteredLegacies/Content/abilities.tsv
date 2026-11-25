@@ -3448,18 +3448,18 @@ ANc2	stock	unused	Cluster Rockets	(Upgrade Level 2)	ANc2	yes	-	creeps	Replaceabl
 ANc3	stock	unused	Cluster Rockets	(Upgrade Level 3)	ANc3	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNClusterRockets.blp	-
 ANca	stock	used	Cleaving Attack	-	ANca	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNCleavingAttack.blp	-
 ANcf	stock	unused	Breath of Fire	(Chen)	ANcf	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNBreathOfFire.blp	-
-ANch	stock	unused	Charm	-	ANch	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCharm.blp	-
+ANch	stock	used	Charm	-	ANch	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCharm.blp	-
 ANcl	stock	used	Channel	-	ANcl	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNDeathPact.blp	-
 ANcr	stock	used	Chemical Rage	-	ANcr	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNChemicalRage.blp	-
 ANd1	stock	unused	Demolish	(Upgrade Level 1)	ANd1	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDemolish.blp	-
 ANd2	stock	unused	Demolish	(Upgrade Level 2)	ANd2	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDemolish.blp	-
 ANd3	stock	unused	Demolish	(Upgrade Level 3)	ANd3	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDemolish.blp	-
-ANdb	stock	unused	Drunken Brawler	-	ANdb	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDrunkenDodge.blp	-
+ANdb	stock	used	Drunken Brawler	-	ANdb	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDrunkenDodge.blp	-
 ANdc	stock	used	Dark Conversion	(Malganis)	ANdc	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSleep.blp	-
 ANde	stock	used	Demolish	-	ANde	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNDemolish.blp	Nrob
 ANdp	stock	used	Dark Portal	(Archimonde)	ANdp	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNDizzy.blp	-
-ANdr	stock	unused	Life Drain	-	ANdr	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNLifeDrain.blp	-
-ANef	stock	unused	Storm, Earth, And Fire	-	ANef	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNStormEarth&Fire.blp	-
+ANdr	stock	used	Life Drain	-	ANdr	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNLifeDrain.blp	-
+ANef	stock	used	Storm, Earth, And Fire	-	ANef	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNStormEarth&Fire.blp	-
 ANen	stock	used	Ensnare	-	ANen	-	-	naga	ReplaceableTextures\CommandButtons\BTNEnsnare.blp	-
 ANfa	stock	used	Frost Arrows	-	ANfa	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNColdArrowsOn.blp	-
 ANfb	stock	used	Firebolt	(Neutral Hostile)	ANfb	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNFireBolt.blp	-
@@ -3487,7 +3487,7 @@ ANsa	stock	unused	Staff of Sanctuary	-	ANsa	-	yes	other	ReplaceableTextures\Comm
 ANsb	stock	used	Storm Bolt	-	ANsb	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNStormBolt.blp	-
 ANse	stock	unused	Spell Shield	(Rune)	ANse	-	yes	other	ReplaceableTextures\CommandButtons\BTNSpellShieldAmulet.blp	-
 ANsh	stock	used	Shockwave	-	ANsh	yes	-	other	ReplaceableTextures\CommandButtons\BTNShockWave.blp	-
-ANsi	stock	unused	Silence	-	ANsi	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSilence.blp	-
+ANsi	stock	used	Silence	-	ANsi	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSilence.blp	-
 ANsl	stock	used	Soul Preservation	(Malganis)	ANsl	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSleep.blp	-
 ANso	stock	used	Soul Burn	-	ANso	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSoulBurn.blp	-
 ANsq	stock	unused	Summon Quilbeast	-	ANsq	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNQuillBeast.blp	-

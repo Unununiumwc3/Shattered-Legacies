@@ -150,7 +150,9 @@ public sealed class QuestKiljaedensCommand : QuestData
 
     if (faction == _druids)
     {
-      AddObjective(new ObjectiveControlCapital(_nordrassil, false));
+      // [SL] (0.75.0): WL 5.0.4 hotfix (#4203) -- a destroyed target capital counts as done
+      AddObjective(new ObjectiveEitherOf(new ObjectiveControlCapital(_nordrassil, false),
+        new ObjectiveCapitalDead(_nordrassil)));
       AddObjective(new ObjectiveControlPoint(UNIT_N01P_NORDRASSIL, 0));
     }
 

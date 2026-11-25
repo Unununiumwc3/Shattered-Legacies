@@ -14,9 +14,15 @@ public static class HintConfig
     Hint.Register(() => Loc.Get("Some heroes can't be revived, and some can only be revived if you control certain capitals when they die."));
     Hint.Register(() => Loc.Get("If you have low FPS, try turning off your health bars."));
     // [SL] (0.39.9): the two hints below are the fork notice requested by the original maintainer.
-    Hint.Register(() => Loc.Format("This map is an unofficial fork of Warcraft Legacies. You can find the original at {url}", ("{url}", "https://warcraftlegacies.com/")));
-    Hint.Register(() => Loc.Format("You can support the original Warcraft Legacies team on Patreon at {url}", ("{url}", "https://www.patreon.com/cw/WarcraftLegacies")));
-    Hint.Register(() => Loc.Get("When a player leaves, their units are refunded, then their gold and hero experience are spread among their remaining allies."));
+    Hint.Register(() => Loc.Format(SlText.HintFork, ("{url}", "https://warcraftlegacies.com/")));
+    Hint.Register(() => Loc.Format(SlText.HintPatreon, ("{url}", "https://www.patreon.com/cw/WarcraftLegacies")));
+    // [SL] (0.75.0): the fork's hints (the maintainer's text); WL's "a leaver's units are refunded" no longer holds --
+    // a bot takes the slot over
+    Hint.Register(() => Loc.Get(SlText.HintFallbacks));
+    Hint.Register(() => Loc.Get(SlText.HintHourglass));
+    Hint.Register(() => Loc.Get(SlText.HintDefeat));
+    Hint.Register(() => Loc.Get(SlText.HintLeavers));
+    Hint.Register(() => Loc.Get(SlText.HintBotChoices));
     Hint.Register(() => Loc.Get("There are water passageways at the edge of the map you can use to instantly move to the other side of the map."));
     Hint.Register(() => Loc.Get("Every faction can build an item shop that contains useful purchasable items."));
     Hint.Register(() => Loc.Get("When you unlock a hero through a Quest, you usually still need to summon that hero from an Altar."));

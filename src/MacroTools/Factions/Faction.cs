@@ -5,6 +5,7 @@ using System.Linq;
 using MacroTools.ControlPoints;
 using MacroTools.Extensions;
 using MacroTools.Legends;
+using MacroTools.Localization;
 using MacroTools.Quests;
 using MacroTools.Shared;
 using MacroTools.Utils;
@@ -110,7 +111,7 @@ public abstract class Faction
   /// <summary>Whether or not the <see cref="Faction"/> has been defeated.</summary>
   public ScoreStatus ScoreStatus { get; private set; } = ScoreStatus.Undefeated;
 
-  public string ColoredName => $"{PrefixCol}{_name}|r";
+  public string ColoredName => $"{PrefixCol}{Loc.Get(_name)}|r";
 
   public string PrefixCol { get; private set; } // [SL] private set: SetPlayerColor
 

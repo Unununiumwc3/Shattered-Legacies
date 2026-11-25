@@ -27,7 +27,11 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - **Ashtongue**: Shattrath / Halaa stand on their spot (fallback and after purification), click circle = model; the
   blue channel from Shattrath to the site being purified.
 - **Decide**: Cenarion Hold to Neutral Passive (WL 5) or kept as the Druids' outpost against Ahn'Qiraj (`UPSTREAM.md`).
-- **Next bundle**: 4 hotfix sync. With the bot work.
+- **Bundle 4 playtest (0.75.0)**: lobby description and loading screen (English and Chinese client), the start message,
+  F9 "How Shattered Legacies works" and Credits, new hints; Boralus fails at turn 11; Kil'jaeden's Command with
+  Nordrassil destroyed; Ahn'Qiraj's Spell Conduction; Old Gods tentacles.
+- **WL 5.0.4 alignment**: the four bundles are in. Left: the open Cenarion Hold decision, the parked Earthmother's
+  Cradle, and the object-data audit of the remaining factions (`UPSTREAM.md`).
 - [ai] **Quest runner** (design discussed 2026-11-25, not built): a general way for bots to finish "bring a hero / unit
   to X" quests (Illidan -> Tomb of Sargeras) instead of one-off code.
 - [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it
@@ -397,4 +401,5 @@ section 12).
   the summon on that spot.
 - [you] Loading screen: a red "BOTIFIED" picture needs an image edit of `Imports/LoadingScreenTL/TR/BL/BR.blp`.
 - [you] Islands still free for neutral roadblocks (Zandalar trolls -- 24p: God King, Gurubashi, Amani, Sandfury).
-- [ai] (low) Chinese localization from upstream WL (`Loc` system) -- a cherry-pick candidate from 5.x.
+- [you] Chinese (0.75.0): build with `localization/publish.py`, test a mixed English / Chinese game (`LOCALIZATION.md`
+  playtest list). The fork's own quests, fallbacks and bot messages are still English.
