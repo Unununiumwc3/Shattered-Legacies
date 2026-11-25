@@ -51,7 +51,7 @@ ISGC	main	used	The Scarab Gong	ckng	Artifact	ReplaceableTextures/CommandButtons/
 IYGL	main	used	Val'anyr, Hammer of Ancient Kings	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNNatureHammer.blp	A03X,AYGS	-
 IZf0	main	used	Summon Forsaken Acolyte	infs	Purchasable	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	AZfx	uZf6
 IZf1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZfy	uZf6
-IZh1	main	unused	Hammer of Twilight	klmm	Artifact	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	AIl2,AItx,AIx5	-
+IZh1	main	used	Hammer of Twilight	klmm	Artifact	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	AIl2,AItx,AIx5	-
 IZk0	main	used	Summon Engineer	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNGoblinWorker.blp	AZkh	oZkb
 IZk1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZki	oZkb
 IZw0	main	used	Summon Cultist	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	AZwg	uZw0

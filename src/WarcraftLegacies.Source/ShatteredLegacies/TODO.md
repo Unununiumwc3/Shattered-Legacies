@@ -15,10 +15,16 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   once (Tyrande, Naisha, Anasterian, Rivendare, Cenarius, Malfurion, Antonidas, Priestess / Warden / Heartwood /
   Keeper elites), equip the four artifacts, research both elite choices once per faction (the other must lock).
   Twilight's Hammer: The Hammer of Twilight drops at Suramar; Ironforge's Uldum expedition can still give Thunderfury.
-- **Decide**: which faction gets the Draenei (The Exodar) as its fallback (proposal: Druids, or Gilneas); then
-  separate the Draenei from the Sentinels' slot (checklist in `UPSTREAM.md`).
-- **Next bundles**: 2 Dalaran (Shield, waygates -- bot movement, caster teleport), 3 Night Elves (Immortality regions,
-  Wrath of the Wild, Sentinels quest changes, income), 4 hotfix sync. One bundle per build, with the bot work.
+- **Bundle 2 playtest (0.73.0)**: `-testkit dalaran` (as Dalaran or any player): Antonidas beside the Power
+  Generator -> Dalaran Shield (dome, undead hurt inside, Cancel Shield ends it); far from it -> refused with a message.
+  Build two Way Gates with the Farmers -> travel both ways; a bot ally's army should use them (dump: "Dalaran Way
+  Gates open"). Geomancers / Mages: Teleport after Teleportation. Check AQ's Ouro (Shifting Sands), C'Thun's
+  Progenesis, Skywall's Frost Bite, and the Orcish Horde's Frenzy / Improved Frenzy (Fortress) / Blademasters.
+- **Draenei**: kept as they are for now (maintainer, 2026-11-25); the fallback plan in `UPSTREAM.md` waits.
+- **Next bundles**: 3 Night Elves (Immortality regions, Wrath of the Wild, Sentinels quest changes, income), 4 hotfix
+  sync. One bundle per build, with the bot work.
+- [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it
+  when Antonidas happens to stand beside the generator in a fight).
 
 ## Western 2v2v2 integration for playtest
 

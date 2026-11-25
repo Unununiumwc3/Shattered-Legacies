@@ -24,7 +24,7 @@
 #
 # id   kind     who    min  radius  flags  note
 A00F   skip     -      -    -       -      Rend Soul (Kel'Thuzad): DeathPact class -- kills an allied unit
-A00Y   skip     -      -    -       -      Teleport (Tidehunter / Water Ascendant): travel, order "stop", no code
+AZo1   skip     -      -    -       -      Teleport (Sea Witch; WL 5 A00Y, fork id since 0.73.0): travel, order "stop", no code
 A01D   point    ally   3    -       -      Lunar Sanctuary (Tyrande): heals allies, slows enemies in the area (0.72.0: code ported)
 A01F   point    enemy  -    -       -      Solar Judgement (Arthas / Crown Prince): bolts on enemies in the area
 A01N   point    enemy  -    -       -      Mass Ensnare (Skywall Ballista Carrier): MassAnySpell, enemies

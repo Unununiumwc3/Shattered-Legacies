@@ -8,7 +8,7 @@
     {
       "Id": "uabi",
       "Type": 3,
-      "Value": "A0DS,A0EF,A0DX,A12I,A0GK,A000,A064,Aion,A01T,A0B2,A16E,AZ03"
+      "Value": "A0DS,A0EF,A0DX,A12I,A0GK,AZo0,A064,Aion,A01T,A0B2,A16E,AZ03"
     },
     {
       "Id": "ua1t",
@@ -104,7 +104,7 @@
     {
       "Id": "upgr",
       "Type": 3,
-      "Value": "R021,R003,R01U,R01Z,R019,R015,Ropm,Rhme,Rhar,Rguv"
+      "Value": "R021,RZo0,R01U,R01Z,R019,R015,Ropm,Rhme,Rhar,Rguv"
     },
     {
       "Id": "ucs1",
@@ -119,7 +119,7 @@
     {
       "Id": "udaa",
       "Type": 3,
-      "Value": "A000"
+      "Value": "AZo0"
     },
     {
       "Id": "udef",

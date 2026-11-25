@@ -1,5 +1,5 @@
 id	map	status	name	suffix	base	hero	item	race	icon	on
-A000	main	used	Frenzy	(Orcish Horde)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\ATCOrcFrenzy.blp	U02S,n03F,o00G,ogru,orai
+A000	main	used	Shifting Sands	(ouro)	AHmt	yes	-	human	ReplaceableTextures\CommandButtons\BTN_SandAvenger.blp	U02S
 A001	main	used	Frost Nova	(The Frozen Throne)	AUfn	-	-	undead	ReplaceableTextures\CommandButtons\BTNGlacier.blp	ZBFT,u000
 A002	main	used	Scroll Tele	(town)	AHmt	-	yes	human	ReplaceableTextures\CommandButtons\BTNMassTeleport.blp	stwp
 A003	main	used	Discordant Cadenza	(Meredith)	AHwe	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWaveOfTerror2.blp	E021,U026
@@ -33,7 +33,7 @@ A00U	main	used	Stand Down	(Yellow - Keep Tower)	Astd	-	-	human	ReplaceableTextur
 A00V	main	used	Arcane Combustion	(Orange - Kirin Tor)	ANso	-	-	human	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	n007
 A00W	main	used	Comet Strike	(Aegwynn)	AUin	yes	-	human	ReplaceableTextures\CommandButtons\BTNStarfall.blp	H09N
 A00X	main	used	Defilement	(Blue - Archimonde)	ANab	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_ShadowWordPain.blp	Uwar
-A00Y	main	used	Teleport	(Sea Witch)	ANcl	-	-	other	ReplaceableTextures\CommandButtons\BTNTeleport.blp	UELN,UZw2,o079
+A00Y	main	used	Frost Bite	(Neptulon)	Aspo	yes	-	undead	ReplaceableTextures\PassiveButtons\PASFrostMourne2.blp	UELN,UZw2
 A00Z	main	used	Power of the Lich King	(Lich King spellbook)	Aspb	-	-	other	ReplaceableTextures\CommandButtons\BTNNecromancerAdept.blp	N023
 A010	main	used	Mass Animate Dead	(Lich King)	ACad	-	-	undead	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	-
 A011	main	used	Thunder Crack (Armor Debuff Applicator)	-	ACav	-	-	human	ReplaceableTextures\CommandButtons\BTNHeroThunderclap.blp	-
@@ -340,7 +340,10 @@ A0DV	main	used	Flame Inferno	(rhonin)	AHfs	yes	-	human	ReplaceableTextures\Comma
 A0DW	main	used	Blink	(Light Blue - Maiev real)	AEbl	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNBlink.blp	Ewrd
 A0DX	main	used	Critical Strike	(Martial Spirit)	ACct	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNCriticalStrike.blp	n03F,n07A,nftk,nogo,o00P,o02M,+6
 A0DZ	main	used	Warsong Offensive	(Warsong)	Aakb	-	-	orc	ReplaceableTextures\CommandButtons\PASGruntWarcry.blp	-
+A0E0	main	used	Dalaran Shield	-	Aroa	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNShardOfPower.blp	n0DS
+A0E1	main	used	Dalaran Shield	(Buff Applicator)	Aasl	-	-	naga	ReplaceableTextures\CommandButtons\BTNDivineShield.blp	-
 A0E2	main	used	Evasion	(10%)(Swordsman, Animated Armor)	AEev	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNEvasion.blp	e01Y,hhes,o01I
+A0E3	main	used	Cancel Shield	(Dalaran)	ANbr	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCancel.blp	n0DS
 A0E5	main	used	Feedback	(Arcane Orb Item - Orange Shop)	Afbb	-	yes	nightelf	ReplaceableTextures\PassiveButtons\PASBTNFeedBack.blp	oli2
 A0E6	main	used	Toughened Hides	(Tauren Tribes - Tauren units)	Assk	-	-	orc	ReplaceableTextures\CommandButtons\PASDragonCarapace.blp	n049,ospw,otau,vP54,vP56,vP57
 A0E7	main	used	Dispel Magic	(Lordaeron - Mage)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	nchp
@@ -989,7 +992,7 @@ A167	main	used	Soulseeker	(Kel'thuzad's staff)	AImr	-	yes	other	ReplaceableTextu
 A168	main	used	Dark Summoning	(Gorefiend's Truncheon)	ANcl	-	yes	undead	ReplaceableTextures\CommandButtons\BTNGorefiendsTruncheon.blp	I027
 A169	main	used	Horn of Cenarius	(Horn of Cenarius)	AImr	-	yes	other	ReplaceableTextures\CommandButtons\BTNScrollOfProtection.blp	cnhn
 A16A	main	used	Wind Walk	(Bow of Elune's Grace)	AOwk	-	yes	orc	ReplaceableTextures\CommandButtons\BTNBowOfElunesGrace.blp	I028
-A16B	main	used	Teleport	(Dalaran casters)	AImt	-	-	human	ReplaceableTextures\CommandButtons\BTNStaffOfTeleportation.blp	h01I,nhym
+A16B	main	used	Teleport	(Dalaran casters)	AImt	-	-	human	ReplaceableTextures\CommandButtons\BTNStaffOfTeleportation.blp	h01I,h02D,nhym
 A16C	main	used	Mana Shield	(Sentinels - Redeemed Highborne)	ANms	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNNeutralManaShield.blp	nnmg
 A16D	main	used	Build Tiny Barracks	-	AIbs	-	yes	other	ReplaceableTextures\CommandButtons\BTNHumanBarracks.blp	I029
 A16E	main	used	Hardened Skin	(Horde melee elites)	Assk	-	-	orc	ReplaceableTextures\CommandButtons\PASDragonCarapace.blp	n03F,vP51,vP52
@@ -1321,6 +1324,8 @@ AZkw	main	used	Robo-Goblin	(level 4)	ANrg	yes	-	creeps	ReplaceableTextures\Comma
 AZkx	main	used	Acid Bomb	(Alchemist)	ANab	-	-	undead	ReplaceableTextures\CommandButtons\BTNAcidBomb.blp	oZkg
 AZky	main	used	Dispel Magic	(Goblin)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	oZkg
 AZkz	main	used	Gunner Pilot	(Goblin Shredder	Assp	-	-	creeps	-	nZk1
+AZo0	main	used	Frenzy	(Orcish Horde)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\ATCOrcFrenzy.blp	n03F,o00G,ogru,orai
+AZo1	main	used	Teleport	(Sea Witch)	ANcl	-	-	other	ReplaceableTextures\CommandButtons\BTNTeleport.blp	o079
 AZq0	main	used	Detonate	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGoblinSapper.blp	uZk0
 AZq1	main	used	Refine Oil	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNOilStation.blp	hZq0
 AZs1	main	used	Domination	(Forsaken - Sylvanas)	ANch	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNCharm.blp	UZa1,UZa3
@@ -1522,7 +1527,7 @@ Awrs	main	used	War Stomp	UNUSED	Awrs	-	-	creeps	ReplaceableTextures\CommandButto
 Aygf	main	used	Chain Mana Burn	(Illidan)	ANcl	yes	-	naga	ReplaceableTextures\CommandButtons\BTNChainManaBurn.blp	Eevi,Eevm
 BLWW	main	used	Bloodlust	(Whim of the Winds)	Ablo	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	-
 CK01	main	used	Demonic Convergence	(Focal Demon Gate - Fel Horde DUMMY)	ACes	-	-	orc	ReplaceableTextures\PassiveButtons\PASWarlockSummoning.blp	n0AP
-CK02	main	unused	Way Gate Travel	(Dalaran)	ANcl	-	-	human	ReplaceableTextures\CommandButtons\BTNWarpPortal.blp	n0AO
+CK02	main	used	Way Gate Travel	(Dalaran)	ANcl	-	-	human	ReplaceableTextures\CommandButtons\BTNWarpPortal.blp	n0AO
 CK04	main	used	Summon the Forest Spiders	(Druids - Cenarius)	AHwe	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNSpiderBlue.blp	-
 CT01	main	used	Orb of Annihilation	(Moam)	Afak	yes	-	undead	ReplaceableTextures\CommandButtons\BTNOrbOfDeathOn.blp	U00Z
 EL0X	main	used	Superior Whirlpool Aura	(tidal Lord)	SCae	-	-	human	ReplaceableTextures\commandButtons\PASWhirlpool.blp	el06
@@ -1773,7 +1778,7 @@ A00T	24p	changed	Fan of Knives	(Light Blue Wards	AEfk	-	-	nightelf	ReplaceableTe
 A00V	24p	changed	Arcane Combustion	(Orange - Kirin Tor)	ANso	-	-	human	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	n007,nmed
 A00W	24p	different	Lightning Strike	(Dark Green Mediv)	AUin	yes	-	human	ReplaceableTextures\CommandButtons\BTNManaFlare.blp	nmed
 A00X	24p	changed	Defilement	(Blue - Archimonde)	ANab	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_ShadowWordPain.blp	Uwar
-A00Y	24p	different	Frost Bite	(Rage Winterchill)	Aspo	yes	-	undead	ReplaceableTextures\PassiveButtons\PASFrostMourne2.blp	U01S,Ulic
+A00Y	24p	changed	Frost Bite	(Rage Winterchill)	Aspo	yes	-	undead	ReplaceableTextures\PassiveButtons\PASFrostMourne2.blp	U01S,Ulic
 A00Z	24p	different	Lich King Spellbook	(Lich King spellbook)	Aspb	-	-	other	ReplaceableTextures\CommandButtons\BTNNecromancerAdept.blp	N023
 A010	24p	changed	Mass Animate Dead	(Red - Lich King)	ACad	-	-	undead	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	-
 A011	24p	different	Great Unholy Aura	(Red - Lich King)	ACua	-	yes	creeps	ReplaceableTextures\PassiveButtons\PASBTNUnholyAura.blp	-
@@ -2131,10 +2136,10 @@ A0DU	24p	24p only	Banshee Queen	(sylvanas)	AOls	yes	-	orc	ReplaceableTextures\Co
 A0DW	24p	changed	Blink	(Light Blue - Maiev real)	AEbl	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNBlink.blp	Ewrd
 A0DX	24p	different	Mana Touch	(Brown - Broll)	ACr2	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNNaturesWrath.blp	-
 A0DY	24p	24p only	Roar	(Scroll Item)	AIrr	-	yes	other	ReplaceableTextures\CommandButtons\BTNBattleRoar.blp	sror
-A0E0	24p	24p only	Overclock	(Tinkerer)	Auhf	-	-	human	ReplaceableTextures\CommandButtons\BTNEngineeringUpgrade.blp	h03R
-A0E1	24p	24p only	Lockdown	(Yellow - Tanks)	ANfb	-	-	human	ReplaceableTextures\CommandButtons\BTNOverload.blp	h01P,h0AA
+A0E0	24p	different	Overclock	(Tinkerer)	Auhf	-	-	human	ReplaceableTextures\CommandButtons\BTNEngineeringUpgrade.blp	h03R
+A0E1	24p	different	Lockdown	(Yellow - Tanks)	ANfb	-	-	human	ReplaceableTextures\CommandButtons\BTNOverload.blp	h01P,h0AA
 A0E2	24p	changed	Evasion	(10%)(Light Blue - Huntress/Naisha. Dark Green - Swordsman)	AEev	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNEvasion.blp	ensh,hhes
-A0E3	24p	24p only	Lightning Shield	(kul Tiras)	Alsh	-	-	orc	ReplaceableTextures\CommandButtons\BTNLightningShield.blp	n009,o05Z
+A0E3	24p	different	Lightning Shield	(kul Tiras)	Alsh	-	-	orc	ReplaceableTextures\CommandButtons\BTNLightningShield.blp	n009,o05Z
 A0E4	24p	24p only	Unpack Altar of Storms	(Pack Kodo)	AIbh	-	-	orc	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	-
 A0E6	24p	changed	Toughened Hides	(Pink - Spirit Walker, Tauren)	Assk	-	-	orc	ReplaceableTextures\CommandButtons\PASDragonCarapace.blp	o063,ospw,otau
 A0E7	24p	changed	Dispel Magic	(Purple - Cleric)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	nchp

@@ -512,7 +512,8 @@ namespace WarcraftLegacies.Source.Ai
       _pExitX.Add(dx);
       _pExitY.Add(dy);
       var oid = GetPlayerId(GetOwningPlayer(u));
-      _pOwner.Add(oid < 24 && PrivateGate(u) ? oid : -1);
+      var marked = AiPortals.MarkerOwner(u); // 0.73.0: Dalaran's Way Gates (hidden markers, owner + allies)
+      _pOwner.Add(marked >= 0 ? marked : oid < 24 && PrivateGate(u) ? oid : -1);
       AiPortals.Watch(u); // 0.46: entry area for the pseudo-portal trigger
       return true;
     }
@@ -565,6 +566,13 @@ namespace WarcraftLegacies.Source.Ai
       if (GetUnitTypeId(gate) == 0 || GetUnitState(gate, UNIT_STATE_LIFE) <= 0.405f)
       {
         return false;
+      }
+
+      // 0.73.0: a Dalaran Way Gate marker -- only while its pair is operational, for the gates' owner and allies
+      var marked = AiPortals.MarkerOwner(gate);
+      if (marked >= 0)
+      {
+        return p == null || GetPlayerId(p) == marked || IsPlayerAlly(p, Player(marked));
       }
       // 0.71.1: the Legion teleporters (n0BE) are dummies, never an active waygate -- only hidden counts for them
       // (their edges exist only once the Argus quest is complete, AiPortals.AddLegionTeleporters)

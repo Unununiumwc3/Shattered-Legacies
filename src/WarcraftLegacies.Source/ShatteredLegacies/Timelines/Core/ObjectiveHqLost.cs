@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MacroTools.PreplacedWidgets;
 using MacroTools.Quests;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
@@ -51,6 +52,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       }
 
       DestroyGroup(g);
+      // 0.73.0: hidden preplaced HQs too (GroupEnumUnitsInRect skips hidden units): Orgrimmar stays hidden until
+      // the Orcish Horde builds it, so its fallback never armed and never fired when Orgrimmar fell
+      for (var i = 0; i < _types.Length; i++)
+      {
+        if (!AllPreplacedWidgets.Units.TryGetAll(_types[i], out var pre))
+        {
+          continue;
+        }
+
+        for (var k = 0; k < pre.Count; k++)
+        {
+          if (!_units.Contains(pre[k]))
+          {
+            _units.Add(pre[k]);
+          }
+        }
+      }
     }
 
     // returns +1 when the HQ was just lost, 0 otherwise

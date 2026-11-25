@@ -54,11 +54,11 @@ public static class OrcishHordeObjectInfo
     yield return new(UPGRADE_ROST_SHAMAN_ADEPT_TRAINING_ORCISH_HORDE, Unlimited);
     yield return new(UPGRADE_ROWD_WITCH_DOCTOR_ADEPT_TRAINING_ORCISH_HORDE, Unlimited);
     yield return new(UPGRADE_ROBS_BRUTE_STRENGTH_ORCISH_HORDE, Unlimited);
-    yield return new(UPGRADE_R003_IMPROVED_FRENZY_ORCISH_HORDE, Unlimited);
+    yield return new(ShatteredLegacies.SlObjects.UPGRADE_RZO0_IMPROVED_FRENZY_ORCISH_HORDE, Unlimited); // fork id (0.73.0)
     yield return new(UPGRADE_R01J_IMPROVED_ENSNARE_ORCISH_HORDE, Unlimited);
     yield return new(UPGRADE_ROVS_ENVENOMED_SPEARS_ORCISH_HORDE, Unlimited);
     yield return new(UPGRADE_RZ01_BURNING_OIL_ORCISH_HORDE, Unlimited);
-    yield return new(UPGRADE_RZ02_BLADEMASTERS_ORCISH_HORDE, Unlimited);
+    yield return new(ShatteredLegacies.SlObjects.UPGRADE_RZO1_BLADEMASTERS_ORCISH_HORDE, Unlimited); // fork id (0.73.0)
     yield return new(UPGRADE_RZ03_KOR_KRON_ELITES_ORCISH_HORDE, Unlimited);
     yield return new(UPGRADE_RZ04_FAR_SEER_ADEPT_TRAINING_ORCISH_HORDE, Unlimited);
     //yield return new(UPGRADE_ROWS_IMPROVED_PULVERIZE_ORCISH_HORDE, Unlimited);

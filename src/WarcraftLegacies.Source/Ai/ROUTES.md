@@ -4,7 +4,7 @@ Written by `python3 tools/shattered-legacies/ai/gen_routes.py` together with `Ai
 
 - Nodes: 168 CPs, 75 area nodes
 - Edges: 338, of them 10 behind rock groups (11 groups of `LTrc`)
-- Hand-written graph (`AiConfig`): 219 edges, 135 of them also generated.
+- Hand-written graph (`AiConfig`): 220 edges, 135 of them also generated.
 
 ## Hand-written edges NOT generated
 
@@ -19,8 +19,8 @@ walk is N times the straight line: check whether something blocks it that does n
 - ?n001 <-> Quel'Danas: not a CP in the map data
 - Borean Tundra <-> Dragonblight: ok, 1.1x
 - Borean Tundra <-> ?n0NX: not a CP in the map data
-- Darkspear Isles <-> Ruins of Ahn'Qiraj: ok, 1.7x
-- Darkspear Isles <-> ?n1A0: not a CP in the map data
+- Tunnels of Ahn'Qiraj <-> Ruins of Ahn'Qiraj: ok, 1.7x
+- Tunnels of Ahn'Qiraj <-> ?n1A0: not a CP in the map data
 - The Abyss <-> Maelstrom: ok, 1.2x
 - The Abyss <-> Eldarath: unreachable on foot
 - Spinebark Grove <-> Southern Barrens: ok, 1.3x
@@ -76,6 +76,7 @@ walk is N times the straight line: check whether something blocks it that does n
 - Grim Batol <-> ?n1A7: not a CP in the map data
 - Northern Highlands <-> ?n1A7: not a CP in the map data
 - Northern Highlands <-> ?n1A9: not a CP in the map data
+- Kezan <-> Nazmir: unreachable on foot
 - Val'sharah <-> ?n1A6: not a CP in the map data
 - Gadgetzan <-> Nazmir: unreachable on foot
 - Isle of Dread <-> ?n1A4: not a CP in the map data
@@ -213,20 +214,20 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Sholazar Basin <-> En'Kilah: 4261 via -7184,18800
 - Sholazar Basin <-> Icecrown Glacier: 3544 via -6288,21776
 - Sholazar Basin <-> area 224: 3235 via -6192,20848
-- Temple of Ahn'Qiraj <-> Darkspear Isles: 3088 via -22672,-17968
+- Temple of Ahn'Qiraj <-> Tunnels of Ahn'Qiraj: 3088 via -22672,-17968
 - Temple of Ahn'Qiraj <-> area 218: 3341 via -21584,-17456
-- Howling Fjords <-> Venture Bay: 4898 via 4944,16016 (rocks 4)
-- Howling Fjords <-> area 168: 2675 via 6032,13744 (rocks 2)
+- Howling Fjords <-> Venture Bay: 4898 via 4944,16016 (rocks 0)
+- Howling Fjords <-> area 168: 2675 via 6032,13744 (rocks 5)
 - Antoran Wastes <-> area 210: 3396 via 19824,-28816
 - Antoran Wastes <-> area 215: 3289 via 19376,-26192
 - Antoran Wastes <-> area 241: 3107 via 19152,-26192
 - Grizzly Hills <-> Zul'Drak: 3448 via 5296,20144
-- Grizzly Hills <-> Drak'Tharon Keep: 4028 via 4176,19728 (rocks 9)
-- Grizzly Hills <-> Venture Bay: 4011 via 4240,17424 (rocks 4)
+- Grizzly Hills <-> Drak'Tharon Keep: 4028 via 4176,19728 (rocks 10)
+- Grizzly Hills <-> Venture Bay: 4011 via 4240,17424 (rocks 0)
 - Borean Tundra <-> En'Kilah: 3939 via -6640,17040
 - Borean Tundra <-> area 191: 4385 via -5712,15824
 - Borean Tundra <-> area 195: 3661 via -9104,16880
-- Zul'Drak <-> Drak'Tharon Keep: 4209 via 4368,20112 (rocks 9)
+- Zul'Drak <-> Drak'Tharon Keep: 4209 via 4368,20112 (rocks 10)
 - Nath'raxas Hold <-> Krokuun: 4339 via 20752,-30992
 - Krokuun <-> area 210: 4390 via 21584,-29232
 - Desolace <-> Feralas: 3092 via -19376,-5136
@@ -235,7 +236,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Crystalsong Forest <-> Storm Peaks: 4889 via 1520,21744
 - Crystalsong Forest <-> Drak'Tharon Keep: 2847 via 1008,20048
 - Crystalsong Forest <-> Mord’rethar: 2503 via -1104,21232
-- Crystalsong Forest <-> area 185: 4220 via -240,22352 (rocks 7)
+- Crystalsong Forest <-> area 185: 4220 via -240,22352 (rocks 9)
 - Crystalsong Forest <-> area 228: 4018 via -1392,18960
 - Feralas <-> Dire Maul: 3732 via -18352,-7984
 - Feralas <-> area 219: 4227 via -18832,-8464
@@ -256,7 +257,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Southern Barrens <-> area 234: 3347 via -11472,-5296
 - Southern Barrens <-> area 236: 5137 via -14160,-2736
 - Stonemaul <-> Dustwallow Marsh: 2848 via -9488,-8592
-- Stonemaul <-> area 169: 3194 via -11888,-8368 (rocks 3)
+- Stonemaul <-> area 169: 3194 via -11888,-8368 (rocks 2)
 - Stonemaul <-> area 234: 3341 via -11696,-7984
 - Stonetalon Peak <-> Windshear Crossing: 3702 via -17648,16
 - Alterac Mountains <-> Strahnbrad: 1982 via 12080,5776
@@ -305,7 +306,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Stormheim <-> area 190: 3769 via 1712,9584
 - Tomb of Sargeras <-> Suramar: 4776 via -272,8528
 - Dustwallow Marsh <-> area 234: 3230 via -10544,-6704
-- Darkspear Isles <-> area 218: 3289 via -21392,-18416
+- Tunnels of Ahn'Qiraj <-> area 218: 3289 via -21392,-18416
 - Suramar <-> area 180: 4303 via 784,4432
 - Suramar <-> area 186: 3973 via 1520,4912
 - Dragonmaw Port <-> Northern Highlands: 2066 via 20592,-2448
@@ -336,7 +337,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Deadwind Pass <-> Duskwood: 2733 via 13264,-16560
 - Deadwind Pass <-> Swamp of Sorrows: 3930 via 15824,-16496
 - Dun Modr <-> Wetlands: 2433 via 15184,-2000
-- Dun Modr <-> Arathi Highlands: 3134 via 15792,368 (rocks 0)
+- Dun Modr <-> Arathi Highlands: 3134 via 15792,368 (rocks 4)
 - Dun Modr <-> area 204: 3740 via 16880,-1104
 - Dun Morogh <-> Ironforge: 3006 via 10992,-5968
 - Dun Morogh <-> Gnomeregan: 3543 via 9200,-6480
@@ -384,7 +385,7 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Swamp of Sorrows <-> area 187: 3978 via 19120,-16560
 - Swamp of Sorrows <-> area 201: 3519 via 18512,-14544
 - Tirisfal Glades <-> Brill: 2499 via 7792,10704
-- Tirisfal Glades <-> area 168: 2739 via 5904,11120 (rocks 6)
+- Tirisfal Glades <-> area 168: 2739 via 5904,11120 (rocks 1)
 - Tirisfal Glades <-> area 211: 3389 via 6992,8496
 - Westfall <-> area 221: 3199 via 8752,-16400
 - Wetlands <-> Menethil Harbour: 2547 via 13104,-2992
@@ -517,17 +518,17 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - area 206 <-> area 229: 2947 via 20400,-7408
 - area 215 <-> area 241: 3092 via 19536,-26000
 - area 216 <-> area 240: 3038 via 13808,9712
-- area 218 <-> area 223: 3278 via -18704,-18192 (rocks 10)
+- area 218 <-> area 223: 3278 via -18704,-18192 (rocks 8)
 
 ## Edges behind rocks
 
-- Howling Fjords <-> Venture Bay (cost 4898, rock group 4)
-- Howling Fjords <-> area 168 (cost 2675, rock group 2)
-- Grizzly Hills <-> Drak'Tharon Keep (cost 4028, rock group 9)
-- Grizzly Hills <-> Venture Bay (cost 4011, rock group 4)
-- Zul'Drak <-> Drak'Tharon Keep (cost 4209, rock group 9)
-- Crystalsong Forest <-> area 185 (cost 4220, rock group 7)
-- Stonemaul <-> area 169 (cost 3194, rock group 3)
-- Dun Modr <-> Arathi Highlands (cost 3134, rock group 0)
-- Tirisfal Glades <-> area 168 (cost 2739, rock group 6)
-- area 218 <-> area 223 (cost 3278, rock group 10)
+- Howling Fjords <-> Venture Bay (cost 4898, rock group 0)
+- Howling Fjords <-> area 168 (cost 2675, rock group 5)
+- Grizzly Hills <-> Drak'Tharon Keep (cost 4028, rock group 10)
+- Grizzly Hills <-> Venture Bay (cost 4011, rock group 0)
+- Zul'Drak <-> Drak'Tharon Keep (cost 4209, rock group 10)
+- Crystalsong Forest <-> area 185 (cost 4220, rock group 9)
+- Stonemaul <-> area 169 (cost 3194, rock group 2)
+- Dun Modr <-> Arathi Highlands (cost 3134, rock group 4)
+- Tirisfal Glades <-> area 168 (cost 2739, rock group 1)
+- area 218 <-> area 223 (cost 3278, rock group 8)

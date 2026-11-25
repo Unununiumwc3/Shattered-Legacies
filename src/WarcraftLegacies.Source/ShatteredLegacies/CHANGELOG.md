@@ -4,6 +4,37 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.73.0 — WL 5.0.4 alignment, bundle 2: Dalaran; repairs of the 0.69 port
+
+Bot changes: `../Ai/CHANGELOG.md` 0.73.0. Playtest of 0.72.0 (maintainer, 2026-11-25).
+- **ID collisions of the 0.69 port repaired.** WL 5 reused ids of objects it had removed; the 0.69 port copied WL 5's
+  Orcish Horde objects under those ids and so overwrote this map's (WL 4.8.2) objects of Ahn'Qiraj and Skywall:
+  `A000` Shifting Sands (Ouro) had become Frenzy, `A00Y` Frost Bite (Neptulon, Skywall heroes) the Sea Witch's
+  Teleport, `R003` Progenesis (C'Thun) Improved Frenzy, `RZ02` Shadow Weaver Adept Training Blademasters, `n00K`
+  Tunnels of Ahn'Qiraj the Darkspear Isles. The five have their 4.8.2 data back; WL 5's objects moved to fork ids:
+  `AZo0` Frenzy, `AZo1` Teleport (Sea Witch), `RZo0` Improved Frenzy, `RZo1` Blademasters (unit references
+  updated; constants in `WarcraftLegacies.Shared/ShatteredLegacies/SlObjects.cs`). Side effects that are gone:
+  researching Improved Frenzy no longer ran C'Thun's Progenesis code, and the AQ / Skywall heroes have their spells.
+- **Improved Frenzy researchable**: it required `o02S` (WL 5's Warsong Fortress); the Orcish Horde's Fortress here is
+  `ofrt` (like Blademasters) -- `RZo0` requires `ofrt`.
+- **Darkspear Isles CP removed** from the Durotar start (the 0.69 port had copied WL 5's island-start CP with its
+  coordinates swapped; it stood hidden under the orc base). The razormane camp on the new orc start (four creeps
+  around -9000,-3100: `nrzb` x2, `nrzm`, `nrzt`) removed -- WL 5.0.4 has none there; the thunder lizards stay.
+- **Orcish Horde fallback (Twilight's Hammer)**: the "Orgrimmar is lost" trigger looked for Orgrimmar with a map
+  scan, which skips hidden units -- Orgrimmar is hidden until the Horde builds it, so the trigger never armed. It now
+  takes hidden preplaced units too (`ObjectiveHqLost.Arm`). In the playtest the Fel Horde then took the shared
+  Twilight path at 33:01 (both fallbacks lead to the Twilight's Hammer; first come, first served).
+- **Bundle 2 -- Dalaran** (WL 5.0.4 as it is): the **Dalaran Shield** (Power Generator `n0DS` in Dalaran, placed at
+  WL 5's spot 9216,4736 -- the city keeps its 4.8.2 layout; Antonidas must stand beside it: a 90 s dome that hurts
+  undead inside the city and holds Antonidas channelling; Cancel Shield), the **clickable Way Gates** (`n0AO`, two
+  at most, built by Farmers; the travel ability moves nearby allies to the other gate) and the **caster teleport**
+  (research Teleportation `RDTP` at the Hall of the Arcane, Teleport on Geomancers -- Mages and Hydromancers already
+  had it). Data that the 0.69 port had brought without code (Way Gates, `RDTP`, models, icons, the region) is now
+  used; the missing objects (`A0E0`, `A0E1`, `A0E3`, `B0DS`, `n0DS`) copied from WL 5.0.4.
+- **`-testkit dalaran`**: hands the Power Generator to the typing player with Antonidas beside it, two Farmers and
+  resources for the Way Gates, Teleportation researched and three Geomancers.
+- **Draenei**: unchanged for now (maintainer, 2026-11-25).
+
 ## 0.72.0 — WL 5.0.4 alignment, bundle 1: hero kits and artifacts (includes 0.71.1)
 
 0.71.1 was never applied on its own: this build contains it (bot fixes, `../Ai/CHANGELOG.md`). New ledger of the WL

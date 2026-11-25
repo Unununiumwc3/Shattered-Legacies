@@ -614,6 +614,7 @@ namespace WarcraftLegacies.Source.Ai
       AiIncome.Setup(); // 0.44.2: CP income for computer slots (WL pays only human slots)
       AiLoad.Setup();   // 0.46: guard positions, order-latency probe
       AiSpells.Setup(); // 0.70.0: bots cast WL's Channel spells in big fights
+      AiCastLog.Setup(); // 0.73.0: every cast of a bot unit, for the dump
       AiAutocast.Setup(); // 0.71.0: autocast on for every autocast ability of bot units
       AiScheduler.Start();
 
@@ -930,13 +931,14 @@ namespace WarcraftLegacies.Source.Ai
         }
 
         // v33: UNIT/ABILITY pool (casters + abilities, AiUpgrades.ByFaction + Extra): steps unlocked =
-        // 1 + one per 5 min (old timer) + one per 2 CPs captured. Steps = every upgrade at level 1 first, then
-        // level 2, then level 3, so casters reach their higher tiers too.
+        // 2 + one per 2 min + one per CP captured (0.73.0; was 1 + one per 5 min + one per 2 CPs -- casters had
+        // their spells at 20+ min). Steps = every upgrade at level 1 first, then level 2, then level 3, so casters
+        // reach their higher tiers too.
         var caps = _cpCaptures.ContainsKey(pid0) ? _cpCaptures[pid0] : 0;
         var steps = AiTech.TechStepsFor(faction.Name);
         if (perks && steps.Ids.Count > 0)
         {
-          var un = 1 + R2I(_clock / 300f) + caps / 2;
+          var un = 2 + R2I(_clock / 120f) + caps;
           if (un > steps.Ids.Count)
           {
             un = steps.Ids.Count;
@@ -2936,7 +2938,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.72.0";
+    public const string Build = "0.73.0";
 
     public static void Setup()
     {

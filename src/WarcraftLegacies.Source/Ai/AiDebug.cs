@@ -705,7 +705,7 @@ public static class AiDebug
   }
 
   // Decode a big-endian FourCC int back to its 4 characters (non-printable bytes shown as '?').
-  private static string RawCode(int id)
+  internal static string RawCode(int id)
   {
     var s = "";
     for (var shift = 24; shift >= 0; shift -= 8)
@@ -958,7 +958,7 @@ public static class AiDebug
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)
     });
 
-    Section(o, "spells", () => AiSpells.Lines(o)); // 0.70.0: bot spellcasting (casts, refusals, re-chains)
+    Section(o, "spells", () => { AiSpells.Lines(o); AiCastLog.Lines(o); }); // 0.70.0: bot spellcasting (casts, refusals, re-chains)
     Section(o, "autocast", () => AiAutocast.Lines(o)); // 0.71.0: autocast switched on
 
     o.Add("## BOTS");

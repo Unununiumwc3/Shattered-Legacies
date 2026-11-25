@@ -5,6 +5,32 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.73.0 — skills learned round robin, free instant revive, faster casters, Dalaran Way Gates
+
+From the 0.72.0 playtest (dumps 5:00-35:00). Map / content side: `../ShatteredLegacies/CHANGELOG.md` 0.73.0.
+- **Hero skills round robin** (`AiHeroSkills`): each free point goes to the learnable skill with the lowest level
+  (ties: the old order, auras first), the attribute bonus last. Before, every point went to the first learnable
+  skill -- the aura / passive was maxed before the first active spell was learned. The SPELLS section showed why
+  casts stayed low: "not ready 5382" against 4145 checks -- the spell was mostly not learned yet.
+- **Stale skill lists**: `AiData.g.cs` was not regenerated after the 0.72.0 kits -- Malfurion (Efur) and Cenarius
+  (E00H) had their OLD skills in the list, so their new spells were never learned by bots. Regenerated (and the
+  Heartwood Ancient's builders).
+- **Every cast counted** (`AiCastLog`, dump SPELLS): "all casts by bot units" -- the engine's own casts of spells on
+  stock bases, autocast and the bot's Channel spells, per bot and the top 40 abilities. The table above it still
+  counts only the bot's own Channel casts, which is why 0.72.0 looked like "10 spells ever cast".
+- **Free revive at once** (`AiAltars.FreeRevive`, bots with perks): a dead hero comes back 8 s after its death at a
+  living altar of its owner -- no native altar revive (up to ~100 s at high levels; it also needed the altar idle).
+  Not food: the native revive does not wait for food, but the bot's altar is busy training / reviving the next hero
+  and the revive time grows with the hero level. `ReviveHero` fires no "finishes reviving" event, so the unit traits
+  and the hero colour WL applies on that event are applied here. Dump: "free revives=".
+- **Tech pool faster** (perks): casters' and units' researches unlock 2 + one per 2 min + one per CP captured (was
+  1 + one per 5 min + one per 2 CPs) -- at 10:00 about 7 steps plus CPs instead of 3.
+- **Dalaran's Way Gates for bots** (`AiPortals.AddDalaranGates`): while a pair is operational, a hidden marker on
+  each gate is a pseudo-portal edge to the other, usable by the gates' owner and its allies; a new pair replaces the
+  markers. Bots do not build the gates (yet). Dump: "Dalaran Way Gates" in the portal states line.
+- Routes regenerated (`gen_routes.py`): the Darkspear Isles CP is gone from the Durotar start; n00K is the Tunnels of
+  Ahn'Qiraj again.
+
 ## 0.72.0 — bot side of the WL 5.0.4 hero kits (includes 0.71.1)
 
 0.71.1 was not applied on its own; this build contains it. Content: `../ShatteredLegacies/CHANGELOG.md` 0.72.0.

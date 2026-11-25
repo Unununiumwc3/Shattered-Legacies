@@ -287,9 +287,75 @@ namespace WarcraftLegacies.Source.Ai
       }
     }
 
+    // ---- 0.73.0: Dalaran's Way Gates (WL 5.0.4, built by Dalaran's workers, two at most) ------------------------
+    // They are no native waygates (WL pairs them in code, Factions/Dalaran/Mechanics), so CheckPortals never sees them.
+    // While the pair is operational, a hidden marker stands on each gate and is the "gate" of a pseudo-portal edge to
+    // the other one -- usable by the gates' owner and its allies (MarkerOwner). A new pair gets new markers (an
+    // edge's ends cannot move); the old ones are removed, which closes their edges. Bots do not build the gates.
+    private static unit _dgA;
+    private static unit _dgB;
+    private static unit _dmA;
+    private static unit _dmB;
+    internal static string DalaranGates = "none";
+
+    // the live owner of the Way Gate a marker stands for while the pair is operational; -1 = not a Dalaran marker or
+    // the pair is not operational (closed)
+    internal static int MarkerOwner(unit m)
+    {
+      if (m == null || (m != _dmA && m != _dmB))
+      {
+        return -1;
+      }
+
+      if (!Factions.Dalaran.Mechanics.WaygateManager.TryGetPair(out var a, out var b) || a != _dgA || b != _dgB)
+      {
+        return 24; // closed: nobody below 24 is player 24 or allied to it
+      }
+
+      var oid = GetPlayerId(GetOwningPlayer(m == _dmA ? _dgA : _dgB));
+      return oid < 24 ? oid : 24;
+    }
+
+    private static void AddDalaranGates()
+    {
+      if (!Factions.Dalaran.Mechanics.WaygateManager.TryGetPair(out var a, out var b) || a == null || b == null)
+      {
+        DalaranGates = _dmA == null ? "none" : "closed";
+        return;
+      }
+
+      if (a != _dgA || b != _dgB)
+      {
+        if (_dmA != null)
+        {
+          RemoveUnit(_dmA);
+          RemoveUnit(_dmB);
+        }
+
+        _dgA = a;
+        _dgB = b;
+        _dmA = Marker(null, GetUnitX(a), GetUnitY(a));
+        _dmB = Marker(null, GetUnitX(b), GetUnitY(b));
+      }
+
+      var n = 0;
+      if (AiRoutes.AddPortalEdge(_dmA, GetUnitX(b), GetUnitY(b) - 192f))
+      {
+        n++;
+      }
+
+      if (AiRoutes.AddPortalEdge(_dmB, GetUnitX(a), GetUnitY(a) - 192f))
+      {
+        n++;
+      }
+
+      DalaranGates = "open, P" + I2S(GetPlayerId(GetOwningPlayer(a))) + (n > 0 ? " (+" + I2S(n) + " edges)" : "");
+    }
+
     internal static void AddStatic()
     {
       AddBotPortals();
+      AddDalaranGates();
       AiFerries.AddEdges(); // 0.50: ferry piers (bot-only, hidden markers)
       AddLegionTeleporters();
       if (!_dpSearched)
@@ -436,7 +502,7 @@ namespace WarcraftLegacies.Source.Ai
             + ", watched waygates " + I2S(_watched.Count));
       // 0.48.2: own line -- the dump cuts long lines (these parts were lost in 0.48.1)
       o.Add("portal states: Dark Portal " + DarkPortalState + "; bot portals:" + BotPortals + "; Legion teleporters "
-            + LegionTeleporterState);
+            + LegionTeleporterState + "; Dalaran Way Gates " + DalaranGates);
 
       // WL's own waygates (not the AI pairs of Neutral Extra): where, owner, active, hidden, destination
       var g = CreateGroup();

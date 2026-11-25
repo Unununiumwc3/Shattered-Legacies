@@ -263,7 +263,7 @@ h01X	main	used	building	Elven Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronS
 h01Y	main	used	building	Elven Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\ElfGate\ElfGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h01Z	main	used	building	Grim Batol	(Creep/Twilight)	hcas	human	DarkIronLair.mdl	main	ReplaceableTextures\CommandButtons\BTNDarkIronLair.blp	-	-	oZwf	-	-	-	A04O	halt
 h021	main	used	unit	Watcher	(Creep)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	-	-	-	-	-	Adef,Aens,Aihn,Aotr	-
-h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+9	-	-	A041,Ahrp	-
+h022	main	used	unit	Farmer	(Dalaran, Worker)	hpea	human	war3mapImported\PeasantBanditV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNVillagerMan1.blp	Dalaran,Scarlet Crusade	h000,h002,h010,h030,h058,h065,h066,h068,+4	-	h02N,h036,h044,h063,h065,h067,h069,h076,h078,h09X,h0A3,h0AG,+10	-	-	A041,Ahrp	-
 h023	main	used	building	Keep	(Gilneas T2)	hkee	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasKeep.blp	Gilneas	-	hpea,o01V	-	-	-	-	-
 h024	main	used	building	Light House	(Stormwind Other)	hwtw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	Dalaran,Gilneas,Stormwind	h060	-	-	-	-	A094	-
 h025	main	used	building	Stormwind Cannon	(Stormwind Tower)	hctw	human	war3mapImported\StormwindTower.mdl	main	ReplaceableTextures\CommandButtons\BTNStormwindCannonTower.blp	-	-	-	-	-	-	-	-
@@ -272,7 +272,7 @@ h027	main	used	unit	Phoenix	(Blood Mage Summon)	hphx	human	units\human\phoenix\p
 h029	main	used	unit	Veteran Footman	(Lordaeron)	hfoo	human	LordearonGuardsman.mdl	main	ReplaceableTextures\CommandButtons\BTN_Royal_Footman_2.blp	-	hbar	-	-	-	-	A020,A0YO,A13L,Aihn	-
 h02A	main	used	unit	Mountaineer	(Creep)	hfoo	human	war3mapImported\DwarvenWarrior.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenWarrior.blp	-	-	-	-	-	-	A020,A02O,A0B8,Aihn	-
 h02C	main	used	building	Castle	(Gilneas T3)	hcas	human	war3mapImported\GilneasTownHall.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasCastle.blp	Gilneas	-	hpea,o01V	-	-	-	-	h02X
-h02D	main	used	unit	Geomancer	(Dalaran)	hmpr	human	war3mapImported\MageDalaranV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNPriest.blp	Dalaran	h036	-	-	-	-	A02R,A0FW,A0K6,A0ZU,Aihn	h066
+h02D	main	used	unit	Geomancer	(Dalaran)	hmpr	human	war3mapImported\MageDalaranV1_01.mdl	main	ReplaceableTextures\CommandButtons\BTNPriest.blp	Dalaran	h036	-	-	-	-	A02R,A0FW,A0K6,A0ZU,A16B,Aihn	h066
 h02F	main	used	building	Household	(Gilneas Farm)	hhou	human	war3mapImported\GilneasFarm.mdl	main	ReplaceableTextures\CommandButtons\BTNGilneasFarm.blp	Gilneas	hpea	-	-	-	-	-	h01R
 h02G	main	used	unit	Vrykul Warrior	(Scourge)	hcth	human	war3mapImported\VrykulWarriorV5Optimized.mdl	main	ReplaceableTextures\CommandButtons\BTNVrykulHarpooner.blp	Scourge	h00O	-	-	-	-	A020,A0R1,Ahan,Aihn	-
 h02H	main	used	building	Stormwind Harbour Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0NX	-
@@ -281,7 +281,7 @@ h02J	main	used	building	Stormwind Harbour Gate	(Gate - Open)	hhou	unknown	Doodad
 h02K	main	used	building	Greymane's Gate	(Gate - Closed)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O0	-
 h02L	main	used	building	Greymane's Gate	(Gate - Dead)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	-	-
 h02M	main	used	building	Greymane's Gate	(Gate - Open)	hhou	unknown	Doodads\LordaeronSummer\Terrain\IronGate\IronGate.mdl	stock	ReplaceableTextures\CommandButtons\BTNFarm.blp	-	-	-	-	-	-	A0O0	-
-h02N	main	used	building	Lumber Mill	(Dalaran Research)	hlum	human	war3mapImported\LumberMillDalaranV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneLumberMill.blp	Dalaran	h022	-	-	R006,R00C,R04R,R09X,Rhar,Rhme	-	-	-
+h02N	main	used	building	Lumber Mill	(Dalaran Research)	hlum	human	war3mapImported\LumberMillDalaranV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneLumberMill.blp	Dalaran	h022	-	-	R006,R00C,R04R,R09X,RDTP,Rhar,Rhme	-	-	-
 h02O	main	used	unit	Bladesman	(Stormwind)	hcth	human	StormwindSergeant.mdl	main	ReplaceableTextures\CommandButtons\BTNpikeman.blp	Stormwind	h05E,h05Z,h06E	-	-	-	-	A0BG,Adef,Aihn,S01J	-
 h02P	main	used	building	Holding	(Sunfury T1)	htow	human	war3mapImported\BE_TownHall1.mdl	main	ReplaceableTextures\CommandButtons\BTNBE_TownHall1.blp	Sunfury	n0E2	n0E2,n0E7	-	-	-	-	-
 h02Q	main	used	unit	Pegasus Knight	(Lordaeron)	hdhw	human	war3mapImported\Unit_PegasusKnight1.mdl	main	ReplaceableTextures\CommandButtons\BTNMystical Knight on Pegasus Lordaeron.blp	Lordaeron	h06C	-	-	-	-	A0BJ,A0VV	R09X
@@ -635,7 +635,7 @@ n00G	main	used	building	Borean Tundra	-	ncop	creeps	buildings\other\CircleOfPowe
 n00H	main	used	building	Zul'Drak	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
 n00I	main	used	building	Black Temple	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NT	-
 n00J	main	used	building	Tomb of Sargeras	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
-n00K	main	used	building	Darkspear Isles	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
+n00K	main	used	building	Tunnels of Ahn'Qiraj	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n00L	main	used	building	Booty Bay	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NU	-
 n00M	main	used	building	Highbank	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
 n00N	main	used	building	Control Point Defender	(Dalaran)	ndgt	human	war3mapImported\Building_DalaranWatchtower.mdl	main	ReplaceableTextures\CommandButtons\BTNDalaranGuardTower.blp	-	-	-	-	-	-	A0ZX	-
@@ -734,7 +734,7 @@ n03A	main	used	building	Nath'raxas Hold	-	ncop	creeps	buildings\other\CircleOfPo
 n03B	main	used	building	Deeprun Tram	-	nwgt	other	units\human\WarWagon\WarWagon_V1.mdl	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	R014	-	A126,Avul,Awrp	-
 n03C	main	used	unit	Demon Portal	(Legion)	nwgt	other	buildings\other\Waygate\Waygate	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	A0A4,Avul,Awrp	-
 n03E	main	used	building	Iron Keep	(Warsong Tower)	nbt1	orc	war3mapImported\WatchTowerHumanV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	Warsong	o04L	-	-	-	-	Aspi	-
-n03F	main	used	unit	Kor'kron Elite	(Orcish Horde-Elite)	nogl	orc	war3mapImported\OrcHero.mdl	main	ReplaceableTextures\CommandButtons\BTNBlack hand.blp	Orcish Horde,Warsong	o00C,o01B,o02D,o02R,o02S,ofrt,ogre,ostr	-	-	-	-	A000,A01T,A064,A0B2,A0DS,A0DX,A0EF,A0GK,A12I,A16E,AZ03,Aion	ofrt,RZ03
+n03F	main	used	unit	Kor'kron Elite	(Orcish Horde-Elite)	nogl	orc	war3mapImported\OrcHero.mdl	main	ReplaceableTextures\CommandButtons\BTNBlack hand.blp	Orcish Horde,Warsong	o00C,o01B,o02D,o02R,o02S,ofrt,ogre,ostr	-	-	-	-	A01T,A064,A0B2,A0DS,A0DX,A0EF,A0GK,A12I,A16E,AZ03,AZo0,Aion	ofrt,RZ03
 n03G	main	used	building	Violet Tower	(Dalaran)	ndgt	human	war3mapImported\Building_DalaranWatchtower.mdl	main	ReplaceableTextures\CommandButtons\BTNDalaranGuardTower.blp	Dalaran,Gilneas	-	-	-	-	-	A04X,AHta,Adts	-
 n03H	main	used	building	Brill	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 n03J	main	used	unit	Storm Cloud	-	ntor	human	Abilities\Spells\Undead\UnholyFrenzy\UnholyFrenzyTarget.mdl	stock	ReplaceableTextures\CommandButtons\BTNBlackHole.blp	-	-	-	-	-	-	A0CZ,Alit,Aloc,Avul	-
@@ -949,7 +949,7 @@ n0AK	main	used	unit	Initiate Mage	(Dalaran)	nslm	human	war3mapImported\MageIniti
 n0AL	main	used	building	Improved Iron Keep	(Warsong Tower 2)	nbt2	orc	war3mapImported\WatchTowerHumanV1_03.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcTower.blp	Warsong	-	-	-	-	-	Aspi	-
 n0AM	main	used	building	Flame Pillar	(Fel Tower)	nbt1	orc	war3mapImported\TowerFelOrcV2.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonPillar.blp	Fel Horde	-	-	-	-	-	-	-
 n0AN	main	used	building	Improved Flame Pillar	(Fel Tower 2)	nbt2	orc	war3mapImported\TowerFelOrcV2.mdl	main	ReplaceableTextures\CommandButtons\BTNDemonPillar.blp	Fel Horde	-	-	-	-	-	-	-
-n0AO	main	unused	building	Way Gate	(Dalaran Siege)	nwgt	human	buildings\other\Waygate\Waygate	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	-	-	-	-	-	-	A126,CK02	-
+n0AO	main	used	building	Way Gate	(Dalaran Siege)	nwgt	human	buildings\other\Waygate\Waygate	stock	ReplaceableTextures\CommandButtons\BTNWaygate.blp	Dalaran	h022	-	-	-	-	A126,CK02	-
 n0AP	main	used	building	Focal Demon Gate	(Fel Siege)	ndmg	orc	war3mapimported/Aethergate_2010.mdl	main	ReplaceableTextures\CommandButtons\BTNAetherGate.blp	Fel Horde	ncpn	-	-	-	-	A126,ARal,CK01	o030
 n0AR	main	used	building	Twisting Halls	(Nzoth T1)	nntt	naga	war3mapImported\BlackEmpireMainBuilding.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireTwistedHalls.blp	Black Empire	n0B5	n0B4,n0B5	-	RBES	-	-	-
 n0AS	main	used	building	Whispering Labyrinth	(Nzoth T2)	nntt	naga	war3mapImported\BlackEmpireMainBuilding.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireWhisperingChambers.blp	Black Empire	-	n0B4,n0B5	-	RBES	-	-	-
@@ -1007,6 +1007,7 @@ n0DJ	main	used	unit	Toxic Cloud	(level 1)	ntor	human	war3mapImported\Radioactive
 n0DL	main	used	unit	Toxic Cloud	(level 2)	ntor	human	war3mapImported\Radioactivecloud.mdl	main	ReplaceableTextures/CommandButtons/BTNToxicGoo.blp	-	-	-	-	-	-	A11U,Aloc	-
 n0DM	main	used	unit	Toxic Cloud	(level 3)	ntor	human	war3mapImported\Radioactivecloud.mdl	main	ReplaceableTextures/CommandButtons/BTNToxicGoo.blp	-	-	-	-	-	-	A11V,Aloc	-
 n0DO	main	used	unit	Doom Guard	(Legion)	nbal	undead	units\demon\DoomGuard\DoomGuard	stock	ReplaceableTextures\CommandButtons\BTNDoomGuard.blp	Legion	ndmg	-	-	-	-	A020,A0BG,Aiun,VP10,VP22	R04B
+n0DS	main	used	building	Power Generator	-	ngob	creeps	Doodads\Cityscape\Props\CrystalShield\CrystalShield.mdl	stock	ReplaceableTextures\CommandButtons\BTNPowerGenerator.blp	-	-	-	-	-	-	A0E0,A0E3	-
 n0DU	main	used	building	Pyramid of Madness	(Nzoth Other)	nntt	naga	war3mapImported\BlackEmpireMainBuilding.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireCathedralOfMadness.blp	-	-	n0B4,n0B5	-	-	-	LEca	-
 n0DV	main	used	building	Control Point Defender	(Nzoth tower)	nntg	naga	war3mapImported\Building_NyAlothaObeliskFix.mdl	main	ReplaceableTextures\CommandButtons\BTNBlackEmpireTowerViciousWatcher.blp	-	-	-	-	-	-	A0ZM	h06S
 n0DW	main	used	building	Control Point Defender	(Cthun tower)	nntg	naga	war3mapImported\CthunTentacleEye.mdl	main	ReplaceableTextures\CommandButtons\BTNZigguratUpgrade.blp	-	-	-	-	-	-	A0ZO	h06S
@@ -1415,7 +1416,7 @@ o00C	main	used	building	Great Hall	(Warsong T1)	ogre	orc	war3mapImported\GreatHa
 o00D	main	used	building	Pyramid	(Cthun Magic)	osld	undead	CthunShop.mdl	main	ReplaceableTextures\CommandButtons\BTNCthunShop.blp	Ahn'qiraj	u019	n05V,n060,o001	-	RL11,RS01,RZ02	-	A0RU,A0YA	u021
 o00E	main	used	unit	Chaos Peon	(Warsong-Bloodpact)	opeo	orc	units\demon\ChaosPeon\ChaosPeon.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosPeon.blp	-	-	-	npgf,o009,o01M,o01T,o02F,oalt,obar,obea,ofor,ogre,oshy,osld,+4	-	-	Arep	-
 o00F	main	used	building	Black Temple	(Illidari/Fel Horde)	ofrt	orc	Doodads\Northrend\Structures\AncientZiggurat\AncientZiggurat1.mdl	stock	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n086,n0E2,n0E7,ncpn,nina,nmpe,nnrg,o01L	-	-	-	A0PF	oalt
-o00G	main	used	unit	Blademaster	(Orcish Horde)	ogru	orc	units\orc\HeroBladeMaster\HeroBladeMaster.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	Orcish Horde,Warsong	o01B,o01S,o02D,ofrt,ogre,ostr	-	-	-	-	A000,A03T,A08P,A16V,Aion,TP72,TP73	ofrt,RZ02
+o00G	main	used	unit	Blademaster	(Orcish Horde)	ogru	orc	units\orc\HeroBladeMaster\HeroBladeMaster.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeroBlademaster.blp	Orcish Horde,Warsong	o01B,o01S,o02D,ofrt,ogre,ostr	-	-	-	-	A03T,A08P,A16V,AZo0,Aion,TP72,TP73	ofrt,RZo1
 o00H	main	used	unit	Berry Bush	(KulTiras - Thornspeaker)	ohwd	human	Objects\InventoryItems\Shimmerweed\Shimmerweed.mdl	stock	ReplaceableTextures\CommandButtons\BTNblackBerry.blp	-	-	-	-	-	-	A0G6,Aloc,Avul	-
 o00I	main	used	unit	War Machine	(Warsong)	ocat	orc	units\orc\catapult\catapult	stock	ReplaceableTextures\CommandButtons\BTNDemolisher.blp	Warsong	-	-	-	-	-	-	o009,o02R
 o00J	main	used	building	Thunder Bluff	(Frostwolf Other)	ofrt	orc	war3mapImported\TaurenGreatHall.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	vP51,vP52,vP59	-	RT01,RT02	-	A09I,A0C9,A0GM,Aspi	-
@@ -1440,7 +1441,7 @@ o017	main	used	building	Kil'Sorrow Fortress	-	ofrt	orc	war3mapImported\GreatHall
 o018	main	used	building	Shrine of Zul'Gurub	-	ofrt	orc	Doodads\Northrend\Structures\AncientZiggurat\AncientZiggurat0.mdl	stock	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	o04A	-	-	-	A0CJ	-
 o019	main	used	unit	Whirlpool	(Tidesage - Kul'tiras)	ohwd	human	Whirlpool.mdl	main	ReplaceableTextures\CommandButtons\BTNWhirlpool.blp	-	-	-	-	-	-	Aloc,Avul,S00A	-
 o01A	main	used	unit	Cannon	(KulTiras)	ocat	human	war3mapImported\SiegeCannon.mdl	main	ReplaceableTextures\CommandButtons\BTNCannonIcon.blp	Kul'tiras	h07P	-	-	-	-	-	h07O,h06I
-o01B	main	used	building	Orgrimmar	(Warsong)	ofrt	orc	war3mapImported\Building_Orgrimmar.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n03F,o00G,opeo	-	RZ02,RZ03	-	A027,A0GM,Aspi	-
+o01B	main	used	building	Orgrimmar	(Warsong)	ofrt	orc	war3mapImported\Building_Orgrimmar.mdl	main	ReplaceableTextures\CommandButtons\BTNFortress.blp	-	-	n03F,o00G,opeo	-	RZ03,RZo1	-	A027,A0GM,Aspi	-
 o01D	main	used	unit	Bloodlust Totem	(Fel-Zuluhed-Level 4)	osp1	orc	units\orc\StasisTotem\StasisTotem.mdl	stock	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-	-	-	-	-	-	S00B	-
 o01F	main	used	unit	Marauder	(Legion)	ogru	undead	units\demon\ChaosGrunt\ChaosGrunt.mdl	stock	ReplaceableTextures\CommandButtons\BTNChaosGrunt.blp	-	-	-	-	-	-	Aion	-
 o01G	main	used	unit	Brute	(Nzoth)	ogru	naga	Units\Creeps\FacelessOne\FacelessOne.mdl	stock	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	Black Empire	n0AW	-	-	-	-	A020,ABPF,Aion	-
@@ -1462,7 +1463,7 @@ o020	main	used	building	Altar of Conquerors	(Warsong Altar)	oalt	orc	war3mapImpo
 o028	main	used	building	Burrow	(Warsong Farm)	otrb	orc	buildings\orc\TrollBurrow\TrollBurrow	stock	ReplaceableTextures\CommandButtons\BTNTrollBurrow.blp	Warsong	o04L	-	-	-	-	A0CF,Arbr,Aspi	-
 o029	main	used	building	Temple of The Moon	(Sentinels Other)	oalt	nightelf	buildings\nightelf\MoonWell\MoonWell.mdl	stock	ReplaceableTextures\CommandButtons\BTNMoonWell.blp	-	-	e00N,ewsp	-	-	-	-	-
 o02A	main	used	unit	Ward of Gale	(Skywall)	osp1	naga	AirEssence.mdl	main	ReplaceableTextures\CommandButtons\BTNWindOrb.blp	-	-	-	-	-	-	A0NN,A0X2	-
-o02D	main	used	building	Darkspear Hold	(Frostwolf Other)	otto	orc	buildings\orc\VoodooLounge\VoodooLounge.mdl	stock	ReplaceableTextures\CommandButtons\BTNTaurenTotem.blp	-	-	n03F,o00G,opeo	-	RZ02,RZ03,Ropg	-	A0C9,A0GM,Aspi	ostr
+o02D	main	used	building	Darkspear Hold	(Frostwolf Other)	otto	orc	buildings\orc\VoodooLounge\VoodooLounge.mdl	stock	ReplaceableTextures\CommandButtons\BTNTaurenTotem.blp	-	-	n03F,o00G,opeo	-	RZ03,RZo1,Ropg	-	A0C9,A0GM,Aspi	ostr
 o02F	main	used	unit	Mangonel	(Lordaeron)	ocat	human	war3mapImported\Siege_Onager.mdl	main	ReplaceableTextures\CommandButtons\BTNOnager.blp	Lordaeron	h094,o00E	-	-	-	-	-	-
 o02G	main	used	building	Jintha'Alor	-	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	-	-	o04A	-	-	-	A0CM	-
 o02H	main	used	building	Blackrock Encampment	(Legion - Alterac)	obar	undead	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	-	-	u007,u00D	-	R01Y,R04G	-	A0BV	-
@@ -1599,7 +1600,7 @@ o070	main	used	unit	Occulus	(Creep-Caverns)	Obla	creeps	units\creeps\BronzeDrago
 o071	main	used	unit	Darkspear Berserker	(Warsong)	otbk	orc	war3mapImported\ForestTrollBerserker.mdl	main	ReplaceableTextures\CommandButtons\BTNForestTrollHeadHunter.blp	-	o01S	-	-	-	-	A0DS,A0DX,ANtr,Absk,Aion	o009
 o072	main	used	unit	Kor'kron Vanguard	(Warsong)	ogru	orc	war3mapImported/GruntAlternateBV2.mdl	main	ReplaceableTextures\CommandButtons\BTNOrcGrunt.BLP	-	-	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,A10E,Aion,Sca1	-
 o073	main	used	unit	Mok'Nathal Warrior	(Warsong)	ogru	orc	war3mapImported/WarsongGruntV2.mdl	main	ReplaceableTextures/CommandButtons/BTNBlackrockGrunt.blp	-	o01S	-	-	-	-	A020,A0BG,A0DS,A0DX,A0ES,A0XM,Aion,Sca1	-
-o079	main	used	unit	Sea Witch	(Orcish Horde)	nfsp	creeps	units\creeps\BansheeGhost\BansheeGhost.mdl	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	A00Y,AELE,AHab	-
+o079	main	used	unit	Sea Witch	(Orcish Horde)	nfsp	creeps	units\creeps\BansheeGhost\BansheeGhost.mdl	stock	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	-	-	-	-	-	AELE,AHab,AZo1	-
 o07B	main	used	unit	Murloc Tiderunner	(Orcish Horde)	nmrl	creeps	units\creeps\Murloc\Murloc.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurloc.blp	-	-	-	-	-	-	-	-
 o07C	main	used	unit	Murloc Huntsman	(Orcish Horde)	nmrr	creeps	units\creeps\MurlocWarrior\MurlocWarrior.mdl	stock	ReplaceableTextures\CommandButtons\BTNMurloc.blp	-	-	-	-	-	-	ACen	-
 o07D	main	used	unit	Murloc Nightcrawler	(Orcish Horde)	nmrm	creeps	units\creeps\MurlocNightcrawler\MurlocNightcrawler	stock	ReplaceableTextures\CommandButtons\BTNMurlocNightCrawler.blp	-	-	-	-	-	-	ACvs,Ashm	-
@@ -1669,7 +1670,7 @@ oZy3	main	used	unit	Defender	(Draenei)	ogru	nightelf	war3mapImported\DraeneiAdhe
 oZy4	main	used	unit	Luminarch	(Draenei)	oshm	nightelf	war3mapImported\DraeneiLuminary_NoGlow.mdl	main	ReplaceableTextures\CommandButtons\BTNZodiac Warrior.blp	-	oZt3	-	-	-	-	A0TH,A0YJ,AZyc,Aion	-
 oZy5	main	used	unit	Elementalist	(draenei)	odoc	nightelf	war3mapImported\VillagerDraenei.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiBattlemaster_by67chrome.blp	-	oZt9	-	-	-	-	A0FB,A0TL,A10W,Aion	-
 oalt	main	used	building	Altar of Storms	(Orcish Horde Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Frostwolf,Orcish Horde	o00E,opeo	O06L,Ogrh,Othr	-	-	-	Abds,Aspi	-
-obar	main	used	building	War Camp	(Orcish Horde Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf,Orcish Horde	o00E,opeo	ogru,ohun	-	R003,Robs	-	Aspi	-
+obar	main	used	building	War Camp	(Orcish Horde Barracks)	obar	orc	buildings\orc\OrcBarracks\OrcBarracks	stock	ReplaceableTextures\CommandButtons\BTNBarracks.blp	Frostwolf,Orcish Horde	o00E,opeo	ogru,ohun	-	RZo0,Robs	-	Aspi	-
 obea	main	used	building	Beastiary	(Orcish Horde Specialist)	obea	orc	war3mapImported\FrostwolfBeastiary.mdl	main	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	Frostwolf,Orcish Horde	o00E,opeo	orai,otbr,vP53	-	R01J,RZ05,Rovs	-	Abds,Aspi	ofrt
 obot	main	used	unit	Horde Transport Ship	(Warsong-Frostwolf-Fel Horde-Orcish Horde)	obot	orc	OrcTransport.mdl	main	ReplaceableTextures\CommandButtons\BTNUndeadTransport.blp	Fel Horde,Frostwolf,Orcish Horde,Tauren Tribes,Warsong	o02T,o032,o03I,oZkc,oZw8,oshy,otsy	-	-	-	-	Sch5,Sdro,Slo3	R04R
 ocat	main	used	unit	Demolisher	(Orcish Horde)	ocat	orc	CatapultV1_by_Kitabatake.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapult.blp	Frostwolf,Orcish Horde	o05G	-	-	-	-	AZ01	ofor,ostr
@@ -1679,14 +1680,14 @@ odkt	main	used	unit	Eredar Occultist	(Fel)	odkt	orc	units\demon\EredarWarlock\Er
 odoc	main	used	unit	Witch Doctor	(Orcish Horde)	odoc	orc	units\orc\WitchDoctor\WitchDoctor	stock	ReplaceableTextures\CommandButtons\BTNWitchDoctor.blp	Frostwolf,Orcish Horde	osld	-	-	-	-	ANtr,Aeye,Ahwd,Aion,Asta	-
 oeye	main	used	unit	Sentry Ward	(Frostwolf-Witch Doctor)	oeye	orc	units\orc\SentryWard\SentryWard	stock	ReplaceableTextures\CommandButtons\BTNSentryWard.blp	-	-	-	-	-	-	Adt1,Aeth	-
 ofor	main	used	building	War Mill	(Orcish Horde Research)	ofor	orc	buildings\orc\WarMill\WarMill	stock	ReplaceableTextures\CommandButtons\BTNForge.blp	Frostwolf,Orcish Horde	o00E,opeo	-	-	R006,R00C,R04R,R09N,R09X,Rhar,Rhme,Rorb,Rosp	-	Abds,Arlm,Aspi	-
-ofrt	main	used	building	Fortress	(Orcish Horde T3)	ofrt	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNFortress.blp	Frostwolf,Orcish Horde	-	n03F,o00G,opeo	-	R05O,RZ02,RZ03	-	A0GM,Aspi	oalt
-ogre	main	used	building	Great Hall	(Orcish Horde T1)	ogre	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNGreathall.blp	Frostwolf,Orcish Horde	o00E,opeo	n03F,o00G,opeo	-	R05O,RZ02,RZ03	-	Aspi	-
-ogru	main	used	unit	Grunt	(Orcish Horde)	ogru	orc	units\orc\Grunt\Grunt	stock	ReplaceableTextures\CommandButtons\BTNGrunt.blp	Frostwolf,Orcish Horde	obar	-	-	-	-	A000,A020,A0BG,A0ES,Aion	-
+ofrt	main	used	building	Fortress	(Orcish Horde T3)	ofrt	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNFortress.blp	Frostwolf,Orcish Horde	-	n03F,o00G,opeo	-	R05O,RZ03,RZo1	-	A0GM,Aspi	oalt
+ogre	main	used	building	Great Hall	(Orcish Horde T1)	ogre	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNGreathall.blp	Frostwolf,Orcish Horde	o00E,opeo	n03F,o00G,opeo	-	R05O,RZ03,RZo1	-	Aspi	-
+ogru	main	used	unit	Grunt	(Orcish Horde)	ogru	orc	units\orc\Grunt\Grunt	stock	ReplaceableTextures\CommandButtons\BTNGrunt.blp	Frostwolf,Orcish Horde	obar	-	-	-	-	A020,A0BG,A0ES,AZo0,Aion	-
 ohun	main	used	unit	Headhunter	(Orcish Horde)	ohun	orc	units\orc\HeadHunter\HeadHunter.mdl	stock	ReplaceableTextures\CommandButtons\BTNHeadhunter.blp	Frostwolf,Orcish Horde	obar	-	-	-	-	A05H,ANtr,Aion	ofor
 ohwd	main	used	unit	Healing Ward	(Frostwolf-Witch Doctor)	ohwd	orc	units\orc\HealingWard\HealingWard	stock	ReplaceableTextures\CommandButtons\BTNHealingWard.blp	-	-	-	-	-	-	Aoar	-
 okod	main	used	unit	Kodo Beast	(Tauren Tribes)	okod	orc	war3mapImported\TaurenKotoBeast.mdl	main	ReplaceableTextures\CommandButtons\BTNKotoBeast.blp	Tauren Tribes,Warsong	o02Q,otwc	-	-	-	-	ACrk,AInv,AT01,AT14,Adev,Advc,Apak	othl,RT20
 opeo	main	used	unit	Peon	(Orcish Horde Worker)	opeo	orc	units\orc\Peon\Peon	stock	ReplaceableTextures\CommandButtons\BTNPeon.blp	Frostwolf,Orcish Horde	o01B,o02D,ofrt,ogre,ostr	-	npgf,o05G,oalt,obar,obea,ofor,ogre,oshy,osld,otrb,ovln,owtw	-	-	A041,Arep	-
-orai	main	used	unit	Raider	(Orcish Horde)	orai	orc	units\orc\WolfRider\WolfRider	stock	ReplaceableTextures\CommandButtons\BTNRaider.blp	Orcish Horde,Warsong	o02Q,obea	-	-	-	-	A000,A0DS,A0DX,A0ES,A0LQ,A0SX,Aens,Aion,Sca2	obea
+orai	main	used	unit	Raider	(Orcish Horde)	orai	orc	units\orc\WolfRider\WolfRider	stock	ReplaceableTextures\CommandButtons\BTNRaider.blp	Orcish Horde,Warsong	o02Q,obea	-	-	-	-	A0DS,A0DX,A0ES,A0LQ,A0SX,AZo0,Aens,Aion,Sca2	obea
 oshm	main	used	unit	Shaman	(Orcish Horde)	oshm	orc	units\orc\Shaman\Shaman	stock	ReplaceableTextures\CommandButtons\BTNShaman.blp	Frostwolf,Orcish Horde	osld	-	-	-	-	Ablo,Aion,Alsh,Apg2	-
 oshy	main	used	building	Horde Pier	(Orcish Horde Shipyard)	oshy	orc	buildings\other\GoblinShipyard\GoblinShipyard	stock	ReplaceableTextures\CommandButtons\BTNGoblinShipyard.blp	Frostwolf,Orcish Horde	o00E,opeo	h0AO,h0AP,h0AS,h0AY,h0B2,h0B5,h0BC,obot	-	R06G	-	-	R04R
 osld	main	used	building	Spirit Lodge	(Orcish Horde Magic)	osld	orc	buildings\orc\SpiritLodge\SpiritLodge	stock	ReplaceableTextures\CommandButtons\BTNSpiritLodge.blp	Frostwolf,Orcish Horde	o00E,opeo	o00A,odoc,oshm	-	R00R,RZ04,Rost,Rowd	-	Abds,Aspi	ostr
@@ -1695,7 +1696,7 @@ osp3	main	used	unit	Serpent Ward	(Rokhan-Vol'jin-Level 3)	osp3	orc	units\orc\Ser
 osp4	main	used	unit	Serpent Ward	(Warsong)	osp4	orc	units\orc\SerpentWard\SerpentWard	stock	ReplaceableTextures\CommandButtons\BTNSerpentWard.blp	-	-	-	-	-	-	S001	-
 ospm	main	used	unit	Spirit Walker	(Frostwolf-Ethereal)	ospm	orc	units\orc\spiritwalker\spiritwalker	stock	ReplaceableTextures\CommandButtons\BTNSpiritWalker.blp	-	-	-	-	-	-	A0H0,ACrk,Aast,Acpf,Adcn,Aion	o00J
 ospw	main	used	unit	Spirit Walker	(Tauren Tribes)	ospw	orc	units\orc\spiritwalker\spiritwalker	stock	ReplaceableTextures\CommandButtons\BTNSpiritWalker.blp	Frostwolf,Tauren Tribes	otsl	-	-	-	-	A0E6,A0H0,AT13,Adcn,Aion	RT20
-ostr	main	used	building	Stronghold	(Orcish Horde T2)	ostr	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNStronghold.blp	Frostwolf,Orcish Horde	-	n03F,o00G,opeo	-	R05O,RZ02,RZ03	-	A0GM,Aspi	-
+ostr	main	used	building	Stronghold	(Orcish Horde T2)	ostr	orc	buildings\orc\GreatHall\GreatHall	stock	ReplaceableTextures\CommandButtons\BTNStronghold.blp	Frostwolf,Orcish Horde	-	n03F,o00G,opeo	-	R05O,RZ03,RZo1	-	A0GM,Aspi	-
 osw3	main	used	unit	Shadow Wolf	Frostwolf-Thrall)	osw3	orc	units\orc\Spiritwolf\Spiritwolf	stock	ReplaceableTextures\CommandButtons\BTNSpiritWolf.blp	-	-	-	-	-	-	ACct	-
 otal	main	used	building	Altar of the Ancestors	(Tauren Tribes Altar)	oalt	orc	buildings\orc\AltarofStorms\AltarofStorms	stock	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	Tauren Tribes	vP59	MD25,Ocbh,Orex,TP83	-	-	-	Abds,Aspi	-
 otau	main	used	unit	Tauren	(Tauren Tribes)	otau	orc	units\orc\Tauren\Tauren	stock	ReplaceableTextures\CommandButtons\BTNTauren.blp	Frostwolf,Tauren Tribes	otto,otwc	-	-	-	-	A0E6,Aion,Awar	RT20

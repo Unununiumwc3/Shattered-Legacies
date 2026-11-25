@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1851 | 26 | 491 | 1045 | 391 | 56 | 287 |
-| abilities | 1700 | 45 | 712 | 490 | 241 | 230 | 281 |
-| upgrades | 495 | 0 | 147 | 133 | 72 | 31 | 15 |
-| items | 100 | 14 | 80 | 29 | 3 | 5 | 222 |
+| units | 1853 | 25 | 491 | 1045 | 391 | 56 | 287 |
+| abilities | 1706 | 44 | 709 | 491 | 243 | 230 | 281 |
+| upgrades | 497 | 0 | 147 | 133 | 72 | 31 | 15 |
+| items | 101 | 13 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
 
@@ -26,11 +26,10 @@ Objects of the main map that nothing uses (no faction limit, not preplaced, not 
 | `nsko` | Skeletal Orc | unit | stock |  |  | unused |
 | `nsog` | Skeletal Orc Grunt | unit | stock |  |  | unused |
 
-### human (4)
+### human (3)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
-| `n0AO` | Way Gate (Dalaran Siege) | building | stock |  |  | unused |
 | `n0D0` | Dalaran Shield Level 1 | unit | main |  |  | unused |
 | `n03R` | Dalaran Shield Level 2 | unit | main |  |  | unused |
 | `n0EA` | Dalaran Shield Level 3 | unit | main |  |  | unused |

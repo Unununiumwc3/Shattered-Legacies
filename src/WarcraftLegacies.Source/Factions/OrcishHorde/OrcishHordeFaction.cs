@@ -176,7 +176,7 @@ public sealed class OrcishHordeFaction : Faction
   private void RegisterResearches()
   {
     ResearchManager.RegisterIncompatibleSet(
-      new CustomResearch(UPGRADE_RZ02_BLADEMASTERS_ORCISH_HORDE, 0)
+      new CustomResearch(WarcraftLegacies.Shared.ShatteredLegacies.SlObjects.UPGRADE_RZO1_BLADEMASTERS_ORCISH_HORDE, 0)
       {
         ResearchFunc = researchingPlayer =>
         {

@@ -44,8 +44,12 @@ This file is the ledger: what WL changed after 4.8.2, what is ported, what is wa
 | -- Cenarius: Tree of Renewal, Lord of the Forest, Master of Nature progression (#4163) | 0.72.0 | |
 | -- Heartwood Ancient: Undying Grove, Spirits of the Forest, Root Tap; Keeper: Living Wall; Druids elite choice Keepers (RK01) / Heartwood (RK02) (#4174, #4158) | 0.72.0 | bots research RK01 |
 | -- Malfurion: Emerald Dream, Seed of Rebirth (#4150, #4165) | 0.72.0 | |
-| -- Antonidas: Arcane Cataclysm (#4156) | 0.72.0 | Dalaran Shield NOT included (bundle 2) |
+| -- Antonidas: Arcane Cataclysm (#4156) | 0.72.0 | Dalaran Shield: bundle 2 (0.73.0) |
 | -- Artifacts: Soulseeker (Kel'Thuzad), Gorefiend's Truncheon (Teron), Bow of Elune's Grace (Tyrande), Horn of Cenarius restores mana and goes to Cenarius (#4183) | 0.72.0 | |
+| **Bundle 2 -- Dalaran** | **0.73.0** | |
+| -- Dalaran Shield + Power Generator, tidy-up (#4103, #4129) | 0.73.0 | 5.0.4 versions (dev's later cooldown / cancel changes not taken); the generator stands at WL 5's spot (9216,4736) in the fork's 4.8.2 city |
+| -- Clickable Dalaran Way Gates (#4087) | 0.73.0 | data was already in (0.69); bot support: `AiPortals.AddDalaranGates` (owner + allies use an operational pair; bots do not build gates) |
+| -- Dalaran caster teleport (#4185) | 0.73.0 | `RDTP` at the Hall of the Arcane, Teleport on Geomancers |
 
 Fork deviations inside bundle 1 (deliberate):
 - Bot order strings (Ncl6) changed so the bot's script orders are not refused: Sunfire Barrage `shockwave`,
@@ -60,9 +64,6 @@ Fork deviations inside bundle 1 (deliberate):
 
 | Bundle | What (WL PR) | Interacts with | Notes |
 |---|---|---|---|
-| 2 Dalaran | Dalaran Shield + Power Generator (#4103, #4129) | Dalaran only | needs `Regions.DalaranShield`, data A0E0 / A0E1 / A0E3 / B0DS / n0DS |
-| 2 Dalaran | Clickable Dalaran waygates (#4087: `Waygate`, `WaygateManager`, `WaygateTravelSpell`) | **bot movement** | the bot must know the new waygates (`AiPortals`) -- test with dumps |
-| 2 Dalaran | Dalaran caster teleport (#4185) | Dalaran | data already identical; check `DalaranObjectInfo` (RDTP) |
 | 3 Night Elves | Immortality regions, `WorldTreeProtection` (#4184) | Druids, Sentinels powers | replaces the `Capital` list of the Immortality power |
 | 3 Night Elves | Druid quest Wrath of the Wild (#4172), Siege Ancient limit 4 | Druids | |
 | 3 Night Elves | Sentinels quest changes: Feathermoon, Scepter of the Queen / Return to the Fold, Redeemed Highborne 6 (#4172, #4189) | Sentinels, Illidari (Scepter) | |
@@ -76,7 +77,26 @@ Fork deviations inside bundle 1 (deliberate):
 Not from WL 5 but often named with it (fork roadmap): Dark Trolls / Hakkar (24p), the Quel'Thalas split, Sunfury
 balance.
 
+## ID collisions of the 0.69 port (repaired in 0.73.0)
+
+WL 5 reused the ids of objects it removed (Ahn'Qiraj, Skywall). This map still has those objects, so a WL 5 object
+under such an id overwrites one of ours. The 0.69 port did that five times; 0.73.0 restored the 4.8.2 data and gave
+WL 5's objects fork ids. **When porting from WL 5: map these ids, and check every other `M` (modified) object file
+for a changed base / name before copying** (the remaining ones -- `A01D`, `A09Q`, `n049`, `o006`, `ocat`, `owyv` --
+are harmless: same role or a dead faction).
+
+| WL 5 id | WL 5 object | This map's object (4.8.2, restored) | WL 5 object here |
+|---|---|---|---|
+| `A000` | Frenzy (Orcish Horde) | Shifting Sands (Ouro, Ahn'Qiraj) | `AZo0` |
+| `A00Y` | Teleport (Sea Witch) | Frost Bite (Neptulon, Skywall) | `AZo1` |
+| `R003` | Improved Frenzy | Progenesis (C'Thun) | `RZo0` (requires `ofrt`, not WL 5's `o02S`) |
+| `RZ02` | Blademasters | Shadow Weaver Adept Training (Ahn'Qiraj) | `RZo1` |
+| `n00K` | Darkspear Isles (CP of the island start) | Tunnels of Ahn'Qiraj | not used (no island start) |
+
 ## The Draenei (The Exodar) -- from start to fallback
+
+**On hold (maintainer, 2026-11-25): "we keep draenei as they are for now"** -- lobby start unchanged; the plan below
+stays for later.
 
 Decided: terrain stays (Azuremyst Isle, Exodar Regalis, Silvermyst Island); the faction stops being a lobby start and
 becomes a fallback. **Which faction falls back to it is open.** Things to separate from the Sentinels first:

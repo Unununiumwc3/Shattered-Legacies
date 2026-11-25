@@ -3,8 +3,9 @@ using MacroTools.Legends;
 namespace WarcraftLegacies.Source.Ai
 {
   // 0.38: bot heroes learn their skills. Order per hero type from AiData.HeroSkills (generated): auras/passives
-  // first, then the other skills in map order, the attribute bonus last. Each free point goes to the FIRST skill in
-  // that order that can still be learned (WC3 refuses maxed skills and ultimates below level 6 by itself).
+  // first, then the other skills in map order, the attribute bonus last. 0.73: each free point goes to the
+  // learnable skill with the lowest level (round robin, see LearnOne); WC3 refuses maxed skills and ultimates
+  // below level 6 by itself.
   // Runs on every hero level-up of a bot (event) and every 15 s for heroes with unspent points (heroes given by
   // quests, revived heroes, new forms). No unit scans.
   internal static class AiHeroSkills
@@ -58,19 +59,65 @@ namespace WarcraftLegacies.Source.Ai
       while (GetHeroSkillPoints(u) > 0 && guard < 10)
       {
         guard++;
-        var learned = false;
-        for (var k = 0; k < order.Length && !learned; k++)
-        {
-          var before = GetHeroSkillPoints(u);
-          SelectHeroSkill(u, order[k]);
-          learned = GetHeroSkillPoints(u) < before;
-        }
-
-        if (!learned)
+        if (!LearnOne(u, order))
         {
           return; // nothing learnable right now (all maxed / level too low)
         }
       }
     }
+
+    // 0.73: round robin. The point goes to the learnable skill with the LOWEST current level (ties: list order),
+    // so every active spell is learned by hero level 3-4 instead of maxing the aura first. The attribute bonus
+    // (Aamk) only when nothing else can be learned.
+    private static bool LearnOne(unit u, int[] order)
+    {
+      var tried = 0;
+      for (var pass = 0; pass < order.Length; pass++)
+      {
+        var best = -1;
+        var bestLevel = 99;
+        for (var k = 0; k < order.Length; k++)
+        {
+          if (order[k] == Attribute || (tried & (1 << k)) != 0)
+          {
+            continue;
+          }
+
+          var lvl = GetUnitAbilityLevel(u, order[k]);
+          if (lvl < bestLevel)
+          {
+            best = k;
+            bestLevel = lvl;
+          }
+        }
+
+        if (best < 0)
+        {
+          break;
+        }
+
+        tried |= 1 << best;
+        var before = GetHeroSkillPoints(u);
+        SelectHeroSkill(u, order[best]);
+        if (GetHeroSkillPoints(u) < before)
+        {
+          return true;
+        }
+      }
+
+      for (var k = 0; k < order.Length; k++)
+      {
+        if (order[k] == Attribute)
+        {
+          var before = GetHeroSkillPoints(u);
+          SelectHeroSkill(u, order[k]);
+          return GetHeroSkillPoints(u) < before;
+        }
+      }
+
+      return false;
+    }
+
+    private const int Attribute = 1096904043; // Aamk
   }
 }

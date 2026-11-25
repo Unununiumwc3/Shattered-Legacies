@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Legends;
+using MacroTools.UnitTraits;
 
 namespace WarcraftLegacies.Source.Ai
 {
@@ -26,6 +27,55 @@ namespace WarcraftLegacies.Source.Ai
     internal static readonly int[] HeroRefused = new int[24];
     internal static readonly int[] AltarCount = new int[24];
     internal static readonly int[] FoodNeeded = new int[24];
+    internal static readonly int[] FreeRevives = new int[24];
+
+    // 0.73.0: bots with perks revive their heroes for free a few seconds after death, at a living altar, without
+    // the native altar revive (~100 s at high levels, needs the altar idle and free food). ReviveHero fires no
+    // "finishes reviving" event, so the things WL hangs on it are done here (unit traits, hero colour);
+    // RefundZeroLimitUnits' check is the object-limit test below.
+    internal const float FreeReviveDelay = 8f;
+    private static readonly Dictionary<unit, float> DeadSince = new();
+
+    private static void FreeRevive(player p, unit altar)
+    {
+      var heroes = LegendaryHeroManager.GetAll();
+      for (var i = 0; i < heroes.Count; i++)
+      {
+        var legend = heroes[i];
+        var hero = legend.Unit;
+        if (hero == null || GetUnitTypeId(hero) == 0 || GetOwningPlayer(hero) != p
+            || GetUnitState(hero, UNIT_STATE_LIFE) > 0.405f || GetUnitAbilityLevel(hero, SimpleBot.PermaDiesMarker) > 0
+            || SimpleBot.PermaDead.Contains(legend.UnitType) || p.GetPlayerData().GetObjectLimit(GetUnitTypeId(hero)) <= 0)
+        {
+          continue;
+        }
+
+        if (!DeadSince.TryGetValue(hero, out var since))
+        {
+          DeadSince[hero] = SimpleBot.Clock;
+          continue;
+        }
+
+        if (SimpleBot.Clock - since < FreeReviveDelay)
+        {
+          continue;
+        }
+
+        if (!ReviveHero(hero, GetUnitX(altar), GetUnitY(altar) - 256f, true))
+        {
+          continue;
+        }
+
+        DeadSince.Remove(hero);
+        UnitTypeTraitRegistry.ForceOnCreated(hero);
+        SetUnitColor(hero, legend.HasCustomColor && legend.PlayerColor != null ? legend.PlayerColor : GetPlayerColor(p));
+        var pid = GetPlayerId(p);
+        FreeRevives[pid]++;
+        AltarReason[pid] = "revived " + GetObjectName(GetUnitTypeId(hero)) + " (free)";
+        SimpleBot.Log("altar: " + SimpleBot.FacName(p) + " revived " + GetUnitName(hero) + " for free after "
+                      + I2S(R2I(SimpleBot.Clock - since)) + " s");
+      }
+    }
 
     private static void ReserveMissingFood(player p, int type)
     {
@@ -146,6 +196,11 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static bool TrainHeroes(unit altar, Faction faction, player p)
     {
+      if (SimpleBot.HasPerks(p) && GetUnitState(altar, UNIT_STATE_LIFE) > 0.405f)
+      {
+        FreeRevive(p, altar);
+      }
+
       if (GetUnitState(altar, UNIT_STATE_LIFE) <= 0.405f || AltarReserved(p, altar, 0) || GetUnitCurrentOrder(altar) != 0)
       {
         return false;
@@ -284,6 +339,11 @@ namespace WarcraftLegacies.Source.Ai
 
     private static bool TryReviveAtAltar(player p, unit altar)
     {
+      if (SimpleBot.HasPerks(p))
+      {
+        return false; // 0.73.0: FreeRevive
+      }
+
       var heroes = LegendaryHeroManager.GetAll();
       var pid = GetPlayerId(p);
       for (var offset = 0; offset < heroes.Count; offset++)
