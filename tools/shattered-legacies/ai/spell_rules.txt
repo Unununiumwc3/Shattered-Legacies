@@ -25,7 +25,7 @@
 # id   kind     who    min  radius  flags  note
 A00F   skip     -      -    -       -      Rend Soul (Kel'Thuzad): DeathPact class -- kills an allied unit
 A00Y   skip     -      -    -       -      Teleport (Tidehunter / Water Ascendant): travel, order "stop", no code
-A01D   skip     -      -    -       -      Lunar Sanctuary (Tyrande): no Spell registered in code -- no effect
+A01D   point    ally   3    -       -      Lunar Sanctuary (Tyrande): heals allies, slows enemies in the area (0.72.0: code ported)
 A01F   point    enemy  -    -       -      Solar Judgement (Arthas / Crown Prince): bolts on enemies in the area
 A01N   point    enemy  -    -       -      Mass Ensnare (Skywall Ballista Carrier): MassAnySpell, enemies
 A02T   skip     -      -    -       -      Dark Summoning (Nathrezim): recalls own units -- utility
@@ -57,23 +57,25 @@ A10M   point    enemy  -    -       -      Inspire Madness (Tichondrius): enemie
 A10N   point    enemy  -    300     -      Apocalypse (Arthas): a line of projectiles towards the point
 A126   skip     -      -    -       -      Self Destruct (Deeprun Tram and others)
 A13R   point    ally   -    -       -      Mass Frost Armor (Kel'Thuzad): frost armor in the area
-A14F   skip     -      -    -       -      Glaive Trap: no Spell registered in code -- no effect
-A14G   skip     -      -    -       -      Watcher's Focus: no Spell registered in code -- no effect
-A14K   skip     -      -    -       -      Sunfire Barrage (Anasterian): no Spell registered in code -- no effect
+A14E   unit     ally   -    -       hurt   Emerald Dream (Malfurion): a hurt ally sleeps and heals (0.72.0: WL 5.0.4 kit)
+A15O   unit     enemy  -    -       -      Seed of Rebirth (Malfurion): damage over time, a treant sprouts (0.72.0)
+A14F   point    enemy  -    -       -      Glaive Trap (Naisha): traps among enemies (0.72.0: code ported)
+A14G   instant  ally   3    500     -      Watcher's Focus (Naisha): critical strike for allies around (0.72.0)
+A14K   point    enemy  -    -       -      Sunfire Barrage (Anasterian): fireball + orbs on enemies (0.72.0: code ported, Ncl6 shockwave)
 A14L   instant  self   -    600     -      Bestial Wrath (Rexxar): buffs Rexxar and his beasts
 A14Q   point    enemy  1    150     -      Wild Throw (Rexxar): Stormbolt projectile towards the point
-A14S   skip     -      -    -       -      Corruption Mine: no Spell registered in code -- no effect
+A14S   point    enemy  -    -       -      Corruption Mine (Rivendare): mine among enemies (0.72.0: code ported)
 A14Y   unit     ally   -    -       hurt   Spirit Mend (Magatha): heals an ally
 A14Z   point    ally   -    -       -      Grimtotem Ward (Magatha): ward with auras for allies
 A151   instant  enemy  -    450     -      Wrath of the Earth Mother (Magatha): damages enemies, heals allies around her
-A156   skip     -      -    -       -      Tree of Renewal: no Spell registered in code -- no effect
-A159   skip     -      -    -       -      Lord of the Forest: no Spell registered in code -- no effect
-A15R   skip     -      -    -       -      Undying Grove: no Spell registered in code -- no effect
-A15S   skip     -      -    -       -      Spirits of the Forest: no Spell registered in code -- no effect
-A15T   skip     -      -    -       -      Root Tap: no Spell registered in code -- no effect
-A16H   skip     -      -    -       -      Light of the Goddess: no Spell registered in code -- no effect
-A16I   skip     -      -    -       -      Mass Wind Walk: escape; no Spell registered in code
-A16K   skip     -      -    -       -      Elune's Protection: no Spell registered in code -- no effect
+A156   point    ally   3    -       -      Tree of Renewal (Cenarius): healing / armor tree among allies (0.72.0)
+A159   point    enemy  5    -       -      Lord of the Forest (Cenarius): treants emerge among enemies, 3 min cooldown (0.72.0)
+A15R   point    ally   3    -       -      Undying Grove (Heartwood Ancient): allies in the area cannot die (0.72.0)
+A15S   skip     -      -    -       -      Spirits of the Forest (Heartwood Ancient): mana-draining toggle (A15U dismisses) -- not for the bot
+A15T   skip     -      -    -       -      Root Tap (Heartwood Ancient): life into mana -- not for the bot
+A16H   unit     ally   -    -       hurt   Light of the Goddess (Priestess elite): heal a hurt ally (0.72.0)
+A16I   skip     -      -    -       -      Mass Wind Walk: escape -- not for the bot
+A16K   instant  ally   3    600     -      Elune's Protection (Priestess elite): mana regeneration buff for allies (0.72.0)
 A16U   unit     enemy  -    -       -      Sunstrike (Sunwalker): damages the target, heals allies around it
 Aygf   unit     enemy  -    -       mana   Chain Mana Burn (Illidan)
 CK02   skip     -      -    -       -      Way Gate Travel: travel
@@ -93,21 +95,23 @@ ZBIM   point    enemy  -    -       -      Inspire Madness (C'Thun): enemies in 
 ZBST   point    enemy  1    300     -      Spawn Tentacle (C'Thun): summons a tentacle at the point
 ZBUE   point    ally   -    -       -      Unstable Evolution (C'Thun): empowers own non-hero units in the area
 #
-# 0.71.0: item-based abilities (no-target; ordered by their id -- if WC3 refuses that, the dump shows "refused")
-A0H1   instant  self   -    -       hurt   Storming Brew (Thane): AIdb heal, self at level 1
-TPWC   instant  ally   2    -       hurt   Archmage's Council (Antonidas): AIdb area heal
-A12R   instant  ally   2    -       hurt   Wise Council (Kirin Tor hero): AIdb area heal
-A0UE   instant  ally   4    -       hurt   Divine Intervention: AIdb area heal, 6 min cooldown -- 4+ hurt allies
-A0PF   instant  ally   2    -       hurt   Fel Energy (fel orcs): AIra area life + mana
-A033   instant  ally   3    -       -      Wise Council (council heroes): AImr area mana
-A0OF   instant  ally   3    -       -      Wise Council: AImr area mana
-A07X   instant  enemy  3    600     -      Rally (Hapm / Hlgr): AIsa area speed buff
-A0KQ   instant  enemy  3    600     -      Call to the Hunt: AIsa area speed buff
-A03S   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
-A0NG   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
-A0GQ   instant  self   -    400     -      Carnage: AIpv vampiric potion, enemies close
-A0OA   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
-A13B   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
-A0IY   instant  self   -    -       hurt   Emergency Repairs: AIh1 self heal
-SLS8   instant  self   -    -       hurt   Nature Vitality: AIhx self heal
-A0WW   instant  enemy  3    800     -      Summon Goliathon: AIfu summon in a fight
+# 0.71.0: item-based abilities (no-target; ordered by their id). 0.71.1: WC3 refused every one of them (0.71.0
+# playtest: Carnage 27, Storming Brew 6, Emergency Repairs 6, Nature Vitality 3 refused, 0 casts) -- all skip.
+# An item ability on a unit has no order the script can give; only a new base (a stock spell) would make them castable.
+A0H1   skip     -      -    -       hurt   Storming Brew (Thane): AIdb heal, self at level 1
+TPWC   skip     -      2    -       hurt   Archmage's Council (Antonidas): AIdb area heal
+A12R   skip     -      2    -       hurt   Wise Council (Kirin Tor hero): AIdb area heal
+A0UE   skip     -      4    -       hurt   Divine Intervention: AIdb area heal, 6 min cooldown -- 4+ hurt allies
+A0PF   skip     -      2    -       hurt   Fel Energy (fel orcs): AIra area life + mana
+A033   skip     -      3    -       -      Wise Council (council heroes): AImr area mana
+A0OF   skip     -      3    -       -      Wise Council: AImr area mana
+A07X   skip     -      3    600     -      Rally (Hapm / Hlgr): AIsa area speed buff
+A0KQ   skip     -      3    600     -      Call to the Hunt: AIsa area speed buff
+A03S   skip     -      -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0NG   skip     -      -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0GQ   skip     -      -    400     -      Carnage: AIpv vampiric potion, enemies close
+A0OA   skip     -      -    -       hurt   Emergency Repairs: AIh1 self heal
+A13B   skip     -      -    -       hurt   Emergency Repairs: AIh1 self heal
+A0IY   skip     -      -    -       hurt   Emergency Repairs: AIh1 self heal
+SLS8   skip     -      -    -       hurt   Nature Vitality: AIhx self heal
+A0WW   skip     -      3    800     -      Summon Goliathon: AIfu summon in a fight

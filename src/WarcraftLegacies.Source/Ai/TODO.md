@@ -8,7 +8,22 @@ in `README.md` ("How the bots move", "Already tried").
 Everything that exists only in the fork that hosts the bot (its timelines, new factions, map content, win rule, game
 length, balance) is in the fork's own TODO -- in this repository `../ShatteredLegacies/TODO.md`.
 
-Working patch: **0.71.0** (autocast, wider spell use, quest creeps, opening home-first, Tauren vanguard). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+Working patch: **0.72.0** (WL 5.0.4 kits: spell rules, elite-choice researches; 0.71.1: Legion Argus exit, home-first by CPs, lighter spell checks; 0.71.0: autocast, quest creeps, home-first, Tauren vanguard). See [BUILDING_DESIGN.md](BUILDING_DESIGN.md) for the combined construction/hero playtest.
+
+## 0.72.0 playtest
+
+- Everything of 0.71.1 below, in the same game.
+- SPELLS: casts of the new kit spells (Lunar Sanctuary, Glaive Trap, Sunfire Barrage, Corruption Mine, Tree of Renewal,
+  Lord of the Forest, Undying Grove, Light of the Goddess, Emerald Dream, Seed of Rebirth ...) and no "refused".
+- Event log: "event research ordered" for RK01 (Druids) and RV01 (Sentinels); Keepers / Priestesses trained after it.
+
+## 0.71.1 playtest
+
+- Legion: PORTALS "Legion teleporters open (2 edges)" after the Argus quest; the army leaves Argus via Northrend /
+  Alterac (no "hold-nothing-reachable" minutes).
+- Illidan: "home-first" per-bot list includes P15; the army stays on the Broken Isles while targets are left there.
+- LOAD: `task spells` back near 0.70.3 (~30k at 10:00) with casts at least as many.
+- Autocast: watch an autopilot Priest / "Powered Up Ammunition" carrier -- on? Computer players: is it on without us?
 
 ## 0.71.0 playtest
 

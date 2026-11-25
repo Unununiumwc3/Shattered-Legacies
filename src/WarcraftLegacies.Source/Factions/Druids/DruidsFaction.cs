@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using MacroTools.Extensions;
 using MacroTools.Dialogues;
 using MacroTools.Factions;
 using MacroTools.Legends;
 using MacroTools.Localization;
 using MacroTools.PreplacedWidgets;
 using MacroTools.Quests;
+using MacroTools.Researches;
 using WarcraftLegacies.Shared.FactionObjectLimits;
 using WarcraftLegacies.Source.Factions.Druids.Mechanics;
 using WarcraftLegacies.Source.Factions.Druids.Quests;
@@ -16,6 +18,7 @@ using WarcraftLegacies.Source.Setup;
 using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.Shared.Powers;
 using WarcraftLegacies.Source.Shared.Quests;
+using WarcraftLegacies.Source.Shared.Researches;
 
 namespace WarcraftLegacies.Source.Factions.Druids;
 
@@ -55,17 +58,42 @@ public sealed class DruidsFaction : Faction
     AddQuest(new QuestSubdueTheTauren());
     RegisterDialogue();
     RegisterPowers();
+    RegisterResearches(); // [SL] (0.72.0): WL 5.0.4 elite choice (Keepers of the Grove / Heartwood Ancients)
     DruidsSpells.Setup();
     DruidsTraits.Setup();
     CenariusGhost.Setup(AllLegends.Druids.Cenarius, this);
+    MasterOfNatureProgression.Setup(ABILITY_A0U0_MASTER_OF_NATURE_BROWN_CENARIUS, UNIT_ECEN_DEMIGOD_OF_THE_NIGHT_ELVES_DRUIDS,
+      UNIT_E00H_DEMIGOD_OF_THE_NIGHT_ELVES_DRUIDS_GHOST); // [SL] (0.72.0): WL 5.0.4 Cenarius kit
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
+  }
+
+  // [SL] (0.72.0): from WL 5.0.4 (Heartwood ancient, #4174)
+  private static void RegisterResearches()
+  {
+    ResearchManager.RegisterIncompatibleSet(
+      new CustomResearch(UPGRADE_RK01_KEEPERS_OF_THE_GROVE_DRUIDS, 0)
+      {
+        ResearchFunc = researchingPlayer =>
+        {
+          var faction = researchingPlayer.GetPlayerData().Faction;
+          faction?.ModObjectLimit(UNIT_E00N_KEEPER_OF_THE_GROVE_DRUIDS_ELITE, 6);
+        }
+      },
+      new CustomResearch(UPGRADE_RK02_HEARTWOOD_ANCIENTS_DRUIDS, 0)
+      {
+        ResearchFunc = researchingPlayer =>
+        {
+          var faction = researchingPlayer.GetPlayerData().Faction;
+          faction?.ModObjectLimit(UNIT_E03H_HEARTWOOD_ANCIENT_DRUIDS_ELITE, 6);
+        }
+      });
   }
 
   private void RegisterQuests()
   {
     var newQuest = AddQuest(new QuestMalfurionAwakens(Regions.MoongladeVillage, Regions.TeldrassilUnlock,
       AllLegends.Druids.Nordrassil.Unit, Artifacts.HornOfCenarius,
-      AllLegends.Druids.Malfurion));
+      AllLegends.Druids.Malfurion, AllLegends.Druids.Cenarius)); // [SL] (0.72.0): Cenarius gets the Horn (WL 5.0.4)
     StartingQuest = newQuest;
     AddQuest(new QuestShrineBase(Regions.ShrineBaseUnlock));
     AddQuest(new QuestRiseBase(Regions.RiseBaseUnlock));

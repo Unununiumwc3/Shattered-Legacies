@@ -270,6 +270,10 @@ public static class AiDebug
     TriggerAddAction(tr, () => RunCommand(cmd, act, level));
   }
 
+  // 0.72.0: a fork's debug command (AiApi.RegisterDebugCommand) -- the same gate as the bot's control commands
+  // (AiDebug.Access: none in a release build)
+  internal static void RegisterControl(string cmd, System.Action act) => RegisterLoose(cmd, act, Level.Control);
+
   private static void Register(string cmd, System.Action act, Level level)
   {
     var tr = CreateTrigger();

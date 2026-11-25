@@ -35,11 +35,23 @@ I01P	main	used	Tech-Orb 4000	olig	Purchasable	ReplaceableTextures\CommandButtons
 I01T	main	used	Fandral's Flamescythe	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNImmolationOn.blp	A09W,AIa3,AIs4,AIx2	-
 I01V	main	used	Gorehowl	desc	Artifact	ReplaceableTextures\CommandButtons\BTNSpiritWalkerMasterTraining.blp	A0I7,AIa6,AIsx,AItf	-
 I01Y	main	used	Helm of Domination	ssil	Artifact	ReplaceableTextures\CommandButtons\BTNHelmofdomination.blp	A03X,A082,Atru	-
+I01Z	main	used	Tiny Great Hall	tgrh	Purchasable	ReplaceableTextures\CommandButtons\BTNGreathall.blp	A145	-
+I020	main	used	Tiny War Camp	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNBarracks.blp	A146	-
+I021	main	used	Tiny Altar of Storms	tbak	Miscellaneous	ReplaceableTextures\CommandButtons\BTNAltarOfStorms.blp	A147	-
+I022	main	used	Tiny Stronghold	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNStronghold.blp	A148	-
+I023	main	used	Tiny Fortress	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNFortress.blp	A149	-
+I024	main	used	Tiny Spirit Lodge	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNSpiritLodge.blp	A14A	-
+I025	main	used	Tiny Beastiary	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNBeastiary.blp	A14B	-
+I026	main	used	Soulseeker	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNDeadProphetStaff.blp	A167	-
+I027	main	used	Gorefiend's Truncheon	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNGorefiendsTruncheon.blp	A168	-
+I028	main	used	Bow of Elune's Grace	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNBowOfElunesGrace.blp	A16A,AIa5	-
+I029	main	used	Tiny War Mill	tbar	Miscellaneous	ReplaceableTextures\CommandButtons\BTNForge.blp	A16D	-
 I0WG	main	used	Warglaives of Azzinoth	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNWarglaive_of_Azzinoth.blp	-	-
 ISGC	main	used	The Scarab Gong	ckng	Artifact	ReplaceableTextures/CommandButtons/BTNScarabMedal.blp	AIl2,vAQ1	-
 IYGL	main	used	Val'anyr, Hammer of Ancient Kings	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNNatureHammer.blp	A03X,AYGS	-
 IZf0	main	used	Summon Forsaken Acolyte	infs	Purchasable	ReplaceableTextures\CommandButtons\BTNAcolyte.blp	AZfx	uZf6
 IZf1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZfy	uZf6
+IZh1	main	unused	Hammer of Twilight	klmm	Artifact	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	AIl2,AItx,AIx5	-
 IZk0	main	used	Summon Engineer	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNGoblinWorker.blp	AZkh	oZkb
 IZk1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZki	oZkb
 IZw0	main	used	Summon Cultist	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	AZwg	uZw0
@@ -50,15 +62,15 @@ arsh	main	used	Shroud of Nozdormu	arsh	Artifact	ReplaceableTextures\CommandButto
 asbl	main	unused	Assassin's Blade	asbl	Artifact	ReplaceableTextures\CommandButtons\BTNDaggerOfEscape.blp	AIsz,AItj	-
 brac	main	used	Runed Bracers	brac	Purchasable	ReplaceableTextures\CommandButtons\BTNRunedBracers.blp	AIsr	n07U,o03X,oZkb
 bspd	main	used	Boots of Speed	bspd	Purchasable	ReplaceableTextures\CommandButtons\BTNBootsOfSpeed.blp	AIms	ngme
-ciri	main	used	Robe of the Magi +6	ciri	Purchasable	ReplaceableTextures\CommandButtons\BTNRobeOfTheMagi.blp	AIi6	hvlt,o057,ovln
-cnhn	main	used	Horn of Cenarius	cnhn	Artifact	ReplaceableTextures\CommandButtons\BTNHornOfCenarius.blp	AIl1,Arel	-
+ciri	main	used	Robe of the Magi +6	ciri	Purchasable	ReplaceableTextures\CommandButtons\BTNRobeOfTheMagi.blp	AIi6	hvlt,o057,otsh,ovln
+cnhn	main	used	Horn of Cenarius	cnhn	Artifact	ReplaceableTextures\CommandButtons\BTNHornOfCenarius.blp	A169,AIl1,Arel	-
 dtsb	main	used	Drek'thar's Spellbook	dtsb	Artifact	ReplaceableTextures\CommandButtons\BTNSorceressMaster.blp	A0AD,AImv	-
 dust	main	used	Dust of Appearance	dust	Purchasable	ReplaceableTextures\CommandButtons\BTNDustOfAppearance.blp	AItb	ngme
 envl	main	unused	Enchanted Vial	envl	Miscellaneous	ReplaceableTextures\CommandButtons\BTNVialFull.blp	AIp6	-
 evtl	main	used	Talisman of Evasion	evtl	Purchasable	ReplaceableTextures\CommandButtons\BTNTalisman.blp	AIev	eden,h04V,n07J,uZf6
 fgbd	main	used	Blue Drake Egg	fgbd	Purchasable	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	AIbd	e019,n07H,n0B2,utom
 gsou	main	used	Soul Gem	gsou	Artifact	ReplaceableTextures\CommandButtons\BTNSoulGem.blp	A0U7,AIi6,AIl1	-
-hslv	main	used	Healing Salve	hslv	Purchasable	ReplaceableTextures\CommandButtons\BTNHealingSalve.blp	AIrl	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+19
+hslv	main	used	Healing Salve	hslv	Purchasable	ReplaceableTextures\CommandButtons\BTNHealingSalve.blp	AIrl	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+20
 infs	main	used	Inferno Stone	infs	Purchasable	ReplaceableTextures\CommandButtons\BTNInfernalStone.blp	A07Y	u00Y,u015,uZw0
 kgal	main	used	Keg of Thunderwater	kgal	Artifact	ReplaceableTextures\CommandButtons\BTNBarrel.blp	AIre,AIrm,Arel	-
 klmm	main	used	Killmaim	klmm	Artifact	ReplaceableTextures\CommandButtons\BTNSpiritWalkerAdeptTraining.blp	AItx,AIva	-
@@ -68,14 +80,14 @@ ocor	main	used	Orb of Corruption	ocor	Purchasable	ReplaceableTextures\CommandBut
 ofir	main	used	Orb of Fire	ofir	Purchasable	ReplaceableTextures\CommandButtons\BTNOrbOfFire.blp	AIfb	h086,n008,n0D8,o01T,u00Q
 ofro	main	used	Orb of Frost	ofro	Purchasable	ReplaceableTextures\CommandButtons\BTNOrbOfFrost.blp	AIob	e019,n07H,n0B2,utom
 oli2	main	used	Orb of the Arcane	oli2	Purchasable	ReplaceableTextures\CommandButtons\BTNUsedSoulGem.blp	A0E5,AIt6	h0CC,n07T,nmrb,u01I
-olig	main	used	Orb of Lightning	olig	Purchasable	ReplaceableTextures\CommandButtons\BTNOrbOfLightning.blp	AIlb,AIlp	hvlt,ovln
+olig	main	used	Orb of Lightning	olig	Purchasable	ReplaceableTextures\CommandButtons\BTNOrbOfLightning.blp	AIlb,AIlp	hvlt,otsh,ovln
 oven	main	used	Orb of Venom	oven	Purchasable	ReplaceableTextures\CommandButtons\BTNOrbOfVenom.blp	AIpb,Apo2	eden,h04V,n07J,uZf6
 pams	main	used	Anti-magic Potion	pams	Purchasable	ReplaceableTextures\CommandButtons\BTNSnazzyPotion.blp	AIxs	eden,h04V,n07J,uZf6
 pdiv	main	used	Brew of Divinity	pdiv	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionOfDivinity.blp	AIdv	n07U,o03X,oZkb
 pghe	main	used	Potion of Greater Healing	pghe	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionGreen.blp	AIh2	ngme
 pgma	main	used	Potion of Greater Mana	pgma	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionBlueBig.blp	AIm2	ngme
-phea	main	used	Potion of Healing	phea	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionGreenSmall.blp	AIh1	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+19
-pman	main	used	Potion of Mana	pman	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionBlueSmall.blp	AIm1	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+19
+phea	main	used	Potion of Healing	phea	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionGreenSmall.blp	AIh1	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+20
+pman	main	used	Potion of Mana	pman	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionBlueSmall.blp	AIm1	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+20
 pnvu	main	unused	Potion of Invulnerability	pnvu	Charged	ReplaceableTextures\CommandButtons\BTNGreaterInvulneralbility.blp	AIvu	-
 pomn	main	used	Potion of Omniscience	pomn	Purchasable	ReplaceableTextures\CommandButtons\BTNPotionOfOmniscience.blp	AIrv	ngme
 pres	main	unused	Potion of Restoration	pres	Charged	ReplaceableTextures\CommandButtons\BTNPotionOfRestoration.blp	AIre	-
@@ -89,12 +101,12 @@ shas	main	used	Scroll of Speed	shas	Purchasable	ReplaceableTextures\CommandButto
 shea	main	used	Scroll of Healing	shea	Purchasable	ReplaceableTextures\CommandButtons\BTNScrollOfTownPortal.blp	AIha	ngme
 spre	main	used	Staff of Preservation	spre	Purchasable	ReplaceableTextures\CommandButtons\BTNStaffOfPreservation.blp	ANpr	e019,n07H,n0B2,utom
 spro	main	used	Scroll of Protection	spro	Purchasable	ReplaceableTextures\CommandButtons\BTNScroll.blp	AIda	nmrk,o057
-spsh	main	used	Amulet of Spell Shield	spsh	Purchasable	ReplaceableTextures\CommandButtons\BTNSpellShieldAmulet.blp	ANss	hvlt,ovln
-sreg	main	used	Scroll of Regeneration	sreg	Purchasable	ReplaceableTextures\CommandButtons\BTNScrollOfRegenerationGreen.blp	AIsl	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+19
+spsh	main	used	Amulet of Spell Shield	spsh	Purchasable	ReplaceableTextures\CommandButtons\BTNSpellShieldAmulet.blp	ANss	hvlt,otsh,ovln
+sreg	main	used	Scroll of Regeneration	sreg	Purchasable	ReplaceableTextures\CommandButtons\BTNScrollOfRegenerationGreen.blp	AIsl	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+20
 sres	main	unused	Scroll of Restoration	sres	Charged	ReplaceableTextures\CommandButtons\BTNScrollOfHealing.blp	AIdb	-
 sror	main	unused	Scroll of the Beast	sror	Charged	ReplaceableTextures\CommandButtons\BTNSnazzyScrollGreen.blp	AIrr	-
 srrc	main	unused	Scroll of Resurrection	srrc	Miscellaneous	ReplaceableTextures\CommandButtons\BTNSnazzyScroll.blp	AIrs	-
-stwp	main	used	Town Portal Scroll	stwp	Purchasable	ReplaceableTextures\CommandButtons\BTNHealingScrollVariation.blp	A002	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+18
+stwp	main	used	Town Portal Scroll	stwp	Purchasable	ReplaceableTextures\CommandButtons\BTNHealingScrollVariation.blp	A002	e019,eden,h04V,h086,h0CC,hvlt,n008,n07H,+19
 tret	main	used	Tome of Retraining	tret	Purchasable	ReplaceableTextures\CommandButtons\BTNTomeOfRetraining.blp	Aret	ngme
 tsct	main	used	Ivory Tower	tsct	Purchasable	ReplaceableTextures\CommandButtons\BTNHumanWatchTower.blp	AIbt	nmrk
 whwd	main	used	Healing Wards	whwd	Purchasable	ReplaceableTextures\CommandButtons\BTNHealingWard.blp	AIhw	h086,n008,n0D8,o01T,u00Q
@@ -137,13 +149,14 @@ I01G	24p	24p only	Summon Wisps	ward	Purchasable	ReplaceableTextures\CommandButto
 I01O	24p	changed	Trol'kalar	desc	Artifact	ReplaceableTextures\CommandButtons\BTNRegenerationAura.blp	A09O,AItx	-
 I01V	24p	changed	Gorehowl	desc	Artifact	ReplaceableTextures\CommandButtons\BTNSpiritWalkerMasterTraining.blp	A0I7,AIa6,AIsx,AItf	-
 I01Y	24p	changed	Helm of Domination	ssil	Artifact	ReplaceableTextures\CommandButtons\BTNHelmofdomination.blp	A03X,A082,Atru	-
-I020	24p	24p only	Thandol Span Repairs	tkno	Permanent	ReplaceableTextures\CommandButtons\BTNSpy.blp	-	-
+I020	24p	different	Thandol Span Repairs	tkno	Permanent	ReplaceableTextures\CommandButtons\BTNSpy.blp	-	-
 ankh	24p	24p only	Ankh of Reincarnation	ankh	Charged	ReplaceableTextures\CommandButtons\BTNAnkh.blp	AIrc	-
 azhr	24p	24p only	Heart of Aszune	azhr	Campaign	ReplaceableTextures\CommandButtons\BTNHeartOfAszune.blp	A096	-
 ches	24p	24p only	Cheese	ches	Campaign	ReplaceableTextures\CommandButtons\BTNCheese.blp	-	-
 ciri	24p	changed	Robe of the Magi +6	ciri	Purchasable	ReplaceableTextures\CommandButtons\BTNRobeOfTheMagi.blp	AIi6	hvlt,o057,ovln
 ckng	24p	24p only	Crown of Kings +5	ckng	Permanent	ReplaceableTextures\CommandButtons\BTNHelmutPurple.blp	AIx5	-
 clfm	24p	24p only	Cloak of Flames	clfm	Permanent	ReplaceableTextures\CommandButtons\BTNCloakOfFlames.blp	AIcf	n095
+cnhn	24p	changed	Horn of Cenarius	cnhn	Artifact	ReplaceableTextures\CommandButtons\BTNHornOfCenarius.blp	AIl1,Arel	-
 cosl	24p	24p only	Celestial Orb of Souls	cosl	Artifact	ReplaceableTextures\CommandButtons\BTNUsedSoulGem.blp	AIrx	-
 crdt	24p	24p only	Crown of the Deathlord	crdt	Artifact	ReplaceableTextures\CommandButtons\BTNRevenant.blp	AIfz,AIlf,AImz	-
 desc	24p	24p only	Kelen's Dagger of Escape	desc	Permanent	ReplaceableTextures\CommandButtons\BTNDaggerOfEscape.blp	AIbk	-
@@ -417,7 +430,7 @@ thdm	stock	unused	Thunderlizard Diamond	thdm	Miscellaneous	ReplaceableTextures\C
 thle	stock	unused	Thunder Lizard Egg	thle	Campaign	ReplaceableTextures\CommandButtons\BTNThunderLizardEgg.blp	-	-
 tin2	stock	unused	Tome of Intelligence +2	tin2	PowerUp	ReplaceableTextures\CommandButtons\BTNTome.blp	AItm	-
 tint	stock	unused	Tome of Intelligence	tint	PowerUp	ReplaceableTextures\CommandButtons\BTNTome.blp	AIim	-
-tkno	stock	unused	Tome of Power	tkno	Artifact	ReplaceableTextures\CommandButtons\BTNTomeRed.blp	AIlm	-
+tkno	stock	used	Tome of Power	tkno	Artifact	ReplaceableTextures\CommandButtons\BTNTomeRed.blp	AIlm	-
 tlum	stock	unused	Tiny Lumber Mill	tlum	Miscellaneous	ReplaceableTextures\CommandButtons\BTNHumanLumberMill.blp	AIbr	-
 tmmt	stock	unused	Totem of Might	tmmt	Miscellaneous	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	AIs1	-
 tmsc	stock	unused	Tome of Sacrifices	tmsc	Miscellaneous	ReplaceableTextures\CommandButtons\BTNNecromancerAdept.blp	AIdp,AImz	-

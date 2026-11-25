@@ -1,6 +1,7 @@
 ﻿using MacroTools.DummyCasters;
 using MacroTools.Spells;
 using WarcraftLegacies.Source.Factions.Dalaran.Spells;
+using WarcraftLegacies.Source.Factions.Dalaran.Spells.ArcaneCataclysm;
 using WarcraftLegacies.Source.Shared.Spells;
 
 namespace WarcraftLegacies.Source.Factions.Dalaran;
@@ -60,5 +61,14 @@ public static class DalaranSpells
       DamageBonusLevel = 0.2f
     };
     SpellRegistry.Register(massSimulacrum);
+
+    var arcaneCataclysm = new ArcaneCataclysmSpell(ABILITY_A14W_ARCANE_CATACLYSM_ANTONIDAS)
+    {
+      GrowDuration = 5,
+      DamageByLevel = new float[] { 300, 450, 600 },
+      Radius = 275,
+      MissileSpeed = 900
+    };
+    SpellRegistry.Register(arcaneCataclysm);
   }
 }

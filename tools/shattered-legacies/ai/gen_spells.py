@@ -75,7 +75,12 @@ CHANNEL_DEFAULT = {"Ncl2": 0, "Ncl6": "channel", "aran": 500.0, "aare": 0.0}
 UNIT_ORDERS = {"thunderbolt", "creepthunderbolt", "slow", "darkconversion", "firebolt", "hex", "polymorph",
                "entanglingroots", "frostnova", "deathcoil", "manaburn", "holybolt", "drain", "charm",
                "chainlightning", "forkedlightning", "shadowstrike", "banish", "doom", "faeriefire", "cripple",
-               "curse", "purge", "sleep"}
+               "curse", "purge", "sleep", "frostarmor", "innerfire", "bloodlust", "heal", "rejuvenation"}
+# 0.72.0: order strings of stock NO-target spells -- a point Channel spell with one is treated the same (not proven
+# refused, but the unit-target case was; the 0.72.0 kits got point orders instead: blizzard, earthquake, monsoon)
+NOTARGET_ORDERS = {"tranquility", "roar", "thunderclap", "stomp", "starfall", "howlofterror", "berserk", "windwalk",
+                   "immolation", "divineshield", "avatar", "metamorphosis", "fanofknives", "mirrorimage", "bladestorm",
+                   "battleroar", "manashieldon"}
 # target type (Ncl2) each kind accepts: 0 no target, 1 unit, 2 point, 3 unit or point
 NCL2_OK = {"unit": (1, 3), "point": (2, 3), "instant": (0,)}
 
@@ -325,6 +330,9 @@ def main():
         ncl2 = CHANNEL_DEFAULT["Ncl2"] if ncl2 is None else int(ncl2)
         if ncl2 not in NCL2_OK[r["kind"]]:
             problems.append(f"{a} {name}: rule says {r['kind']} but the target type (Ncl2) is {ncl2} -- not cast")
+            continue
+        if r["kind"] == "point" and order in NOTARGET_ORDERS:
+            problems.append(f"{a} {name}: point spell with the no-target order \"{order}\" -- give Ncl6 a point order -- not cast")
             continue
         if r["kind"] != "unit" and order in UNIT_ORDERS:
             problems.append(f"{a} {name}: {r['kind']} spell with the unit-target order \"{order}\" -- WC3 refuses "

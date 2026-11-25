@@ -568,6 +568,17 @@ public static class AiUpgrades
     // condition. 0.46.3 (maintainer): Arthas has joined the Scourge (WL spawns the Scourge's Arthas legend) -- that
     // needs Stratholme's fall anyway. WC3 itself needs "The Fortified City" first (turn 14 or Stratholme dead).
     new EventResearch(1378900058, 1747989296, 0f, ArthasTurned),
+    // 0.72.0 (WL 5.0.4 elite choices, one research of two -- ResearchManager.RegisterIncompatibleSet): bots take
+    // the first; the second is refused by WC3 once the first is done. Druids: Keepers of the Grove (RK01, the elite
+    // they had before; RK02 = Heartwood Ancients) at a Tree of Life / Ages / Eternity. Sentinels: Priestesses of
+    // the Moon (RV01, the new Priestess kit; RV02 = Wardens) at an Auberdine / Sentinel Outpost / Enclave / Embassy.
+    new EventResearch(UPGRADE_RK01_KEEPERS_OF_THE_GROVE_DRUIDS, 1702129505, 0f), // @ etoa
+    new EventResearch(UPGRADE_RK01_KEEPERS_OF_THE_GROVE_DRUIDS, 1702129509, 0f), // @ etoe
+    new EventResearch(UPGRADE_RK01_KEEPERS_OF_THE_GROVE_DRUIDS, 1702129516, 0f), // @ etol
+    new EventResearch(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, 1697656906, 0f), // @ e00J Auberdine
+    new EventResearch(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, 1848653386, 0f), // @ n06J
+    new EventResearch(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, 1848653392, 0f), // @ n06P
+    new EventResearch(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, 1848653391, 0f), // @ n06O
   };
 
   // the Scourge's Arthas (a separate WL legend, spawned when Arthas turns) exists

@@ -6,113 +6,103 @@
 namespace WarcraftLegacies.Source.Ai
 {
   // One column per array, one row per ability:
-  //    0 A01F Solar Judgement -- point enemy; on Harf Hart
-  //    1 A01N Mass Ensnare -- point enemy; on sgh5
-  //    2 A04H Resurgent Flame Strike -- point enemy; on Hkal
-  //    3 A097 Exact Justice -- instant enemy; on Huth
-  //    4 A0DG Mass Simulacrum -- point ally; on Hant
-  //    5 A0FA Siphoning Ritual -- point enemy; on Hkal
-  //    6 A0FD Mass Banish -- point enemy; on Hkal
-  //    7 A0GP Scattershot -- point enemy; on H05L
-  //    8 A0OD Seismic Shard -- point enemy; on E023 H08Q HZw0
-  //    9 A0YX Ancestral Legion -- point self; on Ocbh
-  //   10 A104 Storm Surge -- point enemy; on n08S
-  //   11 A10L Enchanted Bolts -- point enemy; on H09N
-  //   12 A10M Inspire Madness -- point enemy; on Utic
-  //   13 A10N Apocalypse -- point enemy; on N023 Uear
-  //   14 A13R Mass Frost Armor -- point ally; on U001 U00M Uktl
-  //   15 A14L Bestial Wrath -- instant self; on Orex
-  //   16 A14Q Wild Throw -- point enemy; on Orex
-  //   17 A14Y Spirit Mend -- unit ally; on TP83
-  //   18 A14Z Grimtotem Ward -- point ally; on TP83
-  //   19 A151 Wrath of the Earth Mother -- instant enemy; on TP83
-  //   20 A16U Sunstrike -- unit enemy; on vP56
-  //   21 Aygf Chain Mana Burn -- unit enemy; on Eevi Eevm
-  //   22 MD23 Chain Mana Burn -- unit enemy; on E01D
-  //   23 MD24 Siphoning Ritual -- point enemy; on U00P
-  //   24 MD28 Voodoo Hex -- point enemy; on MD25
-  //   25 MD29 Mass Banish -- point enemy; on E01D
-  //   26 TP10 Stormguard -- instant enemy; on H028
-  //   27 TP49 Muradin's Stormbolt -- point enemy; on Hmbr
-  //   28 YBBS Blink Strike -- unit enemy; on ndrn
-  //   29 ZB02 Reap -- instant enemy; on N023 Uear
-  //   30 ZB06 Mass Death Coil -- point enemy; on N023 U02D Uear
-  //   31 ZBCM Chain Mana Burn -- unit enemy; on H04F
-  //   32 ZBIM Inspire Madness -- point enemy; on U00R
-  //   33 ZBST Spawn Tentacle -- point enemy; on U00R
-  //   34 ZBUE Unstable Evolution -- point ally; on U00R
-  //   35 A033 Wise Council -- instant ally (item-based AImr); on H09M HZy3 HZy9 Hvsh ...
-  //   36 A03S Carnage -- instant self (item-based AIpv); on Ogrh Opgh
-  //   37 A07X Rally -- instant enemy (item-based AIsa); on Hapm Hlgr
-  //   38 A0GQ Carnage -- instant self (item-based AIpv); on o01L
-  //   39 A0H1 Storming Brew -- instant self (item-based AIdb); on h01L
-  //   40 A0IY Emergency Repairs -- instant self (item-based AIh1); on n06N
-  //   41 A0KQ Call to the Hunt -- instant enemy (item-based AIsa); on o01V
-  //   42 A0NG Carnage -- instant self (item-based AIpv); on o000
-  //   43 A0OA Emergency Repairs -- instant self (item-based AIh1); on h08Z h09H hZk4 hZk5 ...
-  //   44 A0OF Wise Council -- instant ally (item-based AImr); on H05Y
-  //   45 A0PF Fel Energy -- instant ally (item-based AIra); on o008 o00F o013 o017 ...
-  //   46 A0UE Divine Intervention -- instant ally (item-based AIdb); on H00Y
-  //   47 A0WW Summon Goliathon -- instant enemy (item-based AIfu); on H098
-  //   48 A12R Wise Council -- instant ally (item-based AIdb); on H098
-  //   49 A13B Emergency Repairs -- instant self (item-based AIh1); on h09I
-  //   50 SLS8 Nature Vitality -- instant self (item-based AIhx); on emtg
-  //   51 TPWC Archmage's Council -- instant ally (item-based AIdb); on Hant
+  //    0 A01D Lunar Sanctuary -- point ally; on Etyr
+  //    1 A01F Solar Judgement -- point enemy; on Harf Hart
+  //    2 A01N Mass Ensnare -- point enemy; on sgh5
+  //    3 A04H Resurgent Flame Strike -- point enemy; on Hkal
+  //    4 A097 Exact Justice -- instant enemy; on Huth
+  //    5 A0DG Mass Simulacrum -- point ally; on Hant
+  //    6 A0FA Siphoning Ritual -- point enemy; on Hkal
+  //    7 A0FD Mass Banish -- point enemy; on Hkal
+  //    8 A0GP Scattershot -- point enemy; on H05L
+  //    9 A0OD Seismic Shard -- point enemy; on E023 H08Q HZw0
+  //   10 A0YX Ancestral Legion -- point self; on Ocbh
+  //   11 A104 Storm Surge -- point enemy; on n08S
+  //   12 A10L Enchanted Bolts -- point enemy; on H09N
+  //   13 A10M Inspire Madness -- point enemy; on Utic
+  //   14 A10N Apocalypse -- point enemy; on N023 Uear
+  //   15 A13R Mass Frost Armor -- point ally; on U001 U00M Uktl
+  //   16 A14E Emerald Dream -- unit ally; on Efur
+  //   17 A14F Glaive Trap -- point enemy; on E025
+  //   18 A14G Watcher's Focus -- instant ally; on E025
+  //   19 A14K Sunfire Barrage -- point enemy; on H00Q
+  //   20 A14L Bestial Wrath -- instant self; on Orex
+  //   21 A14Q Wild Throw -- point enemy; on Orex
+  //   22 A14S Corruption Mine -- point enemy; on U00A
+  //   23 A14Y Spirit Mend -- unit ally; on TP83
+  //   24 A14Z Grimtotem Ward -- point ally; on TP83
+  //   25 A151 Wrath of the Earth Mother -- instant enemy; on TP83
+  //   26 A156 Tree of Renewal -- point ally; on E00H Ecen
+  //   27 A159 Lord of the Forest -- point enemy; on E00H Ecen
+  //   28 A15O Seed of Rebirth -- unit enemy; on Efur
+  //   29 A15R Undying Grove -- point ally; on e03H
+  //   30 A16H Light of the Goddess -- unit ally; on h04L
+  //   31 A16K Elune's Protection -- instant ally; on h04L
+  //   32 A16U Sunstrike -- unit enemy; on vP56
+  //   33 Aygf Chain Mana Burn -- unit enemy; on Eevi Eevm
+  //   34 MD23 Chain Mana Burn -- unit enemy; on E01D
+  //   35 MD24 Siphoning Ritual -- point enemy; on U00P
+  //   36 MD28 Voodoo Hex -- point enemy; on MD25
+  //   37 MD29 Mass Banish -- point enemy; on E01D
+  //   38 TP10 Stormguard -- instant enemy; on H028
+  //   39 TP49 Muradin's Stormbolt -- point enemy; on Hmbr
+  //   40 YBBS Blink Strike -- unit enemy; on ndrn
+  //   41 ZB02 Reap -- instant enemy; on N023 Uear
+  //   42 ZB06 Mass Death Coil -- point enemy; on N023 U02D Uear
+  //   43 ZBCM Chain Mana Burn -- unit enemy; on H04F
+  //   44 ZBIM Inspire Madness -- point enemy; on U00R
+  //   45 ZBST Spawn Tentacle -- point enemy; on U00R
+  //   46 ZBUE Unstable Evolution -- point ally; on U00R
   internal static class AiSpellData
   {
     // ability id
     internal static int[] Id = new int[]
     {
-      1093677382, 1093677390, 1093678152, 1093679415, 1093682247, 1093682753, 1093682756, 1093683024, 1093685060, 1093687640,
-      1093742644, 1093742668, 1093742669, 1093742670, 1093743442, 1093743692, 1093743697, 1093743705, 1093743706, 1093743921,
-      1093744213, 1098475366, 1296314931, 1296314932, 1296314936, 1296314937, 1414541616, 1414542393, 1497514579, 1514287154,
-      1514287158, 1514292045, 1514293581, 1514296148, 1514296645, 1093677875, 1093677907, 1093678936, 1093683025, 1093683249,
-      1093683545, 1093684049, 1093684807, 1093685057, 1093685062, 1093685318, 1093686597, 1093687127, 1093743186, 1093743426,
-      1397510968, 1414551363,
+      1093677380, 1093677382, 1093677390, 1093678152, 1093679415, 1093682247, 1093682753, 1093682756, 1093683024, 1093685060,
+      1093687640, 1093742644, 1093742668, 1093742669, 1093742670, 1093743442, 1093743685, 1093743686, 1093743687, 1093743691,
+      1093743692, 1093743697, 1093743699, 1093743705, 1093743706, 1093743921, 1093743926, 1093743929, 1093743951, 1093743954,
+      1093744200, 1093744203, 1093744213, 1098475366, 1296314931, 1296314932, 1296314936, 1296314937, 1414541616, 1414542393,
+      1497514579, 1514287154, 1514287158, 1514292045, 1514293581, 1514296148, 1514296645,
     };
 
     // 1 = unit target, 2 = point target, 3 = no target
     internal static int[] Kind = new int[]
     {
-      2, 2, 2, 3, 2, 2, 2, 2, 2, 2,
-      2, 2, 2, 2, 2, 3, 2, 1, 2, 3,
-      1, 1, 1, 2, 2, 2, 3, 2, 1, 3,
-      2, 1, 2, 2, 2, 3, 3, 3, 3, 3,
-      3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-      3, 3,
+      2, 2, 2, 2, 3, 2, 2, 2, 2, 2,
+      2, 2, 2, 2, 2, 2, 1, 2, 3, 2,
+      3, 2, 2, 1, 2, 3, 2, 2, 1, 2,
+      1, 3, 1, 1, 1, 2, 2, 2, 3, 2,
+      1, 3, 2, 1, 2, 2, 2,
     };
 
     // 1 = enemy, 2 = ally, 3 = self
     internal static int[] Who = new int[]
     {
-      1, 1, 1, 1, 2, 1, 1, 1, 1, 3,
-      1, 1, 1, 1, 2, 3, 1, 2, 2, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-      1, 1, 1, 1, 2, 2, 3, 1, 3, 3,
-      3, 1, 3, 3, 2, 2, 2, 1, 2, 3,
-      3, 2,
+      2, 1, 1, 1, 1, 2, 1, 1, 1, 1,
+      3, 1, 1, 1, 1, 2, 2, 1, 2, 1,
+      3, 1, 1, 2, 2, 1, 2, 1, 1, 2,
+      2, 2, 1, 1, 1, 1, 1, 1, 1, 1,
+      1, 1, 1, 1, 1, 1, 2,
     };
 
     // least worth inside the area (unit 1, hero 3); 0 = default
     internal static int[] Min = new int[]
     {
-      0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
-      0, 0, 0, 1, 0, 3, 0, 3, 0, 0,
-      0, 3, 0, 0, 3, 2, 4, 3, 2, 0,
-      0, 2,
+      3, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 3, 0,
+      0, 1, 0, 0, 0, 0, 3, 5, 0, 3,
+      0, 3, 0, 0, 0, 0, 0, 0, 0, 1,
+      0, 0, 0, 0, 0, 1, 0,
     };
 
     // area used to count targets; 0 = the ability's own area of effect
     internal static int[] Radius = new int[]
     {
-      0, 0, 0, 400, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 300, 0, 600, 150, 0, 0, 450,
-      0, 0, 0, 0, 0, 0, 450, 150, 0, 400,
-      0, 0, 0, 300, 0, 0, 400, 600, 400, 0,
-      0, 600, 400, 0, 0, 0, 0, 800, 0, 0,
-      0, 0,
+      0, 0, 0, 0, 400, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 300, 0, 0, 0, 500, 0,
+      600, 150, 0, 0, 0, 450, 0, 0, 0, 0,
+      0, 600, 0, 0, 0, 0, 0, 0, 450, 150,
+      0, 400, 0, 0, 0, 300, 0,
     };
 
     // 1 = prefer targets with mana, 2 = ally target only below 70 % life, 4 = ground targets only,
@@ -120,50 +110,44 @@ namespace WarcraftLegacies.Source.Ai
     internal static int[] Flags = new int[]
     {
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-      0, 0, 0, 0, 0, 0, 0, 2, 0, 0,
-      8, 9, 9, 0, 0, 0, 0, 0, 12, 0,
-      0, 9, 0, 0, 0, 0, 0, 0, 0, 2,
-      2, 0, 0, 2, 0, 2, 2, 0, 2, 2,
-      2, 2,
+      0, 0, 0, 0, 0, 0, 2, 0, 0, 0,
+      0, 0, 0, 2, 0, 0, 0, 0, 8, 0,
+      10, 0, 8, 9, 9, 0, 0, 0, 0, 0,
+      12, 0, 0, 9, 0, 0, 0,
     };
 
     // order string (Channel: Ncl6); "" = item-based, ordered by the ability id
     internal static string[] Order = new string[]
     {
-      "carrionswarm", "flamestrike", "flamestrike", "corrosivebreath", "farsight", "forceofnature",
-      "deathanddecay", "flamestrike", "flamestrike", "breathoffire", "flamestrike", "flamestrike",
-      "stampede", "carrionswarm", "flamestrike", "roar", "shockwave", "healingwave",
-      "healingward", "tranquility", "firebolt", "chainlightning", "chainlightning", "forceofnature",
+      "blizzard", "carrionswarm", "flamestrike", "flamestrike", "corrosivebreath", "farsight",
+      "forceofnature", "deathanddecay", "flamestrike", "flamestrike", "breathoffire", "flamestrike",
+      "flamestrike", "stampede", "carrionswarm", "flamestrike", "rejuvenation", "landmine",
+      "roar", "shockwave", "roar", "shockwave", "landmine", "healingwave",
+      "healingward", "tranquility", "healingward", "earthquake", "doom", "monsoon",
+      "holybolt", "thunderclap", "firebolt", "chainlightning", "chainlightning", "forceofnature",
       "stampede", "deathanddecay", "channel", "shockwave", "chainlightning", "howlofterror",
-      "flamestrike", "chainlightning", "stampede", "clusterrockets", "blizzard", "",
-      "", "", "", "", "", "",
-      "", "", "", "", "", "",
-      "", "", "", "",
+      "flamestrike", "chainlightning", "stampede", "clusterrockets", "blizzard",
     };
 
     // who carries what: unit type -> row (one entry per pair)
     internal static int[] CarrierType = new int[]
     {
-      1214345830, 1214345844, 1936156725, 1214996844, 1215657064, 1214344820, 1214996844, 1214996844, 1211118924, 1160786483,
-      1211119697, 1213888304, 1331913320, 1848653907, 1211119950, 1433692515, 1311781427, 1432707442, 1429221425, 1429221453,
-      1433105516, 1332897144, 1332897144, 1414543411, 1414543411, 1414543411, 1984967990, 1164277353, 1164277357, 1160786244,
-      1429221456, 1296314933, 1160786244, 1211118136, 1215128178, 1852076654, 1311781427, 1432707442, 1311781427, 1429221956,
-      1432707442, 1211118662, 1429221458, 1429221458, 1429221458, 1211119949, 1213888819, 1213888825, 1215722344, 1315007587,
-      1447571505, 1332179560, 1332766568, 1214345325, 1215063922, 1865429324, 1747988812, 1848653390, 1865429334, 1865429040,
-      1747990618, 1747990856, 1750756148, 1750756149, 1848653362, 1851419441, 1211118937, 1865429048, 1865429062, 1865429299,
-      1865429303, 1865429594, 1865429808, 1211117657, 1211119928, 1211119928, 1747990857, 1701672039, 1214344820,
+      1165261170, 1214345830, 1214345844, 1936156725, 1214996844, 1215657064, 1214344820, 1214996844, 1214996844, 1211118924,
+      1160786483, 1211119697, 1213888304, 1331913320, 1848653907, 1211119950, 1433692515, 1311781427, 1432707442, 1429221425,
+      1429221453, 1433105516, 1164342642, 1160786485, 1160786485, 1211117649, 1332897144, 1332897144, 1429221441, 1414543411,
+      1414543411, 1414543411, 1160785992, 1164141934, 1160785992, 1164141934, 1164342642, 1697657672, 1747989580, 1747989580,
+      1984967990, 1164277353, 1164277357, 1160786244, 1429221456, 1296314933, 1160786244, 1211118136, 1215128178, 1852076654,
+      1311781427, 1432707442, 1311781427, 1429221956, 1432707442, 1211118662, 1429221458, 1429221458, 1429221458,
     };
 
     internal static int[] CarrierRow = new int[]
     {
-      0, 0, 1, 2, 3, 4, 5, 6, 7, 8,
-      8, 8, 9, 10, 11, 12, 13, 13, 14, 14,
-      14, 15, 16, 17, 18, 19, 20, 21, 21, 22,
-      23, 24, 25, 26, 27, 28, 29, 29, 30, 30,
-      30, 31, 32, 33, 34, 35, 35, 35, 35, 35,
-      35, 36, 36, 37, 37, 38, 39, 40, 41, 42,
-      43, 43, 43, 43, 43, 43, 44, 45, 45, 45,
-      45, 45, 45, 46, 47, 48, 49, 50, 51,
+      0, 1, 1, 2, 3, 4, 5, 6, 7, 8,
+      9, 9, 9, 10, 11, 12, 13, 14, 14, 15,
+      15, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+      24, 25, 26, 26, 27, 27, 28, 29, 30, 31,
+      32, 33, 33, 34, 35, 36, 37, 38, 39, 40,
+      41, 41, 42, 42, 42, 43, 44, 45, 46,
     };
   }
 }

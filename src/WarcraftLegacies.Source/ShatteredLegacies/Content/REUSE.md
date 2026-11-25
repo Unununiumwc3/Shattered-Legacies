@@ -10,21 +10,38 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1816 | 15 | 495 | 1046 | 385 | 56 | 287 |
-| abilities | 1611 | 16 | 713 | 486 | 237 | 229 | 283 |
-| upgrades | 462 | 0 | 148 | 133 | 71 | 30 | 16 |
-| items | 89 | 13 | 81 | 28 | 2 | 4 | 223 |
+| units | 1851 | 26 | 491 | 1045 | 391 | 56 | 287 |
+| abilities | 1700 | 45 | 712 | 490 | 241 | 230 | 281 |
+| upgrades | 495 | 0 | 147 | 133 | 72 | 31 | 15 |
+| items | 100 | 14 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
 
 Objects of the main map that nothing uses (no faction limit, not preplaced, not in the code, not made or referenced by anything used). Free to reuse under their id.
 
-### nightelf (9)
+### creeps (2)
+
+| Id | Name | Kind | Model | Made at | Trains / builds | Status |
+|---|---|---|---|---|---|---|
+| `nsko` | Skeletal Orc | unit | stock |  |  | unused |
+| `nsog` | Skeletal Orc Grunt | unit | stock |  |  | unused |
+
+### human (4)
+
+| Id | Name | Kind | Model | Made at | Trains / builds | Status |
+|---|---|---|---|---|---|---|
+| `n0AO` | Way Gate (Dalaran Siege) | building | stock |  |  | unused |
+| `n0D0` | Dalaran Shield Level 1 | unit | main |  |  | unused |
+| `n03R` | Dalaran Shield Level 2 | unit | main |  |  | unused |
+| `n0EA` | Dalaran Shield Level 3 | unit | main |  |  | unused |
+
+### nightelf (10)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
 | `HZy4` | High Priestess of the Aldor (Draenei) | hero | main |  |  | unused |
 | `HZy3` | The Naaru (Draenei) | hero | main |  |  | unused |
+| `n039` | Big Tree (Druids - Malfurion) | unit | stock |  |  | unused |
 | `oZy0` | Defender (Draenei) | unit | main |  |  | unused |
 | `hZy1` | Elekk Knight (draenei) | unit | main |  |  | unused |
 | `nZy0` | Lightforged Warframe (Draenei) | unit | main |  |  | unused |
@@ -33,10 +50,19 @@ Objects of the main map that nothing uses (no faction limit, not preplaced, not 
 | `even` | Spirit of Vengeance | unit | stock |  |  | unused |
 | `hZy2` | Vindicator (draenei) | unit | main |  |  | unused |
 
-### other (2)
+### orc (3)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
+| `o06R` | Chaos Blademaster (Warsong) | unit | stock |  |  | unused |
+| `o06Q` | Chaos Kodo Beast (Warsong) | unit | stock |  |  | unused |
+| `nogo` | Stonemaul Bruiser (Warsong) | unit | stock |  |  | unused |
+
+### other (3)
+
+| Id | Name | Kind | Model | Made at | Trains / builds | Status |
+|---|---|---|---|---|---|---|
+| `ntnt` | Tauren Tent | building | stock |  |  | unused |
 | `ncg1` | Clockwerk Goblin (level 2) | unit | stock |  |  | unused |
 | `ncgb` | Clockwerk Goblin (level 1) | unit | stock |  |  | unused |
 
@@ -167,7 +193,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n0CJ` | Zelemar the Wrathful (1) | unit | stock |  |  | different |
 | `n0CK` | Zelemar the Wrathful (3) | unit | stock |  |  | different |
 
-### human (161)
+### human (160)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
@@ -193,7 +219,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h06C` | Aviary (Lordaeron) | building | stock | hpea | h02Q,nwe2 | different |
 | `h07C` | Barracks (Ironforge) | building | main | h019 | h00A,h00B,h014,h018,h01B,h01C,h029,h02O,h032,h033,h03K,h03U,+14 | different |
 | `h081` | Barracks (Scarlet) | building | 24p | hpea | h08I,h08J,h08L,h09I,h09J,h0A3 | 24p only |
-| `h005` | Barricades (Tinker Barricades) | building | stock | h06D,h07D |  | 24p only |
+| `h005` | Barricades (Tinker Barricades) | building | stock | h06D,h07D |  | different |
 | `h0AL` | Black Rook Hold (Neutral Hostile) | building | 24p |  | ewsp,n06E | different |
 | `h06G` | Blacksmith (Scarlet) | building | 24p | hpea |  | different |
 | `h09B` | Blue Dragon Roost (Dalaran) | building | stock | h09C | n09T,n0AC,u025 | 24p only |
@@ -250,7 +276,6 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h09M` | Training Camp (Scarlet) | building | 24p |  | h08M,h095 | 24p only |
 | `h03E` | Training Hall (Gilneas) | building | main | hpea | n06L,n06Q,n06Z | different |
 | `n07U` | Treasure Vault (Khaz Modan) | building | main | h019 |  | different |
-| `n0AO` | Way Gate (Dalaran) | building | stock | h022,h09C |  | 24p only |
 | `h082` | Workshop (Scarlet) | building | 24p | hpea | h09X,n07N,o04C | 24p only |
 | `n07N` | Airship (scarlet) | unit | 24p | h082 |  | different |
 | `hbot` | Alliance Transport Ship (Alliance) | unit | stock | h03H,h06D,h076,h077,h07D,h07W,hshy |  | different |
@@ -287,7 +312,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `nhef` | High Elf (Female) | unit | stock |  |  | 24p only |
 | `nhem` | High Elf (Male) | unit | stock |  |  | 24p only |
 | `h05X` | High Sorcerer Andromath (Arathor-Demi) | unit | stock | h06T |  | different |
-| `h00B` | Irondrake (Ironforge) | unit | 24p | h07C |  | 24p only |
+| `h00B` | Irondrake (Ironforge) | unit | 24p | h07C |  | different |
 | `njks` | Jailor Kassan (Dalaran-Demi) | unit | 24p | h044 |  | 24p only |
 | `n06F` | Katrana Prestor (Arathor-Demi) | unit | stock |  |  | different |
 | `h0A3` | Lancer (argent) | unit | 24p | h081 |  | different |
@@ -505,7 +530,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `e01F` | Treant (Druids - Event) | unit | stock | h09G |  | 24p only |
 | `nssn` | Warden (Creep) | unit | stock |  |  | 24p only |
 
-### orc (130)
+### orc (133)
 
 | Id | Name | Kind | Model | Made at | Trains / builds | Status |
 |---|---|---|---|---|---|---|
@@ -553,6 +578,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n07B` | Queen of Suffering Demon Gate (T3 Queen Suffering) | building | stock |  |  | 24p only |
 | `o05J` | Red Dragon Hatchery (Dragonmaw) | building | stock | o05P | n0CP,n0CQ,o05M | 24p only |
 | `o053` | Smithery (Draenei) | building | main | o05A |  | different |
+| `o006` | Spire (Warsong) | building | main | o04L | n08E,nogn | different |
 | `o033` | Spirit Lodge (fel horde) | building | 24p | ncpn | n08E,nchw,nw2w,odkt,odoc,oshm,ospw,u00V,u018 | different |
 | `o01C` | Throne of Kil'jaeden | building | stock |  |  | 24p only |
 | `h004` | Troll House | building | stock |  |  | different |
@@ -576,6 +602,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `o02K` | Bear Rider (warsong) | unit | 24p | o04X |  | 24p only |
 | `nbdm` | Blackrock Dragonkin (Fel Horde) | unit | stock | o02X |  | 24p only |
 | `n0A4` | Blue Dragonspawn (nexus) | unit | stock | h09A |  | 24p only |
+| `ocat` | Catapult (Frostwolf) | unit | main | o02W,obar |  | different |
 | `o005` | Chaos Blademaster (Warsong - Bloodpact) | unit | stock | o02W |  | 24p only |
 | `o00P` | Chaos Grunt (Warsong-Bloodpact) | unit | stock | o02W |  | different |
 | `osw2` | Dire Wolf (Frostwolf-Thrall) | unit | stock |  |  | 24p only |
@@ -638,6 +665,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n03R` | Warsong Blood-Rider (Warsong-Elite) | unit | stock | o00J,o02W,o06U |  | different |
 | `nwad` | Watcher Ward | unit | stock |  |  | 24p only |
 | `ownr` | Wind Rider (Riderless) | unit | stock |  |  | 24p only |
+| `owyv` | Wind Rider (warsong) | unit | stock | o02Q,o02X,obea |  | different |
 | `o04P` | Wizard (goblin) | unit | main | o03S |  | different |
 
 ### other (240)
@@ -664,7 +692,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n02Z` | Azuremyst Isle (15gold/min) | building | stock |  |  | different |
 | `n07L` | Balor (15gold/min) | building | stock |  |  | different |
 | `n02P` | Barrow Deeps (10gold/min) | building | stock |  |  | 24p only |
-| `n00R` | Black Temple (30gold/min) | building | stock |  |  | 24p only |
+| `n00R` | Black Temple (30gold/min) | building | stock |  |  | different |
 | `n0AA` | Blackrock Depths (10gold/min) | building | stock |  |  | different |
 | `n033` | Blackrock Entrance | building | stock |  |  | different |
 | `n00O` | Blackrock Spire (25gold/min) | building | stock |  |  | different |

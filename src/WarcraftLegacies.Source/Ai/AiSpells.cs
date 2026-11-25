@@ -408,13 +408,17 @@ namespace WarcraftLegacies.Source.Ai
         return false;
       }
 
-      var ready = false;
-      for (var i = 0; i < rows.Count && !ready; i++)
+      // 0.71.1: the lowest fight level any READY row needs (1 skirmish, 2 big fight; 3 = nothing ready)
+      var need = 3;
+      for (var i = 0; i < rows.Count && need > 1; i++)
       {
-        ready = Ready(u, rows[i]);
+        if (Ready(u, rows[i]) && Tier(rows[i]) < need)
+        {
+          need = Tier(rows[i]);
+        }
       }
 
-      if (!ready)
+      if (need > 2)
       {
         NotReady++;
         return false;
@@ -422,8 +426,10 @@ namespace WarcraftLegacies.Source.Ai
 
       Evals++;
       var level = AiSpellFight.Level(u, p, pid);
-      if (level == 0)
+      if (level < need)
       {
+        // 0.71.1: no fight, or a skirmish while only big-fight spells are ready -- no unit collection, no target
+        // search (0.71.0 collected for every skirmish: spells task ~3x 0.70.3's load at 10:00)
         return true;
       }
 

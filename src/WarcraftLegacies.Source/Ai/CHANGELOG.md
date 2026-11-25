@@ -5,6 +5,46 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.72.0 — bot side of the WL 5.0.4 hero kits (includes 0.71.1)
+
+0.71.1 was not applied on its own; this build contains it. Content: `../ShatteredLegacies/CHANGELOG.md` 0.72.0.
+- **Spell rules for the ported kits** (`spell_rules.txt`, were `skip` -- "no effect in code"): Lunar Sanctuary, Tree
+  of Renewal, Undying Grove (point, ally), Glaive Trap, Sunfire Barrage, Corruption Mine, Lord of the Forest (point,
+  enemy), Watcher's Focus, Elune's Protection (no target, allies around), Light of the Goddess, Emerald Dream (hurt
+  ally), Seed of Rebirth (enemy). Skipped: Spirits of the Forest (mana toggle), Root Tap, Mass Wind Walk. 47 spells
+  in the table (35).
+- **Order strings**: `gen_spells.py` also rejects a point Channel spell with a stock NO-target order (`tranquility`,
+  `roar`, ...) and knows more unit-target orders (`frostarmor`, `innerfire`, `bloodlust`, `heal`, `rejuvenation`);
+  changed Ncl6: Sunfire Barrage `firebolt` -> `shockwave`, Lunar Sanctuary `tranquility` -> `blizzard`, Lord of the
+  Forest -> `earthquake`, Undying Grove -> `monsoon`, Elune's Protection `frostarmor` -> `thunderclap`.
+- **Elite choices**: bots research Keepers of the Grove (RK01) at a Tree of Life / Ages / Eternity and Priestesses of
+  the Moon (RV01) at an Auberdine / Sentinel Outpost / Enclave / Embassy (event researches) -- without them the
+  elites stay at limit 0 for bots.
+- `AiApi.RegisterDebugCommand` (the fork's `-testkit`), gated like the control commands.
+- Autocast table regenerated (new units with autocast abilities).
+
+## 0.71.1 — Legion leaves Argus again, home-first for Illidan, lighter spell checks
+
+From the 0.71.0 playtest (16 bots, dumps 5:00 / 10:00 / 13:08). Worked: Ironforge completed The City of Invention
+(Gnomeregan) at 7:31; Tauren escort ended at 3:37 (0.70.3: 4:26); Muradin's Stormbolt 12 casts, 0 refused; Halaa
+and Shattrath were pushed 951 / 454 away by CreateUnit and moved back.
+- **Legion stuck on Argus (since 0.69.0)**: 0.69.0 made the bot's Legion teleporter edges require
+  `WaygateIsActive` and used `WaygateGetDestination`; the teleporters (n0BE) are dummies (base `ndmg`, no waygate
+  ability), so the check was always false -- "Legion teleporters open (0 edges)", the Legion held on Argus from
+  4:54 to 11:02. Back to 0.48.2: WL's landing points (Northrend 3587,20680 / Alterac 11000,6424) once the Argus
+  quest is complete; `AiRoutes.PortalAllowed` exempts n0BE from the active check (hidden still closes it).
+- **Home-first used the wrong home**: the capital's landmass (`BotDiag.HomeLm`); Illidan's capital stands in
+  Outland, so the filter never ran for him (he left the Broken Isles at 6:50 and fell back to the Ashtongue at
+  7:10). Now the landmass where the bot holds the most CPs.
+- **Spell checks lighter**: 0.71.0 collected units and searched targets in every skirmish -- the spells task was
+  ~3x 0.70.3's load at 10:00 (91k vs 30k units touched; 31 % of combat at 13:08). A caster is now only collected
+  for when a READY spell needs that fight level (skirmish: self / ally / no-target; big fight: the rest).
+- **Item-based spells off**: WC3 refused every order by ability id (Carnage 27, Storming Brew 6, Emergency Repairs
+  6, Nature Vitality 3; 0 casts). The 17 rows are `skip`.
+- **Autocast retries capped**: 4998 refused "on" orders by 13:08, 26 accepted -- 12 of them on the autopilot's human
+  slot. Computer players seem to have autocast on already, so the order is refused. A row refused 3 times (~1 min)
+  counts as done. Dump: "given up after 3 tries".
+
 ## 0.71.0 — autocast, wider spell use, quest creeps, opening home-first, Tauren vanguard
 
 From the 0.70.3 playtest (16 bots): 111 casts by 15:00, but the big-fight gate turned down ~74 % of the checks,

@@ -10,7 +10,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
 internal sealed class QuestHourOfTwilight : QuestData
 {
   internal QuestHourOfTwilight(params QuestData[] prerequisites) : base("The Hour of Twilight",
-    "Unite the ascendants, follow the vision of Thunderfury, and hold Grim Batol with a tier-four cult to awaken Deathwing.",
+    "Unite the ascendants, claim the Hammer of Twilight, and hold Grim Batol with a tier-four cult to awaken Deathwing.",
     @"ReplaceableTextures\CommandButtons\BTNDeathwing.blp")
   {
     Global = true;

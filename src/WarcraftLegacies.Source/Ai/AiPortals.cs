@@ -389,13 +389,18 @@ namespace WarcraftLegacies.Source.Ai
       while ((u = FirstOfGroup(g)) != null)
       {
         GroupRemoveUnit(g, u);
-        if (GetUnitTypeId(u) != TeleporterType || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f
-            || !WaygateIsActive(u) || IsUnitHidden(u))
+        // 0.71.1: no WaygateIsActive check -- the teleporters are dummies (base ndmg, no waygate ability), so
+        // WaygateIsActive is always false and 0.69.0 (which added the check) left the Legion bot on Argus
+        // ("open (0 edges)", 0.71.0 playtest: held 4:54-11:02). WL's landing points as in 0.48.2.
+        if (GetUnitTypeId(u) != TeleporterType || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f || IsUnitHidden(u))
         {
           continue;
         }
 
-        if (AiRoutes.AddPortalEdge(u, WaygateGetDestinationX(u), WaygateGetDestinationY(u)))
+        var dx = GetUnitX(u) - 22939f;
+        var dy = GetUnitY(u) - (-29345f);
+        var north = dx * dx + dy * dy < 300f * 300f;
+        if (AiRoutes.AddPortalEdge(u, north ? 3587f : 11000f, north ? 20680f : 6424f))
         {
           n++;
         }

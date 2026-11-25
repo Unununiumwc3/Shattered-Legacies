@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using MacroTools.Extensions;
 using MacroTools.GameTime;
 
 namespace WarcraftLegacies.Source.Ai
 {
-  // 0.71.0: OPENING HOME-FIRST. During the first Turns turns, while the army stands on its home landmass (the
-  // capital's, BotDiag.HomeLm) and the planner has a target there (neutral CP, creep camp, enemy), targets on other
+  // 0.71.0: OPENING HOME-FIRST. During the first Turns turns, while the army stands on its home landmass (0.71.1:
+  // the landmass where the bot holds the most CPs -- 0.71.0 took the capital's, BotDiag.HomeLm, and Illidan's capital
+  // stands in Outland: the filter never ran for him and he left the Broken Isles at 6:50 again) and the planner has a target there (neutral CP, creep camp, enemy), targets on other
   // landmasses are dropped from that plan -- the bot creeps and takes the neutral CPs at home before it sails or
   // walks off (Illidan bots left their island for Kalimdor at ~6:00, 0.70.3 games). Only a filter on the CANDIDATES
   // of AiRoutes.Plan step 1: routes, waypoints, chains, gathering, defence and missions are untouched; nothing pulls
@@ -15,6 +17,7 @@ namespace WarcraftLegacies.Source.Ai
     internal static int Mode = AiAb.OnAll;
     internal const int Turns = 8;
     private static int[] _nodeLm;
+    private static int[] _lmCount = new int[64];
     internal static int Plans;      // plans the filter looked at (opening, army at home)
     internal static int Filtered;   // plans that dropped away targets
     internal static int Dropped;    // away candidates dropped
@@ -46,12 +49,13 @@ namespace WarcraftLegacies.Source.Ai
       bool armyKnown)
     {
       if (pid < 0 || pid >= 24 || !AiAb.For(Mode, pid, AiAb.BitHome) || GameTimeManager.Turn > Turns
-          || AiTheatres.Secondary || d == null || d.HomeLm < 0 || !armyKnown)
+          || AiTheatres.Secondary || d == null || !armyKnown)
       {
         return;
       }
 
-      if (Geography.Landmass(armyX, armyY) != d.HomeLm)
+      var homeLm = OpeningLm(Player(pid));
+      if (homeLm < 0 || Geography.Landmass(armyX, armyY) != homeLm)
       {
         return; // the army is away already (or between landmasses): never pulled back
       }
@@ -66,7 +70,7 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        if (Home(i, d.HomeLm, questNodes))
+        if (Home(i, homeLm, questNodes))
         {
           home++;
         }
@@ -89,7 +93,7 @@ namespace WarcraftLegacies.Source.Ai
 
       for (var i = 0; i < score.Length; i++)
       {
-        if (score[i] >= 0f && !Home(i, d.HomeLm, questNodes))
+        if (score[i] >= 0f && !Home(i, homeLm, questNodes))
         {
           score[i] = -1f;
         }
@@ -98,6 +102,40 @@ namespace WarcraftLegacies.Source.Ai
       Filtered++;
       Dropped += away;
       FilteredBy[pid]++;
+    }
+
+    // 0.71.1: the landmass with the most CPs of the bot (ties: the first found); -1 = none
+    private static int OpeningLm(player p)
+    {
+      var cps = p.GetPlayerData().ControlPoints;
+      var best = -1;
+      for (var k = 0; k < _lmCount.Length; k++)
+      {
+        _lmCount[k] = 0;
+      }
+
+      for (var i = 0; i < cps.Count; i++)
+      {
+        var cu = cps[i].Unit;
+        if (cu == null)
+        {
+          continue;
+        }
+
+        var lm = Geography.Landmass(GetUnitX(cu), GetUnitY(cu));
+        if (lm < 0 || lm >= _lmCount.Length)
+        {
+          continue;
+        }
+
+        _lmCount[lm]++;
+        if (best < 0 || _lmCount[lm] > _lmCount[best])
+        {
+          best = lm;
+        }
+      }
+
+      return best;
     }
 
     internal static void OnCommand()

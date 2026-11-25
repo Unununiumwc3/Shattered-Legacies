@@ -9,6 +9,17 @@ into the upstream PR: `Ai/` + `[BOT]` hooks) is in `../Ai/TODO.md`. Fork code us
 
 Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (how, incl. the faction template).
 
+## WL 5.0.4 alignment (0.72.0; ledger: `UPSTREAM.md`)
+
+- **Bundle 1 playtest (0.72.0)**: `-testkit`, `-testkit items`, `-testkit foes` near a free spot; cast every new button
+  once (Tyrande, Naisha, Anasterian, Rivendare, Cenarius, Malfurion, Antonidas, Priestess / Warden / Heartwood /
+  Keeper elites), equip the four artifacts, research both elite choices once per faction (the other must lock).
+  Twilight's Hammer: The Hammer of Twilight drops at Suramar; Ironforge's Uldum expedition can still give Thunderfury.
+- **Decide**: which faction gets the Draenei (The Exodar) as its fallback (proposal: Druids, or Gilneas); then
+  separate the Draenei from the Sentinels' slot (checklist in `UPSTREAM.md`).
+- **Next bundles**: 2 Dalaran (Shield, waygates -- bot movement, caster teleport), 3 Night Elves (Immortality regions,
+  Wrath of the Wild, Sentinels quest changes, income), 4 hotfix sync. One bundle per build, with the bot work.
+
 ## Western 2v2v2 integration for playtest
 
 The western port takes Orcish Horde, Tauren Tribes and their Kalimdor openings from Warcraft Legacies 5.0.4 (`a0c73082c268f65142781c287bc746e36c7d94c9`). Start with Orcish Horde and Tauren versus Druids and Sentinels (the Draenei lobby alternative remains), versus Black Empire and Ahn'qiraj. The Orcs share the existing Twillight claim with Fel Horde. Only Tauren can claim Skywall.
@@ -321,7 +332,7 @@ From the 0.60 playtest (maintainer):
   train a Death Knight, and train a Battlemaster from Grim Batol after tier four. Test both tunnel mouths in both
   directions before and after the quest. Check Maiev's outpost with both Sentinel and Draenei openings.
 - [0.68 Twillight passed] Original campaign checks. Complete Gift of the Firelord with the Great Forge destroyed before and after taking Twillight. Earn
-  Thunderfury at Suramar and test both reward orders with Ironforge's expedition. Finish The Hour of Twilight, spend
+  the Hammer of Twilight at Suramar (0.72.0; was Thunderfury -- now only Ironforge's expedition gives it). Finish The Hour of Twilight, spend
   Deathwing's skill points and check damage, aura, Searing Breath and Attribute Bonus. Tune after a multiplayer run.
 - [next] After the shared-fallback playtest, extend offer configuration to betrayals and opening picks.
 - [design, next] Shared alternative factions are exclusive and first-come. Two eligible slots can share two fallbacks.

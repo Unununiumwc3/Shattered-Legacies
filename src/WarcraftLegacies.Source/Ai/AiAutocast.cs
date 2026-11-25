@@ -18,10 +18,13 @@ namespace WarcraftLegacies.Source.Ai
     private static List<unit> _units = new();
     private static Dictionary<unit, int> _mask = new();      // unit -> rows (bits of its RowsOf list) switched on
     private static Dictionary<unit, float> _next = new();
+    private static Dictionary<unit, int> _tries = new();    // 0.71.1: passes with refused orders
+    private const int TryLimit = 3;
     private static int _cursor;
     private static bool _loaded;
     internal static int Switched;
     internal static int Refused;
+    internal static int GaveUp; // 0.71.1: rows refused TryLimit times -- most likely ON already (computer players)
     internal static int UnknownOrders;
     internal static int Units;
     internal static int[] SwitchedBy = new int[24];
@@ -108,6 +111,7 @@ namespace WarcraftLegacies.Source.Ai
         {
           _mask.Remove(u);
           _next.Remove(u);
+          _tries.Remove(u);
           _units.RemoveAt(_cursor);
           continue;
         }
@@ -134,6 +138,7 @@ namespace WarcraftLegacies.Source.Ai
 
         var mask = _mask[u];
         var all = true;
+        var refusedBits = 0;
         for (var i = 0; i < rows.Count; i++)
         {
           var bit = 1 << i;
@@ -158,8 +163,36 @@ namespace WarcraftLegacies.Source.Ai
           }
           else
           {
-            Refused++; // usually a research the ability still needs
+            Refused++; // a research the ability still needs, or autocast is ON already
+            refusedBits |= bit;
             all = false;
+          }
+        }
+
+        if (refusedBits != 0)
+        {
+          // 0.71.1: 0.71.0 retried every 20 s for ever (4998 refusals by 13:08, 26 switched -- 12 of them on the
+          // autopilot's HUMAN slot): WC3 seems to switch autocast on for computer players itself, so "on" is
+          // refused. After TryLimit passes (~1 min) the row counts as done.
+          var t = _tries.TryGetValue(u, out var nt) ? nt + 1 : 1;
+          _tries[u] = t;
+          if (t >= TryLimit)
+          {
+            mask |= refusedBits;
+            for (var b = refusedBits; b != 0; b = b & (b - 1))
+            {
+              GaveUp++;
+            }
+
+            // done when nothing switchable is left (unlearned hero skills keep the unit in the 20-s retry)
+            all = true;
+            for (var i = 0; i < rows.Count; i++)
+            {
+              if ((mask & (1 << i)) == 0)
+              {
+                all = false;
+              }
+            }
           }
         }
 
@@ -176,7 +209,8 @@ namespace WarcraftLegacies.Source.Ai
       Ensure();
       var s = "autocast (0.71): table " + I2S(AiAutocastData.Id.Length) + " abilities on " + I2S(_rows.Count)
               + " unit types (unknown orders " + I2S(UnknownOrders) + "); units seen " + I2S(Units) + ", tracked "
-              + I2S(_units.Count) + "; switched on " + I2S(Switched) + ", refused " + I2S(Refused) + "; per bot:";
+              + I2S(_units.Count) + "; switched on " + I2S(Switched) + ", refused " + I2S(Refused)
+              + " (0.71.1: given up after " + I2S(TryLimit) + " tries -- ON already? -- " + I2S(GaveUp) + "); per bot:";
       for (var pid = 0; pid < 24; pid++)
       {
         if (SwitchedBy[pid] > 0)

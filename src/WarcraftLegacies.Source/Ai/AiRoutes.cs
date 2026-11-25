@@ -566,7 +566,10 @@ namespace WarcraftLegacies.Source.Ai
       {
         return false;
       }
-      if ((PrivateGate(gate) || GetUnitTypeId(gate) == FourCC("n06Z")) && (!WaygateIsActive(gate) || IsUnitHidden(gate)))
+      // 0.71.1: the Legion teleporters (n0BE) are dummies, never an active waygate -- only hidden counts for them
+      // (their edges exist only once the Argus quest is complete, AiPortals.AddLegionTeleporters)
+      if ((PrivateGate(gate) || GetUnitTypeId(gate) == FourCC("n06Z"))
+          && ((GetUnitTypeId(gate) != FourCC("n0BE") && !WaygateIsActive(gate)) || IsUnitHidden(gate)))
       {
         return false;
       }

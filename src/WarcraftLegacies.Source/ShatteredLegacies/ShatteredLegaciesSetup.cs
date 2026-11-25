@@ -14,6 +14,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies
       SlBotSetup.Setup();    // the fork's data for the bot (Bot/)
       TimelineSetup.Setup(); // turning points: fallbacks, sub paths, betrayals, picks (Timelines/)
       ScoreboardLines.Setup(); // 0.58: the fork's lines on the scoreboard (end goals)
+      Testing.TestKit.Setup(); // 0.72.0: "-testkit" -- spawns the heroes / artifacts of a port for a quick check
     }
   }
 }

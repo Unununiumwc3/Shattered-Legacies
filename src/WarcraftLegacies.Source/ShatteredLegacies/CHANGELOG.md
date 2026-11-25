@@ -4,6 +4,41 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.72.0 — WL 5.0.4 alignment, bundle 1: hero kits and artifacts (includes 0.71.1)
+
+0.71.1 was never applied on its own: this build contains it (bot fixes, `../Ai/CHANGELOG.md`). New ledger of the WL
+5.x alignment: `UPSTREAM.md` (ported, wanted bundles, not wanted -- the maintainer's decisions of 2026-11-24 -- and the
+Draenei: terrain stays, the faction becomes a fallback, owner open).
+- **13 dead buttons fixed**: the 0.69 port brought WL 5.0.4's hero DATA but not the code. Ported from WL 5.0.4 as
+  they are: Tyrande's Lunar Sanctuary; Naisha's Glaive Trap and Watcher's Focus; the Priestess of the Moon elite's
+  Light of the Goddess, Mass Wind Walk, Elune's Protection and Moonlit Arrows; Anasterian's Sunfire Barrage;
+  Rivendare's Corruption Mine; Cenarius' Tree of Renewal, Lord of the Forest and Master of Nature progression; the
+  Heartwood Ancient's Undying Grove, Spirits of the Forest and Root Tap; plus the Keeper's Living Wall, Antonidas'
+  Arcane Cataclysm, the Warden elite's Spirit of Vengeance and Malfurion's new kit (Emerald Dream, Seed of Rebirth).
+  Missing data files (dummy abilities, buffs, the treant / tree / wall units) copied from WL 5.0.4.
+- **Elite choices** (WL 5.0.4): Druids research Keepers of the Grove or Heartwood Ancients, Sentinels Priestesses of
+  the Moon or Wardens (elites start at limit 0); Vault of the Wardens empowers the Wardens or Maiev.
+- **Artifacts** (WL 5.0.4): Soulseeker for Kel'Thuzad (kept on his ghost), Gorefiend's Truncheon for Teron, Bow of
+  Elune's Grace for Tyrande; the Horn of Cenarius restores mana and goes to Cenarius when Malfurion awakens.
+- **Sentinels**: WL 5.0.4 hero levels (Tyrande, Naisha) and the Tyrande / Maiev / Naisha dialogue.
+- **Twilight's Hammer**: "Blessed Blade of the Windseeker" becomes "The Hammer of Twilight" -- same objectives
+  (Cho'gall at the Broken Isles, Suramar), the reward is the new artifact Hammer of Twilight (`IZh1`) instead of
+  Thunderfury, which stays in Ironforge's "Secrets of Uldum" pool.
+- **Kept as the fork has them** (WL 5.0.4 ties them to quests not ported yet): Siege Ancient limit 6, Redeemed Highborne
+  12. Not ported yet: Dalaran Shield and waygates (bundle 2), Immortality regions, Wrath of the Wild, Sentinels quest
+  changes, Druids / Sentinels income (bundle 3), hotfix sync (bundle 4).
+- **`-testkit`** (debug only, the bot's control-command gate): spawns the bundle's heroes at level 10, `-testkit items`
+  the new artifacts, `-testkit foes` eight hostile footmen.
+- Content index regenerated (`content_index.py`; it was stale since the 0.69 port).
+- New tool: `tools/shattered-legacies/compile_check.sh` -- a real C# compile of the map code without NuGet (WCSharp
+  from GitHub source). 0.72.0 compiles cleanly with it.
+
+## 0.71.1 — bot fixes only
+
+Map unchanged; see `../Ai/CHANGELOG.md` 0.71.1 (Legion bot leaves Argus again -- a 0.69.0 regression in the bot's
+teleporter edges, home-first for Illidan, lighter spell checks). Halaa / Shattrath (0.71.0): the log showed
+CreateUnit had pushed them 951 / 454 away; they are moved back.
+
 ## 0.71.0 — Long March creeps like WL 5.0.4, spell order strings, Halaa / Shattrath placement
 
 - **Long March creeps**: the rest of the WL 5.0.4 layout along the route. Thousand Needles camp: the extra `ncks` and

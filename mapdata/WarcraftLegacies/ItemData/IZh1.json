@@ -1,0 +1,67 @@
+{
+  "OldId": "klmm",
+  "NewId": "IZh1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "AItx,AIx5,AIl2"
+    },
+    {
+      "Id": "icla",
+      "Type": 3,
+      "Value": "Artifact"
+    },
+    {
+      "Id": "idrp",
+      "Value": 1
+    },
+    {
+      "Id": "ihtp",
+      "Value": 500000
+    },
+    {
+      "Id": "ilev",
+      "Value": 8
+    },
+    {
+      "Id": "ipaw",
+      "Value": 0
+    },
+    {
+      "Id": "ipri",
+      "Value": 200
+    },
+    {
+      "Id": "isel",
+      "Value": 0
+    },
+    {
+      "Id": "iusa",
+      "Value": 0
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNStormHammer.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "Increases damage, attributes and hit points."
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Hammer of Twilight"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffff8c00Artifact|r|nIncreases the attack damage of the Hero by 20, all attributes by 3 and hit points by 300 when carried.|n|cffffcc00Lore|r|n|cffffdeadThe relic the Twilight's Hammer is named for: a maul of black elementium, said to have been forged in the Old Gods' service and lost when the night elves' empire fell."
+    }
+  ]
+}

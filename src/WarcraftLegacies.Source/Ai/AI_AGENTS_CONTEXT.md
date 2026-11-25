@@ -166,8 +166,10 @@ mode). Upstream WL for comparison: `https://github.com/AzerothWarsLR/WarcraftLeg
    (`timer timer = timer.Create();` in `ChoiceDialogPresenter.Run`). Any `timer.Create()` ABOVE that line in the same
    block then fails. Never add code to a method that declares such a local -- put it in an own method.
    `tools/shattered-legacies/ai/scope_check.py` catches this and nested re-declarations (CS0136).
-10. **No compiler in the sandbox** (no dotnet, no nuget). Before every drop: `check_refs.py`, a tree-sitter syntax
-    pass and `scope_check.py` on EVERY changed .cs file, including files outside `Ai/`; JSON files through `json.load`.
+10. **No NuGet in the sandbox** -- but since 0.72.0 a real C# compile: `tools/shattered-legacies/compile_check.sh` builds
+    MacroTools + WarcraftLegacies.Shared + WarcraftLegacies.Source against WCSharp compiled from its GitHub source
+    (dotnet 10 + github.com reachable). It does not run CSharp.lua: still `check_refs.py` (Lua limits), `scope_check.py`,
+    and JSON files through `json.load` before every drop.
 11. **Unqualified calls across classes don't compile** (0.39.2 break, CS0103): a helper added to `SimpleBot` and
     called as `IsActive(...)` from `QuestAutoComplete` (same file, other class). `check_refs.py` reports these as
     UNQUALIFIED since 0.39.3.

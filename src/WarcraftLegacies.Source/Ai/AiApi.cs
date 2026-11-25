@@ -103,6 +103,10 @@ namespace WarcraftLegacies.Source.Ai
       AiSpellBook.Add(id, kind, who, min, radius, flags, order, carrierType, carrierRow);
     }
 
+    // 0.72.0: a debug chat command of the fork ("-testkit ..."), gated like the bot's control commands (AiDebug.Access:
+    // off in a release build). The command text is read with GetEventPlayerChatString inside the action.
+    public static void RegisterDebugCommand(string cmd, System.Action act) => AiDebug.RegisterControl(cmd, act);
+
     public static void RegisterHeadquarters(string faction, int[] types)
     {
       AiBuildSites.Headquarters[faction] = types;

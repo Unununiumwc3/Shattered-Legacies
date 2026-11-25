@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MacroTools.Dialogues;
 using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Legends;
 using MacroTools.Localization;
 using MacroTools.Quests;
+using MacroTools.Researches;
 using WarcraftLegacies.Shared.FactionObjectLimits;
 using WarcraftLegacies.Source.Factions.Druids;
 using WarcraftLegacies.Source.Factions.Illidari;
@@ -16,12 +18,15 @@ using WarcraftLegacies.Source.Setup;
 using WarcraftLegacies.Source.Shared;
 using WarcraftLegacies.Source.Shared.Powers;
 using WarcraftLegacies.Source.Shared.Quests;
+using WarcraftLegacies.Source.Shared.Researches;
 using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.Factions.Sentinels;
 
 public sealed class SentinelsFaction : Faction
 {
+  private const float NaishaDoubtsDelay = 180; // [SL] (0.72.0): WL 5.0.4 dialogue
+
   /// <inheritdoc />
   public SentinelsFaction() : base("Sentinels", playercolor.Mint,
     @"ReplaceableTextures\CommandButtons\BTNPriestessOfTheMoon.blp")
@@ -49,6 +54,7 @@ public sealed class SentinelsFaction : Faction
     };
     RegisterFactionDependentInitializer<DruidsFaction>(RegisterDruidsDialogue);
     RegisterFactionDependentInitializer<IllidariFaction>(RegisterIllidariQuests);
+    RegisterFactionDependentInitializer<IllidariFaction>(RegisterIllidariDialogue); // [SL] (0.72.0): WL 5.0.4
     RegisterFactionDependentInitializer<LegionFaction>(RegisterLegionDialogue);
     ProcessObjectInfo(SentinelsObjectInfo.GetAllObjectLimits());
   }
@@ -61,6 +67,7 @@ public sealed class SentinelsFaction : Faction
     AddQuest(new QuestRazeOrgrimmar());
     RegisterDialogue();
     RegisterPowers();
+    RegisterResearches(); // [SL] (0.72.0): WL 5.0.4 elite choice (Priestesses of the Moon / Wardens)
     SentinelsSpells.Setup();
     SentinelsTraits.Setup();
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
@@ -142,6 +149,59 @@ public sealed class SentinelsFaction : Faction
       {
         new ObjectiveLegendMeetsLegend(AllLegends.Sentinels.Maiev, AllLegends.Sentinels.Tyrande)
       }));
+
+    // [SL] (0.72.0): WL 5.0.4 dialogue (#4179)
+    TriggeredDialogueManager.Add(
+      new TriggeredDialogue(new Dialogue(
+        @"Sound\Dialogue\NightElfCampaign\NightElf01\N01Tyrande09",
+        "So, these orcs and humans presume to run rampant through our lands? They will regret ever stepping foot into Ashenvale. We will establish a base and deal with these outlanders as they deserve.",
+        "Tyrande Whisperwind"), new[]
+      {
+        this
+      }, new[]
+      {
+        new ObjectiveControlLegend(AllLegends.Sentinels.Tyrande, false)
+        {
+          EligibleFactions = new List<Faction> { this }
+        }
+      }));
+
+    var hordeLegends = new[] { AllLegends.Tauren.CairneBloodhoof, AllLegends.Orc.GromHellscream, AllLegends.Orc.Thrall };
+    TriggeredDialogueManager.Add(
+      new TriggeredDialogue(new Dialogue(
+          @"Sound\Dialogue\NightElfCampaign\NightElf01\N01Tyrande27",
+          "Bandu thoribas, mortals! You will pay for defiling these lands!",
+          "Tyrande Whisperwind"),
+        new[] { this }
+          .Concat(hordeLegends.Where(x => x.Unit != null).Select(x => x.Unit!.Owner.GetPlayerData().Faction))
+          .OfType<Faction>()
+          .Distinct(),
+        new[]
+        {
+          new ObjectiveLegendMeetsAnyLegend(AllLegends.Sentinels.Tyrande, hordeLegends)
+        }));
+  }
+
+  // [SL] (0.72.0): from WL 5.0.4 (Warden elite, #4176)
+  private static void RegisterResearches()
+  {
+    ResearchManager.RegisterIncompatibleSet(
+      new CustomResearch(UPGRADE_RV01_PRIESTESSES_OF_THE_MOON_SENTINELS, 0)
+      {
+        ResearchFunc = researchingPlayer =>
+        {
+          var faction = researchingPlayer.GetPlayerData().Faction;
+          faction?.ModObjectLimit(UNIT_H04L_PRIESTESS_OF_THE_MOON_SENTINELS_ELITE, 6);
+        }
+      },
+      new CustomResearch(UPGRADE_RV02_WARDENS_SENTINELS, 0)
+      {
+        ResearchFunc = researchingPlayer =>
+        {
+          var faction = researchingPlayer.GetPlayerData().Faction;
+          faction?.ModObjectLimit(UNIT_H045_WARDEN_SENTINELS_ELITE, 6);
+        }
+      });
   }
 
   private void RegisterPowers()
@@ -205,5 +265,57 @@ public sealed class SentinelsFaction : Faction
         new ObjectiveLegendMeetsLegend(AllLegends.Sentinels.Tyrande, AllLegends.Legion.Archimonde)
       }
     ));
+  }
+
+  // [SL] (0.72.0): WL 5.0.4 dialogue (#4179)
+  private void RegisterIllidariDialogue(IllidariFaction illidari)
+  {
+    var maievMeetsIllidan = new TriggeredDialogue(new Dialogue(
+        @"Sound\Dialogue\NightElfExpCamp\NightElf01x\S01Maiev41",
+        "These poor folk were slain just like the others. Illidan has much to answer for. He'll wish he were still chained in his cell when I get through with him.",
+        "Maiev Shadowsong"), new Faction[]
+      {
+        this,
+        illidari
+      }, new[]
+      {
+        new ObjectiveLegendMeetsLegend(AllLegends.Sentinels.Maiev, AllLegends.Naga.Illidan)
+      });
+    maievMeetsIllidan.Completed += _ => RegisterNaishaDoubtsDialogue();
+    TriggeredDialogueManager.Add(maievMeetsIllidan);
+
+    TriggeredDialogueManager.Add(
+      new TriggeredDialogue(new Dialogue(
+        @"Sound\Dialogue\NightElfExpCamp\NightElf01x\S01Maiev39",
+        "Naga? Many craven races have tempted our wrath over the centuries. None have survived!",
+        "Maiev Shadowsong"), new Faction[]
+      {
+        this,
+        illidari
+      }, new[]
+      {
+        new ObjectiveLegendMeetsAnyLegend(AllLegends.Sentinels.Maiev, AllLegends.Naga.Vashj, AllLegends.Naga.Najentus)
+      }));
+  }
+
+  private void RegisterNaishaDoubtsDialogue()
+  {
+    timer.Create().Start(NaishaDoubtsDelay, false, () =>
+    {
+      @event.ExpiredTimer.Dispose();
+      TriggeredDialogueManager.Add(
+        new TriggeredDialogue(new DialogueSequence(
+            new Dialogue(@"Sound\Dialogue\NightElfExpCamp\NightElf01x\S01Huntress14",
+              "Mistress, do you believe we can defeat Illidan even if we find him?",
+              "Naisha"),
+            new Dialogue(@"Sound\Dialogue\NightElfExpCamp\NightElf01x\S01Maiev15",
+              "Illidan has grown powerful: of that, there is no doubt. He consumed the energies of the Skull of Gul'dan. Now he is neither night elf nor demon, but something more.",
+              "Maiev Shadowsong")),
+          new[] { this },
+          new[]
+          {
+            new ObjectiveLegendMeetsLegend(AllLegends.Sentinels.Naisha, AllLegends.Sentinels.Maiev)
+          }));
+    });
   }
 }

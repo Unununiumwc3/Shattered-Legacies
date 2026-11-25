@@ -2936,7 +2936,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.71.0";
+    public const string Build = "0.72.0";
 
     public static void Setup()
     {
