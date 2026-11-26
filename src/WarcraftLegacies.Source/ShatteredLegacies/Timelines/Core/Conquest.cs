@@ -25,7 +25,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal static HashSet<player> Undefeatable = new();
     internal static bool Running;
 
-    internal static void Register(player vassal, int seatCp, player overlord, bool undefeatable = false)
+    // 0.81.0: keepTeam -- the vassal stays in its team now; only a LATER conquest of its seat moves it (Kezan)
+    internal static void Register(player vassal, int seatCp, player overlord, bool undefeatable = false,
+      bool keepTeam = false)
     {
       if (undefeatable)
       {
@@ -36,7 +38,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       Seats.Add(seatCp);
       var cp = AiApi.SafeCp(seatCp);
       Holders.Add(cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null);
-      if (overlord != null && GetPlayerId(overlord) < 24 && overlord != vassal)
+      if (keepTeam)
+      {
+        // stays where it is
+      }
+      else if (overlord != null && GetPlayerId(overlord) < 24 && overlord != vassal)
       {
         Join(vassal, overlord);
       }

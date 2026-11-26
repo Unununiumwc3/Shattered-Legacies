@@ -57,6 +57,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       }
 
       // 0.54 / 0.55: the Forsaken (Quel'thalas' betrayal) -- Sylvanas first, then the 24p tree's apothecaries
+      AiApi.RegisterHeroFamily(ForsakenConfig.SylvanasBanshee, ForsakenConfig.SylvanasDarkRanger, ForsakenConfig.SylvanasQueen);
       AiApi.RegisterHeroes(ForsakenConfig.Name, new List<int>
         { ForsakenConfig.SylvanasBanshee, ForsakenConfig.SylvanasDarkRanger, ForsakenConfig.SylvanasQueen,
           ForsakenObjects.MasterApothecary, ForsakenObjects.GrandApothecary });

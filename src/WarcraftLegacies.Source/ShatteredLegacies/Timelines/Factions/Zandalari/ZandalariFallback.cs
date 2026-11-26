@@ -55,7 +55,20 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari
       });
     }
 
-    private static void Run(player p, TurningPointDef def)
+    internal const string FromHordeText =
+      "|cffffcc00The Horde is broken.|r King Rastakhan never bowed to Thrall's \"new\" Horde. Now he swears the "
+      + "Zandalari Empire to those who destroyed it -- and calls every troll tribe to Zuldazar.";
+
+    internal const string FromAhnqirajText =
+      "|cffffcc00C'Thun has fallen.|r From Zuldazar King Rastakhan raises the Zandalari Empire -- it will serve "
+      + "whoever promises the trolls a united empire.";
+
+    private static void Run(player p, TurningPointDef def) => Arrive(p, _cthunKiller, FromAhnqirajText);
+
+    // 0.81.0 (maintainer): the Orcish Horde's fallback too (not beaten by an Old God): first sworn to its conqueror
+    internal static void FromHorde(player p, player conqueror) => Arrive(p, conqueror, FromHordeText);
+
+    private static void Arrive(player p, player overlord, string text)
     {
       var keep = new List<unit>();
       var glass = Hourglass.Get(GetPlayerId(p));
@@ -83,8 +96,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari
       }
 
       Spawn.Units(p, StartX + 192f, StartY - 256f, army.ToArray());
-      Conquest.Register(p, UNIT_N050_ZULDAZAR, _cthunKiller, true);
+      Conquest.Register(p, UNIT_N050_ZULDAZAR, overlord, true);
       ProtectHalls(p);
+      for (var i = 0; i < 24; i++)
+      {
+        DisplayTimedTextToPlayer(Player(i), 0, 0, 20, text);
+      }
+
       p.RepositionCamera(new Point(StartX, StartY));
     }
 

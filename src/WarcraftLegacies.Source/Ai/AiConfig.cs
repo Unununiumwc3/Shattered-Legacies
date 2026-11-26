@@ -403,6 +403,9 @@ public static class AiConfig
   // 0.37: a hero type counts as "alive" while one of its LATER forms is alive (same legend, new unit type), so the
   // bot doesn't train the first form again. Arthas: Champion of the Scourge (UEAR) -> Lord of the Scourge (N023,
   // after "The Ascension").
+  // 0.81.0: hero types that are phases of ONE hero (owning one = owning all): Sylvanas' three forms (SlBotSetup)
+  public static readonly List<int[]> HeroFamilies = new();
+
   public static readonly Dictionary<int, int> HeroForms = new()
   {
     { UNIT_UEAR_CHAMPION_OF_THE_SCOURGE_SCOURGE, UNIT_N023_LORD_OF_THE_SCOURGE_SCOURGE },

@@ -354,10 +354,34 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void AddStatic()
     {
-      AddBotPortals();
-      AddDalaranGates();
-      AiFerries.AddEdges(); // 0.50: ferry piers (bot-only, hidden markers)
-      AddLegionTeleporters();
+      // 0.81.0: every part on its own -- one error (0.73.0-0.80.0: Dalaran's Way Gates) skipped all that followed:
+      // no ferry, no Legion teleporter, no Dark Portal edge for the rest of the game. The ferries come first now.
+      Step("ferries", AiFerries.AddEdges); // 0.50: ferry piers (bot-only, hidden markers)
+      Step("bot portals", AddBotPortals);
+      Step("dalaran gates", AddDalaranGates);
+      Step("legion teleporters", AddLegionTeleporters);
+      Step("dark portal", AddDarkPortal);
+    }
+
+    private static readonly HashSet<string> _stepFailed = new();
+
+    private static void Step(string name, System.Action step)
+    {
+      try
+      {
+        step();
+      }
+      catch (System.Exception e)
+      {
+        if (_stepFailed.Add(name))
+        {
+          SimpleBot.LogPin("portal rebuild: " + name + " failed (" + e.Message + ") -- the other parts still run");
+        }
+      }
+    }
+
+    private static void AddDarkPortal()
+    {
       if (!_dpSearched)
       {
         _dpSearched = true;

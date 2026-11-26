@@ -100,6 +100,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       KezanEnterpriseBombers.Start(p); // 0.61: Fuel Transports as suicide bombers
       KezanEnterpriseTrade.Start(p);
       KezanEnterpriseBot.Start(p); // 0.79.0: a bot runs the oil (free, at the caster-research pace)
+      // 0.81.0 (maintainer): Kezan joins whoever conquers it -- not now (it stays in Kul Tiras' team), but when its CP
+      // falls to another team later (Core/Conquest.cs, seat Kezan)
+      Conquest.Register(p, UNIT_N04Z_KEZAN, null, false, true);
       KezanEnterpriseSlaveCamps.Start(p); // 0.60: the Refugee Slave Camps rise at the goblin towns
       p.RepositionCamera(start);
       AiApi.LogPin("Kul Tiras fallback -> Kezan Enterprise: old holdings to "

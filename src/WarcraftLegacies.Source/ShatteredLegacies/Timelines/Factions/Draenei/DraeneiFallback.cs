@@ -92,7 +92,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Draenei
         draenei.RepairHull.Progress = QuestProgress.Complete; // "A New Home": the Exodar is theirs, Nobundo trainable
       }
 
-      StartCps.Give(p, UNIT_N0BL_EXODAR_REGALIS);
+      StartCps.Force(p, UNIT_N0BL_EXODAR_REGALIS); // 0.81.0 (maintainer): theirs whoever holds it
       AllLegends.Draenei.Velen.ForceCreate(p, new Point(StartX, StartY), 270f);
       Spawn.Units(p, StartX + 128f, StartY - 192f, Guard);
       var team = victor != null && GetPlayerId(victor) < 24 ? victor.GetPlayerData().Team : null;

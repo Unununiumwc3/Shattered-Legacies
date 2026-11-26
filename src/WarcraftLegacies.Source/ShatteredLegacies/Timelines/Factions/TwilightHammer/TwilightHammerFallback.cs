@@ -22,6 +22,33 @@ internal static class TwilightHammerFallback
                                            + "anyone else: the Dragonmaw Clan rises there, sworn to whoever holds the port.";
   internal static List<unit> Port => _port!;
 
+  // 0.81.0 (maintainer): the ORCISH HORDE has its own route -- beaten by an Old God: Twilight (this path); by anyone
+  // else: the Zandalari Empire (Factions/Zandalari, "Rastakhan swears allegiance to the destroyers of the Horde").
+  // No Dragonmaw for the Horde any more (the Fel Horde keeps Twilight / Dragonmaw). Each destination is claimed
+  // (one faction each); when the wanted one is taken the other one is used.
+  internal static readonly ExclusivePath HordeRoute = new("Twillight or Zandalari", () => { }, RunHorde, StartX, StartY);
+  internal const string HordeOfferDescription = "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. "
+                                                + "Beaten by anyone else: King Rastakhan swears the Zandalari trolls "
+                                                + "to your conqueror -- you play them at Zuldazar.";
+
+  private static void RunHorde(player p, TurningPointDef def)
+  {
+    var conqueror = Dragonmaw.Conquerors.Of(def.Faction);
+    var oldGods = Dragonmaw.Conquerors.ByOldGods(def.Faction);
+    if (oldGods && Path.TryClaim())
+    {
+      RunTwilight(p);
+    }
+    else if (Zandalari.ZandalariFallback.Path.TryClaim())
+    {
+      Zandalari.ZandalariFallback.FromHorde(p, conqueror);
+    }
+    else if (Path.TryClaim())
+    {
+      RunTwilight(p); // the trolls are taken (Ahn'Qiraj): Twilight after all
+    }
+  }
+
   // Only these neutral buildings belong to the start. The portal, the capital and player holdings stay in play.
   private static readonly int[] PortBuildings =
   {

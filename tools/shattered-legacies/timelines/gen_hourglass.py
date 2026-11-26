@@ -54,9 +54,9 @@ TURNING_POINTS = [
      "BTNHeroWarden"),
     ("Exodar", "The Exodar", "RZd8", "RZc8", "Fallback: Draenei of Shattrath (placeholder)",
      "Placeholder until the draenei take Maiev's Watchers path.", "Exodar Regalis lost", "BTNHeroArchMage"),
-    ("OrcishHorde", "Orcish Horde", "RZd9", "RZc9", "Fallback: Twillight or Dragonmaw",
-     "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: the Dragonmaw Clan "
-     "rises at Dragonmaw Port with Nek'rosh Skullcrusher, sworn to whoever holds the port.", "Orgrimmar lost",
+    ("OrcishHorde", "Orcish Horde", "RZd9", "RZc9", "Fallback: Twillight or Zandalari",
+     "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: King Rastakhan swears "
+     "the Zandalari trolls to your conqueror -- you play them at Zuldazar, sworn to whoever holds it.", "Orgrimmar lost",
      "BTNChogall"),
     ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Skywall",
      "Claim the Lost City and Vortex Pinnacle as Skywall. Skywall cannot be defeated: it serves whoever holds the "

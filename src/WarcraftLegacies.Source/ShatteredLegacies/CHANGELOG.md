@@ -4,6 +4,24 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.81.0 — fallback pairings, research ids, lore texts
+
+Bot changes: `../Ai/CHANGELOG.md` 0.81.0 (ferries, Argus, hero revives).
+- **Orcish Horde -> Zandalari** (maintainer): beaten by an Old God -> Twilight as before; by anyone else -> the
+  Zandalari Empire at Zuldazar, first sworn to the conqueror ("King Rastakhan never bowed to Thrall's 'new' Horde ...
+  he swears the Zandalari to those who destroyed it"). No Dragonmaw for the Horde any more (the Fel Horde keeps
+  Twilight / Dragonmaw). Ahn'Qiraj keeps the Zandalari as its fallback too -- whoever falls first gets them; a
+  Horde that finds them taken becomes Twilight.
+- **Draenei get Exodar Regalis** (the CP, whoever holds it) on arrival.
+- **Kezan joins its conqueror** -- not on arrival (it stays in Kul Tiras' team), but when its CP falls to another team
+  later (`Conquest.Register(..., keepTeam)`).
+- **Stormwind -> Gilneas** announcement: "The last of its people seek shelter at the Greymane Wall. Moved by their
+  plight, King Genn Greymane is finally persuaded to open the gates -- Gilneas joins the war effort ..."
+- **"ResearchId should be named ..." warnings at the start** (WL 5's integrity check): WL 5 gave the research ids of
+  the Sentinels' "Gates of Ahn'Qiraj" (`R052`) and "Otherwordly Invaders" (`R007`) to its new quests "Break the Bluff"
+  and "Raze Orgrimmar"; the fork has all four. The two old quests have their own research again (`RZu1`, `RZu0`, WL
+  4.8.2's data) and also grant the shared one, so either quest still unlocks Moon Riders / Guild Rangers.
+
 ## 0.80.0 — Dragonmaw, Zandalari, Ebon Blade, Draenei fallbacks; Gilneas / Dalaran cleaned up
 
 Bot changes: `../Ai/CHANGELOG.md` 0.80.0. One patch on 0.77.0 carries 0.78.0-0.80.0.

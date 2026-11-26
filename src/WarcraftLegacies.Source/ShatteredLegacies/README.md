@@ -101,6 +101,8 @@ ShatteredLegacies/
 | `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade object limits (`[SL]` lines) | 0.80.0 |
 | `Setup/FactionChoiceDialogSetup.cs` | no Draenei pick: the Sentinels' slot plays the Sentinels | 0.80.0 |
 | `Factions/Draenei/DraeneiFaction.cs` | fallback mode (`asFallback`: no Darkshore quest, `RepairHull` for the fallback) | 0.80.0 |
+| `Factions/Dalaran/Mechanics/Waygate.cs` | `IsOperational` without a property pattern (CSharp.lua null crash) | 0.81.0 |
+| `Factions/Sentinels/Quests/QuestSentinelsKillCthun.cs`, `QuestSentinelsKillBlackEmpire.cs` | own research (`RZu1` / `RZu0`) + the shared one | 0.81.0 |
 | `MacroTools/Factions/Faction.cs` | `SetPlayerColor` (a successor keeps the player's colour, scoreboard included) | 0.53 |
 | `Objectives/TurnBased/ObjectiveExpire.cs` | `ExpirationOffset`: deadlines of a faction that arrives mid-game count from its arrival | 0.53 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | only living creeps count (a WL bug: corpses could never die again) -- could go upstream | 0.53 |

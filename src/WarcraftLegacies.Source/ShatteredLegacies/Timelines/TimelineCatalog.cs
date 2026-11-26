@@ -110,9 +110,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         HeroType = 0,                          // Genn Greymane leads them (GilneasFallback)
         Prepare = () => GilneasFallback.Prepare(),
         Run = (p, def) => GilneasFallback.Run(p, def),
-        Announcement = "|cffffcc00Stormwind has fallen.|r Its survivors find refuge behind the Greymane Wall. King Genn "
-                       + "Greymane opens the gates at last -- |cffffcc00Gilneas joins the war effort|r of the North "
-                       + "Alliance.",
+        Announcement = "|cffffcc00Stormwind has fallen.|r The last of its people seek shelter at the Greymane Wall. "
+                       + "Moved by their plight, King Genn Greymane is finally persuaded to open the gates -- "
+                       + "|cffffcc00Gilneas joins the war effort|r of the North Alliance.",
       },
       // superseded: Dwarven Expedition (name open) -- base near the Storm Peaks, frost dwarves, a quest at Ulduar (P5)
       new TurningPointDef("Ironforge", "Explorers' League (placeholder)", TurningPointKind.Fallback,
@@ -187,13 +187,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         X = -982f, Y = -29010f,                // Shattrath
         Announcement = "|cffffcc00The Exodar has fallen.|r Its people return to Outland -- the Naaru welcome them in Shattrath.",
       },
-      new TurningPointDef("Orcish Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)
+      // 0.81.0 (maintainer): Old God conqueror -> Twilight, anyone else -> the Zandalari (no Dragonmaw for the Horde)
+      new TurningPointDef("Orcish Horde", TurningPointKind.Fallback, TwilightHammerFallback.HordeRoute)
       {
         Trigger = "Orgrimmar is lost",
-        Description = TwilightHammerFallback.OfferDescription,
+        Description = TwilightHammerFallback.HordeOfferDescription,
         Decision = HourglassData.DecisionOrcishHorde, Condition = HourglassData.ConditionOrcishHorde,
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Its survivors gather at Dragonmaw Port.",
+        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r",
       },
       new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, SkywallFallback.Path)
       {

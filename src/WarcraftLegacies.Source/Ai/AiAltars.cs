@@ -159,6 +159,7 @@ namespace WarcraftLegacies.Source.Ai
       {
         return false;
       }
+      var owned = OwnedHeroTypes(p); // 0.81.0
       var cand = new List<int>();
       if (AiConfig.Heroes.ContainsKey(faction.Name))
       {
@@ -195,7 +196,7 @@ namespace WarcraftLegacies.Source.Ai
           continue; // v28: died permanently (e.g. Cenarius) -- WL would adopt a re-trained copy, so never train it
         }
 
-        if (p.GetPlayerData().GetObjectLimit(hid) <= 0 || AltarReserved(p, null, hid) || HaveHero(p, hid) || !SimpleBot.RequirementsMet(p, hid))
+        if (p.GetPlayerData().GetObjectLimit(hid) <= 0 || AltarReserved(p, null, hid) || HaveHero(p, hid, owned) || !SimpleBot.RequirementsMet(p, hid))
         {
           continue; // already alive, or still locked (quest not done)
         }
@@ -244,9 +245,10 @@ namespace WarcraftLegacies.Source.Ai
       {
         return;
       }
+      var owned = OwnedHeroTypes(p); // 0.81.0
       foreach (var type in AiConfig.Heroes[faction.Name])
       {
-        if (HaveHero(p, type) || SimpleBot.PermaDead.Contains(type))
+        if (HaveHero(p, type, owned) || SimpleBot.PermaDead.Contains(type))
         {
           continue;
         }
@@ -255,6 +257,63 @@ namespace WarcraftLegacies.Source.Ai
           : AltarCount[pid] == 0 ? "no altar" : "unlocked";
         lines.Add("  missing hero " + GetObjectName(type) + " " + why);
       }
+    }
+
+    // 0.81.0: hero types the player owns as UNITS, alive or dead (waiting for a revive) -- the fork's heroes (Twilight,
+    // Kezan, the Forsaken's apothecaries, Dragonmaw, Zandalari, Ebon Blade ...) are no legends: the legend check alone
+    // missed them, so the bot ordered a living or dead hero again and again ("WC3 refused", hundreds of times) and never
+    // revived a dead one.
+    private static HashSet<int> OwnedHeroTypes(player p)
+    {
+      var set = new HashSet<int>();
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (IsUnitType(u, UNIT_TYPE_HERO) && GetUnitTypeId(u) != 0)
+        {
+          set.Add(GetUnitTypeId(u));
+        }
+      }
+
+      DestroyGroup(g);
+      return set;
+    }
+
+    // a phase of the same hero counts (AiConfig.HeroFamilies: Sylvanas' three forms)
+    private static bool OwnsFamily(HashSet<int> owned, int heroType)
+    {
+      if (owned.Contains(heroType))
+      {
+        return true;
+      }
+
+      for (var f = 0; f < AiConfig.HeroFamilies.Count; f++)
+      {
+        var fam = AiConfig.HeroFamilies[f];
+        var member = false;
+        for (var i = 0; i < fam.Length; i++)
+        {
+          member = member || fam[i] == heroType;
+        }
+
+        for (var i = 0; member && i < fam.Length; i++)
+        {
+          if (owned.Contains(fam[i]))
+          {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    private static bool HaveHero(player p, int heroType, HashSet<int> owned)
+    {
+      return OwnsFamily(owned, heroType) || HaveHero(p, heroType);
     }
 
     private static bool HaveHero(player p, int heroType)
@@ -303,6 +362,49 @@ namespace WarcraftLegacies.Source.Ai
         }
         ReserveMissingFood(p, GetUnitTypeId(hero));
       }
+
+      // 0.81.0: dead heroes that are no legends (the fork's factions): revived the same way
+      var g = CreateGroup();
+      GroupEnumUnitsOfPlayer(g, p, null);
+      unit dead = null;
+      unit u;
+      while ((u = FirstOfGroup(g)) != null)
+      {
+        GroupRemoveUnit(g, u);
+        if (dead == null && IsUnitType(u, UNIT_TYPE_HERO) && GetUnitTypeId(u) != 0
+            && GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f && !IsLegend(u)
+            && GetUnitAbilityLevel(u, SimpleBot.PermaDiesMarker) == 0 && !SimpleBot.PermaDead.Contains(GetUnitTypeId(u))
+            && p.GetPlayerData().GetObjectLimit(GetUnitTypeId(u)) > 0 && !AltarReserved(p, null, GetUnitTypeId(u)))
+        {
+          dead = u;
+        }
+      }
+
+      DestroyGroup(g);
+      if (dead != null)
+      {
+        if (OrderHero(p, altar, GetUnitTypeId(dead), dead))
+        {
+          return true;
+        }
+
+        ReserveMissingFood(p, GetUnitTypeId(dead));
+      }
+
+      return false;
+    }
+
+    private static bool IsLegend(unit u)
+    {
+      var all = LegendaryHeroManager.GetAll();
+      for (var i = 0; i < all.Count; i++)
+      {
+        if (all[i].Unit == u)
+        {
+          return true;
+        }
+      }
+
       return false;
     }
   }

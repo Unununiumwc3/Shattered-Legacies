@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Twillight or Dragonmaw"
+      "Value": "Fallback: Twillight or Zandalari"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Twillight or Dragonmaw"
+      "Value": "Fallback: Twillight or Zandalari"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: the Dragonmaw Clan rises at Dragonmaw Port with Nek'rosh Skullcrusher, sworn to whoever holds the port."
+      "Value": "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: King Rastakhan swears the Zandalari trolls to your conqueror -- you play them at Zuldazar, sworn to whoever holds it."
     }
   ]
 }

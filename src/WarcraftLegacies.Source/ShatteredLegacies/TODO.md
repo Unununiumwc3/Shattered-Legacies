@@ -39,6 +39,11 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - **0.79.0 playtest**: snipe a bot's HQ -- after 5 s its far troops and its allies' appear beside it (text + ping,
   dump "recall"); a bot Kezan builds rigs and tankers (log "kezan oil bot"); Twilight owns Dragonmaw Port on arrival;
   Sylvanas (Dark Ranger / Queen) learns Dark Lady's Command at 6 and the bot casts it.
+- **0.81.0 playtest**: dump "ferries ... boarded N" > 0, "waygates (~30)"; the Legion leaves Argus; no "WC3 refused"
+  hundreds of times, dead fork heroes come back; no "ResearchId should be named" at the start; Horde beaten by a
+  non-Old-God -> Zandalari.
+- **Discussed 2026-11-26**: Twilight's place (Dragonmaw Port between the alliances and the Fel Horde); Undercity from
+  the 24p 1.18a (rect -28672,14176 .. -25728,17888 -- empty and unwalkable in this map) -- plan in the 0.81.0 reply.
 - **0.80.0 playtest**: Orgrimmar taken by a non-Old-God -> the Dragonmaw at Dragonmaw Port (by an Old God -> Twilight);
   Twilight with Cho'gall dead and Grim Batol not theirs -> the Dragonmaw (cult units hostile); C'Thun lost -> the
   Zandalari at Zuldazar; all three serve whoever holds their seat and cannot be defeated. Models: `git lfs checkout`.

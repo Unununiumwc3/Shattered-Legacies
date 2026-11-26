@@ -19,7 +19,9 @@ public sealed class QuestSentinelsKillBlackEmpire : QuestData
     @"ReplaceableTextures\CommandButtons\BTNNzothIcon.blp")
   {
     AddObjective(new ObjectiveLegendDead(AllLegends.BlackE.Nzoth));
-    ResearchId = UPGRADE_R007_QUEST_COMPLETED_OTHERWORDLY_INVADERS_SENTINELS;
+    // [SL] (0.81.0): its own research (RZu*, WL 4.8.2's data) -- WL 5.0.4 gave this id to "Raze Orgrimmar", and the fork keeps
+    // both quests: completing either one also grants the shared research the reward units require (OnComplete)
+    ResearchId = 1381659952;
 
   }
 
@@ -33,11 +35,13 @@ public sealed class QuestSentinelsKillBlackEmpire : QuestData
   protected override void OnComplete(Faction completingFaction)
   {
     completingFaction.Player.SetTechResearched(ResearchId, 1);
+    completingFaction.Player.SetTechResearched(UPGRADE_R007_QUEST_COMPLETED_OTHERWORDLY_INVADERS_SENTINELS, 1); // [SL] (0.81.0)
   }
 
   /// <inheritdoc/>
   protected override void OnAdd(Faction whichFaction)
   {
     whichFaction.ModObjectLimit(ResearchId, Faction.Unlimited);
+    whichFaction.ModObjectLimit(UPGRADE_R007_QUEST_COMPLETED_OTHERWORDLY_INVADERS_SENTINELS, Faction.Unlimited); // [SL] (0.81.0)
   }
 }

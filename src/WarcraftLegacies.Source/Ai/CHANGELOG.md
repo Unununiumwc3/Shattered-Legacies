@@ -5,6 +5,22 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.81.0 — ferries, Argus and the Dark Portal back; heroes revived
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.81.0.
+- **Ferries / Legion stuck on Argus** (maintainer, 0.80.0 dump: "ferries 8 links, boarded 0"; Legion "hold-nothing-
+  reachable"): the bots' portal rebuild (every 30 s) died as soon as Dalaran stood ONE Way Gate ("3:04 TICK ERROR in
+  route portals: attempt to index a nil value (local 'ref')"): WL 5's `Waygate.IsOperational` used a property pattern
+  that CSharp.lua compiles without the null check. Everything after it was skipped for the rest of the game: no ferry
+  edge (waygate edges 10 instead of ~31), no Legion teleporter edge (Argus cut off), no Dark Portal edge. Since 0.73.0.
+  Fixed in `Waygate.cs`, and `AiPortals.AddStatic` now runs each part on its own (ferries first); a failing part is
+  pinned once ("portal rebuild: <part> failed").
+- **Heroes that are no legends** (maintainer: "Legion was not rebuilding its hero ... many factions"): the altar logic
+  only knew WL's legends. The fork's heroes (Twilight, Kezan, Forsaken apothecaries, Dragonmaw, Zandalari, Ebon Blade,
+  Ashtongue ...) were ordered again while alive or dead ("WC3 refused" up to 600 times) and never revived. Now
+  `AiAltars` counts every hero unit the player owns (alive or dead) and revives dead non-legend heroes too; Sylvanas'
+  three forms count as one hero (`AiApi.RegisterHeroFamily`).
+
 ## 0.80.0 — bot data for the new factions
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.80.0. One patch on 0.77.0 carries 0.78.0-0.80.0.

@@ -20,7 +20,9 @@ public sealed class QuestSentinelsKillCthun : QuestData
     @"ReplaceableTextures\CommandButtons\BTNCthunIcon.blp")
   {
     AddObjective(new ObjectiveLegendDead(AllLegends.Ahnqiraj.Cthun));
-    ResearchId = UPGRADE_R052_QUEST_COMPLETED_GATES_OF_AHN_QIRAJ_SENTINELS;
+    // [SL] (0.81.0): its own research (RZu*, WL 4.8.2's data) -- WL 5.0.4 gave this id to "Break the Bluff", and the fork keeps
+    // both quests: completing either one also grants the shared research the reward units require (OnComplete)
+    ResearchId = 1381659953;
 
   }
 
@@ -36,11 +38,13 @@ public sealed class QuestSentinelsKillCthun : QuestData
   protected override void OnComplete(Faction completingFaction)
   {
     completingFaction.Player.SetTechResearched(ResearchId, 1);
+    completingFaction.Player.SetTechResearched(UPGRADE_R052_QUEST_COMPLETED_GATES_OF_AHN_QIRAJ_SENTINELS, 1); // [SL] (0.81.0)
 
   }
   /// <inheritdoc/>
   protected override void OnAdd(Faction whichFaction)
   {
     whichFaction.ModObjectLimit(ResearchId, Faction.Unlimited);
+    whichFaction.ModObjectLimit(UPGRADE_R052_QUEST_COMPLETED_GATES_OF_AHN_QIRAJ_SENTINELS, Faction.Unlimited); // [SL] (0.81.0)
   }
 }

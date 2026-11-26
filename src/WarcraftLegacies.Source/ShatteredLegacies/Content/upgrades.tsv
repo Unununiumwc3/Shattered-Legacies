@@ -348,7 +348,7 @@ RZd5	main	used	Fallback: Kezan Enterprise	(Hourglass of Fate)	Roch	demon	Replace
 RZd6	main	used	Fallback: Dream trees (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNKeeperOfTheGrove.blp	nZh0
 RZd7	main	used	Fallback: Chase Illidan to Outland	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	nZh0
 RZd8	main	used	Fallback: Draenei of Shattrath (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroArchMage.blp	nZh0
-RZd9	main	used	Fallback: Twillight or Dragonmaw	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
+RZd9	main	used	Fallback: Twillight or Zandalari	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
 RZdA	main	used	Fallback: Skywall	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdB	main	used	Fallback: Knights of the Ebon Blade	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
 RZdC	main	used	Fallback: Draenei	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBOSSVelen.blp	nZh0
@@ -419,6 +419,8 @@ RZt1	main	used	Halaa purified	(Condition)	Roch	demon	ReplaceableTextures\Command
 RZt2	main	used	Telredor purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZt3	main	used	Oshu'gun purified	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZt4	main	used	Karabor restored	(Condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZu0	main	used	Quest Completed: Otherwordly Invaders	(Sentinels)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
+RZu1	main	used	Quest Completed: Gates of Ahn'Qiraj	(Sentinels)	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZw0	main	used	Tier 4	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNFourthUgrade.blp	oZw2
 RZw1	main	used	Magi Adept Training	(twilight)	Rost	orc	ReplaceableTextures\CommandButtons\BTNShamanAdept.blp	oZw6
 RZw2	main	used	Herald Adept Training	(Scourge)	Rune	orc	ReplaceableTextures\CommandButtons\BTNNecromancerAdept.blp	oZw6

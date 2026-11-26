@@ -67,6 +67,9 @@ namespace WarcraftLegacies.Source.Ai
 
     // Hero types a faction's bot trains, best first. Replaces the list for that faction name (e.g. a faction
     // renamed by a fork).
+    // 0.81.0: phases of one hero (the bot never trains another phase while one lives or waits for a revive)
+    public static void RegisterHeroFamily(params int[] types) => AiConfig.HeroFamilies.Add(types);
+
     public static void RegisterHeroes(string factionName, List<int> heroTypes)
     {
       AiConfig.Heroes[factionName] = heroTypes;
