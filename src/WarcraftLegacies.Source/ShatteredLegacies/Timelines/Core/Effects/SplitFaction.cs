@@ -42,6 +42,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
       // factions first (so every unit that changes owner below lands with a faction): the successor on the player --
       // which takes the old faction off him (WL unapplies its limits / levels) -- then the old one on the free slot
       data.Faction = successor;
+      SwapFaction.NameSlot(p, successor); // 0.78.0 (maintainer: a bot's Forsaken units still said "Quel'thalas" on hover)
       if (team != null)
       {
         slot.GetPlayerData().SetTeam(team);

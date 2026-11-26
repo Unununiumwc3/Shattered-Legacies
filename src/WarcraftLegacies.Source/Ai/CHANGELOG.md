@@ -5,6 +5,42 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.80.0 — bot data for the new factions
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.80.0. One patch on 0.77.0 carries 0.78.0-0.80.0.
+- The Ebon Blade's heroes and Acherus (its HQ) registered; Acherus in the production data (it revives them).
+- The Dragonmaw Clan's and the Zandalari Empire's buildings in the bot's production / build data (`gen_ai_data.py`
+  SL_BUILDINGS, `gen_build_data.py`); their HQs (the HQ teleport's anchor) and heroes registered (`SlBotSetup`).
+
+## 0.79.0 — emergency HQ teleport
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.79.0. (0.78.0 was not applied by the maintainer: the patch on 0.77.0
+carries both.)
+- **Emergency HQ teleport** (`AiRecall`, maintainer): a bot's HQ (its registered headquarters -- the timelines' Hq
+  types; else its essential capitals; else its biggest town hall) is damaged and more than 5 enemy-player units stand
+  within 1500 of it -> the bot calls troops home: 1.5 x the attackers' food minus the defenders already there. Own
+  units first (farther than 3000, not fighting, not at sea / on a mission; heroes too), then every ALLIED bot gives
+  up to half of what it could send. 5 s warning (teleport effects on the units and the HQ, a minimap ping, a text to
+  every player: "<faction> calls its troops home to defend <HQ> -- <allies> send help"), then they stand beside the HQ,
+  attack-move onto it and stay out of the army logic (and the quest runner) for 45 s. Once per 3 min per bot -- as
+  the defender and, separately, as a helper. Bots with perks only. `-recall on|off`; dump line "recall (0.79.0)";
+  every call is pinned.
+- Twilight's HQ for it: Grim Batol, until then the Great Hall they arrive with (`SlBotSetup`).
+- Bot Sylvanas learns her skills now (`UZa1`-`UZa3` were missing from the hero skill table): `gen_ai_data.py`.
+- Dark Lady's Command (`AZs6`) is cast like the other Inspire Madness spells (`spell_rules.txt`, min worth 4).
+
+## 0.78.0 — gates really open; ferry check
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.78.0.
+- **Bots open their gates now** (maintainer: "bots don't open gates, they lock themselves in"): 0.77.0 sent the
+  orders 852156 / 852157 -- those are Unraven Form / Recharge, not the gates' Robo-Goblin morph -- so no gate ever
+  opened. Now `OrderIds.ORDER_UNROBOGOBLIN` (852657; the closed gate is the morph's alternate form) and, as a fallback,
+  `ORDER_ROBOGOBLIN` (852656). Checked every wave (15 s) instead of every 30 s.
+- "Rebuilding of Ahn'Qiraj" is gone (see the map changelog), and with it its early-quest entry.
+- **Ferries**: the code has not changed since 0.72.0, and the 0.72.0 dump showed them running (99 voyages in 35 min). The boats
+  are invisible in fog. The first voyage of a game is now pinned ("ferries: first voyage ..."), so a dump shows
+  whether they run. Possible blocker in 0.77.0: the Stormwind Harbour Gate stayed shut (gate orders above).
+
 ## 0.77.0 — gates stay; bots keep their gates open
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.77.0.

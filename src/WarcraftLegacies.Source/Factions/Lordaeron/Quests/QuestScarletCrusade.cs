@@ -76,6 +76,7 @@ public sealed class QuestScarletCrusade : QuestData
     if (completingFaction.Player != null)
     {
       completingFaction.Player.GetPlayerData().Faction = scarletCrusade;
+      ShatteredLegacies.Timelines.Core.Effects.SwapFaction.NameSlot(completingFaction.Player, scarletCrusade); // [SL] 0.78.0: a bot slot carries the new name
     }
     FactionManager.Register(scarletCrusade);
   }

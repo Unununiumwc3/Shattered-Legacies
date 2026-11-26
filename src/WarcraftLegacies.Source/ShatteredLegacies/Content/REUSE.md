@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1853 | 25 | 491 | 1045 | 391 | 59 | 284 |
-| abilities | 1706 | 44 | 709 | 490 | 243 | 235 | 276 |
-| upgrades | 497 | 0 | 147 | 133 | 72 | 31 | 15 |
-| items | 101 | 13 | 80 | 29 | 3 | 5 | 222 |
+| units | 1902 | 25 | 491 | 1045 | 391 | 59 | 284 |
+| abilities | 1733 | 44 | 709 | 490 | 243 | 235 | 276 |
+| upgrades | 509 | 0 | 147 | 133 | 72 | 31 | 15 |
+| items | 105 | 13 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
 
@@ -535,11 +535,11 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 |---|---|---|---|---|---|---|
 | `Nsjs` | Brewmaster (Warsong) | hero | stock | o020 |  | 24p only |
 | `H06Q` | Demigod (Warsong) | hero | stock | o040 |  | 24p only |
-| `O00Y` | Dragonmaw Chieftain (Fel Horde) | hero | 24p | o03C |  | 24p only |
-| `O01Q` | Dragonmaw Chieftain (Fel Horde) | hero | 24p | o03C |  | 24p only |
+| `O00Y` | Dragonmaw Chieftain (Fel Horde) | hero | main | o03C |  | 24p only |
+| `O01Q` | Dragonmaw Chieftain (Fel Horde) | hero | main | o03C |  | 24p only |
 | `Odrt` | Far Seer | hero | stock |  |  | 24p only |
 | `O04H` | Fire Ascendant (twilight) | hero | main | o03C |  | different |
-| `O026` | God King of the Zandalari Tribe (troll) | hero | 24p | o040 |  | 24p only |
+| `O026` | God King of the Zandalari Tribe (troll) | hero | main | o040 |  | 24p only |
 | `E01G` | Gronn Overlord (Gilneas) | hero | 24p |  |  | 24p only |
 | `Obla` | High Overlord of the Kor'kron (vassal) | hero | main | o020 |  | 24p only |
 | `O01P` | Leader of the Twilight's Hammer (Twilight Hammer) | hero | main | o03C |  | 24p only |
@@ -605,8 +605,8 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `o005` | Chaos Blademaster (Warsong - Bloodpact) | unit | stock | o02W |  | 24p only |
 | `o00P` | Chaos Grunt (Warsong-Bloodpact) | unit | stock | o02W |  | different |
 | `osw2` | Dire Wolf (Frostwolf-Thrall) | unit | stock |  |  | 24p only |
-| `e00Z` | Direhorn (troll) | unit | 24p | o044 |  | 24p only |
-| `o05M` | Dragon Rider (dragonmaw) | unit | 24p | o05J |  | 24p only |
+| `e00Z` | Direhorn (troll) | unit | main | o044 |  | 24p only |
+| `o05M` | Dragon Rider (dragonmaw) | unit | main | o05J |  | 24p only |
 | `n0CQ` | Dragon Whelp (Dragonmaw) | unit | stock | o05J |  | 24p only |
 | `o05K` | Dragonmaw Warrior (dragonmaw) | unit | main | o03D |  | different |
 | `h00C` | Drek'Thar (Frostwolf-Demi) | unit | stock | oalt |  | 24p only |

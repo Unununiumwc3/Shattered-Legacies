@@ -52,13 +52,18 @@ public sealed class AhnqirajFaction : Faction
     AhnqirajTraits.Setup();
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
     RegisterQuests();
+    // [SL] (0.78.0, maintainer): no "Rebuilding of Ahn'Qiraj" -- the Gates of Ahn'Qiraj belong to Ahn'Qiraj from the
+    // start (closed, attackable; a bot opens them, AiGates.KeepBotGatesOpen). PlayerSetup sets the player first.
+    if (Player != null)
+    {
+      _gateAhnQiraj.SetOwner(Player);
+    }
   }
 
   private void RegisterQuests()
   {
     var newQuest = AddQuest(new QuestTitanJailors(Regions.QirajInsideUnlock));
     StartingQuest = newQuest;
-    AddQuest(new QuestRebuildAhnqiraj(Regions.QirajOutsideUnlock, _gateAhnQiraj));
     AddQuest(new QuestSlitheringForward(Regions.QirajOutpost1, Regions.QirajOutpost2, Regions.QirajOutpost3));
     AddQuest(new QuestTanarisOutpost(Regions.QirajOutpost5));
     AddQuest(new QuestFeralas(Regions.AQFeralasUnlock));

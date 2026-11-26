@@ -1,0 +1,98 @@
+{
+  "OldId": "opeo",
+  "NewId": "oZxd",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Arlm,AZx1,Arep,AZx2"
+    },
+    {
+      "Id": "ubld",
+      "Value": 2
+    },
+    {
+      "Id": "ubui",
+      "Type": 3,
+      "Value": "oZx0,oZx3,oZx4,oZx5,oZx9,oZx8,oZx7,oZx6,oZxc,oZxb"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 8
+    },
+    {
+      "Id": "ugol",
+      "Value": 10
+    },
+    {
+      "Id": "ugor",
+      "Value": 7
+    },
+    {
+      "Id": "urtm",
+      "Value": 2
+    },
+    {
+      "Id": "umvs",
+      "Value": 180
+    },
+    {
+      "Id": "utyp",
+      "Type": 3,
+      "Value": "sapper,peon"
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "RZx4"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": " (Troll, Zandalari, Worker)"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.64
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Hard working, back breaking laborer.|n|cfff5962dAbilities:|r Repair, Gather|n|n|cffffcc00Attacks land units and trees."
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Gatherer"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\TrollGathererAlternateV2.mdl"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNIceTrollWitchDoctor.blp"
+    },
+    {
+      "Id": "usnd",
+      "Type": 3,
+      "Value": "IceTroll"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    }
+  ]
+}

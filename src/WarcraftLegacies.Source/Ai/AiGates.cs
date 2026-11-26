@@ -112,7 +112,7 @@ namespace WarcraftLegacies.Source.Ai
 
     internal static void KeepBotGatesOpen()
     {
-      if (AiGraph.RemoveGates || SimpleBot._clock - _lastOpen < 30f)
+      if (AiGraph.RemoveGates || SimpleBot._clock - _lastOpen < 14f) // 0.78.0: every wave (15 s)
       {
         return;
       }
@@ -152,7 +152,10 @@ namespace WarcraftLegacies.Source.Ai
           continue;
         }
 
-        if (IssueImmediateOrderById(g, 852156) || IssueImmediateOrderById(g, 852157)) // robogoblin / unrobogoblin
+        // 0.78.0: the real Robo-Goblin orders (0.77.0 sent 852156 / 852157 = unravenform / recharge: no gate ever
+        // opened). The closed gate is the morph's ALTERNATE form (Emeu), so "unrobogoblin" opens it.
+        if (IssueImmediateOrderById(g, MacroTools.Shared.OrderIds.ORDER_UNROBOGOBLIN)
+            || IssueImmediateOrderById(g, MacroTools.Shared.OrderIds.ORDER_ROBOGOBLIN))
         {
           GatesOpened++;
           SimpleBot.Log("gates: " + SimpleBot.FacName(GetOwningPlayer(g)) + " opens " + GetUnitName(g) + " at "
@@ -172,7 +175,7 @@ namespace WarcraftLegacies.Source.Ai
         }
       }
 
-      return "gates (0.77.0, removal " + (AiGraph.RemoveGates ? "ON" : "off") + "): " + I2S(_gates.Count) + " known, "
+      return "gates (0.78.0, removal " + (AiGraph.RemoveGates ? "ON" : "off") + "): " + I2S(_gates.Count) + " known, "
              + I2S(closed) + " closed now, opened by bots " + I2S(GatesOpened);
     }
 

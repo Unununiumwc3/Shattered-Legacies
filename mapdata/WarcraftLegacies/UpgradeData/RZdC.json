@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBOSSVelen.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Dreadlord Insurgents (not yet)"
+      "Value": "Fallback: Draenei"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Dreadlord Insurgents (not yet)"
+      "Value": "Fallback: Draenei"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: the dreadlords fight on from a hidden lair. Not in this version."
+      "Value": "The Legion beaten on Azeroth: the Exodar wakes on Azuremyst. You play the Draenei with Prophet Velen, sworn to whoever beat the Legion -- even an old enemy. The rest of the Legion is lost."
     }
   ]
 }

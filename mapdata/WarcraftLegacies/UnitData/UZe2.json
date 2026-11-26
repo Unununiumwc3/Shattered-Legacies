@@ -1,0 +1,94 @@
+{
+  "OldId": "Udea",
+  "NewId": "UZe2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Unholy Knight of the Ebon Blade"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Koltira Deathweaver"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AUcb,AUan,AUdp,AUls,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Ebon Blade)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroDeathKnight.blp"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Koltira Deathweaver"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Koltira Deathweaver"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Koltira Deathweaver"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "A blood elf ranger raised by the Scourge, now its bane. Unholy: Carrion Beetles, Animate Dead, Death Pact; ultimate Locust Swarm."
+    },
+    {
+      "Id": "uclr",
+      "Value": 140
+    },
+    {
+      "Id": "uclg",
+      "Value": 255
+    },
+    {
+      "Id": "uclb",
+      "Value": 140
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    }
+  ]
+}

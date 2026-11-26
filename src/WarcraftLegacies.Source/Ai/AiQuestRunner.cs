@@ -326,7 +326,7 @@ namespace WarcraftLegacies.Source.Ai
     private static bool Free(unit u, player p)
     {
       return u != null && GetUnitTypeId(u) != 0 && GetOwningPlayer(u) == p && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
-             && !IsUnitHidden(u) && !IsUnitLoaded(u) && GetUnitMoveSpeed(u) > 1f && !AiState.MissionUnits.Contains(u)
+             && !IsUnitHidden(u) && !IsUnitLoaded(u) && GetUnitMoveSpeed(u) > 1f && !AiState.MissionUnits.Contains(u) && !AiRecall.Holds(u)
              && u != SimpleBot._ragHero && !AiFerries.InTransit(u);
     }
 

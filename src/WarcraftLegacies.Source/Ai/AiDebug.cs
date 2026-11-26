@@ -103,6 +103,7 @@ public static class AiDebug
     RegisterLoose("-commit", AiRoutes.OnCommitCommand, Level.Control);    // 0.48.4: -commit on|off|ab|ab2
     RegisterLoose("-wake", AiWake.OnCommand, Level.Control);              // 0.48.5: -wake on|off (sleeping creeps)
     RegisterLoose("-ferry", AiFerries.OnCommand, Level.Control);          // 0.50: -ferry on|off (bot ferries)
+    RegisterLoose("-recall", AiRecall.OnCommand, Level.Control);          // 0.79.0: -recall on|off (HQ teleport)
     RegisterLoose("-spells", AiSpells.OnCommand, Level.Control);          // 0.70.0: -spells on|off|ab|ab2
     Register("-ogrift", OnOgRift, Level.Control);   // 0.37 (replaces -ogwave)
     Register("-gold0", () => SetGold(0), Level.Control);
@@ -953,6 +954,7 @@ public static class AiDebug
       AiWake.Lines(o);      // 0.48.5: sleeping creeps woken at the target
       AiRitual.Lines(o);    // 0.49: the Book of Medivh ritual (bot casters)
       AiFerries.Lines(o);   // 0.50: bot ferries
+      AiRecall.Lines(o);    // 0.79.0: emergency HQ teleport
       AiIncome.Lines(o);    // 0.44.2: CP income paid to computer slots
       AiLoad.Lines(o);      // 0.46: order latency, unit budget, guard positions A/B
       AiScheduler.Lines(o); // 0.40: scheduler, orders by distance, one line per task (by total ops)

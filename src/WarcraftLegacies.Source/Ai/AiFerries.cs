@@ -283,6 +283,13 @@ namespace WarcraftLegacies.Source.Ai
       v.Y = LaneY(v.Dir, 0);
       v.Point = 1;
       Voyages++;
+      if (Voyages == 1)
+      {
+        // 0.78.0: the maintainer saw no ferry in a game -- the first voyage is pinned (where, who, how many)
+        SimpleBot.LogPin("ferries: first voyage " + I2S(v.Dir) + " for " + SimpleBot.FacName(Player(v.Pid)) + ", "
+                         + I2S(v.Passengers.Count) + " aboard, from " + I2S(R2I(v.X)) + "," + I2S(R2I(v.Y)));
+      }
+
       var tx = LaneX(v.Dir, 1);
       var ty = LaneY(v.Dir, 1);
       v.Boat = CreateUnit(Player(v.Pid), FourCC(BoatType), v.X, v.Y, Atan2(ty - v.Y, tx - v.X) * 57.29578f);

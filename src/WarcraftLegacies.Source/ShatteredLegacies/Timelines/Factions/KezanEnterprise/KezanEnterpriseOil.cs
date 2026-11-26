@@ -274,7 +274,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnte
 
       if (!FindSeaSpot(fromX, fromY, out var x, out var y))
       {
-        var cost = GetUnitGoldCost(KezanEnterpriseObjects.OilRig);
+        // 0.79.0: a bot's rigs are free (KezanEnterpriseBot) -- no refund for them
+        var cost = AiApi.IsBot(Owner) && AiApi.HasPerks(Owner) ? 0 : GetUnitGoldCost(KezanEnterpriseObjects.OilRig);
         SetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(Owner, PLAYER_STATE_RESOURCE_GOLD) + cost);
         DisplayTimedTextToPlayer(Owner, 0, 0, 10, "|cffff6600Oil Rig:|r no free oil field near that Oil Supply -- "
                                                   + "the gold is refunded.");

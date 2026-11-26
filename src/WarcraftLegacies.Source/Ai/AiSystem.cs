@@ -1202,7 +1202,7 @@ namespace WarcraftLegacies.Source.Ai
           lmCount[slot]++;
           lmX[slot] += ux;
           lmY[slot] += uy;
-          if (u != _ragHero && !AiState.MissionUnits.Contains(u) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
+          if (u != _ragHero && !AiState.MissionUnits.Contains(u) && !AiRecall.Holds(u) && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f
               && GetUnitMoveSpeed(u) > 1f)
           {
             AiArmy.Units.Add(u); // 0.41: alive, can move, not on a mission
@@ -2939,7 +2939,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.77.0";
+    public const string Build = "0.80.0";
 
     public static void Setup()
     {
@@ -2952,6 +2952,7 @@ namespace WarcraftLegacies.Source.Ai
       AiStats.Setup();     // 0.38: count what bots train (dump section TRAINED)
       AiRitual.Setup();    // 0.49: the Book of Medivh ritual (bot casters, invulnerable while channelling)
       AiFerries.Setup();   // 0.50: bot ferries (replace the AI ship waygates)
+      AiRecall.Setup();    // 0.79.0: emergency HQ teleport (own troops + allied bots)
       AiHeroSkills.Setup(); // 0.38: bot heroes learn skills on level-up
       // 0.39.10: a fork's own content is set up from GameSetup.cs itself, never from here.
     }

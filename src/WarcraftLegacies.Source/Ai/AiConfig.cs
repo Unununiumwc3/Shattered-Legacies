@@ -157,7 +157,6 @@ public static class AiConfig
     // Old Gods early quests (Skywall / Black Empire / Ahn'qiraj) -- remove if they make the Old Gods too strong:
     new EarlyQuest("Desolace", 11),
     new EarlyQuest("Feralas", 11),
-    new EarlyQuest("Rebuilding of Ahn'Qiraj", 11),
     new EarlyQuest("Shimmering Flats", 11),
     new EarlyQuest("Slithering Forward", 11),
     new EarlyQuest("The Noxious Lair", 11),

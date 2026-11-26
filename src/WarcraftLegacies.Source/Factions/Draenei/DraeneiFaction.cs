@@ -15,10 +15,18 @@ namespace WarcraftLegacies.Source.Factions.Draenei;
 
 public sealed class DraeneiFaction : Faction
 {
+  // [SL] (0.80.0, maintainer): the Draenei are no pick of the Sentinels' slot any more but the LEGION's fallback
+  // (ShatteredLegacies/Timelines/Factions/Draenei/DraeneiFallback.cs) -- in that mode without Darkshore ("Rebuild
+  // Civilisation", the Sentinels' land) and with "A New Home" completed by the fallback (RepairHull).
+  private readonly bool _asFallback;
+
+  internal QuestRepairExodarHull? RepairHull { get; private set; }
+
   /// <inheritdoc />
-  public DraeneiFaction()
+  public DraeneiFaction(bool asFallback = false)
     : base("The Exodar", playercolor.Mint, @"ReplaceableTextures\CommandButtons\BTNBOSSVelen.blp")
   {
+    _asFallback = asFallback;
     TraditionalTeam = TeamSetup.NightElves;
     StartingGold = new StartingGold
     {
@@ -64,7 +72,11 @@ public sealed class DraeneiFaction : Faction
     var questRepairHull = new QuestRepairExodarHull(Regions.ExodarBaseUnlock, AllLegends.Draenei.LegendExodar);
     StartingQuest = questRepairHull;
     AddQuest(questRepairHull);
-    AddQuest(new QuestRebuildCivilisation(Regions.Darkshore));
+    RepairHull = questRepairHull; // [SL] (0.80.0)
+    if (!_asFallback) // [SL] (0.80.0): Darkshore is the Sentinels'
+    {
+      AddQuest(new QuestRebuildCivilisation(Regions.Darkshore));
+    }
     AddQuest(new QuestShipArgus(
       AllPreplacedWidgets.Units.GetClosest(UNIT_H03V_ENTRANCE_PORTAL, Regions.OutlandToArgus.Center),
       AllPreplacedWidgets.Units.GetClosest(UNIT_H03V_ENTRANCE_PORTAL, Regions.TempestKeepSpawn.Center),

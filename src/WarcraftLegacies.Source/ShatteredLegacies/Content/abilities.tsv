@@ -38,7 +38,7 @@ A00Z	main	used	Power of the Lich King	(Lich King spellbook)	Aspb	-	-	other	Repla
 A010	main	used	Mass Animate Dead	(Lich King)	ACad	-	-	undead	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	-
 A011	main	used	Thunder Crack (Armor Debuff Applicator)	-	ACav	-	-	human	ReplaceableTextures\CommandButtons\BTNHeroThunderclap.blp	-
 A012	main	used	Anti Portal Blocking	(Splipstream)	ANpi	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	h03V,n0D9
-A013	main	used	Devour Magic	(Anasterian)	ACde	yes	-	orc	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	H00Q
+A013	main	used	Devour Magic	(Anasterian)	ACde	yes	-	orc	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	H00Q,OZmg
 A014	main	used	Ice Fall	(lordaeron Mage)	ACbz	-	-	creeps	ReplaceableTextures\CommandButtons\BTNBlizzard.blp	nchp
 A015	main	used	A Close	(Vertical)	ANrg	-	-	creeps	ReplaceableTextures\CommandButtons\BTNUnload.blp	h005,h00B
 A017	main	used	Take Vengeance	(Sentinels - Maiev)	AEev	yes	-	nightelf	ReplaceableTextures\CommandButtons\PASReincarnationWarden.blp	Ewrd
@@ -60,7 +60,7 @@ A01U	main	unused	Earth Bind	(Warson-Stonemaul Bruiser)	AEer	-	-	orc	ReplaceableT
 A01V	main	used	Mass Ensnare	(Skywall Dummy)	Aens	-	-	orc	ReplaceableTextures\CommandButtons\BTNEnsnare.blp	-
 A01X	main	used	Heavy Armor	(Stormwind - Champion, Lordaeron - Paladin)	Assk	-	-	human	ReplaceableTextures\PassiveButtons\PASPlated Gauntlet2.blp	h00F,h05F,h061,h09Y
 A01Y	main	used	Inventory (Dummy Drop)	(ARTIFACT)	AInv	-	-	other	-	N00D,U02C,n00E,n03T,n03Y,nJTR
-A020	main	used	Charge!	(Several units)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNAbility_Warrior_Charge.blp	h00P,h018,h01B,h029,h02A,h02G,+60
+A020	main	used	Charge!	(Several units)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNAbility_Warrior_Charge.blp	h00P,h018,h01B,h029,h02A,h02G,+62
 A022	main	used	Howl of Terror	(Gargoyle)	Acht	-	-	undead	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	ugar
 A023	main	used	Anti Portal Blocking	(1000 range)	ANpi	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	n036,n08F
 A026	main	used	Flurry of Knives	(tess)	Absk	yes	-	orc	ReplaceableTextures\CommandButtons\BTNFlurryOfKnives.blp	TGGN
@@ -68,7 +68,7 @@ A027	main	used	Summon Grunts	(Frostwolf)	AOsf	-	-	orc	ReplaceableTextures\Comman
 A028	main	used	Moon Beam	(Scythe of Elune)	Ahwd	-	yes	other	ReplaceableTextures\CommandButtons\BTNMoonlight.blp	I00R
 A029	main	used	Summon Water Elemental	(Hydromancer)	AHwe	-	-	human	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	nhym
 A02A	main	used	Roar of the Worgen	(Genn)	Aroa	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNWolfRageRed.blp	Hhkl
-A02B	main	used	Rain of Meteors	(Warsong - Jergosh) (Kil'jaden)	ANrc	yes	-	undead	ReplaceableTextures\CommandButtons\BTNInfernalStone.blp	U004
+A02B	main	used	Rain of Meteors	(Warsong - Jergosh) (Kil'jaden)	ANrc	yes	-	undead	ReplaceableTextures\CommandButtons\BTNInfernalStone.blp	OZmg,U004
 A02C	main	used	Summon Fire Elemental	(Quel'Thalas-Sorceress)	AHwe	-	-	human	ReplaceableTextures\CommandButtons\BTNLavaSpawn.blp	hsor
 A02E	main	used	Dispel Magic	(Dark Green Clergyman)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	h00J
 A02F	main	used	Inner Fire	(Dark Green Clergyman)	Ainf	-	-	human	ReplaceableTextures\CommandButtons\BTNInnerFireOn.blp	h00J
@@ -84,7 +84,7 @@ A02X	main	used	Firebolt	(Felomern)	ACfb	-	yes	creeps	ReplaceableTextures\Command
 A02Y	main	used	War Plating	(Stormwind,  Lordaeron - Knights, Sent - Glaive)	Assk	-	-	human	ReplaceableTextures\CommandButtons\PASTenebriousArmor.blp	h054,h08V,h0CP,hZy2,hZy8,hkni,+1
 A030	main	used	Call Treants	(Sunfury)	AOsf	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNEnt.blp	n006
 A032	main	used	Arcane Bombardment	(orange antonidas) (Medivh)	ANcs	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSparkFlare.blp	E00F,E01D,Hant,U02V
-A033	main	used	Wise Council	(Kel'thuzad, Lady Vashj)	AImr	yes	-	human	ReplaceableTextures\CommandButtons\BTNScrollOfProtection.blp	H09M,HZy3,HZy9,Hvsh,Nalc,VH01
+A033	main	used	Wise Council	(Kel'thuzad, Lady Vashj)	AImr	yes	-	human	ReplaceableTextures\CommandButtons\BTNScrollOfProtection.blp	H09M,HZy3,HZy9,Hvsh,Nalc,OZxj,+1
 A034	main	used	Arcane Bombardment	(Ancient of the Arcane)	ANcs	-	-	creeps	ReplaceableTextures\CommandButtons\BTNStarfall.blp	n006
 A038	main	used	Cavalry Onslaught	(Purple - Garithos)	Arsp	yes	-	human	ReplaceableTextures\CommandButtons\BTNKnight.blp	Hlgr
 A039	main	used	Rejuvenation	(cthun)	ACrj	-	-	naga	ReplaceableTextures\CommandButtons\BTNRejuvenation.blp	n05V
@@ -138,7 +138,7 @@ A05C	main	used	Dispel Magic	(Brown - Druid of the Talon)	Adis	-	-	human	Replacea
 A05D	main	used	Multi Shot	(Sky Barge)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	n03L
 A05E	main	used	Holy Aura	(Purple - Arthas)	AUau	yes	-	human	ReplaceableTextures\CommandButtons\PASDivineClarity2.blp	H0A2,Harf,Hart
 A05G	main	used	Unholy Booster	(Sky Barge)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNFire_Siege.blp	n03L
-A05H	main	used	Slow Poison	(Pink - Troll Headhunter)	Aspo	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNSlowPoison.blp	nqb1,o00L,o04D,o05L,oZra,ohun
+A05H	main	used	Slow Poison	(Pink - Troll Headhunter)	Aspo	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNSlowPoison.blp	nqb1,o00L,o04D,o05L,oZmd,oZra,+2
 A05L	main	used	Persistent Soul	(Scourge - Revenant)	ACes	-	-	creeps	ReplaceableTextures\CommandButtons\PASSoulBinding.blp	n009
 A05M	main	used	Resurrection	(Paladin)	AHre	-	-	human	ReplaceableTextures\CommandButtons\BTNResurrection.blp	h00F
 A05N	main	used	Healing Blessing	(Healing Spire)	ANhs	-	-	human	ReplaceableTextures\CommandButtons\BTNHealingSpray.blp	n06Y
@@ -151,7 +151,7 @@ A05X	main	used	Thorns	(Druids - Treant)	AUts	-	-	nightelf	ReplaceableTextures\Pa
 A060	main	used	Splintering Arrows	(Quel'Thalas-Farstrider)	Afak	-	-	human	ReplaceableTextures\CommandButtons\BTNOrbOfDeathOn.blp	n00A
 A064	main	used	Bash	(Thane, Ogre Lord, Tauren Gladiator)	ACbh	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNBash.blp	h01L,n03F,n0CC,o06T
 A066	main	used	Hardened	(Rexxar, Zonozz)	Ansk	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	Orex,U00P,U02S,VSWS
-A069	main	used	Weighted Spear	(Pink - Wind Rider)	ACfb	-	-	orc	ReplaceableTextures\CommandButtons\BTNThoriumRanged.blp	o04J,oZwc
+A069	main	used	Weighted Spear	(Pink - Wind Rider)	ACfb	-	-	orc	ReplaceableTextures\CommandButtons\BTNThoriumRanged.blp	o04J,oZmf,oZwc
 A06B	main	used	Voidcaller Wings	(Fel Horde-Voidcaller)	AId1	-	-	orc	-	n03T,n088
 A06D	main	used	Ashbringer Glow	(Attachment)	AId1	-	yes	other	-	H01J
 A06E	main	used	Avatar	(Druids - Ursoc)	ANav	yes	-	other	ReplaceableTextures\CommandButtons\BTNAvatarOn.blp	E00A
@@ -161,7 +161,7 @@ A06L	main	used	Mana Shield	(Anasterian)	ANms	-	-	human	ReplaceableTextures\Comma
 A06N	main	used	Feedback	(Blue - Dread Lord)	Afbb	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNFeedBack.blp	u007
 A06P	main	used	Howl of Terror	(Dread Lord)	Acht	-	-	undead	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	n03T,n07Z
 A06S	main	used	Holy Nova	(Arthas, King Arthas)	AUfn	yes	-	human	ReplaceableTextures\CommandButtons\BTNScepterOfMastery.blp	E01I,H0A2,Harf,Hart
-A06U	main	used	Mind Confusion	(Blue - Tichondrius.)	ANsi	yes	-	undead	ReplaceableTextures\CommandButtons\BTNHellstalker.blp	HZy3,HZy9,U02B
+A06U	main	used	Mind Confusion	(Blue - Tichondrius.)	ANsi	yes	-	undead	ReplaceableTextures\CommandButtons\BTNHellstalker.blp	HZy3,HZy9,OZxi,U02B
 A06W	main	used	Permanent Immolation	(Infernal Level 3)	ANpi	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	n042
 A06X	main	used	Nether Strike	(Blue - Archimonde)	AHfs	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_BlackPlague.blp	Uwar
 A06Y	main	used	Mana Burn	Fel Stalker, Inquisitor, Magus	Ambb	-	-	undead	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	n04J,n059,n063,nfel,npfm
@@ -266,7 +266,7 @@ A0AX	main	used	Inner Fire	(scarlet)	Ainf	-	-	human	ReplaceableTextures\CommandBu
 A0B1	main	used	Spell Absorption	(dalaran golem)	Aegr	-	-	commoner	ReplaceableTextures\CommandButtons\BTNSpellResistance.blp	n096,n0AD
 A0B2	main	used	Devotion Aura	(Doom Guard, Kazzak, Ogre Lord	AHad	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNDevotion.blp	n03F,n04O,n05T
 A0B3	main	used	Devour Magic	(Brown - The Chosen One. Blue - Doom Guard,Kazzak)	Advm	-	-	undead	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	U02C,n04O,n05T
-A0B4	main	used	Bloodlust Totem	(Teal - Zuluhed)	AOsw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	-
+A0B4	main	used	Bloodlust Totem	(Teal - Zuluhed)	AOsw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNEntrapmentWard.blp	OZmh
 A0B8	main	used	Defend	(Khaz Modan-Defender)	Adef	-	-	human	ReplaceableTextures\CommandButtons\BTNDefend.blp	h018,h02A
 A0B9	main	used	Fel Infused Skeleton	(Fel Grunt)	ACes	-	-	orc	ReplaceableTextures\CommandButtons\PASSkeletalOrcGrunt.blp	nZr2,nchg
 A0BA	main	used	Mana Burn	(Dark Green Clergyman)	AEmb	-	-	human	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	h00J
@@ -316,7 +316,7 @@ A0CX	main	used	Rain of Light	(priestess)	AHfs	-	-	orc	ReplaceableTextures\Comman
 A0CY	main	used	Powered Up Ammunition	(Ironforge) (inner fire)	Ainf	-	-	human	ReplaceableTextures\CommandButtons\ATCExplosiveShot.blp	h001,h013,h01O,h05H,h07F,h07G
 A0CZ	main	used	Static Cloud	(Storm Cloud)	Apig	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	n03J
 A0D0	main	used	Ground Shackles	(Shadow Weaver)	Amls	-	-	human	ReplaceableTextures\CommandButtons\BTNArcaneShackles.blp	n05V
-A0D1	main	used	Magic Missile	(Arcanist)	Awfb	-	-	creeps	ReplaceableTextures\CommandButtons\BTNArcaneBolt.blp	h01I,h0CH,hZfa,n077,o04G
+A0D1	main	used	Magic Missile	(Arcanist)	Awfb	-	-	creeps	ReplaceableTextures\CommandButtons\BTNArcaneBolt.blp	h01I,h0CH,hZfa,n077,o04G,oZxg
 A0D2	main	used	Dispel Magic	(Dalaran-Arcanist)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	h01I
 A0D4	main	used	Ironforge Aura	(Ironforge)	ACac	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	h001
 A0D5	main	used	Keep Commander Aura	(Ironforge)	ACac	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	h056
@@ -413,7 +413,7 @@ A0GE	main	used	Cluster Rockets	(Kul'tiras - Bomber)	ANcs	-	-	creeps	ReplaceableT
 A0GF	main	used	Spell Shield	(Kirin Tor) (Functional)	ANss	-	-	other	ReplaceableTextures\CommandButtons\BTNSpellShieldAmulet.blp	I00K,n007,sl2O
 A0GH	main	used	Barrage	(Kul'tiras)	Aroc	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNScatterRockets.blp	h04W
 A0GI	main	used	Whirlpool	(Kul'tiras - Tidesage)	Ahwd	-	-	human	ReplaceableTextures\CommandButtons\BTNWhirlpool.blp	h05K
-A0GK	main	used	Hero Glow Origin	-	ACnr	-	-	creeps	ReplaceableTextures\CommandButtons\BTNHeal.blp	E002,E005,E00A,E01D,E01E,E023,+46
+A0GK	main	used	Hero Glow Origin	-	ACnr	-	-	creeps	ReplaceableTextures\CommandButtons\BTNHeal.blp	E002,E005,E00A,E01D,E01E,E023,+49
 A0GL	main	used	Scattershot	(Kul'tiras - Lady Ashvane - Dummy)	AHtb	-	-	human	ReplaceableTextures\CommandButtons\BTNImpactBolt.blp	-
 A0GM	main	used	For The Horde!	(Pink/Grey - Main Buildings)	ANsi	-	-	orc	ReplaceableTextures\CommandButtons\BTNOrcBattleStandard.blp	o004,o00J,o01B,o02D,o02R,o02S,+7
 A0GN	main	used	Ancestral Spirits	(Light Blue - Main Buildings)	AUls	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGhost.blp	e00J,e00M,n06O,n06P,n085
@@ -586,15 +586,15 @@ A0OK	main	used	Corrupt Blood	(Twilight Hammer)	ANdo	yes	-	naga	ReplaceableTextur
 A0OL	main	used	Rain of Fire	(twilight hammer)	ACrf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	n07X
 A0OM	main	used	Animate Dead	(Death Knight, Lich)	ACad	-	-	creeps	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	h00H,n09O,nZw3
 A0OO	main	used	Burning Vengeance	(twilight)	AEev	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	O04H,OZwi
-A0OP	main	used	Spawn Totem	(Troll)	Aspd	-	-	creeps	-	o04E
-A0OQ	main	used	Bone Totem	(Zandalar)	AOsw	-	-	naga	ReplaceableTextures\CommandButtons\BTNBigBadTotem.blp	o04E
+A0OP	main	used	Spawn Totem	(Troll)	Aspd	-	-	creeps	-	o04E,oZxh
+A0OQ	main	used	Bone Totem	(Zandalar)	AOsw	-	-	naga	ReplaceableTextures\CommandButtons\BTNBigBadTotem.blp	o04E,oZxh
 A0OR	main	used	Searing Arrows	(witch hunter)	ACsa	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNSearingArrowsOn.blp	n09B
 A0OS	main	used	Frost Nova	(Guardian)	ACfn	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGlacier.blp	U02C
-A0OU	main	used	Spawn Totem	(troll icon)	Ahri	-	-	human	ReplaceableTextures\CommandButtons\PASPortal2.blp	o04E
-A0OZ	main	used	Dispel Magic	(troll - Zandalar)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	o04G
+A0OU	main	used	Spawn Totem	(troll icon)	Ahri	-	-	human	ReplaceableTextures\CommandButtons\PASPortal2.blp	o04E,oZxh
+A0OZ	main	used	Dispel Magic	(troll - Zandalar)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	o04G,oZxg
 A0P0	main	used	Poisoned Spear	(Dark Green Spearman)	ACsa	-	-	human	ReplaceableTextures\CommandButtons\ATCPoisonedSpear.blp	h00A,hZr0,nbrg,nsln
-A0P1	main	used	Hex	(troll - Zandalar)	AChx	-	-	orc	ReplaceableTextures\CommandButtons\BTNHex.blp	o04F
-A0P3	main	used	Mana Burn	(troll - zandalar)	AEmb	-	-	human	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	o04G
+A0P1	main	used	Hex	(troll - Zandalar)	AChx	-	-	orc	ReplaceableTextures\CommandButtons\BTNHex.blp	o04F,oZxf
+A0P3	main	used	Mana Burn	(troll - zandalar)	AEmb	-	-	human	ReplaceableTextures\CommandButtons\BTNManaBurn.blp	o04G,oZxg
 A0P5	main	used	United for the Crusade	(Crusade 1)	ACac	-	-	naga	ReplaceableTextures\PassiveButtons\PASSacredStrike.blp	h08I
 A0P6	main	used	United for the Crusade	(Crusade 2)	ACac	-	-	naga	ReplaceableTextures\PassiveButtons\PASSacredStrike.blp	h09P,hZrf
 A0P7	main	used	Soul Burn	(Teal - Nether Drake, Ember Cleric)	ANso	-	-	orc	ReplaceableTextures\CommandButtons\BTNSoulBurn.blp	n09A
@@ -690,7 +690,7 @@ A0TL	main	used	Summon Earth Elemental	(Draenei)	AHwe	-	-	human	ReplaceableTextur
 A0TO	main	used	Summon Garrison	(Kul Tiras)	AOsf	-	-	human	ReplaceableTextures\CommandButtons\BTNCallToArms.blp	h046,h06I
 A0TP	main	used	Shadow Assault	(Akama)	ANab	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_GatherShadows.blp	Naka
 A0TQ	main	used	Piercing Arrow	(Sentinels - Shandris)	ACcv	yes	-	other	ReplaceableTextures\CommandButtons\BTNVorpalBlades.blp	E002
-A0TR	main	used	Soul Voodoo	(zandalar)	AOvd	-	-	orc	ReplaceableTextures\CommandButtons\BTNLifeBurn.blp	o04E
+A0TR	main	used	Soul Voodoo	(zandalar)	AOvd	-	-	orc	ReplaceableTextures\CommandButtons\BTNLifeBurn.blp	o04E,oZxh
 A0TS	main	used	Bouncing Attack	(Totem)	Amgl	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNUpgradeMoonGlaive.blp	o04T
 A0TU	main	used	Devour	(Black Drake)	Adev	-	-	orc	ReplaceableTextures\CommandButtons\BTNDevour.blp	nbdk
 A0TV	main	used	Feedback	(Green Akama)	Afbt	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNFeedBack.blp	Naka
@@ -701,7 +701,7 @@ A0TZ	main	used	Voodoo Restoration	(Vol'jin)	AEim	yes	-	orc	ReplaceableTextures\C
 A0U0	main	used	Master of Nature	(Brown Cenarius)	Aspb	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNStag.blp	E00H,Ecen
 A0U3	main	used	Summon the Furbolg Elder Shamans	(Brown Cenarius)	ANsw	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNFurbolgShaman.blp	-
 A0U4	main	unused	Wild Throw	(Grey - Rexxar)	AHtb	yes	-	human	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpThree.blp	-
-A0U6	main	used	Stasis Trap	(troll Zandalar)	Asta	-	-	orc	ReplaceableTextures\CommandButtons\BTNStasisTrap.blp	o04F
+A0U6	main	used	Stasis Trap	(troll Zandalar)	Asta	-	-	orc	ReplaceableTextures\CommandButtons\BTNStasisTrap.blp	o04F,oZxf
 A0U7	main	used	Soul Capture	(Item Soul Gem)	ACfb	-	yes	commoner	ReplaceableTextures\CommandButtons\BTNSoulGem.blp	gsou
 A0U9	main	used	Item Damage Bonus	(+80)	AItx	-	yes	other	ReplaceableTextures\CommandButtons\BTNClawsOfAttack.blp	I016
 A0UB	main	used	Portal to Northrend	(Legion)	ANcl	-	-	orc	ReplaceableTextures\CommandButtons\BTNWarpPortalRed.blp	n0BE
@@ -761,7 +761,7 @@ A0X6	main	used	Forked Lightning	(Lady Naz'jar, Naga)	ANfl	yes	-	creeps	Replaceab
 A0X9	main	used	Searing Bite	(Core Hound, Yellow)	AIcb	-	-	human	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	n0CG,nZr9
 A0XA	main	used	Enrage	(Self Cast - Yellow, Core Hound)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	n0CG,nZr9
 A0XG	main	used	Spiked Carapace	(Colossus)	AUts	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNThornShield.blp	o000
-A0XK	main	used	Poison Spears	(Assasins)	ACvs	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNEnvenomedSpear.blp	h05D
+A0XK	main	used	Poison Spears	(Assasins)	ACvs	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNEnvenomedSpear.blp	h05D,hZx1
 A0XL	main	used	Life Drain	(forsaken)	ACdr	-	-	undead	ReplaceableTextures\CommandButtons\BTNLifeDrain.blp	n02F,n0E3,nZf3
 A0XM	main	used	Frenzy	(Self Cast - Warsong)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\ATCOrcFrenzy.blp	o00P,o00S,o06R,o072,o073
 A0XN	main	used	Incinerate	(Lor'themar)	ANic	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNIncinerate.blp	H02E
@@ -1074,7 +1074,7 @@ ACr2	main	used	Rejuvenation	(Seer)	ACr2	-	-	creeps	ReplaceableTextures\CommandBu
 ACrd	main	used	Call Voidwalker	(Pink - Stormreaver Warlock)	ACrd	-	-	creeps	ReplaceableTextures\CommandButtons\BTNVoidWalker.blp	nhhr,nrvd
 ACrf	main	used	Rain of Fire	(Doom Guard)	ACrf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	n00R,nbal
 ACrg	main	used	Rain of Fire	(Spellbook)	ACrg	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	-
-ACrk	main	used	Resistant Skin	(1/1 position)	ACrk	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNThickFur.blp	N00D,UZwx,bHN1,e01A,e022,eZrj,+68
+ACrk	main	used	Resistant Skin	(1/1 position)	ACrk	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNThickFur.blp	N00D,UZwx,bHN1,e01A,e022,eZrj,+69
 ACrn	main	used	Reincarnation	(Neutral Hostile) (demi)	ACrn	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNReincarnation.blp	nwna
 ACro	main	used	Roar	(Feral Wolf/Misha)	ACro	-	-	creeps	ReplaceableTextures\CommandButtons\BTNBattleRoar.blp	n08K,ngz4,nwwd
 ACsa	main	used	Searing Arrows	(Neutral hostile - Priestess of the Moon)	ACsa	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSearingArrowsOn.blp	ncim,nskf,otci
@@ -1129,7 +1129,7 @@ AFTI	main	used	Vampiric Attack	(CthunRewardIcon)	ACvp	-	-	creeps	ReplaceableText
 AGAB	main	used	Guardian's Abjuration	(Pink - Vol'Jin)	AOvd	-	yes	orc	ReplaceableTextures\CommandButtons\BTNBigBadVoodooSpell.blp	I006
 AGOP	main	used	Aegis of Protection	(Exodar)	Aroa	-	-	nightelf	ReplaceableTextures/CommandButtons/BTNMagocracy.blp	h09U
 AGYN	main	used	Tranquility	(val'anyr)	AEtq	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNTranquility.blp	-
-AHab	main	used	Brilliance Aura	(Zuluhed-Jaina-Malfurion-Vol'Jin-Jergosh)	AHab	yes	-	human	ReplaceableTextures\PassiveButtons\PASBTNBrilliance.blp	E01J,Efur,H03G,H04F,H08Q,HZw0,+7
+AHab	main	used	Brilliance Aura	(Zuluhed-Jaina-Malfurion-Vol'Jin-Jergosh)	AHab	yes	-	human	ReplaceableTextures\PassiveButtons\PASBTNBrilliance.blp	E01J,Efur,H03G,H04F,H08Q,HZw0,+8
 AHad	main	used	Devotion Aura	(Lordaeron-Uther-Overseer Idra'kess)	AHad	yes	-	human	ReplaceableTextures\PassiveButtons\PASBTNDevotion.blp	H08G,H09S,HZy4,HZya,Hpb2,Huth,+1
 AHbz	main	used	Blizzard	(Dalaran-Jaina)	AHbz	yes	-	human	ReplaceableTextures\CommandButtons\BTNBlizzard.blp	Hjai,U01S,UZw2
 AHfs	main	used	Flame Strike	(Scarlet)	AHfs	yes	-	human	ReplaceableTextures\CommandButtons\BTNWallOfFire.blp	H00Y
@@ -1138,7 +1138,7 @@ AHmt	main	used	Mass Teleport	(Jaina)	AHmt	yes	-	human	ReplaceableTextures\Comman
 AHpx	main	used	Ashes of Al'ar	(Quel'Thalas-Anasterian-Kael'thas)	AHpx	yes	-	human	ReplaceableTextures\CommandButtons\BTNMarkOfFire.blp	-
 AHre	main	used	Resurrection	(Stormwind - Bolvar)	AHre	yes	-	human	ReplaceableTextures\CommandButtons\BTNResurrection.blp	E01I,H08G,HZy4,HZya
 AHta	main	used	Reveal	(Human Towers)	AHta	-	-	human	ReplaceableTextures\CommandButtons\BTNReveal.blp	n03G,zb01
-AHtb	main	used	Storm Bolt	(Magni)	AHtb	yes	-	human	ReplaceableTextures\CommandButtons\BTNStormBolt.blp	H09S,Hlgr
+AHtb	main	used	Storm Bolt	(Magni)	AHtb	yes	-	human	ReplaceableTextures\CommandButtons\BTNStormBolt.blp	H09S,Hlgr,UZe4
 AIan	main	unused	Item Animate Dead	-	AIan	-	yes	other	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	sand
 AIbd	main	used	Blue Drake Summon	-	AIbd	-	yes	other	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	fgbd
 AIcb	main	used	Item Attack Corruption Bonus	-	AIcb	-	yes	other	ReplaceableTextures\CommandButtons\BTNOrbOfCorruption.blp	ocor
@@ -1177,7 +1177,7 @@ ANMC	main	used	Mind Confusion	(nzoth)	ANsi	-	-	naga	ReplaceableTextures\CommandB
 ANSL	main	used	Sleep	(Nzoth)	AUsl	yes	-	undead	ReplaceableTextures\CommandButtons\BTNSleep.blp	U01Z
 ANST	main	used	Spawn Tentacle	(Nzoth)	ACtn	yes	-	naga	ReplaceableTextures\CommandButtons\BTNTentacle.blp	U01Z
 ANav	main	used	Battle Trance	(Grom, Saurfang)	ANav	yes	-	other	ReplaceableTextures\CommandButtons\BTNHellscreamBerserk.blp	N00D
-ANbf	main	used	Blast of Fire	(Twilight)	ANbf	yes	-	orc	ReplaceableTextures\CommandButtons\BTNFire.blp	O04H,OZwi
+ANbf	main	used	Blast of Fire	(Twilight)	ANbf	yes	-	orc	ReplaceableTextures\CommandButtons\BTNFire.blp	O04H,OZwi,OZxi
 ANbh	main	used	Bash	(Purple Veteran Paladin - Royal Guard -Fandral)	ANbh	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNBash.blp	Hhkl,hwt3,n08K,ngnb,ngnv,ngz2,+1
 ANbl	main	used	Blink	(Light Blue - Shadowleaf Sentinel, DG- SI:7)	ANbl	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNBlink.blp	n06E
 ANcs	main	used	Cluster Rockets	-	ANcs	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNClusterRockets.blp	NZk3,Nrob,Ntin
@@ -1200,17 +1200,17 @@ ANsg	main	used	Tornado	(Al'Akir)	ANsg	yes	-	creeps	ReplaceableTextures\CommandBu
 ANsy	main	used	Pocket Factory	-	ANsy	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNPocketFactory.blp	NZk3,Nrob,Ntin
 ANtr	main	used	Troll Regeneration	(Orcish Horde)	ANtr	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNRegenerate.blp	n08E,nftk,o071,odoc,ohun,otbk,+1
 ANwk	main	used	Wind Walk	(Sentinels)	ANwk	-	-	creeps	ReplaceableTextures\CommandButtons\BTNWindWalkOn.blp	eZrk
-AOae	main	used	Endurance Aura	(Unused?)	AOae	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCommand.blp	E00A,Ocbh,Otch
-AOcl	main	used	Chain Lightning	(Ertan)	AOcl	yes	-	orc	ReplaceableTextures\CommandButtons\BTNChainLightning.blp	E023
-AOcr	main	used	Critical Strike	(Lucille)	AOcr	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCriticalStrike.blp	E016,O005
+AOae	main	used	Endurance Aura	(Unused?)	AOae	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCommand.blp	E00A,Ocbh,Otch,UZe4
+AOcl	main	used	Chain Lightning	(Ertan)	AOcl	yes	-	orc	ReplaceableTextures\CommandButtons\BTNChainLightning.blp	E023,OZxj
+AOcr	main	used	Critical Strike	(Lucille)	AOcr	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCriticalStrike.blp	E016,O005,UZe3
 AOmi	main	used	Mirror Image	(Rend)	AOmi	yes	-	orc	ReplaceableTextures\CommandButtons\BTNMirrorImage.blp	Nbbc
 AOr2	main	used	Endurance Aura	(Teal - Rend) (Nazgrim)	AOr2	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCommand.blp	Nbbc,O06M
 AOr3	main	used	Reincarnation	(Cairne)	AOr3	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNReincarnation.blp	Ocbh
 AOre	main	used	Reincarnation	(Saurfang)	AOre	yes	-	orc	ReplaceableTextures\PassiveButtons\PASBTNReincarnation.blp	E01E,Otch
-AOsh	main	used	Shockwave	-	AOsh	yes	-	orc	ReplaceableTextures\CommandButtons\BTNShockWave.blp	Otch
+AOsh	main	used	Shockwave	-	AOsh	yes	-	orc	ReplaceableTextures\CommandButtons\BTNShockWave.blp	Otch,UZe3
 AOvd	main	used	Big Bad Voodoo	(Pink - Vol'Jin)	AOvd	yes	-	orc	ReplaceableTextures\CommandButtons\BTNBigBadVoodooSpell.blp	Orkn
 AOws	main	used	War Stomp	UNUSED	AOws	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWarStomp.blp	Otch
-AOww	main	used	Bladestorm	(Teal - Rend. Grey - Grom)	AOww	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWhirlwind.blp	Nbbc,O06M,Ogrh,Opgh
+AOww	main	used	Bladestorm	(Teal - Rend. Grey - Grom)	AOww	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWhirlwind.blp	Nbbc,O06M,Ogrh,Opgh,UZe3
 APL2	main	used	Web	(Reaver)	ACen	-	-	undead	ReplaceableTextures\CommandButtons\BTNWeb.blp	o00L,oZra
 ASWB	main	used	Summon Swarm Beetle	(cthun)	ACsf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSwarmScarab.blp	n06I
 AT01	main	used	War Drums	(Tauren Tribes)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	okod
@@ -1223,17 +1223,17 @@ AT11	main	used	Stun Unit	(Tauren Tribes)	ANsb	-	-	creeps	ReplaceableTextures\Com
 AT12	main	used	Cleaving Attack	(Tauren Tribes)	ANca	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNCleavingAttack.blp	vP51
 AT13	main	used	Spirit Link	(Tauren Tribes)	Aspp	-	yes	orc	ReplaceableTextures\CommandButtons\BTNSpiritLink.blp	ospw
 AT14	main	used	Mass Bloodlust	(Tauren Tribes)	ANsi	-	-	orc	ReplaceableTextures\CommandButtons\btnmassbloodlust.blp	okod
-AUan	main	used	Animate Dead	(Kel'thuzad)	AUan	yes	-	undead	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	U001,U00M,Uktl,o06Y
+AUan	main	used	Animate Dead	(Kel'thuzad)	AUan	yes	-	undead	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	OZmg,U001,U00M,UZe2,Uktl,o06Y
 AUau	main	used	Invigoration	(Stormwind Cathedral DUMMY)	AUau	-	-	human	ReplaceableTextures\CommandButtons\PASLight.blp	h02R
-AUav	main	used	Vampiric Aura	(Blue - Tichondrius)	AUav	yes	-	undead	ReplaceableTextures\PassiveButtons\PASBTNVampiricAura.blp	Utic
-AUcb	main	used	Carrion Beetles	(Red - Anub'Arak)	AUcb	yes	-	undead	ReplaceableTextures\CommandButtons\BTNCarrionScarabsOn.blp	E005,Uanb
+AUav	main	used	Vampiric Aura	(Blue - Tichondrius)	AUav	yes	-	undead	ReplaceableTextures\PassiveButtons\PASBTNVampiricAura.blp	UZe3,Utic
+AUcb	main	used	Carrion Beetles	(Red - Anub'Arak)	AUcb	yes	-	undead	ReplaceableTextures\CommandButtons\BTNCarrionScarabsOn.blp	E005,UZe2,Uanb
 AUcs	main	used	Carrion Swarm	(Blue - Mal'Ganis/Detheroc)	AUcs	yes	-	undead	ReplaceableTextures\CommandButtons\BTNCarrionSwarm.blp	Umal
-AUdc	main	used	Death Coil	(Red - Baron Rivendare)	AUdc	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathCoil.blp	U00A
-AUdd	main	used	Death And Decay	(Kel'thuzad)	AUdd	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathAndDecay.blp	U001,U00M,Uktl
-AUfn	main	used	Frost Nova	(Red - Lich Kel'Thuzad)	AUfn	yes	-	undead	ReplaceableTextures\CommandButtons\BTNGlacier.blp	U001,U00M,Uktl
+AUdc	main	used	Death Coil	(Red - Baron Rivendare)	AUdc	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathCoil.blp	U00A,UZe1
+AUdd	main	used	Death And Decay	(Kel'thuzad)	AUdd	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathAndDecay.blp	U001,U00M,UZe1,Uktl
+AUfn	main	used	Frost Nova	(Red - Lich Kel'Thuzad)	AUfn	yes	-	undead	ReplaceableTextures\CommandButtons\BTNGlacier.blp	U001,U00M,UZe1,Uktl
 AUim	main	used	Impale	(Red - Anub'Arak)	AUim	yes	-	undead	ReplaceableTextures\CommandButtons\BTNImpale.blp	U02S,Uanb,o06W
 AUin	main	used	Rain of Chaos' Inferno	(Legion-Archimonde)	AUin	yes	-	undead	ReplaceableTextures\CommandButtons\BTNInfernal.blp	-
-AUls	main	used	Locust Swarm	(Red - Anub'Arak)	AUls	yes	-	undead	ReplaceableTextures\CommandButtons\BTNLocustSwarm.blp	Uanb
+AUls	main	used	Locust Swarm	(Red - Anub'Arak)	AUls	yes	-	undead	ReplaceableTextures\CommandButtons\BTNLocustSwarm.blp	OZxj,UZe2,Uanb
 AUts	main	used	Spiked Carapace	(Scourge - Anub'Arak)	AUts	yes	-	undead	ReplaceableTextures\PassiveButtons\PASBTNThornShield.blp	Uanb
 AVYG	main	used	Mass Haste	(val'anyr)	AIsa	-	-	human	ReplaceableTextures/CommandButtons/BTNDruidSpeed.blp	-
 AXK1	main	used	VoidBoltDummy	(x'korr Dummy spell)	AEfk	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNFanOfKnives.blp	-
@@ -1324,6 +1324,19 @@ AZkw	main	used	Robo-Goblin	(level 4)	ANrg	yes	-	creeps	ReplaceableTextures\Comma
 AZkx	main	used	Acid Bomb	(Alchemist)	ANab	-	-	undead	ReplaceableTextures\CommandButtons\BTNAcidBomb.blp	oZkg
 AZky	main	used	Dispel Magic	(Goblin)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	oZkg
 AZkz	main	used	Gunner Pilot	(Goblin Shredder	Assp	-	-	creeps	-	nZk1
+AZm0	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	oZm0,oZm1,oZm2
+AZm1	main	used	Structure Spiked Barricade	(Horde)	AUts	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSpikedBarricades.blp	oZma
+AZm2	main	used	Harvest	(Yellow/Red/DG/Purple/Orange/Pink/Grey/Blue Workers)	Ahar	-	-	other	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	oZmb
+AZm3	main	used	Self Destruct	-	AIha	-	-	other	ReplaceableTextures\CommandButtons\BTNSelf_Destruct.blp	oZmb
+AZm4	main	used	Self-Bloodlust	(Self Cast - Warsong)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	-
+AZm5	main	used	Incinerate	(Black Drake)	ANia	-	-	orc	ReplaceableTextures\CommandButtons\BTNIncinerateOn.blp	-
+AZm6	main	used	Breath of Fire	(Dragonmaw)	ACbc	-	-	orc	ReplaceableTextures\CommandButtons\BTNFireForTheCannon.blp	nZm1
+AZm7	main	used	Breath of Life	(Red Dragon)	AChv	-	-	orc	-	nZm1
+AZm8	main	used	Shadow Ball	(Nek'rosh)	ANsb	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNOrbOfDarkness.blp	OZmg
+AZm9	main	used	Summon Cultist	-	AHwe	-	yes	human	ReplaceableTextures\CommandButtons\BTNPeon.blp	IZm0
+AZma	main	used	Seed Growth	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNNightElfBuild.blp	IZm1
+AZmb	main	used	Lesser Clarity Potion	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNLesserClarityPotion.blp	-
+AZmc	main	used	Ascendance	(Teal - Zuluhed)	AEme	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	OZmh
 AZo0	main	used	Frenzy	(Orcish Horde)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\ATCOrcFrenzy.blp	n03F,o00G,ogru,orai
 AZo1	main	used	Teleport	(Sea Witch)	ANcl	-	-	other	ReplaceableTextures\CommandButtons\BTNTeleport.blp	o079
 AZq0	main	used	Detonate	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNGoblinSapper.blp	uZk0
@@ -1333,6 +1346,7 @@ AZs2	main	used	Anti-magic Shell	(Forsaken - Sylvanas)	Aam2	yes	-	undead	Replacea
 AZs3	main	used	Banshee Wail	(Forsaken - Sylvanas)	ANht	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNHowlOfTerror.blp	UZa1,UZa3
 AZs4	main	used	Ghostform	(Forsaken - Sylvanas)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNEtherealFormOn.blp	UZa1,UZa3
 AZs5	main	used	Multi Shot	(Forsaken - Sylvanas)	Aroc	yes	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	UZa2
+AZs6	main	used	Dark Lady's Command	(Forsaken - Sylvanas)	ANcl	yes	-	undead	ReplaceableTextures\CommandButtons\BTNPossession.blp	UZa2,UZa3
 AZt0	main	used	Purify	-	Afae	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNSpell_Holy_Renew.blp	HZy4,HZya
 AZw0	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	oZw0,oZw1,oZw2
 AZw1	main	used	Structure Spiked Barricade	(Horde)	AUts	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSpikedBarricades.blp	oZwb
@@ -1360,6 +1374,19 @@ AZwm	main	used	Devour Magic	(Twilight)	Advm	-	-	orc	ReplaceableTextures\CommandB
 AZwn	main	used	Thunder Fists	(Cho'gall - DUMMY CAST)	ANfl	-	-	orc	ReplaceableTextures\CommandButtons\BTNMonsoon.blp	-
 AZwo	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3
 AZwp	main	used	Command Aura	(Kargath, Garithos)	ACac	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	UZwx
+AZx0	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	oZx0,oZx1,oZx2
+AZx1	main	used	Harvest	(Yellow/Red/DG/Purple/Orange/Pink/Grey/Blue Workers)	Ahar	-	-	other	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	oZxd
+AZx2	main	used	Self Destruct	-	AIha	-	-	other	ReplaceableTextures\CommandButtons\BTNSelf_Destruct.blp	oZxd
+AZx3	main	used	Troll Regeneration	(Troll)	Aotr	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNRegenerate.blp	hZx1
+AZx4	main	used	AAASpell Resistance	(ranged primary elites and others)	Aegr	-	-	commoner	ReplaceableTextures\CommandButtons\BTNSpellResistance.blp	oZxh
+AZx5	main	used	Hardened Skin	(Brown - Mountain Giant)	Assk	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	eZx0
+AZx6	main	used	Toughness	(Grey - Rexxar)	Ansk	yes	-	human	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	OZxi
+AZx7	main	used	Plague of Frogs	(Troll )	ANst	yes	-	orc	ReplaceableTextures\CommandButtons\BTNHex.blp	OZxi
+AZx8	main	used	Dark Grip	(Teal - Kargath)	Amls	yes	-	orc	ReplaceableTextures\CommandButtons\BTNAdvancedUnholyStrength.blp	OZxj
+AZx9	main	used	Summon Gatherer	-	AHwe	-	yes	human	ReplaceableTextures\CommandButtons\BTNPeon.blp	IZx0
+AZxa	main	used	Seed Growth	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNNightElfBuild.blp	IZx1
+AZxb	main	used	Lesser Clarity Potion	-	AIpl	-	yes	other	ReplaceableTextures\CommandButtons\BTNLesserClarityPotion.blp	-
+AZxc	main	used	Animal Companion	(Pink headhunter)	ACsf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNQuillBeast.blp	oZxe
 AZy0	main	unused	Defender Shield	(Attachment)	AId1	-	yes	other	-	oZy0
 AZy1	main	unused	Self-Bloodlust	(Self Cast - Warsong)	Afzy	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	-
 AZy2	main	unused	Thick Skin	(Roanauk)	Ansk	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	hZy1
@@ -1380,7 +1407,7 @@ AZyh	main	used	Army of Light Golem summon	(Draenei)	AUin	yes	-	nightelf	Replacea
 Aabs	main	used	Absorb Mana	(Scourge-Destroyer)	Aabs	-	-	undead	ReplaceableTextures\CommandButtons\BTNAbsorbMagic.blp	u02W,ubsp
 Aakb	main	used	War Drums	(Kodo Beast)	Aakb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrum.blp	o06Q
 Aam2	main	used	Anti-magic Shell	(Scourge) - Banshee)	Aam2	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	uban
-Aamk	main	used	Attribute Bonus	(All Heroes)	Aamk	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNStatUp.blp	E002,E005,E00A,E00F,E00H,E016,+110
+Aamk	main	used	Attribute Bonus	(All Heroes)	Aamk	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNStatUp.blp	E002,E005,E00A,E00F,E00H,E016,+116
 Aams	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nnsw
 Aap1	main	used	Disease Cloud	(Red - Abomination/Zombie)	Aap1	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	n08G,nfgl,nzom,uZfc,uabo
 Aap2	main	used	Disease Cloud	(Plague Ward)	Aap2	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	uplg
@@ -1389,7 +1416,7 @@ Aasl	main	used	Slow Aura	(Tornado)	Aasl	-	-	naga	-	n069,n06A,n06B,nAT1,nAT2,nAt3
 Aast	main	used	Ancestral Spirit	(Pink - Spirit Walker)	Aast	-	-	orc	ReplaceableTextures\CommandButtons\BTNAncestralSpirit.blp	ospm
 Aave	main	used	-	(Red - Destroyer)(Unused)	Aave	-	-	undead	ReplaceableTextures\CommandButtons\BTNDestroyer.blp	ubsp
 Abdl	main	used	Blight Dispel Large	(Several Buildings)	Abdl	-	-	other	-	o00C,o02Y,o03L,oZk0
-Abds	main	used	Blight Dispel Small	(Several Buildings)	Abds	-	-	other	-	h004,h00T,h053,h055,h05O,h05P,+51
+Abds	main	used	Blight Dispel Small	(Several Buildings)	Abds	-	-	other	-	h004,h00T,h053,h055,h05O,h05P,+53
 Ablo	main	used	Bloodlust	(Frostwolf-Shaman)	Ablo	-	-	orc	ReplaceableTextures\CommandButtons\BTNBloodLustOn.blp	oshm
 Absk	main	used	Berserk	(Universal Ability)	Absk	-	-	orc	ReplaceableTextures\CommandButtons\BTNBerserkForTrolls.blp	n058,nftb,nftk,nits,o071
 Abtl	main	used	Battle Stations	(Frostwolf-Warsong-Burrow)	Abtl	-	-	orc	ReplaceableTextures\CommandButtons\BTNBattleStations.blp	o03T,oZk8,otrb
@@ -1405,19 +1432,19 @@ Acpf	main	used	Corporeal Form	(Frostwolf-Spirit Walker)	Acpf	-	-	orc	Replaceable
 Acrs	main	used	Curse	(Alchemist. Red - Banshee Sylvanas, Banshee)	Acrs	-	-	undead	ReplaceableTextures\CommandButtons\BTNCurseOn.blp	nmsc,oZkg,uban
 Acyc	main	used	Cyclone	(Druids-Keeper of the Grove)	Acyc	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNCyclone.blp	e00N
 Adcn	main	used	Disenchant	(Pink - Spirit Walker)	Adcn	-	-	orc	ReplaceableTextures\CommandButtons\BTNDisenchant.blp	ospm,ospw
-Adef	main	used	Defend	(Universal Ability)	Adef	-	-	human	ReplaceableTextures\CommandButtons\BTNDefend.blp	h021,h02O,h032,h041,hZrd,hfoo,+3
+Adef	main	used	Defend	(Universal Ability)	Adef	-	-	human	ReplaceableTextures\CommandButtons\BTNDefend.blp	h021,h02O,h032,h041,hZrd,hZx0,+4
 Adev	main	used	Devour	(Kodo Beast)	Adev	-	-	orc	ReplaceableTextures\CommandButtons\BTNDevour.blp	o06Q,okod
 Adis	main	used	Dispel Magic	(Quel'Thalas-Priest)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	hmpr
 Adro	main	used	Unload	(Air Transports),  (Goblin Zeppelin)	Adro	-	-	other	ReplaceableTextures\CommandButtons\BTNUnLoad.blp	n0B9
 Adsm	main	used	Dispel Magic	(Sentinels-Priestess)	Adsm	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	e006
-Adtg	main	used	True Sight	(Brown - Nordrassil. Teal - Black Drake. Pink - Wind Rider. Grey - Rexxar Hawk)	Adtg	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNScout.blp	ZBFT,e01W,h00G,h04P,h05D,h09T,+20
+Adtg	main	used	True Sight	(Brown - Nordrassil. Teal - Black Drake. Pink - Wind Rider. Grey - Rexxar Hawk)	Adtg	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNScout.blp	ZBFT,e01W,h00G,h04P,h05D,h09T,+22
 Adtn	main	used	Detonate	(Light Blue/Brown - Wisps)	Adtn	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNWispSplode.blp	ewsp,ls05
 Adts	main	used	Magic Sentry	(Human Towers)	Adts	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNMagicalSentry.blp	h000,h002,h003,h01G,h030,h0C2,+6
 Advc	main	used	Devour Cargo	(Pink - Kodo Beast. Teal - Black Drake)	Advc	-	-	orc	-	nahy,nbdk,nhyc,nstw,o06Q,okod
 Advm	main	used	Devour Magic	(Destroyer)	Advm	-	-	undead	ReplaceableTextures\CommandButtons\BTNDevourMagic.blp	n051,n0AC,nZw0,u02H,ubsp
 Aegr	main	used	Elune's Grace	(Light Blue - Archer, Shadowleaf Sentinel, Acolyte, Nightblade, Huntress, Priestess. Brown - Dryad)	Aegr	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNElunesBlessing.blp	e006,eZrk,earc,esen,n034,n06C
 Aenr	main	used	Entangling Roots	(Brown - The Chosen One)	Aenr	-	-	creeps	ReplaceableTextures\CommandButtons\BTNEntanglingRoots.blp	nepl
-Aens	main	used	Ensnare	(Explorer,Longbowmen,Hunt,Raider)	Aens	-	-	orc	ReplaceableTextures\CommandButtons\BTNEnsnare.blp	esen,h021,h06J,hZr1,hZrg,hZy0,+5
+Aens	main	used	Ensnare	(Explorer,Longbowmen,Hunt,Raider)	Aens	-	-	orc	ReplaceableTextures\CommandButtons\BTNEnsnare.blp	esen,h021,h06J,hZr1,hZrg,hZx0,+6
 Aenw	main	used	Entangling Roots	(Brown - Druid of the Talon)	Aenw	-	-	creeps	ReplaceableTextures\CommandButtons\BTNEntanglingRoots.blp	n06K,nlds
 Aetl	main	used	Ethereal	-	Aetl	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNTemp.blp	vP57
 Aexh	main	used	Exhume Corpses	(Red - Meat Wagon)	Aexh	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNExhumeCorpses.blp	umtw
@@ -1440,14 +1467,14 @@ Agyb	main	used	Flying Machine Bombs	(Khaz-Modan-GyroCopter)	Agyb	-	-	human	Repla
 Agyd	main	used	Create Corpse	-	Agyd	-	-	undead	-	uZf3,ugrv
 Agyv	main	used	True Sight	(Khaz Modan-GyroCopter-Warsong-Zeppelin)	Agyv	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNFlyingMachineTrueSight.blp	h04O,h091,hZk5
 Ahan	main	used	Second Life	(Icon)	Ahan	-	-	human	ReplaceableTextures\PassiveButtons\PASArthasLifeDrain.blp	h00P,h02G,h061,hZrc
-Ahea	main	used	Heal	(Stormwind Clergyman/ Quel'Thalas Priest)	Ahea	-	-	human	ReplaceableTextures\CommandButtons\BTNHealOn.blp	h00J,h08K,hmpr,o04F
+Ahea	main	used	Heal	(Stormwind Clergyman/ Quel'Thalas Priest)	Ahea	-	-	human	ReplaceableTextures\CommandButtons\BTNHealOn.blp	h00J,h08K,hmpr,o04F,oZxf
 Ahrp	main	used	Repair	(Workers)	Ahrp	-	-	human	ReplaceableTextures\CommandButtons\BTNRepairOn.blp	h019,h01E,h022,h060,hpea,ls05,+2
 Ahsb	main	used	Sundering Blades	-	Ahsb	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNSunderingBlades.blp	h0CP
 Ahwd	main	used	Healing Ward	(Frostwolf-Witch Doctor)	Ahwd	-	-	orc	ReplaceableTextures\CommandButtons\BTNHealingWard.blp	odoc
-Aien	main	used	Unit Inventory	(Night Elf - Light Blue, Brown)	Aien	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	e003,e006,e007,e00B,e00N,e00W,+29
-Aihn	main	used	Unit Inventory	(Human -Yellow,Orange,Purple,Green,DG)	Aihn	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	h00A,h00F,h00J,h00P,h018,h01B,+121
+Aien	main	used	Unit Inventory	(Night Elf - Light Blue, Brown)	Aien	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	e003,e006,e007,e00B,e00N,e00W,+30
+Aihn	main	used	Unit Inventory	(Human -Yellow,Orange,Purple,Green,DG)	Aihn	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	h00A,h00F,h00J,h00P,h018,h01B,+123
 Ainf	main	used	Inner Fire	(Quel'Thalas-Priest)	Ainf	-	-	human	ReplaceableTextures\CommandButtons\BTNInnerFireOn.blp	hmpr
-Aion	main	used	Unit Inventory	(Orc - Teal, Pink, Grey)	Aion	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	bHN1,h09T,n00O,n03F,n058,n059,+101
+Aion	main	used	Unit Inventory	(Orc - Teal, Pink, Grey)	Aion	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	bHN1,h09T,n00O,n03F,n058,n059,+107
 Aiun	main	used	Unit Inventory	(Undead - Red, Blue)	Aiun	-	-	other	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	h00H,h01N,h09F,n009,n04H,n04K,+27
 Aliq	main	used	Liquid Fire	(Warsong-Batrider)	Aliq	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNLiquidFire.blp	otbr
 Alit	main	used	Lightning Attack	(Brown - Chimaera. Grey - Spirit Hawk)	Alit	-	-	nightelf	-	E021,U026,U02V,e00Y,echm,n01J,+9
@@ -1463,7 +1490,7 @@ Amin	main	used	Mine - exploding	(Warsong - Goblin Land Mine)	Amin	-	-	other	-	ng
 Amls	main	used	Aerial Shackles	(Dragonhawk Rider)	Amls	-	-	human	ReplaceableTextures\CommandButtons\BTNMagicLariet.blp	hdhw
 Amnx	main	used	AOE damage upon death	(Warsong - Goblin Mine)	Amnx	-	-	other	-	nglm
 Andt	main	used	Reveal	(Neutral - Goblin Laboratory)	Andt	-	-	creeps	ReplaceableTextures\CommandButtons\BTNReveal.blp	ngad
-Ane2	main	used	Select Unit	-	Ane2	-	-	other	ReplaceableTextures\CommandButtons\BTNSelectHeroOn.blp	h03H,h06D,h076,h077,h07D,h07W,+7
+Ane2	main	used	Select Unit	-	Ane2	-	-	other	ReplaceableTextures\CommandButtons\BTNSelectHeroOn.blp	h03H,h06D,h076,h077,h07D,h07W,+9
 Anh1	main	used	Heal	(Warsong Shadowpriest)	Anh1	-	-	creeps	ReplaceableTextures\CommandButtons\BTNHealOn.blp	n08E,ndtp,nitp,nltc,nmbg,ntkh
 Anh2	main	used	Heal	(Legion)	Anh2	-	-	creeps	ReplaceableTextures\CommandButtons\BTNHealOn.blp	ndth,nfsh,nith
 Ansk	main	used	Hardened Skin	(Khaz Modan-Unused?)	Ansk	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNHardenedSkin.blp	nhyc
@@ -1472,7 +1499,7 @@ Apak	main	used	Pack Mule	(Pink - Kodo Beast)	Apak	-	-	orc	ReplaceableTextures\Co
 Apg2	main	used	Purge	(Teal - Dark Shaman, Pink - Shaman)	Apg2	-	-	orc	ReplaceableTextures\CommandButtons\BTNPurge.blp	oshm,vP54
 Aphx	main	used	Phoenix Morphing (Egg Related)	(Quel'Thalas)	Aphx	-	-	human	-	h04D,h04Y,hphx,hpxe
 Apig	main	used	Permanent Immolation	(Neutral Hostile 2)	Apig	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	N00D,npn4
-Apit	main	used	Shop Purchase Item	-	Apit	-	-	other	-	e019,eden,h04V,h086,h0CC,hvlt,+24
+Apit	main	used	Shop Purchase Item	-	Apit	-	-	other	-	e019,eden,h04V,h086,h0CC,hvlt,+26
 Apiv	main	used	Permanent Invisibility	(Red - Varimathras. Blue - Tichondrius/Dreadlords/Jubei'Thos/Mal'Ganis/Balnazzar/Detheroc/Si:7 Agents)	Apiv	-	-	other	-	n01J,n09M,nwe3
 Apos	main	used	Possession	(Red - Banshee)	Apos	-	-	undead	ReplaceableTextures\CommandButtons\BTNPossession.blp	uban
 Aprg	main	used	Purge	(Electric Strike)	Aprg	-	-	orc	ReplaceableTextures\CommandButtons\BTNPurge.blp	-
@@ -1481,10 +1508,10 @@ Apts	main	used	Disease Cloud	(Red - Meat Wagon)	Apts	-	-	undead	ReplaceableTextu
 Apxf	main	used	Phoenix Fire	(Quel'Thalas-Al'ar)	Apxf	-	-	human	ReplaceableTextures\CommandButtons\BTNMarkOfFire.blp	h04D,h04Y,hphx
 Arai	main	used	Raise Dead	(Scourge-Necromancer)	Arai	-	-	undead	ReplaceableTextures\CommandButtons\BTNRaiseDeadOn.blp	nnwl,unec
 Arav	main	used	Storm Crow Form	(Brown - Druid of the Talon)	Arav	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNRavenForm.blp	edot,edtm
-Arbr	main	used	Reinforced Burrows Upgrade	(Pink/Grey/Teal)	Arbr	-	-	orc	-	o002,o028,o034,o035,o03G,o03H,+15
+Arbr	main	used	Reinforced Burrows Upgrade	(Pink/Grey/Teal)	Arbr	-	-	orc	-	o002,o028,o034,o035,o03G,o03H,+17
 Arel	main	used	Item Life Regeneration	-	Arel	-	yes	other	ReplaceableTextures\CommandButtons\BTNRingSkull.blp	cnhn,kgal
 Aren	main	used	Renew	(Light Blue/Brown - Wisps)	Aren	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNWispHealOn.blp	ewsp
-Arep	main	used	Repair	(Teal - Fel Orc Peon. Pink/Grey - Peon)	Arep	-	-	orc	ReplaceableTextures\CommandButtons\BTNRepairOn.blp	n0B5,ncpn,nmpe,o00E,o02I,o04A,+7
+Arep	main	used	Repair	(Teal - Fel Orc Peon. Pink/Grey - Peon)	Arep	-	-	orc	ReplaceableTextures\CommandButtons\BTNRepairOn.blp	n0B5,ncpn,nmpe,o00E,o02I,o04A,+9
 Aret	main	used	Tome of Retraining	-	Aret	-	yes	other	ReplaceableTextures\CommandButtons\BTNTomeOfRetraining.blp	tret
 Aro1	main	used	Root	(Ancients)	Aro1	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNRoot.blp	e010,e019,eaoe,eaom,eaow,etoa,+4
 Aro2	main	used	Root	(Ancient Protector)	Aro2	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNRoot.blp	e000,e00Q,etrp,ncap
@@ -1492,7 +1519,7 @@ Aroa	main	used	Roar	(Druids-Druid of the claw)	Aroa	-	-	nightelf	ReplaceableText
 Aroc	main	used	Barrage	(Artillery Tank)	Aroc	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNScatterRockets.blp	tp02
 Arpl	main	used	Essence of Blight	(Red - Obsidian Statue)	Arpl	-	-	undead	ReplaceableTextures\CommandButtons\BTNReplenishHealthOn.blp	uobs
 Arpm	main	used	Spirit Touch	(Scourge - Obsidian Statue)	Arpm	-	-	undead	ReplaceableTextures\CommandButtons\BTNReplenishManaOn.blp	uobs
-Arsk	main	used	Resistant Skin	(Brown - Mountain Giant)	Arsk	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNResistantSkin.blp	emtg,h09Y,nbdo
+Arsk	main	used	Resistant Skin	(Brown - Mountain Giant)	Arsk	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNResistantSkin.blp	eZx0,emtg,h09Y,nbdo
 Arst	main	used	Restore	(Red - Acolyte. Blue - Eredar Summoner)	Arst	-	-	undead	ReplaceableTextures\CommandButtons\BTNRepairOn.blp	u00D,u019,uZf1,uaco
 Asd2	main	unused	Kaboom!	(Clockwerk Goblin-Level 2)	Asd2	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSelfDestructOn.blp	ncg1
 Asd3	main	used	Kaboom!	(Clockwerk Goblin-Level 3)	Asd3	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSelfDestructOn.blp	ncg3
@@ -1501,7 +1528,7 @@ Ashm	main	used	Shadow Meld	-	Ashm	-	-	nightelf	ReplaceableTextures\CommandButton
 Aslo	main	used	Slow	(Quel'Thalas-Sorceress, Warsong- Hexbinder)	Aslo	-	-	human	ReplaceableTextures\CommandButtons\BTNSlowOn.blp	hsor,n087,nZw4,nbzw,o05E
 Asp1	main	used	Sphere	(Light Blue - Maiev Summon) (Vengeance - Level 1)	Asp1	-	-	nightelf	-	e01A,espv
 Aspa	main	used	Spider Attack	(Creep - Queen Nezar'Azret. Red - Crypt Fiend)	Aspa	-	-	undead	-	nnwl,ucrm,ucry
-Aspi	main	used	Spiked Barricades	(Frostwolf/Fel Horde/Warsong)	Aspi	-	-	orc	-	n03E,n0AL,npgf,o002,o004,o006,+103
+Aspi	main	used	Spiked Barricades	(Frostwolf/Fel Horde/Warsong)	Aspi	-	-	orc	-	n03E,n0AL,npgf,o002,o004,o006,+113
 Aspo	main	used	Slow Poison	(Dark Green - Spearman, Teal - Succubus)	Aspo	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASBTNSlowPoison.blp	nahy,nhyd,nhyh,nssp
 Aspp	main	used	Spirit Link	(Area)	Aspp	-	yes	other	ReplaceableTextures\CommandButtons\BTNSpiritLink.blp	I00D
 Asps	main	used	Spell Steal	(Quel'Thalas-Spell Breaker)	Asps	-	-	human	ReplaceableTextures\CommandButtons\BTNSpellStealOn.blp	hspt,ndqp
@@ -1517,7 +1544,7 @@ Auco	main	used	Unstable Concoction	(Pink - Troll Batrider)	Auco	-	-	orc	Replacea
 Auhf	main	used	Unholy Frenzy	(Red - Necromancer)	Auhf	-	-	undead	ReplaceableTextures\CommandButtons\BTNUnholyFrenzy.blp	unec
 Ault	main	used	Ultravision	(Light Blue - All units. Brown - All units)	Ault	-	-	nightelf	-	E002,E00A,E00H,E00P,E021,E025,+38
 Auns	main	used	Unsummon Building	(Red - Acolyte)	Auns	-	-	undead	ReplaceableTextures\CommandButtons\BTNUnsummonBuilding.blp	uZf1,uaco
-Aven	main	used	Envenomed Spears	(Orcish Horde-Wind Rider)	Aven	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNEnvenomedSpear.blp	o04J,oZwc,vP53
+Aven	main	used	Envenomed Spears	(Orcish Horde-Wind Rider)	Aven	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNEnvenomedSpear.blp	o04J,oZmf,oZwc,vP53
 Awar	main	used	Pulverize	(Tauren)	Awar	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSmash.blp	otau,otgd
 Aweb	main	used	Web	(Crypt Fiend)	Aweb	-	-	undead	ReplaceableTextures\CommandButtons\BTNWebOn.blp	nspb,nspd,nspg,ucrm
 Awfb	main	used	Firebolt	(Grey - Ogre Magi)	Awfb	-	-	creeps	ReplaceableTextures\CommandButtons\BTNFireBolt.blp	n07X,n0E9,nZw1,nogn
@@ -1534,7 +1561,7 @@ EL0X	main	used	Superior Whirlpool Aura	(tidal Lord)	SCae	-	-	human	ReplaceableTe
 HWP1	main	used	Energy Wave	-	ANhw	-	-	orc	ReplaceableTextures\CommandButtons\BTNFelBurn.blp	o04P
 HWP2	main	used	Energy Wave	(Buff Applicator)	Aasl	-	-	naga	ReplaceableTextures\CommandButtons\BTNCursedScythe.blp	-
 HWP4	main	used	Energy Wave	(Teron)	ANhw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNFelBurn.blp	U02D
-Heal	main	used	Healing Wave	(Teal - Zuluhed)	ANhw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNHealingWave.blp	H04F,H08Q,HZw0
+Heal	main	used	Healing Wave	(Teal - Zuluhed)	ANhw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNHealingWave.blp	H04F,H08Q,HZw0,OZmh
 IFWW	main	used	Inner Fire	(Whim of the Winds)	Ainf	-	-	human	ReplaceableTextures\CommandButtons\BTNInnerFireOn.blp	-
 LEca	main	used	Capital	(DUMMY)	ACes	-	-	other	ReplaceableTextures\commandButtons\PASBTNSlaughter.blp	n05A,n0DU
 LLLN	main	used	Free Yogg-Saron	(All)	ANcl	-	-	other	ReplaceableTextures\CommandButtons\BTNYogg-saronIcon.blp	yLL4
@@ -3234,7 +3261,7 @@ AEbu	stock	unused	Build (Night Elf)	-	AEbu	-	-	nightelf	ReplaceableTextures\Comm
 AEfn	stock	used	Force of Nature	-	AEfn	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNEnt.blp	-
 AEsv	stock	used	Vengeance	-	AEsv	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNSpiritOfVengeance.blp	-
 AGbu	stock	unused	Build (Naga)	-	AGbu	-	-	other	ReplaceableTextures\CommandButtons\BTNBasicStruct.blp	-
-AHav	stock	used	Avatar	-	AHav	yes	-	human	ReplaceableTextures\CommandButtons\BTNAvatarOn.blp	-
+AHav	stock	used	Avatar	-	AHav	yes	-	human	ReplaceableTextures\CommandButtons\BTNAvatarOn.blp	UZe4
 AHbh	stock	used	Bash	-	AHbh	yes	-	human	ReplaceableTextures\PassiveButtons\PASBTNBash.blp	-
 AHbn	stock	used	Banish	-	AHbn	yes	-	human	ReplaceableTextures\CommandButtons\BTNBanish.blp	-
 AHbu	stock	unused	Build (Human)	-	AHbu	-	-	human	ReplaceableTextures\CommandButtons\BTNHumanBuild.blp	-
@@ -3243,7 +3270,7 @@ AHdr	stock	used	Siphon Mana	-	AHdr	yes	-	human	ReplaceableTextures\CommandButton
 AHds	stock	used	Divine Shield	-	AHds	yes	-	human	ReplaceableTextures\CommandButtons\BTNDivineIntervention.blp	HZy4,HZya
 AHer	stock	unused	Hero	-	AHer	-	-	other	-	-
 AHfa	stock	used	Searing Arrows	-	AHfa	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNSearingArrowsOn.blp	-
-AHtc	stock	used	Thunder Clap	-	AHtc	yes	-	human	ReplaceableTextures\CommandButtons\BTNThunderclap.blp	-
+AHtc	stock	used	Thunder Clap	-	AHtc	yes	-	human	ReplaceableTextures\CommandButtons\BTNThunderclap.blp	UZe4
 AHwe	stock	used	Summon Water Elemental	-	AHwe	yes	-	human	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	-
 AI2m	stock	used	Item Mana Bonus (200)	-	AI2m	-	yes	other	-	I00K,I01A
 AIa1	stock	unused	Item Hero Stat Bonus	(+1 Agility)	AIa1	-	yes	other	ReplaceableTextures\CommandButtons\BTNRingPurple.blp	-
@@ -3357,7 +3384,7 @@ AImx	stock	used	Spell Immunity	(Item)	AImx	-	yes	other	ReplaceableTextures\Comma
 AImz	stock	unused	Item Mana Bonus (100)	-	AImz	-	yes	other	-	-
 AInd	stock	unused	Reanimation	(special campaign item)	AInd	-	yes	other	ReplaceableTextures\CommandButtons\BTNWandSkull.blp	-
 AInm	stock	unused	Item Strength Gain	(+2)	AInm	-	yes	other	ReplaceableTextures\CommandButtons\BTNTome.blp	-
-AInv	stock	used	Inventory	(Hero)	AInv	-	-	other	-	E002,E005,E00A,E00F,E00H,E00P,+125
+AInv	stock	used	Inventory	(Hero)	AInv	-	-	other	-	E002,E005,E00A,E00F,E00H,E00P,+133
 AIob	stock	used	Item Attack Frost Bonus	-	AIob	-	yes	other	ReplaceableTextures\CommandButtons\BTNOrbOfFrost.blp	ofro
 AIos	stock	unused	Item Slow	(Orb Version)	AIos	-	yes	other	ReplaceableTextures\CommandButtons\BTNSlow.blp	-
 AIp1	stock	unused	Generic Item-Rejuv Effect	-	AIp1	-	yes	other	ReplaceableTextures\CommandButtons\BTNMinorRejuvPotion.blp	-
@@ -3526,16 +3553,16 @@ APsa	stock	unused	Rune of Speed	-	APsa	-	yes	other	ReplaceableTextures\CommandBu
 APwt	stock	unused	Rune of the Watcher	-	APwt	-	yes	other	ReplaceableTextures\CommandButtons\BTNSentryWard.blp	-
 ARal	stock	used	Rally	-	ARal	-	-	other	ReplaceableTextures\CommandButtons\BTNRallyPoint.blp,ReplaceableTextures\CommandButtons\BTNOrcRallyPoint.blp,ReplaceableTextures\CommandButtons\BTNRallyPointUndead.blp,ReplaceableTextures\CommandButtons\BTNRallyPointNightElf.blp	h03X,n000,n02C,n039,n04M,n05F,+11
 AUbu	stock	unused	Build (Undead)	-	AUbu	-	-	undead	ReplaceableTextures\CommandButtons\BTNScourgeBuild.blp	-
-AUdp	stock	used	Death Pact	-	AUdp	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathPact.blp	-
+AUdp	stock	used	Death Pact	-	AUdp	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDeathPact.blp	UZe2
 AUdr	stock	used	Dark Ritual	-	AUdr	yes	-	undead	ReplaceableTextures\CommandButtons\BTNDarkRitual.blp	-
 AUds	stock	unused	Dark Summoning	-	AUds	-	yes	other	ReplaceableTextures\CommandButtons\BTNDarkSummoning.blp	-
 AUfa	stock	unused	Frost Armor	-	AUfa	yes	-	undead	ReplaceableTextures\CommandButtons\BTNFrostArmor.blp	-
-AUfu	stock	used	Frost Armor	(Autocast)	AUfu	yes	-	undead	ReplaceableTextures\CommandButtons\BTNFrostArmorOn.blp	-
+AUfu	stock	used	Frost Armor	(Autocast)	AUfu	yes	-	undead	ReplaceableTextures\CommandButtons\BTNFrostArmorOn.blp	UZe1
 AUsl	stock	used	Sleep	-	AUsl	yes	-	undead	ReplaceableTextures\CommandButtons\BTNSleep.blp	-
 Aabr	stock	used	Aura of Blight	-	Aabr	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNRegenerationAura.blp	-
 Aadm	stock	used	Abolish Magic	-	Aadm	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNDryadDispelMagicOn.blp	-
 Aaha	stock	used	Gather	(Acolyte Gold)	Aaha	-	-	undead	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	-
-Aall	stock	used	Shop Sharing, Allied Bldg.	-	Aall	-	-	other	ReplaceableTextures\CommandButtons\BTNSelectHeroOn.blp	e019,eden,h04V,h086,h0CC,hvlt,+23
+Aall	stock	used	Shop Sharing, Allied Bldg.	-	Aall	-	-	other	ReplaceableTextures\CommandButtons\BTNSelectHeroOn.blp	e019,eden,h04V,h086,h0CC,hvlt,+25
 Aalr	stock	unused	Alarm	-	Aalr	-	-	other	-	-
 Aap4	stock	unused	Disease Cloud	(Neutral Hostile no damage)	Aap4	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	-
 Aap5	stock	used	Disease Cloud	(Animate Dead)	Aap5	-	-	undead	ReplaceableTextures\PassiveButtons\PASBTNPlagueCloud.blp	-
@@ -3545,7 +3572,7 @@ Aawa	stock	unused	Revive Hero Instantly	-	Aawa	-	-	other	-	-
 Abdt	stock	unused	Burrow Detection	(Fliers, Obsolete)	Abdt	-	-	other	-	-
 Abgl	stock	used	Blight Growth Large	-	Abgl	-	-	undead	-	-
 Abgm	stock	unused	Blighted Gold Mine Ability	-	Abgm	-	-	undead	-	-
-Abgs	stock	used	Blight Growth Small	-	Abgs	-	-	undead	-	-
+Abgs	stock	used	Blight Growth Small	-	Abgs	-	-	undead	-	uZe0
 Ablp	stock	unused	Blight Placement	-	Ablp	-	yes	other	ReplaceableTextures\CommandButtons\BTNSacrificialSkull.blp	-
 Abof	stock	used	Burning Oil	-	Abof	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNFireRocks.blp	-
 Abrf	stock	used	Bear Form	-	Abrf	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNBearForm.blp	-
@@ -3622,9 +3649,9 @@ Ansp	stock	unused	-	-	Ansp	-	-	creeps	-	-
 Aobk	stock	used	Berserker Upgrade	(Icon)	Aobk	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNHeadHunterBerserker.blp	-
 Aobs	stock	used	Brute Strength	(Icon)	Aobs	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNBerserk.blp	-
 Aorb	stock	used	Reinforced Defenses	(Icon)	Aorb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNReinforcedBurrows.blp	ocbw
-Aosp	stock	used	Spiked Barricades,Spiked Barricades,Improved Spiked Barricades	(Icon)	Aosp	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSpikedBarricades.blp,ReplaceableTextures\PassiveButtons\PASBTNImprovedSpikedBarricades.blp,ReplaceableTextures\PassiveButtons\PASBTNAdvancedSpikedBarricades.blp	o00C,o02Y,o034,o035,o039,o03A,+6
+Aosp	stock	used	Spiked Barricades,Spiked Barricades,Improved Spiked Barricades	(Icon)	Aosp	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSpikedBarricades.blp,ReplaceableTextures\PassiveButtons\PASBTNImprovedSpikedBarricades.blp,ReplaceableTextures\PassiveButtons\PASBTNAdvancedSpikedBarricades.blp	o00C,o02Y,o034,o035,o039,o03A,+9
 Aoth	stock	unused	-	-	Aoth	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNInvisibility.blp	-
-Aotr	stock	used	Troll Regeneration	(Icon)	Aotr	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNRegenerate.blp	h021,h05D,o04D
+Aotr	stock	used	Troll Regeneration	(Icon)	Aotr	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNRegenerate.blp	h021,h05D,o04D,oZxe
 Aply	stock	used	Polymorph	-	Aply	-	-	human	ReplaceableTextures\CommandButtons\BTNPolymorph.blp	-
 Apmf	stock	unused	Phoenix Fire	(flyer)	Apmf	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	-
 Apo2	stock	used	Poison Sting	(Orb of Venom)	Apo2	-	yes	other	ReplaceableTextures\PassiveButtons\PASBTNPoisonSting.blp	oven
@@ -3636,7 +3663,7 @@ Arev	stock	used	Revive Hero	-	Arev	-	-	other	-	oZt0,oZt1
 Argd	stock	unused	Return Gold	-	Argd	-	-	other	-	-
 Argl	stock	used	Return Gold and Lumber	-	Argl	-	-	other	-	n04T,n055,n05Q,n05W,n06R,nELC,+5
 Arll	stock	unused	Item Life Regeneration	(Lesser)	Arll	-	yes	other	ReplaceableTextures\CommandButtons\BTNHealthStone.blp	-
-Arlm	stock	used	Return Lumber	-	Arlm	-	-	other	-	hlum,nZk1,o009,o031,o03Q,oZk5,+8
+Arlm	stock	used	Return Lumber	-	Arlm	-	-	other	-	hlum,nZk1,o009,o031,o03Q,oZk5,+11
 Arng	stock	unused	Revenge	-	Arng	-	-	other	-	-
 Arpb	stock	unused	Replenish	-	Arpb	-	-	undead	ReplaceableTextures\CommandButtons\BTNReplenishManaOn.blp	-
 Arsg	stock	used	Summon Misha	(Rexxar)	Arsg	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNGrizzlyBear.blp	-

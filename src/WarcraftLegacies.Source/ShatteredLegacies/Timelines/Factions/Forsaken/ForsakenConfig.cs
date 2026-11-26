@@ -13,6 +13,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     internal const int SylvanasBanshee = 1431986481; // UZa1 The Banshee (tools/shattered-legacies/content/forsaken_heroes.py)
     internal const int SylvanasDarkRanger = 1431986482; // UZa2 The Dark Ranger
     internal const int SylvanasQueen = 1431986483;   // UZa3 Queen of the Forsaken
+    internal const int DarkLadysCommand = 1096446774; // AZs6 (0.79.0): her second ultimate, C'Thun's Inspire Madness
     internal const int EtherealWalk = 1096446772;    // AZs4 (Berserk's speed; the code adds Ethereal and phasing)
     internal const int Ethereal = 1097167980;        // Aetl (stock "Ethereal")
     internal const float EtherealWalkDuration = 20f; // Ghostform (0.57, maintainer)

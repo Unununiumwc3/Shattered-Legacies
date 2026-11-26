@@ -4,6 +4,78 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.80.0 — Dragonmaw, Zandalari, Ebon Blade, Draenei fallbacks; Gilneas / Dalaran cleaned up
+
+Bot changes: `../Ai/CHANGELOG.md` 0.80.0. One patch on 0.77.0 carries 0.78.0-0.80.0.
+- **The Dragonmaw Clan** (new faction, maintainer): the orcs of the 24p's Twilight tree without the cult
+  (`import_24p.py` set DRAGONMAW, ids `?Zm?`): Great Hall line, Altar of Storms, Barracks, War Mill, Red Dragon
+  Hatchery, Docks, Watch Towers, Burrows, Voodoo Lounge (stock orc models); Peons, Dragonmaw Warriors, Spearthrowers,
+  Skull Catapults, Dragon Riders, Dragon Whelps, Ancient Red Dragons (4); heroes Nek'rosh Skullcrusher and Zuluhed the
+  Whacked. A vassal: sworn to whoever holds Dragonmaw Port (its seat), never defeated, its halls indestructible.
+  It comes two ways (both start at Dragonmaw Port -- one of them, once):
+  - **Orcish Horde / Fel Horde fallback**: Orgrimmar / Kil'sorrow Fortress taken by a player of the Old Gods' team ->
+    Twilight, as before; by anyone else -> the Dragonmaw Clan (start army ~40), first serving that conqueror's team.
+    The Hourglass decision ("Fallback: Twillight or Dragonmaw") explains both.
+  - **Twilight's successor**: Cho'gall dead (not revived) while Grim Batol is not Twilight's. Until then Cho'gall is
+    revived as before; then he is gone for good. The cult's own units turn Neutral Hostile ("its fanatics turn on
+    them"), Twilight's heroes leave, its buildings / workers / catapults become the clan's, the Grim Totem goes
+    hostile; Nek'rosh arrives; Grim Batol's holder (or Cho'gall's slayer) is the first overlord. Lore text for all.
+- **The Zandalari Empire** (new faction, maintainer): Ahn'Qiraj's fallback (was "Brood of Nozdormu (not yet)"),
+  trigger C'Thun lost. The 24p's Zandalar trolls (set ZANDALAR, ids `?Zx?`) with King Rastakhan and Zul; the
+  preplaced Zandalari base at Zuldazar (WL's creep trolls) waits hidden / invulnerable and becomes theirs, with
+  Zuldazar's CP (whoever holds it) and Nazmir (if neutral), 5 Gatherers and an army of 38. A vassal of whoever holds
+  Zuldazar -- first C'Thun's slayer --, never defeated, its halls and Dazar'alor indestructible. Quests: the Amani
+  (Zul'Aman), the Drakkari (Gundrak), the Sandfury (Zul'Farrak), "The Soulflayer's Prison" (Zul'Gurub, Hakkar's
+  priests) -- 300 gold each --, then "The Empire Reborn" (all four): Direhorns at the Dinosaur Pen.
+- **The Knights of the Ebon Blade** (Scourge's fallback, was "not yet"; maintainer): trigger = the Frozen Throne lost
+  (WL ruptures it) AND, if Arthas rose as the Lich King, the Lich King permanently dead. A HERO-ONLY faction: four
+  death knights with their own skills (`tools/shattered-legacies/content/ebon_blade.py`, `UZe1`-`UZe4`, level 6 on
+  arrival) -- Thassarian (frost: Frost Nova, Frost Armor, Death Coil; Death and Decay), Koltira Deathweaver (unholy:
+  Carrion Beetles, Animate Dead, Death Pact; Locust Swarm), Nazgrim (blood: Critical Strike, Shockwave, Vampiric Aura;
+  Bladestorm), Thoras Trollbane (plate: Storm Bolt, Thunder Clap, Endurance Aura; Avatar) -- and Acherus: The Ebon Hold
+  (`uZe0`, south-east of Icecrown Citadel, indestructible: revives them, 40 food). No Mograine (Lordaeron's name), no
+  Rivendare (WL's Scourge). A vassal of whoever holds Icecrown Citadel's CP (first its holder, else the last enemy who
+  hit the Frozen Throne), never defeated. The rest of the Scourge turns Neutral Hostile. No quest yet.
+- **The Draenei are the Legion's fallback** (maintainer; was "Dreadlord Insurgents (not yet)"): the Sentinels' slot
+  always plays the Sentinels (no Draenei pick). The Exodar base waits on Azuremyst (buildings invulnerable, units
+  hidden); Darkshore's draenei leftovers go as in every Sentinels game. Legion Stronghold lost -> WL's Draenei faction
+  without its Darkshore quest: the Exodar base theirs at once ("A New Home" completed), Velen, 5 Gemcrafters and a
+  guard; they JOIN the conqueror's team. Lore by conqueror: a good team (Velen swears his people to the Legion's
+  breakers), an evil one (a bitter oath: only that hand can keep the Legion broken), the Fel Horde (Velen's oldest
+  vision -- orcs free of the blood pact, redeemable).
+- **Gilneas / Dalaran** (maintainer): Dalaran no longer builds the Gilneas Manor; Gilneas no longer has Dalaran's three
+  houses (farms) or the Violet Tower. Their quests were already separate (Dalaran: Shadowfang and Southshore kept;
+  Gilneas as Stormwind's fallback: Crowley, the Sunwell Vial, Goldrinn).
+- `import_24p.py`: `"unset"` (fields dropped from a copy -- its stock value again).
+- **Model files**: the Dragonmaw and Zandalari copies need 9 imported models / icons (Nek'rosh, Zuluhed, the Dragon
+  Rider, 2 Zandalari files) -- the patch carries them as Git LFS pointers: run `git lfs checkout` (or `git lfs pull`)
+  after applying, as for every 24p import.
+
+## 0.79.0 — HQ teleport, Kezan oil for bots, Twilight's port, Sylvanas' second ultimate
+
+Bot changes: `../Ai/CHANGELOG.md` 0.79.0 (the emergency HQ teleport). Includes 0.78.0 (not applied separately).
+- **Kezan oil for bots** (maintainer: "tech it at the speed of the caster research, free for bots";
+  `KezanEnterpriseBot`): a bot Enterprise gets two oil steps on arrival, one more every 2 minutes and one per CP it
+  captures -- Oil Rig, Oil Tanker, Oil Rig, Oil Tanker, Oil Refining 1, ... up to 8 rigs, 10 tankers and Oil
+  Refining 2. Rigs and tankers are trained for free (one of each under way at a time), Oil Refining is granted; a
+  free rig that finds no oil field refunds nothing.
+- **Twilight keeps Dragonmaw Port** (maintainer): on arrival the CP is theirs whoever holds it (`StartCps.Force`;
+  before, only a neutral one was handed over). Wetlands as before (only if neutral).
+- **Sylvanas: two ultimates** (maintainer): the Dark Ranger and the Queen of the Forsaken lose the Attribute Bonus
+  and get "Dark Lady's Command" (`AZs6`, one level, from level 6): up to 6 non-summoned enemy units (no heroes, no
+  mechanical units) in the target area fight for her for 30 seconds, then die -- C'Thun's Inspire Madness and WL's
+  own spell code. The Banshee (phase 1, until level 6) keeps hers. `forsaken_heroes.py`.
+
+## 0.78.0 — Ahn'Qiraj holds its gate; gates open for bots; slot names
+
+Bot changes: `../Ai/CHANGELOG.md` 0.78.0.
+- **"Rebuilding of Ahn'Qiraj" removed** (maintainer): the Gates of Ahn'Qiraj belong to Ahn'Qiraj from the start
+  (closed, not invulnerable any more; a bot opens them).
+- **Bots open their gates** (the 0.77.0 orders were wrong, `../Ai/CHANGELOG.md`).
+- **The slot's name follows the faction**: after Quel'thalas' split, a bot's Forsaken units still said "Quel'thalas"
+  on hover (the scoreboard was right) -- `SplitFaction` now renames the slot like `SwapFaction` does (human players
+  keep their own name). The same for Lordaeron -> Scarlet Crusade on a bot slot (WL code, `[SL]` line).
+
 ## 0.77.0 — WL 5.0.4: the UI / localisation fixes and an alignment audit; gates stay
 
 Bot changes: `../Ai/CHANGELOG.md` 0.77.0 (gates).

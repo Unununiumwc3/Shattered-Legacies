@@ -84,6 +84,19 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZkx` |  | `24p:A0NJ` | KezanEnterprise |
 | `AZky` |  | `24p:A07A` | KezanEnterprise |
 | `AZkz` | Gunner Pilot | `24p:A0JX` | KezanEnterprise |
+| `AZm0` |  | `24p:Argl` | Dragonmaw |
+| `AZm1` | Structure Spiked Barricade | `24p:A0CF` | Dragonmaw |
+| `AZm2` |  | `24p:Ahar` | Dragonmaw |
+| `AZm3` | Self Destruct | `24p:A106` | Dragonmaw |
+| `AZm4` | Self-Bloodlust | `24p:A0XM` | Dragonmaw |
+| `AZm5` |  | `24p:A0DS` | Dragonmaw |
+| `AZm6` |  | `24p:A074` | Dragonmaw |
+| `AZm7` | Breath of Life | `24p:A0XR` | Dragonmaw |
+| `AZm8` | Shadow Ball | `24p:ANsb` | Dragonmaw |
+| `AZm9` | Summon Cultist | `24p:A0QT` | Dragonmaw |
+| `AZma` | Seed Growth | `24p:A04C` | Dragonmaw |
+| `AZmb` |  | `24p:AIpl` | Dragonmaw |
+| `AZmc` | Ascendance | `24p:AEme` | Dragonmaw |
 | `AZw0` |  | `24p:Argl` | TwilightHammer |
 | `AZw1` | Structure Spiked Barricade | `24p:A0CF` | TwilightHammer |
 | `AZw2` | Self-Bloodlust | `24p:A0XM` | TwilightHammer |
@@ -97,8 +110,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZwa` | Mind Destruction | `24p:ANfd` | TwilightHammer |
 | `AZwb` | Living Tornado | `24p:ANsg` | TwilightHammer |
 | `AZwc` | Chilling Aura | `24p:A0ON` | TwilightHammer |
-| `AZwd` |  | `24p:A0AG` | TwilightHammer |
-| `AZwe` |  | `24p:A02P` | TwilightHammer |
+| `AZwd` | Flame Strike | `24p:A0AG` | TwilightHammer |
+| `AZwe` | Breath of Fire | `24p:A02P` | TwilightHammer |
 | `AZwf` | Searing Breath | `24p:A0NH` | TwilightHammer |
 | `AZwg` | Summon Cultist | `24p:A0QT` | TwilightHammer |
 | `AZwh` | Seed Growth | `24p:A04C` | TwilightHammer |
@@ -109,6 +122,19 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZwm` |  | `24p:A08F` | TwilightHammer |
 | `AZwn` | Thunder Fists | `24p:A024` | TwilightHammer |
 | `AZwo` |  | `24p:Aams` | TwilightHammer |
+| `AZx0` |  | `24p:Argl` | Zandalari |
+| `AZx1` |  | `24p:Ahar` | Zandalari |
+| `AZx2` | Self Destruct | `24p:A106` | Zandalari |
+| `AZx3` |  | `24p:A0ZK` | Zandalari |
+| `AZx4` | AAASpell Resistance | `24p:A07C` | Zandalari |
+| `AZx5` |  | `24p:Assk` | Zandalari |
+| `AZx6` | Toughness | `24p:A066` | Zandalari |
+| `AZx7` | Plague of Frogs | `24p:A0N1` | Zandalari |
+| `AZx8` | Dark Grip | `24p:A07R` | Zandalari |
+| `AZx9` | Summon Gatherer | `24p:A0QY` | Zandalari |
+| `AZxa` | Seed Growth | `24p:A04C` | Zandalari |
+| `AZxb` |  | `24p:AIpl` | Zandalari |
+| `AZxc` | Animal Companion | `24p:ACsf` | Zandalari |
 | `AZy9` | Defender Shield | `24p:A0TF` | Ashtongue |
 | `AZya` | Self-Bloodlust | `24p:A0XM` | Ashtongue |
 | `AZyb` | Thick Skin | `24p:A0VI` | Ashtongue |
@@ -125,6 +151,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `BZw0` |  | `24p:B07V` | TwilightHammer |
 | `BZw1` |  | `24p:B01Y` | TwilightHammer |
 | `BZw2` | Searing Breath (Effect) | `24p:X00T` | TwilightHammer |
+| `BZx0` | Dark Grip (Caster) | `24p:B010` | Zandalari |
 | `BZy1` |  | `24p:B014` | Ashtongue |
 | `HZw0` | High Priestess | `24p:H08Q` | TwilightHammer |
 | `HZy9` | The Naaru | `24p:H0AK` | Ashtongue |
@@ -133,13 +160,21 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `IZf1` | Seeds of Regrowth | `24p:I00L` | Forsaken |
 | `IZk0` | Summon Engineer | `24p:I00X` | KezanEnterprise |
 | `IZk1` | Seeds of Regrowth | `24p:I00L` | KezanEnterprise |
+| `IZm0` | Summon Cultist | `24p:I008` | Dragonmaw |
+| `IZm1` | Seeds of Regrowth | `24p:I00L` | Dragonmaw |
 | `IZw0` | Summon Cultist | `24p:I008` | TwilightHammer |
 | `IZw1` | Seeds of Regrowth | `24p:I00L` | TwilightHammer |
+| `IZx0` | Summon Gatherer | `24p:I009` | Zandalari |
+| `IZx1` | Seeds of Regrowth | `24p:I00L` | Zandalari |
 | `NZk3` | Chief Engineer | `24p:Ntin` | KezanEnterprise |
 | `NZk4` | Baron of Gadgetzan | `24p:Nalc` | KezanEnterprise |
 | `OZki` | Trade Prince of the Bilgewater Cartel | `24p:O04N` | KezanEnterprise |
+| `OZmg` | Warlord of the Dragonmaw | `24p:O01Q` | Dragonmaw |
+| `OZmh` | Shaman of the Dragonmaw | `24p:O00Y` | Dragonmaw |
 | `OZwh` | Leader of the Twilight's Hammer | `24p:O01P` | TwilightHammer |
 | `OZwi` | Fire Ascendant | `24p:O04H` | TwilightHammer |
+| `OZxi` | God King of the Zandalari Tribe | `24p:O026` | Zandalari |
+| `OZxj` | The Dark Prophet | `24p:O01J` | Zandalari |
 | `RZf0` | Quest Completed: Forsaken Independance | `24p:R04X` | Forsaken |
 | `RZf1` | Quest Completed: The Secret Buildup | `24p:R04Z` | Forsaken |
 | `RZf2` | Tier 4 | `24p:R04R` | Forsaken |
@@ -167,6 +202,12 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZka` | Solo Upgrade | `24p:Rguv` | KezanEnterprise |
 | `RZkb` |  | `24p:Ropm` | KezanEnterprise |
 | `RZkc` | Needs to be Made | `24p:R03N` | KezanEnterprise |
+| `RZm0` | Tier 4 | `24p:R04R` | Dragonmaw |
+| `RZm1` | Horde War Machine | `24p:R021` | Dragonmaw |
+| `RZm2` | Solo Upgrade | `24p:Rguv` | Dragonmaw |
+| `RZm3` |  | `24p:Rotr` | Dragonmaw |
+| `RZm4` |  | `24p:Ropm` | Dragonmaw |
+| `RZm5` | Needs to be Made | `24p:R03N` | Dragonmaw |
 | `RZw0` | Tier 4 | `24p:R04R` | TwilightHammer |
 | `RZw1` | Magi Adept Training | `24p:R06X` | TwilightHammer |
 | `RZw2` | Herald Adept Training | `24p:R06Z` | TwilightHammer |
@@ -176,14 +217,22 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZw6` | Needs to be Made | `24p:R03N` | TwilightHammer |
 | `RZw7` | Quest Completed: Voices in the Quarry | `24p:R05F` | TwilightHammer |
 | `RZw8` | Quest Completed: The Cursed Fortress | `24p:R06Y` | TwilightHammer |
-| `RZw9` | Quest Completed: Rite of Embers | `24p:R07Q` | TwilightHammer |
+| `RZw9` | Quest Completed: Gift of the Firelord | `24p:R07Q` | TwilightHammer |
 | `RZwa` | Quest Completed: Rite of Rime | `24p:R07T` | TwilightHammer |
+| `RZx0` | Quest Completed: City of Gold | `24p:R04W` | Zandalari |
+| `RZx1` | Tier 4 | `24p:R04R` | Zandalari |
+| `RZx2` | Animal Companion | `24p:R00H` | Zandalari |
+| `RZx3` |  | `24p:Rotr` | Zandalari |
+| `RZx4` | Solo Upgrade | `24p:Rguv` | Zandalari |
+| `RZx5` | Needs to be Made | `24p:R03N` | Zandalari |
 | `RZy3` | Solo Upgrade | `24p:Rguv` | Ashtongue |
 | `RZy4` | Spiritual Infusion | `24p:R023` | Ashtongue |
 | `RZy5` | Needs to be Made | `24p:R03N` | Ashtongue |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
 | `UZw2` | Water Ascendant | `24p:U01S` | TwilightHammer |
+| `UZwx` | Deathwing | `24p:u01Y` | TwilightHammer |
+| `eZx0` | Direhorn | `24p:e00Z` | Zandalari |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
 | `hZf1` | Grim Estate | `24p:h08A` | Forsaken |
 | `hZf2` | Haunted Castle | `24p:h08B` | Forsaken |
@@ -201,6 +250,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZk3` | Sappers | `24p:h08X` | KezanEnterprise |
 | `hZk4` | Assault Tank | `24p:h08Z` | KezanEnterprise |
 | `hZk5` | War Zeppelin | `24p:h091` | KezanEnterprise |
+| `hZx0` | Watcher | `24p:h021` | Zandalari |
+| `hZx1` | Raptor Rider | `24p:h05D` | Zandalari |
 | `hZy6` | Rangari | `24p:h09T` | Ashtongue |
 | `hZy7` | Elekk Knight | `24p:h09U` | Ashtongue |
 | `hZy8` | Vindicator | `24p:h09R` | Ashtongue |
@@ -213,6 +264,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZk1` |  | `24p:n062` | KezanEnterprise |
 | `nZk2` | Oil Rig | `24p:n0AQ` | KezanEnterprise |
 | `nZk5` | Trading Zeppelin | `24p:nzep` | KezanEnterprise |
+| `nZm0` | Dragon Whelp | `24p:n0CQ` | Dragonmaw |
+| `nZm1` | Ancient Red Dragon | `24p:n0CP` | Dragonmaw |
 | `nZw0` |  | `24p:n051` | TwilightHammer |
 | `nZw1` |  | `24p:n07X` | TwilightHammer |
 | `nZw2` | Twilight Dragonspawn | `24p:n083` | TwilightHammer |
@@ -243,6 +296,22 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZkh` | Tinker | `24p:o04Q` | KezanEnterprise |
 | `oZkj` | Kezan Trading Center | `24p:o04M` | KezanEnterprise |
 | `oZkk` | Oil Tanker | `24p:o04S` | KezanEnterprise |
+| `oZm0` | Great Hall | `24p:o039` | Dragonmaw |
+| `oZm1` | Stronghold | `24p:o03A` | Dragonmaw |
+| `oZm2` | Fortress | `24p:o03B` | Dragonmaw |
+| `oZm3` | Altar of Storms | `24p:o03C` | Dragonmaw |
+| `oZm4` | Barracks | `24p:o03D` | Dragonmaw |
+| `oZm5` | War Mill | `24p:o03J` | Dragonmaw |
+| `oZm6` | Red Dragon Hatchery | `24p:o05J` | Dragonmaw |
+| `oZm7` | Dragonmaw Docks | `24p:o03I` | Dragonmaw |
+| `oZm8` | Watch Tower | `24p:o03G` | Dragonmaw |
+| `oZm9` | Improved Watch Tower | `24p:o03H` | Dragonmaw |
+| `oZma` | Burrow | `24p:o03K` | Dragonmaw |
+| `oZmb` | Peon | `24p:o05P` | Dragonmaw |
+| `oZmc` | Dragonmaw Warrior | `24p:o05K` | Dragonmaw |
+| `oZmd` | Spearthrower | `24p:o05L` | Dragonmaw |
+| `oZme` | Skull Catapult | `24p:o04K` | Dragonmaw |
+| `oZmf` | Dragon Rider | `24p:o05M` | Dragonmaw |
 | `oZw0` |  | `24p:o039` | TwilightHammer |
 | `oZw1` |  | `24p:o03A` | TwilightHammer |
 | `oZw2` |  | `24p:o03B` | TwilightHammer |
@@ -260,6 +329,24 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZwe` | Cultist | `24p:o04B` | TwilightHammer |
 | `oZwf` | Battlemaster | `24p:o04I` | TwilightHammer |
 | `oZwg` | Skull Catapult | `24p:o04K` | TwilightHammer |
+| `oZx0` |  | `24p:o03R` | Zandalari |
+| `oZx1` |  | `24p:o03Y` | Zandalari |
+| `oZx2` |  | `24p:o03Z` | Zandalari |
+| `oZx3` | Altar of Loa | `24p:o040` | Zandalari |
+| `oZx4` | War Camp | `24p:o041` | Zandalari |
+| `oZx5` |  | `24p:o042` | Zandalari |
+| `oZx6` | Spirit Spire | `24p:o043` | Zandalari |
+| `oZx7` | Dinosaur Pen | `24p:o044` | Zandalari |
+| `oZx8` |  | `24p:o045` | Zandalari |
+| `oZx9` |  | `24p:o046` | Zandalari |
+| `oZxa` | Improved Watch Tower | `24p:o048` | Zandalari |
+| `oZxb` |  | `24p:o047` | Zandalari |
+| `oZxc` | Golden Dock | `24p:o049` | Zandalari |
+| `oZxd` | Gatherer | `24p:o04A` | Zandalari |
+| `oZxe` | Scout | `24p:o04D` | Zandalari |
+| `oZxf` | Hex Doctor | `24p:o04F` | Zandalari |
+| `oZxg` | Haruspex | `24p:o04G` | Zandalari |
+| `oZxh` | Boneseer | `24p:o04E` | Zandalari |
 | `oZy3` | Defender | `24p:o05B` | Ashtongue |
 | `oZy4` | Luminarch | `24p:o05C` | Ashtongue |
 | `oZy5` | Elementalist | `24p:o05D` | Ashtongue |
@@ -281,6 +368,6 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `uZfh` | Corsair | `24p:udes` | Forsaken |
 | `uZfi` | Banshee Spirits | `24p:u00O` | Forsaken |
 | `uZk0` | Fuel Transport Vehicle | `24p:u028` | KezanEnterprise |
+| `uZm0` | Voodoo Lounge | `24p:u00Y` | Dragonmaw |
 | `uZw0` | Voodoo Lounge | `24p:u00Y` | TwilightHammer |
 | `uZw1` | Herald | `24p:u01T` | TwilightHammer |
-| `UZwx` | Deathwing | `24p:u01Y` | TwilightHammer |

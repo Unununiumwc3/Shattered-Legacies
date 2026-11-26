@@ -16,9 +16,7 @@ public static class GilneasObjectInfo
     yield return new(UNIT_H024_LIGHT_HOUSE_STORMWIND_OTHER, Unlimited, Lighthouse);
     yield return new(UNIT_H02F_HOUSEHOLD_GILNEAS_FARM, Unlimited, Farm);
     yield return new(UNIT_H01T_INN_LORDAERON_OTHER, Unlimited, Farm);
-    yield return new(UNIT_H05P_DALARAN_BUILDING_DALARAN_OTHER_1, Unlimited, Farm);
-    yield return new(UNIT_H05Q_DALARAN_BUILDING_DALARAN_OTHER_2, Unlimited, Farm);
-    yield return new(UNIT_H05O_DALARAN_BUILDING_DALARAN_OTHER_3, Unlimited, Farm);
+    // [SL] (0.80.0, maintainer): Dalaran's houses and the Violet Tower are not Gilneas' any more (Stormwind's fallback)
     yield return new(UNIT_H02X_ALTAR_OF_KINGS_GILNEAS_ALTAR, Unlimited, Altar);
     yield return new(UNIT_H03D_TEMPLE_OF_THE_CURSED_GILNEAS_MAGIC, Unlimited, Magic);
     yield return new(UNIT_H03E_WORGEN_MANOR_GILNEAS_SPECIALIST, Unlimited, Specialist);
@@ -32,7 +30,6 @@ public static class GilneasObjectInfo
     yield return new(UNIT_H03B_CANNON_TOWER_GILNEAS_TOWER, Unlimited, Tower);
     yield return new(UNIT_H052_IMPROVED_GUARD_TOWER_GILNEAS_TOWER, Unlimited, Tower);
     yield return new(UNIT_H04N_IMPROVED_CANNON_TOWER_GILNEAS_TOWER, Unlimited, Tower);
-    yield return new(UNIT_N03G_VIOLET_TOWER_DALARAN, Unlimited, Tower);
 
     yield return new(UNIT_HPEA_PEASANT_LORDAERON_STORMWIND_WORKER, Unlimited, Builder);
     yield return new(UNIT_H04M_CLERIC_GILNEAS, Unlimited, Support);

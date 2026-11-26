@@ -6,34 +6,61 @@
 namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
 {
   // One column per array, one row per ability:
-  //   (none)
+  //    0 AZs6 Dark Lady's Command -- point enemy; on UZa2 UZa3
   internal static class SlAiSpells
   {
     // ability id
-    internal static int[] Id = new int[0];
+    internal static int[] Id = new int[]
+    {
+      1096446774,
+    };
 
     // 1 = unit target, 2 = point target, 3 = no target
-    internal static int[] Kind = new int[0];
+    internal static int[] Kind = new int[]
+    {
+      2,
+    };
 
     // 1 = enemy, 2 = ally, 3 = self
-    internal static int[] Who = new int[0];
+    internal static int[] Who = new int[]
+    {
+      1,
+    };
 
     // least worth inside the area (unit 1, hero 3); 0 = default
-    internal static int[] Min = new int[0];
+    internal static int[] Min = new int[]
+    {
+      4,
+    };
 
     // area used to count targets; 0 = the ability's own area of effect
-    internal static int[] Radius = new int[0];
+    internal static int[] Radius = new int[]
+    {
+      0,
+    };
 
     // 1 = prefer targets with mana, 2 = ally target only below 70 % life, 4 = ground targets only,
     // 8 = organic targets only (4 / 8 from the ability's targets allowed)
-    internal static int[] Flags = new int[0];
+    internal static int[] Flags = new int[]
+    {
+      0,
+    };
 
     // order string (Channel: Ncl6); "" = item-based, ordered by the ability id
-    internal static string[] Order = new string[0];
+    internal static string[] Order = new string[]
+    {
+      "stampede",
+    };
 
     // who carries what: unit type -> row (one entry per pair)
-    internal static int[] CarrierType = new int[0];
+    internal static int[] CarrierType = new int[]
+    {
+      1431986482, 1431986483,
+    };
 
-    internal static int[] CarrierRow = new int[0];
+    internal static int[] CarrierRow = new int[]
+    {
+      0, 0,
+    };
   }
 }

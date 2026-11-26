@@ -5,6 +5,10 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterprise;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.EbonBlade;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
 {
@@ -28,6 +32,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
           AiApi.RegisterHeadquarters(def.Faction, def.Hq);
         }
       }
+      // 0.79.0: Twilight's HQ (the emergency teleport's anchor, AiRecall): Grim Batol once it is theirs, until then the
+      // Great Hall they arrive with (maintainer: they die before they reach Grim Batol)
+      AiApi.RegisterHeadquarters(TwilightHammerFaction.FactionName,
+        new[] { UNIT_H01Z_GRIM_BATOL_CREEP_TWILIGHT, TwilightHammerObjects.GreatHall });
+      // 0.80.0: the Dragonmaw Clan's halls (indestructible; the HQ teleport's anchor) and its heroes
+      AiApi.RegisterHeadquarters(DragonmawFaction.FactionName,
+        new[] { DragonmawObjects.GreatHall, DragonmawObjects.Stronghold, DragonmawObjects.Fortress });
+      AiApi.RegisterHeadquarters(ZandalariFaction.FactionName, new[] { ZandalariObjects.GreatHall,
+        ZandalariObjects.Stronghold, ZandalariObjects.Fortress, UNIT_O00V_DAZAR_ALOR_CREEP });
+      AiApi.RegisterHeroes(ZandalariFaction.FactionName, new List<int> { ZandalariObjects.Rastakhan, ZandalariObjects.Zul });
+      AiApi.RegisterHeadquarters(EbonBladeFaction.FactionName, new[] { EbonBladeFallback.Acherus });
+      AiApi.RegisterHeroes(EbonBladeFaction.FactionName, new List<int>(EbonBladeFallback.Heroes));
+      AiApi.RegisterHeroes(DragonmawFaction.FactionName, new List<int> { DragonmawObjects.Nekrosh, DragonmawObjects.Zuluhed });
       AiApi.RegisterHeroes(KezanEnterpriseConfig.Name, new List<int>
         { KezanEnterpriseObjects.Gallywix, KezanEnterpriseObjects.Gazlowe, KezanEnterpriseObjects.Noggenfogger });
       // 0.63: the Ashtongue -- Akama, and Xi'ri once Karabor is restored (Ishanah is placed by code, never trained)

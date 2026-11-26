@@ -6,6 +6,7 @@ using WarcraftLegacies.Source.Setup;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WCSharp.Shared.Data;
+using WarcraftLegacies.Source.Shared;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 
@@ -14,8 +15,12 @@ internal static class TwilightHammerFallback
   internal const float StartX = 22080f;
   internal const float StartY = -3904f;
 
-  internal static readonly ExclusivePath Path = new(TwilightHammerFaction.FactionName, Prepare, Run, StartX, StartY);
-  internal const string OfferDescription = "Join Cho'gall at Dragonmaw Port and rebuild as Twillight.";
+  // 0.80.0 (maintainer): one path, two successors -- beaten by an Old God: Twilight (Old Gods' team); by anyone else:
+  // the Dragonmaw Clan (Factions/Dragonmaw/DragonmawFallback.cs). Both start at Dragonmaw Port, so only one ever comes.
+  internal static readonly ExclusivePath Path = new("Twillight or Dragonmaw", Prepare, Run, StartX, StartY);
+  internal const string OfferDescription = "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by "
+                                           + "anyone else: the Dragonmaw Clan rises there, sworn to whoever holds the port.";
+  internal static List<unit> Port => _port!;
 
   // Only these neutral buildings belong to the start. The portal, the capital and player holdings stay in play.
   private static readonly int[] PortBuildings =
@@ -76,6 +81,9 @@ internal static class TwilightHammerFallback
     var foot = mouths.GetClosest(UNIT_N08R_GRIM_BATOL_TUNNELS, 16568, -2772);
     OpenTunnel(hill, 16569, -2836);
     OpenTunnel(foot, 16761, -2420);
+    // 0.80.0: who takes Orgrimmar / Kil'sorrow Fortress decides between Twilight and the Dragonmaw
+    Dragonmaw.Conquerors.Watch(AllPreplacedWidgets.Units.Get(UNIT_O01B_ORGRIMMAR_WARSONG), "Orcish Horde");
+    Dragonmaw.Conquerors.Watch(AllLegends.FelHorde.KilsorrowFortress.Unit, "Fel Horde");
   }
 
   private static void OpenTunnel(unit mouth, float exitX, float exitY)
@@ -105,6 +113,17 @@ internal static class TwilightHammerFallback
 
   internal static void Run(player p, TurningPointDef def)
   {
+    if (!Dragonmaw.Conquerors.ByOldGods(def.Faction))
+    {
+      Dragonmaw.DragonmawFallback.FromHorde(p, Dragonmaw.Conquerors.Of(def.Faction));
+      return;
+    }
+
+    RunTwilight(p);
+  }
+
+  private static void RunTwilight(player p)
+  {
     var keep = new List<unit>();
     var hourglass = Hourglass.Get(GetPlayerId(p));
     if (hourglass != null)
@@ -120,7 +139,8 @@ internal static class TwilightHammerFallback
     SplitFaction.UnallyOutsideTeam(p);
 
     StartArea.Take(p, _port!, twilight, PortBuildings);
-    StartCps.Give(p, UNIT_N016_WETLANDS, UNIT_N08T_DRAGONMAW_PORT);
+    StartCps.Give(p, UNIT_N016_WETLANDS);
+    StartCps.Force(p, UNIT_N08T_DRAGONMAW_PORT); // 0.79.0: always theirs on arrival (maintainer)
     CreateUnit(p, TwilightHammerObjects.GreatHall, 22464f, -3264f, 270f);
     CreateUnit(p, TwilightHammerObjects.AltarOfVisions, 22016f, -3584f, 270f);
     var worker = TwilightHammerObjects.Cultist;
@@ -128,5 +148,12 @@ internal static class TwilightHammerFallback
     Spawn.Units(p, StartX + 176f, StartY - 304f, StartArmy()); // open ground south-east of the start (PathingMap)
     twilight.AddCampaignQuests();
     p.RepositionCamera(new Point(StartX, StartY));
+    for (var i = 0; i < 24; i++)
+    {
+      DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "|cffffcc00An Old God claims the Horde's survivors.|r Cho'gall "
+                                                   + "rallies Twilight's Hammer at Dragonmaw Port.");
+    }
+
+    Dragonmaw.DragonmawFallback.WatchTwilight(p); // 0.80.0: Grim Batol lost while Cho'gall is dead -> the Dragonmaw
   }
 }

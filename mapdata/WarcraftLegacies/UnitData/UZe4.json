@@ -1,0 +1,94 @@
+{
+  "OldId": "Udea",
+  "NewId": "UZe4",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Plate Knight of the Ebon Blade"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Thoras Trollbane"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AHtb,AHtc,AOae,AHav,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Ebon Blade)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroDeathKnight.blp"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Thoras Trollbane"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Thoras Trollbane"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Thoras Trollbane"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The last king of Stromgarde, a horseman of Acherus. Plate: Storm Bolt, Thunder Clap, Endurance Aura; ultimate Avatar."
+    },
+    {
+      "Id": "uclr",
+      "Value": 200
+    },
+    {
+      "Id": "uclg",
+      "Value": 200
+    },
+    {
+      "Id": "uclb",
+      "Value": 200
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.1
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    }
+  ]
+}

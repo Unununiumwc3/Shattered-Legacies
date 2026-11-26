@@ -6,6 +6,9 @@ using MacroTools.Extensions;
 using WarcraftLegacies.Source.Objectives.LegendBased;
 using WarcraftLegacies.Source.Factions.Sentinels.Quests;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.EbonBlade;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Draenei;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Ashtongue;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken;
@@ -190,7 +193,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Description = TwilightHammerFallback.OfferDescription,
         Decision = HourglassData.DecisionOrcishHorde, Condition = HourglassData.ConditionOrcishHorde,
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
+        Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r Its survivors gather at Dragonmaw Port.",
       },
       new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, SkywallFallback.Path)
       {
@@ -201,17 +204,31 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Announcement = "|cffffcc00Thunder Bluff has fallen.|r Skywall answers the call of the Tauren.",
       },
       // evil factions: shown on the Hourglass only (greyed out, "Not available yet"), names from the concepts
-      new TurningPointDef("Scourge", "Knights of the Ebon Blade (not yet)", TurningPointKind.Fallback,
-        TurningPointSource.NotYet)
+      // 0.80.0 (maintainer): the Frozen Throne lost (WL ruptures it) and the Lich King, if he rose, dead for good ->
+      // the Knights of the Ebon Blade, hero-only, sworn to whoever holds Icecrown Citadel (Factions/EbonBlade)
+      new TurningPointDef("Scourge", TurningPointKind.Fallback, EbonBladeFallback.Path)
       {
+        Trigger = "The Frozen Throne is lost and the Lich King is dead",
+        Description = "With the Lich King dead and the Frozen Throne broken his death knights are free: you play the "
+                      + "Knights of the Ebon Blade -- four death knights and Acherus, sworn to whoever holds Icecrown "
+                      + "Citadel. Everything else of the Scourge is lost.",
         Decision = HourglassData.DecisionScourge, Condition = HourglassData.ConditionScourge,
         Hq = new[] { 1966092336 },             // u000 Frozen Throne
+        Prerequisite = EbonBladeFallback.LichKingGone,
+        RequireTriggerForForcedFallback = true,
+        Announcement = "|cffffcc00The Lich King has fallen and the Frozen Throne is broken.|r His death knights wake "
+                       + "free: the Knights of the Ebon Blade ride out of Acherus -- they serve whoever holds Icecrown.",
       },
-      new TurningPointDef("Legion", "Dreadlord Insurgents (not yet)", TurningPointKind.Fallback,
-        TurningPointSource.NotYet)
+      // 0.80.0 (maintainer): the Legion Stronghold lost -> the Draenei (no Sentinels pick any more), joining the
+      // conqueror's team (Factions/Draenei/DraeneiFallback.cs; the announcement is the fallback's own, by conqueror)
+      new TurningPointDef("Legion", TurningPointKind.Fallback, DraeneiFallback.Path)
       {
+        Trigger = "The Legion Stronghold is lost",
+        Description = "With the Legion beaten on Azeroth the Exodar wakes on Azuremyst: you play the Draenei, sworn to "
+                      + "whoever beat the Legion -- even an old enemy. Everything else of the Legion is lost.",
         Decision = HourglassData.DecisionLegion, Condition = HourglassData.ConditionLegion,
         Hq = new[] { 1966092359 },             // u00G Legion Stronghold
+        RequireTriggerForForcedFallback = true,
       },
       new TurningPointDef("Fel Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)
       {
@@ -220,7 +237,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         MakeTrigger = () => new ObjectiveCapitalDead(AllLegends.FelHorde.KilsorrowFortress)
           { ResearchId = HourglassData.ConditionFelHorde },
         RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00Kil'sorrow Fortress has fallen.|r Cho'gall rallies Twilight's Hammer at Dragonmaw Port.",
+        Announcement = "|cffffcc00Kil'sorrow Fortress has fallen.|r Its survivors gather at Dragonmaw Port.",
       },
       // 0.63 (maintainer): the Black Temple destroyed -> Akama's Ashtongue Deathsworn, sworn to whoever destroyed it, then
       // to whoever holds its CP (Timelines/Factions/Illidari/IllidariFallback.cs)
@@ -251,11 +268,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Decision = HourglassData.DecisionBlackEmpire, Condition = HourglassData.ConditionBlackEmpire,
         Hq = new[] { 1429221722 },             // U01Z N'Zoth
       },
-      new TurningPointDef("Ahn'qiraj", "Brood of Nozdormu (not yet)", TurningPointKind.Fallback,
-        TurningPointSource.NotYet)
+      // 0.80.0 (maintainer): C'Thun lost -> the Zandalari Empire at Zuldazar, sworn to whoever holds Zuldazar
+      // (Timelines/Factions/Zandalari/ZandalariFallback.cs); was "Brood of Nozdormu (not yet)"
+      new TurningPointDef("Ahn'qiraj", TurningPointKind.Fallback, ZandalariFallback.Path)
       {
+        Trigger = "C'Thun is lost",
+        Description = "With C'Thun fallen, the Zandalari reclaim Zuldazar: you play the Zandalari Empire, sworn to "
+                      + "whoever holds Zuldazar -- first C'Thun's slayer. Everything left of Ahn'Qiraj is lost.",
         Decision = HourglassData.DecisionAhnqiraj, Condition = HourglassData.ConditionAhnqiraj,
         Hq = new[] { 1429221458 },             // U00R C'Thun
+        RequireTriggerForForcedFallback = true,
+        Announcement = "|cffffcc00C'Thun has fallen.|r From Zuldazar King Rastakhan raises the Zandalari Empire -- "
+                       + "it will serve whoever promises the trolls a united empire.",
       },
     };
 

@@ -95,6 +95,12 @@ ShatteredLegacies/
 | `Objectives/IObjectiveVisit.cs` + `ObjectiveLegendReachRect`, `ObjectiveLegendInRect`, `ObjectiveAnyUnitInRect`, `ObjectiveAnyUnitReachRect`, `ObjectiveHeroWithLevelInRect`, `ObjectiveAnyHeroWithLevelReachRect` | read-only "where / who" properties for the bot's quest runner | 0.76.0 |
 | `MacroTools/Legends/LegendaryHero.cs` | WL 5.0.4's localised tooltip taken, its localised `Name` NOT (desync in mixed-language games: the bots compare legends by name) | 0.77.0 |
 | `Commands/Forfeit.cs` | WL 5.0.4's localised team name, the 6 votes kept (WL 5: 5, for 7v7) | 0.77.0 |
+| `Factions/Ahnqiraj/AhnqirajFaction.cs`, `Quests/QuestRebuildAhnqiraj.cs` (deleted) | no "Rebuilding of Ahn'Qiraj": the gate is Ahn'Qiraj's from the start | 0.78.0 |
+| `Factions/Lordaeron/Quests/QuestScarletCrusade.cs` | `SwapFaction.NameSlot` after the faction change (bot slot name) | 0.78.0 |
+| `WarcraftLegacies.Shared/FactionObjectLimits/DalaranObjectInfo.cs`, `GilneasObjectInfo.cs` | no Gilneas Manor for Dalaran; no Dalaran houses / Violet Tower for Gilneas | 0.80.0 |
+| `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade object limits (`[SL]` lines) | 0.80.0 |
+| `Setup/FactionChoiceDialogSetup.cs` | no Draenei pick: the Sentinels' slot plays the Sentinels | 0.80.0 |
+| `Factions/Draenei/DraeneiFaction.cs` | fallback mode (`asFallback`: no Darkshore quest, `RepairHull` for the fallback) | 0.80.0 |
 | `MacroTools/Factions/Faction.cs` | `SetPlayerColor` (a successor keeps the player's colour, scoreboard included) | 0.53 |
 | `Objectives/TurnBased/ObjectiveExpire.cs` | `ExpirationOffset`: deadlines of a faction that arrives mid-game count from its arrival | 0.53 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | only living creeps count (a WL bug: corpses could never die again) -- could go upstream | 0.53 |

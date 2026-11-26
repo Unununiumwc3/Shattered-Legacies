@@ -1,4 +1,6 @@
 using MacroTools.Legends;
+using MacroTools.Spells;
+using WarcraftLegacies.Source.Shared.Spells;
 using WarcraftLegacies.Source.Ai;
 using WCSharp.Shared.Data;
 
@@ -19,6 +21,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     {
       Legend = new LegendaryHero("Sylvanas the Forsaken") { UnitType = ForsakenConfig.SylvanasBanshee };
       LegendaryHeroManager.Register(Legend);
+      // 0.79.0 (maintainer): the Dark Ranger and the Queen have two ultimates and no Attribute Bonus -- the second is
+      // "Dark Lady's Command" (AZs6, one level): C'Thun's Inspire Madness, WL's own spell code
+      SpellRegistry.Register(new InspireMadness(ForsakenConfig.DarkLadysCommand)
+      {
+        Radius = 300,
+        CountBase = 6,
+        Duration = 30,
+        EffectTarget = @"Abilities\Spells\Other\Charm\CharmTarget.mdl",
+        EffectScaleTarget = 0.5f
+      });
       Legend.Revived += () => AiApi.Safe("sylvanas revived", () =>
       {
         if (_pending > Phase)

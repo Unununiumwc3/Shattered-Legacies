@@ -92,6 +92,7 @@ ZB06   point    enemy  -    -       -      Mass Death Coil (Arthas / Teron): dea
 ZBCM   unit     enemy  -    -       mana   Chain Mana Burn (Rommath)
 ZBIB   skip     -      -    -       -      Ice Block (Lich): freezes EVERY unit in the area, friend and foe
 ZBIM   point    enemy  -    -       -      Inspire Madness (C'Thun): enemies in the area
+AZs6   point    enemy  4    -       -      Dark Lady's Command (Sylvanas, 0.79.0): Inspire Madness, enemies in the area
 ZBST   point    enemy  1    300     -      Spawn Tentacle (C'Thun): summons a tentacle at the point
 ZBUE   point    ally   -    -       -      Unstable Evolution (C'Thun): empowers own non-hero units in the area
 #

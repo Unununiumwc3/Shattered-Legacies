@@ -25,15 +25,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionSentinels = 1381655351; // RZc7
     internal const int DecisionExodar = 1381655608; // RZd8 Fallback: Draenei of Shattrath (placeholder)
     internal const int ConditionExodar = 1381655352; // RZc8
-    internal const int DecisionOrcishHorde = 1381655609; // RZd9 Fallback: Twillight
+    internal const int DecisionOrcishHorde = 1381655609; // RZd9 Fallback: Twillight or Dragonmaw
     internal const int ConditionOrcishHorde = 1381655353; // RZc9
     internal const int DecisionTauren = 1381655617; // RZdA Fallback: Skywall
     internal const int ConditionTauren = 1381655361; // RZcA
-    internal const int DecisionScourge = 1381655618; // RZdB Fallback: Knights of the Ebon Blade (not yet)
+    internal const int DecisionScourge = 1381655618; // RZdB Fallback: Knights of the Ebon Blade
     internal const int ConditionScourge = 1381655362; // RZcB
-    internal const int DecisionLegion = 1381655619; // RZdC Fallback: Dreadlord Insurgents (not yet)
+    internal const int DecisionLegion = 1381655619; // RZdC Fallback: Draenei
     internal const int ConditionLegion = 1381655363; // RZcC
-    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Twillight
+    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Twillight or Dragonmaw
     internal const int ConditionFelHorde = 1381655364; // RZcD
     internal const int DecisionIllidari = 1381655621; // RZdE Fallback: Ashtongue Deathsworn
     internal const int ConditionIllidari = 1381655365; // RZcE
@@ -41,7 +41,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionSkywall = 1381655366; // RZcF
     internal const int DecisionBlackEmpire = 1381655623; // RZdG Fallback (not decided yet)
     internal const int ConditionBlackEmpire = 1381655367; // RZcG
-    internal const int DecisionAhnqiraj = 1381655624; // RZdH Fallback: Brood of Nozdormu (not yet)
+    internal const int DecisionAhnqiraj = 1381655624; // RZdH Fallback: Zandalari Empire
     internal const int ConditionAhnqiraj = 1381655368; // RZcH
 
     // every research the Hourglass lists (decisions + WL's own), for the per-player limits

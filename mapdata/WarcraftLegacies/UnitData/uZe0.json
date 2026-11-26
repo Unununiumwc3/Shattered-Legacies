@@ -1,0 +1,51 @@
+{
+  "OldId": "uaod",
+  "NewId": "uZe0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Acherus: The Ebon Hold"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "UZe1,UZe2,UZe3,UZe4"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Ebon Blade)"
+    },
+    {
+      "Id": "ufma",
+      "Value": 40
+    },
+    {
+      "Id": "ugol",
+      "Value": 0
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.2
+    },
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "unwalkable"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The necropolis of the Knights of the Ebon Blade. Revives its death knights; it cannot be destroyed."
+    }
+  ]
+}

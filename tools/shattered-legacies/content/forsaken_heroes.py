@@ -1,13 +1,14 @@
 """Sylvanas of the Forsaken: her three phase heroes and the hero skills made for them (0.56).
 
 Usage (repo root):  python3 tools/shattered-legacies/content/forsaken_heroes.py   (after import_24p.py)
-Writes mapdata/WarcraftLegacies/UnitData/UZa1.json, UZa2.json, UZa3.json and AbilityData/AZs1..AZs5.json.
+Writes mapdata/WarcraftLegacies/UnitData/UZa1.json, UZa2.json, UZa3.json and AbilityData/AZs1..AZs6.json.
   UZa1 The Banshee            (caster)  Domination, Anti-magic Shell, Banshee Wail; Ghostform (no skill point)
   UZa2 The Dark Ranger        (attack)  Black Arrow, Silence, Aimed Shot; ultimate Multi Shot; Trueshot Aura
   UZa3 Queen of the Forsaken  (mix)     Black Arrow, Domination, Banshee Wail; ultimate Banshee Queen; Trueshot Aura,
                                         Ghostform
 All three start from Quel'thalas' Sylvanas (Hvwd: stats, attack). Every learnable skill has 4 levels (ultimates 3,
-from level 6), plus the Attribute Bonus. The new skills are hero versions of existing spells; level 1 = the
+from level 6), plus the Attribute Bonus -- 0.79.0 (maintainer): the Dark Ranger and the Queen have no Attribute Bonus
+but a second ultimate, "Dark Lady's Command" (AZs6, one level, from level 6: C'Thun's Inspire Madness). The new skills are hero versions of existing spells; level 1 = the
 original, each level one even step (maintainer: no new spells -- reuse, scale carefully).
 """
 import json
@@ -139,6 +140,20 @@ def abilities():
         if m["Id"] == "ansf":
             m["Value"] = "(Forsaken - Sylvanas)"
     write("AbilityData", "AZs5", multi)
+    # 0.79.0 (maintainer): her second ultimate -- C'Thun's Inspire Madness (ZBIM, Channel) as a hero skill of ONE
+    # level from level 6; the code is WL's InspireMadness (ForsakenSylvanas.Setup: 6 units, 30 s)
+    cmd = load("AbilityData", "ZBIM")
+    keep = [m for m in cmd["Modifications"] if m["Id"] not in (
+        "areq", "aher", "alev", "arlv", "alsk", "anam", "ansf", "aart", "arar", "abpx", "abpy", "arpx", "arpy", "ahky",
+        "arhk", "aret", "arut", "atp1", "aub1", "arac")]
+    text = ("Sylvanas commands up to 6 non-summoned enemy units in the target area (no heroes, no mechanical units): "
+            "they fight for her for 30 seconds, then die.")
+    keep += [s("areq", ""), n("aher", 1), n("alev", 1), n("arlv", 6), n("alsk", 0), s("anam", "Dark Lady's Command"),
+             s("ansf", "(Forsaken - Sylvanas)"), s("arac", "undead"), s("aart", BTN + "BTNPossession.blp"),
+             s("arar", BTN + "BTNPossession.blp"), n("abpx", 3), n("abpy", 1), n("arpx", 3), n("arpy", 1),
+             s("ahky", "F"), s("arhk", "F"), s("aret", "Learn Dark Lady's Command"), s("arut", text),
+             s("atp1", "Dark Lady's Command", 1), s("aub1", text, 1)]
+    write("AbilityData", "AZs6", {"OldId": "ANcl", "NewId": "AZs6", "Unk": [0], "Modifications": keep})
 
 
 def heroes():
@@ -150,10 +165,10 @@ def heroes():
          "AZs1,AZs2,AZs3,Aamk", "AZs4,AInv,Ault",
          "Sylvanas Windrunner, slain by the Scourge and risen as a banshee. A caster: she dominates her enemies."),
         ("UZa2", "The Dark Ranger", "Units\\Undead\\EvilSylvanas\\EvilSylvanas", "BTNBansheeRanger.blp",
-         f"{imp('A03J')},A083,A0PK,AZs5,Aamk", f"{imp('A01O')},A0KV,AInv,Ault",
+         f"{imp('A03J')},A083,A0PK,AZs5,AZs6", f"{imp('A01O')},A0KV,AInv,Ault",
          "Free of the Lich King, Sylvanas is a ranger again -- a deadly archer."),
         ("UZa3", "Queen of the Forsaken", "war3mapImported\\Hero_DarkRangerBoss2.mdl", "BTNBansheeRanger.blp",
-         f"{imp('A03J')},AZs1,AZs3,{imp('A0DU')},Aamk", f"{imp('A01O')},AZs4,AInv,Ault",
+         f"{imp('A03J')},AZs1,AZs3,{imp('A0DU')},AZs6", f"{imp('A01O')},AZs4,AInv,Ault",
          "The Banshee Queen, ruler of the Undercity: archer and spellcaster both."),
     ]
     for oid, title, model, icon, uhab, uabi, story in phases:
@@ -168,4 +183,4 @@ def heroes():
 if __name__ == "__main__":
     abilities()
     heroes()
-    print("wrote UZa1-UZa3, AZs1-AZs5")
+    print("wrote UZa1-UZa3, AZs1-AZs6")

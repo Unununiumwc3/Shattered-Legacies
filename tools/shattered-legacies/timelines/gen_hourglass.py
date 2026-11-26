@@ -54,22 +54,27 @@ TURNING_POINTS = [
      "BTNHeroWarden"),
     ("Exodar", "The Exodar", "RZd8", "RZc8", "Fallback: Draenei of Shattrath (placeholder)",
      "Placeholder until the draenei take Maiev's Watchers path.", "Exodar Regalis lost", "BTNHeroArchMage"),
-    ("OrcishHorde", "Orcish Horde", "RZd9", "RZc9", "Fallback: Twillight",
-     "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree.", "Orgrimmar lost",
+    ("OrcishHorde", "Orcish Horde", "RZd9", "RZc9", "Fallback: Twillight or Dragonmaw",
+     "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: the Dragonmaw Clan "
+     "rises at Dragonmaw Port with Nek'rosh Skullcrusher, sworn to whoever holds the port.", "Orgrimmar lost",
      "BTNChogall"),
     ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Skywall",
      "Claim the Lost City and Vortex Pinnacle as Skywall. Skywall cannot be defeated: it serves whoever holds the "
      "Vortex Pinnacle (first Thunder Bluff's conqueror) and changes sides when another faction takes it.",
      "Thunder Bluff lost",
      "BTNHeroAvatarOfFlame"),
-    ("Scourge", "Scourge", "RZdB", "RZcB", "Fallback: Knights of the Ebon Blade (not yet)",
-     "Planned: when Lich King Arthas dies, his death knights break free. Not in this version.",
-     "Not available yet", "BTNHeroDeathKnight"),
-    ("Legion", "Legion", "RZdC", "RZcC", "Fallback: Dreadlord Insurgents (not yet)",
-     "Planned: the dreadlords fight on from a hidden lair. Not in this version.", "Not available yet",
-     "BTNHeroDreadLord"),
-    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Twillight",
-     "Join Cho'gall at Dragonmaw Port with the Twilight army and tech tree.", "Kil'sorrow Fortress destroyed",
+    ("Scourge", "Scourge", "RZdB", "RZcB", "Fallback: Knights of the Ebon Blade",
+     "The Lich King dead (if he rose) and the Frozen Throne broken: his death knights are free. You play the Knights of "
+     "the Ebon Blade -- Thassarian, Koltira, Nazgrim and Thoras Trollbane, no army -- with Acherus near Icecrown, "
+     "sworn to whoever holds Icecrown Citadel. The rest of the Scourge is lost.",
+     "Frozen Throne lost, Lich King dead", "BTNHeroDeathKnight"),
+    ("Legion", "Legion", "RZdC", "RZcC", "Fallback: Draenei",
+     "The Legion beaten on Azeroth: the Exodar wakes on Azuremyst. You play the Draenei with Prophet Velen, sworn to "
+     "whoever beat the Legion -- even an old enemy. The rest of the Legion is lost.", "Legion Stronghold lost",
+     "BTNBOSSVelen"),
+    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Twillight or Dragonmaw",
+     "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: the Dragonmaw Clan "
+     "rises at Dragonmaw Port with Nek'rosh Skullcrusher, sworn to whoever holds the port.", "Kil'sorrow Fortress destroyed",
      "BTNChogall"),
     ("Illidari", "Illidan", "RZdE", "RZcE", "Fallback: Ashtongue Deathsworn",
      "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn "
@@ -80,9 +85,10 @@ TURNING_POINTS = [
      "Not available", "BTNHeroAvatarOfFlame"),
     ("BlackEmpire", "Black Empire", "RZdG", "RZcG", "Fallback (not decided yet)",
      "Planned: Xal'atath or the Titan Watchers. Not in this version.", "Not available yet", "BTNFacelessOne"),
-    ("Ahnqiraj", "Ahn'qiraj", "RZdH", "RZcH", "Fallback: Brood of Nozdormu (not yet)",
-     "Planned: the bronze dragonflight takes over the Caverns of Time. Not in this version.", "Not available yet",
-     "BTNBronzeDragon"),
+    ("Ahnqiraj", "Ahn'qiraj", "RZdH", "RZcH", "Fallback: Zandalari Empire",
+     "With C'Thun fallen, King Rastakhan raises the Zandalari Empire at Zuldazar: you play the trolls, sworn to whoever "
+     "holds Zuldazar (first C'Thun's slayer). Unite Zul'Aman, Gundrak, Zul'Farrak and Zul'Gurub. Ahn'Qiraj is lost.",
+     "C'Thun lost", "BTNHeadHunterBerserker"),
 ]
 
 

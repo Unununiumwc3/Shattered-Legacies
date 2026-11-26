@@ -107,6 +107,13 @@ namespace WarcraftLegacies.Source.Ai
     // off in a release build). The command text is read with GetEventPlayerChatString inside the action.
     public static void RegisterDebugCommand(string cmd, System.Action act) => AiDebug.RegisterControl(cmd, act);
 
+    // 0.79.0: a bot's caster-research pace (SimpleBot's tech pool: 2 + one step per 2 min + one per CP captured)
+    public static int CpCaptures(player p) =>
+      SimpleBot._cpCaptures.TryGetValue(GetPlayerId(p), out var n) ? n : 0;
+
+    // 0.79.0: train / research for free (gold and lumber topped up for the order, restored right after)
+    public static bool FreeOrder(player p, unit building, int orderId) => AiTech.FreeOrder(p, building, orderId);
+
     public static void RegisterHeadquarters(string faction, int[] types)
     {
       AiBuildSites.Headquarters[faction] = types;

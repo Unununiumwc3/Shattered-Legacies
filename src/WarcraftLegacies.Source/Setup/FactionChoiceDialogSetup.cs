@@ -1,6 +1,5 @@
 ﻿using MacroTools.Factions.Choices;
 using WarcraftLegacies.Source.Factions.Dalaran;
-using WarcraftLegacies.Source.Factions.Draenei;
 using WarcraftLegacies.Source.Factions.Frostwolf;
 using WarcraftLegacies.Source.Factions.Illidari;
 using WarcraftLegacies.Source.Factions.Sentinels;
@@ -45,14 +44,8 @@ public static class FactionChoiceDialogSetup
       Difficulty = FactionLearningDifficulty.Basic,
       StartingArea = Regions.SentDraeSharedStartPos
     };
-    var draenei = new FactionChoice
-
-    {
-      Faction = new DraeneiFaction(),
-      Difficulty = FactionLearningDifficulty.Advanced,
-      StartingArea = Regions.SentDraeSharedStartPos,
-      RequiresCheats = false
-    };
-    new FactionChoiceDialogPresenter(sentinels, draenei).Run(player.Create(18));
+    // [SL] (0.80.0, maintainer): the Draenei are the Legion's fallback, not a pick -- the Sentinels' slot always plays
+    // the Sentinels (one choice: no dialog). The Exodar waits for the Legion's fall (DraeneiFallback.Prepare).
+    new FactionChoiceDialogPresenter(sentinels).Run(player.Create(18));
   }
 }

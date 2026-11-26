@@ -1,0 +1,94 @@
+{
+  "OldId": "Udea",
+  "NewId": "UZe1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Frost Knight of the Ebon Blade"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Thassarian"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AUfn,AUfu,AUdc,AUdd,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Ebon Blade)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroDeathKnight.blp"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Thassarian"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Thassarian"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Thassarian"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The first death knight of Acherus to break the Lich King's hold. Frost: Frost Nova, Frost Armor, Death Coil; ultimate Death and Decay."
+    },
+    {
+      "Id": "uclr",
+      "Value": 170
+    },
+    {
+      "Id": "uclg",
+      "Value": 210
+    },
+    {
+      "Id": "uclb",
+      "Value": 255
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    }
+  ]
+}

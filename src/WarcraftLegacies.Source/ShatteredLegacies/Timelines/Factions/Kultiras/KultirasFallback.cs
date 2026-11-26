@@ -99,6 +99,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras
       KezanEnterpriseOil.Start(p);
       KezanEnterpriseBombers.Start(p); // 0.61: Fuel Transports as suicide bombers
       KezanEnterpriseTrade.Start(p);
+      KezanEnterpriseBot.Start(p); // 0.79.0: a bot runs the oil (free, at the caster-research pace)
       KezanEnterpriseSlaveCamps.Start(p); // 0.60: the Refugee Slave Camps rise at the goblin towns
       p.RepositionCamera(start);
       AiApi.LogPin("Kul Tiras fallback -> Kezan Enterprise: old holdings to "

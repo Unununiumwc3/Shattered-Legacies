@@ -36,6 +36,21 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   clear. Skywall: take the Vortex Pinnacle CP with another team -> Skywall changes sides; its halls stay; it never
   dies. Stormwind Keep lost -> Gilneas (North Alliance, Gilneas CPs, Genn); Dalaran has no Gilneas choice and no
   Greymane Wall; nobody walks into Gilneas before.
+- **0.79.0 playtest**: snipe a bot's HQ -- after 5 s its far troops and its allies' appear beside it (text + ping,
+  dump "recall"); a bot Kezan builds rigs and tankers (log "kezan oil bot"); Twilight owns Dragonmaw Port on arrival;
+  Sylvanas (Dark Ranger / Queen) learns Dark Lady's Command at 6 and the bot casts it.
+- **0.80.0 playtest**: Orgrimmar taken by a non-Old-God -> the Dragonmaw at Dragonmaw Port (by an Old God -> Twilight);
+  Twilight with Cho'gall dead and Grim Batol not theirs -> the Dragonmaw (cult units hostile); C'Thun lost -> the
+  Zandalari at Zuldazar; all three serve whoever holds their seat and cannot be defeated. Models: `git lfs checkout`.
+  Frozen Throne lost + Lich King dead -> the Ebon Blade (4 heroes, Acherus); Legion Stronghold lost -> the Draenei on
+  Azuremyst, joining the conqueror; the Sentinels' slot no longer offers the Draenei.
+- Next: Dragonmaw quests (Grim Batol, the red dragons), the Zandalari's Hakkar endgame (decide), the 24p dungeons
+  (coordinates from the maintainer), a third Dragonmaw hero (Zaela? no model).
+- **0.78.0 playtest**: a bot's gates open within 15 s (dump "gates ... opened by bots N"); Ahn'Qiraj owns its gate
+  from the start; a bot's Forsaken units say "Forsaken" on hover; the pinned "ferries: first voyage" line appears.
+- **Discussed 2026-11-25 (not built)**: HQ emergency recall, Kezan oil for bots, Dragonmaw Port as Twilight's CP,
+  Twilight's Old Gods support (portal weight), conquerable fallbacks, Inspire Madness for Sylvanas, the 24p trolls
+  (Zuldazar), Dalaran / Gilneas shared quests, 24p dungeons into this terrain.
 - **0.77.0 playtest**: gates stand everywhere again; a bot's gate opens within 30 s and stays open (dump "gates"); the
   Greymane Wall is shut (gate invulnerable) until Stormwind falls, then Gilneas holds it. Illusions keep their
   caster's name. Chinese client: books, commands, quest rewards translated.

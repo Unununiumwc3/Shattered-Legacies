@@ -33,5 +33,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
 
       return given;
     }
+
+    // 0.79.0: a CP the arriving faction gets WHOEVER holds it now (Twilight's Dragonmaw Port -- maintainer: it was
+    // often taken before Twilight arrived, and Give only hands over neutral CPs)
+    internal static bool Force(player p, int cpType)
+    {
+      var cp = AiApi.SafeCp(cpType);
+      if (cp == null || cp.Unit == null || GetOwningPlayer(cp.Unit) == p)
+      {
+        return false;
+      }
+
+      AiApi.GiveUnit(cp.Unit, p);
+      return true;
+    }
   }
 }

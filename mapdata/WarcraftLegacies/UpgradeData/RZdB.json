@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Knights of the Ebon Blade (not yet)"
+      "Value": "Fallback: Knights of the Ebon Blade"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Knights of the Ebon Blade (not yet)"
+      "Value": "Fallback: Knights of the Ebon Blade"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: when Lich King Arthas dies, his death knights break free. Not in this version."
+      "Value": "The Lich King dead (if he rose) and the Frozen Throne broken: his death knights are free. You play the Knights of the Ebon Blade -- Thassarian, Koltira, Nazgrim and Thoras Trollbane, no army -- with Acherus near Icecrown, sworn to whoever holds Icecrown Citadel. The rest of the Scourge is lost."
     }
   ]
 }

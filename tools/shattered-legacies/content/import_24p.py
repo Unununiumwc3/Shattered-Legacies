@@ -337,7 +337,118 @@ TWILIGHT = {
     },
 }
 
-SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT]
+# 0.80.0 (maintainer): the Dragonmaw Clan -- the orcs of the 24p's Twilight tree WITHOUT the cult (no Cultists, heralds,
+# death knights, ogres, dragonspawn, void riders, nether dragons, Cho'gall and his ascendants): Twilight's successor once
+# Grim Batol and Cho'gall are lost, and the Orcish Horde's / Fel Horde's fallback when no Old God beat them. Stock orc
+# models for the buildings ("unset": the copies show their stock base), heroes Nek'rosh Skullcrusher and Zuluhed.
+DRAGONMAW = {
+    "name": "Dragonmaw",
+    "third": "m",
+    "force": True,
+    "objects": [
+        ("o039", "GreatHall", ["TownHall"], 200),
+        ("o03A", "Stronghold", ["Keep"], 200),
+        ("o03B", "Fortress", ["Castle"], 200),
+        ("o03C", "AltarOfStorms", ["Altar"], 200),
+        ("o03D", "Barracks", ["Barracks"], 200),
+        ("o03J", "WarMill", ["Research"], 200),
+        ("o05J", "RedDragonHatchery", ["Specialist"], 200),
+        ("o03I", "Dock", ["Shipyard"], 200),
+        ("o03G", "WatchTower", ["Tower"], 200),
+        ("o03H", "ImprovedWatchTower", ["Tower"], 200),
+        ("o03K", "Burrow", ["Farm"], 200),
+        ("u00Y", "VoodooLounge", ["Shop"], 200),
+        ("o05P", "Peon", ["Builder"], 200),
+        ("o05K", "Warrior", ["Fighter"], 200),
+        ("o05L", "Spearthrower", ["Marksman"], 200),
+        ("o04K", "SkullCatapult", ["Siege"], 6),
+        ("o05M", "DragonRider", ["Flyer"], 12),
+        ("n0CQ", "DragonWhelp", ["Flyer"], 200),
+        ("n0CP", "AncientRedDragon", ["Destroyer"], 4),
+        ("O01Q", "Nekrosh", ["Tank"], 1),
+        ("O00Y", "Zuluhed", ["Support"], 1),
+    ],
+    "zero_lumber": True,
+    "exclude": ["o04B", "n087", "u01T", "n09O", "o04J", "n051", "n083", "n07X", "o01H", "O01P", "H08Q", "U01S", "O04H",
+                "u01Y", "o03E", "o03F", "o04I", "odes", "obot", "ojgn", "R006", "R00C", "R08S", "R06Y", "R023"],
+    "drop": [],
+    "extra": [('obot', 'TransportShip', [], 12), ('h0AS', 'ScoutShip', [], 200), ('h0AP', 'Frigate', [], 12),
+              ('h0B2', 'Fireship', [], 200), ('h0AY', 'Galley', [], 200), ('h0B5', 'BoardingVessel', [], 200),
+              ('h0BC', 'Juggernaut', [], 6), ('h0AO', 'Bombard', [], 6)],
+    "set": {
+        "o039": {"utra": "o05P", "unam": "Great Hall"},
+        "o03A": {"utra": "o05P", "unam": "Stronghold"},
+        "o03B": {"utra": "o05P", "unam": "Fortress"},
+        "o03C": {"utra": "O01Q,O00Y", "unam": "Altar of Storms"},
+        "o03D": {"utra": "o05K,o05L,o04K", "unam": "Barracks"},
+        "o03J": {"ures": "Rosp,Rhme,Rhar,=R04R,=R09X", "unam": "War Mill"},
+        "o03G": {"unam": "Watch Tower"},
+        "o03H": {"unam": "Improved Watch Tower"},
+        "o03K": {"unam": "Burrow"},
+        "o03I": {"unam": "Dragonmaw Docks", "utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO",
+                 "ures": "=R006,=R00C", "ureq": ""},
+        "o05P": {"ubui": "o03J,o03G,o03C,o03K,o03I,o03D,o039,o05J,u00Y", "unam": "Peon"},
+        "n0CP": {"ureq": "o03B"},
+        "O01Q": {"unam": "Warlord of the Dragonmaw"},
+        "O00Y": {"unam": "Shaman of the Dragonmaw"},
+    },
+    # stock orc look: the copies drop the Twilight / Iron Horde models and icons (their bases are WC3's orc buildings)
+    "unset": {o: ["umdl", "uico"] for o in ("o039", "o03A", "o03B", "o03C", "o03D", "o03J", "o03K", "o03G", "o03H")}
+             | {"o05P": ["umdl"]},
+}
+
+# 0.80.0 (maintainer): the Zandalari Empire -- the 24p's Zandalar trolls (Rastakhan, Zul), Ahn'Qiraj's fallback at
+# Zuldazar. "force": WL keeps its creep Zandalari under the 24p ids (the preplaced base at Zuldazar) -- MainEquivalents
+# turns that base into the Empire's. Left out: the Loa Shrine and its Warsong units, Gahz'rilla, the 24p's storm wyrm.
+ZANDALAR = {
+    "name": "Zandalari",
+    "third": "x",
+    "force": True,
+    "objects": [
+        ("o03R", "GreatHall", ["TownHall"], 200),
+        ("o03Y", "Stronghold", ["Keep"], 200),
+        ("o03Z", "Fortress", ["Castle"], 200),
+        ("o040", "AltarOfLoa", ["Altar"], 200),
+        ("o041", "TrainingGround", ["Barracks"], 200),
+        ("o042", "WarMill", ["Research"], 200),
+        ("o043", "SpiritSpire", ["Magic"], 200),
+        ("o044", "DinosaurPen", ["Specialist"], 200),
+        ("o045", "Dwelling", ["Farm"], 200),
+        ("o046", "WatchTower", ["Tower"], 200),
+        ("o048", "ImprovedWatchTower", ["Tower"], 200),
+        ("o047", "Bazaar", ["Shop"], 200),
+        ("o049", "GoldenDock", ["Shipyard"], 200),
+        ("o04A", "Gatherer", ["Builder"], 200),
+        ("h021", "Watcher", ["Fighter"], 200),
+        ("o04D", "Scout", ["Marksman"], 200),
+        ("h05D", "RaptorRider", ["Fighter"], 200),
+        ("o04F", "HexDoctor", ["Support"], 200),
+        ("o04G", "Haruspex", ["Support"], 200),
+        ("o04E", "Boneseer", ["Elite"], 6),
+        ("e00Z", "Direhorn", ["Tank"], 6),
+        ("O026", "Rastakhan", ["Support"], 1),
+        ("O01J", "Zul", ["Support"], 1),
+        ("R04W", "QuestCityOfGold", None, 0),  # "Quest Completed: City of Gold" -> the Direhorns (QuestEmpireReborn)
+    ],
+    "zero_lumber": True,
+    "exclude": ["H06Q", "n09E", "o021", "o02K", "nftk", "o04X", "R02F", "odes", "obot", "ojgn", "R006", "R00C",
+                "R08D", "R023", "o04W"],
+    "drop": [],
+    "extra": [('obot', 'TransportShip', [], 12), ('h0AS', 'ScoutShip', [], 200), ('h0AP', 'Frigate', [], 12),
+              ('h0B2', 'Fireship', [], 200), ('h0AY', 'Galley', [], 200), ('h0B5', 'BoardingVessel', [], 200),
+              ('h0BC', 'Juggernaut', [], 6), ('h0AO', 'Bombard', [], 6)],
+    "set": {
+        "o040": {"utra": "O026,O01J"},
+        "o042": {"ures": "Rhme,Rhar,=R04R,=R09X"},
+        "o049": {"utra": "=obot,=h0AS,=h0AP,=h0B2,=h0AY,=h0B5,=h0BC,=h0AO", "ures": "=R006,=R00C", "ureq": ""},
+        "o04A": {"ubui": "o03R,o040,o041,o042,o046,o045,o044,o043,o049,o047"},
+        "o044": {"utra": "h05D,e00Z"},
+        "O026": {"ureq": ""},
+        "o04E": {"ureq": "o03Z"},
+    },
+}
+
+SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT, DRAGONMAW, ZANDALAR]
 
 
 def load(map_dir):
@@ -461,6 +572,9 @@ def main():
                     d.setdefault("Modifications", []).append({"Id": "ulum", "Value": 0})
                 if kind == "UpgradeData" and not any(m["Id"] == "glmb" for m in d.get("Modifications", [])):
                     d.setdefault("Modifications", []).append({"Id": "glmb", "Value": 0})
+            unset = set(s.get("unset", {}).get(oid, []))  # 0.80.0: fields dropped from the copy (stock value again)
+            if unset:
+                d["Modifications"] = [m for m in d.get("Modifications", []) if m["Id"] not in unset]
             for field, value in s.get("set", {}).get(oid, {}).items():
                 hit = [m for m in d.get("Modifications", []) if m["Id"] == field]
                 for m in hit:

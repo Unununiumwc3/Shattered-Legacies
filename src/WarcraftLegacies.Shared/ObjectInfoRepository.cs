@@ -39,6 +39,9 @@ public sealed class ObjectInfoRepository
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.KezanEnterpriseObjectInfo.GetAllObjectLimits()); // [SL] (0.58)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.KezanSlaveCampsObjectInfo.GetAllObjectLimits()); // [SL] (0.60)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.AshtongueObjectInfo.GetAllObjectLimits()); // [SL] (0.63)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DragonmawObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.ZandalariObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.EbonBladeObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
     AddFactionObjectInfo(ScourgeObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(SentinelsObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(SkywallObjectInfo.GetAllObjectLimits());
