@@ -42,7 +42,7 @@ H09N	main	used	hero	Matriarch of Tirisfal	(Dalaran)	Hjai	human	war3mapImported\A
 H09S	main	used	hero	Hammer of the Light	(Draenei)	Huth	nightelf	war3mapImported\Vindicator Maraad.mdl	main	ReplaceableTextures\CommandButtons\BTNGlazeroth.blp	The Exodar	o058	-	-	-	-	A12Y,ACds,AEim,AHad,AHtb,AInv,Aamk	R082
 H0A2	main	used	hero	Scarlet Commander	(Scarlet)	Hpb1	human	war3mapImported\RenaultMograine.mdl	main	ReplaceableTextures\CommandButtons\BTNPaladinRenault.blp	Scarlet Crusade	h0BQ	-	-	-	-	A05E,A06S,A0NC,A0XO,ACds,AInv,Aamk	-
 HZb3	main	used	hero	Sea Witch	(Nzoth)	Hvsh	naga	war3mapImported\Medusa.mdl	main	ReplaceableTextures\CommandButtons\BTNNagaSeaWitch.blp	-	nZb4	-	-	-	-	A0DN,A0X6,A11B,AInv,AZbh,Aamk	-
-HZb4	main	used	hero	Empress of Nazjatar	(Nzoth)	Hvsh	naga	HeroNagaEnchantress.mdl	main	ReplaceableTextures\CommandButtons\BTNNagaSummoner.blp	-	nZb4	-	-	-	-	A0PD,A0ZN,AEsf,AInv,AZbk,Aamk	RZb0
+HZb4	main	used	hero	Empress of Nazjatar	(Nzoth)	Hvsh	naga	HeroNagaEnchantress.mdl	main	ReplaceableTextures\CommandButtons\BTNNagaSummoner.blp	-	nZb4	-	-	-	-	AEsf,AInv,AZbi,AZbj,AZbk,AZbt,Aamk	RZb0
 HZi0	main	used	hero	Golem Lord of Shadowforge	(Dark Iron)	Hmbr	human	units\human\Muradin\Muradin	stock	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	-	hZi4	-	-	-	-	AInv,MD07,TP46,TP49,TP51	-
 HZi1	main	used	hero	Chief Architect of Shadowforge	(Dark Iron)	Hmbr	human	war3mapImported\Hero Dwarven Rider.mdl	main	ReplaceableTextures\CommandButtons\BTNmagni.blp	-	hZi4	-	-	-	-	A08Q,AInv,ANdh,Aamk,VP29,VP30	-
 HZp6	main	used	hero	Patron of the Brotherhood	(Defias)	Hamg	human	units\creeps\HumanMage\HumanMage	stock	ReplaceableTextures\CommandButtons\BTNBanditMage.blp	-	-	-	-	-	-	AHad,AInv,ANch,ANsi,AOhx,Aamk,Asal	-

@@ -34,6 +34,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZbq` | Death Domain Aura | `24p:A103` | Nazjatar |
 | `AZbr` | Death Domain | `24p:A101` | Nazjatar |
 | `AZbs` | Death Domain Slow | `24p:S001` | Nazjatar |
+| `AZbt` | Tidal Aura | `24p:A0ZO` | Nazjatar |
 | `AZf0` |  | `24p:Ahar` | Forsaken |
 | `AZf1` | Self Destruct | `24p:A106` | Forsaken |
 | `AZf2` |  | `24p:Argl` | Forsaken |
@@ -174,6 +175,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZyh` | Army of Light Golem summon | `24p:A0ZI` | Ashtongue |
 | `BZb0` | Death Domain | `24p:B0AM` | Nazjatar |
 | `BZb1` |  | `24p:B0AN` | Nazjatar |
+| `BZb2` |  | `24p:B0AJ` | Nazjatar |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |

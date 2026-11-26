@@ -804,7 +804,7 @@ A0ZH	main	used	Army of Light	(Draenei)	ANrc	yes	-	nightelf	ReplaceableTextures\C
 A0ZK	main	used	Multishot	(defender ancient protector rock)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	e01Y,n0B6
 A0ZL	main	used	Multishot	(defender far seer missile)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	n0BB,n0BC
 A0ZM	main	used	Multishot	(defender Fireball missile)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	h09O,n0AA,n0DV,nECP
-A0ZN	main	used	Finger of Death	(Goliathon)	Afod	-	-	creeps	ReplaceableTextures\CommandButtons\BTNCorpseExplode.blp	HZb4,n0CI,n0CK
+A0ZN	main	used	Finger of Death	(Goliathon)	Afod	-	-	creeps	ReplaceableTextures\CommandButtons\BTNCorpseExplode.blp	n0CI,n0CK
 A0ZO	main	used	Multishot	(defender spirit tower missile)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	n0DW,u008,u01U,u028
 A0ZP	main	used	Charge Mana	(Arcane Well)	Ambt	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNManaRechargeOn.blp	o056
 A0ZQ	main	used	Multishot	(defender boat missile)	Aroc	-	-	human	ReplaceableTextures\CommandButtons\PASTripleShot.blp	n0D6
@@ -1263,8 +1263,8 @@ AZbe	main	used	Void Tide	(C'thun Guardian)	ACc2	-	-	human	ReplaceableTextures\Co
 AZbf	main	used	Consuming Attack	(C'thun Guardian)	ACvp	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNVampiricAura.blp	hZb2
 AZbg	main	used	Multi Shot	(Naga Hydra)	Aroc	-	-	nightelf	ReplaceableTextures\CommandButtons\PASTriclyde.blp	nZbk
 AZbh	main	used	Healing Spores	(Lady Naz'jar, Naga)	ANhs	yes	-	creeps	ReplaceableTextures\CommandButtons\BTNHealingSpores.blp	HZb3
-AZbi	main	unused	Water Wave	(Pink - Vol'Jin)	ANhw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWaterAttack.blp	-
-AZbj	main	unused	Water Images	(Azshara)	AOmi	yes	-	orc	ReplaceableTextures\CommandButtons\BTNMirrorImage.blp	-
+AZbi	main	used	Water Wave	(Pink - Vol'Jin)	ANhw	yes	-	orc	ReplaceableTextures\CommandButtons\BTNWaterAttack.blp	HZb4
+AZbj	main	used	Water Images	(Azshara)	AOmi	yes	-	orc	ReplaceableTextures\CommandButtons\BTNMirrorImage.blp	HZb4
 AZbk	main	used	Ancient Combat Expertise	(azshara)	ANdb	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDrunkenDodge.blp	HZb4
 AZbl	main	used	Death Domain	-	ANsy	yes	-	undead	ReplaceableTextures\CommandButtons\BTNRedDeath.blp	UZb1
 AZbm	main	used	Blood Curse	-	Absk	-	-	naga	ReplaceableTextures\CommandButtons\BTNBloodCurse.blp	UZb1
@@ -1274,6 +1274,7 @@ AZbp	main	used	Lesser Clarity Potion	-	AIpl	-	yes	other	ReplaceableTextures\Comm
 AZbq	main	used	Death Domain Aura	-	Aakb	-	-	orc	ReplaceableTextures\CommandButtons\BTNRedDeath.blp	oZb0
 AZbr	main	used	Death Domain	(Neutral Hostile 1)	ANpi	-	-	other	ReplaceableTextures\PassiveButtons\PASBTNImmolation.blp	oZb0
 AZbs	main	used	Death Domain Slow	-	SCae	-	-	undead	ReplaceableTextures\CommandButtons\BTNRedDeath.blp	oZb0
+AZbt	main	used	Tidal Aura	(Red - Death Knight Arthas) (chogall)	AUau	yes	-	naga	ReplaceableTextures\CommandButtons\BTNSphereofStorm.blp	HZb4
 AZf0	main	used	Harvest	(Yellow/Red/DG/Purple/Orange/Pink/Grey/Blue Workers)	Ahar	-	-	other	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	uZf1
 AZf1	main	used	Self Destruct	-	AIha	-	-	other	ReplaceableTextures\CommandButtons\BTNSelf_Destruct.blp	uZf1
 AZf2	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	hZf0,hZf1,hZf2,hZf7

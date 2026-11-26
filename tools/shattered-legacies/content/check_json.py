@@ -38,5 +38,47 @@ for f, fid, t in where:
         odd += 1
         bad += 1
         print(f"{os.path.relpath(f, ROOT)}: {fid} Type={t}, the map uses Type={top} ({n} of {sum(c.values())})")
-print(f"json check: {len(files)} files, {bad} type mismatches ({odd} unusual field types)")
+# 0.86.1: every ability a unit or item names must exist -- a stock ability (War3Api's AbilityType) or one in the
+# map's AbilityData. The CLI's tooltip / hero-priority migrations read each unit's ability lists, and an unknown id
+# stopped the publish step ("Could not find object with key 'A0PD'": a 24p id left in the Nazjatar copy of Azshara).
+import re
+enum = glob.glob(os.path.join(ROOT, "src", "War3Api.Object", "Generated", "*", "Enums", "AbilityType.cs"))
+stock = set(re.findall(r"\('(\w{4})'\)", open(enum[0], encoding="utf-8").read())) if enum else set()
+custom = {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "mapdata", "WarcraftLegacies", "AbilityData",
+                                                                   "*.json"))}
+def _ids(enum_name, kind):
+    e = glob.glob(os.path.join(ROOT, "src", "War3Api.Object", "Generated", "*", "Enums", enum_name))
+    ids = set(re.findall(r"\('(\w{4})'\)", open(e[0], encoding="utf-8").read())) if e else set()
+    return ids | {os.path.basename(f)[:-5] for f in glob.glob(os.path.join(ROOT, "mapdata", "WarcraftLegacies", kind,
+                                                                           "*.json"))}
+
+
+# the other id lists the migrations read (trained / sold / upgraded-to units, researches, items): same rule
+units, upgrades, items = _ids("UnitType.cs", "UnitData"), _ids("UpgradeType.cs", "UpgradeData"), \
+    _ids("ItemType.cs", "ItemData")
+LISTS = {"utra": units, "uupt": units, "useu": units, "ubui": units, "ures": upgrades, "usei": items, "umki": items}
+missing = 0
+for f in files:
+    if os.path.basename(os.path.dirname(f)) != "UnitData" or not stock:
+        continue
+    for m in json.load(open(f, encoding="utf-8-sig")).get("Modifications", []):
+        if m["Id"] in LISTS and isinstance(m.get("Value"), str):
+            for t in (x.strip() for x in m["Value"].split(",")):
+                if t and (len(t) != 4 or t not in LISTS[m["Id"]]):
+                    missing += 1
+                    bad += 1
+                    print(f"{os.path.relpath(f, ROOT)}: {m['Id']} names {t!r}, which does not exist")
+for f in files:
+    kind = os.path.basename(os.path.dirname(f))
+    fields = {"UnitData": ("uabi", "uhab"), "ItemData": ("iabi",)}.get(kind)
+    if not fields or not stock:
+        continue
+    for m in json.load(open(f, encoding="utf-8-sig")).get("Modifications", []):
+        if m["Id"] in fields and isinstance(m.get("Value"), str):
+            for t in (x.strip() for x in m["Value"].split(",")):
+                if t and (len(t) != 4 or (t not in stock and t not in custom)):
+                    missing += 1
+                    bad += 1
+                    print(f"{os.path.relpath(f, ROOT)}: {m['Id']} names the ability {t!r}, which does not exist")
+print(f"json check: {len(files)} files, {bad} type mismatches ({odd} unusual field types, {missing} unknown object ids)")
 sys.exit(1 if bad else 0)

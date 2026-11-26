@@ -4,6 +4,19 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.86.1 — build fix: Azshara's skills
+
+- **The map build stopped** in the CLI's object migrations: "Could not find object with key 'A0PD'" (Empress of
+  Nazjatar, 0.84). The 24p's own data lists her skills as "A0ZN,A0PD,A0ZOAEsf,AEsf,Aamk" -- two ids run together --
+  and that one bad token left the whole list un-remapped: her copy named the 24p's ids (A0PD is absent here; A0ZN is
+  another ability in this map).
+  - `import_24p.py` repairs it before importing (`REPAIR_24P`). It now also stops with an error on a malformed id list
+    instead of copying it un-remapped.
+  - Azshara now has her 24p kit: Water Wave, Water Images, **Tidal Aura** (newly copied with its buff and its
+    model -- a Git LFS file: `git lfs pull` after committing) and Starfall.
+  - `content/check_json.py` now also fails on any ability, unit, research or item id that a unit or item names and
+    that exists neither in stock data nor in the map: the lists the CLI's migrations read.
+
 ## 0.86.0 — the Dark Iron of Shadowforge and the Furbolgs
 
 Bot changes: `../Ai/CHANGELOG.md` 0.86.0.

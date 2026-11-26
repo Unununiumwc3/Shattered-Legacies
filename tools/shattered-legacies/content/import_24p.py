@@ -536,8 +536,23 @@ def imports(map_dir):
     return out
 
 
+# 0.86.1: errors in the 24p's own data, repaired before anything is read (24p id -> {field: value}). Azshara's hero
+# skills were "A0ZN,A0PD,A0ZOAEsf,AEsf,Aamk" -- two ids run together; one bad token left the whole list un-remapped,
+# her copy named the 24p's A0PD, absent here, and the CLI's publish step stopped ("Could not find object with key
+# 'A0PD'").
+REPAIR_24P = {"H08U": {"uhab": "A0ZN,A0PD,A0ZO,AEsf,Aamk"}}
+
+
+def repair(p24):
+    for oid, fields in REPAIR_24P.items():
+        for m in p24[oid][1].get("Modifications", []):
+            if m["Id"] in fields:
+                m["Value"] = fields[m["Id"]]
+
+
 def main():
     main_data, p24 = load(MAIN), load(P24)
+    repair(p24)
     imp_main, imp_24 = imports(MAIN), imports(P24)
     ids = json.load(open(IDS_FILE)) if os.path.exists(IDS_FILE) else {}
     taken = {k.lower() for k in main_data} | {v.lower() for v in ids.values()}
@@ -654,6 +669,9 @@ def main():
                         m["Value"] = ",".join(p.strip()[1:] if p.strip().startswith("=") else mapping.get(p.strip(), p.strip())
                                               for p in parts)
                     else:
+                        if all(p.strip().isalnum() for p in parts) and any(len(p.strip()) == 4 for p in parts) \
+                                and m["Id"] in ID_LIST_FIELDS:
+                            raise SystemExit(f"{oid} {m['Id']}: malformed id list {v!r} -- add it to REPAIR_24P")
                         v = remap_placeholders(v, oid, mapping, main_data, p24)
                         files, new_value = copy_import(v, imp_main, imp_24)
                         copied_files |= files
@@ -712,6 +730,8 @@ def main():
         f.write("\n".join(lines) + "\n")
 
 
+# fields that hold a list of object ids (a malformed one stops the import instead of being copied un-remapped)
+ID_LIST_FIELDS = {"uabi", "uhab", "ubui", "utra", "uupt", "ureq", "ures", "useu", "usei", "uaen", "udaa", "iabi"}
 STOCK_SAFE = set()  # ids never treated as dangling (none yet)
 PLACEHOLDER = re.compile(r"<([A-Za-z0-9]{4})((?::[A-Za-z0-9]{4})?,)")
 
