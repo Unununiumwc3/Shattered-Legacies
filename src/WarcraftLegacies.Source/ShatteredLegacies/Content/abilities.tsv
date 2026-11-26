@@ -523,7 +523,7 @@ A0LE	main	used	Rejuvenation	(Druid of the Claw)	ACr2	-	-	nightelf	ReplaceableTex
 A0LG	main	used	Rain of Meteors(damage spell level 3)	-	AUin	yes	-	undead	ReplaceableTextures\CommandButtons\BTNInfernal.blp	-
 A0LI	main	used	Dragon form	(Nexus Dummy attack)	ACac	-	-	creeps	ReplaceableTextures\CommandButtons\BTNAzureDragon.blp	n0AC,nadw
 A0LM	main	used	Open Ship	-	ANcl	-	-	creeps	ReplaceableTextures\CommandButtons\BTNLoad.blp	-
-A0LO	main	used	Income 10 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00M,n00P,n00Q,n00V,n011,n013,+70
+A0LO	main	used	Income 10 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00M,n00P,n00Q,n00V,n011,n013,+73
 A0LP	main	used	Frost Nova	(Kel'thuzad - Necromancer)	AUfn	yes	-	undead	ReplaceableTextures\CommandButtons\BTNGlacier.blp	E021,U026
 A0LQ	main	used	Demolish	(Raider, Outrider)	ANde	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNDemolish.blp	h01B,h054,nchr,o00S,o05K,orai
 A0LR	main	used	Ascend	(Arthas)	ANcl	-	-	undead	ReplaceableTextures\CommandButtons\BTNHelmofdomination.blp	Uear
@@ -547,7 +547,7 @@ A0MQ	main	used	Pulverize	(Alexandros)	Awar	-	-	human	ReplaceableTextures\Passive
 A0MR	main	used	Blood of Hakkar	(Sunken Temple)	ACua	-	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNUnholyAura.blp	vP31
 A0MU	main	used	Build Oil Rig	(Goblin - Oil Rig Constructor)	AIbg	-	-	orc	ReplaceableTextures\CommandButtons\BTNOilStation.blp	o06G
 A0MV	main	used	Heal	(gilneas)	Ahea	-	-	human	ReplaceableTextures\CommandButtons\BTNHealOn.blp	h04M
-A0MW	main	used	Income 15 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	md01,md02,md03,md04,n00B,n00F,+41
+A0MW	main	used	Income 15 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	md01,md02,md03,md04,n00B,n00F,+44
 A0MX	main	used	Resurrection	(Gilneas-Cleric)	AHre	-	-	nightelf	ReplaceableTextures\CommandButtons\BTNResurrection.blp	h04M
 A0N2	main	used	Grasping Vines	(Treants)	AUau	-	-	nightelf	ReplaceableTextures\PassiveButtons\PASGrasping_Vines.blp	n05H
 A0N4	main	used	Prescience	(Creep - Ethel Rethor)	AOfs	-	-	orc	ReplaceableTextures\CommandButtons\BTNStaffOfTeleportation.blp	h05I
@@ -561,10 +561,10 @@ A0NK	main	used	Plague Strike	(putress-Skeram)	Aspo	yes	-	undead	ReplaceableTextu
 A0NN	main	used	Evasion	(30%)	ACes	-	-	human	ReplaceableTextures\PassiveButtons\PASBTNEvasion.blp	E023,U01S,n08Z,o02A,o05E
 A0NP	main	used	Devour	(Tortolla)	ACcr	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNDevour.blp	H04U
 A0NQ	main	used	Pulverize	(Gray Ogre Lord)	Awar	-	-	orc	ReplaceableTextures\PassiveButtons\PASBTNSmash.blp	nZy0,nZy1,o04I,oZwf
-A0NR	main	used	Income 20 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00H,n00J,n00Z,n012,n019,n01L,+14
-A0NS	main	used	Income 30 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00S,n010,n015,n01B,n01G,n01M,+7
+A0NR	main	used	Income 20 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00H,n00J,n00Z,n012,n019,n01L,+17
+A0NS	main	used	Income 30 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00S,n010,n015,n01B,n01G,n01M,+8
 A0NT	main	used	Income 50 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00I,nLSE,nNya
-A0NU	main	used	Income 25 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00L,n00W,n01K,n01P,n01W,n046,+2
+A0NU	main	used	Income 25 gold per minute	-	ACav	-	-	creeps	ReplaceableTextures\CommandButtons\PASGoldPile.blp	n00L,n00W,n01K,n01P,n01W,n046,+3
 A0NV	main	used	A Close	(Silvermoon)	ANrg	-	-	creeps	ReplaceableTextures\CommandButtons\BTNUnload.blp	h01W,h01X
 A0NW	main	used	Dispel Magic	(Tunneler)	Adis	-	-	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	n060
 A0NX	main	used	A Close	(Stormwind)	ANrg	-	-	creeps	ReplaceableTextures\CommandButtons\BTNUnload.blp	h02H,h02J

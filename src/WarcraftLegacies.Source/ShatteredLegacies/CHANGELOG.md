@@ -4,6 +4,32 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.83.0 — Nazjatar, Shadowforge and the Deadmines in the void; the Undercity's control point
+
+Bot changes: `../Ai/CHANGELOG.md` 0.83.0. Layout, gates, CPs: `Timelines/VOID_DUNGEONS.md`.
+- **Undercity control point** (maintainer's spot -27139,22825, 20 gold): preplaced Neutral Hostile, out of reach
+  while the gates are shut. "The Throne of Lordaeron" gives it to the Forsaken with the buildings.
+- **Three more 24p dungeons in the void**, each with its own place found by search. "Void" now means the unflyable
+  map boundary: deep sea is not void (the 0.82 plan mixed the two). Every dungeon has at least 12 tiles of void to any
+  other land or sea.
+  - **Nazjatar** (south-west, -23168,-30976 .. -15360,-25600). Gate by WL's Nazjatar CP beside the Maelstrom. CPs
+    Eternal Palace 25, Heart of Azeroth 30, Lightless Cavern 15, Gishan Cavern 10. To make room, **WL's seven unused
+    squares in the south-west corner are void now** (they held nothing since the Undercity moved; `copy_area.py
+    --clear`).
+  - **Shadowforge** (24p Blackrock Depths + Molten Core; north-west, east of the Undercity,
+    -24448,21120 .. -17920,24832). Gate at the east side of WL's Shadowforge City. CPs Shadowforge City 20, Molten
+    Core 15, The Grim Guzzler 10.
+  - **The Deadmines** (the 24p Temple of Ahn'Qiraj instance; south-west corner, -28672,-31488 .. -24448,-22912). Gate
+    in Westfall above the bandit camp. CPs The Deadmines 20, Goblin Foundry 10, Ironclad Cove 15. The terrain is still
+    the temple's; the redecoration comes later.
+  The three gates are open from the start (stock waygates, invulnerable). The CPs are WL's neutral CPs (new types
+  `nZv0`-`nZva`, Chinese names too, `tools/shattered-legacies/content/void_dungeons.py`). No 24p creeps. Each
+  dungeon is a WL instance (no world-tree immortality, Summon Legion or slipstream across its border).
+- `copy_area.py`: the destination must be unflyable void. A type that the 24p map only modifies counts as stock.
+  `--types A=A` keeps our definition, and the tool checks that imported models exist and that new ids are free.
+  `--clear` turns a rectangle into void. New doodad types `DZv2`-`DZv7`, destructable
+  `BZv0`.
+
 ## 0.82.0 — void-area dungeons: the 24p Undercity
 
 Bot changes: `../Ai/CHANGELOG.md` 0.82.0. Plan and layout: `Timelines/VOID_DUNGEONS.md`.

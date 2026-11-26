@@ -5,6 +5,14 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.83.0 — the void dungeons in the route graph
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.83.0.
+- The 11 CPs of the void dungeons are route nodes, with walking edges inside each dungeon. The gates are portal edges
+  as soon as they stand: Nazjatar, Shadowforge and the Deadmines at once, the Undercity when the Forsaken open it.
+  The 0.82 fixed Undercity node is gone (its CP replaces it). Landmasses 21 `V` Nazjatar, 22 `W` Shadowforge, 23 `X`
+  the Deadmines. The south-west squares (landmasses 8, 9, 11-17) are void now, so their cells are gone from the grid. Generated: `AiRoutes.g.cs` (179 CP + 82 area nodes), `SlBuildData.g.cs` (the CP types' footprints).
+
 ## 0.82.0 — the Undercity in the route graph
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.82.0.

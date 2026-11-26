@@ -1064,6 +1064,17 @@ nZr3	main	used	unit	Myrmidon	(Refugee, Illidan)	nmyr	naga	units\naga\NagaMyrmido
 nZr9	main	used	unit	Core Hound	(Refugee, Skywall)	nfel	human	war3mapImported\CoreHoundOptimized.mdl	main	ReplaceableTextures\CommandButtons\BTNCoreHoundIcon.blp	-	oZq2	-	-	-	-	A0X9,A0XA,AELS,Aion,Atru	RZr9
 nZrh	main	used	unit	Ranger	(Refugee, Quel'thalas)	nhea	human	units\creeps\HighElfArcher\HighElfArcher	stock	ReplaceableTextures\CommandButtons\BTNHighElvenArcher.blp	-	oZq4	-	-	-	-	A03H,Aihn	RZrh
 nZri	main	used	unit	Fel Guard	(Refugee, Legion)	nfgu	undead	units\demon\FelgaurdBlue\FelgaurdBlue.mdl	stock	ReplaceableTextures\CommandButtons\BTNFelGuardBlue.blp	-	oZq4	-	-	-	-	A020,A0BG,A0ER,A12B,Aiun	RZri
+nZv0	main	used	building	Undercity	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
+nZv1	main	used	building	Eternal Palace	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NU	-
+nZv2	main	used	building	Heart of Azeroth	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NS	-
+nZv3	main	used	building	Lightless Cavern	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
+nZv4	main	used	building	Gishan Cavern	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
+nZv5	main	used	building	Shadowforge City	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
+nZv6	main	used	building	Molten Core	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
+nZv7	main	used	building	The Grim Guzzler	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
+nZv8	main	used	building	The Deadmines	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0NR	-
+nZv9	main	used	building	Goblin Foundry	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0LO	-
+nZva	main	used	building	Ironclad Cove	-	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	-	-	A0MW	-
 nZw0	main	used	unit	Nether Dragon	(Twilight)	nndr	orc	units\creeps\NetherDragon\NetherDragon	stock	ReplaceableTextures\CommandButtons\BTNNetherDragon.blp	-	oZw7	-	-	-	-	Advm	oZw2
 nZw1	main	used	unit	Ogre Magi	(twilight)	nomg	orc	war3mapImported\Ogre Mage.mdl	main	ReplaceableTextures\CommandButtons\BTNOgreMagi.blp	-	oZw6	-	-	-	-	AZwj,AZwk,Aion,Awfb	-
 nZw2	main	used	unit	Twilight Dragonspawn	(twilight)	nbdo	orc	Units\Creeps\DragonSpawnBlue\DragonSpawnBlue	stock	ReplaceableTextures\CommandButtons\BTNpurpleDragonSpawn.blp	-	oZw7	-	-	-	-	A020,A0CH,AZw5	oZw2

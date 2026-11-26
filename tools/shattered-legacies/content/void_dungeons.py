@@ -1,0 +1,152 @@
+"""Control points of the void-area dungeons (0.83.0, Timelines/VOID_DUNGEONS.md).
+
+  python3 tools/shattered-legacies/content/void_dungeons.py          writes the files below
+  python3 tools/shattered-legacies/content/void_dungeons.py --check  reports only
+
+Writes
+  mapdata/WarcraftLegacies/UnitData/nZv*.json          one CP type per CP (WL's CP: stock ncop, the name is the type's
+                                                       name, the income comes from its marker ability A0LO .. A0NT)
+  mapdata/WarcraftLegacies/UnitData.zhCN/nZv*.json     the Chinese name
+  mapdata/WarcraftLegacies/Units/Dungeon_ControlPoints.json   the CPs, preplaced, Neutral Hostile (WL's
+                                                       ControlPointSetup registers every preplaced CP; the bot's
+                                                       gen_routes.py makes them route nodes)
+  src/WarcraftLegacies.Source/ShatteredLegacies/Dungeons/DungeonObjects.g.cs   the type ids for the code
+Rerun gen_routes.py after a change (the CPs are route nodes).
+"""
+import json
+import os
+import struct
+import sys
+import glob
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
+MAP = os.path.join(ROOT, "mapdata", "WarcraftLegacies")
+OUT_CS = os.path.join(ROOT, "src", "WarcraftLegacies.Source", "ShatteredLegacies", "Dungeons", "DungeonObjects.g.cs")
+UNITS = os.path.join(MAP, "Units", "Dungeon_ControlPoints.json")
+
+MARKER = {10: "A0LO", 15: "A0MW", 20: "A0NR", 25: "A0NU", 30: "A0NS", 50: "A0NT"}  # income -> marker ability
+
+# id, constant, name, Chinese name, income, x, y (the 24p map's CP spots where it had one, moved with its dungeon)
+CPS = [
+    ("nZv0", "Undercity", "Undercity", "幽暗城", 20, -27139, 22825),            # maintainer's spot
+    ("nZv1", "EternalPalace", "Eternal Palace", "永恒王宫", 25, -22208, -30016),  # 24p n05Q "Nazjatar"
+    ("nZv2", "HeartOfAzeroth", "Heart of Azeroth", "艾泽拉斯之心", 30, -19008, -27904),  # 24p n0A0
+    ("nZv3", "LightlessCavern", "Lightless Cavern", "无光洞穴", 15, -16192, -28352),  # 24p n05W
+    ("nZv4", "GishanCavern", "Gishan Cavern", "吉山洞穴", 10, -20288, -26368),     # 24p n04E
+    ("nZv5", "ShadowforgeCity", "Shadowforge City", "暗炉城", 20, -22144, 22784),  # 24p n0AA "Blackrock Depths"
+    ("nZv6", "MoltenCore", "Molten Core", "熔火之心", 15, -23040, 23936),         # 24p n00P
+    ("nZv7", "GrimGuzzler", "The Grim Guzzler", "黑铁酒吧", 10, -18944, 23360),   # 24p n00O "Blackrock Spire"
+    ("nZv8", "Deadmines", "The Deadmines", "死亡矿井", 20, -26048, -26880),       # 24p n078 "Temple of Ahn'Qiraj"
+    ("nZv9", "GoblinFoundry", "Goblin Foundry", "地精铸造厂", 10, -27952, -28256),
+    ("nZva", "IroncladCove", "Ironclad Cove", "铁甲湾", 15, -25232, -30176),
+]
+
+
+def save(path, data):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(json.dumps(data, indent=2, ensure_ascii=False))
+
+
+def le(code):
+    return struct.unpack("<I", code.encode("latin1"))[0]
+
+
+def be(code):
+    return struct.unpack(">I", code.encode("latin1"))[0]
+
+
+def unit_type(code, name, income):
+    # WL's neutral CP (e.g. n024 "Blackrock Depths"), field for field
+    return {
+        "OldId": "ncop", "NewId": code, "Unk": [0],
+        "Modifications": [
+            {"Id": "uabi", "Type": 3, "Value": MARKER[income]},
+            {"Id": "ucol", "Type": 2, "Value": 0},
+            {"Id": "uhos", "Value": 1},
+            {"Id": "uhpm", "Value": 5000},
+            {"Id": "uhrt", "Type": 3, "Value": "always"},
+            {"Id": "utyp", "Type": 3, "Value": "ancient,sapper"},
+            {"Id": "upat", "Type": 3, "Value": "PathTextures\\4x4SimpleSolid.tga"},
+            {"Id": "ua1b", "Value": -1},
+            {"Id": "ua1d", "Value": 1},
+            {"Id": "ua1s", "Value": 1},
+            {"Id": "uaen", "Value": 1},
+            {"Id": "ua1r", "Value": 900},
+            {"Id": "uacq", "Type": 2, "Value": 900},
+            {"Id": "ua1g", "Type": 3, "Value": "bridge"},
+            {"Id": "urac", "Type": 3, "Value": "creeps"},
+            {"Id": "unam", "Type": 3, "Value": name},
+            {"Id": "ussc", "Type": 1, "Value": 1.5},
+        ],
+    }
+
+
+def zh(code, name):
+    return {"OldId": "ncop", "Unk": [0], "Modifications": [{"Id": "unam", "Type": 3, "Value": name}], "NewId": code}
+
+
+def placed(code, x, y, number):
+    return {
+        "TypeId": le(code), "Variation": 0, "Position": {"X": x, "Y": y, "Z": 0}, "Rotation": 4.712389,
+        "Scale": {"X": 1, "Y": 1, "Z": 1}, "SkinId": le(code), "Flags": 2, "OwnerId": 24, "Unk1": 0, "Unk2": 0,
+        "HP": -1, "MP": -1, "MapItemTableId": -1, "ItemTableSets": [], "GoldAmount": 0, "TargetAcquisition": -1,
+        "HeroLevel": 1, "HeroStrength": 0, "HeroAgility": 0, "HeroIntelligence": 0, "InventoryData": [],
+        "AbilityData": [], "RandomDataMode": -1, "CustomPlayerColorId": -1, "WaygateDestinationRegionId": -1,
+        "CreationNumber": number,
+    }
+
+
+def main(check):
+    sys.path.insert(0, os.path.join(ROOT, "tools", "shattered-legacies", "ai"))
+    import map_query
+    problems = []
+    for code, _, name, _, income, x, y in CPS:
+        if not map_query.area_walkable(x, y, 96):
+            problems.append("%s %s: no open ground at %d, %d" % (code, name, x, y))
+        if income not in MARKER:
+            problems.append("%s: no marker for income %d" % (code, income))
+    ours = []
+    for f in glob.glob(os.path.join(MAP, "Units", "*.json")):
+        if os.path.abspath(f) != os.path.abspath(UNITS):
+            ours.extend(json.load(open(f, encoding="utf-8")))
+    taken = {u["TypeId"] for u in ours}
+    for code, *_ in CPS:
+        if le(code) in taken:
+            problems.append("%s is preplaced elsewhere" % code)
+    print("void-dungeon CPs: %d" % len(CPS))
+    for p in problems:
+        print("  PROBLEM: " + p)
+    if problems or check:
+        return 1 if problems else 0
+
+    start = max(u["CreationNumber"] for u in ours) + 1
+    units = []
+    for i, (code, const, name, cn, income, x, y) in enumerate(CPS):
+        save(os.path.join(MAP, "UnitData", code + ".json"), unit_type(code, name, income))
+        save(os.path.join(MAP, "UnitData.zhCN", code + ".json"), zh(code, cn))
+        units.append(placed(code, x, y, start + i))
+    save(UNITS, units)
+    lines = [
+        "// <auto-generated>",
+        "// Generated by tools/shattered-legacies/content/void_dungeons.py -- DO NOT EDIT, re-run the generator.",
+        "// </auto-generated>",
+        "namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons",
+        "{",
+        "  // the control points of the void-area dungeons (Timelines/VOID_DUNGEONS.md): preplaced, Neutral Hostile",
+        "  internal static class DungeonObjects",
+        "  {",
+    ]
+    for code, const, name, _, income, x, y in CPS:
+        lines.append("    internal const int %s = %d; // %s \"%s\", %d gold, %d, %d" % (const, be(code), code, name, income,
+                                                                                    x, y))
+    lines += ["  }", "}", ""]
+    os.makedirs(os.path.dirname(OUT_CS), exist_ok=True)
+    with open(OUT_CS, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    print("  written: UnitData/nZv*.json (+ zhCN), Units/Dungeon_ControlPoints.json, Dungeons/DungeonObjects.g.cs")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main("--check" in sys.argv))

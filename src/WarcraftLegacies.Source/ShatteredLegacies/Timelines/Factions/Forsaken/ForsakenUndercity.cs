@@ -1,3 +1,5 @@
+using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Dungeons;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WCSharp.Shared.Data;
 
@@ -7,8 +9,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
   // "The Throne of Lordaeron" opens it: a second waygate in the Capital Palace's ruins.
   // 0.82 (void-area dungeons): no longer a bare square in the south-west corner -- the 24p map's Undercity, terrain
   // and doodads, copied into the north-west corner of the void (ForsakenConfig). The buildings stand where the 24p
-  // map preplaced them (24p y + UndercityShiftY); the 24p army, its control point (n0BC) and its three entrance portals
-  // are not taken over. The inner gate stands at the 24p southern entrance ("Undercity Interior 1").
+  // map preplaced them (24p y + UndercityShiftY); the 24p army and its three entrance portals are not taken over. The
+  // inner gate stands at the 24p southern entrance ("Undercity Interior 1").
+  // 0.83: its control point (DungeonObjects.Undercity, 20 gold, preplaced Neutral Hostile -- out of reach while the
+  // gates are shut) goes to the Forsaken with the buildings.
   internal static class ForsakenUndercity
   {
     private const float Shift = ForsakenConfig.UndercityShiftY;
@@ -77,6 +81,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     internal static void Open(player p, float x, float y)
     {
       Square?.Open(p, x, y);
+      var cp = AiApi.SafeCp(DungeonObjects.Undercity);
+      if (cp != null && cp.Unit != null && GetOwningPlayer(cp.Unit) != p)
+      {
+        AiApi.GiveUnit(cp.Unit, p);
+      }
     }
   }
 }

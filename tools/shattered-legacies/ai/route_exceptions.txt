@@ -29,7 +29,5 @@ node @-13220,-8800
 # is reached through the corridor (Southern Barrens) instead.
 remove @-13220,-8800 | @-11952,-6416
 
-# 0.82 (void-area dungeons): the Undercity is copied into the north-west void and reached only through its waygate --
-# no CP and no walking path, so the automatic area nodes skip it. A node inside, so the opened gate becomes a portal
-# edge (the region map gives the Undercity's ground to it).
-node @-27136,22600
+# 0.82 (void-area dungeons): the Undercity was a fixed node (node @-27136,22600). 0.83: every void dungeon has CPs
+# (tools/shattered-legacies/content/void_dungeons.py), so their ground belongs to CP nodes; the gates are portal edges.

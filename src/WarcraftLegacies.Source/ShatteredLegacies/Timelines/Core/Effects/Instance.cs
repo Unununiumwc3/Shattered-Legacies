@@ -14,7 +14,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
   //   - registered as a WL instance (MacroTools.Instances): no world-tree immortality, Summon Legion or slipstream
   //     across its border -- like Outland and Argus
   // Open(): a second waygate where the entrance should be (e.g. a ruined capital), both gates open, the buildings go
-  // to the owner (they stay invulnerable). First user: the Forsaken's Undercity.
+  // to the owner (they stay invulnerable). First user: the Forsaken's Undercity; 0.83: Nazjatar, Shadowforge City
+  // and the Deadmines (Dungeons/VoidDungeons, open from the start, no buildings).
   internal sealed class Instance
   {
     private const int Waygate = 1853319028; // nwgt (stock Waygate)
@@ -64,7 +65,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
     }
 
     // the entrance at (x, y) -- both waygates open; the buildings to the owner (they stay invulnerable)
-    internal void Open(player owner, float x, float y)
+    internal void Open(player owner, float x, float y) => Open(owner, x, y, x, y - 250f);
+
+    // 0.83: with the spot where the inner gate puts you (beside the entrance)
+    internal void Open(player owner, float x, float y, float exitX, float exitY)
     {
       if (_entrance == null)
       {
@@ -72,8 +76,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
         SetUnitInvulnerable(_entrance, true);
       }
 
-      _exitX = x;
-      _exitY = y - 250f;
+      _exitX = exitX;
+      _exitY = exitY;
       WaygateSetDestination(_entrance, _arriveX, _arriveY);
       WaygateActivate(_entrance, true);
       WaygateSetDestination(_gate, _exitX, _exitY);

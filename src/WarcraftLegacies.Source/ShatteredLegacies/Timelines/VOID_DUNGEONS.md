@@ -1,4 +1,4 @@
-# Void-area dungeons (0.82.0)
+# Void-area dungeons (0.82.0, 0.83.0)
 
 Maintainer's idea (2026-11-26): the black, unwalkable void of the map holds dungeons that can be entered only through
 gates. The void stays as the wall around and between them. Pack them tightly, so that most of the void gets used:
@@ -34,41 +34,85 @@ slipstreams across its border do not work.
 
 ## Done
 
-| Dungeon | 24p source | Offset | Our rectangle (with wall) | Landmass | Code |
+| Dungeon | 24p source (copied with its wall) | Offset | Our rectangle | Landmass | Since |
 |---|---|---|---|---|---|
-| Undercity | -28672,14208 .. -25728,17920 | 0, +6912 | -28672,21120 .. -25728,24832 | 20 `U` | `Factions/Forsaken/ForsakenUndercity.cs` |
+| Undercity | -28672,14208 .. -25728,17920 | 0, +6912 | -28672,21120 .. -25728,24832 | 20 `U` | 0.82 |
+| Nazjatar | 7936,-31488 .. 15744,-26112 | -31104, +512 | -23168,-30976 .. -15360,-25600 | 21 `V` | 0.83 |
+| Shadowforge (24p Blackrock Depths + Molten Core) | 16256,-32000 .. 22784,-28288 | -40704, +53120 | -24448,21120 .. -17920,24832 | 22 `W` | 0.83 |
+| Deadmines (24p Temple of Ahn'Qiraj) | -28416,-16640 .. -24192,-8064 | -256, -14848 | -28672,-31488 .. -24448,-22912 | 23 `X` | 0.83 |
 
-The Undercity sits in the north-west corner, not in its 24p place. This keeps the western column and the northern
-band in one piece for the bigger dungeons. Its buildings stand at their 24p spots. The inner gate stands at the 24p
-southern entrance. The 24p map's control point (`n0BC`, at -27136,22848 here) is free for a later Undercity CP: the
-Forsaken join whoever holds it.
+**What counts as void**: unflyable cells only (pathing flag 0x04, the map boundary). Deep sea is unwalkable too, but
+ships and flyers cross it. The 0.82 measurement mixed the two: much of the "northern band" and "western column" is
+sea. Each placement leaves at least 1536 (12 tiles) of void between its ground and any other flyable ground (land or
+sea), so no attack reaches across and nothing flies over. The places were found by search: walkable bounding box + 12
+tiles, all void, no doodads or units. Measured after the copies: 1568 for all four.
 
-## The void that is left (our map, measured 0.82)
+**Room made**: WL's seven unused squares in the south-west corner (walkable boxes in the void, x -23040 .. -9984,
+y -30208 .. -24960; the 0.57 Undercity used one; landmasses 8, 9, 11-17) are void now (`copy_area.py --clear
+-23296 -30464 -9728 -24704`); Nazjatar stands there. `Regions.HideUnitBottomLeft` still covers it. That region only
+hides Neutral Passive units at setup, so the CPs (Neutral Hostile) and the gate (created 1 s later) are not
+affected.
 
-| Area | About | Notes |
-|---|---|---|
-| Northern band | x -25728 .. -8700, y 18400 .. 24800 (down to 16900 west of -10700) | east of the Undercity; Scarlet Harbor's old region at -9728,21984 lies in it (void) |
-| Western column | x -28672 .. -20500, y 5600 .. 21100 | west of Teldrassil; narrower (to ~-24600) next to the Exodar, y 5600 .. 9000 |
-| Middle pocket | x -16400 .. -9700, y 12800 .. 16900 | east of Teldrassil; joins the band above |
-| South-west strip | x -28672 .. -26000, y -3500 .. 5100 | north of our Ny'alotha (-28672,-11936 .. -22016,-3360) |
-| South-west squares | 7 squares of ~1900 x 1900 around -11000,-29000 | landmasses `L`-`R`; the 0.57 Undercity square is free again |
+The commands (rerunnable):
 
-These 24p dungeons would fit **in their 24p place**: the rectangle is void here, with no doodads and no units.
+```
+T=tools/shattered-legacies/terrain/copy_area.py
+python3 $T Undercity -28672 14208 -25728 17920 0 6912 --types D00O=DZv0,D00K=DZv1
+python3 $T --clear -23296 -30464 -9728 -24704
+python3 $T Nazjatar 7936 -31488 15744 -26112 -31104 512 --types D03U=DZv2,D020=DZv3,D03V=DZv4,D03Q=DZv5
+python3 $T Shadowforge 16256 -32000 22784 -28288 -40704 53120 --types D06C=DZv6,D00F=DZv7,D030=D030
+python3 $T Deadmines -28416 -16640 -24192 -8064 -256 -14848 --types B00U=BZv0
+python3 tools/shattered-legacies/content/void_dungeons.py
+python3 tools/shattered-legacies/ai/gen_routes.py
+```
 
-| 24p dungeon | 24p rectangle | Notes |
-|---|---|---|
-| Scholomance | -21216,17344 .. -19136,19808 | ours is in the world (Plaguelands) |
-| Dire Maul | -18784,20544 .. -15904,24544 | |
-| Dalaran Dungeon | -14432,20192 .. -10752,24096 | |
-| Scarlet Monastery | -25152,15072 .. -22592,17696 | |
-| Naxxramas | -24928,11520 .. -22016,14528 | |
-| Twisting Nether | -28320,10560 .. -26272,13600 | |
+Gates (stock waygates, invulnerable, Neutral Passive; code: `Dungeons/VoidDungeons.cs`, the Undercity in
+`Factions/Forsaken/ForsakenUndercity.cs`):
 
-These would need a **new place**:
-
-| 24p dungeon | 24p rectangle | Blocked by | Candidate |
+| Dungeon | Inner gate (24p entrance) | World entrance | Open |
 |---|---|---|---|
-| Nazjatar (Sentinels' naga fallback, exit near the Maelstrom) | 7872,-31584 .. 15552,-26624 (7700 x 5000) | the east side of our Black Temple (walkable to x 9920); east of it only ~5900 of void | the western column (e.g. x -28672 .. -20992, y 11500 .. 16500 -- then the Twisting Nether / Naxxramas / Scarlet spots are gone) |
-| Blackrock Depths / Shadowforge City (Dark Iron fallback) | 16416,-32032 .. 22592,-28544 (Shadowforge City 16704,-31744 .. 18272,-30560) | our Argus (MonolithNoBuild 18208,-31584 ..) | northern band between the Undercity and Dire Maul's spot (~7000 x 5000) |
-| Temple of Ahn'Qiraj (24p: a gated instance) | -28480,-16416 .. -23872,-8000 | our Ny'alotha | for the Deadmines (maintainer: "reuse that one and rename the control point"). It is a sand / titan-rock temple (Zsan, Qrck), so it needs new doodads to look like a mine |
-| Aetheneum Catacombs | -28160,17952 .. -23072,24544 | now the Undercity | only if wanted |
+| Undercity | -26528,21344 | Lordaeron's palace ruins | "The Throne of Lordaeron" (Forsaken) |
+| Nazjatar | -18496,-29056 (24p "NazjatarExit2") | -3744,-3552, by WL's Nazjatar CP beside the Maelstrom (shallow water) | from the start |
+| Shadowforge | -21472,21408 (24p entrance portal) | 12480,-9152, east side of WL's Shadowforge City | from the start |
+| Deadmines | -27808,-23904 (24p north portal) | 7584,-16896, Westfall, above the bandit camp | from the start |
+
+Control points (`tools/shattered-legacies/content/void_dungeons.py`: types `nZv*`, preplaced Neutral Hostile, with
+Chinese names). The 24p names are kept except where our map already has the name or the dungeon changed:
+
+| CP | Gold | Spot | 24p |
+|---|---|---|---|
+| Undercity | 20 | -27139,22825 | n0BC "Undercity"; goes to the Forsaken with the buildings |
+| Eternal Palace | 25 | -22208,-30016 | n05Q "Nazjatar" (WL has a Nazjatar CP at the Maelstrom) |
+| Heart of Azeroth | 30 | -19008,-27904 | n0A0 |
+| Lightless Cavern | 15 | -16192,-28352 | n05W |
+| Gishan Cavern | 10 | -20288,-26368 | n04E |
+| Shadowforge City | 20 | -22144,22784 | n0AA "Blackrock Depths" (WL has that CP in the world) |
+| Molten Core | 15 | -23040,23936 | n00P |
+| The Grim Guzzler | 10 | -18944,23360 | n00O "Blackrock Spire" (WL has an orc building of that name) |
+| The Deadmines | 20 | -26048,-26880 | n078 "Temple of Ahn'Qiraj" |
+| Goblin Foundry | 10 | -27952,-28256 | new |
+| Ironclad Cove | 15 | -25232,-30176 | new |
+
+The Deadmines still look like the 24p temple (sand, titan rock, temple doodads): it gets redecorated later.
+
+The 24p creeps are not copied. A CP is Neutral Hostile, with WL's 5000 life, and it defends itself.
+
+New doodad types (stock models or imports we already have): `DZv0` Gargoyle Hub, `DZv1` Iron Gate (Undercity),
+`DZv2`-`DZv5` naga tower / desolace plant / naga walls (Nazjatar), `DZv6` Shadowforge Barricades, `DZv7` Teleporter
+Circle Indicator (Shadowforge), destructable `BZv0` Outland Tree 2 (Deadmines). For Shadowforge, our own `D030`
+"Dark Iron City" (dwarven barracks import) is used instead of the 24p's human barracks. When the 24p map only
+changes a stock type (scale limits, tints), the copy keeps the stock type.
+
+## The void that is left (measured 0.83, true void)
+
+Searched like the placements above:
+
+| Area | Room for (walkable box) |
+|---|---|
+| Western column | 4096 x 4096 at x -28672 .., y 12300 .. 16400 (below the Undercity) |
+| South-west, east of Nazjatar | 4096 x 4096 at x -16400 .. -12300, y -32256 .. -28700 |
+| South-east, east of the Black Temple | 4096 x 4096 at x 8200 .. 16300, y -32256 .. -28700 |
+| South-west strip | 4096 x 4096 at x -28672 .., y -4100 .. 4100, north of our Ny'alotha |
+| Small pockets (2048) | x -16400 .. -12300, y 20500 .. 24500 (east of Shadowforge); along the west edge |
+
+No 6144 x 4096 box is left. A bigger dungeon needs a smaller gap or something moved.

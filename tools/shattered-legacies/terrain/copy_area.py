@@ -8,8 +8,9 @@ the void parts of our map; both maps have the same size and origin (417 x 449 co
   X0 Y0 X1 Y1   the source rectangle, multiples of 128 (tile corners X0..X1 / Y0..Y1 are copied, both included)
   DX DY         where it goes: offset, multiples of 128
   --src DIR     source map-data folder (default mapdata/WarcraftLegacies24p)
-  --types A=B   a custom doodad type of the source we do not have: copied into our DoodadData / DestructableData
-                under the new id B (fork rule ?Z<lower>?, e.g. DZv0), the copied doodads use B
+  --types A=B   a custom doodad type of the source we do not have (or define differently): copied into our
+                DoodadData / DestructableData under the new id B (fork rule ?Z<lower>?, e.g. DZv0), the copied doodads
+                use B. A=A: ours is defined differently but fits -- keep ours (e.g. D030 "Dark Iron City")
   --check       report only, write nothing
 
 What is copied
@@ -22,7 +23,15 @@ What is copied
                     our highest; a custom type we do not define stops the copy
 NOT copied: units (the dungeon's buildings and gates are placed by code), regions, the minimap.
 
-The destination must be void (every pathing cell unwalkable, no doodads, no units) -- or already hold this very copy,
+  python3 tools/shattered-legacies/terrain/copy_area.py --clear X0 Y0 X1 Y1 [--check]
+
+turns a rectangle of OUR map into void (0.83: WL's unused squares in the south-west corner made room for Nazjatar):
+every corner becomes the void corner (boundary, cliff level 2, height 0.875, texture 1 -- the most common void corner
+around), every cell unwalkable / unflyable / unbuildable (206, as the void), no shadow, and its doodads are removed.
+It refuses if preplaced units stand there.
+
+The destination must be void (every pathing cell unflyable -- deep sea is unwalkable too, but ships and flyers cross
+it; no doodads, no units) -- or already hold this very copy,
 so the tool can be run again after a change.
 """
 import glob
@@ -59,11 +68,21 @@ def doodads(folder):
 
 
 def custom_types(folder):
+    """new doodad / destructable types (a file with a NewId). A file without one only modifies a stock type (24p:
+    scale limits, tints) -- such types count as stock: ours keeps the stock values."""
     ids = set()
     for sub in ("DoodadData", "DestructableData"):
         for f in glob.glob(os.path.join(folder, sub, "*.json")):
-            ids.add(os.path.splitext(os.path.basename(f))[0])
+            if load(f).get("NewId"):
+                ids.add(os.path.splitext(os.path.basename(f))[0])
     return ids
+
+
+def imported_models(folder):
+    out = set()
+    for f in glob.glob(os.path.join(folder, "Imports", "war3mapImported", "*")):
+        out.add(os.path.splitext(os.path.basename(f))[0].lower())
+    return out
 
 
 def model_of(folder, t):
@@ -79,8 +98,64 @@ def inside(p, x0, y0, x1, y1):
     return x0 <= p["X"] < x1 and y0 <= p["Y"] < y1
 
 
+VOID_CORNER = {"Height": 0.875, "WaterHeight": 1, "IsEdgeTile": False, "Texture": 1, "IsRamp": False,
+               "IsBlighted": False, "IsWater": False, "IsBoundary": True, "CliffLevel": 2, "CliffTexture": 1}
+VOID_CELL = 206
+
+
+def clear(argv, check):
+    x0, y0, x1, y1 = (int(a) for a in argv)
+    if any(v % TILE for v in (x0, y0, x1, y1)) or x1 <= x0 or y1 <= y0:
+        print("rectangle must be multiples of 128, X0 < X1, Y0 < Y1")
+        return 2
+    units = []
+    for f in glob.glob(os.path.join(DST, "Units", "*.json")):
+        units.extend(u for u in load(f) if inside(u["Position"], x0, y0, x1, y1))
+    de, dp, ds = (load(os.path.join(DST, n)) for n in ("Environment.json", "PathingMap.json", "ShadowMap.json"))
+    w, pw = de["Width"], dp["Width"]
+    corners = [r * w + c for r in range((y0 - MINY) // TILE, (y1 - MINY) // TILE + 1)
+               for c in range((x0 - MINX) // TILE, (x1 - MINX) // TILE + 1)]
+    cells = [cy * pw + cx for cy in range((y0 - MINY) // CELL, (y1 - MINY) // CELL)
+             for cx in range((x0 - MINX) // CELL, (x1 - MINX) // CELL)]
+    files = {}
+    gone = 0
+    for f in sorted(glob.glob(os.path.join(DST, "Doodads", "*.json"))):
+        ds_ = load(f)
+        keep = [d for d in ds_ if not inside(d["Position"], x0, y0, x1, y1)]
+        if len(keep) != len(ds_):
+            files[f] = keep
+            gone += len(ds_) - len(keep)
+    walk = sum(1 for i in cells if not dp["Cells"][i] & 0x02)
+    print("clear %d,%d .. %d,%d: corners %d, cells %d (%d walkable), doodads %d, units %d" % (
+        x0, y0, x1, y1, len(corners), len(cells), walk, gone, len(units)))
+    if units:
+        print("  PROBLEM: preplaced units stand there")
+        return 1
+    if check:
+        return 0
+    for i in corners:
+        t = de["TerrainTiles"][i]
+        t.update(VOID_CORNER)
+    for i in cells:
+        dp["Cells"][i] = VOID_CELL
+        ds["Cells"][i] = 0
+    save(os.path.join(DST, "Environment.json"), de)
+    save(os.path.join(DST, "PathingMap.json"), dp)
+    save(os.path.join(DST, "ShadowMap.json"), ds)
+    for f, keep in files.items():
+        if keep:
+            save(f, keep)
+        else:
+            os.remove(f)
+    print("  written: Environment.json, PathingMap.json, ShadowMap.json, %d doodad files" % len(files))
+    return 0
+
+
 def main(argv):
     check = "--check" in argv
+    if "--clear" in argv:
+        rest = [a for a in argv if a not in ("--clear", "--check")]
+        return clear(rest, check)
     argv = [a for a in argv if a != "--check"]
     src = os.path.join(ROOT, "mapdata", "WarcraftLegacies24p")
     if "--src" in argv:
@@ -142,7 +217,7 @@ def main(argv):
     ocx, ocy = dx // CELL, dy // CELL
     cells = [(cy * pw + cx, (cy + ocy) * pw + cx + ocx) for cy in range(cy0, cy1) for cx in range(cx0, cx1)]
     already = all(dp["Cells"][d] == sp["Cells"][s] for s, d in cells)
-    void = all(dp["Cells"][d] & 0x02 for _, d in cells)
+    void = all(dp["Cells"][d] & 0x04 for _, d in cells)  # 0.83: the void is UNFLYABLE (deep sea is not void)
 
     # --- doodads
     known, theirs = custom_types(DST), custom_types(src)
@@ -155,10 +230,28 @@ def main(argv):
                     and model_of(src, code(d["TypeId"])) != model_of(DST, code(d["TypeId"])):
                 problems.append("doodad type %s is custom in both maps with different models" % code(d["TypeId"]))
             moved.append(d)
+    have = imported_models(DST)
+    for old, new in remap.items():
+        if old == new:
+            continue
+        mod = model_of(src, old)
+        for path in (mod[1] if mod else []):
+            if str(path).lower().startswith("war3mapimported\\"):
+                base = os.path.splitext(str(path)[16:])[0].lower()
+                if base not in have:
+                    problems.append("type %s uses the import %s -- not in our Imports" % (old, path))
+        for sub in ("DoodadData", "DestructableData"):
+            mine, theirs_f = os.path.join(DST, sub, new + ".json"), os.path.join(src, sub, old + ".json")
+            if os.path.exists(mine):
+                want = dict(load(theirs_f), NewId=new) if os.path.exists(theirs_f) else None
+                if load(mine) != want:
+                    problems.append("new id %s is taken (%s)" % (new, sub))
     ours = [(f, d) for f, d in doodads(DST) if f != own_file]
     blocking = [d for f, d in ours if inside(d["Position"], x0 + dx, y0 + dy, x1 + dx, y1 + dy)]
     units = []
     for f in glob.glob(os.path.join(DST, "Units", "*.json")):
+        if os.path.basename(f).startswith("Dungeon_"):
+            continue  # the dungeons' own CPs (content/void_dungeons.py)
         units.extend(u for u in load(f) if inside(u["Position"], x0 + dx, y0 + dy, x1 + dx, y1 + dy))
     if blocking:
         problems.append("%d doodads of ours stand in the destination" % len(blocking))
@@ -185,6 +278,8 @@ def main(argv):
     nxt = max(d["CreationNumber"] for _, d in ours) + 1
     out = []
     for old, new in remap.items():
+        if old == new:
+            continue
         for sub in ("DoodadData", "DestructableData"):
             f = os.path.join(src, sub, old + ".json")
             if os.path.exists(f):
@@ -195,7 +290,7 @@ def main(argv):
     for d in moved:
         n = json.loads(json.dumps(d))
         t = code(n["TypeId"])
-        if t in remap:
+        if t in remap and remap[t] != t:
             n["TypeId"] = struct.unpack("<I", remap[t].encode("latin1"))[0]
             if code(n["SkinId"]) == t:
                 n["SkinId"] = n["TypeId"]
