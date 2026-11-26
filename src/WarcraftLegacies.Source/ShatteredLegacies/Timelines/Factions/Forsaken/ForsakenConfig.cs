@@ -25,11 +25,14 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     internal const int ScourgeGripControlPoints = 10;
     internal const string CullingQuest = "The Culling";
 
-    // the Undercity: the eastern unused square of the south-west corner (measured with map_query.py)
-    internal const float UndercityMinX = -11896f;
-    internal const float UndercityMinY = -30056f;
-    internal const float UndercityMaxX = -10008f;
-    internal const float UndercityMaxY = -28168f;
+    // 0.82: the Undercity is the 24p map's (WL 24p 1.18a), copied into the north-west corner of the void
+    // (tools/shattered-legacies/terrain/copy_area.py, offset 0, +6912 -- Timelines/VOID_DUNGEONS.md). Walkable inside
+    // -28672 .. -25856 / 21248 .. 24704; the rectangle also takes in its wall. Its 24p spots: ForsakenUndercity.
+    internal const float UndercityMinX = -28672f;
+    internal const float UndercityMinY = 21120f;
+    internal const float UndercityMaxX = -25728f;
+    internal const float UndercityMaxY = 24832f;
+    internal const float UndercityShiftY = 6912f; // 24p y + this = our y
     internal const int SylvanasRanger = UNIT_HVWD_RANGER_GENERAL_OF_SILVERMOON_QUELTHALAS; // Quel'thalas' Sylvanas
 
     // 0.55 (maintainer): the old faction keeps its gold and lumber; the Forsaken start with this (no abuse by dying)

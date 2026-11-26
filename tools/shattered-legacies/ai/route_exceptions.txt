@@ -28,3 +28,8 @@ node @-13220,-8800
 # "Dire Maul to Ratchet" ran hub -> area east of the corridor (old 213, -11952,-6416) through the cliff band; Ratchet
 # is reached through the corridor (Southern Barrens) instead.
 remove @-13220,-8800 | @-11952,-6416
+
+# 0.82 (void-area dungeons): the Undercity is copied into the north-west void and reached only through its waygate --
+# no CP and no walking path, so the automatic area nodes skip it. A node inside, so the opened gate becomes a portal
+# edge (the region map gives the Undercity's ground to it).
+node @-27136,22600

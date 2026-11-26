@@ -4,6 +4,23 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.82.0 — void-area dungeons: the 24p Undercity
+
+Bot changes: `../Ai/CHANGELOG.md` 0.82.0. Plan and layout: `Timelines/VOID_DUNGEONS.md`.
+- **Void-area dungeons** (maintainer, 2026-11-26): the map's black void is to hold gated dungeons, packed tightly and
+  walled by the void. New tool `tools/shattered-legacies/terrain/copy_area.py`: copies a rectangle of the 24p 1.18a
+  map (terrain corners with remapped textures, pathing, shadows, doodads) into a void part of ours. It refuses if the
+  destination is not void or a custom doodad type is missing (`--types` copies it under a fork id, `DZv*`).
+- **The Undercity is the 24p map's**: terrain and 206 doodads copied into the north-west corner of the void
+  (-28672,21120 .. -25728,24832; 24p -28672,14208 .. -25728,17920 moved 6912 north). New doodad types `DZv0`
+  (Gargoyle Hub, 24p `D00O`) and `DZv1` (Iron Gate, 24p `D00K`), stock models. The Forsaken's buildings stand at the
+  24p spots, visible and invulnerable until "The Throne of Lordaeron", which opens the gate in the palace's ruins as
+  before. The buildings: Undercity, Royal Sepulcrum, Plaguetorium, Forbidden Archive, Graveyard, Laboratory, 4
+  Graves and 5 Plague Towers. Before, it was 4 buildings and 4 towers. The inner gate stands at the 24p southern
+  entrance. No rock ring any more (the void is the wall).
+  The Undercity is a WL instance now (like Outland): no world-tree immortality, Summon Legion or slipstream across its
+  border. The 0.57 square in the south-west corner is free again.
+
 ## 0.81.0 — fallback pairings, research ids, lore texts
 
 Bot changes: `../Ai/CHANGELOG.md` 0.81.0 (ferries, Argus, hero revives).

@@ -17,6 +17,7 @@ Documents of the fork (the bot has its own set in `../Ai/`):
 | `Timelines/SCENARIO_CONCEPTS.md` | WHAT is planned: vocabulary, rules, decision register D1-D17, every slot |
 | `Timelines/timeline-overview.drawio` | the flow of all timelines (GENERATED, `tools/shattered-legacies/timelines/`) |
 | `Timelines/FACTION_UNITS.md` | units and heroes per WL faction (GENERATED, `unit_scan.py --md`) |
+| `Timelines/VOID_DUNGEONS.md` | the gated dungeons in the map's void: tool, what is placed where, the void that is left |
 | `Content/` | the content index: what the main map, the 24p map and stock WC3 offer, used or not (GENERATED; `Content/README.md`) |
 
 ## Layers
@@ -114,6 +115,7 @@ ShatteredLegacies/
 | `MacroTools/GameTime/TurnCallback.cs`, `GameTimeManager.cs` | `ClampPastTurns`: while a faction arrives mid-game, callbacks for past turns run on the next turn | 0.57.3 |
 | `Objectives/TurnBased/ObjectiveTurn.cs` | the target turn counts from a mid-game arrival (`ExpirationOffset`) | 0.57.3 |
 | `mapdata/WarcraftLegacies/Info.json` | three computer slots "NPC" (P11, P14, P20) and their force -- the free slots for splits | 0.57.1 |
+| `mapdata/WarcraftLegacies/Environment.json`, `PathingMap.json`, `ShadowMap.json`, `Doodads/Dungeon_*.json`, `DoodadData/DZv*.json` | void-area dungeons copied from the 24p map (`terrain/copy_area.py`, `Timelines/VOID_DUNGEONS.md`): the Undercity in the north-west void | 0.82.0 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | `Targets`: the creeps it counts, read by the bot (quest creeps) | 0.71.0 |
 | `Factions/TaurenTribes/Mechanics/LongMarchCaravan.cs` | tells the bot the caravan's next stop (`AiApi.SetEscortGoal`, vanguard) | 0.71.0 |
 | `Factions/Druids/DruidsFaction.cs`, `Factions/Sentinels/SentinelsFaction.cs` | parts of WL 5.0.4 merged by hand into the 4.8.2 files: elite research choices, Master of Nature progression, Horn of Cenarius to Cenarius, Tyrande / Maiev / Naisha dialogue (`UPSTREAM.md`, bundle 1) | 0.72.0 |

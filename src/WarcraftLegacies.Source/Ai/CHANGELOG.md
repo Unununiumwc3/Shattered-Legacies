@@ -5,6 +5,15 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.82.0 — the Undercity in the route graph
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.82.0.
+- **The Undercity is a node** (TODO since 0.57.3): it moved into the north-west void (24p terrain). It has a fixed area
+  node (`route_exceptions.txt`, `node @-27136,22600`), so `gen_routes.py` gives its ground to that node. Once "The
+  Throne of Lordaeron" opens the gates, both waygates are portal edges, and bots walk in and out like through any
+  waygate. Landmass 20 (`U`) in `Geography.Grid`. The area nodes are renumbered (generated). The regeneration also
+  picked up the CP names and rock groups changed since 0.80.
+
 ## 0.81.0 — ferries, Argus and the Dark Portal back; heroes revived
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.81.0.

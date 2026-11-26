@@ -1,22 +1,57 @@
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
+using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
 {
-  // 0.57: the Undercity as an instance (Core/Effects/Instance): prepared at map setup -- visible and invulnerable,
-  // symmetric: the waygate in the middle, the Undercity north of it, Plaguetorium west, Graveyard east, Forbidden
-  // Archive south, a Plague Tower in each corner, rocks and sight blockers along the edge. "The Throne of Lordaeron"
-  // opens it: a second waygate in the Capital Palace's ruins.
+  // 0.57: the Undercity as an instance (Core/Effects/Instance): prepared at map setup -- visible and invulnerable.
+  // "The Throne of Lordaeron" opens it: a second waygate in the Capital Palace's ruins.
+  // 0.82 (void-area dungeons): no longer a bare square in the south-west corner -- the 24p map's Undercity, terrain
+  // and doodads, copied into the north-west corner of the void (ForsakenConfig). The buildings stand where the 24p
+  // map preplaced them (24p y + UndercityShiftY); the 24p army, its control point (n0BC) and its three entrance portals
+  // are not taken over. The inner gate stands at the 24p southern entrance ("Undercity Interior 1").
   internal static class ForsakenUndercity
   {
-    private const float Side = 560f;   // the buildings at the sides
-    private const float Corner = 640f; // the towers in the corners
+    private const float Shift = ForsakenConfig.UndercityShiftY;
+
+    // the 24p spots (x, 24p y)
+    private static readonly int[] Types =
+    {
+      ForsakenObjects.Undercity, ForsakenObjects.RoyalSepulcrum, ForsakenObjects.Plaguetorium,
+      ForsakenObjects.ForbiddenArchive, ForsakenObjects.Graveyard, ForsakenObjects.Laboratory,
+      ForsakenObjects.Grave, ForsakenObjects.Grave, ForsakenObjects.Grave, ForsakenObjects.Grave,
+      ForsakenObjects.PlagueTower, ForsakenObjects.PlagueTower, ForsakenObjects.PlagueTower,
+      ForsakenObjects.PlagueTower, ForsakenObjects.PlagueTower,
+    };
+
+    private static readonly float[] X =
+    {
+      -27136f, -26016f, -27936f,
+      -28256f, -26016f, -26784f,
+      -26176f, -26048f, -28288f, -28416f,
+      -27584f, -26688f, -27584f,
+      -26688f, -27776f,
+    };
+
+    private static readonly float[] Y =
+    {
+      16192f, 16416f, 15392f,
+      16544f, 16928f, 15328f,
+      15616f, 15680f, 16896f, 16832f,
+      15808f, 15808f, 16576f,
+      16576f, 14656f,
+    };
+
+    private const float GateX = -26528f; // 24p: the southern entrance portal (h03V) at -26528, 14432
+    private const float GateY = 14432f + Shift;
+    private const float ArriveX = -26544f; // the middle of 24p "Undercity Interior 1"
+    private const float ArriveY = 14656f + Shift;
 
     internal static Instance Square;
 
     internal static void Prepare()
     {
-      // 0.57.1: a moment after the map setup -- WL's NeutralVictimAndPassiveSetup hides every Neutral Passive unit in
-      // Regions.HideUnitBottomLeft (the Undercity's square lies in it), which hid the buildings and the gate
+      // 0.57.1: a moment after the map setup -- WL's NeutralVictimAndPassiveSetup hides Neutral Passive units in
+      // Regions.HideUnitBottomLeft (the 0.57 square lay in it; 0.82's Undercity does not -- kept as a safe order)
       var t = CreateTimer();
       TimerStart(t, 1f, false, () =>
       {
@@ -27,17 +62,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
 
     private static void Build()
     {
-      Square = new Instance("Undercity", ForsakenConfig.UndercityMinX, ForsakenConfig.UndercityMinY,
-        ForsakenConfig.UndercityMaxX, ForsakenConfig.UndercityMaxY);
-      Square.Prepare(
-        new[]
-        {
-          ForsakenObjects.Undercity, ForsakenObjects.Plaguetorium, ForsakenObjects.Graveyard,
-          ForsakenObjects.ForbiddenArchive, ForsakenObjects.PlagueTower, ForsakenObjects.PlagueTower,
-          ForsakenObjects.PlagueTower, ForsakenObjects.PlagueTower,
-        },
-        new[] { 0f, -Side, Side, 0f, -Corner, Corner, -Corner, Corner },
-        new[] { Side, 0f, 0f, -Side, Corner, Corner, -Corner, -Corner });
+      Square = new Instance("Undercity",
+        new Rectangle(ForsakenConfig.UndercityMinX, ForsakenConfig.UndercityMinY, ForsakenConfig.UndercityMaxX,
+          ForsakenConfig.UndercityMaxY), GateX, GateY, ArriveX, ArriveY);
+      var y = new float[Y.Length];
+      for (var i = 0; i < Y.Length; i++)
+      {
+        y[i] = Y[i] + Shift;
+      }
+
+      Square.Prepare(Types, X, y);
     }
 
     internal static void Open(player p, float x, float y)

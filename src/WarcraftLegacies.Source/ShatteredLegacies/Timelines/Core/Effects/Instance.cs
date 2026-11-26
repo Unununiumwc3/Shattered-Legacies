@@ -1,68 +1,66 @@
 using System.Collections.Generic;
+using MacroTools.Instances;
+using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
 {
-  // 0.57, building block "instance": a base of its own in one of the unused squares of the south-west corner (about
-  // 1900 x 1900 each, over void, inside Regions.HideUnitBottomLeft). Prepared at map setup, visible and invulnerable:
-  //   - a ring of rocks along the square's edge, each with a line-of-sight blocker -- units in neighbouring squares
-  //     cannot see, and so not shoot, across the void
-  //   - a waygate in the middle (closed)
-  //   - its buildings, symmetric around the middle (Neutral Passive)
+  // 0.57, building block "instance": a base of its own, reachable only through a waygate.
+  // 0.82 (void-area dungeons): the instance is a dungeon copied from the 24p map into a void part of our map
+  // (tools/shattered-legacies/terrain/copy_area.py, the layout in Timelines/VOID_DUNGEONS.md) -- the void around it
+  // is its wall, so the ring of rocks and sight blockers of the 0.57 squares is gone. Prepared at map setup, visible
+  // and invulnerable:
+  //   - the inner waygate where the 24p map had its entrance (closed)
+  //   - its buildings at their 24p spots (Neutral Passive)
+  //   - registered as a WL instance (MacroTools.Instances): no world-tree immortality, Summon Legion or slipstream
+  //     across its border -- like Outland and Argus
   // Open(): a second waygate where the entrance should be (e.g. a ruined capital), both gates open, the buildings go
-  // to the owner. First user: the Forsaken's Undercity.
+  // to the owner (they stay invulnerable). First user: the Forsaken's Undercity.
   internal sealed class Instance
   {
-    private const int Waygate = 1853319028;      // nwgt (stock Waygate)
-    private const int Rocks = 1280602723;        // LTrc (stock Rock Chunks)
-    private const int SightBlocker = 1498704994; // YTlb (stock Line of Sight Blocker)
-    private const float RingInset = 70f;         // from the walkable edge
-    private const float RingStep = 160f;
+    private const int Waygate = 1853319028; // nwgt (stock Waygate)
 
     internal readonly string Name;
-    internal readonly float CenterX;
-    internal readonly float CenterY;
-    private readonly float _half;
+    private readonly Rectangle _area;
+    private readonly float _gateX, _gateY;     // the inner waygate
+    private readonly float _arriveX, _arriveY; // where the entrance puts you (a step from the inner gate)
     private readonly List<unit> _buildings = new();
     private unit _gate;
     private unit _entrance;
+    private float _exitX, _exitY;
 
-    internal Instance(string name, float minX, float minY, float maxX, float maxY)
+    internal Instance(string name, Rectangle area, float gateX, float gateY, float arriveX, float arriveY)
     {
       Name = name;
-      CenterX = (minX + maxX) / 2f;
-      CenterY = (minY + maxY) / 2f;
-      _half = (maxX - minX) / 2f;
+      _area = area;
+      _gateX = gateX;
+      _gateY = gateY;
+      _arriveX = arriveX;
+      _arriveY = arriveY;
+      _exitX = gateX;
+      _exitY = gateY;
     }
 
-    // buildings: unit types and their offsets from the middle (keep it symmetric)
-    internal void Prepare(int[] types, float[] dx, float[] dy)
-    {
-      var r = _half - RingInset;
-      for (var d = -r; d <= r; d += RingStep)
-      {
-        Edge(CenterX + d, CenterY - r);
-        Edge(CenterX + d, CenterY + r);
-        Edge(CenterX - r, CenterY + d);
-        Edge(CenterX + r, CenterY + d);
-      }
+    internal bool IsOpen => _entrance != null;
 
+    internal bool Contains(float x, float y) => _area.Contains(x, y);
+
+    // buildings: unit types and their spots (x, y), facing 270
+    internal void Prepare(int[] types, float[] x, float[] y)
+    {
       var passive = Player(PLAYER_NEUTRAL_PASSIVE);
-      _gate = CreateUnit(passive, Waygate, CenterX, CenterY, 270f);
+      _gate = CreateUnit(passive, Waygate, _gateX, _gateY, 270f);
       SetUnitInvulnerable(_gate, true);
       WaygateActivate(_gate, false);
       for (var i = 0; i < types.Length; i++)
       {
-        var u = CreateUnit(passive, types[i], CenterX + dx[i], CenterY + dy[i], 270f);
+        var u = CreateUnit(passive, types[i], x[i], y[i], 270f);
         SetUnitInvulnerable(u, true);
         _buildings.Add(u);
       }
-    }
 
-    private static void Edge(float x, float y)
-    {
-      var rock = CreateDestructable(Rocks, x, y, GetRandomReal(0f, 360f), 1f, GetRandomInt(0, 2));
-      SetDestructableInvulnerable(rock, true);
-      CreateDestructable(SightBlocker, x, y, 0f, 1f, 0);
+      var wl = new MacroTools.Instances.Instance(_area);
+      wl.AddGate(new Gate(() => new Point(_gateX, _gateY), () => new Point(_exitX, _exitY)));
+      InstanceSystem.Register(wl);
     }
 
     // the entrance at (x, y) -- both waygates open; the buildings to the owner (they stay invulnerable)
@@ -74,9 +72,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
         SetUnitInvulnerable(_entrance, true);
       }
 
-      WaygateSetDestination(_entrance, CenterX, CenterY - 250f);
+      _exitX = x;
+      _exitY = y - 250f;
+      WaygateSetDestination(_entrance, _arriveX, _arriveY);
       WaygateActivate(_entrance, true);
-      WaygateSetDestination(_gate, x, y - 250f);
+      WaygateSetDestination(_gate, _exitX, _exitY);
       WaygateActivate(_gate, true);
       for (var i = 0; i < _buildings.Count; i++)
       {
