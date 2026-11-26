@@ -6,16 +6,16 @@ R002	main	used	Quest Completed: Crown of the Snow	(Druids)	Roch	demon	Replaceabl
 R003	main	used	Progenesis	(C'thun)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNEvolveExplode.blp	u020,u021,u022
 R004	main	used	Sunfury Training	(Quel'thalas)	Rhse	human	ReplaceableTextures\CommandButtons\BTNBloodelvenWarrior.blp	nheb
 R005	main	used	Clergyman Adept Training	(Arathor)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	h02R,h040,hars
-R006	main	used	Fortified Hulls	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNArcaniteArchitecture.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+20
+R006	main	used	Fortified Hulls	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNArcaniteArchitecture.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+21
 R007	main	used	Quest Completed: Raze Orgrimmar	(Sentinels)	Roch	other	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
 R008	main	used	Domination	(Power)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R009	main	used	Quest Completed: Plague of Undeath	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R00A	main	used	Improved Thorns	(Druids)	Reeb	nightelf	ReplaceableTextures\CommandButtons\BTNThorns.blp	eaom
 R00B	main	used	Veteran Footmen	(Lordaeron)	Rhse	human	ReplaceableTextures\CommandButtons\BTN_Royal_Footman_2.blp	hbar
-R00C	main	used	Improved Cannons	(Universal Upgrade)	Rhra	human	ReplaceableTextures\CommandButtons\BTNHumanMissileUpThree.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+20
+R00C	main	used	Improved Cannons	(Universal Upgrade)	Rhra	human	ReplaceableTextures\CommandButtons\BTNHumanMissileUpThree.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+21
 R00D	main	used	Mass Bloodlust	(Frostwolf)	Rovs	orc	ReplaceableTextures\CommandButtons\btnmassbloodlust.blp	o02Q
 R00E	main	used	Hydromancer Adept Training	(Dalaran)	Rhst	human	ReplaceableTextures\CommandButtons\BTNSummonWaterElemental.blp	h036
-R00F	main	used	Mithril Plated Armor	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNLancelot_Plate.blp	h07C
+R00F	main	used	Mithril Plated Armor	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNLancelot_Plate.blp	h07C,hZi5
 R00G	main	used	Feint	(Quel'Thalas)	Rhfl	human	ReplaceableTextures\CommandButtons\BTNWindWalkOn.blp	h003,h033,h03S,h03T
 R00H	main	used	Feedback	(Illidari)	Remk	naga	replaceabletextures\commandbuttons\btnfeedback.dds	nnsa
 R00I	main	used	Mage Adept Training	(Lordaeron)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	h035
@@ -23,20 +23,20 @@ R00J	main	used	Ogre Magi Adept Training	(Warsong)	Rhpt	orc	ReplaceableTextures\C
 R00K	main	used	Subdue the Darkspear Trolls	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R00L	main	used	Quest Completed: The Admiralty of Kul Tiras	(Kul Tiras)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
 R00M	main	used	Fel Warlock Adept Training	(Fel Horde)	Rost	orc	ReplaceableTextures\CommandButtons\BTNSoulGem.blp	o033
-R00N	main	used	Improved Swig	(Ironforge Tavern)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNDrinkAle.blp	h048
+R00N	main	used	Improved Swig	(Ironforge Tavern)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNDrinkAle.blp	h048,hZi7
 R00O	main	used	Subdue the Thunderbluff Tauren	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R00P	main	used	Quest Completed: The Citadel	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R00Q	main	used	Chilling Aura	(Scourge)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNFrostAura.blp	u000,u02L,unp1,unp2,unpl
 R00R	main	used	Improved Chain Lightning	(Orcish Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNChainLightning.blp	osld
 R00S	main	used	Priestess Adept Training	(Sentinels)	Rowt	nightelf	ReplaceableTextures\CommandButtons\BTNMoonStone.blp	e00V
-R00T	main	used	Overclock	(Ironforge Steam Tank)	Rhri	human	ReplaceableTextures\CommandButtons\BTNEngineeringUpgrade.blp	harm
+R00T	main	used	Overclock	(Ironforge Steam Tank)	Rhri	human	ReplaceableTextures\CommandButtons\BTNEngineeringUpgrade.blp	hZi9,harm
 R00U	main	used	Quest Completed: The Blue Dragonflight	(Dalaran)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-R00V	main	used	Rune Priest Adept Training	(Ironforge)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNRuneOfLife.blp	h042
+R00V	main	used	Rune Priest Adept Training	(Ironforge)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNRuneOfLife.blp	h042,hZi8
 R00W	main	used	Toughened Hides	(Tauren Tribes)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNDragonCarapace.blp	otwm
 R00X	main	used	Quest Completed: The Blood of Mannoroth	(Warsong)	Rhse	other	ReplaceableTextures\CommandButtons\BTNBloodLust.blp	-
 R00Y	main	used	Improved Frenzy	(Fel Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNAbility_Warrior_Rampage.blp	o02W,o02X
-R00Z	main	used	Armor Penetration Rounds	(Ironforge)	Rhde	human	ReplaceableTextures\CommandButtons\BTNRiflemanBurningShot.blp	h07C
-R010	main	used	Improved Spell Resistance	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTN_CR_SEGGOLEM.blp	harm
+R00Z	main	used	Armor Penetration Rounds	(Ironforge)	Rhde	human	ReplaceableTextures\CommandButtons\BTNRiflemanBurningShot.blp	h07C,hZi5
+R010	main	used	Improved Spell Resistance	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTN_CR_SEGGOLEM.blp	hZi9,harm
 R011	main	used	Quest Completed: Felsteel Refining	(Fel Horde)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R012	main	used	Subdue the Stonemaul Ogres	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R013	main	used	Quest Completed: Breaking Bad Blood	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -148,7 +148,7 @@ R04N	main	used	Turn 3 has passed	-	Roch	demon	ReplaceableTextures\CommandButtons
 R04O	main	used	Cleric Adept Training	(Gilneas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNWaterBurst.blp	h03D
 R04P	main	used	Druid of the Scythe Adept Training	(Gilneas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNDispelMagic.blp	h03D
 R04Q	main	used	Quest Completed: The Blood Elves	(Quel'thalas)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
-R04R	main	used	Navigation	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNHumanTransport.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+22
+R04R	main	used	Navigation	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNHumanTransport.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+24
 R04T	main	used	Legion exists	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 R04V	main	used	Quest Completed: The Slumbering King	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R04Y	main	used	Quest Completed: Hearthlands	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
@@ -232,7 +232,7 @@ R09P	main	used	Revert Bloodpact	-	Rhde	undead	ReplaceableTextures/CommandButtons
 R09U	main	used	Seal of Blood	(Sunfury)	Rhse	human	ReplaceableTextures\CommandButtons\BTNPotionOfVampirism.blp	h0C9
 R09V	main	used	Storm Crow Form	(Druids)	Rhse	nightelf	ReplaceableTextures\CommandButtons\BTNRavenForm.blp	eaow
 R09W	main	used	Felsteel Refining	(Fel Horde)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNTenebriousArmor.blp	o008,o013,o017,o02Y,o02Z,o030
-R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+17
+R09X	main	used	Flight	(Universal Upgrade)	Rhar	other	ReplaceableTextures\CommandButtons\BTNWing.blp	e010,edob,h02N,h02Y,h048,h06F,h06S,h06U,+19
 R09Y	main	used	Quest Completed: Return to Outland	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 R0A7	main	used	Escape to Theramore	(Dalaran)	Rhde	human	ReplaceableTextures\CommandButtons\BTNOldRock.blp	h002
 R0A8	main	used	Your team controls Jaina Proudmoore	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -322,6 +322,21 @@ RZ03	main	used	Kor'kron Elites	(Orcish Horde)	Rnsb	orc	ReplaceableTextures\Comma
 RZ04	main	used	Far Seer Adept Training	(Orcish Horde)	Rost	orc	ReplaceableTextures\CommandButtons\BTNHex.blp	osld
 RZ05	main	used	Airborne Toxins	(Orcish Horde)	Rolf	orc	ReplaceableTextures\CommandButtons\BTNUnstableConcoction.blp	obea
 RZZL	main	used	Quest Completed: The Emperor's Constructs	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZb0	main	used	Quest Completed: Nazjatar Empire	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZb1	main	used	Quest Completed: The Bloodcursed Naga	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZb2	main	used	Quest Completed: Reel them back	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
+RZb3	main	used	Exploit the Sea Floor	(Nzoth)	Rhar	naga	ReplaceableTextures\CommandButtons\BTNGoldMine.blp	nZb3
+RZb4	main	used	Build the Empire	(Nzoth)	Rhar	naga	ReplaceableTextures\CommandButtons\BTNFeatherMoonAura.blp	nZb3
+RZb5	main	used	Tier 4	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNFourthUgrade.blp	nZb3
+RZb6	main	used	Power Infusion 1	(Shared)	Rhan	human	ReplaceableTextures\CommandButtons\BTNSnazzyScroll.blp	hZb0
+RZb7	main	used	Deepseer Adept Training	-	Rnsw	naga	ReplaceableTextures\CommandButtons\BTNCreatureCarapace.blp	nZb8
+RZb8	main	used	Bloodkin Adept Training	-	Rnsw	naga	ReplaceableTextures\CommandButtons\BTNSirenAdept.blp	nZb8
+RZb9	main	used	Solo Upgrade	(Global Dummy)	Rguv	unknown	ReplaceableTextures\CommandButtons\BTNGlyph.blp	-
+RZba	main	used	Improved Hypothermic Breath	(Scourge)	Rhse	undead	ReplaceableTextures\CommandButtons\BTNBreathOfFrost.blp	-
+RZbb	main	used	Backpack	(Undead)	Rupm	undead	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
+RZbc	main	used	Needs to be Made	-	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNNagaBurrow.blp	-
+RZbd	main	used	Malorne's Infusion	(Druids)	Rhan	nightelf	ReplaceableTextures\CommandButtons\BTNRegeneration.blp	-
+RZbe	main	used	Quest Completed: Green-Skinned Brutes	(Sentinels)	Roch	demon	ReplaceableTextures\CommandButtons\BTNThoriumArmor.blp	-
 RZc1	main	used	Silvermoon Palace lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZc2	main	used	Gilneas Castle lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZc3	main	used	Stormwind Keep lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
@@ -337,27 +352,29 @@ RZcC	main	used	Legion Stronghold lost	(Hourglass condition)	Roch	demon	Replaceab
 RZcD	main	used	Kil'sorrow Fortress destroyed	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcE	main	used	Black Temple destroyed	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcF	main	used	Not available	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
-RZcG	main	used	Not available yet	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcG	main	used	N'Zoth lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcH	main	used	C'Thun lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcI	main	used	Sylvanas Windrunner slain by the Scourge	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcJ	main	used	Capital Palace lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZd1	main	used	Fallback: Sunfury	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBloodElfPrince.blp	nZh0
 RZd2	main	used	Fallback: Gilneans on Darkshore (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNJaina.blp	nZh0
-RZd3	main	used	Fallback: Gilneas	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNGreymane.blp	nZh0
-RZd4	main	used	Fallback: Dwarven Expedition (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	nZh0
+RZd3	main	used	Fallback: Defias Brotherhood	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	nZh0
+RZd4	main	used	Fallback: Dark Iron of Shadowforge	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	nZh0
 RZd5	main	used	Fallback: Kezan Enterprise	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroTinker.blp	nZh0
-RZd6	main	used	Fallback: Dream trees (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNKeeperOfTheGrove.blp	nZh0
-RZd7	main	used	Fallback: Chase Illidan to Outland	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroWarden.blp	nZh0
+RZd6	main	used	Fallback: Furbolgs	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	nZh0
+RZd7	main	used	Fallback: Naga of Nazjatar	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNNagaSummoner.blp	nZh0
 RZd8	main	used	Fallback: Draenei of Shattrath (placeholder)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroArchMage.blp	nZh0
 RZd9	main	used	Fallback: Twillight or Zandalari	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
-RZdA	main	used	Fallback: Skywall	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
+RZdA	main	used	Fallback: Centaur Khans	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	nZh0
 RZdB	main	used	Fallback: Knights of the Ebon Blade	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
 RZdC	main	used	Fallback: Draenei	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBOSSVelen.blp	nZh0
 RZdD	main	used	Fallback: Twillight or Dragonmaw	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNChogall.blp	nZh0
 RZdE	main	used	Fallback: Ashtongue Deathsworn	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNDranaiAkama.blp	nZh0
 RZdF	main	used	Conquered, not defeated	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
-RZdG	main	used	Fallback (not decided yet)	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNFacelessOne.blp	nZh0
-RZdH	main	used	Fallback: Zandalari Empire	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeadHunterBerserker.blp	nZh0
+RZdG	main	used	Fallback: Harpies	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHarpyQueen.blp	nZh0
+RZdH	main	used	Fallback: Skywall	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdI	main	used	Betrayal: Forsaken	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanshee.blp	nZh0
+RZdJ	main	used	Fallback: Gilneas	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNGreymane.blp	nZh0
 RZf0	main	used	Quest Completed: Forsaken Independance	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZf1	main	used	Quest Completed: The Secret Buildup	-	Roch	demon	ReplaceableTextures\CommandButtons\BTNSteelRanged.blp	-
 RZf2	main	used	Tier 4	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNFourthUgrade.blp	hZf2
@@ -452,16 +469,16 @@ Renb	main	used	Nature's Blessing	(Brown Research)	Renb	nightelf	ReplaceableTextu
 Rers	main	used	Resistant Skin	(Mountain Giant)	Rers	nightelf	ReplaceableTextures\CommandButtons\BTNResistantSkin.blp	eaoe,oZx7
 Reuv	main	used	Ultravision	(Light Blue Research)(Brown Research)	Reuv	nightelf	ReplaceableTextures\CommandButtons\BTNUltravision.blp	e010,edob
 Rews	main	used	Well Spring	-	Rews	nightelf	ReplaceableTextures\CommandButtons\BTNWellSpring.blp	edob
-Rhac	main	used	Improved Masonry	(Yellow/Purple/Orange/Green/Dark Green Research)	Rhac	human	ReplaceableTextures\CommandButtons\BTNStoneArchitecture.blp	h03O,h048,h06F,h07O,h0A3,hbla,hlum
+Rhac	main	used	Improved Masonry	(Yellow/Purple/Orange/Green/Dark Green Research)	Rhac	human	ReplaceableTextures\CommandButtons\BTNStoneArchitecture.blp	h03O,h048,h06F,h07O,h0A3,hZi6,hZi7,hbla,+1
 Rhan	main	used	Animal War Training	(Dark Green/Purple Research)	Rhan	human	ReplaceableTextures\CommandButtons\BTNAnimalWarTraining.blp	h06E,hbar
-Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+22
+Rhar	main	used	Copper Armor Plating	(Universal Upgrade)	Rhar	human	ReplaceableTextures\CommandButtons\BTNHumanArmorUpOne.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+24
 Rhcd	main	used	Cloud	(Quel'thalas)	Rhcd	human	ReplaceableTextures\CommandButtons\BTNCloudOfFog.blp	h03J
-Rhfl	main	used	Flare	(Ironforge)	Rhfl	human	ReplaceableTextures\CommandButtons\BTNFlare.blp	h07C
-Rhfs	main	used	Fragmentation Shards	(Yellow Research)	Rhfs	human	ReplaceableTextures\CommandButtons\BTNFragmentationBombs.blp	h07C
+Rhfl	main	used	Flare	(Ironforge)	Rhfl	human	ReplaceableTextures\CommandButtons\BTNFlare.blp	h07C,hZi5
+Rhfs	main	used	Fragmentation Shards	(Yellow Research)	Rhfs	human	ReplaceableTextures\CommandButtons\BTNFragmentationBombs.blp	h07C,hZi5
 Rhhb	main	used	Storm Hammers	(Khaz Modan)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNStormHammer.blp	hgra
-Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+22
+Rhme	main	used	Copper Forged Weaponry	(Universal Upgrade)	Rhme	human	ReplaceableTextures\CommandButtons\BTNSteelMelee.blp	e010,edob,h02N,h02Y,h03I,h03O,h048,h06F,+24
 Rhpt	main	used	Priest Adept Training	(Quel'Thalas)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNPriestAdept.blp	h034
-Rhri	main	used	Long Rifles	(Ironforge)	Rhri	human	ReplaceableTextures\CommandButtons\BTNDwarvenLongRifle.blp	h07C
+Rhri	main	used	Long Rifles	(Ironforge)	Rhri	human	ReplaceableTextures\CommandButtons\BTNDwarvenLongRifle.blp	h07C,hZi5
 Rhse	main	used	Magic Sentry	-	Rhse	human	ReplaceableTextures\CommandButtons\BTNMagicalSentry.blp	h035
 Rhss	main	used	Control Magic	(Quel'thalas)	Rhss	human	ReplaceableTextures\CommandButtons\BTNControlMagic.blp	h03J
 Rhst	main	used	Sorceress Adept Training	(Quel'Thalas)	Rhst	human	ReplaceableTextures\CommandButtons\BTNSorceressAdept.blp	h034
@@ -491,9 +508,9 @@ Ruwb	main	used	Web	(Red Research)	Ruwb	undead	ReplaceableTextures\CommandButtons
 TP17	main	used	Improved Frenzy	(Warsong)	Rhse	orc	ReplaceableTextures\CommandButtons\BTNAbility_Warrior_Rampage.blp	o01S
 TP28	main	used	Flamethrower	(Ironforge)	Rhse	human	ReplaceableTextures\CommandButtons\BTNFlamethrower.blp	harm
 TP29	main	used	Artillery	(Ironforge)	Rhse	human	ReplaceableTextures\CommandButtons\BTNArtilleryAttack.blp	harm
-TP38	main	used	Improved Chassis	(Ironforge)	Rhse	human	ReplaceableTextures\CommandButtons\BTNRepair2.blp	harm
-TP41	main	used	Potent Stormbrew	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNOtherBarrel.blp	h07C
-TP42	main	used	Rune Smith Adept Training	(Ironforge)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNHeavenlyDemolisher.blp	h042
+TP38	main	used	Improved Chassis	(Ironforge)	Rhse	human	ReplaceableTextures\CommandButtons\BTNRepair2.blp	hZi9,harm
+TP41	main	used	Potent Stormbrew	(Ironforge)	Rhss	human	ReplaceableTextures\CommandButtons\BTNOtherBarrel.blp	h07C,hZi5
+TP42	main	used	Rune Smith Adept Training	(Ironforge)	Rhpt	human	ReplaceableTextures\CommandButtons\BTNHeavenlyDemolisher.blp	h042,hZi8
 VP31	main	used	Masters of Lightning	(Ironforge)	Rhhb	human	ReplaceableTextures\CommandButtons\BTNZeusStrike.blp	hgra
 YBAA	main	used	Split Healing Wave	(Illidari)	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNFieryWave.blp	n08W
 YBPH	main	used	Kingslayer	(Illidari)	Rnsb	naga	ReplaceableTextures\CommandButtons\BTNBlightDagger.blp	n08W
@@ -882,7 +899,7 @@ Rhde	stock	used	Defend	-	Rhde	human	ReplaceableTextures\CommandButtons\BTNDefend
 Rhfc	stock	used	Flak Cannons	-	Rhfc	human	ReplaceableTextures\CommandButtons\BTNFlakCannons.blp	-
 Rhgb	stock	used	Flying Machine Bombs	-	Rhgb	human	ReplaceableTextures\CommandButtons\BTNHumanArtilleryUpOne.blp	-
 Rhla	stock	unused	Studded Leather Armor	-	Rhla	human	ReplaceableTextures\CommandButtons\BTNLeatherUpgradeOne.blp	-
-Rhlh	stock	used	Improved Lumber Harvesting	-	Rhlh	human	ReplaceableTextures\CommandButtons\BTNHumanLumberUpgrade1.blp	hlum
+Rhlh	stock	used	Improved Lumber Harvesting	-	Rhlh	human	ReplaceableTextures\CommandButtons\BTNHumanLumberUpgrade1.blp	hZi6,hlum
 Rhpm	stock	used	Backpack	(Human)	Rhpm	human	ReplaceableTextures\CommandButtons\BTNPackBeast.blp	-
 Rhra	stock	unused	Black Gunpowder	-	Rhra	human	ReplaceableTextures\CommandButtons\BTNHumanMissileUpOne.blp	-
 Rhrt	stock	unused	Barrage	-	Rhrt	human	ReplaceableTextures\CommandButtons\BTNScatterRockets.blp	-

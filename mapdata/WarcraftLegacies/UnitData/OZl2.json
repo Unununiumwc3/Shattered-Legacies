@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZl2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Khan of the Maraudine"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Khan Hratha"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AOcl,AOhx,ANht,AOvd,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Centaur)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\CentaurKhan\\CentaurKhan"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Khan Hratha"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Khan Hratha"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Khan Hratha"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Maraudine, sons of Theradras, raid the coast of Durotar. Chain Lightning, Hex, Howl of Terror; ultimate Big Bad Voodoo."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "INT"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.15
+    }
+  ]
+}

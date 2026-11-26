@@ -1,0 +1,97 @@
+{
+  "OldId": "Obla",
+  "NewId": "OZj6",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Matriarch of the Bloodfeathers"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Serena Bloodfeather"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AEsh,AEev,AOcr,AOww,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHarpyQueen.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\HarpyQueen\\HarpyQueen"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Serena Bloodfeather"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Serena Bloodfeather"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Serena Bloodfeather"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Freed from the whispers of the deep, she follows the banner of whoever broke them. Shadow Strike, Evasion, Critical Strike; ultimate Bladestorm."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "AGI"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "umvt",
+      "Type": 3,
+      "Value": "fly"
+    },
+    {
+      "Id": "umvh",
+      "Type": 2,
+      "Value": 240
+    }
+  ]
+}

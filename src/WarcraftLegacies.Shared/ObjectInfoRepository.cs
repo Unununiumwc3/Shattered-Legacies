@@ -41,6 +41,12 @@ public sealed class ObjectInfoRepository
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.AshtongueObjectInfo.GetAllObjectLimits()); // [SL] (0.63)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DragonmawObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.ZandalariObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.NazjatarObjectInfo.GetAllObjectLimits()); // [SL] (0.84)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DefiasObjectInfo.GetAllObjectLimits()); // [SL] (0.85)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.CentaurObjectInfo.GetAllObjectLimits()); // [SL] (0.85)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.HarpyObjectInfo.GetAllObjectLimits()); // [SL] (0.85)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DarkIronObjectInfo.GetAllObjectLimits()); // [SL] (0.86)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.FurbolgObjectInfo.GetAllObjectLimits()); // [SL] (0.86)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.EbonBladeObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
     AddFactionObjectInfo(ScourgeObjectInfo.GetAllObjectLimits());
     AddFactionObjectInfo(SentinelsObjectInfo.GetAllObjectLimits());

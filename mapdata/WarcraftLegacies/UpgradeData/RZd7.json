@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroWarden.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNNagaSummoner.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Chase Illidan to Outland"
+      "Value": "Fallback: Naga of Nazjatar"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Chase Illidan to Outland"
+      "Value": "Fallback: Naga of Nazjatar"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "After Driven by Vengeance, return Maiev to her existing Outland outpost."
+      "Value": "Queen Azshara's naga rise in Nazjatar beneath the Maelstrom: you play the Naga of Nazjatar, sworn to whoever broke the Sentinels -- then to whoever holds the Eternal Palace. Everything else of the Sentinels is lost."
     }
   ]
 }

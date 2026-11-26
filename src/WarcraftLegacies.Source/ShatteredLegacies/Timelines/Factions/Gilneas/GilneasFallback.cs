@@ -16,6 +16,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas
   //      Tempest Reach) included -- waits hidden, paused and invulnerable (Neutral Passive), as it did for Dalaran's
   //      Greymane Wall. Bots never go there: hidden / neutral CPs are no targets, and the route gate "greymane"
   //      (Silverpine <-> Gilneas City, AiGates) opens only once a player holds Gilneas City.
+  //   0.85.0 (maintainer): the trigger is LORDAERON's Capital Palace lost (Stormwind gets the Defias): "the last
+  //   humans of the north seek shelter behind the Greymane Wall".
   //   2. Stormwind Keep lost -> swap faction (GilneasFaction in fallback mode), heroes and the rest of Stormwind are
   //      left behind (Neutral Hostile), the Gilneas region and its CPs are taken over, Liberation of Gilneas is
   //      researched (Genn Greymane and the worgen), Genn leads them, the team becomes the NORTH ALLIANCE.
@@ -66,7 +68,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas
       AllLegends.Gilneas.Genn.ForceCreate(p, at, 270f);
       ChangeTeam.JoinOrAlone(p, TeamSetup.NorthAlliance);
       p.RepositionCamera(at);
-      AiApi.LogPin("Stormwind fallback -> Gilneas: " + I2S(taken) + " units, " + I2S(cps) + " more CPs, team "
+      AiApi.LogPin(def.Faction + " fallback -> Gilneas: " + I2S(taken) + " units, " + I2S(cps) + " more CPs, team "
                    + (p.GetPlayerData().Team != null ? p.GetPlayerData().Team.Name : "-"));
     }
   }

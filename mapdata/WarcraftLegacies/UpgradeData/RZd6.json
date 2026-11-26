@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNKeeperOfTheGrove.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Dream trees (placeholder)"
+      "Value": "Fallback: Furbolgs"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Dream trees (placeholder)"
+      "Value": "Fallback: Furbolgs"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Placeholder: the druids walk the Emerald Dream to its trees in the Eastern Kingdoms."
+      "Value": "The furbolg tribes follow whoever holds their Sacred Ancestral Totem: you play the Furbolgs -- Nafien and the Totem Lodge by Nordrassil, warriors every turn, more and stronger for every world tree your side holds -- sworn to whoever holds Nordrassil. They cannot be defeated."
     }
   ]
 }

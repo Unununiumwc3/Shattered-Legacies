@@ -48,7 +48,8 @@ ShatteredLegacies/
     SlAiData.g.cs               GENERATED (tools/shattered-legacies/ai/gen_ai_data.py): the Kezan buildings' bot data
   Content/                      GENERATED content index: REUSE.md + units / abilities / upgrades / items .tsv
   Dungeons/
-    VoidDungeons.cs             the open void-area dungeons (Nazjatar, Shadowforge, Deadmines): gates + instances (0.83)
+    VoidDungeons.cs             the void-area dungeons (Nazjatar, Shadowforge, Deadmines): gates + instances, shut until
+                                their fallback opens them (0.83, 0.84)
     DungeonObjects.g.cs         GENERATED (tools/shattered-legacies/content/void_dungeons.py): their CP types
   Testing/
     TestKit.cs                  "-testkit": spawns a port bundle's heroes / artifacts for a short check (debug only, 0.72.0)
@@ -79,6 +80,12 @@ ShatteredLegacies/
       Illidari/                 IllidariFallback (0.63)
       KezanEnterprise/          the Kezan Enterprise (0.58: own faction): config, objects (generated), oil, trade
                                 (0.59), the Refugee Slave Camps (0.60), the end goal on the scoreboard, Quests/
+      Nazjatar/                 the naga of Azshara (0.84, the Sentinels' fallback in the Nazjatar dungeon): faction,
+                                fallback, objects (generated)
+      Defias/, Centaur/, Harpy/ the Defias Brotherhood (Stormwind's), the Centaur Khans (the Tauren's), the Harpies
+                                (the Black Empire's) -- 0.85, objects from content/minor_factions.py
+      DarkIron/, Furbolg/       the Dark Iron of Shadowforge (Ironforge's, content/dark_iron.py), the Furbolgs (the
+                                Druids', content/minor_factions.py) -- 0.86
 ```
 
 ## Changes to WL's code (marked `[SL]`)
@@ -102,7 +109,7 @@ ShatteredLegacies/
 | `Factions/Ahnqiraj/AhnqirajFaction.cs`, `Quests/QuestRebuildAhnqiraj.cs` (deleted) | no "Rebuilding of Ahn'Qiraj": the gate is Ahn'Qiraj's from the start | 0.78.0 |
 | `Factions/Lordaeron/Quests/QuestScarletCrusade.cs` | `SwapFaction.NameSlot` after the faction change (bot slot name) | 0.78.0 |
 | `WarcraftLegacies.Shared/FactionObjectLimits/DalaranObjectInfo.cs`, `GilneasObjectInfo.cs` | no Gilneas Manor for Dalaran; no Dalaran houses / Violet Tower for Gilneas | 0.80.0 |
-| `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade object limits (`[SL]` lines) | 0.80.0 |
+| `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade / Nazjatar / Defias / Centaur / Harpy / Dark Iron / Furbolg object limits (`[SL]` lines) | 0.80.0, 0.84.0 - 0.86.0 |
 | `Setup/FactionChoiceDialogSetup.cs` | no Draenei pick: the Sentinels' slot plays the Sentinels | 0.80.0 |
 | `Factions/Draenei/DraeneiFaction.cs` | fallback mode (`asFallback`: no Darkshore quest, `RepairHull` for the fallback) | 0.80.0 |
 | `Factions/Dalaran/Mechanics/Waygate.cs` | `IsOperational` without a property pattern (CSharp.lua null crash) | 0.81.0 |
@@ -119,6 +126,7 @@ ShatteredLegacies/
 | `Objectives/TurnBased/ObjectiveTurn.cs` | the target turn counts from a mid-game arrival (`ExpirationOffset`) | 0.57.3 |
 | `mapdata/WarcraftLegacies/Info.json` | three computer slots "NPC" (P11, P14, P20) and their force -- the free slots for splits | 0.57.1 |
 | `mapdata/WarcraftLegacies/Environment.json`, `PathingMap.json`, `ShadowMap.json`, `Doodads/Dungeon_*.json`, `DoodadData/DZv*.json`, `DestructableData/BZv*.json`, `UnitData/nZv*.json`, `Units/Dungeon_ControlPoints.json` | void-area dungeons copied from the 24p map (`terrain/copy_area.py`, `content/void_dungeons.py`, `Timelines/VOID_DUNGEONS.md`): the Undercity, Nazjatar, Shadowforge, the Deadmines and their CPs | 0.82.0, 0.83.0 |
+| `mapdata/WarcraftLegacies/UnitData/h01O.json` | Shadowforge City gets the waygate ability (`Awrp`): the entrance of the Shadowforge dungeon, shut until it opens (`Dungeons/VoidDungeons.cs`) | 0.84.0 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | `Targets`: the creeps it counts, read by the bot (quest creeps) | 0.71.0 |
 | `Factions/TaurenTribes/Mechanics/LongMarchCaravan.cs` | tells the bot the caravan's next stop (`AiApi.SetEscortGoal`, vanguard) | 0.71.0 |
 | `Factions/Druids/DruidsFaction.cs`, `Factions/Sentinels/SentinelsFaction.cs` | parts of WL 5.0.4 merged by hand into the 4.8.2 files: elite research choices, Master of Nature progression, Horn of Cenarius to Cenarius, Tyrande / Maiev / Naisha dialogue (`UPSTREAM.md`, bundle 1) | 0.72.0 |

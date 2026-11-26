@@ -23,7 +23,7 @@ BUILDING = "nZh0"
 WL_RESEARCHES = ["R0XZ"]  # WL's own turning-point researches, also listed on the Hourglass (Scarlet Crusade)
 ICONS = "ReplaceableTextures\\CommandButtons\\"
 # command-card button per decision (x, y); default (0, 0). A faction with two turning points needs two positions.
-BUTTONS = {"Forsaken": (1, 0)}
+BUTTONS = {"Forsaken": (1, 0), "LordaeronGilneas": (1, 0)}
 
 # key (C# name), WL faction name, decision id, condition id, button title, extended tooltip, condition text, icon
 TURNING_POINTS = [
@@ -37,32 +37,42 @@ TURNING_POINTS = [
      "Sylvanas Windrunner slain by the Scourge", "BTNBanshee"),
     ("Gilneas", "Gilneas", "RZd2", "RZc2", "Fallback: Gilneans on Darkshore (placeholder)",
      "Placeholder: the night elves carry the Gilneans to Darkshore.", "Gilneas Castle lost", "BTNJaina"),
-    ("Stormwind", "Stormwind", "RZd3", "RZc3", "Fallback: Gilneas",
-     "Stormwind's survivors sail to Gilneas: you play the Kingdom of Gilneas behind the Greymane Wall, with Genn "
-     "Greymane, and join the North Alliance. Everything left in Stormwind is lost.", "Stormwind Keep lost",
+    ("Stormwind", "Stormwind", "RZd3", "RZc3", "Fallback: Defias Brotherhood",
+     "The red masks come out of the Deadmines: you play the Defias Brotherhood -- Dunco Ratsbon and Count "
+     "Clessington, bandits that pillage what they strike, recruits every turn -- sworn to whoever broke Stormwind, then "
+     "to whoever holds the Deadmines. Everything left in Stormwind is lost.", "Stormwind Keep lost",
+     "BTNBanditLord"),
+    ("LordaeronGilneas", "Lordaeron", "RZdJ", "RZcJ", "Fallback: Gilneas",
+     "Lordaeron's survivors flee to Gilneas: you play the Kingdom of Gilneas behind the Greymane Wall, with Genn "
+     "Greymane, in the North Alliance. Everything left in Lordaeron is lost.", "Capital Palace lost",
      "BTNGreymane"),
-    ("Ironforge", "Ironforge", "RZd4", "RZc4", "Fallback: Dwarven Expedition (placeholder)",
-     "Placeholder: the dwarves dig for hope in the Storm Peaks.", "The Great Forge lost", "BTNHeroMountainKing"),
+    ("Ironforge", "Ironforge", "RZd4", "RZc4", "Fallback: Dark Iron of Shadowforge",
+     "A Dark Iron force tunnels up to claim the Great Anvil: you play the Dark Iron -- Ironforge's arsenal in Dark Iron "
+     "hands, Dagran Thaurissan at their head, Shadowforge opens -- bound by the Mercenary Charter to whoever holds the "
+     "Siege Foundry. They cannot be defeated.", "The Great Forge lost", "BTNHeroMountainKing"),
     ("Kultiras", "Kul'tiras", "RZd5", "RZc5", "Fallback: Kezan Enterprise",
      "Katherine Proudmoore rallies the survivors on Kezan, joined by the goblins: a mercenary faction on its own team. "
      "Kul Tiras' old holdings go to Stormwind if it still fights on your team.", "Boralus Keep lost", "BTNHeroTinker"),
-    ("Druids", "Druids", "RZd6", "RZc6", "Fallback: Dream trees (placeholder)",
-     "Placeholder: the druids walk the Emerald Dream to its trees in the Eastern Kingdoms.",
-     "Nordrassil and Cenarion Hold lost", "BTNKeeperOfTheGrove"),
-    ("Sentinels", "Sentinels", "RZd7", "RZc7", "Fallback: Chase Illidan to Outland",
-     "After Driven by Vengeance, return Maiev to her existing Outland outpost.", "Auberdine and Feathermoon Stronghold lost",
-     "BTNHeroWarden"),
+    ("Druids", "Druids", "RZd6", "RZc6", "Fallback: Furbolgs",
+     "The furbolg tribes follow whoever holds their Sacred Ancestral Totem: you play the Furbolgs -- Nafien and the Totem "
+     "Lodge by Nordrassil, warriors every turn, more and stronger for every world tree your side holds -- sworn to "
+     "whoever holds Nordrassil. They cannot be defeated.", "Nordrassil and Cenarion Hold lost", "BTNFurbolgElder"),
+    ("Sentinels", "Sentinels", "RZd7", "RZc7", "Fallback: Naga of Nazjatar",
+     "Queen Azshara's naga rise in Nazjatar beneath the Maelstrom: you play the Naga of Nazjatar, sworn to whoever "
+     "broke the Sentinels -- then to whoever holds the Eternal Palace. Everything else of the Sentinels is lost.",
+     "Auberdine and Feathermoon Stronghold lost", "BTNNagaSummoner"),
     ("Exodar", "The Exodar", "RZd8", "RZc8", "Fallback: Draenei of Shattrath (placeholder)",
      "Placeholder until the draenei take Maiev's Watchers path.", "Exodar Regalis lost", "BTNHeroArchMage"),
     ("OrcishHorde", "Orcish Horde", "RZd9", "RZc9", "Fallback: Twillight or Zandalari",
      "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: King Rastakhan swears "
      "the Zandalari trolls to your conqueror -- you play them at Zuldazar, sworn to whoever holds it.", "Orgrimmar lost",
      "BTNChogall"),
-    ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Skywall",
-     "Claim the Lost City and Vortex Pinnacle as Skywall. Skywall cannot be defeated: it serves whoever holds the "
-     "Vortex Pinnacle (first Thunder Bluff's conqueror) and changes sides when another faction takes it.",
+    ("Tauren", "Tauren Tribes", "RZdA", "RZcA", "Fallback: Centaur Khans",
+     "Whoever broke the Tauren is the Apex Predator of the plains: the centaur swear the Blood-Oath of the Hunt. You "
+     "play the Centaur Khans -- warriors every turn at the camp by Thunder Bluff, four more khans to win -- sworn to "
+     "whoever holds Thunder Bluff. They cannot be defeated.",
      "Thunder Bluff lost",
-     "BTNHeroAvatarOfFlame"),
+     "BTNCentaurKhan"),
     ("Scourge", "Scourge", "RZdB", "RZcB", "Fallback: Knights of the Ebon Blade",
      "The Lich King dead (if he rose) and the Frozen Throne broken: his death knights are free. You play the Knights of "
      "the Ebon Blade -- Thassarian, Koltira, Nazgrim and Thoras Trollbane, no army -- with Acherus near Icecrown, "
@@ -83,12 +93,14 @@ TURNING_POINTS = [
     ("Skywall", "Skywall", "RZdF", "RZcF", "Conquered, not defeated",
      "Skywall cannot lose: whoever takes the Vortex Pinnacle gains its service. Its halls cannot be destroyed.",
      "Not available", "BTNHeroAvatarOfFlame"),
-    ("BlackEmpire", "Black Empire", "RZdG", "RZcG", "Fallback (not decided yet)",
-     "Planned: Xal'atath or the Titan Watchers. Not in this version.", "Not available yet", "BTNFacelessOne"),
-    ("Ahnqiraj", "Ahn'qiraj", "RZdH", "RZcH", "Fallback: Zandalari Empire",
-     "With C'Thun fallen, King Rastakhan raises the Zandalari Empire at Zuldazar: you play the trolls, sworn to whoever "
-     "holds Zuldazar (first C'Thun's slayer). Unite Zul'Aman, Gundrak, Zul'Farrak and Zul'Gurub. Ahn'Qiraj is lost.",
-     "C'Thun lost", "BTNHeadHunterBerserker"),
+    ("BlackEmpire", "Black Empire", "RZdG", "RZcG", "Fallback: Harpies",
+     "With N'Zoth's tether severed the harpies of Stonetalon imprint on the banner of his slayer: you play the Harpies "
+     "-- their nests, a few harpy kinds and two matriarchs -- sworn to whoever holds Stonetalon Peak. They cannot be "
+     "defeated.", "N'Zoth lost", "BTNHarpyQueen"),
+    ("Ahnqiraj", "Ahn'qiraj", "RZdH", "RZcH", "Fallback: Skywall",
+     "With C'Thun fallen the storm lords claim the Lost City and the Vortex Pinnacle: you play Skywall, sworn to "
+     "C'Thun's slayer, then to whoever holds the Vortex Pinnacle. Skywall cannot be defeated. Ahn'Qiraj is lost.",
+     "C'Thun lost", "BTNHeroAvatarOfFlame"),
 ]
 
 

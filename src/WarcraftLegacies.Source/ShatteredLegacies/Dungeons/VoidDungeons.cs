@@ -1,18 +1,20 @@
+using MacroTools.PreplacedWidgets;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
 {
-  // 0.83.0, void-area dungeons (Timelines/VOID_DUNGEONS.md): three 24p dungeons were copied into the void
-  // (tools/shattered-legacies/terrain/copy_area.py), each reached through one waygate pair, open from the start:
-  //   - Nazjatar     (24p Nazjatar)                         entrance: by WL's Nazjatar CP, beside the Maelstrom
-  //   - Shadowforge  (24p Blackrock Depths / Molten Core)   entrance: WL's Shadowforge City (Ironforge's Dark Iron
-  //                  base)
-  //   - Deadmines    (24p Temple of Ahn'Qiraj, terrain kept for now, to be redecorated)   entrance: Westfall's
-  //                  bandit camp
+  // 0.83.0, void-area dungeons (Timelines/VOID_DUNGEONS.md): three 24p dungeons copied into the void
+  // (tools/shattered-legacies/terrain/copy_area.py), each reached through one waygate pair:
+  //   - Nazjatar     (24p Nazjatar)                         circle by WL's Nazjatar CP beside the Maelstrom
+  //   - Shadowforge  (24p Blackrock Depths / Molten Core)   WL's Shadowforge City building (Awrp since 0.84)
+  //   - Deadmines    (24p Temple of Ahn'Qiraj, redecorated as a mine in 0.84)   a gold mine in Westfall
   // Their CPs are preplaced (DungeonObjects, Neutral Hostile, tools/shattered-legacies/content/void_dungeons.py).
-  // The Undercity is the fourth, but it stays shut until the Forsaken open it (Factions/Forsaken/ForsakenUndercity).
-  // Later: the fallbacks that live there (Sentinels -> naga of Azshara, Ironforge -> Dark Iron, Stormwind -> Defias).
+  // 0.84 (maintainer): SHUT until the fallback that lives there arrives -- the extra CPs' gold would upset the balance
+  // otherwise. The gates stand from the start (visible, invulnerable, closed): Nazjatar opens for the naga of Azshara
+  // (Sentinels' fallback, Timelines/Factions/Nazjatar), Shadowforge for the Dark Iron (Ironforge's, 0.86), the
+  // Deadmines for the Defias (Stormwind's, 0.85, Timelines/Factions/Defias). The Undercity is the fourth:
+  // Factions/Forsaken/ForsakenUndercity.
   internal static class VoidDungeons
   {
     internal static Instance Nazjatar;
@@ -32,22 +34,40 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
 
     private static void Build()
     {
-      // copy rectangles (with their wall); inner gate, arrival; entrance in the world, where the inner gate puts you
-      Nazjatar = Make("Nazjatar", new Rectangle(-23168f, -30976f, -15360f, -25600f), -18496f, -29056f, -18496f,
-        -29312f, -3744f, -3552f, -3744f, -3808f);
-      Shadowforge = Make("Shadowforge", new Rectangle(-24448f, 21120f, -17920f, 24832f), -21472f, 21408f, -21472f,
-        21664f, 12480f, -9152f, 12480f, -9408f);
-      Deadmines = Make("Deadmines", new Rectangle(-28672f, -31488f, -24448f, -22912f), -27808f, -23904f, -27808f,
-        -24160f, 7584f, -16896f, 7584f, -16640f);
+      var circle = DungeonObjects.GatewayCircle;
+      // copy rectangle (with its wall); inner gate, arrival
+      Nazjatar = Make("Nazjatar", new Rectangle(-23168f, -30976f, -15360f, -25600f), circle, -18496f, -29056f,
+        -18496f, -29312f);
+      Nazjatar.PlaceEntrance(circle, -3744f, -3552f, -3744f, -3808f);
+
+      Shadowforge = Make("Shadowforge", new Rectangle(-24448f, 21120f, -17920f, 24832f), circle, -20640f, 23230f,
+        -20640f, 22980f);
+      if (AllPreplacedWidgets.Units.TryGetAll(UNIT_H01O_SHADOWFORGE_CITY_IRONFORGE_OTHER, out var cities)
+          && cities.Count > 0)
+      {
+        Shadowforge.UseEntrance(cities[0], 11400f, -9336f);
+      }
+
+      Deadmines = Make("Deadmines", new Rectangle(-28672f, -31488f, -24448f, -22912f), circle, -27808f, -23904f,
+        -27808f, -24160f);
+      Deadmines.PlaceEntrance(DungeonObjects.DeadminesEntrance, 7721f, -17503f, 7721f, -17253f);
     }
 
-    private static Instance Make(string name, Rectangle area, float gateX, float gateY, float arriveX, float arriveY,
-      float entranceX, float entranceY, float exitX, float exitY)
+    private static Instance Make(string name, Rectangle area, int gateType, float gateX, float gateY, float arriveX,
+      float arriveY)
     {
-      var dungeon = new Instance(name, area, gateX, gateY, arriveX, arriveY);
+      var dungeon = new Instance(name, area, gateType, gateX, gateY, arriveX, arriveY);
       dungeon.Prepare(new int[0], new float[0], new float[0]);
-      dungeon.Open(Player(PLAYER_NEUTRAL_PASSIVE), entranceX, entranceY, exitX, exitY);
       return dungeon;
+    }
+
+    // a fallback arrives: its dungeon's gates open (the gates stay Neutral Passive)
+    internal static void Open(Instance dungeon)
+    {
+      if (dungeon != null && !dungeon.IsOpen)
+      {
+        dungeon.Open(Player(PLAYER_NEUTRAL_PASSIVE));
+      }
     }
   }
 }

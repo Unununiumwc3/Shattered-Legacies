@@ -1,0 +1,58 @@
+{
+  "OldId": "nhns",
+  "NewId": "nZj5",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\4x4Default.tga"
+    },
+    {
+      "Id": "ussc",
+      "Type": 1,
+      "Value": 1
+    },
+    {
+      "Id": "uubs",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Harpy Roost"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "nZj3,OZj6,OZj7"
+    },
+    {
+      "Id": "ufma",
+      "Value": 20
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.35
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHarpyQueen.blp"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The matriarchs' roost. Trains Storm-hags and the harpy heroes, revives them; provides food."
+    }
+  ]
+}

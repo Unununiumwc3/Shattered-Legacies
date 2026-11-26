@@ -1,0 +1,64 @@
+{
+  "OldId": "nbrg",
+  "NewId": "nZp1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "udaa",
+      "Type": 3,
+      "Value": "A0P0"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 18
+    },
+    {
+      "Id": "ua1b",
+      "Value": 25
+    },
+    {
+      "Id": "ufoo",
+      "Value": 0
+    },
+    {
+      "Id": "uhpm",
+      "Value": 475
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.9
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light ranged unit with Shadowmeld. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Defias Brigand"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "A0P0,Ashm,Asal"
+    }
+  ]
+}

@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroAvatarOfFlame.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Skywall"
+      "Value": "Fallback: Centaur Khans"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Skywall"
+      "Value": "Fallback: Centaur Khans"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Claim the Lost City and Vortex Pinnacle as Skywall. Skywall cannot be defeated: it serves whoever holds the Vortex Pinnacle (first Thunder Bluff's conqueror) and changes sides when another faction takes it."
+      "Value": "Whoever broke the Tauren is the Apex Predator of the plains: the centaur swear the Blood-Oath of the Hunt. You play the Centaur Khans -- warriors every turn at the camp by Thunder Bluff, four more khans to win -- sworn to whoever holds Thunder Bluff. They cannot be defeated."
     }
   ]
 }

@@ -1,0 +1,120 @@
+{
+  "OldId": "halt",
+  "NewId": "hZi4",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "ubld",
+      "Value": 30
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "ugol",
+      "Value": 18
+    },
+    {
+      "Id": "ugor",
+      "Value": 13
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\6x6SimpleSolid.tga"
+    },
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": "unwalkable"
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNDwarvenAltar.blp"
+    },
+    {
+      "Id": "ubpy",
+      "Value": 2
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\DwarvenAltar.mdl"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "X"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.85
+    },
+    {
+      "Id": "ussc",
+      "Type": 1,
+      "Value": 3
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Build Altar of Fortitude"
+    },
+    {
+      "Id": "uubs",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Summons Heroes and Demi-heroes. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Dark Iron Altar of Fortitude"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "H03G,HZi0,HZi1"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Dark Iron)"
+    },
+    {
+      "Id": "uclr",
+      "Value": 170
+    },
+    {
+      "Id": "uclg",
+      "Value": 140
+    },
+    {
+      "Id": "uclb",
+      "Value": 130
+    }
+  ]
+}

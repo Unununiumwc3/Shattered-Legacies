@@ -10,7 +10,8 @@ using WCSharp.Shared.Data;
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Skywall;
 
 // 0.76.0 (maintainer): Skywall is CONQUERED, never defeated. It serves the team of whoever holds the Vortex Pinnacle
-// CP (Core/Conquest.cs, seat nVXP; at the start: Thunder Bluff's conqueror) and switches sides when someone else takes
+// CP (Core/Conquest.cs, seat nVXP; at the start: Thunder Bluff's conqueror -- 0.85.0: C'Thun's slayer, Skywall is
+// Ahn'Qiraj's fallback now) and switches sides when someone else takes
 // it. It cannot lose the game (EliminationRule) and its HQ buildings -- the halls, the Vortex Pinnacle, the Sulfuron
 // Spire -- are indestructible while Skywall owns them (also ones built or upgraded later).
 internal static class SkywallFallback
@@ -25,8 +26,6 @@ internal static class SkywallFallback
   internal static readonly ExclusivePath Path = new("Skywall", Prepare, Run, Start.X, Start.Y);
   private static List<unit> _camp = new();
   private static List<unit> _vortex = new();
-  private static player _conqueror;
-  private static bool _lossRecorded;
 
   private static void Prepare()
   {
@@ -39,34 +38,8 @@ internal static class SkywallFallback
     Regions.ThroneoftheFourWind.PrepareUnitsForRescue(RescuePreparationMode.HideAll,
       u => u.UnitType != UNIT_NGME_GOBLIN_MERCHANT);
 
-    var hq = AllPreplacedWidgets.Units.Get(UNIT_O00J_THUNDER_BLUFF_FROSTWOLF_OTHER);
-    var death = CreateTrigger();
-    TriggerRegisterUnitEvent(death, hq, EVENT_UNIT_DEATH);
-    TriggerAddAction(death, () =>
-    {
-      if (_lossRecorded || hq.Owner.GetPlayerData().Faction?.Name != "Tauren Tribes")
-      {
-        return;
-      }
-      _lossRecorded = true;
-      var killer = GetKillingUnit();
-      if (killer != null && GetPlayerId(GetOwningPlayer(killer)) < 24)
-      {
-        _conqueror = GetOwningPlayer(killer);
-      }
-    });
-    var capture = CreateTrigger();
-    TriggerRegisterUnitEvent(capture, hq, EVENT_UNIT_CHANGE_OWNER);
-    TriggerAddAction(capture, () =>
-    {
-      var previous = GetChangingUnitPrevOwner();
-      var owner = GetOwningPlayer(hq);
-      if (!_lossRecorded && previous.GetPlayerData().Faction?.Name == "Tauren Tribes" && GetPlayerId(owner) < 24)
-      {
-        _lossRecorded = true;
-        _conqueror = owner;
-      }
-    });
+    // 0.85.0 (maintainer): Skywall is Ahn'Qiraj's fallback now (the Tauren get the Centaur): C'Thun's slayer
+    LastConqueror.Watch(UNIT_U00R_OLD_GOD_CTHUN, "Ahn'qiraj");
   }
 
   private static void Run(player p, TurningPointDef offer)
@@ -108,7 +81,8 @@ internal static class SkywallFallback
       }
     }
     // 0.76.0: the Vortex Pinnacle CP is the seat -- given above, so Skywall holds it at registration
-    Conquest.Register(p, UNIT_NVXP_THE_VORTEX_PINNACLE, _conqueror, true);
+    var conqueror = LastConqueror.Of("Ahn'qiraj");
+    Conquest.Register(p, UNIT_NVXP_THE_VORTEX_PINNACLE, conqueror != p ? conqueror : null, true);
     ProtectHq(p);
     p.RepositionCamera(Start);
   }

@@ -2,7 +2,8 @@
 dungeons). Made for importing the gated dungeons of Warcraft Legacies 24p 1.18a (mapdata/WarcraftLegacies24p) into
 the void parts of our map; both maps have the same size and origin (417 x 449 corners from -28672, -32256).
 
-  python3 tools/shattered-legacies/terrain/copy_area.py NAME X0 Y0 X1 Y1 DX DY [--src DIR] [--types A=B,..] [--check]
+  python3 tools/shattered-legacies/terrain/copy_area.py NAME X0 Y0 X1 Y1 DX DY [--src DIR] [--types A=B,..]
+          [--retype A=B,..] [--tex A=B,..] [--drop A,A@X,Y,..] [--check]
 
   NAME          the dungeon's name: its doodads go to Doodads/Dungeon_NAME.json (the builder reads every file there)
   X0 Y0 X1 Y1   the source rectangle, multiples of 128 (tile corners X0..X1 / Y0..Y1 are copied, both included)
@@ -11,6 +12,12 @@ the void parts of our map; both maps have the same size and origin (417 x 449 co
   --types A=B   a custom doodad type of the source we do not have (or define differently): copied into our
                 DoodadData / DestructableData under the new id B (fork rule ?Z<lower>?, e.g. DZv0), the copied doodads
                 use B. A=A: ours is defined differently but fits -- keep ours (e.g. D030 "Dark Iron City")
+  --retype A=B  0.84 (redecoration): the copied doodads of type A become type B -- a stock type or one we define; no
+                object data is copied. Variation 0, scale kept within 0.7 .. 1.3 (the old scale was made for another
+                model). The pathing map keeps the old doodad's baked pathing.
+  --tex A=B     0.84: ground texture A (fourcc) becomes B inside the copy (both must be in our TerrainTypes)
+  --drop A      0.84: leave out every doodad of type A (its source or its new id); A@X,Y only the one within 96 of X,Y (OUR coordinates) --
+                e.g. a gate doodad where the code places a waygate with the same model
   --check       report only, write nothing
 
 What is copied
@@ -37,6 +44,7 @@ so the tool can be run again after a change.
 import glob
 import json
 import os
+import re
 import struct
 import sys
 
@@ -167,6 +175,20 @@ def main(argv):
         i = argv.index("--types")
         remap = dict(p.split("=") for p in argv[i + 1].split(","))
         del argv[i:i + 2]
+    retype, texmap, drops = {}, {}, []
+    for flag in ("--retype", "--tex", "--drop"):
+        if flag in argv:
+            i = argv.index(flag)
+            items = argv[i + 1].split(",") if flag != "--drop" else re.split(r",(?![-\d])", argv[i + 1])
+            del argv[i:i + 2]
+            if flag == "--retype":
+                retype = dict(p.split("=") for p in items)
+            elif flag == "--tex":
+                texmap = dict(p.split("=") for p in items)
+            else:
+                for item in items:
+                    t, _, at = item.partition("@")
+                    drops.append((t, tuple(float(v) for v in at.split(",")) if at else None))
     if len(argv) != 7:
         print(__doc__)
         return 2
@@ -205,6 +227,12 @@ def main(argv):
                 problems.append("cliff texture %s is not in our CliffTypes" % code(se["CliffTypes"][t["CliffTexture"]]))
                 break
             t["Texture"] = tex[t["Texture"]]
+            fcc = code(de["TerrainTypes"][t["Texture"]])
+            if fcc in texmap:
+                if struct.unpack("<I", texmap[fcc].encode("latin1"))[0] not in de["TerrainTypes"]:
+                    problems.append("texture %s is not in our TerrainTypes" % texmap[fcc])
+                    break
+                t["Texture"] = de["TerrainTypes"].index(struct.unpack("<I", texmap[fcc].encode("latin1"))[0])
             if t["CliffTexture"] in cliff:
                 t["CliffTexture"] = cliff[t["CliffTexture"]]
             corners.append(((r + orow) * w + c + oc, t))
@@ -224,6 +252,13 @@ def main(argv):
     moved = []
     for _, d in doodads(src):
         if inside(d["Position"], x0, y0, x1, y1):
+            t = code(d["TypeId"])
+            if any(dt in (t, remap.get(t), retype.get(t)) and (at is None or abs(d["Position"]["X"] + dx - at[0]) <= 96
+                                and abs(d["Position"]["Y"] + dy - at[1]) <= 96) for dt, at in drops):
+                continue
+            if t in retype:
+                moved.append(d)
+                continue
             if code(d["TypeId"]) in theirs and code(d["TypeId"]) not in known and code(d["TypeId"]) not in remap:
                 problems.append("doodad type %s is custom in the source and unknown here" % code(d["TypeId"]))
             elif code(d["TypeId"]) in theirs and code(d["TypeId"]) in known and code(d["TypeId"]) not in remap \
@@ -294,6 +329,11 @@ def main(argv):
             n["TypeId"] = struct.unpack("<I", remap[t].encode("latin1"))[0]
             if code(n["SkinId"]) == t:
                 n["SkinId"] = n["TypeId"]
+        elif t in retype:
+            n["TypeId"] = n["SkinId"] = struct.unpack("<I", retype[t].encode("latin1"))[0]
+            n["Variation"] = 0
+            for k in ("X", "Y", "Z"):
+                n["Scale"][k] = min(1.3, max(0.7, n["Scale"][k]))
         n["Position"]["X"] += dx
         n["Position"]["Y"] += dy
         n["CreationNumber"] = nxt

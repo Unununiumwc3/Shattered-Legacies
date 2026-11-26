@@ -1,0 +1,116 @@
+{
+  "OldId": "ANhs",
+  "NewId": "AZbh",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Level": 4,
+      "Pointer": 6,
+      "Id": "Nhs6",
+      "Value": 6
+    },
+    {
+      "Level": 1,
+      "Id": "atar",
+      "Type": 3,
+      "Value": "friend,vulnerable,ground,invulnerable,organic,air,self"
+    },
+    {
+      "Id": "abpx",
+      "Value": 2
+    },
+    {
+      "Id": "arpx",
+      "Value": 2
+    },
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Healing Spores"
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Healing Spores - [|cffffcc00Level %d|r]"
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "Sprays waves of healing spores that heal friendly units in a target area. |n|n|cffffcc00Level 1|r - <AZbh,DataF1> waves at <AZbh,DataA1> hit points healed each. |n|cffffcc00Level 2|r - <AZbh,DataF2> waves at <AZbh,DataA2> hit points healed each. |n|cffffcc00Level 3|r - <AZbh,DataF3> waves at <AZbh,DataA3> hit points healed each. |n|cffffcc00Level 4|r - <AZbh,DataF4> waves at <AZbh,DataA4> hit points healed each."
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Healing Spores - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 3,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Healing Spores - [|cffffcc00Level 3|r]"
+    },
+    {
+      "Level": 2,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Healing Spores - [|cffffcc00Level 2|r]"
+    },
+    {
+      "Level": 1,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Healing Spores - [|cffffcc00Level 1|r]"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Sprays <AZbh,DataF1> waves of healing spores; each wave heals <AZbh,DataA1> damage to all friendly units in an area."
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Sprays <AZbh,DataF2> waves of healing spores; each wave heals <AZbh,DataA2> damage to all friendly units in an area."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Sprays <AZbh,DataF3> waves of healing spores; each wave heals <AZbh,DataA3> damage to all friendly units in an area."
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Sprays <AZbh,DataF4> waves of healing spores; each wave heals <AZbh,DataA4> damage to all friendly units in an area."
+    },
+    {
+      "Id": "aart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHealingSpores.blp"
+    },
+    {
+      "Id": "arar",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHealingSpores.blp"
+    },
+    {
+      "Id": "amat",
+      "Type": 3,
+      "Value": "Abilities\\Weapons\\IllidanMissile\\IllidanMissile.mdl"
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": " (Lady Naz'jar, Naga)"
+    }
+  ]
+}

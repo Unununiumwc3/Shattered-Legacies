@@ -516,10 +516,10 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Heart of Azeroth <-> area 204: 4008 via -20976,-27792
 - Heart of Azeroth <-> area 219: 3512 via -18096,-29264
 - Gishan Cavern <-> area 188: 2885 via -20880,-26512
-- Shadowforge City <-> Molten Core: 1636 via -22736,23248
-- Shadowforge City <-> The Grim Guzzler: 3439 via -20496,22928
-- Shadowforge City <-> area 254: 3056 via -22992,21680
-- Molten Core <-> area 254: 3218 via -23184,22512
+- Dark Iron Treasury <-> Siege Foundry: 1636 via -22736,23248
+- Dark Iron Treasury <-> Tavern District: 3439 via -20496,22928
+- Dark Iron Treasury <-> area 254: 3056 via -22992,21680
+- Siege Foundry <-> area 254: 3218 via -23184,22512
 - The Deadmines <-> Goblin Foundry: 2527 via -27120,-27376
 - The Deadmines <-> Ironclad Cove: 3627 via -25360,-28400
 - The Deadmines <-> area 192: 4433 via -26672,-25072

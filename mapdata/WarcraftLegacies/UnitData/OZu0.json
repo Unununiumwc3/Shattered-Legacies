@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZu0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Totem-Keeper of the Timbermaw"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Nafien"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "ANsg,AEer,AOhw,AEtq,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Furbolg)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\FurbolgElder\\FurbolgElder"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Nafien"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Nafien"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Nafien"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Keeper of the Sacred Ancestral Totem. The tribes follow whoever proves worthy of holding it. Summon Bear, Entangling Roots, Healing Wave; ultimate Tranquility."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.3
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "OldId": "nrog",
+  "NewId": "nZp2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "udaa",
+      "Type": 3,
+      "Value": "A02D"
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 18
+    },
+    {
+      "Id": "ua1b",
+      "Value": 20
+    },
+    {
+      "Id": "uhpm",
+      "Value": 700
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.1
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light melee unit with Shadowmeld. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Defias Rogue"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "ACct,Ashm,Asal"
+    }
+  ]
+}

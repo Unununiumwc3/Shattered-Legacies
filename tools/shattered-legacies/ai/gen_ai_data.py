@@ -26,6 +26,9 @@ SL_BUILDINGS = ["oZk0", "oZk1", "oZk2", "oZk3", "oZk4", "oZk6", "oZk7", "oZkc", 
                 "uZf0", "hZf0", "hZf1", "hZf2", "uZf2", "uZf4", "uZf5", "uZf8", "uZf7", "hZf7",  # 0.55 Forsaken (import_24p.py ids)
                 "oZm0", "oZm1", "oZm2", "oZm3", "oZm4", "oZm5", "oZm6", "oZm7",  # 0.80.0 Dragonmaw Clan
                 "oZx0", "oZx1", "oZx2", "oZx3", "oZx4", "oZx5", "oZx6", "oZx7", "oZxc",  # 0.80.0 Zandalari
+                "nZb0", "nZb1", "nZb2", "nZb3", "nZb4", "nZb6", "hZb0", "nZb7", "nZb8", "nZb9",  # 0.84.0 Nazjatar
+                "nZj4", "nZj5",  # 0.85.0 the Harpies' nests
+                "hZi0", "hZi1", "hZi2", "hZi4", "hZi5", "hZi7", "hZi8", "hZi9", "hZid",  # 0.86.0 Dark Iron (copies)
                 "uZe0"]  # 0.80.0 Acherus (Ebon Blade)
 ABIL = os.path.join(us.ROOT, "mapdata", "WarcraftLegacies", "AbilityData")
 BUILDING_CATS = {"TownHall", "Keep", "Castle", "GilneasManor", "Shipyard", "Lighthouse", "Farm", "Altar", "Specialist",

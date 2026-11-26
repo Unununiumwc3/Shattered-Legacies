@@ -1,0 +1,97 @@
+{
+  "OldId": "Ofar",
+  "NewId": "OZj7",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Storm Witch of the Bloodfury"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Sister Hatelash"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "ANfl,ANsi,AUsl,ANto,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHarpyWitch.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\HarpyWitch\\HarpyWitch"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Sister Hatelash"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Sister Hatelash"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Sister Hatelash"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The winds of Stonetalon answer her shriek. Forked Lightning, Silence, Sleep; ultimate Tornado."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "INT"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "umvt",
+      "Type": 3,
+      "Value": "fly"
+    },
+    {
+      "Id": "umvh",
+      "Type": 2,
+      "Value": 240
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZl4",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Khan of the Gelkis"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Khan Shodo"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AEer,AOhw,AEah,AOeq,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Centaur)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\CentaurKhan\\CentaurKhan"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Khan Shodo"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Khan Shodo"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Khan Shodo"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Gelkis earthcallers keep Theradras' old ways at the edge of Feralas. Entangling Roots, Healing Wave, Thorns Aura; ultimate Earthquake."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "INT"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.15
+    }
+  ]
+}

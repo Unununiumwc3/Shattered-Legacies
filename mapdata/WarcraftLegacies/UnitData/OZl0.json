@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZl0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Khan of the Kolkar"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Khan Leh'Prah"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AOsh,AOws,AOae,AOre,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Centaur)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\CentaurKhan\\CentaurKhan"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Khan Leh'Prah"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Khan Leh'Prah"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Khan Leh'Prah"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Kolkar ride the Barrens around Thunder Bluff -- the first to swear the Blood-Oath of the Hunt. Shockwave, War Stomp, Endurance Aura; ultimate Reincarnation."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.15
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "OldId": "nenf",
+  "NewId": "nZp4",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Id": "ua1b",
+      "Value": 25
+    },
+    {
+      "Id": "uhpm",
+      "Value": 750
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.25
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light melee unit with Shadowmeld and Evasion. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Defias Enforcer"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "A020,ACct,ACev,Asal"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "OldId": "Obla",
+  "NewId": "OZp5",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Kingpin of the Defias"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Dunco Ratsbon"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AEfk,AOwk,AOcr,AOmi,Aamk"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBanditLord.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\BanditLord\\BanditLord"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Dunco Ratsbon"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Dunco Ratsbon"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Dunco Ratsbon"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "A cutthroat who learned his trade in Westfall's ditches. He wants the loot -- every coin Stormwind's nobles ever kept from honest men. Fan of Knives, Wind Walk, Critical Strike; ultimate Mirror Image."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "AGI"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv,Asal"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "OldId": "hlum",
+  "NewId": "hZi6",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "upap",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\8x8SimpleSolid.tga"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Dark Iron Lumber Mill"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Dark Iron)"
+    },
+    {
+      "Id": "uclr",
+      "Value": 170
+    },
+    {
+      "Id": "uclg",
+      "Value": 140
+    },
+    {
+      "Id": "uclb",
+      "Value": 130
+    }
+  ]
+}

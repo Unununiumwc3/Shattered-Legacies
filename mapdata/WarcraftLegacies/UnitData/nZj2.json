@@ -1,0 +1,52 @@
+{
+  "OldId": "nhrw",
+  "NewId": "nZj2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ua1b",
+      "Value": 28
+    },
+    {
+      "Id": "uhpm",
+      "Value": 450
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light flying ranged unit that hurls bolts of lightning. Casts Faerie Fire. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Harpy Windwitch"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 180
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ufoo",
+      "Value": 2
+    },
+    {
+      "Id": "ubld",
+      "Value": 26
+    }
+  ]
+}

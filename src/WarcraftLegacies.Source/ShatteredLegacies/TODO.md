@@ -39,6 +39,41 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - **0.79.0 playtest**: snipe a bot's HQ -- after 5 s its far troops and its allies' appear beside it (text + ping,
   dump "recall"); a bot Kezan builds rigs and tankers (log "kezan oil bot"); Twilight owns Dragonmaw Port on arrival;
   Sylvanas (Dark Ranger / Queen) learns Dark Lady's Command at 6 and the bot casts it.
+- **0.86.0 (no playtest yet)**:
+  - Dark Iron: the Great Forge lost -> Shadowforge opens, town inside, Mercenary Charter (tribute and golems for the
+    Siege Foundry's holder), "The Great Anvil".
+  - Furbolgs: Nordrassil and Cenarion Hold lost -> the Totem Lodge, levy and strength by world trees held.
+  - Still open:
+    - Maiev as a sub-path
+    - Orcish Horde: Trolls only
+    - Fel Horde -> Dragonmaw
+    - Quel'thalas conquerable
+    - Stromgarde
+    - Gilneas' mercy text
+    - satyrs as the Druids' alternative
+- **0.85.0 (no playtest yet, maintainer: build ahead, test in bulk)**:
+  - Defias: Stormwind Keep lost -> the Deadmines open; Pillage on every unit; recruits each turn; quests.
+  - Centaur: Thunder Bluff lost -> Kolkar camp; levy each turn; the khan quests and "The Five Khans".
+  - Harpies: N'Zoth lost -> the nests at Stonetalon become theirs, the Roost trains the heroes.
+  - Skywall from C'Thun's loss; Gilneas from Lordaeron's Capital Palace.
+  - Still open from the table:
+    - Ironforge -> Dark Iron in Shadowforge
+    - Sentinels' Maiev as a sub-path
+    - Druids -> Furbolgs
+    - Orcish Horde: Trolls only
+    - Fel Horde -> Dragonmaw
+    - Quel'thalas conquerable
+    - Stromgarde
+    - Gilneas' mercy text
+- **0.84.0 playtest** (`git lfs checkout` first: naga models):
+  - Before Auberdine and Feathermoon fall, the Nazjatar, Shadowforge and Deadmines gates stand but stay shut.
+  - Sentinels beaten -> the Naga of Nazjatar: their base in Nazjatar becomes yours and the circle by the Maelstrom
+    opens. You get the four Nazjatar CPs, join the conqueror's team, and the temples cannot fall.
+  - The quests unlock Azshara, Atoph and the Immortal Guardians.
+  - Look at the gate models (circles, gold mine in Westfall, Shadowforge City building, Undercity iron gate) and at
+    the Deadmines' new look.
+  - Next: Maiev's "Chase Illidan to Outland" as a sub-path (engine support for SubPath), the Dark Iron in
+    Shadowforge, the Defias in the Deadmines, naga flavour (amphibious exit at the Maelstrom).
 - **0.83.0 playtest**: walk through the three open gates and back: Nazjatar (by the Nazjatar CP at the Maelstrom),
   Shadowforge (east of Shadowforge City), the Deadmines (Westfall, above the bandit camp). Capture a dungeon CP. Check
   edges for holes or odd cliffs, and missing doodads (a type the 24p map only modifies is stock here). WL's unused

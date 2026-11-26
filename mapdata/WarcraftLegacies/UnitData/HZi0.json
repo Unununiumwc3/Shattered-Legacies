@@ -1,0 +1,139 @@
+{
+  "OldId": "Hmbr",
+  "NewId": "HZi0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uagi",
+      "Value": 20
+    },
+    {
+      "Id": "uagp",
+      "Type": 2,
+      "Value": 1.8
+    },
+    {
+      "Id": "ubld",
+      "Value": 13
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 16
+    },
+    {
+      "Id": "udef",
+      "Value": 2
+    },
+    {
+      "Id": "ua1b",
+      "Value": 20
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "TP49,TP51,TP46,MD07"
+    },
+    {
+      "Id": "uhpm",
+      "Value": 500
+    },
+    {
+      "Id": "uint",
+      "Value": 18
+    },
+    {
+      "Id": "uinp",
+      "Type": 2,
+      "Value": 1.7
+    },
+    {
+      "Id": "upri",
+      "Value": 18
+    },
+    {
+      "Id": "umvs",
+      "Value": 220
+    },
+    {
+      "Id": "ustr",
+      "Value": 26
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "R014"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Golem Lord of Shadowforge"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Golem Lord Argelmach"
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Master of Shadowforge's golem foundries. Without Ragnaros his constructs serve gold, not fire."
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Golem Lord Argelmach"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Golem Lord Argelmach"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Golem Lord Argelmach"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Dark Iron)"
+    },
+    {
+      "Id": "uclr",
+      "Value": 170
+    },
+    {
+      "Id": "uclg",
+      "Value": 140
+    },
+    {
+      "Id": "uclb",
+      "Value": 130
+    }
+  ]
+}

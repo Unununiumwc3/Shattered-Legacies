@@ -448,7 +448,65 @@ ZANDALAR = {
     },
 }
 
-SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT, DRAGONMAW, ZANDALAR]
+# 0.84.0 (maintainer): the naga of Azshara -- the 24p's Nazjatar naga (its N'Zoth tree without the Old God), the
+# Sentinels' fallback in the Nazjatar dungeon (Timelines/Factions/Nazjatar). Heroes Queen Azshara, Lady Naz'jar and
+# Atoph the Bloodcursed. Left out: N'Zoth and his Ny'alotha objects, the Illidari buildings the 24p's slave builds.
+NAZJATAR = {
+    "name": "Nazjatar",
+    "third": "b",
+    "objects": [
+        ("n045", "TempleOfAzshara", ["Specialist"], 1),   # the HQ, preplaced (indestructible)
+        ("n0C2", "PillarOfWaves", ["TownHall"], 200),
+        ("n0C8", "MonumentOfCurrents", ["Keep"], 200),
+        ("n0C9", "TempleOfTides", ["Castle"], 200),
+        ("n0C0", "AltarOfTheDepths", ["Altar"], 200),
+        ("n0C1", "CoralBed", ["Farm"], 200),
+        ("n0C4", "SpawningGrounds", ["Barracks"], 200),
+        ("h0A4", "CoralForge", ["Research"], 200),
+        ("n0C3", "ShrineOfAzshara", ["Magic"], 200),
+        ("n0C7", "RoyalPyramid", ["Specialist"], 200),
+        ("n08V", "DepthVoidPortal", ["Specialist"], 200),
+        ("n0C5", "TidalGuardian", ["Tower"], 200),
+        ("n0C6", "ImprovedTidalGuardian", ["Tower"], 200),
+        ("n0BZ", "DeepSeaVault", ["Shop"], 200),
+        ("n0BQ", "FirstGuardian", ["Tower"], 1),         # preplaced
+        ("nmpe", "MurgulSlave", ["Builder"], 200),
+        ("n0CA", "NagaIncursor", ["Fighter"], 200),
+        ("n0CE", "Hatchling", ["Marksman"], 200),
+        ("n0CB", "Deepseer", ["Support"], 200),
+        ("n0CD", "Bloodkin", ["Support"], 200),
+        ("n0CL", "SeaTurtle", ["Tank"], 6),
+        ("nwgs", "Couatl", ["Flyer"], 12),
+        ("u02J", "TidalTerror", ["Flyer"], 6),
+        ("h02P", "NagaSeaWitch", ["Elite"], 6),
+        ("h01Q", "ImmortalGuardian", ["Elite"], 6),
+        ("n0CO", "TrenchHydra", ["Siege"], 6),
+        ("H0A5", "LadyNazjar", ["Support"], 1),
+        ("H08U", "Azshara", ["Support"], 1),
+        ("U02N", "Atoph", ["Tank"], 1),
+        # quest rewards (Timelines/Factions/Nazjatar)
+        ("R08V", "QuestEmpress", None, 0),      # Azshara and the Trench Hydra
+        ("R098", "QuestBloodcursed", None, 0),  # Atoph
+        ("R08X", "QuestGuardians", None, 0),    # the Immortal Guardian
+    ],
+    "zero_lumber": True,
+    "exclude": ["U01Z", "n08H", "n08W", "n0A3", "h06S", "nmrb", "nnad", "nnfm", "nnsa", "nnsg", "nntt", "nntg"],
+    "drop": [],
+    "extra": [],
+    "set": {
+        "nmpe": {"ubui": "n0C2,n0C0,n0C1,n0C4,h0A4,n0C3,n0C7,n08V,n0C5,n0BZ", "unam": "Mur'gul Slave"},
+        "h0A4": {"ures": "R00K,Rhme,Rhar,=R04R,=R09X"},
+        "h02P": {"ureq": "n0C8"},
+        "n0C0": {"utra": "H0A5,H08U,U02N", "unam": "Altar of the Depths"},
+        "n0C1": {"unam": "Coral Bed"},
+        "n0C3": {"unam": "Shrine of Azshara"},
+        "n0C4": {"unam": "Spawning Grounds"},
+        "n0C5": {"unam": "Tidal Guardian"},
+        "n0C9": {"unam": "Temple of Tides"},
+    },
+}
+
+SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT, DRAGONMAW, ZANDALAR, NAZJATAR]
 
 
 def load(map_dir):

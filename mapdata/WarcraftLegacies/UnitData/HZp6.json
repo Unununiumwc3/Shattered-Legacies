@@ -1,0 +1,87 @@
+{
+  "OldId": "Hamg",
+  "NewId": "HZp6",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Patron of the Brotherhood"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Count Clessington"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "ANsi,AHad,AOhx,ANch,Aamk"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBanditMage.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\HumanMage\\HumanMage"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Count Clessington"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Count Clessington"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Count Clessington"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "A count without a county. The House of Nobles took his lands; the Brotherhood will take them back -- and every estate of the men who voted against him. Silence, Devotion Aura, Hex; ultimate Charm."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "INT"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv,Asal"
+    }
+  ]
+}

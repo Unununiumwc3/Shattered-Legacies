@@ -1,0 +1,48 @@
+{
+  "OldId": "nhar",
+  "NewId": "nZj0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ua1b",
+      "Value": 16
+    },
+    {
+      "Id": "uhpm",
+      "Value": 400
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light flying ranged unit that hurls pin-feathers. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Harpy Scout"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 120
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ufoo",
+      "Value": 2
+    },
+    {
+      "Id": "ubld",
+      "Value": 20
+    }
+  ]
+}

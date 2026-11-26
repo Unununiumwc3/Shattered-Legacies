@@ -1,0 +1,164 @@
+{
+  "OldId": "Hmbr",
+  "NewId": "HZi1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "uagp",
+      "Type": 2,
+      "Value": 1.4
+    },
+    {
+      "Id": "ubld",
+      "Value": 13
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 16
+    },
+    {
+      "Id": "ua1b",
+      "Value": 20
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "Aamk,VP29,ANdh,VP30,A08Q"
+    },
+    {
+      "Id": "uhpm",
+      "Value": 475
+    },
+    {
+      "Id": "uint",
+      "Value": 23
+    },
+    {
+      "Id": "uinp",
+      "Type": 2,
+      "Value": 2.5
+    },
+    {
+      "Id": "upri",
+      "Value": 19
+    },
+    {
+      "Id": "umvs",
+      "Value": 220
+    },
+    {
+      "Id": "ustr",
+      "Value": 29
+    },
+    {
+      "Id": "ustp",
+      "Type": 2,
+      "Value": 3.1
+    },
+    {
+      "Id": "ua1g",
+      "Type": 3,
+      "Value": "debris,ground,item,structure,ward"
+    },
+    {
+      "Id": "utco",
+      "Value": 5
+    },
+    {
+      "Id": "upgr",
+      "Type": 3,
+      "Value": "R014"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNmagni.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Hero Dwarven Rider.mdl"
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "W"
+    },
+    {
+      "Id": "usnd",
+      "Type": 3,
+      "Value": "HeroAvatarMountainKing"
+    },
+    {
+      "Id": "ubpx",
+      "Value": 1
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Chief Architect of Shadowforge"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Fineous Darkvire"
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The architect who raised Shadowforge City -- now he wants to rebuild Ironforge in its image."
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Fineous Darkvire"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Fineous Darkvire"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Fineous Darkvire"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Dark Iron)"
+    },
+    {
+      "Id": "uclr",
+      "Value": 170
+    },
+    {
+      "Id": "uclg",
+      "Value": 140
+    },
+    {
+      "Id": "uclb",
+      "Value": 130
+    }
+  ]
+}

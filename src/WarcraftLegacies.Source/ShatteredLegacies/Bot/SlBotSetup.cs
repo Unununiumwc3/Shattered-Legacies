@@ -8,6 +8,12 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.KezanEnterpri
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Nazjatar;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Defias;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Centaur;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Harpy;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.EbonBlade;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
@@ -42,6 +48,24 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       AiApi.RegisterHeadquarters(ZandalariFaction.FactionName, new[] { ZandalariObjects.GreatHall,
         ZandalariObjects.Stronghold, ZandalariObjects.Fortress, UNIT_O00V_DAZAR_ALOR_CREEP });
       AiApi.RegisterHeroes(ZandalariFaction.FactionName, new List<int> { ZandalariObjects.Rastakhan, ZandalariObjects.Zul });
+      // 0.84.0: the naga of Nazjatar -- their temples (indestructible) and heroes
+      AiApi.RegisterHeadquarters(NazjatarFaction.FactionName, new[] { NazjatarObjects.TempleOfAzshara,
+        NazjatarObjects.PillarOfWaves, NazjatarObjects.MonumentOfCurrents, NazjatarObjects.TempleOfTides });
+      AiApi.RegisterHeroes(NazjatarFaction.FactionName, new List<int>
+        { NazjatarObjects.LadyNazjar, NazjatarObjects.Azshara, NazjatarObjects.Atoph });
+      // 0.85.0: the Defias (no buildings: recruits by code), the Centaur Khans (no buildings), the Harpies (the Roost)
+      AiApi.RegisterHeroes(DefiasFaction.FactionName, new List<int> { DefiasObjects.Ratsbon, DefiasObjects.Clessington });
+      AiApi.RegisterHeroes(CentaurFaction.FactionName, new List<int> { CentaurObjects.LehPrah, CentaurObjects.Ablinh,
+        CentaurObjects.Hratha, CentaurObjects.Kammah, CentaurObjects.Shodo });
+      AiApi.RegisterHeadquarters(HarpyFaction.FactionName, new[] { HarpyObjects.Roost });
+      AiApi.RegisterHeroes(HarpyFaction.FactionName, new List<int> { HarpyObjects.Serena, HarpyObjects.Hatelash });
+      // 0.86.0: the Dark Iron (Ironforge's tree as copies; Dagran is WL's legend) and the Furbolgs (lodge + Nafien)
+      AiApi.RegisterHeadquarters(DarkIronFaction.FactionName, new[] { DarkIronObjects.MiningColonyT1,
+        DarkIronObjects.DwarfHoldT2, DarkIronObjects.GreatHoldT3 });
+      AiApi.RegisterHeroes(DarkIronFaction.FactionName, new List<int> { UNIT_H03G_EMPEROR_OF_BLACKROCK_IRONFORGE,
+        DarkIronObjects.Argelmach, DarkIronObjects.Darkvire });
+      AiApi.RegisterHeadquarters(FurbolgFaction.FactionName, new[] { FurbolgObjects.Lodge });
+      AiApi.RegisterHeroes(FurbolgFaction.FactionName, new List<int> { FurbolgObjects.Nafien });
       AiApi.RegisterHeadquarters(EbonBladeFaction.FactionName, new[] { EbonBladeFallback.Acherus });
       AiApi.RegisterHeroes(EbonBladeFaction.FactionName, new List<int>(EbonBladeFallback.Heroes));
       AiApi.RegisterHeroes(DragonmawFaction.FactionName, new List<int> { DragonmawObjects.Nekrosh, DragonmawObjects.Zuluhed });

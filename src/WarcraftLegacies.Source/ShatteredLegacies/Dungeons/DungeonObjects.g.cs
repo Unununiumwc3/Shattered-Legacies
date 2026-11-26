@@ -11,11 +11,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
     internal const int HeartOfAzeroth = 1851422258; // nZv2 "Heart of Azeroth", 30 gold, -19008, -27904
     internal const int LightlessCavern = 1851422259; // nZv3 "Lightless Cavern", 15 gold, -16192, -28352
     internal const int GishanCavern = 1851422260; // nZv4 "Gishan Cavern", 10 gold, -20288, -26368
-    internal const int ShadowforgeCity = 1851422261; // nZv5 "Shadowforge City", 20 gold, -22144, 22784
-    internal const int MoltenCore = 1851422262; // nZv6 "Molten Core", 15 gold, -23040, 23936
-    internal const int GrimGuzzler = 1851422263; // nZv7 "The Grim Guzzler", 10 gold, -18944, 23360
+    internal const int DarkIronTreasury = 1851422261; // nZv5 "Dark Iron Treasury", 20 gold, -22144, 22784
+    internal const int SiegeFoundry = 1851422262; // nZv6 "Siege Foundry", 15 gold, -23040, 23936
+    internal const int TavernDistrict = 1851422263; // nZv7 "Tavern District", 10 gold, -18944, 23360
     internal const int Deadmines = 1851422264; // nZv8 "The Deadmines", 20 gold, -26048, -26880
     internal const int GoblinFoundry = 1851422265; // nZv9 "Goblin Foundry", 10 gold, -27952, -28256
     internal const int IroncladCove = 1851422305; // nZva "Ironclad Cove", 15 gold, -25232, -30176
+
+    // the waygates (stock Waygate, another model)
+    internal const int GatewayCircle = 1851422306; // nZvb "Gateway"
+    internal const int DeadminesEntrance = 1851422307; // nZvc "The Deadmines"
+    internal const int UndercityGate = 1851422308; // nZvd "Gate of the Undercity"
   }
 }

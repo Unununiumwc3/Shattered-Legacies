@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNGreymane.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBanditLord.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Gilneas"
+      "Value": "Fallback: Defias Brotherhood"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Gilneas"
+      "Value": "Fallback: Defias Brotherhood"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Stormwind's survivors sail to Gilneas: you play the Kingdom of Gilneas behind the Greymane Wall, with Genn Greymane, and join the North Alliance. Everything left in Stormwind is lost."
+      "Value": "The red masks come out of the Deadmines: you play the Defias Brotherhood -- Dunco Ratsbon and Count Clessington, bandits that pillage what they strike, recruits every turn -- sworn to whoever broke Stormwind, then to whoever holds the Deadmines. Everything left in Stormwind is lost."
     }
   ]
 }

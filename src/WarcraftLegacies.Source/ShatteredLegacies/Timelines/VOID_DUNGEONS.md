@@ -1,4 +1,4 @@
-# Void-area dungeons (0.82.0, 0.83.0)
+# Void-area dungeons (0.82.0 - 0.84.0)
 
 Maintainer's idea (2026-11-26): the black, unwalkable void of the map holds dungeons that can be entered only through
 gates. The void stays as the wall around and between them. Pack them tightly, so that most of the void gets used:
@@ -53,53 +53,70 @@ y -30208 .. -24960; the 0.57 Undercity used one; landmasses 8, 9, 11-17) are voi
 hides Neutral Passive units at setup, so the CPs (Neutral Hostile) and the gate (created 1 s later) are not
 affected.
 
-The commands (rerunnable):
+The commands (rerunnable; after a copy, run the generators again):
 
 ```
 T=tools/shattered-legacies/terrain/copy_area.py
-python3 $T Undercity -28672 14208 -25728 17920 0 6912 --types D00O=DZv0,D00K=DZv1
+python3 $T Undercity -28672 14208 -25728 17920 0 6912 --types D00O=DZv0,D00K=DZv1 --drop DZv1@-26537,21323
 python3 $T --clear -23296 -30464 -9728 -24704
 python3 $T Nazjatar 7936 -31488 15744 -26112 -31104 512 --types D03U=DZv2,D020=DZv3,D03V=DZv4,D03Q=DZv5
-python3 $T Shadowforge 16256 -32000 22784 -28288 -40704 53120 --types D06C=DZv6,D00F=DZv7,D030=D030
-python3 $T Deadmines -28416 -16640 -24192 -8064 -256 -14848 --types B00U=BZv0
+python3 $T Shadowforge 16256 -32000 22784 -28288 -40704 53120 --types D06C=DZv6,D00F=DZv7,D030=D030 \
+  --drop DZv7@-20640,23230
+python3 $T Deadmines -28416 -16640 -24192 -8064 -256 -14848 \
+  --retype D05I=NOfl,D05K=LOlp,D05M=DSar,D05D=DOmc,D05J=LOth,D05O=DRst,D05F=DRrk,D05H=LOwb,D05L=DOjp,D05N=DOtp,\
+D05G=DOjp,D05U=DRrk,B01R=LTcr,B00U=DTsh,JOgr=LOtz,ZPms=GPsh,BRgs=GRrk,OOal=DOtp \
+  --drop LPcw,LOfl,OPop --tex Zsan=Adrd,Gsqd=Ndrt
 python3 tools/shattered-legacies/content/void_dungeons.py
 python3 tools/shattered-legacies/ai/gen_routes.py
 ```
 
-Gates (stock waygates, invulnerable, Neutral Passive; code: `Dungeons/VoidDungeons.cs`, the Undercity in
-`Factions/Forsaken/ForsakenUndercity.cs`):
+**Gates** (0.84, maintainer). Each gate is a stock Waygate with another model (`void_dungeons.py`: `nZvb`
+"Gateway", the circle effect of the 24p's teleporter indicator; `nZvc` a gold mine; `nZvd` the Undercity's iron
+gate). They are invulnerable and Neutral Passive. They stand from the start, visible and SHUT, so everyone sees
+that something will happen there. A dungeon opens when the fallback that lives there arrives (the extra CPs' gold
+would upset the balance otherwise). Code: `Dungeons/VoidDungeons.cs`; the Undercity is in
+`Factions/Forsaken/ForsakenUndercity.cs`.
 
-| Dungeon | Inner gate (24p entrance) | World entrance | Open |
+| Dungeon | Inner gate | World entrance | Opens with |
 |---|---|---|---|
-| Undercity | -26528,21344 | Lordaeron's palace ruins | "The Throne of Lordaeron" (Forsaken) |
-| Nazjatar | -18496,-29056 (24p "NazjatarExit2") | -3744,-3552, by WL's Nazjatar CP beside the Maelstrom (shallow water) | from the start |
-| Shadowforge | -21472,21408 (24p entrance portal) | 12480,-9152, east side of WL's Shadowforge City | from the start |
-| Deadmines | -27808,-23904 (24p north portal) | 7584,-16896, Westfall, above the bandit camp | from the start |
+| Undercity | the 24p iron gate at -26537,21323 (its doodad is dropped) | stock waygate in Lordaeron's palace ruins | "The Throne of Lordaeron" (Forsaken) |
+| Nazjatar | circle at -18496,-29056 (24p "NazjatarExit2") | circle at -3744,-3552, by WL's Nazjatar CP beside the Maelstrom | the naga of Azshara (Sentinels' fallback, 0.84) |
+| Shadowforge | circle at -20640,23230 (the 24p's teleporter circle; its doodad is dropped) | WL's Shadowforge City building (h01O, Awrp added) | the Dark Iron (Ironforge's fallback, 0.86) |
+| Deadmines | circle at -27808,-23904 (24p north portal) | gold mine at 7721,-17503, Westfall | the Defias (Stormwind's fallback, 0.85) |
 
-Control points (`tools/shattered-legacies/content/void_dungeons.py`: types `nZv*`, preplaced Neutral Hostile, with
-Chinese names). The 24p names are kept except where our map already has the name or the dungeon changed:
+**Control points** (`tools/shattered-legacies/content/void_dungeons.py`: types `nZv*`, preplaced Neutral Hostile,
+with Chinese names). The 24p names are kept except where our map already has the name or the dungeon changed.
+Shadowforge is Shadowforge City itself (0.84: districts; 0.86: the Dark Iron's Treasury and Siege Foundry):
 
 | CP | Gold | Spot | 24p |
 |---|---|---|---|
 | Undercity | 20 | -27139,22825 | n0BC "Undercity"; goes to the Forsaken with the buildings |
-| Eternal Palace | 25 | -22208,-30016 | n05Q "Nazjatar" (WL has a Nazjatar CP at the Maelstrom) |
+| Eternal Palace | 25 | -22208,-30016 | n05Q "Nazjatar" (WL has a Nazjatar CP at the Maelstrom); the naga's seat |
 | Heart of Azeroth | 30 | -19008,-27904 | n0A0 |
 | Lightless Cavern | 15 | -16192,-28352 | n05W |
 | Gishan Cavern | 10 | -20288,-26368 | n04E |
-| Shadowforge City | 20 | -22144,22784 | n0AA "Blackrock Depths" (WL has that CP in the world) |
-| Molten Core | 15 | -23040,23936 | n00P |
-| The Grim Guzzler | 10 | -18944,23360 | n00O "Blackrock Spire" (WL has an orc building of that name) |
+| Dark Iron Treasury | 20 | -22144,22784 | n0AA "Blackrock Depths" (0.84: Imperial District) |
+| Siege Foundry | 15 | -23040,23936 | n00P "Molten Core" (0.84: Forge District); the Dark Iron's seat, their Mercenary Charter |
+| Tavern District | 10 | -18944,23360 | n00O "Blackrock Spire" |
 | The Deadmines | 20 | -26048,-26880 | n078 "Temple of Ahn'Qiraj" |
 | Goblin Foundry | 10 | -27952,-28256 | new |
 | Ironclad Cove | 15 | -25232,-30176 | new |
 
-The Deadmines still look like the 24p temple (sand, titan rock, temple doodads): it gets redecorated later.
+**The Deadmines look like a mine** (0.84). The copy swaps the temple's look:
+- Ground: sand becomes rough dirt, tiles become dirt (`--tex`).
+- Silithid walls become wooden fences, wall ends become lantern posts, arches become dungeon archways.
+- Obelisks become mine carts, pillars become torches, columns become stalagmites or rocks, stakes become wheelbarrows.
+- Trash becomes piles of junk; the circle and the altar become piles of treasure.
+- Egg sacks become crates, Outland trees become the dungeon's cave walls, magic orbs become glowing torches.
+- Plants are removed (`--retype` / `--drop`).
+
+The baked pathing keeps the old doodads' footprints. Fine-tune in the editor if something looks off.
 
 The 24p creeps are not copied. A CP is Neutral Hostile, with WL's 5000 life, and it defends itself.
 
 New doodad types (stock models or imports we already have): `DZv0` Gargoyle Hub, `DZv1` Iron Gate (Undercity),
 `DZv2`-`DZv5` naga tower / desolace plant / naga walls (Nazjatar), `DZv6` Shadowforge Barricades, `DZv7` Teleporter
-Circle Indicator (Shadowforge), destructable `BZv0` Outland Tree 2 (Deadmines). For Shadowforge, our own `D030`
+Circle Indicator (Shadowforge). `BZv0` (0.83) is gone: the Deadmines' Outland trees became stock cave walls. For Shadowforge, our own `D030`
 "Dark Iron City" (dwarven barracks import) is used instead of the 24p's human barracks. When the 24p map only
 changes a stock type (scale limits, tints), the copy keeps the stock type.
 

@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZl3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Khan of the Magram"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Khan Kammah"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AHbh,AHtc,ANca,AHav,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Centaur)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\CentaurKhan\\CentaurKhan"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Khan Kammah"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Khan Kammah"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Khan Kammah"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Magram rule the wastes of Desolace -- the strongest clan, by their own word. Bash, Thunder Clap, Cleaving Attack; ultimate Avatar."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "STR"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.15
+    }
+  ]
+}

@@ -4,6 +4,117 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.86.0 — the Dark Iron of Shadowforge and the Furbolgs
+
+Bot changes: `../Ai/CHANGELOG.md` 0.86.0.
+- **Ironforge -> the Dark Iron of Shadowforge** (maintainer; replaces the Explorers' League placeholder). Lore: the
+  Bronzebeard throne is empty; a Dark Iron expeditionary force tunnels up to claim the Great Anvil -- not for Ragnaros
+  but for a ruthless industrial empire. Cold-blooded pragmatists: gold, ore and survival.
+  - **Objects:** Ironforge's tech tree as Dark Iron copies (`tools/shattered-legacies/content/dark_iron.py`, ids
+    `?Zi?`): "Dark Iron <name>", the suffix "(Dark Iron)", a soot tint. The Explorer's Vault is the Black Market.
+    Researches are shared.
+  - **Heroes:** Dagran Thaurissan (WL's legend), plus Golem Lord Argelmach and Fineous Darkvire (copies of
+    Muradin / Magni).
+  - **Left out:** the Bronzebeard / Wildhammer heroes, gryphons, Flame / Artillery Tanks and the Deeprun Tram
+    research.
+  - **Arrival (the Great Forge lost):** Shadowforge opens; its entrance is the Shadowforge City building. WL's Dark
+    Iron outpost in Shadowforge City is theirs, and so are the dungeon's three CPs. They get a Dark Iron town inside
+    (hall, altar, barracks, workshop, forge, 2 taverns), 5 Masons and an army.
+  - **Mercenary Charter:** vassal of whoever holds the **Siege Foundry** (renamed from Forge District; Imperial
+    District is now the **Dark Iron Treasury**). Every turn the charter holder, if allied, pays 50 gold tribute and
+    gets a Dark Iron War Golem and Mortar Team at the Foundry. The first tribute also gives him one weapons level.
+    Halls indestructible, never defeated.
+  - **Quests:** "The Great Anvil" (the Great Forge + the Ironforge CP: a War Golem and Mortar Team every turn there,
+    plus a weapons and an armour level) and WL's artifact hunt "Secrets of Uldum".
+- **Druids -> the Furbolgs** (maintainer; replaces the Dream trees placeholder). Lore: the tribes follow whoever proves
+  worthy of holding their Sacred Ancestral Totem (the Claw of Ursoc). Seat: the Nordrassil CP.
+  - **Units:** one hero, Nafien (Summon Bear, Entangling Roots, Healing Wave, Tranquility), and the Totem Lodge of
+    Ursoc by Nordrassil (HQ and altar, indestructible, preplaced and visible).
+  - **Levy:** WL's creep furbolgs every turn: a Furbolg plus one per **world tree** their side holds (Nordrassil,
+    Vordrassil, Shaladrassil, Seradane -- theirs or an ally's).
+  - **Strength:** every furbolg gets +3 damage, +1 armour and +60 life per tree, kept up to date each turn.
+
+## 0.85.0 — Defias, Centaur Khans and Harpies; Skywall to Ahn'Qiraj, Gilneas to Lordaeron
+
+Bot changes: `../Ai/CHANGELOG.md` 0.85.0. New objects: `tools/shattered-legacies/content/minor_factions.py` (stock
+skills only, WL's creep models).
+
+Fallbacks now (maintainer's table): Stormwind -> **Defias**, Lordaeron -> **Gilneas** (besides WL's Scarlet
+Crusade), Tauren -> **Centaur Khans**, Black Empire -> **Harpies**, Ahn'Qiraj -> **Skywall**. The Zandalari stay the
+Orcish Horde's alone. All three new factions are VASSALS (Core/Conquest.cs): first sworn to whoever beat the old
+faction (`Core/LastConqueror`: the last to raze or take its HQ), then to whoever holds their seat; never defeated.
+
+- **The Defias Brotherhood** (Stormwind Keep lost).
+  - The Deadmines open; they get the Deadmines' three CPs (the seat, the Deadmines CP, whoever holds it) and
+    Westfall's bandit camp.
+  - Units: WL's bandits as Defias Bandits, Brigands, Rogues, Assassins and Enforcers. **Every unit has Pillage**,
+    the heroes too.
+  - Heroes: **Dunco Ratsbon** (wants the loot: Fan of Knives, Wind Walk, Critical Strike, Mirror Image) and **Count
+    Clessington** (wants Stormwind's estates: Silence, Devotion Aura, Hex, Charm).
+  - No buildings: recruits every turn in the Deadmines (3 Bandits and a Brigand).
+  - Quests: "Ratsbon's Haul" (hold 1500 gold: +Rogue +Assassin per turn), "The Clessington Estates" (Westfall,
+    Duskwood, Elwynn Forest: 500 gold, +Enforcer +Brigand), "The Brotherhood Rises" (both: +3 per turn).
+  - Heroes come back by themselves after 60 s.
+- **The Centaur Khans** (Thunder Bluff lost).
+  - Lore: the Tauren's conqueror is the Apex Predator of the plains; the centaur swear him the Blood-Oath of the
+    Hunt. Their seat is Thunder Bluff's CP.
+  - Five khans, one per clan: Leh'Prah (Kolkar, at the start), Ablinh (Galak), Hratha (Maraudine), Kammah (Magram),
+    Shodo (Gelkis).
+  - WL's centaur tents are the five camps: by Thunder Bluff, Southern Barrens, Durotar, Desolace, near Silithus.
+    They are visible and indestructible until their clan joins.
+  - Nothing is trainable: WL's creep centaurs arrive every turn at the camp by Thunder Bluff (2 Outrunners, an
+    Archer).
+  - Quests: each other khan joins when you hold his land's CP, with his camp and one more warrior per turn. "The Five
+    Khans" adds 3 more per turn and 300 gold. Khans return by themselves.
+- **The Harpies of Stonetalon** (N'Zoth lost).
+  - Lore: the Void-Touched Matriarch's Resonance Totem breaks; in Magical Thralldom they imprint on N'Zoth's slayer.
+    Their seat is Stonetalon Peak.
+  - WL's 8 harpy nests become 7 Harpy Nests (Scouts, Rogues, Windwitches; food) and the Harpy Roost (Storm-hags and
+    the heroes **Serena Bloodfeather** and **Sister Hatelash**). All are indestructible; no tech.
+- **Skywall** is Ahn'Qiraj's fallback (C'Thun's slayer is the first overlord). **Gilneas** is Lordaeron's (Capital
+  Palace lost; new Hourglass decision `RZdJ`).
+- New helpers: `Core/Effects/TurnLevy` (units every turn), `Core/Effects/HeroRevival` (heroes without an altar),
+  `Core/LastConqueror`.
+
+## 0.84.0 — the naga of Azshara; the dungeons shut until their fallback; new gate models; the Deadmines as a mine
+
+Bot changes: `../Ai/CHANGELOG.md` 0.84.0. Layout, gates, CPs: `Timelines/VOID_DUNGEONS.md`.
+- **Sentinels -> the Naga of Nazjatar** (maintainer). The 24p's Nazjatar naga are imported (`import_24p.py`, set
+  `NAZJATAR`, ids `?Zb?`: its N'Zoth tree without the Old God). The tree:
+  - Temple of Azshara (HQ), and Pillar of Waves -> Monument of Currents -> Temple of Tides
+  - Altar of the Depths, Coral Bed, Spawning Grounds, Coral Forge, Shrine of Azshara, Royal Pyramid, Depth Void
+    Portal, Tidal Guardians, Deep Sea Vault, Mur'gul Slaves
+  - units: Naga Incursors, Hatchlings, Deepseers, Bloodkin, Sea Turtles, Couatl, Tidal Terrors, Naga Sea Witches,
+    Immortal Guardians, Trench Hydras
+  - heroes: Lady Naz'jar, Queen Azshara and Atoph the Bloodcursed
+
+  Trigger: Auberdine and Feathermoon Stronghold lost.
+  - **Before:** their base stands in Nazjatar where the 24p map preplaced it. It is Neutral Extra, visible and
+    invulnerable, behind the shut gates.
+  - **Arrival:** the base is theirs, Nazjatar's gates open, and they get its four CPs (the Eternal Palace whoever holds
+    it). Lady Naz'jar, 5 Mur'gul Slaves and an army arrive.
+  - **Vassal:** sworn to whoever holds the Eternal Palace. At the start that is whoever destroyed or took the last
+    Sentinels HQ. Never defeated; its temples are indestructible.
+
+  Quests: "The Empress Awakens" (Maelstrom + Azshara Coast -> Queen Azshara, Trench Hydras), "The Bloodcursed"
+  (Ranazjar Isle -> Atoph), "Reel Them Back" (Nazjatar + Heart of Azeroth -> Immortal Guardians). Maiev's "Chase
+  Illidan to Outland" is no longer the Sentinels' fallback (it becomes a sub-path, TODO.md).
+- **The dungeons stay shut until their fallback arrives** (maintainer: the extra CPs' gold would upset the balance).
+  Their gates stand from the start, visible: Nazjatar opens for the naga, Shadowforge for the Dark Iron and the
+  Deadmines for the Defias (both later).
+- **Gate models** (maintainer):
+  - circles (the 24p's teleporter circle effect) inside every dungeon and at Nazjatar's world entrance
+  - a gold mine for the Deadmines, now at 7721,-17503 in Westfall
+  - WL's Shadowforge City building is Shadowforge's entrance (it got the waygate ability); the inner circle stands
+    at -20640,23230
+  - the Undercity's inner gate is its 24p iron gate
+- **Shadowforge's CPs are districts** of Shadowforge City: Imperial District, Forge District, Tavern District.
+- **The Deadmines look like a mine**. Dirt instead of sand. Instead of silithid doodads: wooden fences, lantern
+  posts, archways, mine carts, torches, stalagmites, crates, cave walls, junk and treasure. No plants.
+- `copy_area.py`: `--retype`, `--tex`, `--drop` (redecoration, and doodads where the code places a gate with the
+  same model).
+- Models: `git lfs checkout` after applying (22 naga models / icons).
+
 ## 0.83.0 — Nazjatar, Shadowforge and the Deadmines in the void; the Undercity's control point
 
 Bot changes: `../Ai/CHANGELOG.md` 0.83.0. Layout, gates, CPs: `Timelines/VOID_DUNGEONS.md`.

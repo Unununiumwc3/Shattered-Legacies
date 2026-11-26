@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Dwarven Expedition (placeholder)"
+      "Value": "Fallback: Dark Iron of Shadowforge"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Dwarven Expedition (placeholder)"
+      "Value": "Fallback: Dark Iron of Shadowforge"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Placeholder: the dwarves dig for hope in the Storm Peaks."
+      "Value": "A Dark Iron force tunnels up to claim the Great Anvil: you play the Dark Iron -- Ironforge's arsenal in Dark Iron hands, Dagran Thaurissan at their head, Shadowforge opens -- bound by the Mercenary Charter to whoever holds the Siege Foundry. They cannot be defeated."
     }
   ]
 }

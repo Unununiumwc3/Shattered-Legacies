@@ -1,0 +1,87 @@
+{
+  "OldId": "Otch",
+  "NewId": "OZl1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Khan of the Galak"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Khan Ablinh"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "AEar,AEev,ANba,ANst,Aamk"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Centaur)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ureq",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNCentaurKhan.blp"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\creeps\\CentaurKhan\\CentaurKhan"
+    },
+    {
+      "Id": "uawt",
+      "Type": 3,
+      "Value": "Revive Khan Ablinh"
+    },
+    {
+      "Id": "utpr",
+      "Type": 3,
+      "Value": "Revive Khan Ablinh"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Khan Ablinh"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Galak archers of the southern Barrens and the Needles. Trueshot Aura, Evasion, Black Arrow; ultimate Stampede."
+    },
+    {
+      "Id": "upra",
+      "Type": 3,
+      "Value": "AGI"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.15
+    }
+  ]
+}

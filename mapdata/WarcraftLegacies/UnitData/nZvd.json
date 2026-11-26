@@ -1,0 +1,24 @@
+{
+  "OldId": "nwgt",
+  "NewId": "nZvd",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "Doodads\\LordaeronSummer\\Terrain\\IronGate\\IronGate.mdl"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Gate of the Undercity"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.9
+    }
+  ]
+}

@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNFacelessOne.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHarpyQueen.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback (not decided yet)"
+      "Value": "Fallback: Harpies"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback (not decided yet)"
+      "Value": "Fallback: Harpies"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Planned: Xal'atath or the Titan Watchers. Not in this version."
+      "Value": "With N'Zoth's tether severed the harpies of Stonetalon imprint on the banner of his slayer: you play the Harpies -- their nests, a few harpy kinds and two matriarchs -- sworn to whoever holds Stonetalon Peak. They cannot be defeated."
     }
   ]
 }

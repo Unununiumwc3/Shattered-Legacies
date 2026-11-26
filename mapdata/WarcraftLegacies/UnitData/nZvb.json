@@ -1,0 +1,24 @@
+{
+  "OldId": "nwgt",
+  "NewId": "nZvb",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Effect_Gateway_White.mdl"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Gateway"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 2.0
+    }
+  ]
+}

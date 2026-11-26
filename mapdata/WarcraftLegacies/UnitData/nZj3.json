@@ -1,0 +1,48 @@
+{
+  "OldId": "nhrh",
+  "NewId": "nZj3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ua1b",
+      "Value": 37
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Medium flying ranged unit that hurls bolts of lightning. Can Curse opponents and cast Sleep. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Harpy Storm-hag"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Harpies)"
+    },
+    {
+      "Id": "ugol",
+      "Value": 260
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ufoo",
+      "Value": 3
+    },
+    {
+      "Id": "ubld",
+      "Value": 32
+    }
+  ]
+}

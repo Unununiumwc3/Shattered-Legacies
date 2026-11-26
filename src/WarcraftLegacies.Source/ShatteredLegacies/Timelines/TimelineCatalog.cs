@@ -4,7 +4,12 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Kultiras;
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using WarcraftLegacies.Source.Objectives.LegendBased;
-using WarcraftLegacies.Source.Factions.Sentinels.Quests;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Nazjatar;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Harpy;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Centaur;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Defias;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Zandalari;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.EbonBlade;
@@ -27,24 +32,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
   // Hourglass only (NotYet). 0.53: Decision / Condition = the Hourglass researches (Core/HourglassData.g.cs).
   internal static class TimelineCatalog
   {
-    private static bool CanReturnToOutland(player p)
-    {
-      var maiev = AllLegends.Sentinels.Maiev.Unit;
-      var faction = p.GetPlayerData().Faction;
-      if (maiev == null || !maiev.Alive || maiev.Owner != p || faction == null)
-      {
-        return false;
-      }
-      foreach (var quest in faction.GetAllQuests())
-      {
-        if (quest is QuestMaievOutland chase && chase.UsedAtVault)
-        {
-          return true;
-        }
-      }
-      return false;
-    }
-
     internal static List<TurningPointDef> All = new()
     {
       // WL runs it (automatic when the Violet Citadel falls) -- no Hourglass
@@ -52,6 +39,24 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       // WL runs it (research at Tyr's Hand); the Hourglass lists WL's research too
       new TurningPointDef("Lordaeron", "Scarlet Crusade", TurningPointKind.Fallback, TurningPointSource.Wl)
         { WlResearch = 1378900058 },          // R0XZ The Scarlet Crusade
+      // 0.85.0 (maintainer): the Capital Palace lost -> GILNEAS (was Stormwind's fallback, 0.76.0-0.84.0): the last
+      // humans of the north seek shelter behind the Greymane Wall (Factions/Gilneas/GilneasFallback.cs)
+      new TurningPointDef("Lordaeron", "Gilneas", TurningPointKind.Fallback, TurningPointSource.Timeline)
+      {
+        Trigger = "The Capital Palace is lost",
+        Description = "If Lordaeron's capital falls, its survivors flee to Gilneas: you play the Kingdom of Gilneas "
+                      + "behind the Greymane Wall, led by Genn Greymane, in the North Alliance. Everything left in "
+                      + "Lordaeron is lost.",
+        Decision = HourglassData.DecisionLordaeronGilneas, Condition = HourglassData.ConditionLordaeronGilneas,
+        Hq = new[] { UNIT_H000_CAPITAL_PALACE_LORDAERON },
+        X = 7168f, Y = 512f,                   // Gilneas City
+        HeroType = 0,                          // Genn Greymane leads them (GilneasFallback)
+        Prepare = () => GilneasFallback.Prepare(),
+        Run = (p, def) => GilneasFallback.Run(p, def),
+        Announcement = "|cffffcc00Lordaeron has fallen.|r The last humans of the north seek shelter at the Greymane "
+                       + "Wall. Moved by their plight, King Genn Greymane is finally persuaded to open the gates -- "
+                       + "|cffffcc00Gilneas joins the war effort|r of the North Alliance.",
+      },
       // 0.53: WL's Sunfury faction as Quel'thalas' fallback (no longer an Illidari pick); Forsaken = the betrayal (D3)
       new TurningPointDef("Quel'thalas", "Sunfury", TurningPointKind.Fallback, TurningPointSource.Timeline)
       {
@@ -98,32 +103,32 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       },
       // 0.76.0 (maintainer): Stormwind -> Gilneas, on the North Alliance (Timelines/Factions/Gilneas/GilneasFallback.cs).
       // Replaces the Valiance Expedition placeholder; Gilneas is no longer a pick of the Dalaran slot.
-      new TurningPointDef("Stormwind", "Gilneas", TurningPointKind.Fallback, TurningPointSource.Timeline)
+      // 0.85.0 (maintainer): Stormwind Keep lost -> the Defias Brotherhood in the Deadmines, sworn to whoever holds the
+      // Deadmines (Factions/Defias). Gilneas (the Stormwind fallback until 0.84) is Lordaeron's now (above).
+      new TurningPointDef("Stormwind", TurningPointKind.Fallback, DefiasFallback.Path)
       {
         Trigger = "Stormwind Keep is lost",
-        Description = "If Stormwind falls, its survivors sail to Gilneas: you play the Kingdom of Gilneas behind the "
-                      + "Greymane Wall, led by Genn Greymane, and join the North Alliance. Everything left in Stormwind "
-                      + "is lost.",
+        Description = "With Stormwind fallen the red masks come out of the Deadmines: you play the Defias Brotherhood "
+                      + "-- Dunco Ratsbon and Count Clessington, bandits that pillage what they strike and recruits "
+                      + "every turn -- sworn to whoever broke Stormwind, then to whoever holds the Deadmines. "
+                      + "Everything else of Stormwind is lost.",
         Decision = HourglassData.DecisionStormwind, Condition = HourglassData.ConditionStormwind,
-        Hq = new[] { 1747988568 },             // h00X Stormwind Keep
-        X = 7168f, Y = 512f,                   // Gilneas City
-        HeroType = 0,                          // Genn Greymane leads them (GilneasFallback)
-        Prepare = () => GilneasFallback.Prepare(),
-        Run = (p, def) => GilneasFallback.Run(p, def),
-        Announcement = "|cffffcc00Stormwind has fallen.|r The last of its people seek shelter at the Greymane Wall. "
-                       + "Moved by their plight, King Genn Greymane is finally persuaded to open the gates -- "
-                       + "|cffffcc00Gilneas joins the war effort|r of the North Alliance.",
+        Hq = new[] { UNIT_H00X_STORMWIND_KEEP_STORMWIND_OTHER },
+        RequireTriggerForForcedFallback = true,
       },
       // superseded: Dwarven Expedition (name open) -- base near the Storm Peaks, frost dwarves, a quest at Ulduar (P5)
-      new TurningPointDef("Ironforge", "Explorers' League (placeholder)", TurningPointKind.Fallback,
-        TurningPointSource.Timeline)
+      // 0.86.0 (maintainer): the Great Forge lost -> the Dark Iron of Shadowforge, bound by the Mercenary Charter to
+      // whoever holds the Siege Foundry (Factions/DarkIron); was "Explorers' League (placeholder)"
+      new TurningPointDef("Ironforge", TurningPointKind.Fallback, DarkIronFallback.Path)
       {
         Trigger = "The Great Forge is lost",
-        Description = "Placeholder: a hero appears where the dwarves would start again in the Storm Peaks.",
+        Description = "The Bronzebeard throne is empty: a Dark Iron force tunnels up to claim the Great Anvil. You play "
+                      + "the Dark Iron of Shadowforge -- Ironforge's arsenal in Dark Iron hands, Dagran Thaurissan at "
+                      + "their head -- bound by the Mercenary Charter to whoever broke Ironforge, then to whoever holds "
+                      + "the Siege Foundry. Everything else of Ironforge is lost.",
         Decision = HourglassData.DecisionIronforge, Condition = HourglassData.ConditionIronforge,
-        Hq = new[] { 1747988529 },             // h001 the Great Forge (was the Ironforge CP in 0.39.1)
-        X = 3468f, Y = 22662f,                 // Storm Peaks
-        Announcement = "|cffffcc00Ironforge has fallen.|r The Explorers' League digs for hope in the Storm Peaks.",
+        Hq = new[] { UNIT_H001_THE_GREAT_FORGE_IRONFORGE_OTHER },
+        RequireTriggerForForcedFallback = true,
       },
       // 0.39.5 (maintainer): Kul Tiras keeps Katherine and becomes a mercenary faction on Kezan. 0.58: rebuilt -- a
       // faction of its own (KezanEnterpriseFaction, the 24p goblin tree), the base on Kezan hidden until then
@@ -144,37 +149,31 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
                        + "conflict for gold and glory!",
       },
       // concepts: Dream trees -> South Alliance, trigger = the World Tree consumed / Nordrassil falls (P12)
-      new TurningPointDef("Druids", "Dream trees (placeholder)", TurningPointKind.Fallback, TurningPointSource.Timeline)
+      // 0.86.0 (maintainer): Nordrassil and Cenarion Hold lost -> the Furbolgs, following whoever holds Nordrassil
+      // (their Sacred Ancestral Totem; Factions/Furbolg); was "Dream trees (placeholder)"
+      new TurningPointDef("Druids", TurningPointKind.Fallback, FurbolgFallback.Path)
       {
         Trigger = "Nordrassil and Cenarion Hold are lost",
-        Description = "Placeholder: a hero appears where the druids would start again in the Eastern Kingdoms.",
+        Description = "The furbolg tribes follow whoever proves worthy of holding their Sacred Ancestral Totem: you "
+                      + "play the Furbolgs -- Nafien and the Totem Lodge by Nordrassil, warriors every turn, more and "
+                      + "stronger for every world tree your side holds -- sworn to whoever holds Nordrassil. Everything "
+                      + "else of the druids is lost.",
         Decision = HourglassData.DecisionDruids, Condition = HourglassData.ConditionDruids,
-        Hq = new[] { 1848651826, 1848653380 }, // n002 Nordrassil, n06D Cenarion Hold
-        X = 12522f, Y = -16722f,               // Duskwood (Twilight Grove)
-        Announcement = "|cffffcc00Nordrassil is lost.|r The druids walk the Emerald Dream to its great trees in the Eastern Kingdoms.",
+        Hq = new[] { UNIT_N002_NORDRASSIL_DRUIDS_OTHER, UNIT_N06D_CENARION_HOLD_SENTINELS_OTHER },
+        RequireTriggerForForcedFallback = true,
       },
-      // concepts: Maiev's Watchers for both picks of the slot (P19)
-      new TurningPointDef("Sentinels", "Chase Illidan to Outland", TurningPointKind.Fallback,
-        TurningPointSource.Timeline)
+      // 0.84.0 (maintainer): both Sentinels HQs lost -> the naga of Azshara in the Nazjatar dungeon, sworn to whoever
+      // holds the Eternal Palace (Factions/Nazjatar). Maiev's "Chase Illidan to Outland" (the fallback until 0.83)
+      // becomes a sub-path without losing the Sentinels (TODO.md).
+      new TurningPointDef("Sentinels", TurningPointKind.Fallback, NazjatarFallback.Path)
       {
         Trigger = "Auberdine and Feathermoon Stronghold are lost",
-        Description = "After using Chase Illidan at the Vault for Driven by Vengeance, use it at the Hourglass to return Maiev to her existing outpost when both Sentinel headquarters fall.",
-        RequireTriggerForForcedFallback = true,
-        HourglassAbility = ABILITY_A0J5_CHASE_ILLIDAN_TO_OUTLAND_SENTINEL,
-        Prerequisite = CanReturnToOutland,
-        HeroType = 0,
-        Run = (p, def) =>
-        {
-          if (CanReturnToOutland(p))
-          {
-            QuestMaievOutland.ReturnToOutland(AllLegends.Sentinels.Maiev);
-            p.RepositionCamera(Regions.MaievStartUnlock.Center);
-          }
-        },
+        Description = "With the Sentinels broken Queen Azshara's naga rise in Nazjatar: you play the Naga of "
+                      + "Nazjatar, sworn to whoever broke the Sentinels -- then to whoever holds the Eternal Palace. "
+                      + "Everything else of the Sentinels is lost.",
         Decision = HourglassData.DecisionSentinels, Condition = HourglassData.ConditionSentinels,
-        Hq = new[] { 1697656906, 1697656909 }, // e00J Auberdine, e00M Feathermoon Stronghold
-        X = -5252f, Y = -27597f,               // Driven by Vengeance outpost
-        Announcement = "|cffffcc00The Sentinels are broken.|r Maiev Shadowsong leads her Watchers into Outland.",
+        Hq = new[] { UNIT_E00J_AUBERDINE_SENTINELS_OTHER, UNIT_E00M_FEATHERMOON_STRONGHOLD_SENTINELS_OTHER },
+        RequireTriggerForForcedFallback = true,
       },
       // superseded: the Draenei pick takes Maiev's Watchers too (P19)
       new TurningPointDef("The Exodar", "Draenei of Shattrath (placeholder)", TurningPointKind.Fallback,
@@ -196,13 +195,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Hq = new[] { UNIT_O01B_ORGRIMMAR_WARSONG }, RequireTriggerForForcedFallback = true,
         Announcement = "|cffffcc00The Horde of Kalimdor is broken.|r",
       },
-      new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, SkywallFallback.Path)
+      // 0.85.0 (maintainer): Thunder Bluff lost -> the Centaur Khans (Factions/Centaur); Skywall moved to Ahn'Qiraj
+      new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, CentaurFallback.Path)
       {
         Trigger = "Thunder Bluff is lost",
-        Description = "Claim the Lost City and Vortex Pinnacle as Skywall and join Thunder Bluff's conqueror.",
+        Description = "Whoever broke the Tauren is the Apex Predator of the plains: the centaur swear him the "
+                      + "Blood-Oath of the Hunt. You play the Centaur Khans -- warriors every turn at the camp by "
+                      + "Thunder Bluff, four more khans to win -- sworn to whoever holds Thunder Bluff.",
         Hq = new[] { UNIT_O00J_THUNDER_BLUFF_FROSTWOLF_OTHER }, RequireTriggerForForcedFallback = true,
         Decision = HourglassData.DecisionTauren, Condition = HourglassData.ConditionTauren,
-        Announcement = "|cffffcc00Thunder Bluff has fallen.|r Skywall answers the call of the Tauren.",
       },
       // evil factions: shown on the Hourglass only (greyed out, "Not available yet"), names from the concepts
       // 0.80.0 (maintainer): the Frozen Throne lost (WL ruptures it) and the Lich King, if he rose, dead for good ->
@@ -264,23 +265,30 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         // is nELC, and the Sulfuron Spire (swSS) counts too (maintainer): both lost or not Skywall's
         Hq = new[] { UNIT_NELC_VORTEX_PINNACLE_SKYWALL_T3, UNIT_SWSS_SULFURON_SPIRE_SCOURGE_T3 },
       },
-      new TurningPointDef("Black Empire", "not decided yet", TurningPointKind.Fallback, TurningPointSource.NotYet)
+      // 0.85.0 (maintainer): N'Zoth lost -> the Harpies of Stonetalon, sworn to his slayer (Factions/Harpy)
+      new TurningPointDef("Black Empire", TurningPointKind.Fallback, HarpyFallback.Path)
       {
+        Trigger = "N'Zoth is lost",
+        Description = "With N'Zoth's tether severed the harpies of Stonetalon imprint on the banner of whoever slew "
+                      + "him: you play the Harpies -- their nests, a few harpy kinds and two matriarchs -- sworn to "
+                      + "whoever holds Stonetalon Peak. Everything else of the Black Empire is lost.",
         Decision = HourglassData.DecisionBlackEmpire, Condition = HourglassData.ConditionBlackEmpire,
-        Hq = new[] { 1429221722 },             // U01Z N'Zoth
+        Hq = new[] { UNIT_U01Z_OLD_GOD_NZOTH },
+        RequireTriggerForForcedFallback = true,
       },
-      // 0.80.0 (maintainer): C'Thun lost -> the Zandalari Empire at Zuldazar, sworn to whoever holds Zuldazar
-      // (Timelines/Factions/Zandalari/ZandalariFallback.cs); was "Brood of Nozdormu (not yet)"
-      new TurningPointDef("Ahn'qiraj", TurningPointKind.Fallback, ZandalariFallback.Path)
+      // 0.85.0 (maintainer): C'Thun lost -> SKYWALL (was the Tauren's; the Zandalari stay the Orcish Horde's), sworn
+      // to C'Thun's slayer, then to whoever holds the Vortex Pinnacle (Factions/Skywall)
+      new TurningPointDef("Ahn'qiraj", TurningPointKind.Fallback, SkywallFallback.Path)
       {
         Trigger = "C'Thun is lost",
-        Description = "With C'Thun fallen, the Zandalari reclaim Zuldazar: you play the Zandalari Empire, sworn to "
-                      + "whoever holds Zuldazar -- first C'Thun's slayer. Everything left of Ahn'Qiraj is lost.",
+        Description = "With C'Thun fallen the storm lords of Skywall claim the Lost City and the Vortex Pinnacle: you "
+                      + "play Skywall, sworn to C'Thun's slayer, then to whoever holds the Vortex Pinnacle. Everything "
+                      + "left of Ahn'Qiraj is lost.",
         Decision = HourglassData.DecisionAhnqiraj, Condition = HourglassData.ConditionAhnqiraj,
-        Hq = new[] { 1429221458 },             // U00R C'Thun
+        Hq = new[] { UNIT_U00R_OLD_GOD_CTHUN },
         RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00C'Thun has fallen.|r From Zuldazar King Rastakhan raises the Zandalari Empire -- "
-                       + "it will serve whoever promises the trolls a united empire.",
+        Announcement = "|cffffcc00C'Thun has fallen.|r Al'Akir's storms sweep over the desert -- Skywall claims the "
+                       + "Lost City and serves the one who slew the Old God.",
       },
     };
 

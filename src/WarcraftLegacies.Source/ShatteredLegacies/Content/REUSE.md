@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1913 | 25 | 491 | 1045 | 391 | 59 | 284 |
-| abilities | 1733 | 44 | 709 | 490 | 243 | 235 | 276 |
-| upgrades | 511 | 0 | 147 | 133 | 72 | 31 | 15 |
-| items | 105 | 13 | 80 | 29 | 3 | 5 | 222 |
+| units | 1998 | 25 | 491 | 1045 | 391 | 60 | 283 |
+| abilities | 1760 | 46 | 709 | 490 | 243 | 238 | 273 |
+| upgrades | 528 | 0 | 147 | 133 | 72 | 31 | 15 |
+| items | 107 | 13 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
 
@@ -364,13 +364,13 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `Eevi` | Betrayer (Naga) | hero | stock |  |  | different |
 | `U00P` | C'thrax Aberration | hero | main | n0AV |  | different |
 | `E015` | Champion of the Illidari (Naga) | hero | 24p | nnad |  | 24p only |
-| `H08U` | Empress of Nazjatar (Nzoth) | hero | 24p | n0C0 |  | 24p only |
+| `H08U` | Empress of Nazjatar (Nzoth) | hero | main | n0C0 |  | 24p only |
 | `U02M` | Grimscale Chieftain (Naga) | hero | 24p | n0D8 |  | 24p only |
 | `U02A` | N'raqi Aberration (yogg) | hero | main | u01F |  | 24p only |
 | `E01D` | N'raqi Arcanist (yogg) | hero | main | n0AV |  | different |
-| `H0A5` | Sea Witch (Nzoth) | hero | 24p | n0C0 |  | 24p only |
+| `H0A5` | Sea Witch (Nzoth) | hero | main | n0C0 |  | 24p only |
 | `Eill` | The Betrayer (Naga) | hero | 24p |  |  | 24p only |
-| `U02N` | The Leader of Bloodcursed Naga (Naga) | hero | 24p | n0C0 |  | 24p only |
+| `U02N` | The Leader of Bloodcursed Naga (Naga) | hero | main | n0C0 |  | 24p only |
 | `U02B` | Yogg-Saron Champion | hero | main | n0AV |  | different |
 | `n0C0` | Altar of the Depths (Nzoth) | building | stock | nmpe | H08U,H0A5,U02N | 24p only |
 | `n0A3` | Coilfang Archive (Illidari) | building | 24p | nmpe | nmsc,nnsu,nnsw | different |
@@ -390,7 +390,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n0C2` | Pillar of Waves (Nzoth) | building | 24p | nmpe | h02P,nmpe | 24p only |
 | `n0AX` | Prison of Unspeakable Horrors (Yogg) | building | main | n0B5 | h09F,n0AH,o04Z | different |
 | `n0B6` | Pyramid of Madness (black Empire) | building | main |  | n0B4,n0B5,u02E | different |
-| `n0C7` | Royal Pyramid (Nzoth) | building | 24p | nmpe | n0CB,n0CD | 24p only |
+| `n0C7` | Royal Pyramid (Nzoth) | building | main | nmpe | n0CB,n0CD | 24p only |
 | `nnsa` | Serpentshrine (Illidari) | building | 24p | nhew,nmpe | e00Y,nwgs | different |
 | `n0C3` | Shrine of Azshara (Nzoth) | building | stock | nmpe | nwgs,u02J | 24p only |
 | `n0C4` | Spawning Grounds (Nzoth) | building | stock | nmpe | n0CA,n0CE,n0CL | 24p only |
@@ -409,7 +409,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `n0CD` | Bloodkin (Nzoth) | unit | stock | n0C7 |  | 24p only |
 | `u01E` | Burrowed Giant Scarab (C'thun Giant Scarab) | unit | stock |  |  | 24p only |
 | `n073` | CthunTentacle | unit | main | u019 |  | different |
-| `n0CB` | Deepseer (Nzoth) | unit | 24p | n0C7 |  | 24p only |
+| `n0CB` | Deepseer (Nzoth) | unit | main | n0C7 |  | 24p only |
 | `ndrs` | Draenei Seer (Illidari) | unit | stock | n08W,ndh4 |  | different |
 | `ndrn` | Draenei Vindicator (Illidari) | unit | stock | n08W,ndh3,ndh4 |  | different |
 | `h01N` | Faceless Corrupter (C'thun Faceless Corruptor) | unit | stock | u01H |  | different |
@@ -420,7 +420,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h09F` | Gladiator (yogg) | unit | main | n0AX |  | different |
 | `e00S` | Glaive Warrior (Sentinels) | unit | 24p | n08H |  | 24p only |
 | `n0CE` | Hatchling (Nzoth) | unit | stock | n0C4 |  | 24p only |
-| `h01Q` | Immortal Guardian (Nzoth) | unit | 24p | n08V |  | 24p only |
+| `h01Q` | Immortal Guardian (Nzoth) | unit | main | n08V |  | 24p only |
 | `nmsc` | Mur'gul Shadowcaster (Illidari) | unit | stock | n0A3 |  | different |
 | `nmpe` | Mur'gul Slave (Illidari, Nzoth, Worker) | unit | stock | n045,n04T,n055,n05A,n0C2,n0C8,n0C9,nntt | h06S,h0A4,n08H,n08V,n08W,n0A3,n0BZ,n0C0,n0C1,n0C2,n0C3,n0C4,+9 | different |
 | `n0CA` | Naga Incursor (nzoth) | unit | main | n0C4 |  | 24p only |
@@ -442,7 +442,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `nsbs` | Submerged Snap Dragon (Green - Naga) | unit | stock |  |  | 24p only |
 | `nnsu` | Summoner (Illidari) | unit | stock | n0A3 |  | different |
 | `nfgt` | Tentacle | unit | stock |  |  | 24p only |
-| `u02J` | Tidal Terror (Nzoth) | unit | 24p | n0C3 |  | 24p only |
+| `u02J` | Tidal Terror (Nzoth) | unit | main | n0C3 |  | 24p only |
 | `n0CO` | Trench Hydra (nzoth) | unit | stock | n08V |  | 24p only |
 | `n0B7` | YoggTentacle | unit | 24p |  |  | 24p only |
 | `n0B8` | YoggTentacleMace | unit | 24p |  |  | 24p only |
@@ -974,7 +974,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `u01U` | Cultist of the Damned (Forsaken, Cult) | unit | stock |  |  | different |
 | `n0BY` | Dark Ranger (forsaken) | unit | main | h089,h08B,h08S |  | 24p only |
 | `n07S` | Deadeye (Forsaken, Cult) | unit | main | u011 |  | 24p only |
-| `o066` | Death Domain | unit | 24p |  |  | 24p only |
+| `o066` | Death Domain | unit | main |  |  | 24p only |
 | `u01Y` | Deathwing (twilight) | unit | main |  |  | 24p only |
 | `n091` | Doomfire Abyssal (Legion-Archimond-Level 2) | unit | stock |  |  | different |
 | `h08N` | Dreadguard (Forsaken, Cult) | unit | 24p | u011 |  | 24p only |

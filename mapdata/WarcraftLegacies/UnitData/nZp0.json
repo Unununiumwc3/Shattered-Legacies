@@ -1,0 +1,47 @@
+{
+  "OldId": "nban",
+  "NewId": "nZp0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 16
+    },
+    {
+      "Id": "ua1b",
+      "Value": 18
+    },
+    {
+      "Id": "uhpm",
+      "Value": 440
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.8
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Light melee unit with Shadowmeld. "
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Defias Bandit"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Defias)"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Ashm,Asal"
+    }
+  ]
+}

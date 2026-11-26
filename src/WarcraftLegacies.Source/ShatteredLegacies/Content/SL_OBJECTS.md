@@ -5,6 +5,35 @@ researches ...) are listed in `../README.md` "Changes to map data".
 
 | New id | Name | Source | Used by |
 |---|---|---|---|
+| `AZb0` |  | `24p:Argl` | Nazjatar |
+| `AZb1` |  | `24p:ANha` | Nazjatar |
+| `AZb2` | Self Destruct | `24p:A106` | Nazjatar |
+| `AZb3` | Hardened Scales | `24p:A0M5` | Nazjatar |
+| `AZb4` |  | `24p:Asb1` | Nazjatar |
+| `AZb5` | Frostbolt | `24p:A0LX` | Nazjatar |
+| `AZb6` | Frost Shell | `24p:A0XH` | Nazjatar |
+| `AZb7` |  | `24p:A0MJ` | Nazjatar |
+| `AZb8` | Shadow Mend | `24p:A0WU` | Nazjatar |
+| `AZb9` |  | `24p:A0XI` | Nazjatar |
+| `AZba` |  | `24p:A0XC` | Nazjatar |
+| `AZbb` | Tsunami | `24p:A0XJ` | Nazjatar |
+| `AZbc` | Squall | `24p:A0XQ` | Nazjatar |
+| `AZbd` | AAASpell Resistance | `24p:A07C` | Nazjatar |
+| `AZbe` | Void Tide | `24p:A0YH` | Nazjatar |
+| `AZbf` | Consuming Attack | `24p:A0YF` | Nazjatar |
+| `AZbg` | Multi Shot | `24p:A0VD` | Nazjatar |
+| `AZbh` | Healing Spores | `24p:A0X3` | Nazjatar |
+| `AZbi` | Water Wave | `24p:A0ZN` | Nazjatar |
+| `AZbj` | Water Images | `24p:A0PD` | Nazjatar |
+| `AZbk` | Ancient Combat Expertise | `24p:A0V8` | Nazjatar |
+| `AZbl` | Death Domain | `24p:A102` | Nazjatar |
+| `AZbm` | Blood Curse | `24p:A104` | Nazjatar |
+| `AZbn` | Summon Mur'gul Workers | `24p:A0PQ` | Nazjatar |
+| `AZbo` | Seed Growth | `24p:A04C` | Nazjatar |
+| `AZbp` |  | `24p:AIpl` | Nazjatar |
+| `AZbq` | Death Domain Aura | `24p:A103` | Nazjatar |
+| `AZbr` | Death Domain | `24p:A101` | Nazjatar |
+| `AZbs` | Death Domain Slow | `24p:S001` | Nazjatar |
 | `AZf0` |  | `24p:Ahar` | Forsaken |
 | `AZf1` | Self Destruct | `24p:A106` | Forsaken |
 | `AZf2` |  | `24p:Argl` | Forsaken |
@@ -143,6 +172,8 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZye` | Light's Edict | `24p:A0ZG` | Ashtongue |
 | `AZyf` | Army of Light | `24p:A0ZH` | Ashtongue |
 | `AZyh` | Army of Light Golem summon | `24p:A0ZI` | Ashtongue |
+| `BZb0` | Death Domain | `24p:B0AM` | Nazjatar |
+| `BZb1` |  | `24p:B0AN` | Nazjatar |
 | `BZf0` |  | `24p:B07V` | Forsaken |
 | `BZf1` | Death Aura | `24p:B03C` | Forsaken |
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
@@ -153,9 +184,13 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `BZw2` | Searing Breath (Effect) | `24p:X00T` | TwilightHammer |
 | `BZx0` | Dark Grip (Caster) | `24p:B010` | Zandalari |
 | `BZy1` |  | `24p:B014` | Ashtongue |
+| `HZb3` |  | `24p:H0A5` | Nazjatar |
+| `HZb4` | Empress of Nazjatar | `24p:H08U` | Nazjatar |
 | `HZw0` | High Priestess | `24p:H08Q` | TwilightHammer |
 | `HZy9` | The Naaru | `24p:H0AK` | Ashtongue |
 | `HZya` | High Priestess of the Aldor | `24p:H09S` | Ashtongue |
+| `IZb0` | Summon Mur'gul Workers  | `24p:I00B` | Nazjatar |
+| `IZb1` | Seeds of Regrowth | `24p:I00L` | Nazjatar |
 | `IZf0` | Summon Forsaken Acolyte | `24p:I00N` | Forsaken |
 | `IZf1` | Seeds of Regrowth | `24p:I00L` | Forsaken |
 | `IZk0` | Summon Engineer | `24p:I00X` | KezanEnterprise |
@@ -175,6 +210,21 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `OZwi` | Fire Ascendant | `24p:O04H` | TwilightHammer |
 | `OZxi` | God King of the Zandalari Tribe | `24p:O026` | Zandalari |
 | `OZxj` | The Dark Prophet | `24p:O01J` | Zandalari |
+| `RZb0` | Quest Completed: Nazjatar Empire | `24p:R08V` | Nazjatar |
+| `RZb1` | Quest Completed: The Bloodcursed Naga | `24p:R098` | Nazjatar |
+| `RZb2` | Quest Completed: Reel them back | `24p:R08X` | Nazjatar |
+| `RZb3` | Exploit the Sea Floor | `24p:R092` | Nazjatar |
+| `RZb4` | Build the Empire | `24p:R08Q` | Nazjatar |
+| `RZb5` | Tier 4 | `24p:R04R` | Nazjatar |
+| `RZb6` | Power Infusion 1 | `24p:R00K` | Nazjatar |
+| `RZb7` | Deepseer Adept Training | `24p:R08P` | Nazjatar |
+| `RZb8` | Bloodkin Adept Training | `24p:R08O` | Nazjatar |
+| `RZb9` | Solo Upgrade | `24p:Rguv` | Nazjatar |
+| `RZba` | Improved Hypothermic Breath | `24p:R04V` | Nazjatar |
+| `RZbb` |  | `24p:Rupm` | Nazjatar |
+| `RZbc` | Needs to be Made | `24p:R03N` | Nazjatar |
+| `RZbd` | Malorne's Infusion | `24p:R01H` | Nazjatar |
+| `RZbe` | Quest Completed: Green-Skinned Brutes | `24p:R007` | Nazjatar |
 | `RZf0` | Quest Completed: Forsaken Independance | `24p:R04X` | Forsaken |
 | `RZf1` | Quest Completed: The Secret Buildup | `24p:R04Z` | Forsaken |
 | `RZf2` | Tier 4 | `24p:R04R` | Forsaken |
@@ -228,11 +278,15 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `RZy3` | Solo Upgrade | `24p:Rguv` | Ashtongue |
 | `RZy4` | Spiritual Infusion | `24p:R023` | Ashtongue |
 | `RZy5` | Needs to be Made | `24p:R03N` | Ashtongue |
+| `UZb1` | The Leader of Bloodcursed Naga | `24p:U02N` | Nazjatar |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
 | `UZw2` | Water Ascendant | `24p:U01S` | TwilightHammer |
 | `UZwx` | Deathwing | `24p:u01Y` | TwilightHammer |
 | `eZx0` | Direhorn | `24p:e00Z` | Zandalari |
+| `hZb0` | Coral Forge | `24p:h0A4` | Nazjatar |
+| `hZb1` | Naga Sea Witch | `24p:h02P` | Nazjatar |
+| `hZb2` | Immortal Guardian | `24p:h01Q` | Nazjatar |
 | `hZf0` | Dark Mansion | `24p:h089` | Forsaken |
 | `hZf1` | Grim Estate | `24p:h08A` | Forsaken |
 | `hZf2` | Haunted Castle | `24p:h08B` | Forsaken |
@@ -255,6 +309,28 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZy6` | Rangari | `24p:h09T` | Ashtongue |
 | `hZy7` | Elekk Knight | `24p:h09U` | Ashtongue |
 | `hZy8` | Vindicator | `24p:h09R` | Ashtongue |
+| `nZb0` | Temple of Azshara | `24p:n045` | Nazjatar |
+| `nZb1` | Pillar of Waves | `24p:n0C2` | Nazjatar |
+| `nZb2` | Monument of Currents | `24p:n0C8` | Nazjatar |
+| `nZb3` | Temple of Tides | `24p:n0C9` | Nazjatar |
+| `nZb4` | Altar of the Depths | `24p:n0C0` | Nazjatar |
+| `nZb5` | Coral Bed | `24p:n0C1` | Nazjatar |
+| `nZb6` | Spawning Grounds | `24p:n0C4` | Nazjatar |
+| `nZb7` | Shrine of Azshara | `24p:n0C3` | Nazjatar |
+| `nZb8` | Royal Pyramid | `24p:n0C7` | Nazjatar |
+| `nZb9` | Depth Void Portal | `24p:n08V` | Nazjatar |
+| `nZba` | Tidal Guardian | `24p:n0C5` | Nazjatar |
+| `nZbb` | Improved Tidal Guardian | `24p:n0C6` | Nazjatar |
+| `nZbc` | Deep Sea Vault | `24p:n0BZ` | Nazjatar |
+| `nZbd` | The First Guardian | `24p:n0BQ` | Nazjatar |
+| `nZbe` | Mur'gul Slave | `24p:nmpe` | Nazjatar |
+| `nZbf` | Naga Incursor | `24p:n0CA` | Nazjatar |
+| `nZbg` | Hatchling | `24p:n0CE` | Nazjatar |
+| `nZbh` | Deepseer | `24p:n0CB` | Nazjatar |
+| `nZbi` | Bloodkin | `24p:n0CD` | Nazjatar |
+| `nZbj` | Gargantuan Sea Turtle | `24p:n0CL` | Nazjatar |
+| `nZbk` | Trench Hydra | `24p:n0CO` | Nazjatar |
+| `nZbl` |  | `24p:ntws` | Nazjatar |
 | `nZf0` | Deadeye | `24p:n07S` | Forsaken |
 | `nZf1` | Dark Ranger | `24p:n0BY` | Forsaken |
 | `nZf2` | Plague Construct | `24p:n07W` | Forsaken |
@@ -275,6 +351,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZw6` | Hurricane | `24p:n06A` | TwilightHammer |
 | `nZw7` | Hurricane | `24p:n06B` | TwilightHammer |
 | `nZy1` | Lightforged Warframe | `24p:n0DA` | Ashtongue |
+| `oZb0` | Death Domain | `24p:o066` | Nazjatar |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `oZk0` |  | `24p:o03L` | KezanEnterprise |
 | `oZk1` |  | `24p:o03M` | KezanEnterprise |
@@ -350,6 +427,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `oZy3` | Defender | `24p:o05B` | Ashtongue |
 | `oZy4` | Luminarch | `24p:o05C` | Ashtongue |
 | `oZy5` | Elementalist | `24p:o05D` | Ashtongue |
+| `uZb0` | Tidal Terror | `24p:u02J` | Nazjatar |
 | `uZf0` | Altar of the Queen | `24p:u010` | Forsaken |
 | `uZf1` |  | `24p:u01K` | Forsaken |
 | `uZf2` | Plaguetorium | `24p:u011` | Forsaken |

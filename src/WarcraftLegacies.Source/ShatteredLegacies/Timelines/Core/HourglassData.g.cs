@@ -13,21 +13,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionForsaken = 1381655369; // RZcI
     internal const int DecisionGilneas = 1381655602; // RZd2 Fallback: Gilneans on Darkshore (placeholder)
     internal const int ConditionGilneas = 1381655346; // RZc2
-    internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Gilneas
+    internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Defias Brotherhood
     internal const int ConditionStormwind = 1381655347; // RZc3
-    internal const int DecisionIronforge = 1381655604; // RZd4 Fallback: Dwarven Expedition (placeholder)
+    internal const int DecisionLordaeronGilneas = 1381655626; // RZdJ Fallback: Gilneas
+    internal const int ConditionLordaeronGilneas = 1381655370; // RZcJ
+    internal const int DecisionIronforge = 1381655604; // RZd4 Fallback: Dark Iron of Shadowforge
     internal const int ConditionIronforge = 1381655348; // RZc4
     internal const int DecisionKultiras = 1381655605; // RZd5 Fallback: Kezan Enterprise
     internal const int ConditionKultiras = 1381655349; // RZc5
-    internal const int DecisionDruids = 1381655606; // RZd6 Fallback: Dream trees (placeholder)
+    internal const int DecisionDruids = 1381655606; // RZd6 Fallback: Furbolgs
     internal const int ConditionDruids = 1381655350; // RZc6
-    internal const int DecisionSentinels = 1381655607; // RZd7 Fallback: Chase Illidan to Outland
+    internal const int DecisionSentinels = 1381655607; // RZd7 Fallback: Naga of Nazjatar
     internal const int ConditionSentinels = 1381655351; // RZc7
     internal const int DecisionExodar = 1381655608; // RZd8 Fallback: Draenei of Shattrath (placeholder)
     internal const int ConditionExodar = 1381655352; // RZc8
     internal const int DecisionOrcishHorde = 1381655609; // RZd9 Fallback: Twillight or Zandalari
     internal const int ConditionOrcishHorde = 1381655353; // RZc9
-    internal const int DecisionTauren = 1381655617; // RZdA Fallback: Skywall
+    internal const int DecisionTauren = 1381655617; // RZdA Fallback: Centaur Khans
     internal const int ConditionTauren = 1381655361; // RZcA
     internal const int DecisionScourge = 1381655618; // RZdB Fallback: Knights of the Ebon Blade
     internal const int ConditionScourge = 1381655362; // RZcB
@@ -39,13 +41,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionIllidari = 1381655365; // RZcE
     internal const int DecisionSkywall = 1381655622; // RZdF Conquered, not defeated
     internal const int ConditionSkywall = 1381655366; // RZcF
-    internal const int DecisionBlackEmpire = 1381655623; // RZdG Fallback (not decided yet)
+    internal const int DecisionBlackEmpire = 1381655623; // RZdG Fallback: Harpies
     internal const int ConditionBlackEmpire = 1381655367; // RZcG
-    internal const int DecisionAhnqiraj = 1381655624; // RZdH Fallback: Zandalari Empire
+    internal const int DecisionAhnqiraj = 1381655624; // RZdH Fallback: Skywall
     internal const int ConditionAhnqiraj = 1381655368; // RZcH
 
     // every research the Hourglass lists (decisions + WL's own), for the per-player limits
-    internal static int[] Decisions = { 1381655601, 1381655625, 1381655602, 1381655603, 1381655604, 1381655605, 1381655606, 1381655607, 1381655608, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
+    internal static int[] Decisions = { 1381655601, 1381655625, 1381655602, 1381655603, 1381655626, 1381655604, 1381655605, 1381655606, 1381655607, 1381655608, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
     internal static int[] WlResearches = { 1378900058 }; // R0XZ
   }
 }

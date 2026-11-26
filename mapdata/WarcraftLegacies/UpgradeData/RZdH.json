@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeadHunterBerserker.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroAvatarOfFlame.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Zandalari Empire"
+      "Value": "Fallback: Skywall"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Zandalari Empire"
+      "Value": "Fallback: Skywall"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "With C'Thun fallen, King Rastakhan raises the Zandalari Empire at Zuldazar: you play the trolls, sworn to whoever holds Zuldazar (first C'Thun's slayer). Unite Zul'Aman, Gundrak, Zul'Farrak and Zul'Gurub. Ahn'Qiraj is lost."
+      "Value": "With C'Thun fallen the storm lords claim the Lost City and the Vortex Pinnacle: you play Skywall, sworn to C'Thun's slayer, then to whoever holds the Vortex Pinnacle. Skywall cannot be defeated. Ahn'Qiraj is lost."
     }
   ]
 }

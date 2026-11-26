@@ -26,7 +26,9 @@ internal static class TwilightHammerFallback
   // else: the Zandalari Empire (Factions/Zandalari, "Rastakhan swears allegiance to the destroyers of the Horde").
   // No Dragonmaw for the Horde any more (the Fel Horde keeps Twilight / Dragonmaw). Each destination is claimed
   // (one faction each); when the wanted one is taken the other one is used.
-  internal static readonly ExclusivePath HordeRoute = new("Twillight or Zandalari", () => { }, RunHorde, StartX, StartY);
+  // 0.85.0: Ahn'Qiraj has Skywall now -- the Zandalari base waits for the Horde alone (its Prepare runs here)
+  internal static readonly ExclusivePath HordeRoute = new("Twillight or Zandalari",
+    () => Zandalari.ZandalariFallback.Path.Prepare(), RunHorde, StartX, StartY);
   internal const string HordeOfferDescription = "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. "
                                                 + "Beaten by anyone else: King Rastakhan swears the Zandalari trolls "
                                                 + "to your conqueror -- you play them at Zuldazar.";

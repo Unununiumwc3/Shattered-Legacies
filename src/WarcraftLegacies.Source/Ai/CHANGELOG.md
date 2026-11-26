@@ -5,6 +5,26 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.86.0 — bot data for the Dark Iron and the Furbolgs
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.86.0.
+- The Dark Iron: their copied halls as HQs, Dagran / Argelmach / Darkvire as heroes, their buildings in the production
+  data. The Furbolgs: the Totem Lodge as HQ, Nafien; their units come by code.
+
+## 0.85.0 — bot data for the Defias, Centaur and Harpies
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.85.0.
+- Heroes registered for the three new factions; the Harpy Roost is the Harpies' HQ, their nests are production
+  (`gen_ai_data.py`). The Defias and Centaur get units by code every turn (no production to manage).
+
+## 0.84.0 — bot data for the naga
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.84.0.
+- The naga of Nazjatar on a bot slot: temples registered as HQs (the emergency teleport's anchor), Lady Naz'jar /
+  Azshara / Atoph as heroes, their buildings in the production data (`gen_ai_data.py`, `gen_build_data.py`).
+- The dungeons' gates are closed until a fallback opens them, so their portal edges appear only then (live
+  waygates).
+
 ## 0.83.0 — the void dungeons in the route graph
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.83.0.

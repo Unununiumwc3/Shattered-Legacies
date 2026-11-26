@@ -45,8 +45,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
       16576f, 14656f,
     };
 
-    private const float GateX = -26528f; // 24p: the southern entrance portal (h03V) at -26528, 14432
-    private const float GateY = 14432f + Shift;
+    // 0.84 (maintainer): the inner gate is the 24p's iron gate at the southern entrance (its doodad is left out of the
+    // copy, the waygate carries its model: DungeonObjects.UndercityGate)
+    private const float GateX = -26537f;
+    private const float GateY = 21323f;
     private const float ArriveX = -26544f; // the middle of 24p "Undercity Interior 1"
     private const float ArriveY = 14656f + Shift;
 
@@ -68,7 +70,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Forsaken
     {
       Square = new Instance("Undercity",
         new Rectangle(ForsakenConfig.UndercityMinX, ForsakenConfig.UndercityMinY, ForsakenConfig.UndercityMaxX,
-          ForsakenConfig.UndercityMaxY), GateX, GateY, ArriveX, ArriveY);
+          ForsakenConfig.UndercityMaxY), DungeonObjects.UndercityGate, GateX, GateY, ArriveX, ArriveY);
       var y = new float[Y.Length];
       for (var i = 0; i < Y.Length; i++)
       {
