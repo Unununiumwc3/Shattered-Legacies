@@ -100,7 +100,7 @@ OZmg	main	used	hero	Warlord of the Dragonmaw	(Fel Horde)	Oths	orc	war3mapImporte
 OZmh	main	used	hero	Shaman of the Dragonmaw	(Fel Horde)	Orkn	orc	war3mapImported\Hero_Zuluhed.mdl	main	ReplaceableTextures\CommandButtons\BTNShaman.blp	-	oZm3	-	-	-	-	A0B4,A0GK,AHab,AInv,AZmc,Aamk,Heal	-
 OZp5	main	used	hero	Kingpin of the Defias	(Defias)	Obla	orc	units\creeps\BanditLord\BanditLord	stock	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	-	-	-	-	-	-	AEfk,AInv,AOcr,AOmi,AOwk,Aamk,Asal	-
 OZu0	main	used	hero	Totem-Keeper of the Timbermaw	(Furbolg)	Otch	orc	units\creeps\FurbolgElder\FurbolgElder	stock	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	-	oZu2	-	-	-	-	AEer,AEtq,AInv,ANsg,AOhw,Aamk	-
-OZwh	main	used	hero	Leader of the Twilight's Hammer	(Twilight Hammer)	Ocbh	orc	war3mapImported\Chogall.mdl	main	ReplaceableTextures\CommandButtons\BTNChogall.blp	-	oZw3	-	-	-	-	A0OK,A0SC,AInv,ANrf,AZw9,Aamk	-
+OZwh	main	used	hero	Leader of the Twilight's Hammer	(Twilight Hammer)	Ocbh	orc	war3mapImported\Chogall.mdl	main	ReplaceableTextures\CommandButtons\BTNChogall.blp	-	oZw3	-	-	-	-	A0SC,AInv,ANrf,AZw9,AZwr,Aamk	-
 OZwi	main	used	hero	Fire Ascendant	(twilight)	Orkn	orc	war3mapImported\DreadRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNFireMetalRevenant.blp	-	oZw3	-	-	-	-	A0GK,A0IC,A0JF,A0OO,AInv,ANbf,Aamk	RZw9
 OZxi	main	used	hero	God King of the Zandalari Tribe	(troll)	Obla	orc	war3mapImported\HeroWarchiefVoljinGlowyEyes.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollConjurer.blp	-	oZx3	-	-	-	-	A06U,AInv,ANbf,AZx6,AZx7,Aamk	-
 OZxj	main	used	hero	The Dark Prophet	(Troll)	Orkn	orc	war3mapImported\RokhanMaskV2.mdl	main	ReplaceableTextures\CommandButtons\BTNShadowHunter.blp	-	oZx3	-	-	-	-	A033,AInv,AOcl,AUls,AZx8,Aamk	-
@@ -625,7 +625,7 @@ hZrc	main	used	unit	Vrykul Warrior	(Refugee, Scourge)	hcth	human	war3mapImported
 hZrd	main	used	unit	Battlemage	(Refugee, Dalaran / Gilneas)	hfoo	human	FootmanStromgardeV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNMagic_Bronze_Armour.blp	-	oZq3	-	-	-	-	A057,A0C3,Adef,Aihn	RZrd
 hZrf	main	used	unit	Longbowman	(Refugee, Scarlet Crusade)	hrif	human	war3mapImported\ScarletArcher.mdl	main	ReplaceableTextures/CommandButtons/BTNScarletArcher.blp	-	oZq3	-	-	-	-	A0P6,A0Q2,ACen,Aihn	RZrf
 hZrg	main	used	unit	Rifleman	(Refugee, Ironforge)	hrif	human	units\human\Rifleman\Rifleman	stock	ReplaceableTextures\CommandButtons\BTNRifleman.blp	-	oZq4	-	-	-	-	A0F4,A13J,Aens,Aihn	RZrg
-hZw1	main	used	building	Twilight Citadel	(Twilight)	hars	orc	war3mapImported\DarkShrineX2.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	-	oZwe,oZwf	-	-	-	AZwq	-
+hZw1	main	used	building	Twilight Citadel	(Twilight)	hars	orc	war3mapImported\DarkShrineX2.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	-	oZwe,oZwf	-	-	-	-	-
 hZx0	main	used	unit	Watcher	(troll)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	oZx4	-	-	-	-	Adef,Aens,Aihn	-
 hZx1	main	used	unit	Raptor Rider	(troll)	hkni	orc	war3mapImported\EliteHeadhunterScoutAWRV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollRaptor.blp	-	oZx7	-	-	-	-	A020,A0XK,AZx3,Adtg,Aihn	-
 hZy0	main	unused	unit	Rangari	(draenei)	hrif	nightelf	war3mapImported\Rangari.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiHuntress.blp	-	-	-	-	-	-	Aens,Aihn	RZt0

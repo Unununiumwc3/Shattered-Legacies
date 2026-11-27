@@ -295,6 +295,7 @@ TWILIGHT = {
         ("U01S", "Feludius", ["Support"], 1),
         ("O04H", "Ignacious", ["Tank"], 1),
         ("u01Y", "Deathwing", ["Flyer"], 1),
+        ("A0OK", "CorruptBlood", None, 0),
         ("A0LN", "ThunderFists", None, 0),
         ("A024", "ThunderFistsLightning", None, 0),
         ("R05F", "Whispers", None, 0),
@@ -326,6 +327,8 @@ TWILIGHT = {
         "R07Q": {"gnam": "Quest Completed: Gift of the Firelord"},
         "R07T": {"gnam": "Quest Completed: Rite of Rime"},
         "R05F": {"gnam": "Quest Completed: Voices in the Quarry"},
+        "A0ON": {"ahky": "W", "arhk": "W", "abpx": 1, "arpx": 1},
+        "A0OK": {"ahky": "R", "arhk": "R", "arlv": 10, "alsk": 5, "abpx": 3, "arpx": 3},
         "U01S": {"unam": "Water Ascendant", "upro": "Feludius",
                  "umdl": r"Units\Creeps\RevenantOfTheWaves\RevenantOfTheWaves.mdl",
                  "utip": "Summon Feludius", "uawt": "Revive Feludius", "utpr": "Revive Feludius",
@@ -335,8 +338,8 @@ TWILIGHT = {
         "o03A": {"utra": "o04B"},
         "o03B": {"utra": "o04B"},
         "o03C": {"utra": "O01P,H08Q,O04H,U01S"},
-        "o04B": {"ureq": ""},
-        "h05U": {"ures": "", "ureq": "", "unsf": "(Twilight)",
+        "o04B": {"ureq": "", "utub": "Glimpse of the Old Gods: Visions draw these followers into the Twilight cult. Cultists construct and repair the clan's buildings."},
+        "h05U": {"uabi": "", "ures": "", "ureq": "", "unsf": "(Twilight)",
                  "utub": "The seat of the Twilight's Hammer in the Highlands. Trains Cultists and Battlemasters."},
     },
 }
@@ -718,6 +721,9 @@ def main():
         written = {}
         for oid in closure:
             kind, d = p24[oid]
+            if s is TWILIGHT and oid == "A0OK":
+                # Preserve the live spell balance while giving Cho'gall his own hero skill.
+                kind, d = main_data[oid]
             d = json.loads(json.dumps(d))
             d["NewId"] = mapping[oid]
             if s.get("zero_lumber"):

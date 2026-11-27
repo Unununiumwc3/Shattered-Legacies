@@ -224,6 +224,24 @@
       "Id": "aub1",
       "Type": 3,
       "Value": "Decreases nearby enemy units' movement speed by 25%."
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "W"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "W"
+    },
+    {
+      "Id": "abpx",
+      "Value": 1
+    },
+    {
+      "Id": "arpx",
+      "Value": 1
     }
   ]
 }

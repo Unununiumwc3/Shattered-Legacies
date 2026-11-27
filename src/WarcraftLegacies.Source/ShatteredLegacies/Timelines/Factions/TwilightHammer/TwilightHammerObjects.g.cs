@@ -34,6 +34,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
     internal const int Feludius = 1431992114; // UZw2 (24p U01S)
     internal const int Ignacious = 1331328873; // OZwi (24p O04H)
     internal const int Deathwing = 1431992184; // UZwx (24p u01Y)
+    internal const int CorruptBlood = 1096447858; // AZwr (24p A0OK)
     internal const int ThunderFists = 1096447801; // AZw9 (24p A0LN)
     internal const int ThunderFistsLightning = 1096447854; // AZwn (24p A024)
     internal const int Whispers = 1381660471; // RZw7 (24p R05F)

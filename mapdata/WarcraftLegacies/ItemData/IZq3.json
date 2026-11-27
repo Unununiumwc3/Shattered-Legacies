@@ -39,7 +39,7 @@
     {
       "Id": "iico",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNBattleStandard.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNInv_bannerpvp_02.blp"
     },
     {
       "Id": "ides",

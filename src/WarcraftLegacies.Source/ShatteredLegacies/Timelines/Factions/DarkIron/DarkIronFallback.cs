@@ -86,6 +86,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
       // Shadowforge's preplaced props (dungeon_content.py): visible, invulnerable, neutral until the Dark Iron come
       _throne = Protect(DarkIronObjects.ThroneOfThaurissan);
       _statue = Protect(DarkIronObjects.StatueOfThaurissan);
+      if (_statue != null)
+      {
+        // CreateUnit may displace a building from the unwalkable hill. Restore the editor anchor.
+        SetUnitX(_statue, -22380.629f);
+        SetUnitY(_statue, 23577.186f);
+      }
       Protect(DarkIronObjects.ShadowforgeBlackMarket);
     }
 

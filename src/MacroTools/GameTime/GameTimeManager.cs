@@ -88,7 +88,9 @@ public static class GameTimeManager
 
   private static void EndTurn()
   {
-    _turnScheduler.Process(++Turn);
+    Turn++;
+    GameTimeDialog.UpdateTitle();
+    _turnScheduler.Process(Turn);
   }
 
   [EditorBrowsable(EditorBrowsableState.Never)]

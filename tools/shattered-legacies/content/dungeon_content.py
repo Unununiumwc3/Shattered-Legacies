@@ -6,7 +6,7 @@
 - CREEPS: a fallback starts with its dungeon's seat only; every other CP of a dungeon is guarded by a creep camp
   (Neutral Hostile): Nazjatar's three by mur'gul, hydras and sea turtles, Shadowforge's two by Ragnaros' loyalists
   (Core Hounds, Fire Wyrms, a Shadowforge Titan), the Deadmines' two by kobolds and goblin shredders. Majordomo
-  Executus holds Shadowforge's west throne with two Core Hounds.
+  Executus stands by the Siege Foundry. Two Core Hounds guard the west throne.
 - SHADOWFORGE (Dark Iron): the Throne of Thaurissan (their HQ) replaces the throne doodad by the Throne Room, the
   Statue of Thaurissan replaces the big dwarf statue by the Siege Foundry, the Shadowforge Black Market stands by the
   Treasury -- Neutral Passive (the code makes them invulnerable and hands the throne to the Dark Iron).
@@ -98,17 +98,14 @@ def main(check):
                     continue
                 add(code, p[0], p[1], HOSTILE, facing=math.atan2(cy - p[1], cx - p[0]))
 
-    # Shadowforge's west throne: Majordomo Executus and two Core Hounds
+    # Majordomo by the Siege Foundry; the hounds guard the west throne.
     tx, ty = -24313, 21273
-    p = spot(tx, ty, 150, 400, 64)
-    if p:
-        add(forces["U00W"], p[0], p[1], HOSTILE, level=8)
+    add(forces["U00W"], -23468, 24062, HOSTILE, level=8)
     for _ in range(2):
         q = spot(tx, ty, 250, 550)
         if q:
             add("n0CG", q[0], q[1], HOSTILE)
-    if not p:
-        problems.append("no room for Majordomo by the west throne")
+
 
     # the Dark Iron props: the throne and the statue on their doodads' spots, the market by the Treasury
     doodads = json.load(open(SHADOWFORGE_DOODADS, encoding="utf-8"))
@@ -133,13 +130,21 @@ def main(check):
         add("hZiy", round(throne["Position"]["X"]), round(throne["Position"]["Y"]), PASSIVE,
             facing=throne.get("Rotation", 4.712389))
     if statue:
-        add("hZix", round(statue["Position"]["X"]), round(statue["Position"]["Y"]), PASSIVE,
+        add("hZix", -22380.629, 23577.186, PASSIVE,
             facing=statue.get("Rotation", 4.712389))
     m = spot(-22144, 22784, 400, 700, 64)
     if m:
         add("nZiy", m[0], m[1], PASSIVE)
     else:
         problems.append("no room for the Black Market by the Treasury")
+
+    # Port garrison, separate from the Dragonmaw buildings reserved for the fallback.
+    for unit_type in ("oZmc", "oZmc", "oZmc", "oZmd", "oZmd", "nZm0"):
+        p = spot(21312, -3200, 240, 640)
+        if p:
+            add(unit_type, *p, HOSTILE)
+        else:
+            problems.append("no room for Dragonmaw Port guard " + unit_type)
 
     print("dungeon content: %d units (%d creeps), %d doodads replaced" %
           (len(units), sum(1 for u in units if u["OwnerId"] == HOSTILE), len(doodads) - len(rest)))

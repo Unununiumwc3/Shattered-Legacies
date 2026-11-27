@@ -11,7 +11,7 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
 | units | 2025 | 25 | 491 | 1045 | 391 | 61 | 282 |
-| abilities | 1791 | 45 | 709 | 490 | 243 | 240 | 271 |
+| abilities | 1791 | 46 | 709 | 490 | 243 | 240 | 271 |
 | upgrades | 569 | 0 | 147 | 133 | 72 | 31 | 15 |
 | items | 118 | 13 | 80 | 29 | 3 | 5 | 222 |
 

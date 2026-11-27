@@ -277,13 +277,13 @@ def main():
     # ------------------------------------------------------------ the mini-bosses' artifacts
     pearl = I("PearlOfTheGrimscale", "I", "item")
     write("item", pearl, "ckng", merged(mods_of("item", "I00I"), [
-        s("iabi", "A03X,AIdb"), s("unam", "Pearl of the Grimscale"), s("iico", BTN + "BTNPearl.blp"),
+        s("iabi", "A03X,AIdb"), s("unam", "Pearl of the Grimscale"), s("iico", BTN + "BTNWaterOrb.blp"),
         s("ides", "Mmmrrrggglll's treasure. Increases all attributes; heals."),
         s("utub", "|cffff8c00Artifact|r|nThe Grimscale chieftain's hoarded pearl. Increases all attributes. Can "
                   "cast Crown Heal.")]))
     banner = I("BlackmaneWarbanner", "I", "item")
     write("item", banner, "ckng", merged(mods_of("item", "I00I"), [
-        s("iabi", "A0AL,AIcd"), s("unam", "Blackmane Warbanner"), s("iico", BTN + "BTNBattleStandard.blp"),
+        s("iabi", "A0AL,AIcd"), s("unam", "Blackmane Warbanner"), s("iico", BTN + "BTNInv_bannerpvp_02.blp"),
         s("ides", "Snarlmane's banner. Increases Strength; nearby allies deal more damage."),
         s("utub", "|cffff8c00Artifact|r|nThe warbanner of the Blackmane gnolls. Increases Strength by 10; nearby "
                   "friendly units deal more damage.")]))

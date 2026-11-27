@@ -582,7 +582,7 @@ A0OC	main	used	Extract Vial	(All)	ANcl	-	-	other	ReplaceableTextures\CommandButt
 A0OD	main	used	Seismic Shard	(Azil)	ANcl	yes	-	human	ReplaceableTextures\CommandButtons\BTNGolemStormBolt.blp	E023,H08Q,HZw0
 A0OE	main	used	Seismic Shard	(Azil Dummy)	AHtb	-	-	human	ReplaceableTextures\CommandButtons\BTNImpactBolt.blp	-
 A0OF	main	used	Wise Council	(Antonidas)	AImr	yes	-	human	ReplaceableTextures\CommandButtons\BTNScrollOfProtection.blp	EZn1,H05Y,UZn0
-A0OK	main	used	Corrupt Blood	(Twilight Hammer)	ANdo	yes	-	naga	ReplaceableTextures\CommandButtons\BTNDoom.blp	OZwh,U01Z
+A0OK	main	used	Corrupt Blood	(Twilight Hammer)	ANdo	yes	-	naga	ReplaceableTextures\CommandButtons\BTNDoom.blp	U01Z
 A0OL	main	used	Rain of Fire	(twilight hammer)	ACrf	-	-	creeps	ReplaceableTextures\CommandButtons\BTNSpell_Shadow_RainOfFire.blp	n07X
 A0OM	main	used	Animate Dead	(Death Knight, Lich)	ACad	-	-	creeps	ReplaceableTextures\CommandButtons\BTNAnimateDead.blp	h00H,n09O,nZw3
 A0OO	main	used	Burning Vengeance	(twilight)	AEev	yes	-	nightelf	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	O04H,OZwi
@@ -1416,7 +1416,8 @@ AZwm	main	used	Devour Magic	(Twilight)	Advm	-	-	orc	ReplaceableTextures\CommandB
 AZwn	main	used	Thunder Fists	(Cho'gall - DUMMY CAST)	ANfl	-	-	orc	ReplaceableTextures\CommandButtons\BTNMonsoon.blp	-
 AZwo	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3
 AZwp	main	used	Command Aura	(Kargath, Garithos)	ACac	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	UZwx
-AZwq	main	used	Glimpse of the Old Gods	(twilight)	ANcl	-	-	creeps	ReplaceableTextures\CommandButtons\BTNOldGodWhispers.blp	hZw1
+AZwq	main	unused	Glimpse of the Old Gods	(twilight)	ANcl	-	-	creeps	ReplaceableTextures\CommandButtons\BTNOldGodWhispers.blp	-
+AZwr	main	used	Corrupt Blood	(Twilight Hammer)	ANdo	yes	-	naga	ReplaceableTextures\CommandButtons\BTNDoom.blp	OZwh
 AZx0	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	oZx0,oZx1,oZx2
 AZx1	main	used	Harvest	(Yellow/Red/DG/Purple/Orange/Pink/Grey/Blue Workers)	Ahar	-	-	other	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	oZxd
 AZx2	main	used	Self Destruct	-	AIha	-	-	other	ReplaceableTextures\CommandButtons\BTNSelf_Destruct.blp	oZxd

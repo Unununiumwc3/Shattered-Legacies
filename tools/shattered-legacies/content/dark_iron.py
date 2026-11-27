@@ -313,7 +313,7 @@ def shadowforge(ids, forces):
         t3("unam", "Statue of Thaurissan"), t3("unsf", "(Shadowforge)"),
         t3("umdl", "war3mapImported\\Prop_DwarfStatue.mdl"),  # Shadowforge's dwarf statue doodad (D006)
         t3("uico", "ReplaceableTextures\\CommandButtons\\BTNStatUp.blp"), {"Id": "usca", "Type": 1, "Value": 2.95},
-        {"Id": "ussc", "Type": 1, "Value": 3.0}, t3("upat", "PathTextures\\4x4SimpleSolid.tga"), t3("uabi", "Avul"),
+        {"Id": "ussc", "Type": 1, "Value": 3.0}, t3("upat", ""), t3("uabi", "Avul"),
         t3("utub", "Dagran Thaurissan in stone. Whoever holds the Siege Foundry stands under his gaze: +4 armour "
                    "to nearby units.")])
 

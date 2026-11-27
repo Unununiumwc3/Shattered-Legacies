@@ -4,6 +4,12 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.89.3 - Twilight heroes and dungeon placement
+
+- Train Cho'gall at the Altar of Visions. His Corrupt Blood ultimate uses R at levels 10, 15 and 20. Feludius learns Chilling Aura with W.
+- Move the Old Gods flavor to the Cultist training tooltip and remove the unused worker-conversion button. Six hostile Dragonmaw units guard the port.
+- Move Majordomo to (-23468, 24062) and anchor the clickable statue at the hill doodad's original coordinates. Use map icons for the Pearl of the Grimscale and the Blackmane Warbanner.
+
 ## 0.89.2 - Twilight opening and invasion routes
 
 - Move Twilight's opening camp and P20's camera to the Southern Highlands at (19015, -6411). Cho'gall and five Cultists start with the camp. Its units, buildings and gate share the opening pause. Capture the Grim Batol control point to earn the fortress and its workshops.

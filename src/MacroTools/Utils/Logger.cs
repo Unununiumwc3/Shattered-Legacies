@@ -12,8 +12,14 @@ public static class Logger
   /// </summary>
   public static void LogWarning(string message) => Console.WriteLine($"|cff960000SYSTEM WARNING: |r{message}");
 
+  public static string? LastError { get; private set; }
+
   /// <summary>
   /// Logs an error visible to all players.
   /// </summary>
-  public static void LogError(string message) => Console.WriteLine($"|cff960000SYSTEM ERROR: |r{message}");
+  public static void LogError(string message)
+  {
+    LastError = message;
+    Console.WriteLine($"|cff960000SYSTEM ERROR: |r{message}");
+  }
 }

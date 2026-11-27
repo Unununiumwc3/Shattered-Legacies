@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.Factions;
 using MacroTools.Shared;
+using MacroTools.GameTime;
+using MacroTools.Utils;
 using MacroTools.ControlPoints;
 using MacroTools.Quests;
 using MacroTools.Legends;
@@ -192,7 +194,12 @@ public static class AiDebug
     PreloadGenClear();
     PreloadGenStart();
     Preload("WLAI heartbeat build=" + AiSetup.Build + " t=" + FileTime(SimpleBot.Clock) + " units-on-map=" + I2S(_hbMapUnits)
-            + " orders/min=" + I2S(_hbOrdersPerMin) + " orders=" + SimpleBot.OrdersMode());
+            + " turn=" + I2S(GameTimeManager.Turn) + " orders/min=" + I2S(_hbOrdersPerMin) + " orders=" + SimpleBot.OrdersMode());
+    if (Logger.LastError is { } error)
+    {
+      var line = error.Replace("\r", " ").Replace("\n", " ");
+      Preload(line.Length > PreloadChunk ? line.Substring(0, PreloadChunk) : line);
+    }
     for (var i = 0; i < SimpleBot.TaskRing.Length; i++)
     {
       var e = SimpleBot.TaskRing[(SimpleBot.TaskRingPos + i) % SimpleBot.TaskRing.Length];
@@ -207,16 +214,11 @@ public static class AiDebug
 
   private static int CountMapUnits()
   {
-    var n = 0;
     var g = CreateGroup();
-    GroupEnumUnitsInRect(g, GetWorldBounds(), null);
-    unit u;
-    while ((u = FirstOfGroup(g)) != null)
-    {
-      GroupRemoveUnit(g, u);
-      n++;
-    }
-
+    var bounds = GetWorldBounds();
+    GroupEnumUnitsInRect(g, bounds, null);
+    var n = BlzGroupGetSize(g);
+    RemoveRect(bounds);
     DestroyGroup(g);
     return n;
   }
@@ -915,8 +917,13 @@ public static class AiDebug
   private static void BuildDump(List<string> o, string tag)
   {
     o.Add("=== WLAI DUMP build=" + AiSetup.Build + " t=" + SimpleBot.TimeTag(SimpleBot.Clock) + " tag=" + tag
-          + " bots=" + I2S(SimpleBot.BotCount) + " goldBonus=" + I2S(SimpleBot.BotGoldBonus)
+          + " turn=" + I2S(GameTimeManager.Turn) + " bots=" + I2S(SimpleBot.BotCount) + " goldBonus=" + I2S(SimpleBot.BotGoldBonus)
           + " botbreak=" + B(SimpleBot.BotBreak) + " prod=" + B(SimpleBot.ProdOn) + " atk=" + B(SimpleBot.AtkOn) + " ===");
+
+    if (Logger.LastError is { } error)
+    {
+      o.Add(error.Replace("\r", " ").Replace("\n", " "));
+    }
 
     Section(o, "pinned", () =>
     {

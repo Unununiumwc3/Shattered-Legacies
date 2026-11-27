@@ -158,6 +158,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZwn` | Thunder Fists | `24p:A024` | TwilightHammer |
 | `AZwo` |  | `24p:Aams` | TwilightHammer |
 | `AZwq` | Glimpse of the Old Gods | `24p:A0BW` | TwilightHammer |
+| `AZwr` | Corrupt Blood | `24p:A0OK` | TwilightHammer |
 | `AZx0` |  | `24p:Argl` | Zandalari |
 | `AZx1` |  | `24p:Ahar` | Zandalari |
 | `AZx2` | Self Destruct | `24p:A106` | Zandalari |

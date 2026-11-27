@@ -58,7 +58,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
         Place(p, Camp[i].Type, Camp[i].X, Camp[i].Y);
       }
 
-      Place(p, TwilightHammerObjects.Chogall, 19584f, -6848f);
       for (var i = 0; i < 5; i++)
       {
         Place(p, TwilightHammerObjects.Cultist, 19648f + 64f * (i % 2), -6784f - 64f * (i / 2));

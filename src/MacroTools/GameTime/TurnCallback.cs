@@ -38,7 +38,7 @@ internal sealed class TurnCallback
     {
       if (endTurn != Infinite)
       {
-        endTurn = Math.Max(endTurn, currentTurn + 1) + (currentTurn + 1 - startTurn);
+        endTurn = endTurn + (currentTurn + 1 - startTurn);
       }
 
       startTurn = currentTurn + 1;
@@ -66,9 +66,21 @@ internal sealed class TurnCallback
   /// <returns><c>true</c> if the callback has completed and should be removed; otherwise, <c>false</c>.</returns>
   public bool Advance(int currentTurn)
   {
-    if (currentTurn >= _nextExecutionTurn && (_condition?.Invoke() ?? true))
+    if (currentTurn >= _nextExecutionTurn)
     {
-      _action();
+      try
+      {
+        if (_condition != null && !_condition())
+        {
+          return false;
+        }
+
+        _action();
+      }
+      catch (Exception error)
+      {
+        Utils.Logger.LogError($"Turn {currentTurn}: {error}");
+      }
 
       if (_endTurn == Infinite || _nextExecutionTurn + _interval <= _endTurn)
       {

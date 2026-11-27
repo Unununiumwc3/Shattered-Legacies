@@ -148,6 +148,8 @@ internal static class TwilightHammerFallback
   // who killed Cho'gall last (a player)
   internal static player? ChogallKiller { get; private set; }
 
+  private static player? _lastChogallDeathOwner;
+
   private static void WatchChogall()
   {
     var death = CreateTrigger();
@@ -159,8 +161,13 @@ internal static class TwilightHammerFallback
     TriggerAddAction(death, () =>
     {
       var killer = GetKillingUnit();
-      if (GetUnitTypeId(GetTriggerUnit()) == TwilightHammerObjects.Chogall && killer != null
-          && GetPlayerId(GetOwningPlayer(killer)) < 24)
+      if (GetUnitTypeId(GetTriggerUnit()) != TwilightHammerObjects.Chogall)
+      {
+        return;
+      }
+
+      _lastChogallDeathOwner = GetOwningPlayer(GetTriggerUnit());
+      if (killer != null && GetPlayerId(GetOwningPlayer(killer)) < 24)
       {
         ChogallKiller = GetOwningPlayer(killer);
       }
@@ -170,6 +177,11 @@ internal static class TwilightHammerFallback
   // the turning point's prerequisite: Cho'gall is dead (Grim Batol lost is its HQ condition)
   internal static bool ChogallDead(player p)
   {
+    if (_lastChogallDeathOwner != p)
+    {
+      return false; // An untrained hero has never died.
+    }
+
     var g = CreateGroup();
     GroupEnumUnitsOfPlayer(g, p, null);
     var alive = false;

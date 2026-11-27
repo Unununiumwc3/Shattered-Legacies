@@ -63,8 +63,8 @@ IZm0	main	used	Summon Cultist	ward	Purchasable	ReplaceableTextures\CommandButton
 IZm1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZma	uZm0
 IZq0	main	used	Claw of Ursoc	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNClawsOfAttack.blp	A0AL,A0MC	-
 IZq1	main	used	Benediction	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNStaffOfSanctuary.blp	A03Y,A0BF	-
-IZq2	main	used	Pearl of the Grimscale	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNPearl.blp	A03X,AIdb	-
-IZq3	main	used	Blackmane Warbanner	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNBattleStandard.blp	A0AL,AIcd	-
+IZq2	main	used	Pearl of the Grimscale	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNWaterOrb.blp	A03X,AIdb	-
+IZq3	main	used	Blackmane Warbanner	ckng	Artifact	ReplaceableTextures\CommandButtons\BTNInv_bannerpvp_02.blp	A0AL,AIcd	-
 IZw0	main	used	Summon Cultist	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	AZwg	uZw0
 IZw1	main	used	Seeds of Regrowth	wild	Purchasable	ReplaceableTextures\CommandButtons\BTNDust.blp	AZwh	uZw0
 IZx0	main	used	Summon Gatherer	ward	Purchasable	ReplaceableTextures\CommandButtons\BTNIceTrollWitchDoctor.blp	AZx9	oZxb
