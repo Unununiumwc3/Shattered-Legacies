@@ -4,6 +4,10 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.89.4 - Turn errors
+
+- Exclude all neutral slots from control-level growth. Elite research now reads the faction’s registered choices in the published Lua callback.
+
 ## 0.89.3 - Twilight heroes and dungeon placement
 
 - Train Cho'gall at the Altar of Visions. His Corrupt Blood ultimate uses R at levels 10, 15 and 20. Feludius learns Chilling Aura with W.

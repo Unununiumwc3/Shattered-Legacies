@@ -262,9 +262,7 @@ public sealed class ControlPointManager
   {
     GameTimeManager.RegisterOnTurnRepeating(1, () =>
     {
-      if (controlPoint.Owner == player.NeutralAggressive ||
-          controlPoint.Owner == player.NeutralPassive ||
-          controlPoint.Owner == player.NeutralVictim ||
+      if (controlPoint.Owner.Id >= GetBJMaxPlayers() ||
           controlPoint.ControlLevel >= ControlPointSettings.ControlLevelMaximum)
       {
         return;

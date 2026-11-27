@@ -178,7 +178,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
     private static void Unlock(player p, int pair, bool first)
     {
       var faction = p.GetPlayerData().Faction;
-      if (faction == null || !_locked.TryGetValue(faction, out var list))
+      if (faction == null)
+      {
+        return;
+      }
+
+      if (!_locked.TryGetValue(faction, out var list))
       {
         return;
       }
