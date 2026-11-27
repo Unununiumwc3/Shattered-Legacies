@@ -16,7 +16,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
   // faction (AiApi.ReserveSlot / TakeOver). A slot is free while it has no faction and no human plays it.
   internal static class SplitFaction
   {
-    internal static int[] FreeSlotOrder = { 10, 13, 19 }; // player ids of P11, P14, P20
+    // 0.89.0: P20 (19) plays Twilight's Hammer now (Factions/TwilightHammer/TwilightStart)
+    internal static int[] FreeSlotOrder = { 10, 13 }; // player ids of P11, P14
 
     internal static player FindFreeSlot()
     {

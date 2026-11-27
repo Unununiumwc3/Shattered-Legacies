@@ -15,13 +15,15 @@ internal static class TwilightHammerFallback
   internal const float StartX = 22080f;
   internal const float StartY = -3904f;
 
-  // 0.80.0 (maintainer): one path, two successors -- beaten by an Old God: Twilight (Old Gods' team); by anyone else:
-  // the Dragonmaw Clan (Factions/Dragonmaw/DragonmawFallback.cs). Both start at Dragonmaw Port, so only one ever comes.
-  // 0.87.0 (maintainer): the Fel Horde -> the DRAGONMAW, whoever beat it; Twilight is on hold (RunTwilight stays for
-  // later, nothing calls it)
+  // 0.80.0 - 0.87.0: one path, two successors (Twilight or the Dragonmaw at Dragonmaw Port) for the Orcish / Fel Horde.
+  // 0.89.0 (maintainer): TWILIGHT IS A START FACTION (P20, TwilightStart) and the Dragonmaw are ITS fallback: Grim Batol
+  // lost while Cho'gall is dead -> the Dragonmaw Clan rises at Dragonmaw Port (their base waits there, invulnerable and
+  // hidden, from the map start -- Twilight cannot use it), sworn to whoever holds the port. The Fel Horde has no
+  // fallback for now (the Consortium comes later).
   internal static readonly ExclusivePath Path = new("Dragonmaw", Prepare, Run, StartX, StartY);
-  internal const string OfferDescription = "The Dragonmaw Clan rises at Dragonmaw Port with its red dragons -- sworn to "
-                                           + "whoever holds the port.";
+  internal const string OfferDescription = "Cho'gall is dead and Grim Batol is lost: the Dragonmaw throw off the cult. "
+                                           + "You play the Dragonmaw Clan at Dragonmaw Port with its red dragons -- "
+                                           + "sworn to whoever holds the port. Everything else of the cult is lost.";
   internal static List<unit> Port => _port!;
 
   // 0.81.0 (maintainer): the ORCISH HORDE has its own route -- beaten by an Old God: Twilight (this path); by anyone
@@ -102,9 +104,9 @@ internal static class TwilightHammerFallback
     var foot = mouths.GetClosest(UNIT_N08R_GRIM_BATOL_TUNNELS, 16568, -2772);
     OpenTunnel(hill, 16569, -2836);
     OpenTunnel(foot, 16761, -2420);
-    // 0.80.0: who takes Orgrimmar / Kil'sorrow Fortress decides between Twilight and the Dragonmaw
+    // who takes Orgrimmar (the Zandalari's master); 0.89.0: who kills Cho'gall (the Dragonmaw's, if Grim Batol is free)
     Dragonmaw.Conquerors.Watch(AllPreplacedWidgets.Units.Get(UNIT_O01B_ORGRIMMAR_WARSONG), "Orcish Horde");
-    Dragonmaw.Conquerors.Watch(AllLegends.FelHorde.KilsorrowFortress.Unit, "Fel Horde");
+    WatchChogall();
   }
 
   private static void OpenTunnel(unit mouth, float exitX, float exitY)
@@ -132,42 +134,56 @@ internal static class TwilightHammerFallback
   internal static void ClaimHighlands(player owner, Faction faction) =>
     StartArea.Take(owner, _highlandBuildings!, faction, PortBuildings);
 
-  internal static void Run(player p, TurningPointDef def) =>
-    Dragonmaw.DragonmawFallback.FromFelHorde(p, Dragonmaw.Conquerors.Of(def.Faction));
-
-  // on hold since 0.87.0 (maintainer: the Fel Horde gets the Dragonmaw) -- kept for a later Old Gods route
-  internal static void RunTwilight(player p)
+  // Twilight -> the Dragonmaw: the conqueror is Grim Batol's holder, else Cho'gall's killer
+  internal static void Run(player p, TurningPointDef def)
   {
-    var keep = new List<unit>();
-    var hourglass = Hourglass.Get(GetPlayerId(p));
-    if (hourglass != null)
-    {
-      keep.Add(hourglass);
-    }
+    var batol = AllPreplacedWidgets.Units.Get(UNIT_H01Z_GRIM_BATOL_CREEP_TWILIGHT);
+    var holder = batol != null && GetUnitTypeId(batol) != 0 && GetUnitState(batol, UNIT_STATE_LIFE) > 0.405f
+      ? GetOwningPlayer(batol)
+      : null;
+    var conqueror = holder != null && GetPlayerId(holder) < 24 && holder != p ? holder : ChogallKiller;
+    Dragonmaw.DragonmawFallback.FromTwilight(p, conqueror);
+  }
 
-    var twilight = new TwilightHammerFaction();
-    SwapFaction.Run(p, twilight);
-    LeaveBehind.RemoveHeroes(p, keep);
-    LeaveBehind.ToNeutralHostile(p, keep);
-    ChangeTeam.JoinOrAlone(p, TeamSetup.OldGods);
-    SplitFaction.UnallyOutsideTeam(p);
+  // who killed Cho'gall last (a player)
+  internal static player? ChogallKiller { get; private set; }
 
-    StartArea.Take(p, _port!, twilight, PortBuildings);
-    StartCps.Give(p, UNIT_N016_WETLANDS);
-    StartCps.Force(p, UNIT_N08T_DRAGONMAW_PORT); // 0.79.0: always theirs on arrival (maintainer)
-    CreateUnit(p, TwilightHammerObjects.GreatHall, 22464f, -3264f, 270f);
-    CreateUnit(p, TwilightHammerObjects.AltarOfVisions, 22016f, -3584f, 270f);
-    var worker = TwilightHammerObjects.Cultist;
-    Spawn.Units(p, StartX, StartY, new[] { worker, worker, worker, worker, worker, TwilightHammerObjects.Chogall });
-    Spawn.Units(p, StartX + 176f, StartY - 304f, StartArmy()); // open ground south-east of the start (PathingMap)
-    twilight.AddCampaignQuests();
-    p.RepositionCamera(new Point(StartX, StartY));
+  private static void WatchChogall()
+  {
+    var death = CreateTrigger();
     for (var i = 0; i < 24; i++)
     {
-      DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "|cffffcc00An Old God claims the Horde's survivors.|r Cho'gall "
-                                                   + "rallies Twilight's Hammer at Dragonmaw Port.");
+      TriggerRegisterPlayerUnitEvent(death, Player(i), EVENT_PLAYER_UNIT_DEATH, null);
     }
 
-    Dragonmaw.DragonmawFallback.WatchTwilight(p); // 0.80.0: Grim Batol lost while Cho'gall is dead -> the Dragonmaw
+    TriggerAddAction(death, () =>
+    {
+      var killer = GetKillingUnit();
+      if (GetUnitTypeId(GetTriggerUnit()) == TwilightHammerObjects.Chogall && killer != null
+          && GetPlayerId(GetOwningPlayer(killer)) < 24)
+      {
+        ChogallKiller = GetOwningPlayer(killer);
+      }
+    });
+  }
+
+  // the turning point's prerequisite: Cho'gall is dead (Grim Batol lost is its HQ condition)
+  internal static bool ChogallDead(player p)
+  {
+    var g = CreateGroup();
+    GroupEnumUnitsOfPlayer(g, p, null);
+    var alive = false;
+    unit u;
+    while ((u = FirstOfGroup(g)) != null)
+    {
+      GroupRemoveUnit(g, u);
+      if (!alive && GetUnitTypeId(u) == TwilightHammerObjects.Chogall && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
+      {
+        alive = true;
+      }
+    }
+
+    DestroyGroup(g);
+    return !alive;
   }
 }

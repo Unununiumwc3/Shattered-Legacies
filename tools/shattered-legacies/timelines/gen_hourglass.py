@@ -137,9 +137,14 @@ TURNING_POINTS = [
      "the Legion -- even an old enemy -- then to whoever holds the Exodar's bridge. The ship lands near your conqueror; "
      "\"The Dimensional Ship\" makes it fly. The rest of the Legion is lost.", "Legion Stronghold lost",
      "BTNBOSSVelen"),
-    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Fallback: Dragonmaw",
-     "The Dragonmaw Clan rises at Dragonmaw Port with Nek'rosh Skullcrusher and the red dragons, sworn to whoever holds "
-     "the port.", "Kil'sorrow Fortress destroyed", "BTNRedDragon"),
+    # 0.89.0 (maintainer): the Dragonmaw are Twilight's fallback now; the Fel Horde gets the Consortium (later)
+    ("FelHorde", "Fel Horde", "RZdD", "RZcD", "Not yet: the Consortium",
+     "Rogue ethereal raiders of the Consortium will be the Fel Horde's fallback -- not built yet.",
+     "Kil'sorrow Fortress destroyed", "BTNEtherealFormOn"),
+    ("Twilight", "Twillight", "RZdK", "RZcK", "Fallback: Dragonmaw",
+     "Cho'gall is dead and Grim Batol is lost: the Dragonmaw throw off the cult. You play the Dragonmaw Clan at "
+     "Dragonmaw Port with Nek'rosh Skullcrusher and the red dragons, sworn to whoever holds the port. Everything else "
+     "of the cult is lost.", "Grim Batol lost and Cho'gall dead", "BTNRedDragon"),
     ("Illidari", "Illidan", "RZdE", "RZcE", "Fallback: Ashtongue Deathsworn",
      "The Black Temple has fallen and Illidan is gone. Akama and the Ashtongue Deathsworn rise from its ruins, sworn "
      "to whoever holds the Black Temple's CP: purify Telredor, Halaar, Shattrath and Oshu'gun and restore Karabor to "

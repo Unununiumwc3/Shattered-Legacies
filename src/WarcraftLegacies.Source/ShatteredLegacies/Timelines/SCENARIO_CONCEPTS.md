@@ -82,7 +82,7 @@ From `PlayerSetup.cs` and each faction's `playercolor`. P = WC3 player number (P
 | P6  | Tauren Tribes                        | Orange     | | P23 | Kul Tiras                   | Emerald  |
 | P7  | Fel Horde                            | Green      | | P24 | Burning Legion              | Peanut   |
 | P8  | Dalaran                              | Pink       | |     |                             |          |
-| P10 | Lordaeron (Arthas / Garithos pick: *open*) | Light Blue | |  |                         |          |
+| P10 | Lordaeron (Arthas / Garithos pick: *open*) | Light Blue | | P20 | Twilight's Hammer (0.89) | Red      |
 
 0.87.1: from `Setup/PlayerSetup.cs`. The picks are gone: Sunfury (0.53, Quel'thalas' fallback), Gilneas (0.76, now
 Lordaeron's fallback), the Draenei (0.80, the Legion's fallback); Frostwolf / Warsong and Skywall have no slot of their
@@ -95,7 +95,7 @@ New colours: **Forsaken = Lavender** (the P3 human after defecting); the Quel'th
 
 | Slot | State                                                        | Use                         |
 |------|--------------------------------------------------------------|-----------------------------|
-| P11, P14, P20 | nothing preplaced, not used in code                 | **defections, in this order** |
+| P11, P14 | nothing preplaced, not used in code (0.89: P20 plays Twilight's Hammer) | **defections, in this order** |
 | P22  | start location only                                          | free                        |
 | P9   | no start faction (0.85); WL's game modes give it a team      | reserved until checked      |
 | P15  | Ny'alotha content (tentacles, N'Zoth buildings, "Old God" hero), although Black Empire plays on P13 | reserved until checked |
@@ -148,7 +148,7 @@ to the Harpies). Still open: D1 - D5, D10 - D14, D16.
 | Pick                      | D1 (*open*); WL's picks are gone (section 3) | WL's pick dialog                                                                    |
 | Conquest                  | most fallbacks (0.76 - 0.87)                    | serves the team of the seat's holder (`Core/Conquest`); first the conqueror (`Core/LastConqueror`) |
 | Tax task                  | Imperial Tax (South -> North), Legion's Tithe (Scourge -> Legion) | every second X % of the payer's income (CP + `PlayerData.TotalIncome` + bot strength-vote bonus) to the recipient(s), never below 0 gold |
-| Defection                 | D3 (Forsaken)                                   | WC3 can't move humans between slots: the human keeps the slot and gets the new faction; the old faction moves to a free slot (P11 -> P14 -> P20) as a bot. [ai] check whether `PlayerDistributor` helps |
+| Defection                 | D3 (Forsaken)                                   | WC3 can't move humans between slots: the human keeps the slot and gets the new faction; the old faction moves to a free slot (P11 -> P14) as a bot. [ai] check whether `PlayerDistributor` helps |
 | Shared box                | World Tree, Helm of Domination                  | first claimant closes it                                                                  |
 | Channel                   | World Tree (Archimonde, Garithos), Argus portal            | WL's existing channel mechanic (Archimonde at the tree)                        |
 | Inheritance               | every fallback, sub path, betrayal              | see section 6                                                                             |

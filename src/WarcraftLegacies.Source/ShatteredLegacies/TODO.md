@@ -40,6 +40,10 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - **0.79.0 playtest**: snipe a bot's HQ -- after 5 s its far troops and its allies' appear beside it (text + ping,
   dump "recall"); a bot Kezan builds rigs and tankers (log "kezan oil bot"); Twilight owns Dragonmaw Port on arrival;
   Sylvanas (Dark Ranger / Queen) learns Dark Lady's Command at 6 and the bot casts it.
+- **0.89.0 (no playtest yet)**: P20 in the lobby as Twilight's Hammer (Old Gods); its base one second in (Grim Batol,
+  the Citadel camp at the Southern Highlands -- buildings placed well? the ogres gone?); the Elven Gate of the pass (opens
+  and closes? the bot keeps it open?) and the two watchtowers; "The Old Pact" riders; the Dragonmaw fallback at the port
+  (Grim Batol lost + Cho'gall dead); an empty P20 (defeated at 2 s, nothing placed); Forsaken split into P11 / P14.
 - **0.88.0 (no playtest yet)**: Theramore taken at Jaina's Sanctum, Jaina a dreadlord under an evil holder and back;
   "The Nexus" (a minute's channel) and Kalecgos' Dragon Form (skills kept? attribute?); Edwin after 1,500 pillaged;
   Benediction from Majordomo; Mmmrrrggglll and Snarlmane with their artifacts; the Claw of Ursoc (free furbolgs, the
@@ -429,8 +433,14 @@ Insurgents -> Brood of Nozdormu) is superseded; those concepts are listed in `SC
   Direhorn, Forsaken Elder Banshee / Val'kyr, Kezan Tinker / War Zeppelin.
 
 **Later:**
-- **Twilight**: its own patch -- Twilight gets a player slot (the maintainer explains later). Until then the "Twilight
-  as a Black Empire sub path" plan of 0.87.1 is on hold.
+- ~~**Twilight**: its own player slot~~ (0.89.0, P20; the sub path plan of 0.87.1 is dropped). Next (discussed
+  0.89.0): a Twilight dungeon with more CPs -- **Deepholm** proposed (Temple of Earth, the Stonecore, Twilight Precipice,
+  the World Pillar; a void dungeon, terrain to find); **Deathwing harder** for a start faction -- proposal: not before
+  turn 40, Grim Batol + Dragonmaw Port + both Highlands held, then Cho'gall channels 2 min at Grim Batol (announced,
+  interruptible); **the Maw of Madness** (the tentacle at the Northern Highlands) -- proposals: a portal to Ny'alotha
+  while an Old God holds the Northern Highlands, later the way into Deepholm, or sacrifices for N'Zoth's gifts.
+  `[you]` decide.
+- **Fel Horde**: the Consortium (rogue ethereal raiders) as its fallback -- later (maintainer).
 - **Garithos** (D1 and his phases): too big for now.
 - Extra abilities as elite choices (instead of locks); the broodmother's eggs; Anathema; Horde reunification.
 - **Thandol / the Great Alliance**: human-only when built (bots never take them); a desperation opening for both

@@ -7,9 +7,9 @@ Read this first. Then, depending on the task:
 
 "AI" in file and class names means the **bots**; this file is about **AI assistants** working on the code.
 
-## State (0.88.0)
+## State (0.89.0)
 
-- **Development state**: 0.88.0 (patches on top of the last pushed tag; the maintainer applies, builds and
+- **Development state**: 0.89.0 (patches on top of the last pushed tag; the maintainer applies, builds and
   playtests in bulk -- 0.86.1 is the last build he confirmed). Everything since 0.52 is in `CHANGELOG.md` (fork) and
   `../Ai/CHANGELOG.md` (bot).
 - **Every slot has its fallback**: `Timelines/TIMELINES.md` section 0 (base, seat, team, code). Most are **conquered,

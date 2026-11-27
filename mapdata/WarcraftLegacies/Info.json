@@ -6,7 +6,7 @@
   "MapName": "Shattered Legacies: Botified Realm",
   "MapAuthor": "Based on Warcraft Legacies by Technopig, Vampirika, Madsen",
   "MapDescription": "When your capital falls, your faction does not. Every faction carries more than one story: rise again as something new, betray your allies, or break away and fight alone. Play with friends, against bots, or both.",
-  "RecommendedPlayers": "16 Players ",
+  "RecommendedPlayers": "17 Players ",
   "CameraBounds": {
     "BottomLeft": {
       "X": -28160,
@@ -313,13 +313,13 @@
     },
     {
       "Id": 19,
-      "Controller": 2,
-      "Race": 3,
+      "Controller": 1,
+      "Race": 2,
       "Flags": 1,
-      "Name": "NPC",
+      "Name": "Twilight's Hammer",
       "StartPosition": {
-        "X": -16308,
-        "Y": -26824
+        "X": 19768,
+        "Y": -4920
       },
       "AllyLowPriorityFlags": 0,
       "AllyHighPriorityFlags": 0,
@@ -380,7 +380,7 @@
     },
     {
       "Flags": 7,
-      "Players": 69632,
+      "Players": 593920,
       "Name": "Old Gods"
     },
     {
@@ -390,7 +390,7 @@
     },
     {
       "Flags": 0,
-      "Players": 533504,
+      "Players": 9216,
       "Name": "NPC"
     },
     {

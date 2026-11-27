@@ -625,6 +625,7 @@ hZrc	main	used	unit	Vrykul Warrior	(Refugee, Scourge)	hcth	human	war3mapImported
 hZrd	main	used	unit	Battlemage	(Refugee, Dalaran / Gilneas)	hfoo	human	FootmanStromgardeV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNMagic_Bronze_Armour.blp	-	oZq3	-	-	-	-	A057,A0C3,Adef,Aihn	RZrd
 hZrf	main	used	unit	Longbowman	(Refugee, Scarlet Crusade)	hrif	human	war3mapImported\ScarletArcher.mdl	main	ReplaceableTextures/CommandButtons/BTNScarletArcher.blp	-	oZq3	-	-	-	-	A0P6,A0Q2,ACen,Aihn	RZrf
 hZrg	main	used	unit	Rifleman	(Refugee, Ironforge)	hrif	human	units\human\Rifleman\Rifleman	stock	ReplaceableTextures\CommandButtons\BTNRifleman.blp	-	oZq4	-	-	-	-	A0F4,A13J,Aens,Aihn	RZrg
+hZw1	main	used	building	Twilight Citadel	(Twilight)	hars	orc	war3mapImported\DarkShrineX2.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	-	oZwe,oZwf	-	-	-	AZwq	-
 hZx0	main	used	unit	Watcher	(troll)	hfoo	orc	war3mapImported\TrollWatcherV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollWatcher.blp	-	oZx4	-	-	-	-	Adef,Aens,Aihn	-
 hZx1	main	used	unit	Raptor Rider	(troll)	hkni	orc	war3mapImported\EliteHeadhunterScoutAWRV2.mdl	main	ReplaceableTextures\CommandButtons\BTNTrollRaptor.blp	-	oZx7	-	-	-	-	A020,A0XK,AZx3,Adtg,Aihn	-
 hZy0	main	unused	unit	Rangari	(draenei)	hrif	nightelf	war3mapImported\Rangari.mdl	main	ReplaceableTextures\CommandButtons\BTNDraeneiHuntress.blp	-	-	-	-	-	-	Aens,Aihn	RZt0
@@ -1128,7 +1129,7 @@ nZf1	main	used	unit	Dark Ranger	(forsaken)	nhea	undead	war3mapImported\Hero_Dark
 nZf2	main	used	unit	Plague Construct	(Forsaken)	nlrv	undead	war3mapImported\PlagueRevenant.mdl	main	ReplaceableTextures\CommandButtons\BTNDeepLordRevenant.blp	-	uZf4	-	-	-	-	A0HY,AZfg,AZfh	hZf2
 nZf3	main	used	unit	Elder Banshee	(Forsaken)	nmed	undead	war3mapImported\LichFemaleV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNGhost.blp	-	uZf8	-	-	-	-	A0XL,AZfj,AZfk,Aihn	RZf2
 nZf4	main	used	unit	Lesser Dark Minion	-	ndr1	other	units\undead\Skeleton\Skeleton	stock	ReplaceableTextures\CommandButtons\BTNSkeletonWarrior.blp	-	-	-	-	-	-	-	-
-nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RK01,RK02,RT01,RT02,RV01,RV02,RZ03,RZd1,RZd3,RZd4,RZd5,+59	-	Avul	-
+nZh0	main	used	building	Hourglass of Fate	(Shattered Legacies)	ncop	creeps	buildings\other\CircleOfPower\CircleOfPower	stock	ReplaceableTextures\CommandButtons\BTNCOP.blp	-	-	-	-	R0XZ,RK01,RK02,RT01,RT02,RV01,RV02,RZ03,RZd1,RZd3,RZd4,RZd5,+60	-	Avul	-
 nZi0	main	used	building	Dark Iron Arms Vault	(Dark Iron)	nmrk	human	war3mapImported\DwarvenTurret.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarvenTreasury.blp	-	hZig	-	-	-	-	Aall,Apit	-
 nZi1	main	used	unit	Dark Iron Dreadnaught	(Dark Iron)	nbal	human	war3mapImported\DwarfDreadNaughtRocket.mdl	main	ReplaceableTextures\CommandButtons\BTNDreadnaughtDwarf.blp	-	hZi9	-	-	-	-	-	-
 nZi2	main	used	unit	Dark Iron War Golem	(Dark Iron)	nwrg	human	war3mapImported\Unit_DwarfGolem.mdl	main	ReplaceableTextures\CommandButtons\BTNDwarfGolem.blp	-	hZi9	-	-	-	-	A0CC,ACrk	-
@@ -1795,9 +1796,9 @@ oZt9	main	used	building	Oshu'gun	-	obar	other	buildings\other\GoldMine\GoldMine.
 oZta	main	used	building	Outland Supply	-	otrb	orc	war3mapImported\DUMMY.mdl	missing	ReplaceableTextures\CommandButtons\BTNTrollBurrow.blp	-	-	-	-	-	-	Aloc,Avul	-
 oZu1	main	used	building	Totem Lodge of Ursoc	(Furbolg)	oalt	orc	buildings\other\FurbolgHut2\FurbolgHut2	stock	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	-	-	-	-	-	-	Awrp	-
 oZu2	main	used	building	Shrine of Ursoc	(Furbolg)	oalt	orc	Doodads\Ashenvale\Props\Totem\Totem	stock	ReplaceableTextures\CommandButtons\BTNFurbolgElder.blp	-	-	OZu0	-	-	-	Abds,Aspi	-
-oZw0	main	used	building	Great Hall	(twilight)	ogre	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeGreatHall.blp	-	oZwe	oZwe,oZwf	-	-	-	AZw0,Aosp,Aspi	-
-oZw1	main	used	building	Stronghold	(twilight)	ostr	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeStrongHold.blp	-	-	oZwe,oZwf	-	-	-	AZw0,Aosp,Aspi	-
-oZw2	main	used	building	Fortress	(twilight)	ofrt	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeFortress.blp	-	-	oZwe,oZwf	-	RZw0	-	AZw0,Aosp,Aspi	oZw3
+oZw0	main	used	building	Great Hall	(twilight)	ogre	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeGreatHall.blp	-	oZwe	oZwe	-	-	-	AZw0,Aosp,Aspi	-
+oZw1	main	used	building	Stronghold	(twilight)	ostr	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeStrongHold.blp	-	-	oZwe	-	-	-	AZw0,Aosp,Aspi	-
+oZw2	main	used	building	Fortress	(twilight)	ofrt	orc	war3mapImported\GreatHallUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeFortress.blp	-	-	oZwe	-	RZw0	-	AZw0,Aosp,Aspi	oZw3
 oZw3	main	used	building	Altar of Visions	(twilight)	oalt	orc	war3mapImported\AltarofStormsUndeadV1_00.mdl	main	ReplaceableTextures\CommandButtons\BTNIronHordeAltarOfStorms.blp	-	oZwe	HZw0,OZwh,OZwi,UZw2	-	-	-	Abds,Aspi	-
 oZw4	main	used	building	War Camp	(twilight)	obar	orc	war3mapImported\DragonDungeon.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp	-	oZwe	nZw4,oZwd,oZwg	-	-	-	Aspi	-
 oZw5	main	used	building	War Mill	(twilight)	ofor	orc	war3mapImported\DragonQuarry.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonQuarry.blp	-	oZwe	-	-	R04R,R09X,RZw3,Rhar,Rhme,Rosp	-	Arlm,Aspi	-
@@ -1809,8 +1810,8 @@ oZwa	main	used	building	Improved Twilight Lookout	(twilight)	owtw	orc	war3mapImp
 oZwb	main	used	building	Twilight Burrow	(twilight)	ocbw	orc	war3mapImported\DragonNest.mdl	main	ReplaceableTextures\CommandButtons\BTNDragonNest.blp	-	oZwe	-	-	-	-	AZw1,Aspi	-
 oZwc	main	used	unit	Void Rider	(twilight)	owyv	orc	war3mapImported\NetherDragonRiderV1_02.mdl	main	ReplaceableTextures\CommandButtons\BTNWyvernRider.blp	-	oZw7	-	-	-	-	A069,Adtg,Aven	-
 oZwd	main	used	unit	Twilight Hammer Enforcer	(twilight)	ogru	orc	war3mapImported\BonechewerGrunt.mdl	main	ReplaceableTextures\CommandButtons\BTNBonechewerGrunt.blp	-	oZw4	-	-	-	-	A01K,A020,Aion	-
-oZwe	main	used	unit	Cultist	(Twilight Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	oZw0,oZw1,oZw2	-	oZw0,oZw3,oZw4,oZw5,oZw6,oZw7,oZw8,oZw9,oZwb,uZw0	-	-	AZw3,AZw4,Arep,Arlm	-
-oZwf	main	used	unit	Battlemaster	(Twilight)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	h01Z,oZw0,oZw1,oZw2	-	-	-	-	A01T,A0GK,A0IT,A0NQ,ACsk,AZw6,Aion	RZw0
+oZwe	main	used	unit	Cultist	(Twilight Hammer, Worker)	opeo	orc	war3mapImported\Flagellant.mdl	main	ReplaceableTextures\CommandButtons\BTNEbonBladePeasant.blp	-	hZw1,oZw0,oZw1,oZw2	-	oZw0,oZw3,oZw4,oZw5,oZw6,oZw7,oZw8,oZw9,oZwb,uZw0	-	-	AZw3,AZw4,Arep,Arlm	-
+oZwf	main	used	unit	Battlemaster	(Twilight)	odkt	orc	war3mapImported\TwilightHammerbattlemaster.mdl	main	ReplaceableTextures\CommandButtons\BTNOneHeadedOgre.blp	-	h01Z,hZw1	-	-	-	-	A01T,A0GK,A0IT,A0NQ,ACsk,AZw6,Aion	RZw0
 oZwg	main	used	unit	Skull Catapult	(Twilight)	ocat	orc	war3mapImported\CatapultWC1.mdl	main	ReplaceableTextures\CommandButtons\BTNCatapultWC1.blp	-	oZw4	-	-	-	-	-	oZw2
 oZx0	main	used	building	Great Hall	(Zandalar)	ogre	orc	war3mapImported\GreatHallGurubashiV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsGreatHall.blp	-	oZxd	oZxd,oZxh	-	-	-	AZx0	-
 oZx1	main	used	building	Stronghold	(Zandalar)	ostr	orc	war3mapImported\GreatHallGurubashiV1_04.mdl	main	ReplaceableTextures\CommandButtons\BTNRuinsStrongHold.blp	-	-	oZxd,oZxh	-	-	-	AZx0	-
@@ -2475,7 +2476,7 @@ h05Q	24p	changed	building	Dalaran Building	(Dalaran#3)	hhou	human	Doodads\Dalara
 h05R	24p	24p only	unit	Effect	(Thunder clap)	hfoo	human	Abilities\Spells\Human\Thunderclap\ThunderClapCaster.mdl	stock	ReplaceableTextures\CommandButtons\BTNFootman.blp	-	-	-	-	-	-	Aloc	-
 h05S	24p	changed	unit	Brigadier	(Arathor-Summons)	hfoo	human	units\creeps\Bandit\Bandit.mdl	stock	ReplaceableTextures\CommandButtons\BTNBandit.blp	-	-	-	-	-	-	A01K,A020,Aihn	-
 h05T	24p	changed	building	Instance Entrance	(Portal)	hprt	other	war3mapImported\Effect_Gateway_White.mdl	main	ReplaceableTextures\CommandButtons\BTNPortal.blp	-	h05E	-	-	-	-	Avul,Awrp	-
-h05U	24p	24p only	building	Twilight Citadel	(twilight)	hars	orc	war3mapImported\DarkShrineX2.mdl	24p	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	h05E	o04B,o04I	-	R08R,R08S	-	A0BW	-
+h05U	24p	24p only	building	Twilight Citadel	(twilight)	hars	orc	war3mapImported\DarkShrineX2.mdl	main	ReplaceableTextures\CommandButtons\BTNArcaneSanctum.blp	-	h05E	o04B,o04I	-	R08R,R08S	-	A0BW	-
 h05V	24p	24p only	unit	Proudmoore Flagship	(Kul'tiras)	hbsh	human	war3mapImported\GalleonKulTiras.mdl	24p	ReplaceableTextures\CommandButtons\BTNGalleonIcon.blp	-	h07C	-	-	-	-	A0JT,ACsk,Repa	-
 h05W	24p	24p only	unit	Grand Inquisitor Isilien	(scarlet)	hsor	human	war3mapImported\ArchBishopV1.00.mdl	24p	ReplaceableTextures\CommandButtons\BTNHeroArchMage.blp	-	h080	-	-	-	-	A0BP,A0E8,A0GK,A0R6,A0SK,ACrk,ACrn,AInv	R07P
 h05X	24p	different	unit	High Sorcerer Andromath	(Arathor-Demi)	hsor	human	units\creeps\HumanMage\HumanMage.mdl	stock	ReplaceableTextures\CommandButtons\BTNMagician.blp	-	h06T	-	-	-	-	A0AU,A0B9,A0GK,ACrk,AInv	R03X

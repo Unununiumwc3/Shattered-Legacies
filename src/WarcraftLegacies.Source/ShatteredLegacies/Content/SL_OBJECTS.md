@@ -157,6 +157,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZwm` |  | `24p:A08F` | TwilightHammer |
 | `AZwn` | Thunder Fists | `24p:A024` | TwilightHammer |
 | `AZwo` |  | `24p:Aams` | TwilightHammer |
+| `AZwq` | Glimpse of the Old Gods | `24p:A0BW` | TwilightHammer |
 | `AZx0` |  | `24p:Argl` | Zandalari |
 | `AZx1` |  | `24p:Ahar` | Zandalari |
 | `AZx2` | Self Destruct | `24p:A106` | Zandalari |
@@ -342,6 +343,7 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZk3` | Sappers | `24p:h08X` | KezanEnterprise |
 | `hZk4` | Assault Tank | `24p:h08Z` | KezanEnterprise |
 | `hZk5` | War Zeppelin | `24p:h091` | KezanEnterprise |
+| `hZw1` | Twilight Citadel | `24p:h05U` | TwilightHammer |
 | `hZx0` | Watcher | `24p:h021` | Zandalari |
 | `hZx1` | Raptor Rider | `24p:h05D` | Zandalari |
 | `hZy6` | Rangari | `24p:h09T` | Ashtongue |

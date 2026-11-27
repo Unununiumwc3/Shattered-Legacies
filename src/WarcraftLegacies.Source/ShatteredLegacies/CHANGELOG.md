@@ -4,6 +4,25 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.89.0 — Twilight's Hammer returns as a start faction
+
+No bot changes (version only, `../Ai/CHANGELOG.md`). No playtest yet.
+- **Twilight's Hammer on P20** (`Timelines/Factions/TwilightHammer/TwilightStart`): the lobby's NPC slot P20 (the one
+  Twilight had in the 24p) is a playable slot on the Old Gods' force; the fork's free slots for splits are P11 and P14.
+  One second in (if the slot plays): Grim Batol -- its capital, the cult's buildings around it and its CP --, the
+  Southern Highlands CP and the 24p's camp there: the **Twilight Citadel** (24p `h05U`, import set TWILIGHT: Cultists
+  and Battlemasters -- the Great Halls train Cultists only now), a Great Hall, the Altar of Visions, 4 Burrows and 3
+  Lookouts; Cho'gall, 5 Cultists and 14 soldiers. The ogres of the Southern Highlands make room.
+- **The gate of the pass** north of Grim Batol: the wooden gate becomes the big Elven Gate (WL's gate unit, Twilight's),
+  between two of the 24p's watchtowers.
+- **"The Old Pact"**: Twilight takes Dragonmaw Port's CP -> 2 Dragonmaw Dragon Riders every 3 turns while it holds the
+  port and the clan is not in play. The Dragonmaw's base at the port stays hidden and invulnerable -- it is theirs.
+- **The Dragonmaw are Twilight's fallback** (Hourglass, `RZdK`): Grim Batol lost and Cho'gall dead -> the clan rises
+  at Dragonmaw Port, sworn to whoever holds the port (first master: Grim Batol's holder, else Cho'gall's killer); the
+  cult is left behind. The old in-place takeover (`WatchTwilight`) is gone.
+- **The Fel Horde has no fallback for now** (the Consortium comes later): an info row on the Hourglass.
+- Twilight's quests run from the start; their texts name Grim Batol instead of the port.
+
 ## 0.88.0 — Theramore and Jaina, Kalecgos, the Claw of Ursoc, Acherus flies, the plague goes south
 
 Bot changes: `../Ai/CHANGELOG.md` 0.88.0 (`AiApi.Landmass`). Agreed 2026-11-27; the objects come from

@@ -218,13 +218,25 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Hq = new[] { 1966092359 },             // u00G Legion Stronghold
         RequireTriggerForForcedFallback = true,
       },
-      new TurningPointDef("Fel Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)
+      // 0.89.0 (maintainer): the Dragonmaw are Twilight's fallback now -- the Fel Horde gets the Consortium (rogue
+      // ethereal raiders) later; until then an info row on the Hourglass
+      new TurningPointDef("Fel Horde", "the Consortium (later)", TurningPointKind.Fallback, TurningPointSource.NotYet)
       {
         Decision = HourglassData.DecisionFelHorde, Condition = HourglassData.ConditionFelHorde,
-        Description = TwilightHammerFallback.OfferDescription,
         MakeTrigger = () => new ObjectiveCapitalDead(AllLegends.FelHorde.KilsorrowFortress)
           { ResearchId = HourglassData.ConditionFelHorde },
-        RequireTriggerForForcedFallback = true, // 0.87.0: the Dragonmaw announce themselves (FromFelHordeText)
+      },
+      // 0.89.0 (maintainer): Twilight's Hammer is a start faction (P20, Factions/TwilightHammer/TwilightStart) -- its
+      // fallback is the Dragonmaw Clan at Dragonmaw Port: Grim Batol lost while Cho'gall is dead
+      new TurningPointDef("Twillight", TurningPointKind.Fallback, TwilightHammerFallback.Path)
+      {
+        Trigger = "Grim Batol is lost and Cho'gall is dead",
+        Description = TwilightHammerFallback.OfferDescription,
+        Decision = HourglassData.DecisionTwilight, Condition = HourglassData.ConditionTwilight,
+        Hq = new[] { UNIT_H01Z_GRIM_BATOL_CREEP_TWILIGHT },
+        Prerequisite = TwilightHammerFallback.ChogallDead,
+        RequireTriggerForForcedFallback = true,
+        Announcement = "|cffffcc00The Twilight's Hammer is broken.|r",
       },
       // 0.63 (maintainer): the Black Temple destroyed -> Akama's Ashtongue Deathsworn, sworn to whoever destroyed it, then
       // to whoever holds its CP (Timelines/Factions/Illidari/IllidariFallback.cs)

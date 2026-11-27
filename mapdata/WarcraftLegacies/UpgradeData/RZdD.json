@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNRedDragon.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Dragonmaw"
+      "Value": "Not yet: the Consortium"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Dragonmaw"
+      "Value": "Not yet: the Consortium"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "The Dragonmaw Clan rises at Dragonmaw Port with Nek'rosh Skullcrusher and the red dragons, sworn to whoever holds the port."
+      "Value": "Rogue ethereal raiders of the Consortium will be the Fel Horde's fallback -- not built yet."
     }
   ]
 }

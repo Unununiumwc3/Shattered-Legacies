@@ -31,8 +31,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionScourge = 1381655362; // RZcB
     internal const int DecisionLegion = 1381655619; // RZdC Fallback: Draenei
     internal const int ConditionLegion = 1381655363; // RZcC
-    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Dragonmaw
+    internal const int DecisionFelHorde = 1381655620; // RZdD Not yet: the Consortium
     internal const int ConditionFelHorde = 1381655364; // RZcD
+    internal const int DecisionTwilight = 1381655627; // RZdK Fallback: Dragonmaw
+    internal const int ConditionTwilight = 1381655371; // RZcK
     internal const int DecisionIllidari = 1381655621; // RZdE Fallback: Ashtongue Deathsworn
     internal const int ConditionIllidari = 1381655365; // RZcE
     internal const int DecisionSkywall = 1381655622; // RZdF Conquered, not defeated
@@ -43,7 +45,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionAhnqiraj = 1381655368; // RZcH
 
     // every research the Hourglass lists (decisions + WL's own), for the per-player limits
-    internal static int[] Decisions = { 1381655601, 1381655625, 1381655603, 1381655626, 1381655604, 1381655605, 1381655606, 1381655607, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
+    internal static int[] Decisions = { 1381655601, 1381655625, 1381655603, 1381655626, 1381655604, 1381655605, 1381655606, 1381655607, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655627, 1381655621, 1381655622, 1381655623, 1381655624 };
     internal static int[] WlResearches = { 1378900058 }; // R0XZ
 
     // 0.88.0: the elite choices (choice A, choice B per faction key) and their condition (turn 10)

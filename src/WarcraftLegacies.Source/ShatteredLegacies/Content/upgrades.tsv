@@ -354,6 +354,7 @@ RZcG	main	used	N'Zoth lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\
 RZcH	main	used	C'Thun lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcI	main	used	Sylvanas Windrunner slain by the Scourge	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZcJ	main	used	Capital Palace lost	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
+RZcK	main	used	Grim Batol lost and Cho'gall dead	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZd1	main	used	Fallback: Sunfury	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroBloodElfPrince.blp	nZh0
 RZd3	main	used	Fallback: Defias Brotherhood	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanditLord.blp	nZh0
 RZd4	main	used	Fallback: Dark Iron of Shadowforge	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroMountainKing.blp	nZh0
@@ -364,13 +365,14 @@ RZd9	main	used	Fallback: Zandalari	(Hourglass of Fate)	Roch	demon	ReplaceableTex
 RZdA	main	used	Fallback: Centaur Khans	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNCentaurKhan.blp	nZh0
 RZdB	main	used	Fallback: Knights of the Ebon Blade	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroDeathKnight.blp	nZh0
 RZdC	main	used	Fallback: Draenei	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBOSSVelen.blp	nZh0
-RZdD	main	used	Fallback: Dragonmaw	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNRedDragon.blp	nZh0
+RZdD	main	used	Not yet: the Consortium	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNEtherealFormOn.blp	nZh0
 RZdE	main	used	Fallback: Ashtongue Deathsworn	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNDranaiAkama.blp	nZh0
 RZdF	main	used	Conquered, not defeated	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdG	main	used	Fallback: Harpies	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHarpyQueen.blp	nZh0
 RZdH	main	used	Fallback: Skywall	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroAvatarOfFlame.blp	nZh0
 RZdI	main	used	Betrayal: Forsaken	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNBanshee.blp	nZh0
 RZdJ	main	used	Fallback: Gilneas	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNGreymane.blp	nZh0
+RZdK	main	used	Fallback: Dragonmaw	(Hourglass of Fate)	Roch	demon	ReplaceableTextures\CommandButtons\BTNRedDragon.blp	nZh0
 RZe0	main	used	Turn 10	(Hourglass condition)	Roch	demon	ReplaceableTextures\CommandButtons\BTNOrcMeleeUpOne.blp	-
 RZe1	main	used	Elite: Stormwind Champions	(elite choice)	Roch	demon	ReplaceableTextures\CommandButtons\BTNTheCaptain.blp	nZh0
 RZe2	main	used	Elite: Paladins	(elite choice)	Roch	demon	ReplaceableTextures\CommandButtons\BTNHeroPaladin.blp	nZh0

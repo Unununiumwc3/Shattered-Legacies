@@ -8,6 +8,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
     internal static void Setup()
     {
       TimelineSystem.Setup();
+      Factions.TwilightHammer.TwilightStart.Setup(); // 0.89.0: Twilight's Hammer, a start faction on P20
     }
   }
 }

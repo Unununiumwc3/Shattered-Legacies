@@ -10,9 +10,9 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 2024 | 25 | 491 | 1045 | 391 | 61 | 282 |
-| abilities | 1790 | 45 | 709 | 490 | 243 | 240 | 271 |
-| upgrades | 567 | 0 | 147 | 133 | 72 | 31 | 15 |
+| units | 2025 | 25 | 491 | 1045 | 391 | 61 | 282 |
+| abilities | 1791 | 45 | 709 | 490 | 243 | 240 | 271 |
+| upgrades | 569 | 0 | 147 | 133 | 72 | 31 | 15 |
 | items | 118 | 13 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
@@ -582,7 +582,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `o01C` | Throne of Kil'jaeden | building | stock |  |  | 24p only |
 | `h004` | Troll House | building | stock |  |  | different |
 | `o03K` | Twilight Burrow (twilight) | building | 24p | o04B,o05P |  | different |
-| `h05U` | Twilight Citadel (twilight) | building | 24p | h05E | o04B,o04I | 24p only |
+| `h05U` | Twilight Citadel (twilight) | building | main | h05E | o04B,o04I | 24p only |
 | `o03I` | Twilight Dock (twilight) | building | 24p | o04B,o05P | obot,odes,ojgn | different |
 | `o03G` | Twilight Lookout (twilight) | building | 24p | o04B,o05P |  | different |
 | `n06G` | Voidcrusher Demon Gate (T2 Voidcrusher) | building | stock |  |  | different |

@@ -278,6 +278,7 @@ TWILIGHT = {
         ("o03H", "ImprovedLookout", ["Tower"], 200),
         ("u00Y", "VoodooLounge", ["Shop"], 200),
         ("o03K", "Burrow", ["Farm"], 200),
+        ("h05U", "TwilightCitadel", ["Specialist"], 1),  # 0.89.0: by the Southern Highlands (TwilightStart)
         ("n051", "NetherDragon", ["Flyer"], 4),
         ("o04J", "VoidRider", ["Flyer"], 8),
         ("n07X", "OgreMagi", ["Support"], 200),
@@ -308,7 +309,7 @@ TWILIGHT = {
     ],
     "zero_lumber": True,
     "exclude": ["o05P", "O01Q", "O00Y", "o05K", "o05L", "odes", "obot", "ojgn", "R006", "R00C",
-                "R08S"],
+                "R08S", "R08R"],  # R08R / R08S: the 24p Citadel's switch to the Dragonmaw (0.89.0: a fallback instead)
     "drop": [],
     "extra": [('obot', 'TransportShip', [], 12), ('h0AS', 'ScoutShip', [], 200), ('h0AP', 'Frigate', [], 12),
               ('h0B2', 'Fireship', [], 200), ('h0AY', 'Galley', [], 200), ('h0B5', 'BoardingVessel', [], 200),
@@ -329,11 +330,14 @@ TWILIGHT = {
                  "umdl": r"Units\Creeps\RevenantOfTheWaves\RevenantOfTheWaves.mdl",
                  "utip": "Summon Feludius", "uawt": "Revive Feludius", "utpr": "Revive Feludius",
                  "utub": "A water ascendant of the Twilight cult. Learns Blizzard, Frost Bite, Chilling Aura and Living Tornado."},
-        "o039": {"utra": "o04B,o04I"},
-        "o03A": {"utra": "o04B,o04I"},
-        "o03B": {"utra": "o04B,o04I"},
+        # 0.89.0: Battlemasters only at the Twilight Citadel (h05U)
+        "o039": {"utra": "o04B"},
+        "o03A": {"utra": "o04B"},
+        "o03B": {"utra": "o04B"},
         "o03C": {"utra": "O01P,H08Q,O04H,U01S"},
         "o04B": {"ureq": ""},
+        "h05U": {"ures": "", "ureq": "", "unsf": "(Twilight)",
+                 "utub": "The seat of the Twilight's Hammer in the Highlands. Trains Cultists and Battlemasters."},
     },
 }
 

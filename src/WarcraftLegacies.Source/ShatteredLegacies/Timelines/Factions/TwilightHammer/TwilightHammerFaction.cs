@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MacroTools.Factions;
+using MacroTools.Localization;
 using MacroTools.Quests;
 using WarcraftLegacies.Source.Objectives.ControlPointBased;
 using WarcraftLegacies.Source.Objectives.LegendBased;
@@ -21,7 +22,19 @@ public sealed class TwilightHammerFaction : Faction
   {
     TraditionalTeam = TeamSetup.OldGods;
     ControlPointDefenderUnitTypeId = UNIT_N0DV_CONTROL_POINT_DEFENDER_NZOTH_TOWER;
-    Nicknames = new List<string> { "twilight", "twilightshammer" };
+    Nicknames = new List<string> { "twilight", "twilightshammer", "chogall", "cult" };
+    // 0.89.0: a start faction (P20, TwilightStart)
+    StartingGold = new StartingGold
+    {
+      Instant = 200,
+      Income = 135,
+      Turns = 10
+    };
+    IntroText = () => Loc.Format(
+      "You are playing as {faction}.\n\nCho'gall's cult holds Grim Batol and the Highlands for the Old Gods. Your gate "
+      + "bars the pass in the north; the Twilight Citadel trains your Battlemasters. Win the Dragonmaw of the port for "
+      + "the old pact, gather the ascendants -- and wake Deathwing.",
+      ("{faction}", $"{PrefixCol}{Loc.Get("the Twilight's Hammer")}|r"));
     ProcessObjectInfo(TwilightHammerObjectInfo.GetAllObjectLimits());
   }
 
@@ -29,13 +42,15 @@ public sealed class TwilightHammerFaction : Faction
   {
     SharedFactionConfigSetup.AddSharedFactionConfig(this);
     PlayerUnitEvents.Register(UnitTypeEvent.Damaging, ThunderFists, TwilightHammerObjects.Chogall);
+    AddCampaignQuests(); // 0.89.0: a start faction -- its quests from the start
+    AddQuest(new QuestOldPact());
   }
 
   // Evaluate territorial objectives only after the old army, control points and alliances have been settled.
   internal void AddCampaignQuests()
   {
     StartingQuest = AddQuest(new QuestTwilightUnlock("Voices in the Quarry",
-      "The miners at Dragonmaw Port hear whispers beneath their picks. Study Spiritual Infusion at the War Mill so Azil can interpret them.",
+      "The miners of Grim Batol hear whispers beneath their picks. Study Spiritual Infusion at the War Mill so Azil can interpret them.",
       "BTNChogall", TwilightHammerObjects.Whispers, "High Priestess Azil joins the Altar of Visions",
       new ObjectiveResearch(TwilightHammerObjects.SpiritualInfusion, TwilightHammerObjects.WarMill)));
 
@@ -46,7 +61,7 @@ public sealed class TwilightHammerFaction : Faction
       "BTNHeroAvatarOfFlame", TwilightHammerObjects.FlameRite, "Ignacious joins the Altar of Visions",
       new ObjectiveControlLevel(UNIT_N024_BLACKROCK_DEPTHS, 1), new ForgeDestroyed()));
     var rime = AddQuest(new QuestTwilightUnlock("Rite of Rime",
-      "Train the heralds at the Grim Totem to bind the waters beneath the port. Feludius will rise from the depths.",
+      "Train the heralds at the Grim Totem to bind the waters beneath the Highlands. Feludius will rise from the depths.",
       "BTNFrostRevenant2", TwilightHammerObjects.FrostRite, "Feludius joins the Altar of Visions",
       new ObjectiveResearch(TwilightHammerObjects.HeraldTraining, TwilightHammerObjects.GrimTotem)));
     AddQuest(new QuestHourOfTwilight(fortress, blade, fire, rime));

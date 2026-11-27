@@ -1416,6 +1416,7 @@ AZwm	main	used	Devour Magic	(Twilight)	Advm	-	-	orc	ReplaceableTextures\CommandB
 AZwn	main	used	Thunder Fists	(Cho'gall - DUMMY CAST)	ANfl	-	-	orc	ReplaceableTextures\CommandButtons\BTNMonsoon.blp	-
 AZwo	main	used	Anti-magic Shell	(Twilight, Illidari, Nzoth)	Aams	-	-	undead	ReplaceableTextures\CommandButtons\BTNAntiMagicShell.blp	nZw3
 AZwp	main	used	Command Aura	(Kargath, Garithos)	ACac	yes	-	creeps	ReplaceableTextures\PassiveButtons\PASBTNGnollCommandAura.blp	UZwx
+AZwq	main	used	Glimpse of the Old Gods	(twilight)	ANcl	-	-	creeps	ReplaceableTextures\CommandButtons\BTNOldGodWhispers.blp	hZw1
 AZx0	main	used	Return Gold and Lumber	(All Teams)	Argl	-	-	other	-	oZx0,oZx1,oZx2
 AZx1	main	used	Harvest	(Yellow/Red/DG/Purple/Orange/Pink/Grey/Blue Workers)	Ahar	-	-	other	ReplaceableTextures\CommandButtons\BTNGatherGold.blp	oZxd
 AZx2	main	used	Self Destruct	-	AIha	-	-	other	ReplaceableTextures\CommandButtons\BTNSelf_Destruct.blp	oZxd

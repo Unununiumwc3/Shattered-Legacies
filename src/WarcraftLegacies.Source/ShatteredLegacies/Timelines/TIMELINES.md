@@ -1,6 +1,6 @@
 # Timelines -- how they are built
 
-**State: 0.88.0** (updated 0.88.0). What changed version by version: `../CHANGELOG.md`.
+**State: 0.89.0** (updated 0.89.0). What changed version by version: `../CHANGELOG.md`.
 
 **What** is planned lives in `SCENARIO_CONCEPTS.md` (vocabulary, ground rules, decision register D1-D17, every slot)
 and its flow in `timeline-overview.drawio`. This file is the **how**: the turning-point model, the WL mechanics it
@@ -31,14 +31,16 @@ its halls cannot be destroyed and the defeat rule passes it by. Fallbacks get no
 | Tauren Tribes | Centaur Khans | Thunder Bluff and the khans' huts | Thunder Bluff | the conqueror's | yes | `Factions/Centaur` |
 | Scourge | Knights of the Ebon Blade | Acherus (0.88: flies once the four are level 10) | Icecrown Citadel | the conqueror's | yes | `Factions/EbonBlade` |
 | Legion | Draenei | the Exodar (a ship that flies) | the Exodar's bridge | the conqueror's | no | `Factions/Draenei` |
-| Fel Horde | Dragonmaw Clan | Dragonmaw Port | Dragonmaw Port | the conqueror's | yes | `Factions/Dragonmaw` |
+| Fel Horde | -- (the Consortium, later; 0.89: an info row) | -- | -- | -- | -- | -- |
+| Twilight's Hammer (P20, a start faction since 0.89) | Dragonmaw Clan | Dragonmaw Port (its base waits there from the start) | Dragonmaw Port | Grim Batol's holder / Cho'gall's killer | yes | `Factions/Dragonmaw` |
 | Illidari | Ashtongue Deathsworn | the Black Temple | Black Temple CP | the destroyer's | no | `Factions/Ashtongue` |
 | Black Empire | Harpies | Stonetalon | the caged Broodmother (0.88) | the slayer's | yes | `Factions/Harpy` |
 | Ahn'qiraj | Skywall | the Lost City, the Vortex Pinnacle | the Vortex Pinnacle | the slayer's | yes | `Factions/Skywall` |
 | Skywall (itself a fallback) | -- (Hourglass info row "Conquered, not defeated") | -- | -- | -- | -- | `TimelineCatalog` |
 
 Shared paths: `ExclusivePath` (`Core/`) -- one destination, claimed once (`TwilightHammerFallback.Path` = the
-Dragonmaw, `HordeRoute` = the Zandalari). Twilight's Hammer is on hold (0.87.0: its code stays, nothing reaches it).
+Dragonmaw, `HordeRoute` = the Zandalari). Twilight's Hammer is a START faction since 0.89.0 (P20, `TwilightStart`):
+Grim Batol, the Twilight Citadel by the Southern Highlands, the gate of the pass; its fallback is the Dragonmaw.
 
 ## 1. The model: turning points
 

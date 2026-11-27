@@ -22,7 +22,7 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.88.0)
+## Current development build (0.89.0)
 
 What changed since 0.71 (details: `CHANGELOG.md`):
 - 0.72 - 0.74: the WL 5.0.4 hero kits; skills learned round robin; free instant revive; Dalaran Way Gates; heroes

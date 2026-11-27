@@ -33,6 +33,9 @@ public static class PlayerSetup
     SetupPlayer(player.Create(11), new DruidsFaction());
     SetupPlayer(player.Create(12), new BlackEmpireFaction());
     SetupPlayer(player.Create(16), new AhnqirajFaction());
+    // [SL] (0.89.0): Twilight's Hammer on P20 -- one of the fork's free NPC slots (ShatteredLegacies/Timelines/Factions/
+    // TwilightHammer/TwilightStart.cs: its base is placed one second in)
+    SetupPlayer(player.Create(19), new WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightHammer.TwilightHammerFaction());
     player.Create(18).GetPlayerData().SetTeam(TeamSetup.NightElves);
     player.Create(15).GetPlayerData().SetTeam(TeamSetup.Outland);
     SetupPlayer(player.Create(22), new KultirasFaction());

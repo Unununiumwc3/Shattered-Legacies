@@ -12,8 +12,8 @@ using WCSharp.Shared.Data;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
 {
-  // 0.80.0 (maintainer): the Dragonmaw Clan comes in two ways -- both start at Dragonmaw Port (the shared path of
-  // TwilightHammerFallback.Path: one of the two, once):
+  // 0.89.0 (maintainer): the Dragonmaw Clan is TWILIGHT's fallback (way 2 below, at Dragonmaw Port); way 1 is history
+  // (the Fel Horde gets the Consortium later, the Horde has the Zandalari). Before 0.89.0 -- two ways, both at the port:
   // 1. the Orcish Horde's / Fel Horde's fallback when the conqueror of Orgrimmar / Kil'sorrow Fortress is NOT on the
   //    Old Gods' team (an Old God's conqueror -> Twilight, as before). Conquerors: Conquerors (death / capture).
   // 2. Twilight's successor: Cho'gall dead (not revived) while Grim Batol is not Twilight's -- checked every 2 s
@@ -41,13 +41,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
       UNIT_O06D_SHIPYARD_CREEP_SHIPYARD, DragonmawObjects.Dock
     };
 
-    private static readonly int[] CultTypes =
-    {
-      TwilightHammerObjects.Herald, TwilightHammerObjects.DeathKnight, TwilightHammerObjects.OgreMagi,
-      TwilightHammerObjects.Dragonspawn, TwilightHammerObjects.VoidRider, TwilightHammerObjects.NetherDragon,
-      TwilightHammerObjects.PhaseGrenadier, TwilightHammerObjects.Enforcer, TwilightHammerObjects.Battlemaster
-    };
-
     private static readonly int[] ArmyTypes =
     {
       DragonmawObjects.Warrior, DragonmawObjects.Spearthrower, DragonmawObjects.DragonRider,
@@ -60,10 +53,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
       "|cffffcc00The Dragonmaw Clan rises.|r No Old God claimed the Horde's survivors: Nek'rosh Skullcrusher gathers the "
       + "clan and its red dragons at Dragonmaw Port -- sworn to whoever holds the port.";
 
-    internal const string FromFelHordeText =
-      "|cffffcc00Kil'sorrow Fortress has fallen.|r The Fel Horde's last clan breaks its chains to the demons: Nek'rosh "
-      + "Skullcrusher gathers the Dragonmaw and their red dragons at Dragonmaw Port -- sworn to whoever holds the port.";
-
     internal const string FromTwilightText =
       "|cffffcc00Cho'gall is dead and Grim Batol is lost.|r The whispers fall silent. Free of the Old Gods' grip, the "
       + "Dragonmaw throw off the Twilight's Hammer -- its fanatics turn on them -- and Nek'rosh Skullcrusher leads the "
@@ -71,9 +60,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
 
     // ---- 1. from the Orcish Horde / the Fel Horde ---------------------------------------------------------------
     internal static void FromHorde(player p, player conqueror) => Arrive(p, conqueror, FromHordeText);
-
-    // 0.87.0 (maintainer): the Fel Horde's fallback is always the Dragonmaw
-    internal static void FromFelHorde(player p, player conqueror) => Arrive(p, conqueror, FromFelHordeText);
 
     private static void Arrive(player p, player conqueror, string text)
     {
@@ -177,160 +163,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
       });
     }
 
-    // ---- 2. from Twilight -------------------------------------------------------------------------------------
-    private static player _twilight;
-    private static player _chogallKiller;
-    private static bool _done;
-
-    // TwilightHammerFallback.RunTwilight: watch the Twilight player from its arrival on
-    internal static void WatchTwilight(player p)
+    // ---- 2. from Twilight (0.89.0: Twilight's fallback, a turning point -- TwilightHammerFallback.Path) --------------
+    // Grim Batol lost while Cho'gall is dead: the clan rises at Dragonmaw Port with its own base, which waited there
+    // since the start; the cult is left behind (its fanatics and buildings Neutral Hostile, Cho'gall and his ascendants
+    // gone), sworn to whoever holds the port (at the start: Grim Batol's holder or Cho'gall's killer).
+    internal static void FromTwilight(player p, player overlord)
     {
-      if (_twilight != null)
-      {
-        return;
-      }
-
-      _twilight = p;
-      var death = CreateTrigger();
-      TriggerRegisterPlayerUnitEvent(death, p, EVENT_PLAYER_UNIT_DEATH, null);
-      TriggerAddAction(death, () =>
-      {
-        var killer = GetKillingUnit();
-        if (GetUnitTypeId(GetTriggerUnit()) == TwilightHammerObjects.Chogall && killer != null
-            && GetPlayerId(GetOwningPlayer(killer)) < 24)
-        {
-          _chogallKiller = GetOwningPlayer(killer);
-        }
-      });
-      var t = CreateTimer();
-      TimerStart(t, 2f, true, () => AiApi.Safe("twilight -> dragonmaw", Check));
-    }
-
-    private static void Check()
-    {
-      if (_done || _twilight.GetPlayerData().Faction?.Name != TwilightHammerFaction.FactionName)
-      {
-        return;
-      }
-
-      if (ChogallAlive(_twilight))
-      {
-        return;
-      }
-
-      var batol = AllPreplacedWidgets.Units.Get(UNIT_H01Z_GRIM_BATOL_CREEP_TWILIGHT);
-      var holder = batol != null && GetUnitTypeId(batol) != 0 && GetUnitState(batol, UNIT_STATE_LIFE) > 0.405f
-        ? GetOwningPlayer(batol)
-        : null;
-      if (holder == _twilight)
-      {
-        return; // Grim Batol still stands for the cult: Cho'gall can be revived
-      }
-
-      _done = true;
-      FromTwilight(_twilight, holder != null && GetPlayerId(holder) < 24 ? holder : _chogallKiller);
-    }
-
-    private static bool ChogallAlive(player p)
-    {
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      var alive = false;
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        if (!alive && GetUnitTypeId(u) == TwilightHammerObjects.Chogall && GetUnitState(u, UNIT_STATE_LIFE) > 0.405f)
-        {
-          alive = true;
-        }
-      }
-
-      DestroyGroup(g);
-      return alive;
-    }
-
-    private static bool IsCult(int type)
-    {
-      for (var i = 0; i < CultTypes.Length; i++)
-      {
-        if (CultTypes[i] == type)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    }
-
-    private static void FromTwilight(player p, player overlord)
-    {
-      var glass = Hourglass.Get(GetPlayerId(p));
-      var clan = new DragonmawFaction();
-      SwapFaction.Run(p, clan);
-      var all = new List<unit>();
-      var g = CreateGroup();
-      GroupEnumUnitsOfPlayer(g, p, null);
-      unit u;
-      while ((u = FirstOfGroup(g)) != null)
-      {
-        GroupRemoveUnit(g, u);
-        all.Add(u);
-      }
-
-      DestroyGroup(g);
-      var turned = 0;
-      for (var i = 0; i < all.Count; i++)
-      {
-        u = all[i];
-        if (u == glass || GetUnitTypeId(u) == 0)
-        {
-          continue;
-        }
-
-        if (IsUnitType(u, UNIT_TYPE_HERO))
-        {
-          RemoveUnit(u); // Cho'gall and his ascendants are gone for good
-          continue;
-        }
-
-        if (IsCult(GetUnitTypeId(u)))
-        {
-          SetUnitOwner(u, Player(PLAYER_NEUTRAL_AGGRESSIVE), true); // the fanatics turn on the clan
-          turned++;
-          continue;
-        }
-
-        try
-        {
-          u.ReplaceWithFactionEquivalent(clan);
-        }
-        catch (System.Exception)
-        {
-          if (IsUnitType(u, UNIT_TYPE_STRUCTURE))
-          {
-            SetUnitOwner(u, Player(PLAYER_NEUTRAL_AGGRESSIVE), true); // the Grim Totem: a cult temple
-          }
-        }
-      }
-
-      CreateUnit(p, DragonmawObjects.Nekrosh, TwilightHammerFallback.StartX, TwilightHammerFallback.StartY, 270f);
-      Establish(p, overlord);
+      Arrive(p, overlord, FromTwilightText);
       EliminationRule.GiveGrace(p, 2);
-      if (AiApi.IsBot(p))
-      {
-        var bot = p;
-        var t = CreateTimer();
-        TimerStart(t, 3f, false, () =>
-        {
-          DestroyTimer(t);
-          AiApi.Safe("arrival production", () => AiApi.GiveStarterProduction(bot));
-        });
-      }
-
-      Announce(FromTwilightText);
-      AiApi.LogPin("TURNING POINT P" + I2S(GetPlayerId(p)) + " Twilight -> Dragonmaw (" + I2S(turned)
-                   + " cult units turned hostile)");
+      AiApi.LogPin("TURNING POINT P" + I2S(GetPlayerId(p)) + " Twilight -> Dragonmaw");
     }
   }
 

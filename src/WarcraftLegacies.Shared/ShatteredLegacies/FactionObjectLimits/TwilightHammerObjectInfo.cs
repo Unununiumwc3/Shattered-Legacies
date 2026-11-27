@@ -30,6 +30,7 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1868199777, 200, Tower); // oZwa ImprovedLookout
       yield return new(1968863024, 200, Shop); // uZw0 VoodooLounge
       yield return new(1868199778, 200, Farm); // oZwb Burrow
+      yield return new(1750759217, 1, Specialist); // hZw1 TwilightCitadel
       yield return new(1851422512, 4, Flyer); // nZw0 NetherDragon
       yield return new(1868199779, 8, Flyer); // oZwc VoidRider
       yield return new(1851422513, 200, Support); // nZw1 OgreMagi

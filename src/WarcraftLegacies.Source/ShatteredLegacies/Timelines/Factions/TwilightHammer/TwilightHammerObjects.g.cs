@@ -17,6 +17,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
     internal const int ImprovedLookout = 1868199777; // oZwa (24p o03H)
     internal const int VoodooLounge = 1968863024; // uZw0 (24p u00Y)
     internal const int Burrow = 1868199778; // oZwb (24p o03K)
+    internal const int TwilightCitadel = 1750759217; // hZw1 (24p h05U)
     internal const int NetherDragon = 1851422512; // nZw0 (24p n051)
     internal const int VoidRider = 1868199779; // oZwc (24p o04J)
     internal const int OgreMagi = 1851422513; // nZw1 (24p n07X)
