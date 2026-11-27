@@ -18,6 +18,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
   // Dark Iron copies (tools/shattered-legacies/content/dark_iron.py): renamed, tinted; Dagran Thaurissan, Golem Lord
   // Argelmach and Fineous Darkvire at the altar. A VASSAL bound by the Mercenary Charter: whoever holds the Siege
   // Foundry is their master (DarkIronFallback.Charter).
+  // 0.87.0 (maintainer): their troops are the 24p's Dark Iron (Anvilrage Guardsmen, Bear Riders, Chieftains, Magma
+  // Tanks, Shadowcasters, Flame Keepers, Gyrocopters -- import_24p.py DARK_IRON); the seat is the Throne Room.
   public sealed class DarkIronFaction : Faction
   {
     internal const string FactionName = "Dark Iron";
@@ -30,10 +32,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
       IntroText = () => Loc.Format(
         "You are playing as {faction}.\n\nThe Bronzebeard throne is empty. Your only goal: seize the Great Anvil and "
         + "turn the mountain into a black-market arsenal that out-produces every empire on the map. You care for gold, "
-        + "rare ore and survival -- whoever holds your Siege Foundry holds your Mercenary Charter: he pays tribute and "
-        + "gets your golems and mortar teams.",
+        + "rare ore and survival. Whoever holds your Throne Room is your master and gets a Gatebreaker every five "
+        + "turns; whoever holds your Siege Foundry holds your Mercenary Charter: he pays tribute for your mortar teams.",
         ("{faction}", $"{PrefixCol}{Loc.Get("the Dark Iron of Shadowforge")}|r"));
       ProcessObjectInfo(DarkIronObjectInfo.GetAllObjectLimits());
+      ProcessObjectInfo(DarkIronForcesObjectInfo.GetAllObjectLimits()); // 0.87.0: the 24p's Dark Iron units
     }
 
     public override void OnRegistered()

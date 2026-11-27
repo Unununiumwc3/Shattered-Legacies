@@ -108,7 +108,7 @@ public static class Regions
   public static Rectangle ElementalRealm { get; set; } = new Rectangle(-18016f, -22848f, -8480f, -20320f);
   public static Rectangle ElwinForestAmbient { get; set; } = new Rectangle(8704f, -14816f, 13376f, -12672f);
   public static Rectangle EnKilahUnlock { get; set; } = new Rectangle(-6016f, 18176f, -4832f, 18848f);
-  public static Rectangle ExodarBaseUnlock { get; set; } = new Rectangle(-24608f, 5632f, -21280f, 8896f);
+  public static Rectangle ExodarBaseUnlock { get; set; } = new Rectangle(-28448f, 12800f, -25120f, 16064f);
   public static Rectangle FTSummon { get; set; } = new Rectangle(-3392f, 20384f, -3232f, 20512f);
   public static Rectangle Far_Eastern_Northrend { get; set; } = new Rectangle(4608f, 20064f, 7328f, 22944f);
   public static Rectangle FeathermoonCreeps { get; set; } = new Rectangle(-22464f, -12128f, -18368f, -7584f);
@@ -268,9 +268,9 @@ public static class Regions
   public static Rectangle SilverpineForest { get; set; } = new Rectangle(6880f, 3936f, 7552f, 4544f);
   public static Rectangle SkullRetrieval { get; set; } = new Rectangle(8864f, 4672f, 9184f, 4928f);
   public static Rectangle SkywallShimmering_Unlock { get; set; } = new Rectangle(-10720f, -12544f, -8288f, -10496f);
-  public static Rectangle SlipstreamArgusOrigin { get; set; } = new Rectangle(-23104f, 7712f, -22592f, 7872f);
+  public static Rectangle SlipstreamArgusOrigin { get; set; } = new Rectangle(-26944f, 14880f, -26432f, 15040f);
   public static Rectangle SlipstreamArgusTarget { get; set; } = new Rectangle(21408f, -27200f, 22080f, -26656f);
-  public static Rectangle SlipstreamTempestOrigin { get; set; } = new Rectangle(-22304f, 6816f, -22112f, 7392f);
+  public static Rectangle SlipstreamTempestOrigin { get; set; } = new Rectangle(-26144f, 13984f, -25952f, 14560f);
   public static Rectangle SlipstreamTempestTarget { get; set; } = new Rectangle(2752f, -21920f, 3200f, -21504f);
   public static Rectangle Solliden_Farmstead { get; set; } = new Rectangle(6400f, 8992f, 7808f, 10592f);
   public static Rectangle South_EK_Ships { get; set; } = new Rectangle(7872f, -18240f, 18880f, -12288f);

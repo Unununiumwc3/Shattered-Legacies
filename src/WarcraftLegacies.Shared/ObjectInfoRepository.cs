@@ -46,6 +46,7 @@ public sealed class ObjectInfoRepository
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.CentaurObjectInfo.GetAllObjectLimits()); // [SL] (0.85)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.HarpyObjectInfo.GetAllObjectLimits()); // [SL] (0.85)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DarkIronObjectInfo.GetAllObjectLimits()); // [SL] (0.86)
+    AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.DarkIronForcesObjectInfo.GetAllObjectLimits()); // [SL] (0.87)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.FurbolgObjectInfo.GetAllObjectLimits()); // [SL] (0.86)
     AddFactionObjectInfo(ShatteredLegacies.FactionObjectLimits.EbonBladeObjectInfo.GetAllObjectLimits()); // [SL] (0.80)
     AddFactionObjectInfo(ScourgeObjectInfo.GetAllObjectLimits());

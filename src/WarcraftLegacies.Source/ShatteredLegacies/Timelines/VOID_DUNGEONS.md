@@ -1,4 +1,4 @@
-# Void-area dungeons (0.82.0 - 0.84.0)
+# Void-area dungeons (0.82.0 - 0.87.0)
 
 Maintainer's idea (2026-11-26): the black, unwalkable void of the map holds dungeons that can be entered only through
 gates. The void stays as the wall around and between them. Pack them tightly, so that most of the void gets used:
@@ -40,6 +40,8 @@ slipstreams across its border do not work.
 | Nazjatar | 7936,-31488 .. 15744,-26112 | -31104, +512 | -23168,-30976 .. -15360,-25600 | 21 `V` | 0.83 |
 | Shadowforge (24p Blackrock Depths + Molten Core) | 16256,-32000 .. 22784,-28288 | -40704, +53120 | -24448,21120 .. -17920,24832 | 22 `W` | 0.83 |
 | Deadmines (24p Temple of Ahn'Qiraj) | -28416,-16640 .. -24192,-8064 | -256, -14848 | -28672,-31488 .. -24448,-22912 | 23 `X` | 0.83 |
+| Timbermaw Hold (OUR Felwood glade by the furbolg camp, `--src mapdata/WarcraftLegacies`) | -12416,7680 .. -10368,9600 | -3968, +13824 | -16384,21504 .. -14336,23424 | `.` | 0.87 |
+| The Exodar (OUR Azuremyst base, MOVED: `terrain/exodar_move.py` -- the old place is void now) | -24704,5632 .. -21248,8960 | -3840, +7168 | -28544,12800 .. -25088,16128 | `.` | 0.87 |
 
 **What counts as void**: unflyable cells only (pathing flag 0x04, the map boundary). Deep sea is unwalkable too, but
 ships and flyers cross it. The 0.82 measurement mixed the two: much of the "northern band" and "western column" is
@@ -83,10 +85,13 @@ would upset the balance otherwise). Code: `Dungeons/VoidDungeons.cs`; the Underc
 | Nazjatar | circle at -18496,-29056 (24p "NazjatarExit2") | circle at -3744,-3552, by WL's Nazjatar CP beside the Maelstrom | the naga of Azshara (Sentinels' fallback, 0.84) |
 | Shadowforge | circle at -20640,23230 (the 24p's teleporter circle; its doodad is dropped) | WL's Shadowforge City building (h01O, Awrp added) | the Dark Iron (Ironforge's fallback, 0.86) |
 | Deadmines | circle at -27808,-23904 (24p north portal) | gold mine at 7721,-17503, Westfall | the Defias (Stormwind's fallback, 0.85) |
+| Timbermaw Hold | circle at -14692,22708 | the Totem Lodge of Ursoc at -11154,10970 by Nordrassil (Awrp) | the Furbolgs (the Druids' fallback, 0.87) |
+| The Exodar | circle at -26200,13400 | the ship itself (`nZvf`), at one of 16 landing spots; it flies (`Factions/Draenei/ExodarShip.cs`) | the Draenei (the Legion's fallback, 0.87; 0.87.1: its two preplaced shipyards removed -- the Draenei can still build them) |
 
 **Control points** (`tools/shattered-legacies/content/void_dungeons.py`: types `nZv*`, preplaced Neutral Hostile,
 with Chinese names). The 24p names are kept except where our map already has the name or the dungeon changed.
-Shadowforge is Shadowforge City itself (0.84: districts; 0.86: the Dark Iron's Treasury and Siege Foundry):
+Shadowforge is Shadowforge City itself (0.84: districts; 0.86: the Dark Iron's Treasury and Siege Foundry; 0.87: the
+Throne Room is their seat):
 
 | CP | Gold | Spot | 24p |
 |---|---|---|---|
@@ -96,11 +101,12 @@ Shadowforge is Shadowforge City itself (0.84: districts; 0.86: the Dark Iron's T
 | Lightless Cavern | 15 | -16192,-28352 | n05W |
 | Gishan Cavern | 10 | -20288,-26368 | n04E |
 | Dark Iron Treasury | 20 | -22144,22784 | n0AA "Blackrock Depths" (0.84: Imperial District) |
-| Siege Foundry | 15 | -23040,23936 | n00P "Molten Core" (0.84: Forge District); the Dark Iron's seat, their Mercenary Charter |
-| Tavern District | 10 | -18944,23360 | n00O "Blackrock Spire" |
+| Siege Foundry | 15 | -23040,23936 | n00P "Molten Core" (0.84: Forge District); their Mercenary Charter, the Statue of Thaurissan |
+| Throne Room | 10 | -18944,23360 | n00O "Blackrock Spire" (0.84 - 0.86: Tavern District); the Dark Iron's seat (0.87), the Throne of Thaurissan beside it |
 | The Deadmines | 20 | -26048,-26880 | n078 "Temple of Ahn'Qiraj" |
 | Goblin Foundry | 10 | -27952,-28256 | new |
 | Ironclad Cove | 15 | -25232,-30176 | new |
+| Timbermaw Hold | 10 | -14892,22008 | new (0.87); the Furbolgs' |
 
 **The Deadmines look like a mine** (0.84). The copy swaps the temple's look:
 - Ground: sand becomes rough dirt, tiles become dirt (`--tex`).
@@ -113,6 +119,21 @@ Shadowforge is Shadowforge City itself (0.84: districts; 0.86: the Dark Iron's T
 The baked pathing keeps the old doodads' footprints. Fine-tune in the editor if something looks off.
 
 The 24p creeps are not copied. A CP is Neutral Hostile, with WL's 5000 life, and it defends itself.
+
+**Creeps (0.87, maintainer)**: a fallback starts with its dungeon's SEAT only; every other CP of a dungeon is guarded
+by a Neutral Hostile camp (`tools/shattered-legacies/content/dungeon_content.py`, `Units/Dungeon_Content.json`):
+
+| Dungeon | Guarded CPs | Camp |
+|---|---|---|
+| Nazjatar | Heart of Azeroth, Lightless Cavern, Gishan Cavern | mur'gul, hydras, a giant sea turtle |
+| Shadowforge | Dark Iron Treasury, Siege Foundry | Ragnaros' loyalists: Core Hounds, Fire Wyrms, a Shadowforge Titan; Majordomo Executus (24p, level 8) and two Core Hounds at the west throne (-24313,21273) |
+| Deadmines | Goblin Foundry, Ironclad Cove | kobolds, goblin shredders |
+
+**Shadowforge's props (0.87)**: the throne doodad by the Throne Room is the Throne of Thaurissan (`hZiy`, the Dark Iron
+HQ), the big dwarf statue by the Siege Foundry the Statue of Thaurissan (`hZix`: the Foundry's holder owns it, the
+24p's Will of the Emperor at level 4, +4 armour), and the Shadowforge Black Market (`nZiy`, neutral, a Goblin Merchant
+copy) stands by the Treasury: expensive Titanforged trinkets and the 24p's Book of Experience, staves and Granite
+Token. All Neutral Passive and invulnerable until the Dark Iron arrive (the market stays neutral).
 
 New doodad types (stock models or imports we already have): `DZv0` Gargoyle Hub, `DZv1` Iron Gate (Undercity),
 `DZv2`-`DZv5` naga tower / desolace plant / naga walls (Nazjatar), `DZv6` Shadowforge Barricades, `DZv7` Teleporter

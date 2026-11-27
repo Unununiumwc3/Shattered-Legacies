@@ -60,13 +60,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
       "|cffffcc00The Dragonmaw Clan rises.|r No Old God claimed the Horde's survivors: Nek'rosh Skullcrusher gathers the "
       + "clan and its red dragons at Dragonmaw Port -- sworn to whoever holds the port.";
 
+    internal const string FromFelHordeText =
+      "|cffffcc00Kil'sorrow Fortress has fallen.|r The Fel Horde's last clan breaks its chains to the demons: Nek'rosh "
+      + "Skullcrusher gathers the Dragonmaw and their red dragons at Dragonmaw Port -- sworn to whoever holds the port.";
+
     internal const string FromTwilightText =
       "|cffffcc00Cho'gall is dead and Grim Batol is lost.|r The whispers fall silent. Free of the Old Gods' grip, the "
       + "Dragonmaw throw off the Twilight's Hammer -- its fanatics turn on them -- and Nek'rosh Skullcrusher leads the "
       + "clan, sworn to whoever holds Dragonmaw Port.";
 
     // ---- 1. from the Orcish Horde / the Fel Horde ---------------------------------------------------------------
-    internal static void FromHorde(player p, player conqueror)
+    internal static void FromHorde(player p, player conqueror) => Arrive(p, conqueror, FromHordeText);
+
+    // 0.87.0 (maintainer): the Fel Horde's fallback is always the Dragonmaw
+    internal static void FromFelHorde(player p, player conqueror) => Arrive(p, conqueror, FromFelHordeText);
+
+    private static void Arrive(player p, player conqueror, string text)
     {
       var keep = new List<unit>();
       var glass = Hourglass.Get(GetPlayerId(p));
@@ -88,7 +97,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
         new[] { worker, worker, worker, worker, worker, DragonmawObjects.Nekrosh });
       Spawn.Units(p, TwilightHammerFallback.StartX + 176f, TwilightHammerFallback.StartY - 304f, StartArmy());
       Establish(p, conqueror);
-      Announce(FromHordeText);
+      Announce(text);
       p.RepositionCamera(new Point(TwilightHammerFallback.StartX, TwilightHammerFallback.StartY));
     }
 

@@ -1,0 +1,55 @@
+{
+  "OldId": "ngos",
+  "NewId": "nZq2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Snarlmane"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Snarlmane"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Blackmane chief)"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.45
+    },
+    {
+      "Id": "uhpm",
+      "Value": 1500
+    },
+    {
+      "Id": "ua1b",
+      "Value": 40
+    },
+    {
+      "Id": "udef",
+      "Value": 4
+    },
+    {
+      "Id": "ulev",
+      "Value": 8
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "AInv,ACrk,ACbh"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Chief of the Blackmane gnolls. He guards a stolen relic."
+    }
+  ]
+}

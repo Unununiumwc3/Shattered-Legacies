@@ -25,14 +25,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
     internal const int Rifleman = 1750755688; // hZih (Ironforge hrif)
     internal const int MortarTeam = 1750755689; // hZii (Ironforge hmtm)
     internal const int Dreadnaught = 1851418929; // nZi1 (Ironforge n0CZ)
-    internal const int Warrior = 1750755690; // hZij (Ironforge h018)
-    internal const int Thane = 1750755691; // hZik (Ironforge h01L)
     internal const int EngineerElite = 1750755692; // hZil (Ironforge h037)
     internal const int WarGolem = 1851418930; // nZi2 (Ironforge n02D)
-    internal const int SteamTank = 1750755693; // hZim (Ironforge h01P)
-    internal const int RuneSmith = 1952082224; // tZi0 (Ironforge tp05)
-    internal const int RunePriest = 1851418931; // nZi3 (Ironforge n00C)
     internal const int Argelmach = 1213884720; // HZi0 (Ironforge Hmbr)
     internal const int Darkvire = 1213884721; // HZi1 (Ironforge H00S)
+
+    // 0.87.0: Shadowforge's own objects
+    internal const int ThroneOfThaurissan = 1750755705; // hZiy, their HQ
+    internal const int StatueOfThaurissan = 1750755704; // hZix, the Siege Foundry holder's aura
+    internal const int ShadowforgeBlackMarket = 1851419001; // nZiy, neutral
+    internal const int ForgeGolem = 1096444208; // AZi0, Argelmach's summon
   }
 }

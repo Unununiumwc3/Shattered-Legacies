@@ -809,7 +809,7 @@ public static class AiGraph
     new Edge(1848660816, 1848652113), // 0.39.3: Sulfuron Spire (new CP n0SP, in front of the Spire) <-> Northern Ashenvale
     new Edge(1848652113, 1848652373), // Northern Ashenvale <-> Darkshore
     new Edge(1848652373, 1848653382), // Darkshore <-> Silvermyst Island
-    new Edge(1848653382, 1848656460), // Silvermyst Island <-> Exodar Regalis
+    // 0.87.0: Silvermyst Island <-> Exodar Regalis removed -- the Exodar is in the void now, reached by its ship
     new Edge(1848653382, 1848652378), // Silvermyst Island <-> Azuremyst Isle
     new Edge(1848652373, 1848654148), // Darkshore <-> Auberdine
     new Edge(1848654148, 1848652377), // Auberdine <-> Teldrassil
@@ -904,6 +904,10 @@ public static class AiGraph
     // 0.35.3: Tol Barad <-> Menethil Harbour (both ends checked: island / mainland ground)
     // 0.39.1: mainland end moved to 13007,-2039 (maintainer: the old end was bugged)
     new PortalLink(11356f, -2009f, 13007f, -2039f, "hbot", "Ship to Menethil", "Ship to Tol Barad", "ship"),
+    // 0.87.0 (maintainer): east -> west over the islands, not before turn 30 (the early game stays as it is): Kul
+    // Tiras (Stormsong coast) <-> Kezan; with Stormwind <-> Kul Tiras and Kezan <-> Nazmir <-> Gadgetzan the bots'
+    // armies can cross between the Eastern Kingdoms and Kalimdor. Announced when it opens (AiFerries).
+    new PortalLink(1338f, -6112f, 138f, -6662f, "hbot", "Ship to Kezan", "Ship to Kul Tiras", "ship", 30),
     // 0.49: the Argus <-> Northrend (prelegion) and Argus <-> Felwood (legion) bot waygates are removed for good.
     // 0.37: the Old Gods rift (phase "oldgods", AiGates.OpenOldGodsRift): Maw of Gor'ma (beside the decorative
     // portal doodads ~400 from the CP) <-> the unused preplaced portal n07E in the Twilight Highlands, which is
@@ -1094,9 +1098,12 @@ public sealed class PortalLink
   public readonly string NameA;  // mouse-over name of the A end
   public readonly string NameB;
   public readonly string Phase;  // "always" | "prelegion" (removed at the summon) | "legion" (created at it)
+  public readonly int FromTurn;  // 0.87.0: a ferry that sails from this WL turn on (0 = from the start)
 
-  public PortalLink(float ax, float ay, float bx, float by, string skin, string nameA, string nameB, string phase)
+  public PortalLink(float ax, float ay, float bx, float by, string skin, string nameA, string nameB, string phase,
+    int fromTurn = 0)
   {
+    FromTurn = fromTurn;
     AX = ax;
     AY = ay;
     BX = bx;

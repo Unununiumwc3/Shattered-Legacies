@@ -34,8 +34,8 @@ public static class FactionChoiceDialogSetup
       Difficulty = FactionLearningDifficulty.Basic,
       StartingArea = Regions.DalaStartPos
     };
-    // [SL] (0.76.0): Gilneas is Stormwind's fallback, not a pick (ShatteredLegacies/Timelines/Factions/Gilneas) -- the
-    // Dalaran slot always plays Dalaran (one choice: no dialog)
+    // [SL] (0.76.0): Gilneas is a fallback, not a pick (Stormwind's until 0.84, Lordaeron's since 0.85;
+    // ShatteredLegacies/Timelines/Factions/Gilneas) -- the Dalaran slot always plays Dalaran (one choice: no dialog)
     new FactionChoiceDialogPresenter(dalaran).Run(player.Create(7));
 
     var sentinels = new FactionChoice

@@ -11,8 +11,6 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionQuelthalas = 1381655345; // RZc1
     internal const int DecisionForsaken = 1381655625; // RZdI Betrayal: Forsaken
     internal const int ConditionForsaken = 1381655369; // RZcI
-    internal const int DecisionGilneas = 1381655602; // RZd2 Fallback: Gilneans on Darkshore (placeholder)
-    internal const int ConditionGilneas = 1381655346; // RZc2
     internal const int DecisionStormwind = 1381655603; // RZd3 Fallback: Defias Brotherhood
     internal const int ConditionStormwind = 1381655347; // RZc3
     internal const int DecisionLordaeronGilneas = 1381655626; // RZdJ Fallback: Gilneas
@@ -25,9 +23,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionDruids = 1381655350; // RZc6
     internal const int DecisionSentinels = 1381655607; // RZd7 Fallback: Naga of Nazjatar
     internal const int ConditionSentinels = 1381655351; // RZc7
-    internal const int DecisionExodar = 1381655608; // RZd8 Fallback: Draenei of Shattrath (placeholder)
-    internal const int ConditionExodar = 1381655352; // RZc8
-    internal const int DecisionOrcishHorde = 1381655609; // RZd9 Fallback: Twillight or Zandalari
+    internal const int DecisionOrcishHorde = 1381655609; // RZd9 Fallback: Zandalari
     internal const int ConditionOrcishHorde = 1381655353; // RZc9
     internal const int DecisionTauren = 1381655617; // RZdA Fallback: Centaur Khans
     internal const int ConditionTauren = 1381655361; // RZcA
@@ -35,7 +31,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionScourge = 1381655362; // RZcB
     internal const int DecisionLegion = 1381655619; // RZdC Fallback: Draenei
     internal const int ConditionLegion = 1381655363; // RZcC
-    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Twillight or Dragonmaw
+    internal const int DecisionFelHorde = 1381655620; // RZdD Fallback: Dragonmaw
     internal const int ConditionFelHorde = 1381655364; // RZcD
     internal const int DecisionIllidari = 1381655621; // RZdE Fallback: Ashtongue Deathsworn
     internal const int ConditionIllidari = 1381655365; // RZcE
@@ -47,7 +43,48 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal const int ConditionAhnqiraj = 1381655368; // RZcH
 
     // every research the Hourglass lists (decisions + WL's own), for the per-player limits
-    internal static int[] Decisions = { 1381655601, 1381655625, 1381655602, 1381655603, 1381655626, 1381655604, 1381655605, 1381655606, 1381655607, 1381655608, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
+    internal static int[] Decisions = { 1381655601, 1381655625, 1381655603, 1381655626, 1381655604, 1381655605, 1381655606, 1381655607, 1381655609, 1381655617, 1381655618, 1381655619, 1381655620, 1381655621, 1381655622, 1381655623, 1381655624 };
     internal static int[] WlResearches = { 1378900058 }; // R0XZ
+
+    // 0.88.0: the elite choices (choice A, choice B per faction key) and their condition (turn 10)
+    internal const int EliteCondition = 1381655856; // RZe0
+    internal const int EliteStormwindA = 1381655857; // RZe1 Stormwind Champions
+    internal const int EliteStormwindB = 1381656369; // RZg1 Conjurers
+    internal const int EliteLordaeronA = 1381655858; // RZe2 Paladins
+    internal const int EliteLordaeronB = 1381656370; // RZg2 Pegasus Knights
+    internal const int EliteDalaranA = 1381655859; // RZe3 Kirin Tor
+    internal const int EliteDalaranB = 1381656371; // RZg3 Blue Dragons
+    internal const int EliteQuelthalasA = 1381655860; // RZe4 Farstriders
+    internal const int EliteQuelthalasB = 1381656372; // RZg4 Blood Mages
+    internal const int EliteKultirasA = 1381655861; // RZe5 Musketeers
+    internal const int EliteKultirasB = 1381656373; // RZg5 Sea Giants
+    internal const int EliteGilneasA = 1381655862; // RZe6 Greyguards
+    internal const int EliteGilneasB = 1381656374; // RZg6 Worgen Shamans
+    internal const int EliteScarletA = 1381655863; // RZe7 Templars
+    internal const int EliteScarletB = 1381656375; // RZg7 Bishops of the Light
+    internal const int EliteSunfuryA = 1381655864; // RZe8 Bloodwarders
+    internal const int EliteSunfuryB = 1381656376; // RZg8 Warlocks
+    internal const int EliteDraeneiA = 1381655865; // RZe9 Vindicators
+    internal const int EliteDraeneiB = 1381656377; // RZg9 Elekk Knights
+    internal const int EliteLegionA = 1381655905; // RZea Dreadlords
+    internal const int EliteLegionB = 1381656417; // RZga Doom Lords
+    internal const int EliteFelHordeA = 1381655906; // RZeb Executioners
+    internal const int EliteFelHordeB = 1381656418; // RZgb Fel Death Knights
+    internal const int EliteIllidariA = 1381655907; // RZec Royal Guards
+    internal const int EliteIllidariB = 1381656419; // RZgc Sea Witches
+    internal const int EliteBlackEmpireA = 1381655908; // RZed Reapers
+    internal const int EliteBlackEmpireB = 1381656420; // RZgd Heralds
+    internal const int EliteSkywallA = 1381655909; // RZee Elemental Lords
+    internal const int EliteSkywallB = 1381656421; // RZge Tidal Lords
+    internal const int EliteNazjatarA = 1381655910; // RZef Immortal Guardians
+    internal const int EliteNazjatarB = 1381656422; // RZgf Naga Sea Witches
+    internal const int EliteAshtongueA = 1381655911; // RZeg Vindicators
+    internal const int EliteAshtongueB = 1381656423; // RZgg Seers
+    internal const int EliteZandalariA = 1381655912; // RZeh Boneseers
+    internal const int EliteZandalariB = 1381656424; // RZgh Direhorns
+    internal const int EliteForsakenA = 1381655913; // RZei Elder Banshees
+    internal const int EliteForsakenB = 1381656425; // RZgi Val'kyr
+    internal const int EliteKezanA = 1381655914; // RZej Tinkers
+    internal const int EliteKezanB = 1381656426; // RZgj War Zeppelins
   }
 }

@@ -1,0 +1,112 @@
+{
+  "OldId": "Hjai",
+  "NewId": "HZq1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "ubld",
+      "Value": 13
+    },
+    {
+      "Id": "ucol",
+      "Type": 2,
+      "Value": 16
+    },
+    {
+      "Id": "uhpm",
+      "Value": 350
+    },
+    {
+      "Id": "upri",
+      "Value": 18
+    },
+    {
+      "Id": "urun",
+      "Type": 1,
+      "Value": 350
+    },
+    {
+      "Id": "umvs",
+      "Value": 220
+    },
+    {
+      "Id": "ua1p",
+      "Type": 3,
+      "Value": "air,debris,enemies,ground,nonancient,structure,vulnerable"
+    },
+    {
+      "Id": "uwal",
+      "Type": 1,
+      "Value": 350
+    },
+    {
+      "Id": "ugol",
+      "Value": 100
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulur",
+      "Value": 0
+    },
+    {
+      "Id": "uhot",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Summon Jaina"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Dreadlord of Theramore"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Jaina Proudmoore"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Theramore, evil)"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "units\\undead\\HeroDreadLord\\HeroDreadLord.mdl"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNHeroDreadLord.blp"
+    },
+    {
+      "Id": "uhab",
+      "Type": 3,
+      "Value": "Aamk,VP05,AUcs,AHab,SNin"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "A07B,VP02,AInv"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.0
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Theramore serves a dark master now -- and Jaina Proudmoore was never what she seemed. Garithos always said so.|n|n|cffffcc00Jaina again when Jaina's Sanctum is held by a faction that is not evil.|r"
+    }
+  ]
+}

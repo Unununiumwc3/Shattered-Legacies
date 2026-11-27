@@ -1,0 +1,55 @@
+{
+  "OldId": "ckng",
+  "NewId": "IZq2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "idrp",
+      "Value": 1
+    },
+    {
+      "Id": "ihtp",
+      "Value": 500000
+    },
+    {
+      "Id": "ipaw",
+      "Value": 0
+    },
+    {
+      "Id": "iusa",
+      "Value": 1
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A03X,AIdb"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Pearl of the Grimscale"
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNPearl.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "Mmmrrrggglll's treasure. Increases all attributes; heals."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffff8c00Artifact|r|nThe Grimscale chieftain's hoarded pearl. Increases all attributes. Can cast Crown Heal."
+    }
+  ]
+}

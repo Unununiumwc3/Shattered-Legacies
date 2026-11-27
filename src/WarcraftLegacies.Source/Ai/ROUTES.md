@@ -2,9 +2,9 @@
 
 Written by `python3 tools/shattered-legacies/ai/gen_routes.py` together with `AiRoutes.g.cs`. Review this after every run.
 
-- Nodes: 179 CPs, 82 area nodes
+- Nodes: 180 CPs, 83 area nodes
 - Edges: 358, of them 10 behind rock groups (11 groups of `LTrc`)
-- Hand-written graph (`AiConfig`): 220 edges, 135 of them also generated.
+- Hand-written graph (`AiConfig`): 219 edges, 134 of them also generated.
 
 ## Hand-written edges NOT generated
 
@@ -101,88 +101,89 @@ walk is N times the straight line: check whether something blocks it that does n
 
 ## Area nodes (targets only while enemy structures stand near them)
 
-- #179 area 179 @ 5904,12496
-- #180 area 180 @ -13232,-8784
-- #181 area 181 @ -9904,-17840
-- #182 area 182 @ -9936,4656
-- #183 area 183 @ -4784,24144
-- #184 area 184 @ 17680,-22064
-- #185 area 185 @ 6448,6096
-- #186 area 186 @ 15568,19504
-- #187 area 187 @ 5680,-24784
-- #188 area 188 @ -23024,-26544
-- #189 area 189 @ 10896,12496
-- #190 area 190 @ -1200,1200
-- #191 area 191 @ 20400,-23632
-- #192 area 192 @ -28016,-23440
-- #193 area 193 @ -24720,-23056
-- #194 area 194 @ 464,2640
-- #195 area 195 @ 21040,16048
-- #196 area 196 @ -6608,-10288
-- #197 area 197 @ -20528,12624
-- #198 area 198 @ -22992,-5872
-- #199 area 199 @ -48,24112
-- #200 area 200 @ 3504,4944
-- #201 area 201 @ -18896,-30640
-- #202 area 202 @ 19504,-18384
-- #203 area 203 @ 16848,-4816
-- #204 area 204 @ -22960,-27792
-- #205 area 205 @ -14128,560
-- #206 area 206 @ 2416,11184
-- #207 area 207 @ -3664,15568
-- #208 area 208 @ 12496,-4944
-- #209 area 209 @ -5424,-11984
-- #210 area 210 @ -22832,-14256
-- #211 area 211 @ -10416,17872
-- #212 area 212 @ -80,-31984
-- #213 area 213 @ 19504,2640
-- #214 area 214 @ -208,-23504
-- #215 area 215 @ 12496,15280
-- #216 area 216 @ -14928,-15408
-- #217 area 217 @ 18000,-12976
-- #218 area 218 @ 14608,-20944
-- #219 area 219 @ -18480,-30832
-- #220 area 220 @ 18224,-4688
-- #221 area 221 @ 18608,-720
-- #222 area 222 @ -1840,-9904
-- #223 area 223 @ 18896,-7728
-- #224 area 224 @ -8144,9520
-- #225 area 225 @ 4144,-27440
-- #226 area 226 @ -2608,-1616
-- #227 area 227 @ 20912,-29520
-- #228 area 228 @ 8112,7376
-- #229 area 229 @ 3408,-14640
-- #230 area 230 @ -7376,-15920
-- #231 area 231 @ -13264,-20272
-- #232 area 232 @ 20656,-26384
-- #233 area 233 @ 14992,10192
-- #234 area 234 @ 19760,10928
-- #235 area 235 @ -20080,-17616
-- #236 area 236 @ -19184,-10352
-- #237 area 237 @ 11856,-17360
-- #238 area 238 @ 9712,-15184
-- #239 area 239 @ 8528,-20688
-- #240 area 240 @ -17232,-18608
-- #241 area 241 @ -4816,20176
-- #242 area 242 @ 21680,10960
-- #243 area 243 @ -16464,14128
-- #244 area 244 @ -17968,-11184
-- #245 area 245 @ -3120,18736
-- #246 area 246 @ 19792,-7984
-- #247 area 247 @ -18480,3664
-- #248 area 248 @ 17840,6832
-- #249 area 249 @ 19440,-20048
-- #250 area 250 @ -11216,-17360
-- #251 area 251 @ -11952,-6416
-- #252 area 252 @ 12464,-12752
-- #253 area 253 @ -13744,-336
-- #254 area 254 @ -24304,21264
-- #255 area 255 @ 10320,-23760
-- #256 area 256 @ -5968,1616
-- #257 area 257 @ -5808,-30032
-- #258 area 258 @ 14672,9776
-- #259 area 259 @ 18448,-24912
-- #260 area 260 @ 17168,17552
+- #180 area 180 @ 5904,12496
+- #181 area 181 @ -13232,-8784
+- #182 area 182 @ -9904,-17840
+- #183 area 183 @ -9936,4656
+- #184 area 184 @ -4784,24144
+- #185 area 185 @ 17680,-22064
+- #186 area 186 @ 6448,6096
+- #187 area 187 @ 15568,19504
+- #188 area 188 @ 5680,-24784
+- #189 area 189 @ -23024,-26544
+- #190 area 190 @ 10896,12496
+- #191 area 191 @ -1200,1200
+- #192 area 192 @ 20400,-23632
+- #193 area 193 @ -28016,-23440
+- #194 area 194 @ -25520,16112
+- #195 area 195 @ -24720,-23056
+- #196 area 196 @ 464,2640
+- #197 area 197 @ 21040,16048
+- #198 area 198 @ -6608,-10288
+- #199 area 199 @ -20528,12624
+- #200 area 200 @ -22992,-5872
+- #201 area 201 @ -48,24112
+- #202 area 202 @ 3504,4944
+- #203 area 203 @ -18896,-30640
+- #204 area 204 @ 19504,-18384
+- #205 area 205 @ 16848,-4816
+- #206 area 206 @ -22960,-27792
+- #207 area 207 @ -14128,560
+- #208 area 208 @ 2416,11184
+- #209 area 209 @ -3664,15568
+- #210 area 210 @ 12496,-4944
+- #211 area 211 @ -5424,-11984
+- #212 area 212 @ -22832,-14256
+- #213 area 213 @ -10416,17872
+- #214 area 214 @ -80,-31984
+- #215 area 215 @ 19504,2640
+- #216 area 216 @ -208,-23504
+- #217 area 217 @ 12496,15280
+- #218 area 218 @ -14928,-15408
+- #219 area 219 @ 18000,-12976
+- #220 area 220 @ 14608,-20944
+- #221 area 221 @ -18480,-30832
+- #222 area 222 @ 18224,-4688
+- #223 area 223 @ 18608,-720
+- #224 area 224 @ -1840,-9904
+- #225 area 225 @ 18896,-7728
+- #226 area 226 @ -8144,9520
+- #227 area 227 @ 4144,-27440
+- #228 area 228 @ -2608,-1616
+- #229 area 229 @ 20912,-29520
+- #230 area 230 @ 8112,7376
+- #231 area 231 @ 3408,-14640
+- #232 area 232 @ -7376,-15920
+- #233 area 233 @ -13264,-20272
+- #234 area 234 @ 20656,-26384
+- #235 area 235 @ 14992,10192
+- #236 area 236 @ 19760,10928
+- #237 area 237 @ -20080,-17616
+- #238 area 238 @ -19184,-10352
+- #239 area 239 @ 11856,-17360
+- #240 area 240 @ 9712,-15184
+- #241 area 241 @ 8528,-20688
+- #242 area 242 @ -17232,-18608
+- #243 area 243 @ -4816,20176
+- #244 area 244 @ 21680,10960
+- #245 area 245 @ -16464,14128
+- #246 area 246 @ -17968,-11184
+- #247 area 247 @ -3120,18736
+- #248 area 248 @ 19792,-7984
+- #249 area 249 @ -18480,3664
+- #250 area 250 @ 17840,6832
+- #251 area 251 @ 19440,-20048
+- #252 area 252 @ -11216,-17360
+- #253 area 253 @ -11952,-6416
+- #254 area 254 @ 12464,-12752
+- #255 area 255 @ -13744,-336
+- #256 area 256 @ -24304,21264
+- #257 area 257 @ 10320,-23760
+- #258 area 258 @ -5968,1616
+- #259 area 259 @ -5808,-30032
+- #260 area 260 @ 14672,9776
+- #261 area 261 @ 18448,-24912
+- #262 area 262 @ 17168,17552
 
 ## All edges (A <-> B, walking cost, where the two areas touch)
 
@@ -198,261 +199,260 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Redridge Mountains <-> Burning Steppes: 3124 via 14992,-12976
 - Redridge Mountains <-> Duskwood: 3508 via 13008,-14992
 - Redridge Mountains <-> Swamp of Sorrows: 3682 via 16144,-14512
-- Redridge Mountains <-> area 217: 4358 via 16464,-13968
-- Redridge Mountains <-> area 252: 3665 via 12560,-14256
+- Redridge Mountains <-> area 219: 4358 via 16464,-13968
+- Redridge Mountains <-> area 254: 3665 via 12560,-14256
 - Dragonblight <-> Crystalsong Forest: 3269 via -336,18640
 - Dragonblight <-> Drak'Tharon Keep: 4242 via 848,18416
 - Dragonblight <-> Venture Bay: 3620 via 912,16560
-- Dragonblight <-> area 207: 3796 via -2192,16336
-- Dragonblight <-> area 245: 3145 via -2032,17648
+- Dragonblight <-> area 209: 3796 via -2192,16336
+- Dragonblight <-> area 247: 3145 via -2032,17648
 - Echo Isles <-> Dustwallow Marsh: 2954 via -7984,-6640
 - Echo Isles <-> Durotar: 2817 via -8400,-4368
 - Azshara Coast <-> Winterspring: 5105 via -7760,6384
 - Azshara Coast <-> Eldarath: 3849 via -7248,4208
 - Ruins of Ahn'Qiraj <-> Silithus: 2761 via -17648,-14800
-- Ruins of Ahn'Qiraj <-> area 240: 3194 via -18192,-17424
+- Ruins of Ahn'Qiraj <-> area 242: 3194 via -18192,-17424
 - Feathermoon <-> Isle of Dread: 2950 via -20656,-10032
-- Feathermoon <-> area 236: 3307 via -19760,-9520
+- Feathermoon <-> area 238: 3307 via -19760,-9520
 - Alcaz Isle <-> Dustwallow Marsh: 3801 via -7408,-7408
-- Alcaz Isle <-> area 196: 4252 via -7120,-8400
+- Alcaz Isle <-> area 198: 4252 via -7120,-8400
 - Dalaran <-> Southshore: 4902 via 9520,3632
 - Dalaran <-> Silverpine Forest: 5044 via 9008,3728
 - Eredath <-> Antoran Wastes: 4617 via 20848,-27056
 - Sholazar Basin <-> En'Kilah: 4261 via -7184,18800
 - Sholazar Basin <-> Icecrown Glacier: 3544 via -6288,21776
-- Sholazar Basin <-> area 241: 3235 via -6192,20848
+- Sholazar Basin <-> area 243: 3235 via -6192,20848
 - Temple of Ahn'Qiraj <-> Tunnels of Ahn'Qiraj: 3088 via -22672,-17968
-- Temple of Ahn'Qiraj <-> area 235: 3341 via -21584,-17456
+- Temple of Ahn'Qiraj <-> area 237: 3341 via -21584,-17456
 - Howling Fjords <-> Venture Bay: 4898 via 4944,16016 (rocks 0)
-- Howling Fjords <-> area 179: 2675 via 6032,13744 (rocks 5)
-- Antoran Wastes <-> area 227: 3396 via 19824,-28816
-- Antoran Wastes <-> area 232: 3289 via 19376,-26192
-- Antoran Wastes <-> area 259: 3107 via 19152,-26192
+- Howling Fjords <-> area 180: 2675 via 6032,13744 (rocks 5)
+- Antoran Wastes <-> area 229: 3396 via 19824,-28816
+- Antoran Wastes <-> area 234: 3289 via 19376,-26192
+- Antoran Wastes <-> area 261: 3107 via 19152,-26192
 - Grizzly Hills <-> Zul'Drak: 3448 via 5296,20144
 - Grizzly Hills <-> Drak'Tharon Keep: 4028 via 4176,19728 (rocks 10)
 - Grizzly Hills <-> Venture Bay: 4011 via 4240,17424 (rocks 0)
 - Borean Tundra <-> En'Kilah: 3939 via -6640,17040
-- Borean Tundra <-> area 207: 4385 via -5712,15824
-- Borean Tundra <-> area 211: 3661 via -9104,16880
+- Borean Tundra <-> area 209: 4385 via -5712,15824
+- Borean Tundra <-> area 213: 3661 via -9104,16880
 - Zul'Drak <-> Drak'Tharon Keep: 4209 via 4368,20112 (rocks 10)
 - Nath'raxas Hold <-> Krokuun: 4339 via 20752,-30992
-- Krokuun <-> area 227: 4390 via 21584,-29232
+- Krokuun <-> area 229: 4390 via 21584,-29232
 - Desolace <-> Feralas: 3092 via -19376,-5136
 - Desolace <-> Ranazjar Isle: 2545 via -19824,-2928
 - Desolace <-> Windshear Crossing: 4664 via -18320,-1712
 - Crystalsong Forest <-> Storm Peaks: 4889 via 1520,21744
 - Crystalsong Forest <-> Drak'Tharon Keep: 2847 via 1008,20048
 - Crystalsong Forest <-> Mord’rethar: 2503 via -1104,21232
-- Crystalsong Forest <-> area 199: 4220 via -240,22352 (rocks 9)
-- Crystalsong Forest <-> area 245: 4018 via -1392,18960
+- Crystalsong Forest <-> area 201: 4220 via -240,22352 (rocks 9)
+- Crystalsong Forest <-> area 247: 4018 via -1392,18960
 - Feralas <-> Dire Maul: 3732 via -18352,-7984
-- Feralas <-> area 236: 4227 via -18832,-8464
+- Feralas <-> area 238: 4227 via -18832,-8464
 - Hellfire Peninsula <-> East-Zangarmarsh: 3929 via -720,-26192
-- Hellfire Peninsula <-> area 187: 5097 via 3344,-25264
-- Hellfire Peninsula <-> area 225: 3491 via 2480,-27152
+- Hellfire Peninsula <-> area 188: 5097 via 3344,-25264
+- Hellfire Peninsula <-> area 227: 3491 via 2480,-27152
 - Nordrassil <-> Shrine to Malorne: 2347 via -10704,9840
 - Moonglade <-> Felwood: 3640 via -13744,10032
 - Moonglade <-> Auberdine: 3861 via -15376,10960
 - Northern Barrens <-> Southern Barrens: 3075 via -12080,-3632
 - Northern Barrens <-> Ratchet: 2810 via -11728,-3536
 - Northern Barrens <-> Durotar: 3525 via -10160,-2352
-- Northern Barrens <-> area 253: 3069 via -13136,-1616
+- Northern Barrens <-> area 255: 3069 via -13136,-1616
 - Southern Barrens <-> Ratchet: 2649 via -11824,-4272
 - Southern Barrens <-> Windshear Crossing: 5315 via -14352,-2736
 - Southern Barrens <-> Mulgore: 3248 via -13936,-6000
-- Southern Barrens <-> area 180: 4133 via -13136,-6800
-- Southern Barrens <-> area 251: 3347 via -11472,-5296
-- Southern Barrens <-> area 253: 5137 via -14160,-2736
+- Southern Barrens <-> area 181: 4133 via -13136,-6800
+- Southern Barrens <-> area 253: 3347 via -11472,-5296
+- Southern Barrens <-> area 255: 5137 via -14160,-2736
 - Stonemaul <-> Dustwallow Marsh: 2848 via -9488,-8592
-- Stonemaul <-> area 180: 3194 via -11888,-8368 (rocks 2)
-- Stonemaul <-> area 251: 3341 via -11696,-7984
+- Stonemaul <-> area 181: 3194 via -11888,-8368 (rocks 2)
+- Stonemaul <-> area 253: 3341 via -11696,-7984
 - Stonetalon Peak <-> Windshear Crossing: 3702 via -17648,16
 - Alterac Mountains <-> Strahnbrad: 1982 via 12080,5776
 - Tanaris <-> Un'Goro Crater: 3715 via -12496,-15344
 - Tanaris <-> Gadgetzan: 2937 via -9872,-14192
 - Tanaris <-> Zul'Farrak: 2867 via -11056,-14096
-- Tanaris <-> area 230: 3630 via -8912,-15216
-- Tanaris <-> area 250: 3204 via -11632,-16560
+- Tanaris <-> area 232: 3630 via -8912,-15216
+- Tanaris <-> area 252: 3204 via -11632,-16560
 - Thousand Needles <-> Spinebark Grove: 2468 via -13552,-10832
 - Thousand Needles <-> Shimmering Flats: 3289 via -11024,-11184
-- Thousand Needles <-> area 180: 2105 via -13040,-9776
+- Thousand Needles <-> area 181: 2105 via -13040,-9776
 - Un'Goro Crater <-> Spinebark Grove: 3300 via -14160,-12752
 - Un'Goro Crater <-> Uldum: 4346 via -13360,-15824
-- Un'Goro Crater <-> area 250: 4617 via -12848,-16048
+- Un'Goro Crater <-> area 252: 4617 via -12848,-16048
 - Winterspring <-> Ascendant's Rise: 2780 via -10768,6480
 - West-Zangarmarsh <-> Nagrand: 3757 via -4368,-26896
 - West-Zangarmarsh <-> Blade's Edge Mountains: 3677 via -3024,-23760
 - West-Zangarmarsh <-> East-Zangarmarsh: 2046 via -3344,-25872
 - Terokkar Forest <-> Shattrath City: 2757 via -112,-28944
 - Terokkar Forest <-> Shadowmoon Valley: 2642 via 2160,-29904
-- Terokkar Forest <-> area 212: 3642 via 976,-30640
+- Terokkar Forest <-> area 214: 3642 via 976,-30640
 - Nagrand <-> Halaar: 2310 via -3408,-28880
 - Nagrand <-> East-Zangarmarsh: 2177 via -2384,-27088
 - Nagrand <-> Kil'sorrow Fortress: 3960 via -2544,-29712
-- Storm Peaks <-> area 199: 3984 via 1648,23472
+- Storm Peaks <-> area 201: 3984 via 1648,23472
 - Balor <-> Tiragarde Sound: 4712 via 4720,-10960
-- Balor <-> area 229: 3380 via 4464,-13424
+- Balor <-> area 231: 3380 via 4464,-13424
 - Azsuna <-> Val'sharah: 2960 via -2416,6448
 - Azsuna <-> Suramar: 2981 via -944,5488
-- Azsuna <-> area 194: 4614 via -1616,3024
+- Azsuna <-> area 196: 4614 via -1616,3024
 - Tyr's Hand <-> Havenshire: 1631 via 20496,8560
 - Tyr's Hand <-> Corin's Crossing: 3192 via 18704,8080
-- The Abyss <-> area 226: 4082 via -3472,48
-- Nazjatar <-> area 226: 3398 via -2576,-2992
+- The Abyss <-> area 228: 4082 via -3472,48
+- Nazjatar <-> area 228: 3398 via -2576,-2992
 - Boralus <-> Tiragarde Sound: 1413 via 4944,-8016
 - Boralus <-> Stormsong Valley: 3490 via 3600,-6128
-- Maelstrom <-> area 190: 4475 via 48,80
-- Maelstrom <-> area 226: 3414 via -1200,-2288
+- Maelstrom <-> area 191: 4475 via 48,80
+- Maelstrom <-> area 228: 3414 via -1200,-2288
 - Southshore <-> Durnholde: 3594 via 12112,2864
 - Southshore <-> Strahnbrad: 4289 via 11600,3824
 - Southshore <-> Silverpine Forest: 5121 via 8944,2960
 - Val'sharah <-> Tomb of Sargeras: 4073 via -752,8816
 - Val'sharah <-> Suramar: 3332 via -1232,6864
 - Stormheim <-> Suramar: 3284 via 1584,6960
-- Stormheim <-> area 200: 4062 via 2224,6448
-- Stormheim <-> area 206: 3769 via 1712,9584
+- Stormheim <-> area 202: 4062 via 2224,6448
+- Stormheim <-> area 208: 3769 via 1712,9584
 - Tomb of Sargeras <-> Suramar: 4776 via -272,8528
-- Dustwallow Marsh <-> area 251: 3230 via -10544,-6704
-- Tunnels of Ahn'Qiraj <-> area 235: 3289 via -21392,-18416
-- Suramar <-> area 194: 4303 via 784,4432
-- Suramar <-> area 200: 3973 via 1520,4912
+- Dustwallow Marsh <-> area 253: 3230 via -10544,-6704
+- Tunnels of Ahn'Qiraj <-> area 237: 3289 via -21392,-18416
+- Suramar <-> area 196: 4303 via 784,4432
+- Suramar <-> area 202: 3973 via 1520,4912
 - Dragonmaw Port <-> Northern Highlands: 2066 via 20592,-2448
 - Quel'Danas <-> Silvermoon: 3763 via 18704,19408
-- Quel'Danas <-> area 260: 4295 via 18256,19216
-- Teldrassil <-> area 197: 4031 via -18928,13616
+- Quel'Danas <-> area 262: 4295 via 18256,19216
+- Teldrassil <-> area 199: 4031 via -18928,13616
 - Area 52 <-> Blade's Edge Mountains: 4456 via -912,-21488
 - Area 52 <-> Farahlon: 3119 via 2256,-21392
 - Area 52 <-> Netherstorm: 3526 via 1456,-20336
 - Shattrath City <-> East-Zangarmarsh: 3540 via -1232,-27280
-- Shattrath City <-> area 212: 3845 via -912,-30416
+- Shattrath City <-> area 214: 3845 via -912,-30416
 - Andorhal <-> Lordaeron City: 4793 via 10352,9360
 - Andorhal <-> Strahnbrad: 3337 via 12944,7088
 - Andorhal <-> Hearthglen: 2894 via 12528,9776
-- Andorhal <-> area 233: 3302 via 13584,9648
-- Andorhal <-> area 258: 3125 via 13744,9040
+- Andorhal <-> area 235: 3302 via 13584,9648
+- Andorhal <-> area 260: 3125 via 13744,9040
 - Northern Badlands <-> Loch Modan: 3852 via 16304,-7568
 - Northern Badlands <-> Searing Gorge: 2825 via 15568,-9136
 - Northern Badlands <-> Fuselight: 3230 via 17936,-10416
-- Northern Badlands <-> area 203: 4649 via 17136,-7024
+- Northern Badlands <-> area 205: 4649 via 17136,-7024
 - Nethergarde Keep <-> Swamp of Sorrows: 2320 via 17456,-16912
 - Nethergarde Keep <-> Blasted Lands: 2845 via 17104,-18256
-- Nethergarde Keep <-> area 202: 3969 via 17872,-18800
+- Nethergarde Keep <-> area 204: 3969 via 17872,-18800
 - Burning Steppes <-> Blackrock Depths: 3360 via 14256,-11568
-- Burning Steppes <-> area 217: 4573 via 16208,-13328
+- Burning Steppes <-> area 219: 4573 via 16208,-13328
 - Caer Darrow <-> Hinterlands: 3640 via 15152,5712
 - Caer Darrow <-> Strahnbrad: 4249 via 14320,5936
 - Deadwind Pass <-> Duskwood: 2733 via 13264,-16560
 - Deadwind Pass <-> Swamp of Sorrows: 3930 via 15824,-16496
 - Dun Modr <-> Wetlands: 2433 via 15184,-2000
 - Dun Modr <-> Arathi Highlands: 3134 via 15792,368 (rocks 4)
-- Dun Modr <-> area 221: 3740 via 16880,-1104
+- Dun Modr <-> area 223: 3740 via 16880,-1104
 - Dun Morogh <-> Ironforge: 3006 via 10992,-5968
 - Dun Morogh <-> Gnomeregan: 3543 via 9200,-6480
-- Dun Morogh <-> area 208: 3732 via 12176,-6544
+- Dun Morogh <-> area 210: 3732 via 12176,-6544
 - Durnholde <-> Hinterlands: 2980 via 14992,3760
 - Durnholde <-> Stromgarde: 2889 via 13648,2256
 - Durnholde <-> Strahnbrad: 3143 via 12400,4080
 - Duskwood <-> Elwynn Forest: 3660 via 11664,-14864
 - Duskwood <-> Stranglethorn: 4878 via 11408,-18128
-- Duskwood <-> area 237: 4923 via 11600,-17968
-- Duskwood <-> area 238: 3206 via 10640,-16240
+- Duskwood <-> area 239: 4923 via 11600,-17968
+- Duskwood <-> area 240: 3206 via 10640,-16240
 - Elwynn Forest <-> Stormwind City: 3220 via 9904,-12272
 - Elwynn Forest <-> Westfall: 4042 via 8816,-14960
-- Elwynn Forest <-> area 238: 3448 via 11280,-14864
-- Elwynn Forest <-> area 252: 2923 via 11440,-13488
+- Elwynn Forest <-> area 240: 3448 via 11280,-14864
+- Elwynn Forest <-> area 254: 2923 via 11440,-13488
 - Grim Batol <-> Northern Highlands: 3636 via 18992,-3056
 - Grim Batol <-> Southern Highlands: 3558 via 18768,-3440
-- Grim Batol <-> area 221: 3485 via 17840,-2000
+- Grim Batol <-> area 223: 3485 via 17840,-2000
 - Hinterlands <-> Strahnbrad: 4718 via 14352,5488
 - Hinterlands <-> Jintha'Alor : 2282 via 17360,4272
 - Hinterlands <-> Arathi Highlands: 2591 via 16208,3056
-- Hinterlands <-> area 248: 3113 via 17296,5488
+- Hinterlands <-> area 250: 3113 via 17296,5488
 - Tranquillien <-> Eversong Woods: 2384 via 18384,14736
 - Tranquillien <-> Zul'Aman: 4141 via 19952,12272
-- Tranquillien <-> area 195: 4356 via 20080,14224
-- Tranquillien <-> area 234: 3773 via 18576,11760
+- Tranquillien <-> area 197: 4356 via 20080,14224
+- Tranquillien <-> area 236: 3773 via 18576,11760
 - Loch Modan <-> Wetlands: 4355 via 15088,-4016
-- Loch Modan <-> area 203: 3514 via 16560,-6352
-- Loch Modan <-> area 208: 3742 via 13360,-6288
+- Loch Modan <-> area 205: 3514 via 16560,-6352
+- Loch Modan <-> area 210: 3742 via 13360,-6288
 - Lordaeron City <-> Hearthglen: 4375 via 10320,9808
 - Lordaeron City <-> Brill: 2666 via 8848,9808
-- Eversong Woods <-> area 195: 4303 via 19568,16880
-- Eversong Woods <-> area 260: 3013 via 18256,17392
+- Eversong Woods <-> area 197: 4303 via 19568,16880
+- Eversong Woods <-> area 262: 3013 via 18256,17392
 - Searing Gorge <-> Blackrock Depths: 3604 via 12848,-9072
-- Silvermoon <-> area 260: 3549 via 18832,17744
+- Silvermoon <-> area 262: 3549 via 18832,17744
 - Stranglethorn <-> Jaguero Isle: 4267 via 12240,-22192
 - Stranglethorn <-> Zul'Gurub: 4111 via 11888,-18736
 - Stranglethorn <-> Booty Bay: 2841 via 10704,-21712
-- Stranglethorn <-> area 218: 4371 via 12848,-21744
-- Stranglethorn <-> area 237: 4290 via 11856,-18608
-- Stranglethorn <-> area 239: 3205 via 9904,-21200
-- Stratholme <-> area 215: 4230 via 13488,13616
-- Stratholme <-> area 233: 3284 via 14896,11760
+- Stranglethorn <-> area 220: 4371 via 12848,-21744
+- Stranglethorn <-> area 239: 4290 via 11856,-18608
+- Stranglethorn <-> area 241: 3205 via 9904,-21200
+- Stratholme <-> area 217: 4230 via 13488,13616
+- Stratholme <-> area 235: 3284 via 14896,11760
 - Stromgarde <-> Arathi Highlands: 2583 via 14608,2000
-- Swamp of Sorrows <-> area 202: 3978 via 19120,-16560
-- Swamp of Sorrows <-> area 217: 3519 via 18512,-14544
+- Swamp of Sorrows <-> area 204: 3978 via 19120,-16560
+- Swamp of Sorrows <-> area 219: 3519 via 18512,-14544
 - Tirisfal Glades <-> Brill: 2499 via 7792,10704
-- Tirisfal Glades <-> area 179: 2739 via 5904,11120 (rocks 1)
-- Tirisfal Glades <-> area 228: 3389 via 6992,8496
-- Westfall <-> area 238: 3199 via 8752,-16400
+- Tirisfal Glades <-> area 180: 2739 via 5904,11120 (rocks 1)
+- Tirisfal Glades <-> area 230: 3389 via 6992,8496
+- Westfall <-> area 240: 3199 via 8752,-16400
 - Wetlands <-> Menethil Harbour: 2547 via 13104,-2992
-- Zul'Aman <-> area 195: 4757 via 20880,13808
-- Zul'Aman <-> area 242: 3163 via 20528,11888
+- Zul'Aman <-> area 197: 4757 via 20880,13808
+- Zul'Aman <-> area 244: 3163 via 20528,11888
 - Silverpine Forest <-> Gilneas City: 4216 via 7024,2160
-- Silverpine Forest <-> area 228: 4143 via 7088,5840
+- Silverpine Forest <-> area 230: 4143 via 7088,5840
 - Hearthglen <-> Brill: 3846 via 10288,10480
-- Hearthglen <-> area 233: 3379 via 13328,10224
+- Hearthglen <-> area 235: 3379 via 13328,10224
 - Halaar <-> Kil'sorrow Fortress: 2847 via -3440,-30000
-- Halaar <-> area 257: 3072 via -5200,-28848
+- Halaar <-> area 259: 3072 via -5200,-28848
 - Silvermyst Island <-> Azuremyst Isle: 2196 via -20784,9168
-- Silvermyst Island <-> Exodar Regalis: 3613 via -21904,7408
 - Silvermyst Island <-> Darkshore: 3624 via -18736,7760
 - Jaguero Isle <-> Booty Bay: 4095 via 11824,-22928
-- Jaguero Isle <-> area 218: 3522 via 13424,-22256
-- Jaguero Isle <-> area 255: 3048 via 11792,-23856
+- Jaguero Isle <-> area 220: 3522 via 13424,-22256
+- Jaguero Isle <-> area 257: 3048 via 11792,-23856
 - Blade's Edge Mountains <-> Netherstorm: 4186 via -1936,-20400
-- Blade's Edge Mountains <-> area 214: 3663 via -1584,-22384
-- Jintha'Alor  <-> area 213: 3623 via 18768,4144
-- Jintha'Alor  <-> area 248: 3400 via 17808,5168
+- Blade's Edge Mountains <-> area 216: 3663 via -1584,-22384
+- Jintha'Alor  <-> area 215: 3623 via 18768,4144
+- Jintha'Alor  <-> area 250: 3400 via 17808,5168
 - Silithus <-> Spinebark Grove: 3744 via -15952,-12528
 - Silithus <-> Isle of Dread: 5225 via -19216,-12656
-- Silithus <-> area 216: 3559 via -16496,-14832
+- Silithus <-> area 218: 3559 via -16496,-14832
 - Northern Highlands <-> Southern Highlands: 3470 via 19504,-3184
 - Highbank <-> Southern Highlands: 3967 via 21136,-6192
-- Highbank <-> area 246: 3123 via 21136,-7504
-- Fuselight <-> area 217: 3530 via 18416,-11440
+- Highbank <-> area 248: 3123 via 21136,-7504
+- Fuselight <-> area 219: 3530 via 18416,-11440
 - The Vortex Pinnacle <-> Lost City of the Tol'vir: 3084 via -11632,-21104
-- Throne of the Four Winds <-> area 231: 5022 via -14608,-20560
+- Throne of the Four Winds <-> area 233: 5022 via -14608,-20560
 - Astranaar <-> Southern Ashenvale: 5692 via -13072,2576
 - Astranaar <-> Grove of the Ancients: 3302 via -16400,3056
 - Astranaar <-> Northern Ashenvale: 4018 via -14832,3024
 - Astranaar <-> Windshear Crossing: 3761 via -15184,240
-- Astranaar <-> area 205: 3837 via -14000,1232
-- Astranaar <-> area 247: 3596 via -17168,2544
-- East-Zangarmarsh <-> area 214: 3596 via -1424,-24592
+- Astranaar <-> area 207: 3837 via -14000,1232
+- Astranaar <-> area 249: 3596 via -17168,2544
+- East-Zangarmarsh <-> area 216: 3596 via -1424,-24592
 - Southern Ashenvale <-> Eldarath: 2430 via -9520,2640
-- Southern Ashenvale <-> area 205: 4521 via -12336,1104
-- Southern Ashenvale <-> area 253: 4792 via -11984,624
+- Southern Ashenvale <-> area 207: 4521 via -12336,1104
+- Southern Ashenvale <-> area 255: 4792 via -11984,624
 - Spinebark Grove <-> Dire Maul: 3902 via -15728,-9776
-- Spinebark Grove <-> area 180: 4312 via -15152,-9392
-- Spinebark Grove <-> area 244: 4198 via -16336,-10384
+- Spinebark Grove <-> area 181: 4312 via -15152,-9392
+- Spinebark Grove <-> area 246: 4198 via -16336,-10384
 - Drustvar <-> Tiragarde Sound: 3077 via 3312,-8688
 - Drustvar <-> Stormsong Valley: 4091 via 2736,-7600
 - Nazmir <-> Zuldazar: 2442 via -2896,-14736
-- Nazmir <-> area 209: 3710 via -4048,-13104
+- Nazmir <-> area 211: 3710 via -4048,-13104
 - Grove of the Ancients <-> Northern Ashenvale: 4568 via -15536,3120
 - Grove of the Ancients <-> Darkshore: 2590 via -17488,5520
-- Grove of the Ancients <-> area 247: 3118 via -17200,3152
-- Dire Maul <-> area 180: 4153 via -15216,-9104
-- Dire Maul <-> area 236: 3260 via -18224,-9232
-- Dire Maul <-> area 244: 3157 via -17328,-9904
+- Grove of the Ancients <-> area 249: 3118 via -17200,3152
+- Dire Maul <-> area 181: 4153 via -15216,-9104
+- Dire Maul <-> area 238: 3260 via -18224,-9232
+- Dire Maul <-> area 246: 3157 via -17328,-9904
 - Maw of Gor'ma <-> Twilight Landing: 4130 via -26256,-8784
 - Twilight Landing <-> Ny'alotha, the Waking City: 5350 via -25296,-6800
 - Twilight Landing <-> Isle of Dread: 3936 via -22864,-10384
-- Twilight Landing <-> area 198: 4026 via -24400,-7152
-- Ny'alotha, the Waking City <-> area 198: 4025 via -24848,-5488
+- Twilight Landing <-> area 200: 4026 via -24400,-7152
+- Ny'alotha, the Waking City <-> area 200: 4025 via -24848,-5488
 - Farahlon <-> Netherstorm: 3379 via 1584,-19728
-- Zul'Gurub <-> area 237: 3231 via 12560,-18448
+- Zul'Gurub <-> area 239: 3231 via 12560,-18448
 - Gilneas City <-> Duskhaven: 3090 via 6352,-560
 - Gilneas City <-> Keel Harbor: 3282 via 5872,1040
 - Gilneas City <-> Tempest Reach: 3380 via 8016,112
@@ -461,101 +461,102 @@ Check suspicious ones in the editor at the 'via' point: a wall, cliff or mountai
 - Northern Ashenvale <-> Felwood: 3774 via -14320,6640
 - Northern Ashenvale <-> Ascendant's Rise: 3298 via -13392,5424
 - Northern Ashenvale <-> Darkshore: 3494 via -16304,5776
-- Northern Ashenvale <-> area 182: 5454 via -12528,4272
+- Northern Ashenvale <-> area 183: 5454 via -12528,4272
 - Drak'Tharon Keep <-> Venture Bay: 3615 via 2608,18192
 - Felwood <-> Shrine to Malorne: 2964 via -12656,8624
 - Uldum <-> Lost City of the Tol'vir: 3435 via -13360,-18608
-- Uldum <-> area 231: 3359 via -13776,-18832
-- Uldum <-> area 250: 3532 via -12944,-17264
+- Uldum <-> area 233: 3359 via -13776,-18832
+- Uldum <-> area 252: 3532 via -12944,-17264
 - Icecrown Citadel <-> Icecrown Glacier: 2929 via -4368,21872
 - Mord’rethar <-> Icecrown Glacier: 3624 via -3472,22704
-- Mord’rethar <-> area 183: 5247 via -2640,24368
-- Mord’rethar <-> area 199: 4361 via -1424,23568
-- Arathi Highlands <-> area 213: 3908 via 17808,1936
-- Booty Bay <-> area 239: 3247 via 9712,-21712
-- Booty Bay <-> area 255: 3836 via 11472,-22960
-- Southern Highlands <-> area 220: 3493 via 19120,-5840
-- Southern Highlands <-> area 223: 3432 via 19408,-6256
-- Southern Highlands <-> area 246: 4303 via 20592,-6608
-- En'Kilah <-> area 207: 3764 via -4656,17008
+- Mord’rethar <-> area 184: 5247 via -2640,24368
+- Mord’rethar <-> area 201: 4361 via -1424,23568
+- Arathi Highlands <-> area 215: 3908 via 17808,1936
+- Booty Bay <-> area 241: 3247 via 9712,-21712
+- Booty Bay <-> area 257: 3836 via 11472,-22960
+- Southern Highlands <-> area 222: 3493 via 19120,-5840
+- Southern Highlands <-> area 225: 3432 via 19408,-6256
+- Southern Highlands <-> area 248: 4303 via 20592,-6608
+- En'Kilah <-> area 209: 3764 via -4656,17008
 - Auberdine <-> Darkshore: 3662 via -17200,8432
-- Auberdine <-> area 197: 5602 via -18096,11792
+- Auberdine <-> area 199: 5602 via -18096,11792
 - Ascendant's Rise <-> Shrine to Malorne: 2878 via -12016,7824
-- Shrine to Malorne <-> area 224: 3431 via -9680,9040
-- Lost City of the Tol'vir <-> area 231: 1818 via -13264,-19664
-- Lost City of the Tol'vir <-> area 250: 3087 via -12336,-18480
-- Ratchet <-> area 251: 3370 via -11056,-5488
+- Shrine to Malorne <-> area 226: 3431 via -9680,9040
+- Lost City of the Tol'vir <-> area 233: 1818 via -13264,-19664
+- Lost City of the Tol'vir <-> area 252: 3087 via -12336,-18480
+- Ratchet <-> area 253: 3370 via -11056,-5488
 - Blackwald <-> Tempest Reach: 2758 via 8272,-2256
-- Kezan <-> area 222: 3466 via -720,-8784
+- Kezan <-> area 224: 3466 via -720,-8784
+- Exodar Regalis <-> area 194: 3619 via -25744,14576
 - Thunderbluff <-> Mulgore: 2075 via -15536,-5136
-- Icecrown Glacier <-> area 183: 1221 via -4816,24112
-- Icecrown Glacier <-> area 241: 3185 via -5296,21552
+- Icecrown Glacier <-> area 184: 1221 via -4816,24112
+- Icecrown Glacier <-> area 243: 3185 via -5296,21552
 - Eldarath <-> Orgrimmar Outskirts: 3880 via -7920,1264
-- Eldarath <-> area 256: 3047 via -7248,2256
-- Kil'sorrow Fortress <-> area 212: 3656 via -1648,-31344
-- Kil'sorrow Fortress <-> area 257: 3039 via -4720,-31024
-- Corin's Crossing <-> area 233: 3285 via 16240,9904
-- Corin's Crossing <-> area 234: 3282 via 18352,10352
-- Corin's Crossing <-> area 258: 3158 via 16080,9424
+- Eldarath <-> area 258: 3047 via -7248,2256
+- Kil'sorrow Fortress <-> area 214: 3656 via -1648,-31344
+- Kil'sorrow Fortress <-> area 259: 3039 via -4720,-31024
+- Corin's Crossing <-> area 235: 3285 via 16240,9904
+- Corin's Crossing <-> area 236: 3282 via 18352,10352
+- Corin's Crossing <-> area 260: 3158 via 16080,9424
 - Gadgetzan <-> Zul'Farrak: 3474 via -10352,-13744
-- Gadgetzan <-> area 230: 3348 via -8112,-14576
-- Isle of Dread <-> area 210: 3671 via -21584,-12976
-- Windshear Crossing <-> area 253: 4820 via -14384,-2288
-- Mulgore <-> area 180: 4296 via -13680,-6832
-- Blasted Lands <-> area 202: 4542 via 17552,-19216
-- Blasted Lands <-> area 218: 3517 via 15664,-19696
-- Blasted Lands <-> area 249: 4836 via 17552,-19632
+- Gadgetzan <-> area 232: 3348 via -8112,-14576
+- Isle of Dread <-> area 212: 3671 via -21584,-12976
+- Windshear Crossing <-> area 255: 4820 via -14384,-2288
+- Mulgore <-> area 181: 4296 via -13680,-6832
+- Blasted Lands <-> area 204: 4542 via 17552,-19216
+- Blasted Lands <-> area 220: 3517 via 15664,-19696
+- Blasted Lands <-> area 251: 4836 via 17552,-19632
 - Orgrimmar Outskirts <-> Durotar: 3892 via -8688,-1648
-- Orgrimmar Outskirts <-> area 256: 3783 via -7504,1392
+- Orgrimmar Outskirts <-> area 258: 3783 via -7504,1392
 - Eternal Palace <-> Heart of Azeroth: 4187 via -20592,-29008
-- Eternal Palace <-> area 201: 4185 via -20368,-29424
-- Eternal Palace <-> area 204: 3862 via -21648,-28336
+- Eternal Palace <-> area 203: 4185 via -20368,-29424
+- Eternal Palace <-> area 206: 3862 via -21648,-28336
 - Heart of Azeroth <-> Lightless Cavern: 3002 via -17616,-28144
 - Heart of Azeroth <-> Gishan Cavern: 2216 via -19856,-27280
-- Heart of Azeroth <-> area 201: 3970 via -19984,-29136
-- Heart of Azeroth <-> area 204: 4008 via -20976,-27792
-- Heart of Azeroth <-> area 219: 3512 via -18096,-29264
-- Gishan Cavern <-> area 188: 2885 via -20880,-26512
+- Heart of Azeroth <-> area 203: 3970 via -19984,-29136
+- Heart of Azeroth <-> area 206: 4008 via -20976,-27792
+- Heart of Azeroth <-> area 221: 3512 via -18096,-29264
+- Gishan Cavern <-> area 189: 2885 via -20880,-26512
 - Dark Iron Treasury <-> Siege Foundry: 1636 via -22736,23248
-- Dark Iron Treasury <-> Tavern District: 3439 via -20496,22928
-- Dark Iron Treasury <-> area 254: 3056 via -22992,21680
-- Siege Foundry <-> area 254: 3218 via -23184,22512
+- Dark Iron Treasury <-> Throne Room: 3439 via -20496,22928
+- Dark Iron Treasury <-> area 256: 3056 via -22992,21680
+- Siege Foundry <-> area 256: 3218 via -23184,22512
 - The Deadmines <-> Goblin Foundry: 2527 via -27120,-27376
 - The Deadmines <-> Ironclad Cove: 3627 via -25360,-28400
-- The Deadmines <-> area 192: 4433 via -26672,-25072
-- The Deadmines <-> area 193: 4351 via -24816,-25232
+- The Deadmines <-> area 193: 4433 via -26672,-25072
+- The Deadmines <-> area 195: 4351 via -24816,-25232
 - Goblin Foundry <-> Ironclad Cove: 3515 via -26736,-29456
-- area 181 <-> area 230: 3323 via -8624,-17008
-- area 184 <-> area 218: 3573 via 16016,-21808
-- area 184 <-> area 249: 3113 via 18576,-20912
-- area 185 <-> area 228: 3518 via 6448,7056
-- area 186 <-> area 260: 3264 via 16944,18928
-- area 187 <-> area 225: 3417 via 4848,-26192
-- area 188 <-> area 204: 3923 via -21552,-26896
-- area 189 <-> area 215: 3572 via 12144,13712
-- area 190 <-> area 226: 3399 via -2000,-208
-- area 191 <-> area 259: 3025 via 19472,-24784
-- area 192 <-> area 193: 4578 via -26544,-24272
-- area 194 <-> area 200: 4013 via 1872,3952
-- area 202 <-> area 249: 3501 via 18640,-19792
-- area 205 <-> area 253: 3579 via -12752,368
-- area 207 <-> area 245: 3658 via -2832,17008
-- area 218 <-> area 249: 5403 via 17040,-20400
-- area 220 <-> area 223: 3443 via 18640,-6128
-- area 223 <-> area 246: 2947 via 20400,-7408
-- area 232 <-> area 259: 3092 via 19536,-26000
-- area 233 <-> area 258: 3038 via 13808,9712
-- area 235 <-> area 240: 3278 via -18704,-18192 (rocks 8)
+- area 182 <-> area 232: 3323 via -8624,-17008
+- area 185 <-> area 220: 3573 via 16016,-21808
+- area 185 <-> area 251: 3113 via 18576,-20912
+- area 186 <-> area 230: 3518 via 6448,7056
+- area 187 <-> area 262: 3264 via 16944,18928
+- area 188 <-> area 227: 3417 via 4848,-26192
+- area 189 <-> area 206: 3923 via -21552,-26896
+- area 190 <-> area 217: 3572 via 12144,13712
+- area 191 <-> area 228: 3399 via -2000,-208
+- area 192 <-> area 261: 3025 via 19472,-24784
+- area 193 <-> area 195: 4578 via -26544,-24272
+- area 196 <-> area 202: 4013 via 1872,3952
+- area 204 <-> area 251: 3501 via 18640,-19792
+- area 207 <-> area 255: 3579 via -12752,368
+- area 209 <-> area 247: 3658 via -2832,17008
+- area 220 <-> area 251: 5403 via 17040,-20400
+- area 222 <-> area 225: 3443 via 18640,-6128
+- area 225 <-> area 248: 2947 via 20400,-7408
+- area 234 <-> area 261: 3092 via 19536,-26000
+- area 235 <-> area 260: 3038 via 13808,9712
+- area 237 <-> area 242: 3278 via -18704,-18192 (rocks 8)
 
 ## Edges behind rocks
 
 - Howling Fjords <-> Venture Bay (cost 4898, rock group 0)
-- Howling Fjords <-> area 179 (cost 2675, rock group 5)
+- Howling Fjords <-> area 180 (cost 2675, rock group 5)
 - Grizzly Hills <-> Drak'Tharon Keep (cost 4028, rock group 10)
 - Grizzly Hills <-> Venture Bay (cost 4011, rock group 0)
 - Zul'Drak <-> Drak'Tharon Keep (cost 4209, rock group 10)
-- Crystalsong Forest <-> area 199 (cost 4220, rock group 9)
-- Stonemaul <-> area 180 (cost 3194, rock group 2)
+- Crystalsong Forest <-> area 201 (cost 4220, rock group 9)
+- Stonemaul <-> area 181 (cost 3194, rock group 2)
 - Dun Modr <-> Arathi Highlands (cost 3134, rock group 4)
-- Tirisfal Glades <-> area 179 (cost 2739, rock group 1)
-- area 235 <-> area 240 (cost 3278, rock group 8)
+- Tirisfal Glades <-> area 180 (cost 2739, rock group 1)
+- area 237 <-> area 242 (cost 3278, rock group 8)

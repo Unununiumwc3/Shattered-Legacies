@@ -1,0 +1,91 @@
+{
+  "OldId": "nsth",
+  "NewId": "nZq1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Peroth'arn"
+    },
+    {
+      "Id": "upro",
+      "Type": 3,
+      "Value": "Peroth'arn"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Satyr lord)"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 1.6
+    },
+    {
+      "Id": "uhpm",
+      "Value": 2100
+    },
+    {
+      "Id": "umpm",
+      "Value": 500
+    },
+    {
+      "Id": "udef",
+      "Value": 5
+    },
+    {
+      "Id": "ua1b",
+      "Value": 52
+    },
+    {
+      "Id": "ua1d",
+      "Value": 2
+    },
+    {
+      "Id": "ua1s",
+      "Value": 10
+    },
+    {
+      "Id": "ufoo",
+      "Value": 0
+    },
+    {
+      "Id": "ugol",
+      "Value": 0
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "ulev",
+      "Value": 9
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "ACrk,ACsl"
+    },
+    {
+      "Id": "ubba",
+      "Value": 250
+    },
+    {
+      "Id": "ubdi",
+      "Value": 0
+    },
+    {
+      "Id": "ubsi",
+      "Value": 0
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Xavius' first follower, a satyr lord of the Nightmare."
+    }
+  ]
+}

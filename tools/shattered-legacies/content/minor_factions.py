@@ -189,15 +189,23 @@ def furbolgs():
          "units\\creeps\\FurbolgElder\\FurbolgElder", "BTNFurbolgElder.blp", "STR", "(Furbolg)",
          "Keeper of the Sacred Ancestral Totem. The tribes follow whoever proves worthy of holding it. Summon Bear, "
          "Entangling Roots, Healing Wave; ultimate Tranquility.", scale=1.3)
-    write("oZu1", "oalt", [s("unam", "Totem Lodge of Ursoc"), s("unsf", "(Furbolg)"), s("utra", "OZu0"),
-                           n("ufma", 30), n("ugol", 0), n("ulum", 0), r("usca", 1.6),
+    # 0.87.0 (maintainer): the lodge is the ENTRANCE of Timbermaw Hold, the furbolgs' den (Dungeons/VoidDungeons): a
+    # waygate (Awrp, like Shadowforge City); the Shrine of Ursoc inside is their HQ and altar
+    write("oZu1", "oalt", [s("unam", "Totem Lodge of Ursoc"), s("unsf", "(Furbolg)"), s("utra", ""),
+                           s("uabi", "Awrp"), n("ufma", 30), n("ugol", 0), n("ulum", 0), r("usca", 1.6),
                            s("umdl", "buildings\\other\\FurbolgHut2\\FurbolgHut2"),
                            s("upat", "PathTextures\\6x6SimpleSolid.tga"), s("uico", BTN + "BTNFurbolgElder.blp"),
-                           s("utub", "The lodge of the Sacred Ancestral Totem. Revives the Totem-Keeper; it cannot "
-                                     "be destroyed.")])
-    limits = [("OZu0", 1, "Support", "Nafien"), ("oZu1", 1, "Altar", "Totem Lodge of Ursoc")]
+                           s("utub", "The way down into Timbermaw Hold, the furbolgs' den. It cannot be destroyed.")])
+    write("oZu2", "oalt", [s("unam", "Shrine of Ursoc"), s("unsf", "(Furbolg)"), s("utra", "OZu0"),
+                           n("ufma", 30), n("ugol", 0), n("ulum", 0), r("usca", 2.2),
+                           s("umdl", "Doodads\\Ashenvale\\Props\\Totem\\Totem"),
+                           s("upat", "PathTextures\\4x4SimpleSolid.tga"), s("uico", BTN + "BTNFurbolgElder.blp"),
+                           s("utub", "The Sacred Ancestral Totem and the Claw of Ursoc, deep in Timbermaw Hold. "
+                                     "Revives the Totem-Keeper; it cannot be destroyed.")])
+    limits = [("OZu0", 1, "Support", "Nafien"), ("oZu1", 1, "Specialist", "Totem Lodge of Ursoc"),
+              ("oZu2", 1, "Altar", "Shrine of Ursoc")]
     limits += [(u, 200, cat, u) for u, cat in FURBOLG_UNITS]
-    consts = [("Nafien", "OZu0"), ("Lodge", "oZu1")]
+    consts = [("Nafien", "OZu0"), ("Lodge", "oZu1"), ("Shrine", "oZu2")]
     consts += list(zip(["Furbolg", "Shaman", "Tracker", "Champion", "UrsaWarrior"], [u for u, _ in FURBOLG_UNITS]))
     return "Furbolg", limits, consts
 

@@ -135,7 +135,7 @@ def smooth(path):
 def ship_links():
     src = open(CONFIG, encoding="utf-8-sig").read()
     links = []
-    for m in re.finditer(r'new PortalLink\((-?[\d.]+)f, (-?[\d.]+)f, (-?[\d.]+)f, (-?[\d.]+)f, "hbot", "([^"]*)", "([^"]*)", "ship"\)',
+    for m in re.finditer(r'new PortalLink\((-?[\d.]+)f, (-?[\d.]+)f, (-?[\d.]+)f, (-?[\d.]+)f, "hbot", "([^"]*)", "([^"]*)", "ship"(?:, \d+)?\)',
                          src):
         links.append((float(m.group(1)), float(m.group(2)), float(m.group(3)), float(m.group(4)), m.group(5), m.group(6)))
     return links

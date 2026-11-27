@@ -1,8 +1,8 @@
 # Content tools -- reusing the 24p map (and making objects by hand)
 
 How a faction of the 24p map (`mapdata/WarcraftLegacies24p`, the vJASS repository
-`AzerothWarsLR/WarcraftLegacies24p` for its quests) becomes a faction of this map. Done twice: the Forsaken (0.55,
-set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). Every rule below cost a playtest once.
+`AzerothWarsLR/WarcraftLegacies24p` for its quests) becomes a faction of this map. Done for the Forsaken (0.55,
+set `FORSAKEN`), the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins) and the Dark Iron (0.87, set `DARK_IRON`). Every rule below cost a playtest once.
 
 ## The tools
 
@@ -10,6 +10,10 @@ set `FORSAKEN`) and the Kezan Enterprise (0.58, set `KEZAN`, the 24p goblins). E
 | --- | --- | --- |
 | `import_24p.py` | the copies (`?Z<third>?` ids, `import_ids.json` keeps them stable), their model / icon files, `<Faction>Objects.g.cs` (constants + `MainEquivalents`), `WarcraftLegacies.Shared/ShatteredLegacies/FactionObjectLimits/<Faction>ObjectInfo.cs`, `Content/SL_OBJECTS.md` | after every change of a set; again after `git lfs pull` (textures) |
 | `forsaken_heroes.py`, `kezan_objects.py`, `ashtongue_objects.py` | hand-made objects a 24p faction did not have (Sylvanas' phases; Oil Refining, the Refugee Slave Camps) | after changing their tables; rows are appended, never reordered (a row's index is its id) |
+| `minor_factions.py`, `dark_iron.py`, `ebon_blade.py`, `deathwing.py` | the conquered fallbacks' own objects (Defias, Centaur, Harpies, Furbolgs, Dragonmaw ...; the Dark Iron's hand-made parts; the Ebon Blade; Deathwing) | after changing their tables |
+| `void_dungeons.py`, `dungeon_content.py` | the void dungeons' gates and CP types (`DungeonObjects.g.cs`); their creeps and props (`Units/Dungeon_Content.json`) | after changing a dungeon; `--check` before every delivery |
+| `../terrain/copy_area.py` | 24p terrain (tiles, cliffs, doodads, pathing) copied into this map's void | once per dungeon |
+| `content_088.py` | 0.88's hand-made objects (Jaina the Dreadlord, Kalecgos' forms, Xavius, the Claw of Ursoc, Benediction, the Broodmother, Acherus in flight, the plague, the harbours); ids in `content_088_ids.json` | after `import_24p.py` (it edits Kalecgos' two copies) |
 | `check_json.py` | nothing -- checks the type of every value in the map's JSON (a string without `"Type": 3` broke the build, 0.57), and (0.63) that a field has the type the map uses for it everywhere else (a scale is real, Type 1 -- not unreal, 2) | before every delivery |
 | `content_index.py` | `ShatteredLegacies/Content/` (what exists in the main map, the 24p map, stock WC3) | after map data changes |
 | `../ai/gen_ai_data.py` | the bot's production data (`SL_BUILDINGS`: the fork's buildings) | after a set's buildings change |

@@ -22,7 +22,7 @@ This file is the ledger: what WL changed after 4.8.2, what is ported, what is wa
 | `AhnQirajSetup` (5.0.4 hotfix: Gates of Ahn'Qiraj and C'Thun invulnerable) | **Not wanted** -- Ahn'qiraj is a faction here. |
 | Orc island opening (Countdown to Extinction, Sea Witch assault, troll rescue, ship repair peons) | **Not wanted** -- 0.69 chose the Durotar mainland start ("Build Orgrimmar"). |
 | WL 5 Kezan rework | **Not wanted** -- the fork restored its own Kezan (0.69). |
-| Sentinels-only lobby choice (#4178) | **Partly**: Sentinels become the only START. The Draenei (The Exodar) **keep their terrain** and become a **fallback** of another faction (which one: open, see below). Until then the lobby pick stays. |
+| Sentinels-only lobby choice (#4178) | **Done differently (0.80)**: Sentinels are the only START; the Draenei keep their terrain and are the **Legion's fallback** (since 0.87.0 the Exodar flies; see below). |
 | Ironforge "Secrets of Uldum" artifact pool (Demon Soul, Gloves of Ahn'Qiraj, Thunderfury, Fandral's Flamescythe) | **Unchanged (WL).** The Twilight's Hammer gets a replacement instead (0.72.0: Hammer of Twilight). |
 
 ## Ported
@@ -125,22 +125,15 @@ are harmless: same role or a dead faction).
 
 ## The Draenei (The Exodar) -- from start to fallback
 
-**On hold (maintainer, 2026-11-25): "we keep draenei as they are for now"** -- lobby start unchanged; the plan below
-stays for later.
+**Done (0.80.0 - 0.87.1).** The Draenei are no lobby start any more: the Sentinels' slot plays the Sentinels only
+(`FactionChoiceDialogSetup`), and the Draenei are the **Legion's fallback** (`Timelines/Factions/Draenei`), conquered
+through the Exodar's bridge. 0.87.0: the Exodar is a ship that flies (`Timelines/VOID_DUNGEONS.md`); 0.87.1: no second
+fallback for them (the "Draenei of Shattrath" placeholder is gone) and no preplaced shipyards in the Exodar.
 
-Decided: terrain stays (Azuremyst Isle, Exodar Regalis, Silvermyst Island); the faction stops being a lobby start and
-becomes a fallback. **Which faction falls back to it is open.** Things to separate from the Sentinels first:
-- The lobby pick (`FactionChoiceDialogSetup`: Sentinels / Draenei share slot P19) and the bot's pick (`AiChoices`).
-- Maiev's Watchers is the fallback "for both" (`TimelineCatalog`, P19) -- Sentinels only after the change.
-- The Draenei-only turning points: The Triumvirate (D15) and the placeholder "The Exodar" fallback ("Draenei of
-  Shattrath", Hq Exodar Regalis `e01X`).
-- Shared object data: the Exodar's hero types carry Druids suffixes (`E01I` Ageless One, `E01J` High Shaman); the
-  Sentinels' Maiev quests / outpost were tested "with both Sentinel and Draenei openings".
-- Bot data: `AiConfig` heroes for "The Exodar", the Silvermyst <-> Exodar Regalis edge.
-
-Candidates (0.72.0 proposal, for discussion): **Druids** (same team; the Exodar keeps the Night Elves at two players
-when Hyjal falls; replaces the "Dream trees" placeholder) or **Gilneas** (placeholder fallback; the Gilneans fled to
-the night elves in lore).
+Superseded by that (0.87.1): Maiev's Watchers as the fallback "for both" (Maiev is on hold), The Triumvirate (D15) as a
+decision (it is a Draenei quest), and the 0.72.0 candidates for the Draenei's master (the Druids -- replacing the
+"Dream trees" placeholder -- or Gilneas). Still to check: the Exodar's hero types carry Druids suffixes (`E01I`
+Ageless One, `E01J` High Shaman) -- harmless, but confusing in the editor.
 
 ## Test plan for a port bundle
 

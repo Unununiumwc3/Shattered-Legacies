@@ -17,9 +17,11 @@ internal static class TwilightHammerFallback
 
   // 0.80.0 (maintainer): one path, two successors -- beaten by an Old God: Twilight (Old Gods' team); by anyone else:
   // the Dragonmaw Clan (Factions/Dragonmaw/DragonmawFallback.cs). Both start at Dragonmaw Port, so only one ever comes.
-  internal static readonly ExclusivePath Path = new("Twillight or Dragonmaw", Prepare, Run, StartX, StartY);
-  internal const string OfferDescription = "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by "
-                                           + "anyone else: the Dragonmaw Clan rises there, sworn to whoever holds the port.";
+  // 0.87.0 (maintainer): the Fel Horde -> the DRAGONMAW, whoever beat it; Twilight is on hold (RunTwilight stays for
+  // later, nothing calls it)
+  internal static readonly ExclusivePath Path = new("Dragonmaw", Prepare, Run, StartX, StartY);
+  internal const string OfferDescription = "The Dragonmaw Clan rises at Dragonmaw Port with its red dragons -- sworn to "
+                                           + "whoever holds the port.";
   internal static List<unit> Port => _port!;
 
   // 0.81.0 (maintainer): the ORCISH HORDE has its own route -- beaten by an Old God: Twilight (this path); by anyone
@@ -27,27 +29,17 @@ internal static class TwilightHammerFallback
   // No Dragonmaw for the Horde any more (the Fel Horde keeps Twilight / Dragonmaw). Each destination is claimed
   // (one faction each); when the wanted one is taken the other one is used.
   // 0.85.0: Ahn'Qiraj has Skywall now -- the Zandalari base waits for the Horde alone (its Prepare runs here)
-  internal static readonly ExclusivePath HordeRoute = new("Twillight or Zandalari",
+  // 0.87.0 (maintainer): TROLLS ONLY -- whoever beat the Horde (an Old God too) gets the Zandalari; no Twilight
+  internal static readonly ExclusivePath HordeRoute = new("Zandalari",
     () => Zandalari.ZandalariFallback.Path.Prepare(), RunHorde, StartX, StartY);
-  internal const string HordeOfferDescription = "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. "
-                                                + "Beaten by anyone else: King Rastakhan swears the Zandalari trolls "
-                                                + "to your conqueror -- you play them at Zuldazar.";
+  internal const string HordeOfferDescription = "King Rastakhan swears the Zandalari trolls to your conqueror -- you "
+                                                + "play them at Zuldazar.";
 
   private static void RunHorde(player p, TurningPointDef def)
   {
-    var conqueror = Dragonmaw.Conquerors.Of(def.Faction);
-    var oldGods = Dragonmaw.Conquerors.ByOldGods(def.Faction);
-    if (oldGods && Path.TryClaim())
+    if (Zandalari.ZandalariFallback.Path.TryClaim())
     {
-      RunTwilight(p);
-    }
-    else if (Zandalari.ZandalariFallback.Path.TryClaim())
-    {
-      Zandalari.ZandalariFallback.FromHorde(p, conqueror);
-    }
-    else if (Path.TryClaim())
-    {
-      RunTwilight(p); // the trolls are taken (Ahn'Qiraj): Twilight after all
+      Zandalari.ZandalariFallback.FromHorde(p, Dragonmaw.Conquerors.Of(def.Faction));
     }
   }
 
@@ -140,18 +132,11 @@ internal static class TwilightHammerFallback
   internal static void ClaimHighlands(player owner, Faction faction) =>
     StartArea.Take(owner, _highlandBuildings!, faction, PortBuildings);
 
-  internal static void Run(player p, TurningPointDef def)
-  {
-    if (!Dragonmaw.Conquerors.ByOldGods(def.Faction))
-    {
-      Dragonmaw.DragonmawFallback.FromHorde(p, Dragonmaw.Conquerors.Of(def.Faction));
-      return;
-    }
+  internal static void Run(player p, TurningPointDef def) =>
+    Dragonmaw.DragonmawFallback.FromFelHorde(p, Dragonmaw.Conquerors.Of(def.Faction));
 
-    RunTwilight(p);
-  }
-
-  private static void RunTwilight(player p)
+  // on hold since 0.87.0 (maintainer: the Fel Horde gets the Dragonmaw) -- kept for a later Old Gods route
+  internal static void RunTwilight(player p)
   {
     var keep = new List<unit>();
     var hourglass = Hourglass.Get(GetPlayerId(p));

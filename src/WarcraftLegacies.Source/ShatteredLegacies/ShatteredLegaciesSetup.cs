@@ -16,6 +16,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies
       Dungeons.VoidDungeons.Setup(); // 0.83: Nazjatar, Shadowforge, Deadmines in the void (Timelines/VOID_DUNGEONS.md)
       ScoreboardLines.Setup(); // 0.58: the fork's lines on the scoreboard (end goals)
       Testing.TestKit.Setup(); // 0.72.0: "-testkit" -- spawns the heroes / artifacts of a port for a quick check
+      Events.EventsSetup.Setup(); // 0.88.0: Theramore / Jaina, Kalecgos, bosses, elite choices, crossing, plague (Events/)
     }
   }
 }

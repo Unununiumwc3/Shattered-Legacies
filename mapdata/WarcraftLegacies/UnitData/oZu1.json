@@ -18,7 +18,12 @@
     {
       "Id": "utra",
       "Type": 3,
-      "Value": "OZu0"
+      "Value": ""
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Awrp"
     },
     {
       "Id": "ufma",
@@ -55,7 +60,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "The lodge of the Sacred Ancestral Totem. Revives the Totem-Keeper; it cannot be destroyed."
+      "Value": "The way down into Timbermaw Hold, the furbolgs' den. It cannot be destroyed."
     }
   ]
 }

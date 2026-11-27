@@ -10,6 +10,11 @@ WL mechanics, the faction template, the status per slot -- is in `TIMELINES.md`;
 
 Status: everything below is **agreed** unless marked *open*.
 
+**0.87.1 (maintainer):** the fallbacks that exist are those of `TIMELINES.md` section 0 -- conquered vassals, no second
+fallback. The fallback concepts they replaced are listed in section 14 (one line each, kept for the record). Still
+open and kept here in full: the **Garithos path** of Lordaeron (D1, section 8 P10) and the **Great Alliance**
+(section 7). New ideas are in `../TODO.md` ("Discussed 0.87.1").
+
 ---
 
 ## 1. Vocabulary
@@ -49,6 +54,8 @@ after it breaks (and the start teams in Garithos games). **Empire of Mankind** =
 - **Recycle, then adjust**: successors reuse objects of the main map, the 24p map and stock WC3 assets (content index,
   `../TODO.md`); no new assets.
 - **Fallback vs betrayal of the same faction must clearly differ** (team, start size, heroes, what is left behind).
+- **Conquered, not defeated** (0.76 - 0.87): most fallbacks serve the team of whoever holds their seat (`Core/Conquest`,
+  `TIMELINES.md` section 0); a fallback never has a fallback of its own.
 
 ### Bot rules
 
@@ -67,15 +74,19 @@ From `PlayerSetup.cs` and each faction's `playercolor`. P = WC3 player number (P
 
 | P   | Faction                              | Colour     | | P   | Faction                     | Colour   |
 |-----|--------------------------------------|------------|-|-----|-----------------------------|----------|
-| P1  | Frostwolf / Warsong (pick)           | Red        | | P12 | Druids                      | Brown    |
+| P1  | Orcish Horde                         | Red        | | P12 | Druids                      | Brown    |
 | P2  | Stormwind                            | Blue       | | P13 | Black Empire                | Maroon   |
-| P3  | Quel'thalas                          | Teal       | | P16 | Illidari (Sunfury pick removed) | Violet |
+| P3  | Quel'thalas                          | Teal       | | P16 | Illidari                    | Violet   |
 | P4  | Scourge                              | Purple     | | P17 | Ahn'qiraj                   | Wheat    |
-| P5  | Ironforge                            | Yellow     | | P19 | Sentinels / Draenei (pick)  | Mint     |
-| P7  | Fel Horde                            | Green      | | P23 | Kul Tiras                   | Emerald  |
-| P8  | Dalaran / Gilneas (pick)             | Pink       | | P24 | Burning Legion              | Peanut   |
-| P9  | Skywall                              | Gray       | |     |                             |          |
-| P10 | Lordaeron (Arthas / Garithos pick)   | Light Blue | |     |                             |          |
+| P5  | Ironforge                            | Yellow     | | P19 | Sentinels                   | Mint     |
+| P6  | Tauren Tribes                        | Orange     | | P23 | Kul Tiras                   | Emerald  |
+| P7  | Fel Horde                            | Green      | | P24 | Burning Legion              | Peanut   |
+| P8  | Dalaran                              | Pink       | |     |                             |          |
+| P10 | Lordaeron (Arthas / Garithos pick: *open*) | Light Blue | |  |                         |          |
+
+0.87.1: from `Setup/PlayerSetup.cs`. The picks are gone: Sunfury (0.53, Quel'thalas' fallback), Gilneas (0.76, now
+Lordaeron's fallback), the Draenei (0.80, the Legion's fallback); Frostwolf / Warsong and Skywall have no slot of their
+own (Skywall is Ahn'qiraj's fallback since 0.85; P9 has no start faction). A fallback plays in its old faction's slot.
 
 New colours: **Forsaken = Lavender** (the P3 human after defecting); the Quel'thalas bot keeps Teal. **Sunfury = Teal**
 (Quel'thalas' fallback, same player; WL's Violet now belongs to the Illidari only).
@@ -86,15 +97,15 @@ New colours: **Forsaken = Lavender** (the P3 human after defecting); the Quel'th
 |------|--------------------------------------------------------------|-----------------------------|
 | P11, P14, P20 | nothing preplaced, not used in code                 | **defections, in this order** |
 | P22  | start location only                                          | free                        |
-| P6   | a Warsong base is preplaced (Great Hall, towers, peons)      | reserved until checked      |
+| P9   | no start faction (0.85); WL's game modes give it a team      | reserved until checked      |
 | P15  | Ny'alotha content (tentacles, N'Zoth buildings, "Old God" hero), although Black Empire plays on P13 | reserved until checked |
 | P18  | Zandalari creep camp                                         | reserved until checked      |
 | P21  | `NeutralHostileSetup` hands its units to Neutral Aggressive  | avoid                       |
 
 - Checked (0.52): WL's `CleanupUnoccupiedPlayerSlots` only defeats empty slots that HAVE a faction, so the preplaced
-  units of P6 / P15 / P18 stay in the game. *Open*: remove them at start (then the slots are free too)?
+  units of P15 / P18 stay in the game. *Open*: remove them at start (then the slots are free too)?
 - The lobby names in `Info.json` are stale (old WL 24p layout: index 9 "Forsaken", 19 "Twilight Hammer", 21 "Nazjatar" ...) -> rename to the Shattered Legacies layout.
-- WL still has Twilight's Hammer creep assets (Grim Batol, Enforcer, Champion, dragonspawn, Altar of Visions) -> cheap Twilight's Hammer fallback.
+- WL still has Twilight's Hammer creep assets (Grim Batol, Enforcer, Champion, dragonspawn, Altar of Visions) -> reused by the Dragonmaw (0.80) and, *open*, by a Twilight sub path of the Black Empire (`../TODO.md`).
 
 ---
 
@@ -122,6 +133,11 @@ New colours: **Forsaken = Lavender** (the P3 human after defecting); the Quel'th
 
 Pop-up choices (D3, D6, D11) have a 60 s window; Hourglass options stay until used or until their condition disappears.
 
+**Superseded by 0.87** (section 14): D6 (Theramore stays WL's; Jaina's new idea is in `../TODO.md`), D7 (Gilneas is
+Lordaeron's fallback), D8 (Maiev on hold), D9 (Stormwind / Ironforge fall to the Defias / Dark Iron), D15 (the
+Draenei are the Legion's fallback; "The Triumvirate" is a Draenei quest), D17 (no Xal'atath -- the Black Empire falls
+to the Harpies). Still open: D1 - D5, D10 - D14, D16.
+
 ---
 
 ## 5. Shared mechanics
@@ -129,12 +145,12 @@ Pop-up choices (D3, D6, D11) have a 60 s window; Hourglass options stay until us
 | Mechanic                  | Used by                                         | Notes                                                                                     |
 |---------------------------|-------------------------------------------------|-------------------------------------------------------------------------------------------|
 | Hourglass turning points  | all                                             | the Hourglass of Fate (`nZh0`, 0.53): one research per turning point, greyed out until available |
-| Pick                      | D1 (new), Dalaran / Gilneas, Sentinels / Draenei, Frostwolf / Warsong | WL's pick dialog                                          |
-| Choice at fallback        | Jaina (D6), South fallbacks (D9)                | dialog when the fallback triggers                                                         |
+| Pick                      | D1 (*open*); WL's picks are gone (section 3) | WL's pick dialog                                                                    |
+| Conquest                  | most fallbacks (0.76 - 0.87)                    | serves the team of the seat's holder (`Core/Conquest`); first the conqueror (`Core/LastConqueror`) |
 | Tax task                  | Imperial Tax (South -> North), Legion's Tithe (Scourge -> Legion) | every second X % of the payer's income (CP + `PlayerData.TotalIncome` + bot strength-vote bonus) to the recipient(s), never below 0 gold |
 | Defection                 | D3 (Forsaken)                                   | WC3 can't move humans between slots: the human keeps the slot and gets the new faction; the old faction moves to a free slot (P11 -> P14 -> P20) as a bot. [ai] check whether `PlayerDistributor` helps |
 | Shared box                | World Tree, Helm of Domination                  | first claimant closes it                                                                  |
-| Channel                   | World Tree (Archimonde, Garithos, Xal'atath), Argus portal | WL's existing channel mechanic (Archimonde at the tree)                        |
+| Channel                   | World Tree (Archimonde, Garithos), Argus portal            | WL's existing channel mechanic (Archimonde at the tree)                        |
 | Inheritance               | every fallback, sub path, betrayal              | see section 6                                                                             |
 | Barks                     | Garithos, Quel'thalas                           | one table: event / speaker / line / sound                                                 |
 
@@ -189,7 +205,7 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 - **Lore anchor**: Grand Marshal Othmar Garithos, last commander of Lordaeron's resistance, xenophobic ("The only good non-human is a dead non-human."), arrested Kael's elves for treason. His army: humans and dwarves.
 - **Divergence**: Terenas keeps Arthas at court and gives the plague to the Grand Marshal.
 - **No fallback** -- the gamble. No Scarlet Crusade can exist, so the Legion never gets its puppet (Garithos' people are nobody's puppet).
-- Garithos = main hero, buffed. Not Valiance Expedition's second hero in this game. Detheroc cannot be revived (his death freed Garithos' men in *Dreadlord's Fall*).
+- Garithos = main hero, buffed (*open*, `../TODO.md`: a stronger Garithos with the 24p Dark Knights). Detheroc cannot be revived (his death freed Garithos' men in *Dreadlord's Fall*).
 - **The campaign chain**:
   1. **Shores of Northrend** (reuses WL's quest): Mal'Ganis slain, Frostmourne refused (bark).
   2. **The Well of Eternity**: Garithos channels at the World Tree (shared box) -> empowered.
@@ -213,38 +229,39 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 - **D4 break free**: from the civil war on (lore: Sylvanas broke free when the Lich King's grip failed, in the Plaguelands civil war). Latest: automatic when Lich King Arthas dies. May also stay with the Scourge.
 - Free Forsaken: Horde if it exists, otherwise own team -- meant to be hard. Quest "The Throne of Lordaeron" (take Lordaeron City -> Undercity).
 
-### P8 Dalaran / Gilneas (pick)
+### P8 Dalaran
 
-- **Fallback: Theramore / Jaina's Sanctum** for both picks (Gilneas has no own fallback). **D6 Jaina's choice** when the Violet Citadel falls:
-  - Stay -> North ("Return to Dalaran": retake the Violet Citadel).
-  - Pact of Hyjal -> Horde, or Kalimdor if there is no Horde.
-  - Daughter of the Sea -> South (if it exists; Kul Tiras is her family).
-  - Turncoat -> Legion, Garithos games only ("I swear she is a demon" -- Garithos was right).
-- **D7 The Gates Close**: Genn reseals the Greymane Wall (lore: Gilneas stayed sealed while Lordaeron burned) -> Gilneas joins the South, Dalaran is left behind (heir: Lordaeron, else neutral hostile), no fallback. Needs no Great Alliance, the plague and Genn alive.
+- **Fallback: Theramore** (WL's, as is). *Open* (`../TODO.md`): Jaina's Sanctum conquerable; Jaina stays allied to her
+  conqueror. D6 and D7 are superseded (section 14).
+
+### P10 Lordaeron -- fallback Gilneas (built)
+
+- **Fallback: Gilneas** (0.85): the survivors flee behind the Greymane Wall; North Alliance, conquered through Gilneas
+  City (mercy text). Lordaeron's other fallback stays WL's Scarlet Crusade. Garithos games: the P10 section above
+  (*open*; it says "no fallback" -- the gamble).
 
 ### P2 Stormwind / P5 Ironforge / P23 Kul Tiras
 
-- **P2 Valiance Expedition** (fallback) and **P5 Dwarven Expedition** (fallback; working title -- the name must differ from Stormwind's expedition): **D9** stay South or go North. Bots: North if Arthas is still loyal, or in Garithos games.
-- **Dwarven Expedition**: a base near the Storm Peaks (Northrend), frost dwarves, a new quest at the titan city ("Secrets of Ulduar"). WL's Explorers' League quest of Ironforge goes to Kalimdor -- the Northrend quest is new.
-- **Bolvar** (Valiance) is a claimant of the Helm -> end goal Lich King Bolvar. In Garithos games he races his own Emperor for it.
-- **P23 Kezan Enterprise** (fallback, own team). End goal: **acquire 20,000 gold** (*open*: confirm the number).
-- In Garithos games all three join the Empire of Mankind when it forms.
+- **P2 Defias Brotherhood** (0.85): the Deadmines, sworn to whoever holds them (undefeatable).
+- **P5 Dark Iron of Shadowforge** (0.86 / 0.87): Shadowforge, sworn to whoever holds the Throne Room (undefeatable).
+- **P23 Kezan Enterprise** (fallback, own team). End goal: **acquire 20,000 gold** (confirmed, 0.59).
+- In Garithos games all three join the Empire of Mankind when it forms (*open*, with the Garithos path).
 
 ### P12 Druids
 
-- **Fallback: Dream trees** (Twilight Grove, Seradane) -> South Alliance. Trigger: the World Tree is consumed / Nordrassil falls (same event).
+- **Fallback: Furbolgs** (0.86): Timbermaw Hold (void den), sworn to whoever holds Nordrassil (undefeatable).
 
-### P19 Sentinels / Draenei (pick)
+### P19 Sentinels
 
-- **Fallback for both picks: Maiev's Watchers** (Warden's Cage, Shadowmoon; Kalimdor team; small remnant, Tyrande joins the hunt). Quest "The Hunt": take down the Black Citadel; if Illidan is already beaten, hunt the Legion's demon lords instead.
-- **Sentinels -- D8 The River** (when Maiev is available): Maiev abandons Tyrande -> Watchers on their own team, bigger start; Tyrande and the Sentinels' holdings go to the Druids if they are still on the Kalimdor team, else neutral hostile.
-- **Draenei -- D15 The Triumvirate** (when Velen meets Archimonde): Velen, Kil'jaeden and Archimonde were the eredar triumvirate; this time Velen says yes -> the **Man'ari draenei** join the Legion.
-- Announcements: fallback (desperation) "Ashenvale burns, and the Sentinels are no more. With nothing left to defend, Maiev Shadowsong clings to the only duty that remains: the Betrayer must not go free." · The River (vengeance) "Maiev Shadowsong has left Tyrande to the river. Let Ashenvale burn -- for ten thousand years she guarded the Betrayer, and she will not lose him for one more day."
+- **Fallback: the naga of Azshara** (0.84): Nazjatar (void dungeon), sworn to whoever holds the Eternal Palace.
+- Maiev (fallback / D8 The River) is on hold (0.87.0); the announcements are kept in section 14.
 
-### P1 Frostwolf / Warsong (pick)
+### P1 Orcish Horde / P6 Tauren Tribes
 
-- **D12 Found the Horde** when Archimonde dies (lore: after Hyjal the pact ended and Thrall's people went their own way). The Horde team only exists if founded.
-- **Fallback: Twilight's Hammer** (orc HQ falls) -> Old Gods team, base Grim Batol (assets exist). It reuses the Dragonmaw assets and the tech / unit / building trees of the 24p map. Lore: Cho'gall's Old God cult, later Deathwing's servants. End goal: **The Hour of Twilight -- Deathwing returns**.
+- **D12 Found the Horde** when Archimonde dies (*open*; lore: after Hyjal the pact ended and Thrall's people went
+  their own way).
+- **P1 fallback: the Zandalari** (0.80; trolls only since 0.87.0): Zuldazar, sworn to the conqueror (`HordeRoute`).
+- **P6 fallback: the Centaur Khans** (0.85): Thunder Bluff and the khans' huts, sworn to whoever holds Thunder Bluff.
 
 ### P4 Scourge
 
@@ -253,15 +270,17 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
   - pull: the **Ascension is gated** behind the civil war (WL's "The Ascension": Arthas lvl 12 + channel on the Frozen Throne) -> Arthas claims the Helm -> Lich King Arthas (end goal).
   - the civil war also opens D4 (Forsaken) and D13 (Grand Crusader).
 - In Garithos games the civil war is possible too (Kel'Thuzad leads); the Ascension then needs Arthas from the Coronation path.
-- **Fallback: Knights of the Ebon Blade** when Lich King Arthas dies -> join the victor (death knights who broke free from the Lich King). The Helm is free again.
+- **Fallback: Knights of the Ebon Blade** (0.80): Acherus, sworn to whoever holds Icecrown Citadel (undefeatable).
+  *Open* (`../TODO.md`): a flying Acherus.
 
 ### P24 Burning Legion
 
 - **HQ**: all Argus CPs; while the Legion controls Archimonde, Archimonde replaces that rule.
 - Archimonde can consume the World Tree (shared box; in Arthas games this also breaks the Great Alliance).
-- **Fallback: Dreadlord Insurgents** -- same team, crippled, dreadlords revive at a hidden lair until it is destroyed (lore: demons slain outside the Nether return to it).
+- **Fallback: the Draenei** (0.80; flying since 0.87.0): the Exodar, conquered through its bridge.
 - **D13 The Grand Crusader** (after the civil war, Arthas games): forces the Scarlet Crusade into the Legion team -- Balnazzar's mask slips.
-- **Puppets in the Legion team**: Corrupted Scarlet Crusade, Jaina (turncoat), Man'ari draenei, Fel Horde (if the Legion beats the Illidari).
+- **Puppets in the Legion team**: Corrupted Scarlet Crusade, Fel Horde (if the Legion beats the Illidari). Jaina
+  (turncoat) and the Man'ari draenei are superseded (section 14).
 - **Argus**: the portal is one-way; a non-Legion hero channels at its site to make it two-way (*Beyond the Dark Portal*: the Alliance went through the enemy's own gate).
 
 ### P16 Illidari / P7 Fel Horde
@@ -303,21 +322,17 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
     theirs.
 - **Sunfury is no longer the Illidari slot's pick** -- it becomes Quel'thalas' fallback (a full turning point to WL's Sunfury faction).
 - If the **Legion** beats the Illidari, Magtheridon is unleashed and the **Fel Horde** joins the Legion. Otherwise the Fel Horde stays where it is.
-- **Fel Horde fallback: Mag'har** (orcs of Nagrand who never drank the blood) -> Horde if it exists, otherwise the victor's team.
-  Start: Kil'sorrow Fortress (maintainer, 0.63). Gold: a trading post that produces up to 4 traders by itself (60 s
-  each) -- attackable, not controllable, on fixed routes out of Outland (2 to Booty Bay, 2 to Fuselight); 4 on the
-  road at once completes a quest. Needs a mule / pack-horse asset.
+- **Fel Horde fallback: the Dragonmaw Clan** (0.80; dragons since 0.87.0): Dragonmaw Port, sworn to the conqueror
+  (undefeatable).
 
-### Old Gods: P9 Skywall / P13 Black Empire / P17 Ahn'qiraj
+### Old Gods: P13 Black Empire / P17 Ahn'qiraj
 
-| Faction      | Fallback (joins the victor)   | Lore                                                                      |
-|--------------|-------------------------------|---------------------------------------------------------------------------|
-| Skywall      | *open*: The Earthen Ring, or Ramkahen | Earthen Ring: shamans who restore the elemental balance once Al'Akir falls |
-| Black Empire | *open*: **Xal'atath**, or Titan Watchers | Xal'atath: "Blade of the Black Empire", serves the victor as a weapon, as she served the shadow priests |
-| Ahn'qiraj    | Brood of Nozdormu             | the bronze flight that guarded the Scarab Wall                            |
-
-- **D17 The Blade turns** (only if the Black Empire's fallback is Xal'atath -- *open*): Xal'atath can channel at the World Tree too (shared box). Consuming it is her betrayal: she leaves the victor's team for her own. If the World Tree is already gone, she turns when sudden death starts. The Old Gods are never truly beaten.
-- Old Gods flavour: they win through other people's falls (Twilight's Hammer, Xal'atath). Later candidates: Emerald Nightmare, Druids of the Flame.
+- **Black Empire fallback: the Harpies** (0.85): Stonetalon, sworn to the Black Empire's slayer, then to whoever holds
+  Stonetalon Peak (undefeatable). *Open* (`../TODO.md`): the broodmother; Twilight as a sub path.
+- **Ahn'qiraj fallback: Skywall** (0.85): the Lost City and the Vortex Pinnacle, sworn to C'Thun's slayer, then to
+  whoever holds the Vortex Pinnacle. Skywall is itself a fallback: no fallback of its own (the Hourglass shows an info
+  row).
+- Old Gods flavour: they win through other people's falls. Later candidates: Emerald Nightmare, Druids of the Flame.
 
 ---
 
@@ -325,8 +340,8 @@ Heroes listed by the concept go along; others follow the chain. Timing: at the t
 
 | Box                         | Claimants (first one closes it)                                   | Effect                                                                       |
 |-----------------------------|-------------------------------------------------------------------|------------------------------------------------------------------------------|
-| **World Tree consumed**     | Archimonde (channel) · Garithos (Well of Eternity) · Xal'atath (D17) | Nordrassil falls -> Druids' fallback. Archimonde: breaks the Great Alliance (Arthas games). Garithos: empowered. Xal'atath: turns |
-| **Helm of Domination**      | Arthas (Ascension, after the civil war) · Bolvar (Valiance) · Garithos (victor over the Scourge) | Lich King Arthas / Lich King Bolvar / D11 wear or shatter. When a Lich King dies, the Helm is free again |
+| **World Tree consumed**     | Archimonde (channel) · Garithos (Well of Eternity) | Archimonde: breaks the Great Alliance (Arthas games). Garithos: empowered |
+| **Helm of Domination**      | Arthas (Ascension, after the civil war) · Garithos (victor over the Scourge) | Lich King Arthas / D11 wear or shatter. When a Lich King dies, the Helm is free again |
 
 ---
 
@@ -339,8 +354,6 @@ Open for most factions. Known so far:
 | P10 Arthas          | Kingdom of Man (WL)                      | no                |
 | P10 Garithos        | Empire of Mankind                        | yes               |
 | P4 Scourge          | The Ascension (WL)                       | no                |
-| P2 Valiance         | Lich King Bolvar                         | no                |
-| P1 Twilight's Hammer | The Hour of Twilight: Deathwing returns | no                |
 | P23 Kezan           | acquire 20,000 gold (0.59: hold it at once, on the scoreboard) | no |
 
 ---
@@ -349,7 +362,7 @@ Open for most factions. Known so far:
 
 - **Lore anchor**: the Infinite Dragonflight unravels timelines; the bronze flight guards the true one. Shattered Legacies *is* a broken timeline -- the bronze dragons don't care who wins, only that someone does.
 - **Trigger**: turn >= X and one of: stalemate; nothing decisive for Y turns; all fallbacks used up.
-- **Phases**: Omen (announcement + countdown) -> the sands run out (every Hourglass of Fate shatters, rifts at contested CPs; Xal'atath turns if she hasn't yet) -> resolution (hold the Caverns of Time for N turns, or most CPs when the countdown ends).
+- **Phases**: Omen (announcement + countdown) -> the sands run out (every Hourglass of Fate shatters, rifts at contested CPs) -> resolution (hold the Caverns of Time for N turns, or most CPs when the countdown ends).
 - *Open*: X, N, Y.
 
 ---
@@ -357,11 +370,10 @@ Open for most factions. Known so far:
 ## 12. Backlog
 
 - **Army of the Light** (lore upgrade for a Legion fallback) and the **Vindicaar** (second way to Argus -- hard for bots).
-- **Azshara's naga** (the old WL "Nazjatar" slot suggests assets).
 - **Naxxramas** (extra reward for a free Scourge).
 - **The Four Horsemen** (raise enemy heroes) -- too strong, too much setup.
 - **The Scarlet Enclave** (Ebon Blade vs the Scarlet puppet) -- breaks with the "wrong" victor.
-- **Arugal's Folly** (Dalaran / Gilneas worgen sub path) -- not reviewed.
+- **Arugal's Folly** (a Gilneas worgen sub path) -- not reviewed.
 - **Sylvanas' Knife** (Forsaken vs Garithos -- the TFT ending).
 - **Emerald Nightmare / Druids of the Flame** (Old Gods corruption paths).
 
@@ -370,10 +382,37 @@ Open for most factions. Known so far:
 ## 13. Open
 
 - End goals for the remaining factions; what reaching an end goal does (Kezan's 20,000 gold: confirmed, 0.59).
-- Fallbacks of Skywall and the Black Empire (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers); D17 depends on it.
-- Name of the Dwarven Expedition.
-- Remove the preplaced units of P6, P15, P18 at start? [ai] `PlayerDistributor` for defections.
+- Remove the preplaced units of P15, P18 at start? [ai] `PlayerDistributor` for defections.
 - Rename lobby slots in `Info.json`.
-- Assets for the Earthen Ring, Brood of Nozdormu, Xal'atath, Mag'har, Akama's Ashtongue.
 - Sudden death numbers.
 - Source / sound for "Die, mongrel!".
+
+---
+
+## 14. Superseded (0.87.1)
+
+Removed from this file because a built fallback took the slot (`TIMELINES.md` section 0). One line each, so nothing is
+lost; any of them can come back as a sub path or a quest.
+
+- **P8 Dalaran / Gilneas pick** -- Gilneas became a fallback (0.76). Theramore "for both picks".
+- **D6 Jaina's choice** at the Violet Citadel's fall: Stay (North, "Return to Dalaran") · Pact of Hyjal (Horde /
+  Kalimdor) · Daughter of the Sea (South) · Turncoat (Legion, Garithos games: "I swear she is a demon").
+- **D7 The Gates Close**: Genn reseals the Greymane Wall, Gilneas joins the South, Dalaran left behind.
+- **P2 Valiance Expedition** / **P5 Dwarven Expedition** (Storm Peaks base, frost dwarves, "Secrets of Ulduar") and
+  **D9** South fallback goes North; **Bolvar** as a Helm claimant, end goal Lich King Bolvar.
+- **P12 Dream trees** (Twilight Grove, Seradane; South Alliance; trigger: Nordrassil falls).
+- **P19 Maiev's Watchers** (Warden's Cage; quest "The Hunt"), **D8 The River**, **D15 The Triumvirate** (Man'ari
+  draenei join the Legion). Announcements: "Ashenvale burns, and the Sentinels are no more. With nothing left to
+  defend, Maiev Shadowsong clings to the only duty that remains: the Betrayer must not go free." · "Maiev Shadowsong
+  has left Tyrande to the river. Let Ashenvale burn -- for ten thousand years she guarded the Betrayer, and she will
+  not lose him for one more day."
+- **P1 Frostwolf / Warsong pick**; **P1 Twilight's Hammer** fallback (Grim Batol, Old Gods team; end goal "The Hour of
+  Twilight -- Deathwing returns"). Its code stays on hold (`TIMELINES.md` section 0).
+- **P4 Ebon Blade "join the victor"** (now: conquered through Icecrown Citadel).
+- **P24 Dreadlord Insurgents** (same team, crippled, dreadlords revive at a hidden lair).
+- **P7 Mag'har** (Kil'sorrow Fortress; a trading post with 4 traders on fixed routes to Booty Bay / Fuselight; a quest
+  for 4 on the road).
+- **Old Gods fallbacks**: Skywall -> Earthen Ring / Ramkahen; Black Empire -> Xal'atath / Titan Watchers (and **D17 The
+  Blade turns**, Xal'atath at the World Tree and in sudden death); Ahn'qiraj -> Brood of Nozdormu.
+- Open items that went with them: the Dwarven Expedition's name; assets for the Earthen Ring, Brood of Nozdormu,
+  Xal'atath, Mag'har; "Azshara's naga" (backlog, built in 0.84).

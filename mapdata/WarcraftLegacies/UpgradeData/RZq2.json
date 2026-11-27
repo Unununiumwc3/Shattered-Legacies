@@ -1,0 +1,65 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZq2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "gglb",
+      "Value": 0
+    },
+    {
+      "Id": "glmb",
+      "Value": 0
+    },
+    {
+      "Id": "gtib",
+      "Value": 20
+    },
+    {
+      "Id": "gbpx",
+      "Value": 2
+    },
+    {
+      "Id": "gbpy",
+      "Value": 1
+    },
+    {
+      "Level": 1,
+      "Id": "greq",
+      "Type": 3,
+      "Value": "RZq3"
+    },
+    {
+      "Level": 1,
+      "Id": "gar1",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNPlagueCloud.blp"
+    },
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(Scourge)"
+    },
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "The Plague Goes South"
+    },
+    {
+      "Level": 1,
+      "Id": "gtp1",
+      "Type": 3,
+      "Value": "The Plague Goes South"
+    },
+    {
+      "Level": 1,
+      "Id": "gub1",
+      "Type": 3,
+      "Value": "Amnennar the Coldbringer rises in Razorfen Downs and about 30 plague boars march on the strongholds of Kalimdor. They do not fight -- they infect: the zombie plague eats at its victims until a dispel or purge cures it, and whoever dies with it rises as a zombie of the Scourge.|n|n|cffffcc00Requires the Plague of Undeath.|r"
+    }
+  ]
+}

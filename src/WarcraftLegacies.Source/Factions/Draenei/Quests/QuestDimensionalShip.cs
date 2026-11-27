@@ -67,10 +67,12 @@ public sealed class QuestDimensionalShip : QuestData
   }
 
   /// <inheritdoc/>
+  // [SL] (0.87.0, maintainer): the reward is the FLIGHT of the Exodar (ShatteredLegacies/Timelines/Factions/Draenei/
+  // ExodarShip.cs): the research unlocks "Set Course" on the Dimensional Generator besides the portals
   public override string RewardFlavour =>
-    "With the acquisition of a replacement power source, the Exodar's gemcrafters set to work reigniting the ship's dimensional portals. The Dimensional Generator can now now be used to travel the planes once more.";
+    "With the acquisition of a replacement power source, the Exodar's gemcrafters reignite the ship's engines and its dimensional portals. The Exodar can fly again.";
 
   /// <inheritdoc/>
   protected override string RewardDescription =>
-    "The Dimensional Generator gains the ability to channel portals to Argus and Outland. The Lightforged units and A'dal will become available";
+    "The Dimensional Generator can Set Course: the Exodar flies to another landing spot (while its bridge is held by the draenei or their master). It can also channel portals to Argus and Outland. The Lightforged units and A'dal will become available";
 }

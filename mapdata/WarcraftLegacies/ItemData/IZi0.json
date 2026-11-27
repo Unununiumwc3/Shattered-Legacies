@@ -1,0 +1,55 @@
+{
+  "OldId": "ratc",
+  "NewId": "IZi0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Titanforged Signet"
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A0VJ"
+    },
+    {
+      "Id": "igol",
+      "Value": 1000
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNRingJadeFalcon.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "A ring from the Titan forges beneath Shadowforge. +3 to all attributes."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "A ring from the Titan forges beneath Shadowforge. +3 to all attributes."
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Purchase Titanforged Signet"
+    },
+    {
+      "Id": "isto",
+      "Value": 1
+    },
+    {
+      "Id": "istr",
+      "Value": 300
+    },
+    {
+      "Id": "isst",
+      "Value": 0
+    }
+  ]
+}

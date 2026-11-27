@@ -22,7 +22,26 @@ Changes outside `Ai/` that the bot needs are marked `// [BOT]` (hook) or `// [WO
 `WORKAROUNDS.md` (incl. map data and runtime map changes; "blocks PR" yes/no). Other markers (`// [SL]`) belong to
 the fork. Find them with `grep -rn "\[BOT\]\|\[WORKAROUND\]" src`.
 
-## Current development build (0.71.0)
+## Current development build (0.88.0)
+
+What changed since 0.71 (details: `CHANGELOG.md`):
+- 0.72 - 0.74: the WL 5.0.4 hero kits; skills learned round robin; free instant revive; Dalaran Way Gates; heroes
+  revived at the altar again, Cenarius' ghost.
+- 0.76: the **quest runner** (`AiQuestRunner`: "bring a unit to a place" objectives via `IObjectiveVisit`).
+- 0.77 - 0.78: gates stay (`AiGraph.RemoveGates = false`), bots open their own gates (`AiGates.KeepBotGatesOpen`,
+  `ORDER_UNROBOGOBLIN`).
+- 0.79: the **emergency HQ teleport** (`AiRecall`).
+- 0.80, 0.84 - 0.86: bot data for every new fallback (heroes, HQs, production / build data from `gen_ai_data.py`,
+  `gen_build_data.py`).
+- 0.81: the portal rebuild no longer dies on WL 5's `Waygate.IsOperational`; ferries, Argus and the Dark Portal back;
+  non-legend heroes revived (`AiApi.RegisterHeroFamily`).
+- 0.82 - 0.83: the void dungeons in the route graph (their CPs as nodes, gates as live portal edges; the south-west
+  squares are gone from the grid).
+- 0.87: a late sea route (`PortalLink.FromTurn`: Kul Tiras <-> Kezan from turn 30, `AiFerries`); the Exodar's ship as
+  a live waygate read by `AiRoutes.CheckPortals`. 0.87.1: version only. 0.88.0: `AiApi.Landmass` (for the fork's
+  Kalimdor crossing).
+
+## Development build 0.71.0
 
 0.71.0: `AiAutocast.cs` switches autocast on for bot / autopilot units (table `AiAutocast.g.cs`, also written by
 `gen_spells.py`; the base -> "on" order map `AUTOCAST` is in the generator). `AiSpellFight.Level` has two fight levels

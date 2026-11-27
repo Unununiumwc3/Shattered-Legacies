@@ -21,14 +21,24 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
   {
     internal static List<player> Vassals = new();
     internal static List<int> Seats = new();
+    // 0.88.0: a seat that is not a CP -- who holds it, asked every check (Jaina's Sanctum, the Broodmother, the Claw of
+    // Ursoc: Core/Effects/CaptureSeat); null for a CP seat
+    internal static List<System.Func<player>> SeatHolders = new();
     internal static List<player> Holders = new(); // per vassal: who held the seat at the last check
     internal static HashSet<player> Undefeatable = new();
+    // 0.87.0: a vassal's own line when its seat is taken (Gilneas' mercy text); none = the plain "now serve" line
+    internal static Dictionary<player, string> ConquestTexts = new();
     internal static bool Running;
 
     // 0.81.0: keepTeam -- the vassal stays in its team now; only a LATER conquest of its seat moves it (Kezan)
     internal static void Register(player vassal, int seatCp, player overlord, bool undefeatable = false,
-      bool keepTeam = false)
+      bool keepTeam = false, string conquestText = null)
     {
+      if (conquestText != null)
+      {
+        ConquestTexts[vassal] = conquestText;
+      }
+
       if (undefeatable)
       {
         Undefeatable.Add(vassal);
@@ -36,8 +46,50 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
       Vassals.Add(vassal);
       Seats.Add(seatCp);
+      SeatHolders.Add(null);
       var cp = AiApi.SafeCp(seatCp);
       Holders.Add(cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null);
+      Start(vassal, overlord, keepTeam);
+    }
+
+    // 0.88.0: the seat is whatever holder() says (a captured unit, an artifact's carrier); null = nobody
+    internal static void Register(player vassal, System.Func<player> holder, player overlord, bool undefeatable = false,
+      bool keepTeam = false, string conquestText = null)
+    {
+      if (conquestText != null)
+      {
+        ConquestTexts[vassal] = conquestText;
+      }
+
+      if (undefeatable)
+      {
+        Undefeatable.Add(vassal);
+      }
+
+      Vassals.Add(vassal);
+      Seats.Add(0);
+      SeatHolders.Add(holder);
+      Holders.Add(holder());
+      Start(vassal, overlord, keepTeam);
+    }
+
+    // 0.88.0: a vassal that is its own master again (the Furbolgs while the Claw is theirs): no seat any more
+    internal static void Release(player vassal)
+    {
+      var i = Vassals.IndexOf(vassal);
+      if (i < 0)
+      {
+        return;
+      }
+
+      Vassals.RemoveAt(i);
+      Seats.RemoveAt(i);
+      SeatHolders.RemoveAt(i);
+      Holders.RemoveAt(i);
+    }
+
+    private static void Start(player vassal, player overlord, bool keepTeam)
+    {
       if (keepTeam)
       {
         // stays where it is
@@ -64,8 +116,17 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     {
       for (var i = 0; i < Vassals.Count; i++)
       {
-        var cp = AiApi.SafeCp(Seats[i]);
-        var holder = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null;
+        player holder;
+        if (SeatHolders[i] != null)
+        {
+          holder = SeatHolders[i]();
+        }
+        else
+        {
+          var cp = AiApi.SafeCp(Seats[i]);
+          holder = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null;
+        }
+
         if (holder == Holders[i])
         {
           continue;
@@ -80,13 +141,21 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
 
         if (holder.GetPlayerData().Team != vassal.GetPlayerData().Team)
         {
+          if (ConquestTexts.TryGetValue(vassal, out var text))
+          {
+            for (var j = 0; j < 24; j++)
+            {
+              DisplayTimedTextToPlayer(Player(j), 0, 0, 20, text);
+            }
+          }
+
           Join(vassal, holder);
         }
       }
     }
 
     // the vassal joins the overlord's whole team, and only that
-    private static void Join(player vassal, player overlord)
+    internal static void Join(player vassal, player overlord)
     {
       var team = overlord.GetPlayerData().Team;
       if (team == null)

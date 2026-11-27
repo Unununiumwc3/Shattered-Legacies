@@ -19,7 +19,7 @@
     },
     {
       "Id": "gbpx",
-      "Value": 0
+      "Value": 2
     },
     {
       "Id": "gbpy",
@@ -59,7 +59,7 @@
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "A Dark Iron force tunnels up to claim the Great Anvil: you play the Dark Iron -- Ironforge's arsenal in Dark Iron hands, Dagran Thaurissan at their head, Shadowforge opens -- bound by the Mercenary Charter to whoever holds the Siege Foundry. They cannot be defeated."
+      "Value": "A Dark Iron force tunnels up to claim the Great Anvil: you play the Dark Iron -- Anvilrage guards, bear riders, magma tanks and golems, Dagran Thaurissan on his throne, Shadowforge opens -- sworn to whoever holds the Throne Room; the Siege Foundry's holder gets the Mercenary Charter. They cannot be defeated."
     }
   ]
 }

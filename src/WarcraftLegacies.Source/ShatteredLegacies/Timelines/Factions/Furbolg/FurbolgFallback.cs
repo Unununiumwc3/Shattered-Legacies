@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.GameTime;
 using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Dungeons;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WarcraftLegacies.Source.Shared;
@@ -18,12 +19,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg
   //   Vordrassil, Shaladrassil, Seradane -- held by them or an ally); every furbolg of theirs is stronger by the same
   //   count (+3 damage, +1 armour, +60 life per tree, kept up to date each turn). A VASSAL of whoever holds the Nordrassil
   //   CP (the Totem: at the start the Druids' conqueror), never defeated.
+  // 0.87.0 (maintainer): TIMBERMAW HOLD, their den (Dungeons/VoidDungeons): the lodge (moved to -11154,10970 -- the
+  // maintainer's -11138,11210 is a cliff edge; this is the nearest open ground) is its entrance, shut until they come;
+  // inside the Shrine of Ursoc (HQ, altar) and the Timbermaw Hold CP, theirs on arrival.
   internal static class FurbolgFallback
   {
-    internal const float LodgeX = -10048f; // by Nordrassil
-    internal const float LodgeY = 10432f;
+    internal const float LodgeX = -11154f; // by Nordrassil (maintainer)
+    internal const float LodgeY = 10970f;
+    internal const float ShrineX = -15492f; // inside Timbermaw Hold
+    internal const float ShrineY = 22308f;
     internal static readonly ExclusivePath Path = new("Furbolg Tribes", Prepare, Run, LodgeX, LodgeY);
-    private static unit _lodge;
     private static readonly Dictionary<unit, int> _applied = new();
 
     private static readonly int[] Kinds =
@@ -40,20 +45,15 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg
 
     internal const string ArrivalText =
       "|cffffcc00Nordrassil is lost to the druids.|r From the deep woods the furbolg tribes gather at the Totem Lodge "
-      + "of Ursoc. They follow whoever proves worthy of holding their Sacred Ancestral Totem -- and that is the one who "
-      + "broke the druids.";
+      + "of Ursoc -- and with them Xavius, Lord of the Nightmare, who holds their sacred |cffffcc00Claw of Ursoc|r. "
+      + "While he lives or the Claw stays with them, the furbolgs are their own masters. Whoever takes the Claw from "
+      + "them takes the furbolgs.";
 
     private static void Prepare()
     {
       LastConqueror.Watch(UNIT_N002_NORDRASSIL_DRUIDS_OTHER, "Druids");
       LastConqueror.Watch(UNIT_N06D_CENARION_HOLD_SENTINELS_OTHER, "Druids");
-      var t = CreateTimer();
-      TimerStart(t, 1f, false, () =>
-      {
-        DestroyTimer(t);
-        _lodge = CreateUnit(Player(26), FurbolgObjects.Lodge, LodgeX, LodgeY, 270f); // Neutral Extra (README)
-        SetUnitInvulnerable(_lodge, true);
-      });
+      // 0.87.0: the lodge (Timbermaw Hold's entrance) and the shrine are placed by VoidDungeons
     }
 
     private static void Run(player p, TurningPointDef def)
@@ -69,16 +69,22 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg
       SwapFaction.Run(p, furbolgs);
       LeaveBehind.RemoveHeroes(p, keep);
       LeaveBehind.ToNeutralHostile(p, keep);
-      if (_lodge != null && GetUnitTypeId(_lodge) != 0)
+      var lodge = VoidDungeons.Timbermaw?.Entrance;
+      if (lodge != null && GetUnitTypeId(lodge) != 0)
       {
-        SetUnitOwner(_lodge, p, true);
-        SetUnitInvulnerable(_lodge, true);
+        SetUnitOwner(lodge, p, true);
+        SetUnitInvulnerable(lodge, true);
       }
+
+      VoidDungeons.Timbermaw?.Open(p); // the den opens, the Shrine of Ursoc is theirs
+      StartCps.Force(p, DungeonObjects.TimbermawHold);
 
       Spawn.Units(p, LodgeX, LodgeY - 320f, new[] { FurbolgObjects.Nafien });
       Spawn.Units(p, LodgeX + 256f, LodgeY - 320f, Band);
       var overlord = LastConqueror.Of("Druids");
-      Conquest.Register(p, UNIT_N01P_NORDRASSIL, overlord != p ? overlord : null, true);
+      // 0.88.0 (maintainer): no Nordrassil seat any more -- the CLAW OF URSOC decides (FurbolgClaw): their own masters
+      // while Xavius lives or the Claw is theirs; never defeated
+      FurbolgClaw.Start(p, overlord != p ? overlord : null);
       Empower(p);
       GameTimeManager.RegisterOnTurnRepeating(GameTimeManager.Turn + 1, () => AiApi.Safe("furbolg turn", () =>
       {

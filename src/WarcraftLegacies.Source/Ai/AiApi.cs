@@ -19,6 +19,9 @@ namespace WarcraftLegacies.Source.Ai
 
     public static bool IsBot(player p) => SimpleBot.IsBot(p);
 
+    // 0.88.0: the bot's landmass id of a point (0 = Eastern Kingdoms / Northrend, 1 = Kalimdor; Geography's grid)
+    public static int Landmass(float x, float y) => Geography.Landmass(x, y);
+
     public static void StopBot(player p)
     {
       AiState.TakenOver.Remove(GetPlayerId(p));

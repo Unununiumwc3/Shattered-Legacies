@@ -1,0 +1,106 @@
+{
+  "OldId": "ANcl",
+  "NewId": "AZv0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Set Course"
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": "(Exodar)"
+    },
+    {
+      "Id": "aart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNStaffOfTeleportation.blp"
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "S"
+    },
+    {
+      "Id": "aher",
+      "Value": 0
+    },
+    {
+      "Id": "alev",
+      "Value": 1
+    },
+    {
+      "Id": "areq",
+      "Type": 3,
+      "Value": "R09A"
+    },
+    {
+      "Id": "arac",
+      "Type": 3,
+      "Value": "orc"
+    },
+    {
+      "Id": "abpx",
+      "Value": 0
+    },
+    {
+      "Id": "abpy",
+      "Value": 2
+    },
+    {
+      "Id": "aran",
+      "Level": 1,
+      "Type": 2,
+      "Value": 99999
+    },
+    {
+      "Id": "acdn",
+      "Level": 1,
+      "Type": 2,
+      "Value": 300
+    },
+    {
+      "Id": "Ncl1",
+      "Level": 1,
+      "Type": 2,
+      "Value": 0
+    },
+    {
+      "Id": "Ncl2",
+      "Level": 1,
+      "Value": 2
+    },
+    {
+      "Id": "Ncl3",
+      "Level": 1,
+      "Value": 1
+    },
+    {
+      "Id": "Ncl5",
+      "Level": 1,
+      "Value": 0
+    },
+    {
+      "Id": "Ncl6",
+      "Level": 1,
+      "Type": 3,
+      "Value": "blizzard"
+    },
+    {
+      "Id": "atp1",
+      "Level": 1,
+      "Type": 3,
+      "Value": "Set Course"
+    },
+    {
+      "Id": "aub1",
+      "Level": 1,
+      "Type": 3,
+      "Value": "The Exodar flies to the landing spot nearest the target point. 90 seconds in flight -- nobody gets in or out meanwhile. Only while the Exodar's bridge is held by the draenei or their master."
+    }
+  ]
+}

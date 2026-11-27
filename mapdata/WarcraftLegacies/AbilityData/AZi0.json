@@ -1,0 +1,180 @@
+{
+  "OldId": "AHwe",
+  "NewId": "AZi0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Forge Golem"
+    },
+    {
+      "Id": "aart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp"
+    },
+    {
+      "Id": "arar",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNArmorGolem.blp"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "Q"
+    },
+    {
+      "Id": "alev",
+      "Value": 3
+    },
+    {
+      "Id": "aher",
+      "Value": 1
+    },
+    {
+      "Id": "arlv",
+      "Value": 1
+    },
+    {
+      "Id": "alsk",
+      "Value": 2
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Forge Golem - [|cffffcc00Level %d|r]"
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "Argelmach wakes a Dark Iron War Golem from the foundries for 60 seconds.|n|n|cffffcc00Level 1|r - 1 golem.|n|cffffcc00Level 2|r - 1 golem, cooldown 20 s.|n|cffffcc00Level 3|r - 2 golems."
+    },
+    {
+      "Id": "Hwe1",
+      "Level": 1,
+      "Type": 3,
+      "Value": "nZi2"
+    },
+    {
+      "Id": "Hwe2",
+      "Level": 1,
+      "Value": 1
+    },
+    {
+      "Id": "adur",
+      "Level": 1,
+      "Type": 2,
+      "Value": 60
+    },
+    {
+      "Id": "acdn",
+      "Level": 1,
+      "Type": 2,
+      "Value": 30
+    },
+    {
+      "Id": "amcs",
+      "Level": 1,
+      "Value": 100
+    },
+    {
+      "Id": "atp1",
+      "Level": 1,
+      "Type": 3,
+      "Value": "Forge Golem - [|cffffcc00Level 1|r]"
+    },
+    {
+      "Id": "aub1",
+      "Level": 1,
+      "Type": 3,
+      "Value": "Wakes 1 Dark Iron War Golem for 60 seconds."
+    },
+    {
+      "Id": "Hwe1",
+      "Level": 2,
+      "Type": 3,
+      "Value": "nZi2"
+    },
+    {
+      "Id": "Hwe2",
+      "Level": 2,
+      "Value": 1
+    },
+    {
+      "Id": "adur",
+      "Level": 2,
+      "Type": 2,
+      "Value": 60
+    },
+    {
+      "Id": "acdn",
+      "Level": 2,
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Id": "amcs",
+      "Level": 2,
+      "Value": 100
+    },
+    {
+      "Id": "atp1",
+      "Level": 2,
+      "Type": 3,
+      "Value": "Forge Golem - [|cffffcc00Level 2|r]"
+    },
+    {
+      "Id": "aub1",
+      "Level": 2,
+      "Type": 3,
+      "Value": "Wakes 1 Dark Iron War Golem for 60 seconds."
+    },
+    {
+      "Id": "Hwe1",
+      "Level": 3,
+      "Type": 3,
+      "Value": "nZi2"
+    },
+    {
+      "Id": "Hwe2",
+      "Level": 3,
+      "Value": 2
+    },
+    {
+      "Id": "adur",
+      "Level": 3,
+      "Type": 2,
+      "Value": 60
+    },
+    {
+      "Id": "acdn",
+      "Level": 3,
+      "Type": 2,
+      "Value": 20
+    },
+    {
+      "Id": "amcs",
+      "Level": 3,
+      "Value": 100
+    },
+    {
+      "Id": "atp1",
+      "Level": 3,
+      "Type": 3,
+      "Value": "Forge Golem - [|cffffcc00Level 3|r]"
+    },
+    {
+      "Id": "aub1",
+      "Level": 3,
+      "Type": 3,
+      "Value": "Wakes 2 Dark Iron War Golems for 60 seconds."
+    }
+  ]
+}

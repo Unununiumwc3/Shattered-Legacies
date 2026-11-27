@@ -127,6 +127,11 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZma` | Seed Growth | `24p:A04C` | Dragonmaw |
 | `AZmb` |  | `24p:AIpl` | Dragonmaw |
 | `AZmc` | Ascendance | `24p:AEme` | Dragonmaw |
+| `AZn0` |  | `24p:Aabr` | Heroes088 |
+| `AZn1` | Dragon form | `24p:A03N` | Heroes088 |
+| `AZn2` | Focus Prey | `24p:A110` | Heroes088 |
+| `AZn5` | Toughness | `24p:A066` | Heroes088 |
+| `AZn6` | Dark Grip | `24p:A07R` | Heroes088 |
 | `AZw0` |  | `24p:Argl` | TwilightHammer |
 | `AZw1` | Structure Spiked Barricade | `24p:A0CF` | TwilightHammer |
 | `AZw2` | Self-Bloodlust | `24p:A0XM` | TwilightHammer |
@@ -173,6 +178,22 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `AZye` | Light's Edict | `24p:A0ZG` | Ashtongue |
 | `AZyf` | Army of Light | `24p:A0ZH` | Ashtongue |
 | `AZyh` | Army of Light Golem summon | `24p:A0ZI` | Ashtongue |
+| `AZz0` | Will of the Emperor | `24p:A0KE` | DarkIronForces |
+| `AZz1` | Titanforged | `24p:A0VN` | DarkIronForces |
+| `AZz2` | Storming Brew | `24p:A0KQ` | DarkIronForces |
+| `AZz3` | Heavy Bash | `24p:A064` | DarkIronForces |
+| `AZz4` | Perfect Avatar | `24p:A06I` | DarkIronForces |
+| `AZz5` | Flamethrower | `24p:A0RI` | DarkIronForces |
+| `AZz6` | Lockdown | `24p:A0E1` | DarkIronForces |
+| `AZz7` |  | `24p:A0WK` | DarkIronForces |
+| `AZz8` | Shadow Mend | `24p:A0WU` | DarkIronForces |
+| `AZz9` | Summon Shadowspawn | `24p:A0X8` | DarkIronForces |
+| `AZza` | Incinerate | `24p:A0WZ` | DarkIronForces |
+| `AZzb` | Flame Shield | `24p:A0X1` | DarkIronForces |
+| `AZzc` | Blazing Aura | `24p:A0VR` | DarkIronForces |
+| `AZzd` | Molten Strike | `24p:A0WR` | DarkIronForces |
+| `AZze` | Curse of Executus | `24p:A0WP` | DarkIronForces |
+| `AZzf` | Aegis of Ragaros | `24p:A0WS` | DarkIronForces |
 | `BZb0` | Death Domain | `24p:B0AM` | Nazjatar |
 | `BZb1` |  | `24p:B0AN` | Nazjatar |
 | `BZb2` |  | `24p:B0AJ` | Nazjatar |
@@ -181,13 +202,21 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `BZf2` | Searing Breath (Effect) | `24p:X00T` | Forsaken |
 | `BZf3` | Acid Rain Target | `24p:B09O` | Forsaken |
 | `BZk0` | Mage Armour | `24p:B00A` | KezanEnterprise |
+| `BZn0` |  | `24p:B082` | Heroes088 |
+| `BZn1` | Dark Grip (Caster) | `24p:B010` | Heroes088 |
 | `BZw0` |  | `24p:B07V` | TwilightHammer |
 | `BZw1` |  | `24p:B01Y` | TwilightHammer |
 | `BZw2` | Searing Breath (Effect) | `24p:X00T` | TwilightHammer |
 | `BZx0` | Dark Grip (Caster) | `24p:B010` | Zandalari |
 | `BZy1` |  | `24p:B014` | Ashtongue |
+| `BZz0` | Will of the Emperor | `24p:B04C` | DarkIronForces |
+| `BZz1` |  | `24p:B0A9` | DarkIronForces |
+| `BZz2` |  | `24p:B0AE` | DarkIronForces |
+| `EZn0` | Defias Kingpin | `24p:E01H` | Heroes088 |
+| `EZn1` | Dragon form | `24p:E004` | Heroes088 |
 | `HZb3` |  | `24p:H0A5` | Nazjatar |
 | `HZb4` | Empress of Nazjatar | `24p:H08U` | Nazjatar |
+| `HZn0` | Lord of the Satyrs | `24p:H047` | Heroes088 |
 | `HZw0` | High Priestess | `24p:H08Q` | TwilightHammer |
 | `HZy9` | The Naaru | `24p:H0AK` | Ashtongue |
 | `HZya` | High Priestess of the Aldor | `24p:H09S` | Ashtongue |
@@ -203,6 +232,10 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `IZw1` | Seeds of Regrowth | `24p:I00L` | TwilightHammer |
 | `IZx0` | Summon Gatherer | `24p:I009` | Zandalari |
 | `IZx1` | Seeds of Regrowth | `24p:I00L` | Zandalari |
+| `IZz0` | Book of Experience | `24p:I00T` | DarkIronForces |
+| `IZz1` | Mercenary Staff of Town Portal | `24p:I00V` | DarkIronForces |
+| `IZz2` | Staff of Teleportation | `24p:I01B` | DarkIronForces |
+| `IZz3` | Granite Token | `24p:fgrg` | DarkIronForces |
 | `NZk3` | Chief Engineer | `24p:Ntin` | KezanEnterprise |
 | `NZk4` | Baron of Gadgetzan | `24p:Nalc` | KezanEnterprise |
 | `OZki` | Trade Prince of the Bilgewater Cartel | `24p:O04N` | KezanEnterprise |
@@ -283,8 +316,11 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `UZb1` | The Leader of Bloodcursed Naga | `24p:U02N` | Nazjatar |
 | `UZfd` | Grand Apothecary | `24p:U01O` | Forsaken |
 | `UZfe` | Master of the Royal Apothecary Society | `24p:U02I` | Forsaken |
+| `UZn0` | Steward of Magic | `24p:U027` | Heroes088 |
+| `UZn1` | Grimscale Chieftain | `24p:U02M` | Heroes088 |
 | `UZw2` | Water Ascendant | `24p:U01S` | TwilightHammer |
 | `UZwx` | Deathwing | `24p:u01Y` | TwilightHammer |
+| `UZz0` | Majordomo Executus | `24p:U00W` | DarkIronForces |
 | `eZx0` | Direhorn | `24p:e00Z` | Zandalari |
 | `hZb0` | Coral Forge | `24p:h0A4` | Nazjatar |
 | `hZb1` | Naga Sea Witch | `24p:h02P` | Nazjatar |
@@ -311,6 +347,12 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `hZy6` | Rangari | `24p:h09T` | Ashtongue |
 | `hZy7` | Elekk Knight | `24p:h09U` | Ashtongue |
 | `hZy8` | Vindicator | `24p:h09R` | Ashtongue |
+| `hZz0` | Anvilrage Guardsman | `24p:h0A6` | DarkIronForces |
+| `hZz1` | Bear Rider | `24p:h0A7` | DarkIronForces |
+| `hZz2` | Chieftain | `24p:h0A8` | DarkIronForces |
+| `hZz3` | Magma Tank | `24p:h0AA` | DarkIronForces |
+| `hZz4` | Shadowcaster | `24p:h0AB` | DarkIronForces |
+| `hZz5` | Gyrocopter | `24p:hgyr` | DarkIronForces |
 | `nZb0` | Temple of Azshara | `24p:n045` | Nazjatar |
 | `nZb1` | Pillar of Waves | `24p:n0C2` | Nazjatar |
 | `nZb2` | Monument of Currents | `24p:n0C8` | Nazjatar |
@@ -353,6 +395,9 @@ researches ...) are listed in `../README.md` "Changes to map data".
 | `nZw6` | Hurricane | `24p:n06A` | TwilightHammer |
 | `nZw7` | Hurricane | `24p:n06B` | TwilightHammer |
 | `nZy1` | Lightforged Warframe | `24p:n0DA` | Ashtongue |
+| `nZz0` | Flame Keeper | `24p:n0CH` | DarkIronForces |
+| `nZz1` | Dark Iron Gatebreaker | `24p:n0CC` | DarkIronForces |
+| `nZz2` | Shadowspawn | `24p:n0CM` | DarkIronForces |
 | `oZb0` | Death Domain | `24p:o066` | Nazjatar |
 | `oZf0` | Plague Flyer | `24p:o05H` | Forsaken |
 | `oZk0` |  | `24p:o03L` | KezanEnterprise |

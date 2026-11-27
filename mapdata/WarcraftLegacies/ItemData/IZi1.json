@@ -1,0 +1,55 @@
+{
+  "OldId": "ratc",
+  "NewId": "IZi1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Titanforged Gauntlets"
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A0VM"
+    },
+    {
+      "Id": "igol",
+      "Value": 1200
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNGauntletsOfOgrePower.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "Gauntlets of Titan steel. +9 Strength."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Gauntlets of Titan steel. +9 Strength."
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Purchase Titanforged Gauntlets"
+    },
+    {
+      "Id": "isto",
+      "Value": 1
+    },
+    {
+      "Id": "istr",
+      "Value": 300
+    },
+    {
+      "Id": "isst",
+      "Value": 0
+    }
+  ]
+}

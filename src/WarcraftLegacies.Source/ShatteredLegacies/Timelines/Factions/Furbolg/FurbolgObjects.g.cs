@@ -5,6 +5,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg
   {
     internal const int Nafien = 1331328304; // OZu0
     internal const int Lodge = 1868199217; // oZu1
+    internal const int Shrine = 1868199218; // oZu2
     internal const int Furbolg = 1852207724; // nfrl
     internal const int Shaman = 1852207731; // nfrs
     internal const int Tracker = 1852207714; // nfrb

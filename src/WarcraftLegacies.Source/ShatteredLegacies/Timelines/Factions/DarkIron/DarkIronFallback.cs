@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using MacroTools.GameTime;
+using MacroTools.PreplacedWidgets;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Dungeons;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIronForces;
 using WarcraftLegacies.Source.Shared;
 using WCSharp.Shared.Data;
 
@@ -14,17 +16,32 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
   // the Great Forge lost (the catalog's Hq).
   // - run: Ironforge's units are left behind -- but what stands in Shadowforge City on the surface (WL's Dark Iron
   //   outpost, hidden until Ironforge's "The Dark Iron" quest) is theirs; the Shadowforge dungeon opens (its entrance
-  //   is that city's building), its three CPs are theirs (the Siege Foundry whoever holds it); a Dark Iron town inside
+  //   is that city's building), its CPs are theirs (0.87.0: the seat only); a Dark Iron town inside
   //   the dungeon, 5 Masons, an army, Dagran Thaurissan.
   // - MERCENARY CHARTER: a VASSAL of whoever holds the Siege Foundry (at the start: whoever took or razed the Great
   //   Forge), never defeated, its halls indestructible. Every turn the charter holder (an ally, not the Dark Iron
   //   themselves) pays 50 gold tribute -- and gets a Dark Iron War Golem and a Dark Iron Mortar Team at the Foundry; the
   //   first tribute also brings master-forged weapons (one level of Copper-Forged Weaponry).
   // - "The Great Anvil" (DarkIronFaction): the arsenal -- a War Golem and a Mortar Team every turn at the Great Forge.
+  // 0.87.0 (maintainer):
+  // - the 24p's Dark Iron troops (DarkIronForces); the SEAT is the Throne Room (was the Siege Foundry), its throne the
+  //   Dark Iron HQ (the Throne of Thaurissan, indestructible). Only the seat is theirs on arrival -- the Treasury and
+  //   the Siege Foundry are guarded by Ragnaros' loyalists (dungeon_content.py), Majordomo Executus holds the west throne
+  // - their CONTROLLER (whoever they serve: the seat's holder, at first the conqueror) gets a Dark Iron Gatebreaker
+  //   every 5 turns at Shadowforge City (200 chaos damage, a very slow swing)
+  // - the Mercenary Charter stays with the Siege Foundry: its holder pays tribute for a Mortar Team each turn (the
+  //   first tribute: a weapons level); the Statue of Thaurissan beside it gives the Foundry's holder +4 armour around it
+  // - the Shadowforge Black Market (neutral, expensive) sells to anyone who reaches it
   internal static class DarkIronFallback
   {
-    internal const float StartX = -19200f; // Shadowforge, the Tavern District
+    internal const float StartX = -19200f; // Shadowforge, by the Throne Room
     internal const float StartY = 22900f;
+    private const float SurfaceX = 11400f;  // Shadowforge City on the surface (the dungeon's world entrance)
+    private const float SurfaceY = -9336f;
+    private const int GatebreakerTurns = 5;
+    private static player _controller;
+    private static unit _throne;
+    private static unit _statue;
     private const float FoundryX = -23040f; // the Siege Foundry CP (DungeonObjects.SiegeFoundry)
     private const float FoundryY = 23700f;
     private const int Tribute = 50;
@@ -34,7 +51,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
     private static readonly int[] HallTypes =
     {
       DarkIronObjects.MiningColonyT1, DarkIronObjects.DwarfHoldT2, DarkIronObjects.GreatHoldT3,
-      UNIT_H01O_SHADOWFORGE_CITY_IRONFORGE_OTHER
+      UNIT_H01O_SHADOWFORGE_CITY_IRONFORGE_OTHER, DarkIronObjects.ThroneOfThaurissan
     };
 
     private static readonly int[] Town =
@@ -47,20 +64,41 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
     private static readonly int[] Army =
     {
       DarkIronObjects.MasonWorker, DarkIronObjects.MasonWorker, DarkIronObjects.MasonWorker, DarkIronObjects.MasonWorker,
-      DarkIronObjects.MasonWorker, DarkIronObjects.Warrior, DarkIronObjects.Warrior, DarkIronObjects.Warrior,
-      DarkIronObjects.Warrior, DarkIronObjects.Warrior, DarkIronObjects.Warrior, DarkIronObjects.Warrior,
-      DarkIronObjects.Warrior, DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronObjects.Rifleman,
-      DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronObjects.MortarTeam,
+      DarkIronObjects.MasonWorker, DarkIronForcesObjects.AnvilrageGuardsman,
+      DarkIronForcesObjects.AnvilrageGuardsman, DarkIronForcesObjects.AnvilrageGuardsman,
+      DarkIronForcesObjects.AnvilrageGuardsman, DarkIronForcesObjects.AnvilrageGuardsman,
+      DarkIronForcesObjects.AnvilrageGuardsman, DarkIronForcesObjects.BearRider, DarkIronForcesObjects.BearRider,
+      DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronObjects.Rifleman,
+      DarkIronObjects.Rifleman, DarkIronObjects.Rifleman, DarkIronForcesObjects.Shadowcaster,
+      DarkIronForcesObjects.Shadowcaster, DarkIronForcesObjects.FlameKeeper, DarkIronObjects.MortarTeam,
       DarkIronObjects.MortarTeam, DarkIronObjects.WarGolem, DarkIronObjects.WarGolem
     };
 
     internal const string ArrivalText =
       "|cffffcc00The Bronzebeard throne is empty.|r A Dark Iron expeditionary force tunnels up through the shattered "
       + "foundations -- not to burn the world for Ragnaros, but to claim the Great Anvil. Gold, ore and survival are "
-      + "all they serve: whoever holds their Siege Foundry holds their Mercenary Charter.";
+      + "all they serve: whoever holds their Throne Room is their master, whoever holds their Siege Foundry holds their "
+      + "Mercenary Charter.";
 
-    private static void Prepare() =>
+    private static void Prepare()
+    {
       LastConqueror.Watch(UNIT_H001_THE_GREAT_FORGE_IRONFORGE_OTHER, "Ironforge");
+      // Shadowforge's preplaced props (dungeon_content.py): visible, invulnerable, neutral until the Dark Iron come
+      _throne = Protect(DarkIronObjects.ThroneOfThaurissan);
+      _statue = Protect(DarkIronObjects.StatueOfThaurissan);
+      Protect(DarkIronObjects.ShadowforgeBlackMarket);
+    }
+
+    private static unit Protect(int type)
+    {
+      if (!AllPreplacedWidgets.Units.TryGetAll(type, out var all) || all.Count == 0)
+      {
+        return null;
+      }
+
+      SetUnitInvulnerable(all[0], true);
+      return all[0];
+    }
 
     private static void Run(player p, TurningPointDef def)
     {
@@ -78,16 +116,31 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
       LeaveBehind.ToNeutralHostile(p, keep);
       TakeShadowforgeCity(p);
       VoidDungeons.Open(VoidDungeons.Shadowforge);
-      StartCps.Force(p, DungeonObjects.SiegeFoundry);
-      StartCps.Give(p, DungeonObjects.DarkIronTreasury, DungeonObjects.TavernDistrict);
+      StartCps.Force(p, DungeonObjects.ThroneRoom); // 0.87.0: the seat only -- the rest is guarded by creeps
+      if (_throne != null)
+      {
+        SetUnitOwner(_throne, p, true);
+      }
+
       Spawn.Buildings(p, StartX, StartY, Town);
       Spawn.Units(p, StartX + 256f, StartY - 256f, Army);
       AllLegends.Ironforge.Dagran.ForceCreate(p, new Point(StartX, StartY), 270f);
       var overlord = LastConqueror.Of("Ironforge");
-      Conquest.Register(p, DungeonObjects.SiegeFoundry, overlord != p ? overlord : null, true);
+      _controller = overlord != p ? overlord : null;
+      Conquest.Register(p, DungeonObjects.ThroneRoom, _controller, true);
       ProtectHalls(p);
       GameTimeManager.RegisterOnTurnRepeating(GameTimeManager.Turn + 1, () => AiApi.Safe("dark iron charter",
         () => Charter(p)), 1, () => p.GetPlayerData().Faction == darkIron);
+      GameTimeManager.RegisterOnTurnRepeating(GameTimeManager.Turn + GatebreakerTurns, () =>
+        AiApi.Safe("dark iron gatebreaker", () => Gatebreaker(p)), GatebreakerTurns,
+        () => p.GetPlayerData().Faction == darkIron);
+      if (_statue != null)
+      {
+        UnitAddAbility(_statue, DarkIronForcesObjects.WillOfTheEmperor);
+        SetUnitAbilityLevel(_statue, DarkIronForcesObjects.WillOfTheEmperor, 4);
+        var t = CreateTimer();
+        TimerStart(t, 2f, true, () => AiApi.Safe("statue of thaurissan", StatueOwner));
+      }
       for (var i = 0; i < 24; i++)
       {
         DisplayTimedTextToPlayer(Player(i), 0, 0, 20, ArrivalText);
@@ -141,7 +194,44 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
       }
     }
 
-    // the Mercenary Charter: the Siege Foundry's holder pays tribute and gets golems and mortar teams
+    // the Statue of Thaurissan stands with whoever holds the Siege Foundry (its aura is the owner's)
+    private static void StatueOwner()
+    {
+      var cp = AiApi.SafeCp(DungeonObjects.SiegeFoundry);
+      var holder = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null;
+      var owner = holder != null && GetPlayerId(holder) < 24 ? holder : Player(PLAYER_NEUTRAL_PASSIVE);
+      if (GetOwningPlayer(_statue) != owner)
+      {
+        SetUnitOwner(_statue, owner, true);
+      }
+    }
+
+    // every 5 turns: a Gatebreaker for the Dark Iron's controller -- the Throne Room's holder, else their conqueror
+    private static void Gatebreaker(player p)
+    {
+      var cp = AiApi.SafeCp(DungeonObjects.ThroneRoom);
+      var holder = cp != null && cp.Unit != null ? GetOwningPlayer(cp.Unit) : null;
+      if (holder != null && holder != p && GetPlayerId(holder) < 24)
+      {
+        _controller = holder;
+      }
+
+      if (_controller == null || GetPlayerSlotState(_controller) != PLAYER_SLOT_STATE_PLAYING
+          || !IsPlayerAlly(_controller, p))
+      {
+        return;
+      }
+
+      CreateUnit(_controller, DarkIronForcesObjects.Gatebreaker, SurfaceX, SurfaceY, 270f);
+      DisplayTimedTextToPlayer(_controller, 0, 0, 15, "|cffffcc00Shadowforge pays its due:|r a Dark Iron Gatebreaker "
+        + "waits for you at Shadowforge City.");
+      if (GetLocalPlayer() == _controller)
+      {
+        PingMinimap(SurfaceX, SurfaceY, 4f);
+      }
+    }
+
+    // the Mercenary Charter: the Siege Foundry's holder pays tribute and gets a mortar team (the first time: weapons)
     private static void Charter(player p)
     {
       var cp = AiApi.SafeCp(DungeonObjects.SiegeFoundry);
@@ -159,14 +249,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIron
 
       SetPlayerState(holder, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(holder, PLAYER_STATE_RESOURCE_GOLD) - Tribute);
       SetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD, GetPlayerState(p, PLAYER_STATE_RESOURCE_GOLD) + Tribute);
-      CreateUnit(holder, DarkIronObjects.WarGolem, FoundryX, FoundryY - 256f, 270f);
       CreateUnit(holder, DarkIronObjects.MortarTeam, FoundryX + 128f, FoundryY - 256f, 270f);
       if (_forged.Add(holder))
       {
         var weapons = UPGRADE_RHME_COPPER_FORGED_WEAPONRY_UNIVERSAL_UPGRADE;
         SetPlayerTechResearched(holder, weapons, GetPlayerTechCount(holder, weapons, true) + 1);
         DisplayTimedTextToPlayer(holder, 0, 0, 15, "|cffffcc00Mercenary Charter:|r the Dark Iron forge your weapons "
-          + "and send golems and mortar teams every turn -- for " + I2S(Tribute) + " gold.");
+          + "and send a mortar team every turn -- for " + I2S(Tribute) + " gold.");
       }
     }
 

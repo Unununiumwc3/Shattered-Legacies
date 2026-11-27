@@ -1,0 +1,55 @@
+{
+  "OldId": "ckng",
+  "NewId": "IZq1",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "idrp",
+      "Value": 1
+    },
+    {
+      "Id": "ihtp",
+      "Value": 500000
+    },
+    {
+      "Id": "ipaw",
+      "Value": 0
+    },
+    {
+      "Id": "iusa",
+      "Value": 1
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A0BF,A03Y"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Benediction"
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNStaffOfSanctuary.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "The Eye of Divinity, from Majordomo's Cache of the Firelord. Increases Intelligence; heals."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffff8c00Artifact|r|nThe Eye of Divinity, kept in Majordomo Executus' Cache of the Firelord, awakened in its holy form. Increases Intelligence by 8. Can cast a heal on all nearby friendly units (life, mana and armour)."
+    }
+  ]
+}

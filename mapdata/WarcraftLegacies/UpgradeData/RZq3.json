@@ -1,0 +1,21 @@
+{
+  "OldId": "Roch",
+  "NewId": "RZq3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "gnsf",
+      "Type": 3,
+      "Value": "(condition)"
+    },
+    {
+      "Level": 1,
+      "Id": "gnam",
+      "Type": 3,
+      "Value": "The Plague of Undeath"
+    }
+  ]
+}

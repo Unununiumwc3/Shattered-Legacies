@@ -1,0 +1,55 @@
+{
+  "OldId": "ckng",
+  "NewId": "IZq3",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "idrp",
+      "Value": 1
+    },
+    {
+      "Id": "ihtp",
+      "Value": 500000
+    },
+    {
+      "Id": "ipaw",
+      "Value": 0
+    },
+    {
+      "Id": "iusa",
+      "Value": 1
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A0AL,AIcd"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Blackmane Warbanner"
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNBattleStandard.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "Snarlmane's banner. Increases Strength; nearby allies deal more damage."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffff8c00Artifact|r|nThe warbanner of the Blackmane gnolls. Increases Strength by 10; nearby friendly units deal more damage."
+    }
+  ]
+}

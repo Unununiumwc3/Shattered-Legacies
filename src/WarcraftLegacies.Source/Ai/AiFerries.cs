@@ -57,6 +57,7 @@ namespace WarcraftLegacies.Source.Ai
     private static HashSet<unit> _transit = new();
     private static HashSet<unit> _boats = new();
     private static List<AiVoyage> _voyages = new();
+    private static HashSet<int> _announced = new(); // 0.87.0: late ferries announced once
     private static bool _ready;
     internal static int Boarded;
     internal static int Landed;
@@ -129,6 +130,23 @@ namespace WarcraftLegacies.Source.Ai
 
       for (var k = 0; k < _link.Count; k++)
       {
+        var from = AiGraph.Portals[_link[k]].FromTurn; // 0.87.0: a late ferry has no edges before its turn
+        if (from > 0 && MacroTools.GameTime.GameTimeManager.Turn < from)
+        {
+          continue;
+        }
+
+        if (from > 0 && _announced.Add(k))
+        {
+          var pl = AiGraph.Portals[_link[k]];
+          for (var i = 0; i < 24; i++)
+          {
+            DisplayTimedTextToPlayer(Player(i), 0, 0, 20, "|cffffcc00Turn " + I2S(from) + ":|r a new sea route over "
+              + "the islands is open (" + pl.NameA + " / " + pl.NameB + ") -- armies now sail between the Eastern "
+              + "Kingdoms and Kalimdor.");
+          }
+        }
+
         var len = LaneLength(k);
         var extra = len * WalkSpeed / ShipSpeed + BoardWait * WalkSpeed * 0.5f;
         for (var side = 0; side < 2; side++)

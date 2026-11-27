@@ -71,6 +71,7 @@ def heroes():
 def acherus():
     write("UnitData", "uZe0", {"OldId": "uaod", "NewId": "uZe0", "Unk": [0], "Modifications": [
         s("unam", "Acherus: The Ebon Hold"), s("utra", "UZe1,UZe2,UZe3,UZe4"), s("unsf", "(Ebon Blade)"),
+        s("ures", "RZq0"),  # 0.88.0: The Ebon Hold Rises (content_088.py) -- Acherus flies
         n("ufma", 40), n("ugol", 0), n("ulum", 0), r("usca", 1.2), s("upap", "unwalkable"),
         s("utub", "The necropolis of the Knights of the Ebon Blade. Revives its death knights; it cannot be destroyed.")]})
 

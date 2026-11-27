@@ -1,0 +1,34 @@
+{
+  "OldId": "Bfae",
+  "NewId": "BZq0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "fnam",
+      "Type": 3,
+      "Value": "Zombie Plague"
+    },
+    {
+      "Id": "ftip",
+      "Type": 3,
+      "Value": "Zombie Plague"
+    },
+    {
+      "Id": "fube",
+      "Type": 3,
+      "Value": "This unit has the zombie plague; it slowly takes damage and rises as a zombie when it dies. Only a dispel or purge cures it."
+    },
+    {
+      "Id": "fart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNPlagueCloud.blp"
+    },
+    {
+      "Id": "ftat",
+      "Type": 3,
+      "Value": "Abilities\\Spells\\Undead\\PlagueCloud\\PlagueCloudtarget.mdl"
+    }
+  ]
+}

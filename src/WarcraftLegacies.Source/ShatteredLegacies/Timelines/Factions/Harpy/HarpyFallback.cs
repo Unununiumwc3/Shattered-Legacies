@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MacroTools.Extensions;
 using WarcraftLegacies.Source.Ai;
+using WarcraftLegacies.Source.ShatteredLegacies.Events;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WCSharp.Shared.Data;
@@ -22,6 +23,11 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Harpy
     internal const float RoostX = -18505f; // the heart of the colony
     internal const float RoostY = 987f;
     internal static readonly ExclusivePath Path = new("Harpies", Prepare, Run, RoostX, RoostY);
+    private const float BroodX = -18300f; // 0.88.0: the Broodmother's cage, by the nests (map_query: open ground)
+    private const float BroodY = 1200f;
+    private const string BroodText = "|cffffcc00The Broodmother's cage is taken!|r The harpies of Stonetalon follow "
+                                     + "her new keeper: {0}.";
+    private static CaptureSeat _broodmother;
     private static readonly List<unit> _nests = new();
 
     private static readonly int[] Flock =
@@ -73,7 +79,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Harpy
       Spawn.Units(p, RoostX, RoostY - 300f, new[] { HarpyObjects.Serena });
       Spawn.Units(p, RoostX + 256f, RoostY - 300f, Flock);
       var overlord = LastConqueror.Of("Black Empire");
-      Conquest.Register(p, UNIT_N01U_STONETALON_PEAK, overlord != p ? overlord : null, true);
+      // 0.88.0 (maintainer): the seat is THE BROODMOTHER -- a caged hostage by the nests that cannot move; whoever
+      // brings her to 0 life takes her (CaptureSeat), and the harpies serve that player's team. At the start she is
+      // held by N'Zoth's slayer.
+      var brood = CreateUnit(p, Objects088.Broodmother, BroodX, BroodY, 270f);
+      _broodmother = new CaptureSeat(brood, overlord != null && overlord != p ? overlord : p, BroodText);
+      Conquest.Register(p, () => _broodmother.Holder, overlord != p ? overlord : null, true);
       ProtectNests(p);
       for (var i = 0; i < 24; i++)
       {

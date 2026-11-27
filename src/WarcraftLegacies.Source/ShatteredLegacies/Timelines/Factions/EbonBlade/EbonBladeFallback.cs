@@ -86,6 +86,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.EbonBlade
       LeaveBehind.ToNeutralHostile(p, keep);
       var hold = CreateUnit(p, Acherus, AcherusX, AcherusY, 270f);
       SetUnitInvulnerable(hold, true);
+      AcherusFlight.Start(p, hold); // 0.88.0: the four at level 10 -> "The Ebon Hold Rises", Acherus flies
       for (var i = 0; i < Heroes.Length; i++)
       {
         var h = CreateUnit(p, Heroes[i], HeroX + 128f * (i % 2), HeroY - 128f * (i / 2), 270f);

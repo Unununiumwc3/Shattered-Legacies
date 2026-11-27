@@ -1,0 +1,24 @@
+{
+  "OldId": "nwgt",
+  "NewId": "nZq6",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Harbour: ship to Northrend"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(the late crossing)"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Ships sail between Northrend and Kalimdor -- open to everyone since the crossing opened."
+    }
+  ]
+}

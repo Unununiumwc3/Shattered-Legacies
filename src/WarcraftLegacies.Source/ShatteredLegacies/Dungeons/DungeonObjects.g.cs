@@ -13,14 +13,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
     internal const int GishanCavern = 1851422260; // nZv4 "Gishan Cavern", 10 gold, -20288, -26368
     internal const int DarkIronTreasury = 1851422261; // nZv5 "Dark Iron Treasury", 20 gold, -22144, 22784
     internal const int SiegeFoundry = 1851422262; // nZv6 "Siege Foundry", 15 gold, -23040, 23936
-    internal const int TavernDistrict = 1851422263; // nZv7 "Tavern District", 10 gold, -18944, 23360
+    internal const int ThroneRoom = 1851422263; // nZv7 "Throne Room", 10 gold, -18944, 23360
     internal const int Deadmines = 1851422264; // nZv8 "The Deadmines", 20 gold, -26048, -26880
     internal const int GoblinFoundry = 1851422265; // nZv9 "Goblin Foundry", 10 gold, -27952, -28256
     internal const int IroncladCove = 1851422305; // nZva "Ironclad Cove", 15 gold, -25232, -30176
+    internal const int TimbermawHold = 1851422309; // nZve "Timbermaw Hold", 10 gold, -14892, 22008
+
+    // 0.87: the Exodar's Set Course (on the Dimensional Generator)
+    internal const int SetCourse = 1096447536; // AZv0
 
     // the waygates (stock Waygate, another model)
     internal const int GatewayCircle = 1851422306; // nZvb "Gateway"
     internal const int DeadminesEntrance = 1851422307; // nZvc "The Deadmines"
     internal const int UndercityGate = 1851422308; // nZvd "Gate of the Undercity"
+    internal const int ExodarShip = 1851422310; // nZvf "The Exodar"
   }
 }

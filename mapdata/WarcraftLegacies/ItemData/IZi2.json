@@ -1,0 +1,55 @@
+{
+  "OldId": "ratc",
+  "NewId": "IZi2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Titanforged Core"
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "AZz1"
+    },
+    {
+      "Id": "igol",
+      "Value": 1800
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "A Titan engine's burning heart. Burns nearby enemy units for 40 damage per second."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "A Titan engine's burning heart. Burns nearby enemy units for 40 damage per second."
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": "Purchase Titanforged Core"
+    },
+    {
+      "Id": "isto",
+      "Value": 1
+    },
+    {
+      "Id": "istr",
+      "Value": 300
+    },
+    {
+      "Id": "isst",
+      "Value": 0
+    }
+  ]
+}

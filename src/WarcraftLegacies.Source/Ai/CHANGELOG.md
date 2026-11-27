@@ -5,6 +5,28 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.88.0 — AiApi.Landmass
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.88.0.
+- `AiApi.Landmass(x, y)`: the bot's landmass id of a point (Geography), for the fork's Kalimdor crossing (70 % of
+  Kalimdor's CPs).
+
+## 0.87.1 — version only
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.87.1. No bot change (`AI_AGENTS_CONTEXT.md`: the current build
+section now summarises 0.72 - 0.87).
+
+## 0.87.0 — a late sea route, the Exodar's ship, new dens
+
+Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.87.0.
+- **East -> west over the islands from turn 30** (maintainer): a ferry Kul Tiras (Stormsong coast) <-> Kezan
+  (`PortalLink` with `FromTurn` 30; `AiFerries` builds no edges before that turn and announces the route once it
+  opens). With Stormwind <-> Kul Tiras and Kezan <-> Nazmir <-> Gadgetzan the armies cross between the Eastern Kingdoms
+  and Kalimdor. `gen_lanes.py` reads the optional turn.
+- The edge Silvermyst Island <-> Exodar Regalis is gone (the Exodar is in the void; its ship is a live waygate, read by
+  `AiRoutes.CheckPortals` wherever it lands). Routes regenerated (Timbermaw Hold, the Exodar's interior).
+- HQs: the Dark Iron's Throne of Thaurissan, the Furbolgs' Shrine of Ursoc; both in the production data.
+
 ## 0.86.0 — bot data for the Dark Iron and the Furbolgs
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.86.0.

@@ -48,8 +48,10 @@ ShatteredLegacies/
     SlAiData.g.cs               GENERATED (tools/shattered-legacies/ai/gen_ai_data.py): the Kezan buildings' bot data
   Content/                      GENERATED content index: REUSE.md + units / abilities / upgrades / items .tsv
   Dungeons/
-    VoidDungeons.cs             the void-area dungeons (Nazjatar, Shadowforge, Deadmines): gates + instances, shut until
-                                their fallback opens them (0.83, 0.84)
+  Events/                       0.88: Theramore / Jaina, Kalecgos (The Nexus), creep bosses, elite choices, the
+                                Kalimdor <-> Northrend crossing, the quilboar plague (objects: content_088.py)
+    VoidDungeons.cs             the void-area dungeons (Nazjatar, Shadowforge, Deadmines, Timbermaw Hold, the Exodar):
+                                gates + instances, shut until their fallback opens them (0.83 - 0.87)
     DungeonObjects.g.cs         GENERATED (tools/shattered-legacies/content/void_dungeons.py): their CP types
   Testing/
     TestKit.cs                  "-testkit": spawns a port bundle's heroes / artifacts for a short check (debug only, 0.72.0)
@@ -58,7 +60,8 @@ ShatteredLegacies/
     ScoreboardLines.cs          the fork's lines on WL's scoreboard (end goals, 0.59; [SL] FactionMultiboard.ExtraLines)
   Timelines/
     TimelineSetup.cs            entry point of the timelines
-    TimelineCatalog.cs          one turning-point definition per WL faction (mostly placeholders, see TIMELINES.md)
+    TimelineCatalog.cs          one turning-point definition per WL faction (overview: TIMELINES.md section 0; no
+                                placeholders since 0.87.1)
     Core/                       the engine:
       TurningPointDef / Kind / Source   what a turning point is
       TurningPointQuest.cs      a turning point as a WL quest (objectives: ObjectiveHqLost + the Hourglass decision)
@@ -68,8 +71,9 @@ ShatteredLegacies/
       TimelineSystem.cs         attaches the quests (FactionRegistered), HQ checks, bot decisions, effects
       Hourglass.cs              the Hourglass of Fate buildings and their per-player research limits
       HourglassData.g.cs        GENERATED (tools/shattered-legacies/timelines/gen_hourglass.py): its object ids
-      Effects/                  SwapFaction, LeaveBehind, StartArea, ChangeTeam, SplitFaction, Spawn -- the building
-                                blocks of turning points
+      Conquest.cs, LastConqueror.cs, ExclusivePath.cs  conquered vassals, their first master, one-claim paths
+      Effects/                  SwapFaction, LeaveBehind, StartArea, ChangeTeam, SplitFaction, Spawn, StartCps,
+                                TurnLevy, HeroRevival, Instance -- the building blocks of turning points
     Factions/<Faction>/         content per WL faction or new faction -- the template is in TIMELINES.md
       Quelthalas/               Quel'thalas -> WL's Sunfury (QuelthalasFallback, the full-turning-point pilot)
       Forsaken/                 Quel'thalas' betrayal -> the Forsaken (ForsakenBetrayal, the split pilot), the fork's
@@ -86,6 +90,9 @@ ShatteredLegacies/
                                 (the Black Empire's) -- 0.85, objects from content/minor_factions.py
       DarkIron/, Furbolg/       the Dark Iron of Shadowforge (Ironforge's, content/dark_iron.py), the Furbolgs (the
                                 Druids', content/minor_factions.py) -- 0.86
+      DarkIronForces/           GENERATED ids of the Dark Iron's 24p troops (import_24p.py set DARK_IRON) -- 0.87
+      Draenei/ExodarShip.cs     the Exodar flies: landing spots, Set Course, the flight -- 0.87
+      Defias/StromgardeHandover.cs  Stromgarde's quest passes to Lordaeron when Stormwind falls back -- 0.87
 ```
 
 ## Changes to WL's code (marked `[SL]`)
@@ -102,14 +109,16 @@ ShatteredLegacies/
 | `GameLogic/DisplayIntroText.cs`, `GameLogic/InfoQuests.cs`, `Setup/HintSetup.cs` | fork title and notice | 0.39.9 |
 | `GameLogic/GameEnd/PlayerElimination.cs` | the fork's defeat rule replaces WL's (`Rules/EliminationRule`) | 0.53 |
 | `Setup/FactionChoiceDialogSetup.cs` | no Sunfury pick for the Illidari slot (Sunfury = Quel'thalas' fallback) | 0.53 |
-| `Setup/FactionChoiceDialogSetup.cs`, `Factions/Dalaran/DalaranFaction.cs`, `Factions/Gilneas/GilneasFaction.cs` | no Gilneas pick for the Dalaran slot; Dalaran no longer takes Gilneas (no "The Greymane Wall", no unit replacement in `Regions.Gilneas`); `GilneasFaction(asFallback: true)` without the pick's start quests and Book of Medivh (Gilneas = Stormwind's fallback) | 0.76.0 |
+| `Setup/FactionChoiceDialogSetup.cs`, `Factions/Dalaran/DalaranFaction.cs`, `Factions/Gilneas/GilneasFaction.cs` | no Gilneas pick for the Dalaran slot; Dalaran no longer takes Gilneas (no "The Greymane Wall", no unit replacement in `Regions.Gilneas`); `GilneasFaction(asFallback: true)` without the pick's start quests and Book of Medivh (Gilneas = Stormwind's fallback; Lordaeron's since 0.85) | 0.76.0 |
 | `Objectives/IObjectiveVisit.cs` + `ObjectiveLegendReachRect`, `ObjectiveLegendInRect`, `ObjectiveAnyUnitInRect`, `ObjectiveAnyUnitReachRect`, `ObjectiveHeroWithLevelInRect`, `ObjectiveAnyHeroWithLevelReachRect` | read-only "where / who" properties for the bot's quest runner | 0.76.0 |
 | `MacroTools/Legends/LegendaryHero.cs` | WL 5.0.4's localised tooltip taken, its localised `Name` NOT (desync in mixed-language games: the bots compare legends by name) | 0.77.0 |
 | `Commands/Forfeit.cs` | WL 5.0.4's localised team name, the 6 votes kept (WL 5: 5, for 7v7) | 0.77.0 |
 | `Factions/Ahnqiraj/AhnqirajFaction.cs`, `Quests/QuestRebuildAhnqiraj.cs` (deleted) | no "Rebuilding of Ahn'Qiraj": the gate is Ahn'Qiraj's from the start | 0.78.0 |
 | `Factions/Lordaeron/Quests/QuestScarletCrusade.cs` | `SwapFaction.NameSlot` after the faction change (bot slot name) | 0.78.0 |
 | `WarcraftLegacies.Shared/FactionObjectLimits/DalaranObjectInfo.cs`, `GilneasObjectInfo.cs` | no Gilneas Manor for Dalaran; no Dalaran houses / Violet Tower for Gilneas | 0.80.0 |
-| `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade / Nazjatar / Defias / Centaur / Harpy / Dark Iron / Furbolg object limits (`[SL]` lines) | 0.80.0, 0.84.0 - 0.86.0 |
+| `WarcraftLegacies.Shared/ObjectInfoRepository.cs` | Dragonmaw / Zandalari / Ebon Blade / Nazjatar / Defias / Centaur / Harpy / Dark Iron (+ its 24p troops) / Furbolg object limits (`[SL]` lines) | 0.80.0, 0.84.0 - 0.87.0 |
+| `Factions/Draenei/Quests/QuestDimensionalShip.cs` | the reward text: the Exodar can fly (`[SL]`) | 0.87.0 |
+| `mapdata/WarcraftLegacies/UnitData/n00E.json` | WL's Dimensional Generator gets Set Course (`AZv0`, `content/void_dungeons.py`) | 0.87.0 |
 | `Setup/FactionChoiceDialogSetup.cs` | no Draenei pick: the Sentinels' slot plays the Sentinels | 0.80.0 |
 | `Factions/Draenei/DraeneiFaction.cs` | fallback mode (`asFallback`: no Darkshore quest, `RepairHull` for the fallback) | 0.80.0 |
 | `Factions/Dalaran/Mechanics/Waygate.cs` | `IsOperational` without a property pattern (CSharp.lua null crash) | 0.81.0 |
@@ -126,6 +135,7 @@ ShatteredLegacies/
 | `Objectives/TurnBased/ObjectiveTurn.cs` | the target turn counts from a mid-game arrival (`ExpirationOffset`) | 0.57.3 |
 | `mapdata/WarcraftLegacies/Info.json` | three computer slots "NPC" (P11, P14, P20) and their force -- the free slots for splits | 0.57.1 |
 | `mapdata/WarcraftLegacies/Environment.json`, `PathingMap.json`, `ShadowMap.json`, `Doodads/Dungeon_*.json`, `DoodadData/DZv*.json`, `DestructableData/BZv*.json`, `UnitData/nZv*.json`, `Units/Dungeon_ControlPoints.json` | void-area dungeons copied from the 24p map (`terrain/copy_area.py`, `content/void_dungeons.py`, `Timelines/VOID_DUNGEONS.md`): the Undercity, Nazjatar, Shadowforge, the Deadmines and their CPs | 0.82.0, 0.83.0 |
+| the same files + `Units/Exodar_Interior.json`, `Units/Dungeon_Content.json`, `Regions/ExodarBaseUnlock.json` and the two slipstream origins, `Regions.g.cs`, 18 `Units/` chunk files | 0.87.0: Timbermaw Hold (our Felwood glade copied into the void), the Exodar's base MOVED into the void (`terrain/exodar_move.py`, one-shot; Azuremyst's old spot is void), the dungeon creeps and Shadowforge's props (`content/dungeon_content.py`) | 0.87.0 |
 | `mapdata/WarcraftLegacies/UnitData/h01O.json` | Shadowforge City gets the waygate ability (`Awrp`): the entrance of the Shadowforge dungeon, shut until it opens (`Dungeons/VoidDungeons.cs`) | 0.84.0 |
 | `Objectives/UnitBased/ObjectiveHostilesInAreaAreDead.cs` | `Targets`: the creeps it counts, read by the bot (quest creeps) | 0.71.0 |
 | `Factions/TaurenTribes/Mechanics/LongMarchCaravan.cs` | tells the bot the caravan's next stop (`AiApi.SetEscortGoal`, vanguard) | 0.71.0 |

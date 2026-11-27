@@ -29,6 +29,7 @@ SL_BUILDINGS = ["oZk0", "oZk1", "oZk2", "oZk3", "oZk4", "oZk6", "oZk7", "oZkc", 
                 "nZb0", "nZb1", "nZb2", "nZb3", "nZb4", "nZb6", "hZb0", "nZb7", "nZb8", "nZb9",  # 0.84.0 Nazjatar
                 "nZj4", "nZj5",  # 0.85.0 the Harpies' nests
                 "hZi0", "hZi1", "hZi2", "hZi4", "hZi5", "hZi7", "hZi8", "hZi9", "hZid",  # 0.86.0 Dark Iron (copies)
+                "hZiy", "oZu2",  # 0.87.0 the Throne of Thaurissan, the Shrine of Ursoc
                 "uZe0"]  # 0.80.0 Acherus (Ebon Blade)
 ABIL = os.path.join(us.ROOT, "mapdata", "WarcraftLegacies", "AbilityData")
 BUILDING_CATS = {"TownHall", "Keep", "Castle", "GilneasManor", "Shipyard", "Lighthouse", "Farm", "Altar", "Specialist",

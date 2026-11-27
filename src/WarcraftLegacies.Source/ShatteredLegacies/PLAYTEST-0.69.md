@@ -1,5 +1,10 @@
 # 0.69.0 — mainland Horde and restored Kezan
 
+> **Historical (0.87.1).** Kept for the record only. Its fallback table is out of date: the Horde falls to the
+> Zandalari, the Fel Horde to the Dragonmaw, the Tauren to the Centaur Khans, Skywall is Ahn'qiraj's fallback, and
+> the shared Twillight claim is gone (Twilight's Hammer on hold). Current state: `Timelines/TIMELINES.md` section 0;
+> current playtest items: `TODO.md`.
+
 This handoff supersedes the western pilot's island opening and disabled Kezan notes.
 The original 0.68 Twillight playtest passed at `15484d14de1ac0db9ed07ec30839473abe2f44a3`.
 The western pilot was subsequently playtested by the maintainer. **0.69 is a new,

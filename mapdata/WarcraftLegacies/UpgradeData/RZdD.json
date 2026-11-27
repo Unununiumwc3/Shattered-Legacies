@@ -35,7 +35,7 @@
       "Level": 1,
       "Id": "gar1",
       "Type": 3,
-      "Value": "ReplaceableTextures\\CommandButtons\\BTNChogall.blp"
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNRedDragon.blp"
     },
     {
       "Level": 1,
@@ -47,19 +47,19 @@
       "Level": 1,
       "Id": "gnam",
       "Type": 3,
-      "Value": "Fallback: Twillight or Dragonmaw"
+      "Value": "Fallback: Dragonmaw"
     },
     {
       "Level": 1,
       "Id": "gtp1",
       "Type": 3,
-      "Value": "Fallback: Twillight or Dragonmaw"
+      "Value": "Fallback: Dragonmaw"
     },
     {
       "Level": 1,
       "Id": "gub1",
       "Type": 3,
-      "Value": "Beaten by an Old God: join Cho'gall at Dragonmaw Port as Twillight. Beaten by anyone else: the Dragonmaw Clan rises at Dragonmaw Port with Nek'rosh Skullcrusher, sworn to whoever holds the port."
+      "Value": "The Dragonmaw Clan rises at Dragonmaw Port with Nek'rosh Skullcrusher and the red dragons, sworn to whoever holds the port."
     }
   ]
 }

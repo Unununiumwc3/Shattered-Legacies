@@ -7,42 +7,37 @@ Read this first. Then, depending on the task:
 
 "AI" in file and class names means the **bots**; this file is about **AI assistants** working on the code.
 
-## 0.65.0 bot-construction candidate (unverified; see `../Ai/BUILDING_DESIGN.md`)
+## State (0.88.0)
 
-The changes under `Ai/` in this patch replace worker-consuming starter production with native worker
-construction, project tracking and HQ / owned-or-allied CP recovery. Forward bases are capped at three **total**
-including the HQ. `SlBotSetup` still calls the existing `AiApi.GiveStarterProduction` hook for successor factions;
-its behavior changed from instant structure grants to requesting an early construction evaluation. The special
-Legion Argus base remains but no longer removes Herald workers. This is a **development candidate** awaiting a
-map build and playtests, not an observed fix to the Sunfury issue. Debug permissions remain as-is until 1.0.
-
-Historical notes below reflect 0.64.0 (latest previously verified release), not the new candidate.
-
-## Handover (end of the 0.52-0.57 session) -- historical state
-
-
-- **Released state**: `v0.64.0` on `botified-dev` (0.64.0: the Ashtongue's purification reworked -- Shattrath as the node, sites as tech buildings, Karabor rename; 0.63.2: the Hourglass survives WL's quests; 0.63.1: Hourglass / trigger for late picks, slot names; 0.63.0: Illidari -> Ashtongue Deathsworn -- the third full
-  faction: conquest rule, purification, Karabor; 0.62.0: Kezan's carried oil). Open from the last playtest: Sunfury on a bot slot builds no troops (`TODO.md`). Everything since 0.52 is in `CHANGELOG.md` (fork) and
-  `../Ai/CHANGELOG.md` (bot). The maintainer playtests 0.57.1/0.57.2 next and brings his findings to the new chat.
-- **0.63.0**: Illidari -> Ashtongue Deathsworn (full faction; `TODO.md` step 3b). **0.58.0-0.62.0**: Kul Tiras -> Kezan Enterprise rebuilt (own faction, the 24p goblin tree and Trading Center,
-  Oil Rigs, Oil Refining, trade, the Refugee Slave Camps, the end goal on the scoreboard). **Next work**: the 0.62
-  playtest, the "Known issues" of the 0.60 playtest (Kul Tiras' fallback flicker, Katherine's ultimate level, quest
-  buildings visible, detect invisible), the maintainer's answers (`TODO.md` step 3: how camps are built, what the end goal does, the Kezan
-  concept -- turtle / tower defence, buying time), then step 4 the Forsaken's small issues. Bot: `Ai/TODO.md`
-  "Production follow-ups" (bots that build with workers, food cap under siege).
+- **Development state**: 0.88.0 (patches on top of the last pushed tag; the maintainer applies, builds and
+  playtests in bulk -- 0.86.1 is the last build he confirmed). Everything since 0.52 is in `CHANGELOG.md` (fork) and
+  `../Ai/CHANGELOG.md` (bot).
+- **Every slot has its fallback**: `Timelines/TIMELINES.md` section 0 (base, seat, team, code). Most are **conquered,
+  not defeated** (`Core/Conquest`, `Core/LastConqueror`); five live in **void dungeons** (`Dungeons/VoidDungeons.cs`,
+  `Timelines/VOID_DUNGEONS.md`). On hold: Maiev, Twilight's Hammer as a faction. Still open: the Garithos path (D1)
+  and the Great Alliance (`Timelines/SCENARIO_CONCEPTS.md` sections 7 and 8).
+- **Next work**: the playtest lists and the planned items of `TODO.md` ("6. Faction by faction"); bot: `../Ai/TODO.md`.
 - **Reusing the 24p map**: read `tools/shattered-legacies/content/README.md` FIRST -- the steps of an import set and
   WL's rules a copied faction must follow (object limits or WL refunds the unit, Flight / Navigation, tooltip
   placeholders, workers, command card, LFS).
 - **How we work**: the maintainer edits nothing by hand. The assistant clones the repo in the sandbox, makes the
-  change, runs every check, and hands over ONE `git apply` patch (plus a full patch when the base is unclear); the
-  maintainer applies, commits, builds on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and
-  `json-to-w3x publish`), playtests, and sends screenshots / `-dump` files. Version bump in every patch
-  (`AiSetup.Build` in `Ai/AiSystem.cs`, `appsettings.json`), both changelogs.
-- **Checks before every patch** (no compiler in the sandbox): `tools/shattered-legacies/ai/check_refs.py`,
-  `using_check.py`, `scope_check.py`, a tree-sitter C# syntax pass, `tools/shattered-legacies/content/check_json.py`
-  after map data changes, `git apply --check` on a clean copy of the base.
-- **Generators** (never edit their output): `gen_hourglass.py` (Hourglass), `import_24p.py` (24p objects, object
-  limits, id constants, main-map equivalents; sets FORSAKEN, KEZAN), `kezan_objects.py` (Oil Refining), `forsaken_heroes.py` (Sylvanas), `gen_ai_data.py` (bot data), `gen_spells.py` (bot spell table, 0.70; rules in `spell_rules.txt`), `content_index.py` (`Content/`).
+  change, runs every check, and hands over ONE `git apply` patch per version; the maintainer applies, commits, builds
+  on Windows (`dotnet build src\WarcraftLegacies.Source` first, then the CLI and `json-to-w3x publish`), playtests,
+  and sends screenshots / `-dump` files. Version bump in every code patch (`AiSetup.Build` in `Ai/AiSystem.cs`,
+  `appsettings.json`), both changelogs.
+- **Checks before every patch**: `tools/shattered-legacies/compile_check.sh` (a real C# compile without NuGet, 0.72),
+  `tools/shattered-legacies/ai/check_refs.py`, `using_check.py`, `scope_check.py`, `check_build_data.py`,
+  `gen_spells.py --check`; after map data changes `tools/shattered-legacies/content/check_json.py` (also unknown ids
+  in ability / training / build lists, 0.86.1), `void_dungeons.py --check`, `dungeon_content.py --check`; then
+  `git apply --check` on a clean worktree of the base.
+- **Generators** (never edit their output): `gen_hourglass.py` (Hourglass; it does not delete stale files -- remove
+  them by hand), `timeline_overview_gen.py` (the drawio), `import_24p.py` (24p objects, object limits, id constants,
+  main-map equivalents; sets FORSAKEN, KEZAN, DARK_IRON ...), `kezan_objects.py`, `forsaken_heroes.py`,
+  `ashtongue_objects.py`, `ebon_blade.py`, `deathwing.py`, `minor_factions.py` (the conquered fallbacks' objects),
+  `dark_iron.py`, `content_088.py` (0.88's hand-made objects; run after `import_24p.py`), `void_dungeons.py` (dungeon objects), `dungeon_content.py` (creeps and props ->
+  `Units/Dungeon_Content.json`), `terrain/copy_area.py` (24p terrain into the void), `gen_ai_data.py`,
+  `gen_build_data.py`, `gen_routes.py`, `gen_lanes.py`, `gen_spells.py` (rules in `spell_rules.txt`),
+  `content_index.py` (`Content/`). `terrain/exodar_move.py` was a one-shot (0.87.0).
 
 ## The project in one paragraph
 
@@ -66,11 +61,12 @@ Markers in WL files: `// [BOT]` = hook the bot needs (list: `../Ai/WORKAROUNDS.m
 Every change to a WL file gets a marker and a row in the matching list in the same drop. Map data (JSON) cannot hold
 comments -- it is only listed.
 
-## State of the work -- read this, then `TODO.md` ("Order of the work")
+## History of the work (0.52 - 0.58; the state is at the top)
 
 - **0.52.0 (released, map works)**: the structure is in place -- `Timelines/` (`Core/` engine, `TimelineCatalog`,
   `Factions/<X>/`), `Bot/`, separate docs for bot and fork, tools in `tools/shattered-legacies/`. Behaviour as in
-  0.51.1: one turning point per faction, mostly placeholders; Kul Tiras -> Kezan Enterprise is the only real one.
+  0.51.1: one turning point per faction, mostly placeholders (all replaced or removed by 0.87.1); Kul Tiras -> Kezan
+  Enterprise was the only real one.
 - **Content index (after 0.52.0, tools / docs only)**: `Content/` lists what the main map, the 24p map and stock WC3
   offer, used or unused. Use it for every content question instead of scanning the map data:
   `grep -i <name> Content/units.tsv`, browse `Content/REUSE.md`. Content is named `<map>:<id>` (`24p:u011`).
@@ -99,6 +95,7 @@ comments -- it is only listed.
   `KultirasFallback` (hidden base -> `StartArea.Take` with `MainEquivalents`, `LeaveBehind.ToHeir`), oil
   (`KezanEnterpriseOil`), five quests. Next: the playtest, then the Forsaken's small issues (step 4). Every new turning
   point follows `Timelines/TIMELINES.md` sections 3 and 4; new content comes through an import set.
+- **0.59 - 0.87**: one line each in `CHANGELOG.md`; the fallbacks as they are now: `Timelines/TIMELINES.md` section 0.
 - **Bot side**: phase 2 (restructure) is the bot's next step (`../Ai/TODO.md`); fork work does not wait for it --
   anything the fork needs from the bot is one `AiApi` method.
 - The maintainer plays test games in the Windows VM and reports what he sees; he recycles content, he does not create
@@ -118,7 +115,9 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | control points a faction gets when it arrives | `StartCps.Give(p, cpTypes...)` (neutral ones only) | `Timelines/Core/Effects/` |
 | something that happens when a faction falls (defeat or its fallback) | `TimelineSystem.FactionFell.Add(name => ...)` + `Faction.ScoreStatusChanged` | `Timelines/Core/` |
 | an autocast bots should use | switch it on by code (its "on" order) and track toggles by `EVENT_PLAYER_UNIT_ISSUED_ORDER` | `KezanEnterpriseOil` / `Bombers` |
-| a vassal on the team of whoever holds its seat CP (evil factions conquered, not defeated) | `Conquest.Register(vassal, seatCp, overlord)` | `Timelines/Core/` |
+| a vassal on the team of whoever holds its seat CP (conquered, not defeated) | `Conquest.Register(vassal, seatCp, overlord, undefeatable, keepTeam, conquestText)`; the first overlord from `LastConqueror` | `Timelines/Core/` |
+| one destination several slots may claim (first come) | `ExclusivePath` | `Timelines/Core/` |
+| income per turn / heroes coming back | `TurnLevy`, `HeroRevival` | `Timelines/Core/Effects/` |
 | an objective at a place (minimap icon) that code completes | `ObjectiveAt(text, x, y).Complete()` | `Timelines/Core/` |
 | a successor's heroes removed instead of inherited | `LeaveBehind.RemoveHeroes(p, keep)` | `Timelines/Core/Effects/` |
 | units any player can buy | a limit in EVERY faction (`FactionManager.FactionRegistered` + `ModObjectLimit`), or WL refunds them | `KezanEnterpriseSlaveCamps` |
@@ -131,7 +130,7 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
 | its units / buildings | an import set in `tools/shattered-legacies/content/import_24p.py` (24p objects with new ids, dependencies, models; knowledge costs) | generator |
 | a hero that changes with the story | one hero type per phase, `Legend.UnitType = ...` (WL carries over life, mana, XP, items); generated by `forsaken_heroes.py` | `ForsakenSylvanas` |
 | its quests | WL `QuestData` + WL objectives (`ObjectiveLegendLevel`, `ObjectiveControlPoint`, `ObjectiveCapitalDead`, `ObjectiveQuestComplete` ...); a repeatable reward: `ObjectiveRepeatingKills`; another faction's state: `ObjectiveFactionState` | `Timelines/Factions/Forsaken/Quests/` |
-| a base of its own (an "instance") | one of the unused squares in the south-west corner: rocks + sight blockers along the edge, waygate in the middle, buildings symmetric; opened later with a second waygate | `Timelines/Core/Effects/Instance.cs`, `ForsakenUndercity` |
+| a base of its own (an "instance") | a **void dungeon**: 24p terrain copied into the map's unused void (`terrain/copy_area.py`), its objects from `void_dungeons.py`, the gate pair from `Instance` (`Entrance`, `Close()`, `MoveEntrance`); the south-west squares are gone (0.83) | `Dungeons/VoidDungeons.cs`, `Timelines/Core/Effects/Instance.cs`, `Timelines/VOID_DUNGEONS.md` |
 | gates in a tech tree | condition techs (granted by a quest's `ResearchId`) as requirements set in the import set (`"set": {id: {"ureq": ...}}`, `=XXXX` = a main-map id) | `import_24p.py` |
 | money for a new start | 150 gold per turn for 10 turns (`TimelineSystem.GrantArrivalIncome`), 10 turns of grace from the defeat rule | `Timelines/Core/TimelineSystem.cs` |
 | the bot | `AiApi.TakeOver`, `RegisterHeroes`, production data (`SL_BUILDINGS` in `gen_ai_data.py`) | `Bot/SlBotSetup.cs` |
@@ -174,8 +173,8 @@ Everything a new faction's content needs exists once; `Timelines/TIMELINES.md` s
   Windows file names ignore case.
 - A slot that should be played by the bot must be a COMPUTER player (lobby, `Info.json`): many bot features (quest
   auto-complete, production checks) are computer-only; a taken-over empty slot is only half a bot.
-- WL hides every Neutral Passive unit in `Regions.HideUnitBottomLeft` at setup -- anything placed in the south-west
-  squares must be created a moment later.
+- WL hides every Neutral Passive unit in `Regions.HideUnitBottomLeft` at setup -- anything Neutral Passive the fork
+  places must be created a moment later (it was learned with the old south-west squares).
 - Capitals are never destroyed (the attacker takes them over): quest objectives use `ObjectiveControlCapital`.
 - Alliances start from the lobby forces (`Info.json`); WL's teams only ADD alliances, never remove them. A player
   who changes sides needs an explicit unally (`SplitFaction.UnallyOutsideTeam`). WL puts every non-lobby slot into the
@@ -211,10 +210,9 @@ git sparse-checkout set src/WarcraftLegacies.Source/Ai src/WarcraftLegacies.Sour
 
 The hard rules in `../Ai/AI_AGENTS_CONTEXT.md` ("Hard rules") apply to ALL code of this repository, fork code
 included -- above all the CSharp.lua limits (small classes; `internal static` without `readonly` for shared state),
-no compiler in the sandbox (run `check_refs.py`, `using_check.py`, a tree-sitter syntax pass and `scope_check.py` on
-every changed `.cs` file -- `dotnet build src/WarcraftLegacies.CLI` does NOT compile WarcraftLegacies.Source, only
-the publish step does, so a missing `using` shows up there first; the maintainer can add
-`dotnet build src\WarcraftLegacies.Source` to his build commands to see all C# errors at once), file encodings (WL's C# / JSON files start with a UTF-8 BOM, files in `Ai/` and `ShatteredLegacies/`
+the checks (`compile_check.sh` compiles the C# in the sandbox since 0.72; plus `check_refs.py`, `using_check.py`
+and `scope_check.py` on every changed `.cs` file -- `dotnet build src/WarcraftLegacies.CLI` does NOT compile
+WarcraftLegacies.Source, only the publish step does, so the maintainer builds `src\WarcraftLegacies.Source` first), file encodings (WL's C# / JSON files start with a UTF-8 BOM, files in `Ai/` and `ShatteredLegacies/`
 don't -- keep whatever the file had) and desync safety. In addition, for fork code:
 
 1. **Reuse WL's mechanics before writing new ones** -- `Timelines/TIMELINES.md` "Reused WL mechanics" lists them.
@@ -243,8 +241,7 @@ don't -- keep whatever the file had) and desync safety. In addition, for fork co
 - Push only named tags (`git push origin v<build>`), never `--tags` (old tags drag Git LFS into history the clone
   never downloaded).
 - Deliver one patch per version (`git diff --binary -M` against the pushed branch, or against the previous patch of
-  the same delivery), verified with `git apply --check` on a clean worktree of `origin/botified-dev`, plus a zip of the
-  whole files with repo paths. The maintainer downloads them to `~/Downloads/` and runs the commands given in the reply
+  the same delivery), verified with `git apply --check` on a clean worktree of the base (since 0.8x: the patch only, no zip). The maintainer downloads them to `~/Downloads/` and runs the commands given in the reply
   (apply, commit, tag); he cannot run `.ps1` scripts in Windows, only paste PowerShell commands.
 - Content for new factions: recycle, then adjust -- the maintainer does not create assets. Reuse objects of the main
   map, the 24p map (`mapdata/WarcraftLegacies24p/`) and stock WC3 (referenced only, its data is in

@@ -1,4 +1,5 @@
 using MacroTools.PreplacedWidgets;
+using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects;
 using WCSharp.Shared.Data;
 
@@ -15,11 +16,18 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
   // (Sentinels' fallback, Timelines/Factions/Nazjatar), Shadowforge for the Dark Iron (Ironforge's, 0.86), the
   // Deadmines for the Defias (Stormwind's, 0.85, Timelines/Factions/Defias). The Undercity is the fourth:
   // Factions/Forsaken/ForsakenUndercity.
+  // 0.87.0 (maintainer): two more --
+  //   - Timbermaw Hold (a Felwood glade copied into the void east of Shadowforge): the Furbolgs' den, its entrance the
+  //     Totem Lodge of Ursoc by Nordrassil, the Shrine of Ursoc inside (their HQ / altar) -- opens for the Furbolgs
+  //   - the Exodar (its Azuremyst base moved into the western void, tools/shattered-legacies/terrain/exodar_move.py):
+  //     the inside of the ship; its entrance is the ship itself, which lands and flies (Factions/Draenei/ExodarShip)
   internal static class VoidDungeons
   {
     internal static Instance Nazjatar;
     internal static Instance Shadowforge;
     internal static Instance Deadmines;
+    internal static Instance Timbermaw;
+    internal static Instance Exodar;
 
     internal static void Setup()
     {
@@ -51,6 +59,19 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Dungeons
       Deadmines = Make("Deadmines", new Rectangle(-28672f, -31488f, -24448f, -22912f), circle, -27808f, -23904f,
         -27808f, -24160f);
       Deadmines.PlaceEntrance(DungeonObjects.DeadminesEntrance, 7721f, -17503f, 7721f, -17253f);
+
+      Timbermaw = new Instance("Timbermaw Hold", new Rectangle(-16384f, 21504f, -14336f, 23424f), circle, -14692f,
+        22708f, -14692f, 22458f);
+      Timbermaw.Prepare(new[] { FurbolgObjects.Shrine }, new[] { FurbolgFallback.ShrineX },
+        new[] { FurbolgFallback.ShrineY });
+      Timbermaw.PlaceEntrance(FurbolgObjects.Lodge, FurbolgFallback.LodgeX, FurbolgFallback.LodgeY,
+        FurbolgFallback.LodgeX, FurbolgFallback.LodgeY - 260f);
+      SetUnitOwner(Timbermaw.Entrance, Player(26), true); // Neutral Extra like before (README): visible, a building
+
+      // the ship is placed when the Draenei arrive (ExodarShip.Land); until then nothing leads in
+      Exodar = new Instance("The Exodar", new Rectangle(-28544f, 12800f, -25088f, 16128f), circle, -26200f, 13400f,
+        -26200f, 13660f);
+      Exodar.Prepare(new int[0], new float[0], new float[0]);
     }
 
     private static Instance Make(string name, Rectangle area, int gateType, float gateX, float gateY, float arriveX,

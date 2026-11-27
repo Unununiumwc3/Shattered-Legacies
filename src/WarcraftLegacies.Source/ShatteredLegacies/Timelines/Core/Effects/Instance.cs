@@ -47,6 +47,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
 
     internal bool IsOpen => _open;
 
+    // 0.87.0: the world entrance (the Totem Lodge of Timbermaw Hold, the Exodar's ship)
+    internal unit Entrance => _entrance;
+
+    internal float GateX => _gateX;
+
+    internal float GateY => _gateY;
+
     internal bool Contains(float x, float y) => _area.Contains(x, y);
 
     // buildings: unit types and their spots (x, y), facing 270
@@ -95,6 +102,41 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
     {
       PlaceEntrance(StockWaygate, x, y, x, y - 250f);
       Open(owner);
+    }
+
+    // 0.87.0 (the Exodar, Factions/Draenei/ExodarShip): both gates shut while the ship flies -- nobody gets in or out
+    internal void Close()
+    {
+      if (_entrance != null)
+      {
+        WaygateActivate(_entrance, false);
+      }
+
+      if (_gate != null)
+      {
+        WaygateActivate(_gate, false);
+      }
+    }
+
+    // 0.87.0: the entrance stands at (x, y) now, the inner gate puts you out at (exitX, exitY); both gates open again
+    // (only if the instance was opened before)
+    internal void MoveEntrance(float x, float y, float exitX, float exitY)
+    {
+      if (_entrance == null)
+      {
+        return;
+      }
+
+      SetUnitPosition(_entrance, x, y);
+      _exitX = exitX;
+      _exitY = exitY;
+      if (_open)
+      {
+        WaygateSetDestination(_entrance, _arriveX, _arriveY);
+        WaygateActivate(_entrance, true);
+        WaygateSetDestination(_gate, _exitX, _exitY);
+        WaygateActivate(_gate, true);
+      }
     }
 
     // both waygates open; the buildings to the owner (they stay invulnerable)

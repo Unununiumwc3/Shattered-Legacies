@@ -52,6 +52,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Defias
         + "power of the south.", "BTNBanditLord", "3 more recruits every turn (a Bandit, an Assassin and an Enforcer)",
         new[] { DefiasObjects.Bandit, DefiasObjects.Assassin, DefiasObjects.Enforcer }, 0,
         new ObjectiveQuestComplete(haul), new ObjectiveQuestComplete(estates)));
+      AddQuest(new QuestStonemasonsDue()); // 0.88.0: Edwin VanCleef for 1,500 gold pillaged
     }
   }
 

@@ -1,6 +1,6 @@
 # Timelines -- how they are built
 
-**Current handoff: [0.69.0 changes and playtest checklist](../PLAYTEST-0.69.md).**
+**State: 0.88.0** (updated 0.88.0). What changed version by version: `../CHANGELOG.md`.
 
 **What** is planned lives in `SCENARIO_CONCEPTS.md` (vocabulary, ground rules, decision register D1-D17, every slot)
 and its flow in `timeline-overview.drawio`. This file is the **how**: the turning-point model, the WL mechanics it
@@ -9,46 +9,36 @@ Open work and its order: `../TODO.md`. (Until 0.51.1 this file was `FALLBACKS.md
 "Enslaved" rule, the team wrappers, the old per-faction tables -- is in git history: `git show
 v0.51.1:src/WarcraftLegacies.Source/ShatteredLegacies/FALLBACKS.md`.)
 
-## Reassigning the Twillight fallback
+## 0. The fallback map today (0.87.1)
 
-Edit the offer in `TimelineCatalog.All`. For example, the Fel Horde entry begins with
-`new TurningPointDef("Fel Horde", TurningPointKind.Fallback, TwilightHammerFallback.Path)`.
-The first argument names the registered **source** faction. The third selects the shared **destination**.
-The initializer supplies the source's trigger, decision and condition IDs, and announcement. To move this
-offer intact, change the source name. If the new offer uses a different trigger, update the initializer and
-the matching tooltip in `tools/shattered-legacies/timelines/gen_hourglass.py`, then rerun that script from
-the repository root. Give concurrently visible offers distinct research IDs and button positions.
+Every successor is **conquered, not defeated** unless the table says otherwise: it serves the TEAM of its SEAT's
+holder (`Core/Conquest`); at first that is the conqueror of the old faction (`Core/LastConqueror`). "Undefeatable" =
+its halls cannot be destroyed and the defeat rule passes it by. Fallbacks get no second fallback.
 
-| Opening faction | Hourglass decision / condition | Unlock |
-|---|---|---|
-| Orcish Horde | `RZd9` / `RZc9` | Lose Orgrimmar after holding it |
-| Fel Horde | `RZdD` / `RZcD` | Kil'sorrow Fortress (`o017`) is destroyed. The nearby CP (`n09Y`), Hellfire Citadel and Black Temple do not count. |
+| Slot | Turning point | Base | Seat (whoever holds it is the master) | Team at the start | Undefeatable | Code |
+|---|---|---|---|---|---|---|
+| Lordaeron | Scarlet Crusade (WL) | Tyr's Hand | -- | own | no | WL |
+| Lordaeron | Gilneas | Gilneas | Gilneas City (mercy text) | North Alliance | no | `Factions/Gilneas` |
+| Dalaran | Theramore (WL) | Theramore | Jaina's Sanctum (0.88: taken at 0 life; Jaina a dreadlord under an evil holder) | the holder's | no | WL + `Events/TheramoreJaina` |
+| Quel'thalas | Sunfury | Netherstorm | Netherstorm CP | Outland / own | no | `Factions/Quelthalas` |
+| Quel'thalas | Forsaken (betrayal, a split) | Northrend, later the Undercity | -- | the Scourge's, free later | no | `Factions/Forsaken` |
+| Stormwind | Defias Brotherhood | the Deadmines (void dungeon) | Deadmines | the conqueror's | yes | `Factions/Defias` |
+| Ironforge | Dark Iron of Shadowforge | Shadowforge (void dungeon) | Throne Room | the conqueror's | yes | `Factions/DarkIron` |
+| Kul Tiras | Kezan Enterprise | Kezan | Kezan | own | no | `Factions/KezanEnterprise` |
+| Druids | Furbolgs | Timbermaw Hold (void den) | the Claw of Ursoc (0.88: free while Xavius lives or the Claw is theirs) | their own, then the Claw holder's | yes | `Factions/Furbolg` |
+| Sentinels | Naga of Azshara | Nazjatar (void dungeon) | Eternal Palace | the conqueror's | yes | `Factions/Nazjatar` |
+| Orcish Horde | Zandalari | Zuldazar | Zuldazar | the conqueror's | yes | `Factions/Zandalari` |
+| Tauren Tribes | Centaur Khans | Thunder Bluff and the khans' huts | Thunder Bluff | the conqueror's | yes | `Factions/Centaur` |
+| Scourge | Knights of the Ebon Blade | Acherus (0.88: flies once the four are level 10) | Icecrown Citadel | the conqueror's | yes | `Factions/EbonBlade` |
+| Legion | Draenei | the Exodar (a ship that flies) | the Exodar's bridge | the conqueror's | no | `Factions/Draenei` |
+| Fel Horde | Dragonmaw Clan | Dragonmaw Port | Dragonmaw Port | the conqueror's | yes | `Factions/Dragonmaw` |
+| Illidari | Ashtongue Deathsworn | the Black Temple | Black Temple CP | the destroyer's | no | `Factions/Ashtongue` |
+| Black Empire | Harpies | Stonetalon | the caged Broodmother (0.88) | the slayer's | yes | `Factions/Harpy` |
+| Ahn'qiraj | Skywall | the Lost City, the Vortex Pinnacle | the Vortex Pinnacle | the slayer's | yes | `Factions/Skywall` |
+| Skywall (itself a fallback) | -- (Hourglass info row "Conquered, not defeated") | -- | -- | -- | -- | `TimelineCatalog` |
 
-1. `PlayerSetup` assigns Orcish Horde and Fel Horde.
-   Registration attaches the matching turning-point quest. Its trigger grants the requirement for that
-   player's Hourglass research. Bots with perks decide when the trigger fires. The defeat rule checks
-   the same trigger before it can force any of these two Twillight offers.
-2. Completing a decision claims the shared path synchronously, before the swap runs on the next timer tick.
-   Competing Twillight quests close and their buttons disappear. Other destinations use their own claim state.
-3. `TwilightHammerFallback.Run` keeps the Hourglass. `SwapFaction` assigns and registers one
-   `TwilightHammerFaction`, copies object levels and keeps slot colour. Old heroes are removed.
-   `LeaveBehind` disposes of remaining holdings under WL's rules, including neutralizing protected assets.
-   `ChangeTeam.JoinOrAlone` joins living Old Gods or creates a solo pact. `UnallyOutsideTeam` clears
-   old alliance and vision flags in both directions. The multiboard renders on faction and team changes.
-4. At Dragonmaw Port, only the designated neutral buildings convert. The player receives the hall, altar,
-   four Cultists and Cho'gall. Wetlands and Dragonmaw Port CPs transfer only from neutral owners.
-   Campaign quests attach after the transfer. Grim Batol's reward waits for its territorial quest,
-   pre-transfer reward buildings retain their protection, and the public tunnels stay open.
-5. The same player slot retains control. The timeline refreshes the Hourglass, gives arrival income and
-   elimination grace, and schedules starter production for a bot. `AiBuilder` detects the new faction,
-   clears old projects and replans with its new tech tree.
-
-The pilot has one exclusive destination. Whichever eligible player completes the decision first gets it.
-A two-destination pool and opening picks that consume it remain roadmap work.
-
-## Tauren-only Skywall
-
-In `TimelineCatalog.All`, the entry `new TurningPointDef("Tauren Tribes", TurningPointKind.Fallback, SkywallFallback.Path)` assigns Skywall. Its HQ is Thunder Bluff (`o00J`), its decision is `RZdA`, and its condition is `RZcA`. The player must first hold the HQ and then lose it. The successor keeps the Horde alliance, colour and Hourglass. The Lost City control point transfers only from a neutral owner. Skywall has no opening slot. The Kezan Enterprise offer and its area preparation are disabled during this playtest.
+Shared paths: `ExclusivePath` (`Core/`) -- one destination, claimed once (`TwilightHammerFallback.Path` = the
+Dragonmaw, `HordeRoute` = the Zandalari). Twilight's Hammer is on hold (0.87.0: its code stays, nothing reaches it).
 
 ## 1. The model: turning points
 
@@ -132,16 +122,19 @@ Steps, in this order:
    through `AiApi` in `../Bot/SlBotSetup.cs`. A missing `AiApi` method is added in the same drop.
 7. **Docs** -- section 6 status, `../README.md` lists, `../CHANGELOG.md`, `../TODO.md`.
 
-## 4. The engine today (0.53)
+## 4. The engine today (0.87)
 
-| Part | Today | Next (`../TODO.md`) |
-|---|---|---|
-| `TimelineCatalog` + `Core/TurningPointDef` | one definition per WL faction: HQ unit types, trigger text, Hourglass ids, start spot, placeholder hero, announcement, `Run` (the faction's own effects) | definitions per faction folder |
-| `Core/TurningPointQuest` | a turning point run by the timelines = a WL quest of its faction ("Fallback: ...", "Betrayal: ..."), attached through `FactionManager.FactionRegistered` (no WL faction file changes); a faction can have several. Objectives: the trigger -- `ObjectiveHqLost` by default, any WL objective through `TurningPointDef.MakeTrigger` (0.54: `ObjectiveLegendKilledBy`) -- which unlocks the decision through its condition tech, + WL's `ObjectiveResearch` (the decision at the Hourglass). `OnTrigger` effects run when the trigger fires, the effects when the quest completes | alternatives (stay / betray) as incompatible sets |
-| `Core/TimelineSystem` | every 5 s: the HQ objectives (all HQ units lost after having held one; held again -> unavailable again). Bots decide at once (the decision objective is set complete), humans research at the Hourglass. `ForceFallback` for the defeat rule | alternatives (stay / betray) |
-| `Core/Hourglass` | the Hourglass of Fate (`nZh0`, sealed top-right corner, columns by team), one per slot whose faction has a research on it; per-player limits hide the other factions' researches | -- |
-| `Core/Effects/` | `SwapFaction` (+ keep colour), `LeaveBehind` (WL's removal: removable units removed, CPs / capitals Neutral Hostile), `StartArea` (take a start area like a pick), `ChangeTeam` (living-target rule) | modify faction (light), inheritance to a lore heir |
-| Defeat (`../Rules/EliminationRule`) | the only way to lose: no CP for more than 5 turns (WL's `PlayerElimination` with one `[SL]` hook; humans, from turn 20, as in WL); an unused fallback starts instead of the defeat | -- |
+| Part | Today |
+|---|---|
+| `TimelineCatalog` + `Core/TurningPointDef` | one definition per turning point: source faction, HQ unit types, trigger text, Hourglass ids, `Prepare` (map setup), `Run` (the effects); `ExclusivePath` for a destination several sources share |
+| `Core/TurningPointQuest` | a turning point = a WL quest of its faction, attached through `FactionManager.FactionRegistered`. Objectives: the trigger (`ObjectiveHqLost` by default, any WL objective through `MakeTrigger`) + the Hourglass decision (`ObjectiveResearch`). `OnTrigger` effects run when the trigger fires |
+| `Core/TimelineSystem` | every 5 s: the HQ objectives; bots decide at once, humans at the Hourglass; `ForceFallback` for the defeat rule; arrival income and grace |
+| `Core/Hourglass` | the Hourglass of Fate (`nZh0`), one per slot, per-player limits hide other factions' researches |
+| `Core/Conquest` (0.63, 0.80+) | vassals: the team of the seat's holder, optional undefeatable, optional own team until conquered (`keepTeam`), optional conquest text (0.87) |
+| `Core/LastConqueror` (0.85) | who took / destroyed a building last -- the first master of a successor |
+| `Core/Effects/` | `SwapFaction`, `SplitFaction`, `LeaveBehind` (incl. `ToHeir`, `RemoveHeroes`, `ToNeutralHostile`), `StartArea`, `StartCps` (`Force` / `Give`), `Spawn` (`Units` / `Buildings`), `ChangeTeam`, `TurnLevy` and `HeroRevival` (0.85), `Instance` (a void-area base behind waygates; 0.87: the entrance can move and both gates can shut) |
+| `Dungeons/VoidDungeons` (0.82+) | the void-area bases: Nazjatar, Shadowforge, the Deadmines (0.83), Timbermaw Hold and the Exodar (0.87); shut until their fallback (`VOID_DUNGEONS.md`) |
+| Defeat (`../Rules/EliminationRule`) | the only way to lose: no CP for more than 5 turns (humans, from turn 20); an unused fallback starts instead of the defeat |
 
 **The Hourglass of Fate.** One DECISION research per turning point; it requires a CONDITION tech with a readable
 name ("Requires: Silvermoon Palace lost"), which `ObjectiveHqLost` grants while the trigger holds --
@@ -171,43 +164,30 @@ turning point hands everything over (`RescueGroup`). Reused neutral buildings in
 treatment. Check per rectangle that no other WL rescue / cleanup covers the area (WL removes Neutral Passive units in
 some areas at runtime -- `CleanupNeutralPassiveUnits`).
 
-**HQ per faction.** Today's catalog uses WL's essential legends (ALL must be lost). The concepts change some of them.
+**HQ per faction** (the trigger: ALL of them lost after having held one).
 
-| Faction | WL essential legends | Catalog today | Concepts / open |
-|---|---|---|---|
-| Lordaeron | Capital Palace `h000`, Stratholme Castle `h01G`, Tyr's Hand Citadel `h030` | (WL: Scarlet Crusade) | Arthas games: WL's research restart (D14); HQ fall breaks the Great Alliance; Garithos games: no fallback |
-| Dalaran / Gilneas | Violet Citadel `h002` / Gilneas Castle `h04I` | (WL: Theramore) / placeholder | both picks: Theramore / Jaina's Sanctum, Jaina's choice D6 |
-| Quel'thalas | Silvermoon Palace `h003`, the Sunwell `n001` | Silvermoon Palace only (0.53, maintainer) | -- |
-| Stormwind | Stormwind Keep `h00X` | same | -- |
-| Ironforge | the Great Forge `h001` | same | -- |
-| Kul Tiras | Boralus Keep `h046` | same | -- |
-| Druids | Nordrassil `n002`, Cenarion Hold `n06D` (+1) | both listed | the World Tree consumed / Nordrassil falls |
-| Sentinels / Exodar | Auberdine `e00J`, Feathermoon `e00M` / Exodar Regalis `e01X` | same | -- |
-| Orcish Horde | Orgrimmar `o01B` | Orgrimmar | lose Orgrimmar after holding it |
-| Scourge | Frozen Throne `u000` | same | Lich King Arthas dies (Ebon Blade) |
-| Legion | Legion Stronghold `u00G` | same | all Argus CPs; Archimonde while the Legion controls him |
-| Fel Horde | Kil'sorrow Fortress `o017`, Black Temple `o00F`, Hellfire Citadel `o008` | Kil'sorrow Fortress only | destroy the fortress |
-| Illidari | (none) | none | the Black Citadel |
-| Skywall / Black Empire / Ahn'qiraj | Vortex Pinnacle `nelc` / N'Zoth `U01Z` / C'Thun `U00R` | same | -- |
+| Faction | HQ in the catalog |
+|---|---|
+| Lordaeron | Capital Palace `h000` (Gilneas); WL's Scarlet Crusade has its own research |
+| Dalaran | WL's Theramore quest (the Violet Citadel) |
+| Quel'thalas | Silvermoon Palace `h003` |
+| Stormwind | Stormwind Keep `h00X` |
+| Ironforge | the Great Forge `h001` |
+| Kul Tiras | Boralus Keep `h046` |
+| Druids | Nordrassil `n002`, Cenarion Hold `n06D` |
+| Sentinels | Auberdine `e00J`, Feathermoon `e00M` |
+| Orcish Horde | Orgrimmar `o01B` (also hidden preplaced) |
+| Tauren Tribes | Thunder Bluff `o00J` |
+| Scourge | the Frozen Throne `u000` |
+| Legion | the Legion Stronghold `u00G` |
+| Fel Horde | Kil'sorrow Fortress `o017` |
+| Illidari | the Black Temple `o00F` destroyed |
+| Black Empire / Ahn'qiraj | N'Zoth `U01Z` / C'Thun `U00R` |
 
-**Placement data** (CP ids = raw codes; owner 24 = Neutral Hostile, 27 = Neutral Passive -- often part of a WL rescue,
-check for conflicts; other numbers = a player slot at start). Rows for designs the concepts dropped are left out.
-
-| Successor | Start spot | CPs / quest CPs | Assets to reuse | Checks |
-|---|---|---|---|---|
-| Theramore (Dalaran, Gilneas) | `Regions.Theramore` | Jaina's Sanctum `n0JS` (-7616,-9152), Alcaz Isle | WL's Theramore base | Gilneas uses the same path (no own fallback) |
-| Sunfury (Quel'thalas) | `Regions.SunfuryStartingPosition` (1888..3616, -23424..-22048) | Netherstorm `n02O` (-64,-19840) | the whole WL Sunfury start | only once Sunfury is no longer an Illidari pick |
-| Valiance Expedition (Stormwind) | Borean Tundra | Borean Tundra `n00G` (-7744,15680); quest: Dragonblight `n02Q` (-640,17152) | Stormwind buildings (copies) | the Nexus area clear runs there (fine) |
-| Dwarven Expedition (Ironforge, name open) | near the Storm Peaks | Storm Peaks `n02S` (3456,22976); quest: Ulduar ("Secrets of Ulduar", new) | Explorer's Vault `n07U` (copy), dwarf buildings, frost dwarves (24p?) | Yogg-Saron's prison is next door (the Yogg quest needs that CP -- fine, lore) |
-| Kezan Enterprise (Kul Tiras) | `Regions.KezanUnlock` (-2400..608, -8000..-5184) | Kezan `n04Z` (-960,-7168); quests: Gadgetzan `n05C` (-8832,-13184), the goblin towns (Goblin Empire) | the base preplaced in KezanUnlock (owner 27, WL's creep goblins -> the 24p copies by `MainEquivalents`) | 0.58: `HideNonStructures`; no other WL rescue / cleanup covers it |
-| Dream trees (Druids) | Twilight Grove, Duskwood | Duskwood `n00V` (12160,-16384, owner 20 at start); quest: Hinterlands `n01A` (16256,4352) | druid buildings (copies) | Duskwood starts owned by slot 20 -- which faction? |
-| Maiev's Watchers (Sentinels, Draenei) | Warden's Cage, Outland | Warden's Cage `md03` (5440,-31040, owner 27) | `Regions.MaievStartUnlock` (-6016..-4896, -28416..-27104), the Sentinels' Maiev quests | MaievStartUnlock belongs to a Sentinels quest -> reuse or second rectangle |
-| Twilight's Hammer (Orcish Horde or Fel Horde) | Wetlands / Grim Batol | Wetlands `n016` (14080,-2240), Dragonmaw Port `n08T` (21312,-3200); Grim Batol `n03X` (17344,-3456) | Grim Batol is a neutral WL capital (`h01Z`, Twilight's Hammer creeps) + tunnels `n08R`; Dragonmaw assets; 24p tech / unit / building trees | controlling the Grim Batol point grants the hill workshops and towers, claims the neutral capital and unlocks Orcish Death Knights. The two tunnels connect the foot and top of the hill from turn one |
-| Forsaken (Quel'thalas betrayal, D3) | Undercity (under Lordaeron City) | Lordaeron City `n01G` (9088,8576, owner 27), Tirisfal `n01F` (6784,10112, owner 9 = Lordaeron) | 24p Forsaken buildings (e.g. Plaguetorium `u011`) | Tirisfal / Brill are Lordaeron's at start -> own small rectangle |
-| Knights of the Ebon Blade (Scourge) | Eastern Plaguelands (Acherus) | Havenshire `n04W` (20608,9344, owner 27), Corin's Crossing `n03P` (17536,9088, owner 9) | Scourge buildings (copies) | Havenshire is owner 27 (rescue?) |
-| Mag'har (Fel Horde) | Kil'sorrow Fortress (maintainer, 0.63; was Nagrand / Garadar) | Nagrand `n00B` (-2944,-27904), Halaar `n0CV` (-4352,-29312) | orc buildings (copies) | none found |
-| Ashtongue Deathsworn (Illidari, 0.63) | Shadowmoon Valley (the Black Temple's spot) | Shadowmoon `n09V` (2560,-31040, owner 27), Black Temple `n00I` (7168,-30144, owner 27) | the Illidari's own draenei objects | both owner 27 -> probably the Illidari's own rescue |
-| Brood of Nozdormu (Ahn'qiraj) | Tanaris (Caverns of Time) | Tanaris `n020` (-10624,-15360) | dragon models (24p) | -- |
+**Placement data.** Each successor's spots, CPs and reused assets are in its `Timelines/Factions/<X>/` code (start
+spots as constants at the top) and, for the void-area bases, in `VOID_DUNGEONS.md`. (0.87.1: the old placement table
+of planned successors -- Valiance Expedition, Dwarven Expedition, Dream trees, Maiev's Watchers, Mag'har, Brood of
+Nozdormu, Twilight's Hammer for the Horde -- is gone: none of them was built that way.)
 
 **Light successors -- what the engine can do without copying units.** Removing units / buildings: object limits = 0.
 Adding units: only when a building of the player trains them (train lists belong to the building TYPE -- give the
@@ -219,29 +199,15 @@ player. The bot's data is keyed by faction name: a renamed faction needs its own
 
 ## 6. Status per slot
 
-Today = what the code does in 0.53. Placeholders (Marin Noggenfogger at the planned spot + announcement) are replaced
-faction by faction.
-
-| Slot | Turning points (concepts) | Today | Content plan |
-|---|---|---|---|
-| P10 Lordaeron | pick Arthas / Garithos (D1), Scarlet Crusade (WL, D14), Treason (D10), Helm (D11) | WL's Scarlet Crusade (also on the Hourglass, 0.53) | -- |
-| P3 Quel'thalas | fallback Sunfury (WL faction), betrayal Forsaken (D3), rogue nation (D16) | **fallback Sunfury** (0.53, full); **betrayal Forsaken** (0.54, split; placeholder tech) | Forsaken: the 24p tree (0.55), breaking free + Undercity (0.56) |
-| P8 Dalaran / Gilneas | fallback Theramore for both, Jaina's choice (D6), The Gates Close (D7) | Dalaran: WL's Theramore; Gilneas: placeholder (Darkshore -- superseded) | WL's Theramore |
-| P2 Stormwind | fallback Valiance Expedition, D9, Bolvar -> Lich King | placeholder | -- |
-| P5 Ironforge | fallback Dwarven Expedition (name open; must differ from Valiance), D9 | placeholder ("Explorers' League") | base near the Storm Peaks, frost dwarves, "Secrets of Ulduar" (new -- WL's Explorer quest is for Kalimdor) |
-| P23 Kul Tiras | fallback Kezan Enterprise (own team) | **disabled for the western playtest** (0.39.5; rebuilt 0.58: own `Faction`, the 24p goblin tree, base on Kezan via WL's rescue, Oil Rigs, 5 quests) | 0.59: 24p Trading Center + trade, Oil Refining, end goal on the scoreboard; 0.60: Refugee Slave Camps -- open: camps built one by one, what the end goal does, turtle concept |
-| P12 Druids | fallback Dream trees | placeholder | -- |
-| P19 Sentinels / Draenei | fallback Maiev's Watchers for both, The River (D8), The Triumvirate (D15) | Sentinels: Chase Illidan at the Hourglass after both HQs fall and Driven by Vengeance was used at the Vault; Exodar remains a placeholder | -- |
-| P1 Orcish Horde | fallback Twilight's Hammer, Found the Horde (D12) | Twillight at Dragonmaw Port, Old Gods team, 24p roster and tech tree | The Hour of Twilight grants hero Deathwing after the Grim Batol, Hammer of Twilight (0.72.0; was Thunderfury), Firelord and Rime quests, tier four and control of the capital. D12 is separate. |
-| P6 Tauren Tribes | fallback Skywall | Lose Thunder Bluff after holding it, then use the Hourglass to arrive at the Lost City on the Horde team. | Playtest caravan, camp and quest deadlines. |
-| P4 Scourge | fallback Ebon Blade, civil war (D5) | Hourglass only | -- |
-| P24 Legion | fallback Dreadlord Insurgents, Grand Crusader (D13) | Hourglass only | -- |
-| P16 Illidari | fallback Ashtongue Deathsworn (full, 0.63) | **fallback Ashtongue** (0.63: Black Temple destroyed -> Temple of the Deathsworn, conquest rule, purification, Karabor) | faction name "Karabor"; balance |
-| P7 Fel Horde | Mag'har planned | shared Twillight fallback on destruction of Kil'sorrow Fortress | first claim gets Dragonmaw Port |
-| P13 Black Empire | fallbacks **open** (Earthen Ring / Xal'atath or Ramkahen / Titan Watchers) | Hourglass only | -- |
-| P17 Ahn'qiraj | fallback Brood of Nozdormu | Hourglass only | dragon models (24p) |
+Section 0 is the status (0.87.1). Open work per slot: `../TODO.md`; designs still open (the Garithos path for
+Lordaeron, the Great Alliance and its tax, Jaina's choice, the civil war ...): `SCENARIO_CONCEPTS.md`.
 
 ## 7. History (implemented so far)
+
+- 0.64-0.87 (details: `../CHANGELOG.md`): the WL 5.0.4 alignment (0.69-0.77), the conquest rule for most successors
+  (0.76+), the fallback pairings (0.80-0.81: Dragonmaw, Zandalari, Ebon Blade, Draenei), the void-area dungeons (0.82-0.84:
+  the Undercity, Nazjatar, Shadowforge, the Deadmines; naga), Defias / Centaur / Harpies (0.85), Dark Iron / Furbolgs
+  (0.86), the flying Exodar, Timbermaw Hold, the 24p's Dark Iron, dungeon creeps (0.87), no second fallbacks (0.87.1).
 
 - 0.39.1: first slice in `Ai/Fallbacks/`: one definition per faction, trigger buildings (`n0FB`, `AFB1`), bots run by
   code. 0.39.2: bots take over leaving humans. 0.39.4: every faction gets a trigger building, every good faction a

@@ -14,7 +14,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Nazjatar
   // Sentinels' fallback (Maiev's return becomes a sub-path later, TODO.md).
   // - map setup (+1 s): the naga's base stands in Nazjatar where the 24p map preplaced it -- Neutral Extra, visible and
   //   invulnerable; the dungeon's gates stay shut. Whoever destroys or takes a Sentinels HQ last is recorded.
-  // - run: the Sentinels' units are left behind, the base is theirs, the gates open, the four Nazjatar CPs are theirs
+  // - run: the Sentinels' units are left behind, the base is theirs, the gates open, the Eternal Palace is theirs
+  //   (0.87.0: the other three CPs are guarded by creeps)
   //   (the Eternal Palace whoever holds it), Lady Naz'jar, 5 Mur'gul Slaves and an army; a VASSAL of whoever holds the
   //   Eternal Palace (at the start: the Sentinels' conqueror), never defeated, its temples indestructible.
   internal static class NazjatarFallback
@@ -153,8 +154,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Nazjatar
       }
 
       VoidDungeons.Open(VoidDungeons.Nazjatar);
-      StartCps.Force(p, DungeonObjects.EternalPalace);
-      StartCps.Give(p, DungeonObjects.HeartOfAzeroth, DungeonObjects.LightlessCavern, DungeonObjects.GishanCavern);
+      StartCps.Force(p, DungeonObjects.EternalPalace); // 0.87.0: the seat only -- the other three are guarded by creeps
       var s = NazjatarObjects.MurgulSlave;
       Spawn.Units(p, -19200f, -30100f, new[] { s, s, s, s, s, NazjatarObjects.LadyNazjar });
       var army = new List<int>();

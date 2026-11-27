@@ -1,0 +1,221 @@
+{
+  "OldId": "ANht",
+  "NewId": "AZze",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Level": 1,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 2,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 3,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 4,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 5,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 6,
+      "Id": "aare",
+      "Type": 2,
+      "Value": 400
+    },
+    {
+      "Level": 1,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.25
+    },
+    {
+      "Level": 2,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.35
+    },
+    {
+      "Level": 3,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.45
+    },
+    {
+      "Level": 4,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.55
+    },
+    {
+      "Level": 5,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.65
+    },
+    {
+      "Level": 6,
+      "Pointer": 1,
+      "Id": "Roa1",
+      "Type": 2,
+      "Value": 0.75
+    },
+    {
+      "Id": "alev",
+      "Value": 4
+    },
+    {
+      "Id": "arut",
+      "Type": 3,
+      "Value": "The Majordomo throws a curse of weakness on all nearby enemies, reducing their attack damage. |n|n|cffffcc00Level 1|r - <AZze,DataA1,%>% attack damage reduction. |n|cffffcc00Level 2|r - <AZze,DataA2,%>% attack damage reduction. |n|cffffcc00Level 3|r - <AZze,DataA3,%>% attack damage reduction. |n|cffffcc00Level 4|r - <AZze,DataA4,%>% attack damage reduction. "
+    },
+    {
+      "Level": 4,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Curse of Executus - [|cffffcc00Level 4|r]"
+    },
+    {
+      "Level": 5,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Howl of |cffffcc00T|rerror - [|cffffcc00Level 5|r]"
+    },
+    {
+      "Level": 6,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Howl of |cffffcc00T|rerror - [|cffffcc00Level 6|r]"
+    },
+    {
+      "Level": 4,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Reduces nearby enemy units' attack damage by <AZze,DataA4,%>% for <AZze,Dur4> seconds."
+    },
+    {
+      "Level": 5,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "The Pit Lord lets loose a terrifying howl that reduces nearby enemy units' attack damage by <AZze,DataA5,%>% for <AZze,Dur5> seconds."
+    },
+    {
+      "Level": 6,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "The Pit Lord lets loose a terrifying howl that reduces nearby enemy units' attack damage by <AZze,DataA6,%>% for <AZze,Dur6> seconds."
+    },
+    {
+      "Level": 1,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Curse of Executus - [|cffffcc00Level 1|r]"
+    },
+    {
+      "Level": 2,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Curse of Executus - [|cffffcc00Level 2|r]"
+    },
+    {
+      "Level": 3,
+      "Id": "atp1",
+      "Type": 3,
+      "Value": "Curse of Executus - [|cffffcc00Level 3|r]"
+    },
+    {
+      "Id": "anam",
+      "Type": 3,
+      "Value": "Curse of Executus"
+    },
+    {
+      "Id": "aret",
+      "Type": 3,
+      "Value": "Learn Curse of Executus - [|cffffcc00Level %d|r]"
+    },
+    {
+      "Level": 1,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Reduces nearby enemy units' attack damage by <AZze,DataA1,%>% for <AZze,Dur1> seconds."
+    },
+    {
+      "Level": 2,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Reduces nearby enemy units' attack damage by <AZze,DataA2,%>% for <AZze,Dur2> seconds."
+    },
+    {
+      "Level": 3,
+      "Id": "aub1",
+      "Type": 3,
+      "Value": "Reduces nearby enemy units' attack damage by <AZze,DataA3,%>% for <AZze,Dur3> seconds."
+    },
+    {
+      "Id": "aart",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNAuraShadow.blp"
+    },
+    {
+      "Id": "arar",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNAuraShadow.blp"
+    },
+    {
+      "Id": "ansf",
+      "Type": 3,
+      "Value": " (Majordomo Executus, Yellow)"
+    },
+    {
+      "Id": "auar",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\PASAuraShadow.blp"
+    },
+    {
+      "Id": "arhk",
+      "Type": 3,
+      "Value": "E"
+    },
+    {
+      "Id": "ahky",
+      "Type": 3,
+      "Value": "E"
+    },
+    {
+      "Id": "auhk",
+      "Type": 3,
+      "Value": "V"
+    },
+    {
+      "Id": "abpx",
+      "Value": 2
+    },
+    {
+      "Id": "arpx",
+      "Value": 2
+    }
+  ]
+}

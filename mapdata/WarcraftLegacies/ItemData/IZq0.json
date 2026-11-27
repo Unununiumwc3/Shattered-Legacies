@@ -1,0 +1,55 @@
+{
+  "OldId": "ckng",
+  "NewId": "IZq0",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "idrp",
+      "Value": 1
+    },
+    {
+      "Id": "ihtp",
+      "Value": 500000
+    },
+    {
+      "Id": "ipaw",
+      "Value": 0
+    },
+    {
+      "Id": "iusa",
+      "Value": 1
+    },
+    {
+      "Id": "utip",
+      "Type": 3,
+      "Value": ""
+    },
+    {
+      "Id": "iabi",
+      "Type": 3,
+      "Value": "A0AL,A0MC"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Claw of Ursoc"
+    },
+    {
+      "Id": "iico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNClawsOfAttack.blp"
+    },
+    {
+      "Id": "ides",
+      "Type": 3,
+      "Value": "The furbolgs' sacred totem. Increases Strength; attacks can bash."
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "|cffff8c00Artifact|r|nThe Sacred Ancestral Totem of the furbolgs. Increases Strength by 10; attacks can bash.|n|n|cffffcc00Its holder is the master of the Furbolgs.|r"
+    }
+  ]
+}

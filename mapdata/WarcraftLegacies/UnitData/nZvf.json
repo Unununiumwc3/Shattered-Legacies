@@ -1,0 +1,24 @@
+{
+  "OldId": "nwgt",
+  "NewId": "nZvf",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Unit_Exodar.mdl"
+    },
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "The Exodar"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 0.32
+    }
+  ]
+}

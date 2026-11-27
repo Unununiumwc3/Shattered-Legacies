@@ -1,6 +1,7 @@
 # TODO -- Shattered Legacies (fork content)
 
-**Current handoff: [0.69.0 changes and playtest checklist](PLAYTEST-0.69.md).**
+**Current handoff: the 0.87.x playtest items below** ("WL 5.0.4 alignment" holds the playtest lists of every
+release; `PLAYTEST-0.69.md` is historical). The fallbacks as they are: `Timelines/TIMELINES.md` section 0.
 
 `[you]` = needs a decision or in-game data from the maintainer. `[ai]` = implementation work. Finished items go to
 `CHANGELOG.md`. **This file holds everything that exists only in Shattered Legacies**: timelines, new factions, map
@@ -20,7 +21,7 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
   Build two Way Gates with the Farmers -> travel both ways; a bot ally's army should use them (dump: "Dalaran Way
   Gates open"). Geomancers / Mages: Teleport after Teleportation. Check AQ's Ouro (Shifting Sands), C'Thun's
   Progenesis, Skywall's Frost Bite, and the Orcish Horde's Frenzy / Improved Frenzy (Fortress) / Blademasters.
-- **Draenei**: kept as they are for now (maintainer, 2026-11-25); the fallback plan in `UPSTREAM.md` waits.
+- **Draenei**: the Legion's fallback since 0.80 (the 2026-11-25 "keep them as they are" was overtaken; `UPSTREAM.md`).
 - **Bundle 3 playtest (0.74.0)**: Immortality card lists the four regions (green = held); a unit outside them is not
   saved; a unit is saved once. Druids: destroy Orgrimmar -> Wrath of the Wild (Siege Ancients 8, +150 life). Sentinels:
   Return to the Fold -> 12 Redeemed Highborne. Cenarius dies -> his ghost comes back (bot and player).
@@ -39,32 +40,44 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - **0.79.0 playtest**: snipe a bot's HQ -- after 5 s its far troops and its allies' appear beside it (text + ping,
   dump "recall"); a bot Kezan builds rigs and tankers (log "kezan oil bot"); Twilight owns Dragonmaw Port on arrival;
   Sylvanas (Dark Ranger / Queen) learns Dark Lady's Command at 6 and the bot casts it.
+- **0.88.0 (no playtest yet)**: Theramore taken at Jaina's Sanctum, Jaina a dreadlord under an evil holder and back;
+  "The Nexus" (a minute's channel) and Kalecgos' Dragon Form (skills kept? attribute?); Edwin after 1,500 pillaged;
+  Benediction from Majordomo; Mmmrrrggglll and Snarlmane with their artifacts; the Claw of Ursoc (free furbolgs, the
+  first loss, hostile satyrs); the Broodmother taken at 0 life; Acherus rises, flies, carries, burns and mends (bot
+  movement?); the harbours (70 % / the north fallen); the plague boars (do they walk? zombies? dispel?); Maraad after six
+  turns; Alexstrasza's Chains (drakes, Nek'rosh); the elite locks (only own researches visible on the Hourglass? bots
+  pick?). Models to check: Amnennar (RazormaneChief), the Broodmother (Meat Wagon).
+- **0.87.1 (no playtest yet)**: the Hourglass shows no second fallback for Gilneas or the Draenei (rows gone); Skywall's
+  info row "Conquered, not defeated" still shows; the Exodar has no preplaced shipyards (the Draenei can still build
+  them).
+- **0.87.0 (no playtest yet; 0.86.1 builds and runs -- maintainer)**:
+  - The Exodar: the Legion beaten -> the ship lands near the conqueror's home; walk in through it; after "The
+    Dimensional Ship" use Set Course on the Dimensional Generator -- 90 s flight, gates shut. Take the bridge with an
+    enemy and try to fly (refused), retake it.
+  - Furbolgs: the lodge by Nordrassil leads into Timbermaw Hold (shrine, CP).
+  - Dark Iron: the 24p troops and models (`git lfs pull`), the Throne of Thaurissan, a Gatebreaker every 5 turns at
+    Shadowforge City, the statue's aura for the Siege Foundry's holder, the Black Market.
+  - Dungeons: only the seat on arrival, creep camps on the other CPs.
+  - Horde -> Zandalari always; Fel Horde -> Dragonmaw always; Sunfury / Gilneas / Draenei conquerable (Gilneas' mercy
+    text); Stromgarde passes to Lordaeron.
+  - Turn 30: the Kul Tiras <-> Kezan ferry and its announcement.
+  - Still open:
+    - Maiev as a sub-path (on hold, maintainer)
+    - Twilight's Hammer (on hold since 0.87)
+    - satyrs as the Druids' alternative
+    - the Horde dies too early -- needs a game's dumps
+    - the 24p quests: the 24p repository is scanned (0.87.1) -- what to take is in "6. Faction by faction"
 - **0.86.0 (no playtest yet)**:
   - Dark Iron: the Great Forge lost -> Shadowforge opens, town inside, Mercenary Charter (tribute and golems for the
     Siege Foundry's holder), "The Great Anvil".
   - Furbolgs: Nordrassil and Cenarion Hold lost -> the Totem Lodge, levy and strength by world trees held.
-  - Still open:
-    - Maiev as a sub-path
-    - Orcish Horde: Trolls only
-    - Fel Horde -> Dragonmaw
-    - Quel'thalas conquerable
-    - Stromgarde
-    - Gilneas' mercy text
-    - satyrs as the Druids' alternative
+  - Still open then: all built in 0.87.0 except Maiev (on hold) and the satyrs -- see 0.87.0.
 - **0.85.0 (no playtest yet, maintainer: build ahead, test in bulk)**:
   - Defias: Stormwind Keep lost -> the Deadmines open; Pillage on every unit; recruits each turn; quests.
   - Centaur: Thunder Bluff lost -> Kolkar camp; levy each turn; the khan quests and "The Five Khans".
   - Harpies: N'Zoth lost -> the nests at Stonetalon become theirs, the Roost trains the heroes.
   - Skywall from C'Thun's loss; Gilneas from Lordaeron's Capital Palace.
-  - Still open from the table:
-    - Ironforge -> Dark Iron in Shadowforge
-    - Sentinels' Maiev as a sub-path
-    - Druids -> Furbolgs
-    - Orcish Horde: Trolls only
-    - Fel Horde -> Dragonmaw
-    - Quel'thalas conquerable
-    - Stromgarde
-    - Gilneas' mercy text
+  - Still open then: all built in 0.86 / 0.87 except Maiev (on hold) -- see 0.87.0.
 - **0.84.0 playtest** (`git lfs checkout` first: naga models):
   - Before Auberdine and Feathermoon fall, the Nazjatar, Shadowforge and Deadmines gates stand but stay shut.
   - Sentinels beaten -> the Naga of Nazjatar: their base in Nazjatar becomes yours and the circle by the Maelstrom
@@ -116,27 +129,15 @@ Design: `Timelines/SCENARIO_CONCEPTS.md` (what) and `Timelines/TIMELINES.md` (ho
 - [ai] Bots and Dalaran: they neither build Way Gates nor use the Dalaran Shield on purpose (the engine may cast it
   when Antonidas happens to stand beside the generator in a fight).
 
-## Western 2v2v2 integration for playtest
+## Left from the western port (0.69) and the Twillight pilot (0.68)
 
-The western port takes Orcish Horde, Tauren Tribes and their Kalimdor openings from Warcraft Legacies 5.0.4 (`a0c73082c268f65142781c287bc746e36c7d94c9`). Start with Orcish Horde and Tauren versus Druids and Sentinels (the Draenei lobby alternative remains), versus Black Empire and Ahn'qiraj. The Orcs share the existing Twillight claim with Fel Horde. Only Tauren can claim Skywall.
-
-- Play through the Tauren caravan from Shimmering Flats to Thunder Bluff and the Orcish landing to Orgrimmar with both human and bot control. Check recruitment, income, scoreboard teams, alliance vision and the paths through the changed terrain.
-- Lose Thunder Bluff before and after taking it. Only the second case should enable Skywall. Check the protected Lost City camp, the Hourglass, bot production, Vortex and Throne quest deadlines and control points already held by opponents.
-- Playtest Orcish Horde's upstream Kezan reward before deciding how to separate Kezan. Keep the Kul Tiras fallback implementation dormant. The Tauren Earthmother's Cradle reward and Skywall's overlapping Shimmering Flats and joint Firelands invasion quests are parked for design review.
-- Check the two Old Gods openings, original interiors, public tunnels and Un'Goro outpost. Verify both orders of the Orcish Horde / Fel Horde shared Twillight claim, including a late Tauren-to-Skywall arrival.
-- Dark Trolls/Hakkar, the Quel'Thalas split, Sunfury balance and Ironforge artifact rewards remain separate follow-ups.
-
-## Historical handoff after the 0.68 Twillight playtest
-
-- The maintainer passed the Twillight playtest at `15484d14de1ac0db9ed07ec30839473abe2f44a3`.
-- Implemented the first reassignment pilot. Frostwolf and Warsong retain their Orgrimmar offers. Fel Horde
-  can claim the same Twillight arrival after Kil'sorrow Fortress dies. See **Reassigning the Twillight fallback**
-  in `Timelines/TIMELINES.md` for the catalog entry and execution trace.
-- Playtest the shared path in both claim orders, once with a bot and once with competing human researches.
-  Check that capturing the Kil'sorrow CP or losing all CPs with the fortress alive cannot unlock Fel Horde.
-  After the first claim, check for one Cho'gall and one port transfer, correct scoreboard team, vision and bot orders.
-- Next pool milestone needs a second playable destination for the remaining slot. Exercise both claim orders
-  with two options before connecting the same pool to opening picks.
+The western port (WL 5.0.4's Orcish Horde, Tauren Tribes and their Kalimdor openings) and the shared Twillight claim
+are history: the Horde falls to the Zandalari, the Fel Horde to the Dragonmaw, Skywall is Ahn'qiraj's (0.80 - 0.87).
+Left from them:
+- [you] The Tauren Earthmother's Cradle reward and Skywall's overlapping Shimmering Flats / joint Firelands invasion
+  quests -- parked for design review (see "Decide" above).
+- [you] The Orcish Horde's upstream Kezan reward vs the Kezan Enterprise (does it still clash?).
+- Dark Trolls / Hakkar (the Zandalari's endgame), Sunfury balance, Ironforge artifact rewards -- separate follow-ups.
 
 ## Order of the work
 
@@ -359,37 +360,82 @@ Small issues (maintainer, 0.57 playtest), in the order I would take them:
 - [you] **Balance**: 12,000 purification (2000 / 2400 / 2400 / 2600 / 2600), every 8 s up to 50 per unit and 160 in
   all, 2 per second by itself (`AshtongueConfig`); 10 gold and 6 food per Outland CP.
 - ~~**The faction's name "Karabor"**~~ (0.64: `Faction.Name` -- WL re-keys its tables; the bot knows both names).
-- [ai] **Evil factions conquered instead of defeated** (maintainer): `Core/Conquest` is ready for it -- hook it into the
-  elimination rule (`Rules/EliminationRule`): the seat = the faction's HQ CP; per faction: which ones are "evil".
+- ~~**Evil factions conquered instead of defeated**~~ (0.76 - 0.87: most fallbacks use `Core/Conquest`;
+  `TIMELINES.md` section 0).
 - [ai] **A "Hold <HQ>" quest for every faction** (maintainer): generated from the catalog's `Hq`, with map markers --
   says which buildings the faction must not lose and what losing them unlocks.
-- [ai] **Mag'har** (Fel Horde fallback): start at Kil'sorrow Fortress; a trading post auto-producing up to 4 traders
-  (60 s each; attackable, not controllable; 2 to Booty Bay, 2 to Fuselight through the Dark Portal -- check that the
-  pathing uses the waygate); 4 on the road at once = a quest reward. Build the trade route as a Core block from
-  `KezanEnterpriseTrade`. [you] a mule / pack-horse asset (none in either map; the stock Kodo is the nearest).
 - [ai] (check) The WL quests that use the Black Temple -- Ironforge's "destroy it", the Fel Horde's rebuild and HQ list
   -- after the Ashtongue's temple stands on its spot; Shattrath / Halaar are WL Exodar capitals (in a Draenei game the
   Ashtongue take them).
 
-### 4. Light turning point (pilot: Illidari -> draenei remnant)
-
-- [ai] Modify faction: remove the non-draenei objects, add a few (content index), Akama. HQ: the Black Citadel.
-
 ### 5. Lordaeron pick Arthas / Garithos (D1)
 
-- [ai] A `FactionChoice` for the Lordaeron slot like Dalaran / Gilneas (`Timelines/Factions/Lordaeron/`).
+Still open (maintainer, 0.87.1: keep). Design: `Timelines/SCENARIO_CONCEPTS.md` section 8 P10 and section 7 (the
+Great Alliance belongs to the Arthas games).
+- [ai] A `FactionChoice` for the Lordaeron slot (WL's pick dialog is still used, with one choice, by the Dalaran,
+  Sentinels and Illidari slots -- `Setup/FactionChoiceDialogSetup.cs`; `Timelines/Factions/Lordaeron/`).
   `[you]` Garithos as its own `Faction` class or Lordaeron with a game flag -- decide when we build it.
+- [ai] **A stronger Garithos** (maintainer, 0.87.1): the main map's Garithos (`Hlgr`: Storm Bolt, Rally, Cavalry
+  Onslaught, Mighty Guard) with the 24p **Dark Knights** (`h009`: Dark Hammer, Unholy Plating) as his elite -- the 24p
+  "High Commander (garithos)" `E00O` is really Michael Goodchilde and is not him. [you] which kit to keep.
+- [you] In Garithos games Lordaeron has no fallback ("the gamble") -- still true now that Gilneas is its fallback in
+  Arthas games?
 
 ### 6. Faction by faction (`Timelines/SCENARIO_CONCEPTS.md` section 8)
 
-Order proposal (reuse first): Theramore for Gilneas (WL path exists) -> Maiev's Watchers (Sentinels and Draenei) ->
-Valiance Expedition (Bolvar -> Lich King) -> Dwarven Expedition -> Twilight's Hammer -> Knights of the Ebon Blade ->
-Forsaken (Quel'thalas' betrayal, D3) -> Dream trees -> Mag'har -> Dreadlord Insurgents -> Brood of Nozdormu.
-- `[you]` **Dwarven Expedition**: name (must differ from Stormwind's Valiance Expedition); base near the Storm Peaks,
-  frost dwarves, "Secrets of Ulduar" -- a NEW quest (Ironforge's Explorers' League quests in WL go to Kalimdor / Uldum).
-- `[you]` Fallbacks of **Skywall** and the **Black Empire**: Earthen Ring / Xal'atath or Ramkahen / Titan Watchers.
-- Twilight's Hammer: Dragonmaw assets + the 24p tech / unit / building trees (content index).
+Every slot has its fallback now (`TIMELINES.md` section 0). The old order (Theramore for Gilneas -> Maiev's Watchers ->
+Valiance -> Dwarven Expedition -> Twilight's Hammer -> Ebon Blade -> Forsaken -> Dream trees -> Mag'har -> Dreadlord
+Insurgents -> Brood of Nozdormu) is superseded; those concepts are listed in `SCENARIO_CONCEPTS.md` section 14.
+- On hold: Maiev as a Sentinels sub path; Twilight's Hammer as a faction (its code stays; see Black Empire below).
 - End goals of the remaining factions (`SCENARIO_CONCEPTS.md` section 10).
+- [ai] `timeline-overview.drawio` still shows the old fallbacks -- update `timelines/timeline_overview_gen.py`.
+
+**0.88.0 -- agreed (maintainer, 2026-11-27) -- built in 0.88.0, playtest open (`CHANGELOG.md`):**
+
+- **Theramore conquerable**: Jaina's Sanctum is the seat; Theramore always serves the holder's team (never neutral).
+  Held by an evil faction (Scourge, Legion, Fel Horde, Old Gods -- by the holder's FACTION, the teams are shared) ->
+  Jaina becomes a dreadlord; held by any other -> Jaina again. As often as the Sanctum changes hands.
+- **Kalecgos** (Dalaran): a transform hero -- human form (24p model, caster), dragon form (the blue dragon, scaled up,
+  more attack damage, its own spells); same primary attribute. Quest "The Nexus": a hero CHANNELS at the Nexus for one
+  minute (Jaina and Kalecgos, a little hanky-panky) -> Kalecgos and the blue dragonspawn join Dalaran.
+- **Defias**: Edwin VanCleef for 1,500 gold pillaged ("The Stonemasons' Due").
+- **Majordomo**: his kill gives **Benediction** (the Eye of Divinity's holy form; no Anathema for now).
+- **Furbolgs**: when the Druids fall the satyr dungeon opens. **Xavius** (demi-hero, holds the **Claw of Ursoc**) and
+  **Peroth'arn** (demi-hero). The Furbolgs are their own faction while Xavius lives OR while they hold the Claw. The
+  first time they lose the Claw they join the conqueror's team (the Claw holder's), and Xavius and Peroth'arn turn
+  Neutral Hostile (the satyrs no longer rule the furbolgs -- also stops a Claw hand-off to another hero). An
+  announcement about the Claw when the Furbolgs join the game. The Furbolgs get a simple furbolg hero. No new bot hook.
+- **Harpies**: the **broodmother** -- an immovable, conquerable caged unit (cage on wheels) next to the harpy huts.
+  Later (not 0.88): corpses, digesting, eggs.
+- **Ebon Blade**: four knights at level 10 channel -> **Acherus flies** (a transport, ultimate-like abilities). At 0 HP
+  it burns, stops in the air for 60 s, invulnerable, and regenerates to full (the HP bar is the timer). Attacks never
+  change its owner, only the team (the seat). Movement: the bots' current system, playtest first.
+- **Kalimdor <-> Northrend**: harbour docks open (waygates) when one team holds 70 % of Kalimdor's CPs (from turn 30)
+  or Lordaeron, Dalaran and Quel'thalas have all fallen.
+- **Quilboar plague**: a Scourge option (Hourglass and Frozen Throne) -> Amnennar the Coldbringer and about 30 plague
+  boars from Razorfen Downs heading to the Kalimdor HQs; infection only purge / dispel cures; infected units that die
+  rise as Scourge zombies.
+- **Smaller**: same research on the Hourglass and at the faction's own building where it fits; mini-bosses
+  Mmmrrrggglll and a Blackmane chief with an artifact each; Draenei quests "The Broken One" (Nobundo) and "Survivors of
+  Shattrath" (Maraad); Dragonmaw "Alexstrasza's Chains" (hold Grim Batol -> the chained reds hatch drakes every turn;
+  Nek'rosh slain -> Alexstrasza breaks free and the dragons turn on the Dragonmaw).
+- **Elite choices on the Hourglass**: WL's seven mirrored (same research), plus a unit lock for every faction with
+  two elite-tier units -- a faction can only have ONE elite unit (the other is locked):
+  Stormwind Champion / Conjurer, Lordaeron Paladin / Pegasus Knight, Dalaran Kirin Tor / Blue Dragon, Quel'thalas
+  Farstrider / Blood Mage, Kul Tiras Musketeer / Sea Giant, Gilneas Greyguard / Worgen Shaman, Scarlet Templar /
+  Bishop, Sunfury Bloodwarder / Warlock, Draenei Vindicator / Elekk Knight, Legion Dreadlord / Doom Lord, Fel Horde
+  Executioner / Fel Death Knight, Illidari Royal Guard / Sea Witch, Black Empire Reaper / Herald, Skywall Elemental
+  Lord / Tidal Lord, Nazjatar Immortal Guardian / Naga Sea Witch, Ashtongue Vindicator / Seer, Zandalari Boneseer /
+  Direhorn, Forsaken Elder Banshee / Val'kyr, Kezan Tinker / War Zeppelin.
+
+**Later:**
+- **Twilight**: its own patch -- Twilight gets a player slot (the maintainer explains later). Until then the "Twilight
+  as a Black Empire sub path" plan of 0.87.1 is on hold.
+- **Garithos** (D1 and his phases): too big for now.
+- Extra abilities as elite choices (instead of locks); the broodmother's eggs; Anathema; Horde reunification.
+- **Thandol / the Great Alliance**: human-only when built (bots never take them); a desperation opening for both
+  sides. Not built.
+- Not changed: the lumber crash (maintainer).
 
 ### 7. Shared mechanics (concepts sections 5, 7, 9, 11)
 
@@ -426,29 +472,15 @@ From the 0.60 playtest (maintainer):
 - [ai] **Katherine's ultimate without its level** after the fallback to Kezan: probably every hero that stays with its
   faction through a fallback (the level requirement of hero skills -- `SwapFaction`, the faction's object levels?).
   Investigate with one hero, then fix for all fallbacks.
-- [0.68 Twillight passed; Maiev separate] Original test coverage. Before the relevant choice, try attacking the neutral Dragonmaw port and
-  Grim Batol reward buildings, including the Dungeon at (17312, -3808). Take the fallback and check that only the port
-  converts. Capture the Grim Batol point and check the capital, workshops and towers. Attack the transferred buildings,
-  train a Death Knight, and train a Battlemaster from Grim Batol after tier four. Test both tunnel mouths in both
-  directions before and after the quest. Check Maiev's outpost with both Sentinel and Draenei openings.
-- [0.68 Twillight passed] Original campaign checks. Complete Gift of the Firelord with the Great Forge destroyed before and after taking Twillight. Earn
-  the Hammer of Twilight at Suramar (0.72.0; was Thunderfury -- now only Ironforge's expedition gives it). Finish The Hour of Twilight, spend
-  Deathwing's skill points and check damage, aura, Searing Breath and Attribute Bonus. Tune after a multiplayer run.
-- [next] After the shared-fallback playtest, extend offer configuration to betrayals and opening picks.
-- [design, next] Shared alternative factions are exclusive and first-come. Two eligible slots can share two fallbacks.
-  Test both claim orders and simultaneous choices. A committed claim must leave a usable fallback for each slot that
-  still needs one. An opening pick can consume the same pool.
-- [content, next] Port the 24p Dark Trolls and Hakkar. First offer the betrayal to Frostwolf and Warsong. Configure a
-  starting offer later using the same roster. Inspect `Factions/Frostwolf/Quests/QuestDarkspear.cs` (Echo Isles rescue and Vol'jin unlock), the other troll recruitment quests, `mapdata/WarcraftLegacies24p/` and `tools/shattered-legacies/content/import_24p.py` first so the betrayal
-  cannot duplicate a previous reward or take a player's holdings. Protect the designated neutral buildings, hide and
-  protect reserved troops, and release each group once on transfer.
+- [content] The Zandalari's endgame: Hakkar (the 24p Dark Trolls and Hakkar; `mapdata/WarcraftLegacies24p/`,
+  `import_24p.py`) -- `[you]` decide.
 - [map, next] Apply the same policy to additional named sites after checking their original rewards. Existing hidden
   buildings may stay hidden. Visible future buildings should resist attacks until claimed. Keep active creeps and
-  public landmarks separate from reserved units. Verify the Theramore opening as Dalaran and Gilneas and the Sunfury
-  garrison before and after Quel'Thalas takes its fallback. Review the Quel'Thalas split separately.
+  public landmarks separate from reserved units. Verify the Sunfury garrison before and after Quel'Thalas takes
+  its fallback. Review the Quel'Thalas split separately.
 - [reference] The donor Twilight Citadel is 24p unit `h05U`, based on `hars`, model
-  `war3mapImported\DarkShrineX2.mdl`. Its training list contains the Battlemaster and Cultist. The current path uses
-  Grim Batol for tier-four Battlemaster production. A separate Citadel HQ is a future design choice.
+  `war3mapImported\DarkShrineX2.mdl`. Its training list contains the Battlemaster and Cultist -- the production
+  building of the planned Twilight sub path (Black Empire, "6. Faction by faction").
 - [ai] **Detect invisible** is possible with the Forsaken's towers: needs a rework -- a research for it, and / or the
   same for other factions.
 - [ai] (polish) **Kezan's trade ships** sometimes sail through islands -- why do they ignore land at times? (an order
@@ -457,8 +489,6 @@ From the 0.60 playtest (maintainer):
 
 - [ai] **Fallback messages are wrong**: when Kul Tiras loses its HQ, the game says the HQ was regained, although it
   was destroyed for good (v0.39.9 playtest; check in the 0.58 playtest -- `TimelineSystem.OnTriggerChanged`).
-- [ai] **Dalaran / Gilneas fallback does not swap teams on the scoreboard.** Gilneas should use Dalaran's path (same
-  slot), with Gilneas City as its HQ (step 6).
 - [ai] **New Kezan units are invisible** (0.39 Kezan units -- 0.58 uses the 24p copies; check again): the unit count goes up during production, but nothing can be seen. Checked
   (after 0.52.0): every model path of the Kezan units points to an import that exists in the main map, and all 4046
   main-map imports are on the fork's LFS server. Left: `[you]` `git lfs ls-files | awk '$2=="-"'` in your clone lists
@@ -471,7 +501,7 @@ From the 0.60 playtest (maintainer):
   leavers (0.39.2).
 - [ai] Lobby slot names in `Info.json` are still WL's old 24p layout -> the Shattered Legacies layout
   (`SCENARIO_CONCEPTS.md` section 3).
-- [you] Remove the preplaced units of the unused slots P6, P15, P18 at start? (WL only defeats empty slots that have a
+- [you] Remove the preplaced units of the unused slots P15, P18 at start? (WL only defeats empty slots that have a
   faction.)
 
 ## Map content, design and ideas (brainstorm)

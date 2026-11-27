@@ -1,0 +1,54 @@
+{
+  "OldId": "hwtw",
+  "NewId": "hZix",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Statue of Thaurissan"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Shadowforge)"
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "war3mapImported\\Prop_DwarfStatue.mdl"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNStatUp.blp"
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 2.95
+    },
+    {
+      "Id": "ussc",
+      "Type": 1,
+      "Value": 3.0
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\4x4SimpleSolid.tga"
+    },
+    {
+      "Id": "uabi",
+      "Type": 3,
+      "Value": "Avul"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "Dagran Thaurissan in stone. Whoever holds the Siege Foundry stands under his gaze: +4 armour to nearby units."
+    }
+  ]
+}

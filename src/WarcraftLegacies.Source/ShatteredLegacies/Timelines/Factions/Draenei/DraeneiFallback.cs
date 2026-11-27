@@ -21,10 +21,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Draenei
   // - run: the Legion's units are left behind, the Exodar and its base are theirs at once ("A New Home" completed:
   //   Nobundo), Velen leads them, 5 Gemcrafters and a small guard; no Darkshore quest; they JOIN the conqueror's team
   //   (none: a team of their own). Lore: the announcement differs for a good, an evil and a Fel Horde conqueror.
+  // 0.87.0 (maintainer): the base is the INSIDE OF THE EXODAR, in the void (ExodarShip): the ship lands near the home of
+  // whoever beat the Legion and is the only way in or out; "The Dimensional Ship" lets it fly. CONQUERABLE: whoever
+  // takes the Exodar's bridge (its CP) gains the draenei's service. They can still be defeated.
   internal static class DraeneiFallback
   {
-    private const float StartX = -22592f;
-    private const float StartY = 7008f;
+    private const float StartX = -26432f; // inside the ship (0.86: -22592, 7008 on Azuremyst)
+    private const float StartY = 14176f;
+
+    internal const string ConquestText =
+      "|cffffcc00The Exodar's bridge has fallen.|r Velen bows to the ship's new masters -- the draenei serve them now.";
     internal static readonly ExclusivePath Path = new("Draenei", Prepare, Run, StartX, StartY);
     private static List<unit> _exodar = new();
 
@@ -93,11 +99,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Draenei
       }
 
       StartCps.Force(p, UNIT_N0BL_EXODAR_REGALIS); // 0.81.0 (maintainer): theirs whoever holds it
+      draenei.AddQuest(new QuestSurvivorsOfShattrath()); // 0.88.0: hold the bridge six turns -> Maraad
       AllLegends.Draenei.Velen.ForceCreate(p, new Point(StartX, StartY), 270f);
       Spawn.Units(p, StartX + 128f, StartY - 192f, Guard);
       var team = victor != null && GetPlayerId(victor) < 24 ? victor.GetPlayerData().Team : null;
-      ChangeTeam.JoinOrAlone(p, team);
-      SplitFaction.UnallyOutsideTeam(p);
+      // 0.87.0: a vassal of the bridge -- the conqueror's team (none: their own), then whoever takes the Exodar's CP
+      Conquest.Register(p, UNIT_N0BL_EXODAR_REGALIS, team != null ? victor : null, false, false, ConquestText);
+      ExodarShip.LandNear(victor);
       var text = team == null || team == TeamSetup.Alliance || team == TeamSetup.NorthAlliance
                  || team == TeamSetup.SouthAlliance || team == TeamSetup.NightElves || team == TeamSetup.Horde
                  || team == TeamSetup.Kalimdor

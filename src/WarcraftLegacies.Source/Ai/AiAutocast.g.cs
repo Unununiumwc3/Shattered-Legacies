@@ -15,7 +15,7 @@ namespace WarcraftLegacies.Source.Ai
   //     6 A076 frostarmoron -- ; on nvdg
   //     7 A07V innerfireon -- Bolster; on h054
   //     8 A08Z carrionscarabson -- Invoke Spiders; on n06K
-  //     9 A09J replenishlifeon -- Swig; on h01S
+  //     9 A09J replenishlifeon -- Swig; on h01S hZi3
   //    10 A0A7 faeriefireon -- ; on n06C
   //    11 A0AR healon -- ; on n04K n05V u00V u01T
   //    12 A0AU frostarmoron -- ; on sfh5
@@ -29,16 +29,16 @@ namespace WarcraftLegacies.Source.Ai
   //    20 A0F8 innerfireon -- Unholy Armor; on nchw
   //    21 A0FB frostarmoron -- ; on o05D oZy2 oZy5
   //    22 A0G7 raisedeadon -- Natural Burial; on e007
-  //    23 A0GC replenishmanaon -- Replenish Mana; on h002 h066 h068 h07G
+  //    23 A0GC replenishmanaon -- Replenish Mana; on h002 h066 h068 h07G ...
   //    24 A0HR healon -- ; on o05N
   //    25 A0HT raisedeadon -- Cycle of Rebirth; on edot edtm
   //    26 A0LX innerfireon -- Gateway Reinforcement; on o051
   //    27 A0MV healon -- ; on h04M
   //    28 A0OR flamingarrows -- ; on n09B
-  //    29 A0P0 flamingarrows -- Poisoned Spear; on h00A hZr0 nbrg nsln
+  //    29 A0P0 flamingarrows -- Poisoned Spear; on h00A hZr0 nZp1 nbrg ...
   //    30 A0RT innerfireon -- Stone Armor; on n060
   //    31 A0SA raisedeadon -- Animate Soul; on n093
-  //    32 A0X0 raisedeadon -- Cremate; on h0CG
+  //    32 A0X0 raisedeadon -- Cremate; on h0CG nZz0
   //    33 A0X2 bloodluston -- Gale; on o02A
   //    34 A0YJ innerfireon -- ; on o05C oZy1 oZy4
   //    35 A12B innerfireon -- Hound Companion; on n04H nZri
@@ -53,12 +53,12 @@ namespace WarcraftLegacies.Source.Ai
   //    44 A15H innerfireon -- Stoneskin; on vP54
   //    45 ACbb bloodluston -- stock; on n080 ndrh nomg
   //    46 ACbl bloodluston -- ; on ncks ngos ngow nslv ...
-  //    47 ACcs curseon -- ; on nfor ngh2 nhdc nhrh
-  //    48 ACcw coldarrows -- ; on h0AC nskm
+  //    47 ACcs curseon -- ; on nZj3 nfor ngh2 nhdc ...
+  //    48 ACcw coldarrows -- ; on h0AC hZb1 nskm
   //    49 ACd2 autodispelon -- ; on nfsh nith
   //    50 ACdm autodispelon -- ; on ncks nfps nfsp nkog ...
   //    51 ACf2 frostarmoron -- ; on nfps nith nlrv nltc ...
-  //    52 ACff faeriefireon -- stock; on nehy nfrb nhrw
+  //    52 ACff faeriefireon -- stock; on nZj2 nehy nfrb nhrw
   //    53 ACif innerfireon -- ; on nfsh ntks
   //    54 ACpa parasiteon -- Void Parasite; on nerd ners
   //    55 ACrd raisedeadon -- Call Voidwalker; on nhhr nrvd
@@ -69,46 +69,51 @@ namespace WarcraftLegacies.Source.Ai
   //    60 AEpa poisonarrows -- ; on h05N h0CF hZr4
   //    61 AHca coldarrows -- stock; on Hjnd
   //    62 AHfa flamingarrows -- stock; on Emoo
-  //    63 ANba blackarrowon -- stock; on Nbrn Usyl
+  //    63 ANba blackarrowon -- stock; on Nbrn OZl1 Usyl
   //    64 ANfa coldarrows -- stock; on Nngs Nswt
   //    65 ANpa parasiteon -- ; on nnsw
-  //    66 AUcb carrionscarabson -- ; on E005 Uanb Ucrl
-  //    67 AUfu frostarmoron -- stock; on Uclc Ulic
+  //    66 AUcb carrionscarabson -- ; on E005 UZe2 Uanb Ucrl
+  //    67 AUfu frostarmoron -- stock; on UZe1 Uclc Ulic
   //    68 AZ3A replenishmanaon -- ; on o001
-  //    69 AZf6 blackarrowon -- ; on nZf1
-  //    70 AZfd carrionscarabson -- Raise Plaguelings; on uZf9
-  //    71 AZfk spellstealon -- ; on nZf3
-  //    72 AZg1 blackarrowon -- ; on UZa2 UZa3
-  //    73 AZk2 replenishmanaon -- Fuel Refill; on hZk1 uZk0
-  //    74 AZk7 innerfireon -- Mage Armor; on oZkf
-  //    75 AZq0 faeriefireon -- Detonate; on uZk0
-  //    76 AZq1 faeriefireon -- Refine Oil; on hZq0
-  //    77 AZt0 faeriefireon -- Purify; on HZy4 HZya
-  //    78 AZw8 healon -- Shadow Infusion; on uZw1
-  //    79 AZwk bloodluston -- ; on nZw1
-  //    80 Ablo bloodluston -- ; on oshm
-  //    81 Acrs curseon -- ; on nmsc oZkg uban uswb
-  //    82 Ahea healon -- ; on h00J h08K hmpr o04F
-  //    83 Ainf innerfireon -- ; on hmpr
-  //    84 Anh1 healon -- ; on n08E ndrm ndtp nitp ...
-  //    85 Anh2 healon -- ; on ndth nfsh nith
-  //    86 Apsh phaseshifton -- ; on efdr nvdw
-  //    87 Arai raisedeadon -- ; on nnwl uktn unec
-  //    88 Aren renewon -- ; on ewsp
-  //    89 Arpl replenishlifeon -- ; on uobs
-  //    90 Arpm replenishmanaon -- ; on uobs
-  //    91 Arst restorationon -- ; on u00D u019 uZf1 uaco
-  //    92 Aslo slowon -- ; on hsor n087 nZw4 nbzw ...
-  //    93 Asps spellstealon -- ; on hspt ndqp
-  //    94 Aweb webon -- ; on nspb nspd nspg ucrm
-  //    95 MD10 innerfireon -- ; on o04Y
-  //    96 MD12 replenishmanaon -- ; on u00J
-  //    97 VP05 parasiteon -- ; on Umal
-  //    98 VP10 innerfireon -- Hound Companion; on n0DO
-  //    99 WMTP curseon -- Warped Malediction; on ls06
-  //   100 WOTW innerfireon -- Whim of the Winds; on u02P
-  //   101 Xehc parasiteon -- ; on ncfs
-  //   102 ZBRD raisedeadon -- Incubate; on h01N
+  //    69 AZb6 frostarmoron -- Frost Shell; on nZbh
+  //    70 AZb7 parasiteon -- ; on nZbh
+  //    71 AZb8 healon -- Shadow Mend; on nZbi
+  //    72 AZba bloodluston -- ; on nZbi
+  //    73 AZf6 blackarrowon -- ; on nZf1
+  //    74 AZfd carrionscarabson -- Raise Plaguelings; on uZf9
+  //    75 AZfk spellstealon -- ; on nZf3
+  //    76 AZg1 blackarrowon -- ; on UZa2 UZa3
+  //    77 AZk2 replenishmanaon -- Fuel Refill; on hZk1 uZk0
+  //    78 AZk7 innerfireon -- Mage Armor; on oZkf
+  //    79 AZq0 faeriefireon -- Detonate; on uZk0
+  //    80 AZq1 faeriefireon -- Refine Oil; on hZq0
+  //    81 AZt0 faeriefireon -- Purify; on HZy4 HZya
+  //    82 AZw8 healon -- Shadow Infusion; on uZw1
+  //    83 AZwk bloodluston -- ; on nZw1
+  //    84 AZz8 healon -- Shadow Mend; on hZz4
+  //    85 Ablo bloodluston -- ; on oshm
+  //    86 Acrs curseon -- ; on nmsc oZkg uban uswb
+  //    87 Ahea healon -- ; on h00J h08K hmpr o04F ...
+  //    88 Ainf innerfireon -- ; on hmpr
+  //    89 Anh1 healon -- ; on n08E ndrm ndtp nitp ...
+  //    90 Anh2 healon -- ; on ndth nfsh nith
+  //    91 Apsh phaseshifton -- ; on efdr nvdw
+  //    92 Arai raisedeadon -- ; on nnwl uktn unec
+  //    93 Aren renewon -- ; on ewsp
+  //    94 Arpl replenishlifeon -- ; on uobs
+  //    95 Arpm replenishmanaon -- ; on uobs
+  //    96 Arst restorationon -- ; on u00D u019 uZf1 uaco
+  //    97 Aslo slowon -- ; on hsor n087 nZw4 nbzw ...
+  //    98 Asps spellstealon -- ; on hspt ndqp
+  //    99 Aweb webon -- ; on nspb nspd nspg ucrm
+  //   100 MD10 innerfireon -- ; on o04Y
+  //   101 MD12 replenishmanaon -- ; on u00J
+  //   102 VP05 parasiteon -- ; on Umal
+  //   103 VP10 innerfireon -- Hound Companion; on n0DO
+  //   104 WMTP curseon -- Warped Malediction; on ls06
+  //   105 WOTW innerfireon -- Whim of the Winds; on u02P
+  //   106 Xehc parasiteon -- ; on ncfs
+  //   107 ZBRD raisedeadon -- Incubate; on h01N
   internal static class AiAutocastData
   {
     // ability id
@@ -120,11 +125,11 @@ namespace WarcraftLegacies.Source.Ai
       1093685844, 1093686081, 1093687344, 1093687346, 1093687626, 1093743170, 1093743178, 1093743184, 1093743193, 1093743194,
       1093743413, 1093743416, 1093743417, 1093743429, 1093743944, 1094935138, 1094935148, 1094935411, 1094935415, 1094935602,
       1094935661, 1094936114, 1094936166, 1094936934, 1094938721, 1094939236, 1094939489, 1094939511, 1094940514, 1095060567,
-      1095069793, 1095263073, 1095263841, 1095656033, 1095657057, 1095659617, 1096115042, 1096115829, 1096430401, 1096443446,
-      1096443492, 1096443499, 1096443697, 1096444722, 1096444727, 1096446256, 1096446257, 1096447024, 1096447800, 1096447851,
-      1096969327, 1097036403, 1097360737, 1097428582, 1097754673, 1097754674, 1097888616, 1098015081, 1098016110, 1098018924,
-      1098018925, 1098019700, 1098083439, 1098084467, 1098343778, 1296314672, 1296314674, 1448095797, 1448096048, 1464685648,
-      1464816727, 1483040867, 1514295876,
+      1095069793, 1095263073, 1095263841, 1095656033, 1095657057, 1095659617, 1096115042, 1096115829, 1096430401, 1096442422,
+      1096442423, 1096442424, 1096442465, 1096443446, 1096443492, 1096443499, 1096443697, 1096444722, 1096444727, 1096446256,
+      1096446257, 1096447024, 1096447800, 1096447851, 1096448568, 1096969327, 1097036403, 1097360737, 1097428582, 1097754673,
+      1097754674, 1097888616, 1098015081, 1098016110, 1098018924, 1098018925, 1098019700, 1098083439, 1098084467, 1098343778,
+      1296314672, 1296314674, 1448095797, 1448096048, 1464685648, 1464816727, 1483040867, 1514295876,
     };
 
     // order string that turns autocast on
@@ -141,35 +146,37 @@ namespace WarcraftLegacies.Source.Ai
       "coldarrows", "autodispelon", "autodispelon", "frostarmoron", "faeriefireon", "innerfireon",
       "parasiteon", "raisedeadon", "flamingarrows", "slowon", "webon", "bloodluston",
       "poisonarrows", "coldarrows", "flamingarrows", "blackarrowon", "coldarrows", "parasiteon",
-      "carrionscarabson", "frostarmoron", "replenishmanaon", "blackarrowon", "carrionscarabson", "spellstealon",
-      "blackarrowon", "replenishmanaon", "innerfireon", "faeriefireon", "faeriefireon", "faeriefireon",
-      "healon", "bloodluston", "bloodluston", "curseon", "healon", "innerfireon",
-      "healon", "healon", "phaseshifton", "raisedeadon", "renewon", "replenishlifeon",
-      "replenishmanaon", "restorationon", "slowon", "spellstealon", "webon", "innerfireon",
-      "replenishmanaon", "parasiteon", "innerfireon", "curseon", "innerfireon", "parasiteon",
-      "raisedeadon",
+      "carrionscarabson", "frostarmoron", "replenishmanaon", "frostarmoron", "parasiteon", "healon",
+      "bloodluston", "blackarrowon", "carrionscarabson", "spellstealon", "blackarrowon", "replenishmanaon",
+      "innerfireon", "faeriefireon", "faeriefireon", "faeriefireon", "healon", "bloodluston",
+      "healon", "bloodluston", "curseon", "healon", "innerfireon", "healon",
+      "healon", "phaseshifton", "raisedeadon", "renewon", "replenishlifeon", "replenishmanaon",
+      "restorationon", "slowon", "spellstealon", "webon", "innerfireon", "replenishmanaon",
+      "parasiteon", "innerfireon", "curseon", "innerfireon", "parasiteon", "raisedeadon",
     };
 
     // who carries what: unit type -> row (one entry per pair)
     internal static int[] CarrierType = new int[]
     {
       1848651843, 1853319546, 1747988554, 1747989060, 1851418160, 1851421288, 1852335457, 1848653880, 1747989298, 1750757988,
-      1853252711, 1747989812, 1848653387, 1747988819, 1848653379, 1848652875, 1848653142, 1966092374, 1966092628, 1936091189,
-      1848653368, 1747993413, 1968858726, 1970171953, 1970171954, 1747988529, 1747988787, 1747988815, 1747989832, 1747990342,
-      1747990343, 1848656203, 1697656886, 1865430105, 1848653656, 1852008567, 1865430340, 1868200242, 1868200245, 1697656887,
-      1747988530, 1747990070, 1747990072, 1747990343, 1865430350, 1701080948, 1701082221, 1865430321, 1747989581, 1848654146,
-      1747988545, 1750757936, 1851945575, 1853058158, 1848653360, 1848654131, 1747993415, 1865429569, 1865430339, 1868200241,
-      1868200244, 1848652872, 1851421289, 1848653893, 1848657209, 1966092887, 1211119955, 1865430607, 1865430608, 1747988565,
-      1852340589, 1747988809, 1701080948, 1984967988, 1848653872, 1852076648, 1852796263, 1852009331, 1852272499, 1852272503,
-      1853058166, 1853059694, 1853317492, 1853323895, 1852206962, 1852270642, 1852335203, 1852338792, 1747992899, 1853057901,
+      1853252711, 1747989812, 1848653387, 1747988819, 1750755635, 1848653379, 1848652875, 1848653142, 1966092374, 1966092628,
+      1936091189, 1848653368, 1747993413, 1968858726, 1970171953, 1970171954, 1747988529, 1747988787, 1747988815, 1747989832,
+      1747990342, 1747990343, 1750755633, 1750755634, 1750755705, 1848656203, 1697656886, 1865430105, 1848653656, 1852008567,
+      1865430340, 1868200242, 1868200245, 1697656887, 1747988530, 1747990070, 1747990072, 1747990343, 1750755634, 1750755705,
+      1865430350, 1701080948, 1701082221, 1865430321, 1747989581, 1848654146, 1747988545, 1750757936, 1851420721, 1851945575,
+      1853058158, 1848653360, 1848654131, 1747993415, 1851423280, 1865429569, 1865430339, 1868200241, 1868200244, 1848652872,
+      1851421289, 1848653893, 1848657209, 1966092887, 1211119955, 1865430607, 1865430608, 1747988565, 1852340589, 1747988809,
+      1701080948, 1984967988, 1848653872, 1852076648, 1852796263, 1852009331, 1852272499, 1852272503, 1853058166, 1853059694,
+      1853317492, 1853323895, 1851419187, 1852206962, 1852270642, 1852335203, 1852338792, 1747992899, 1750753841, 1853057901,
       1852207976, 1852404840, 1852009331, 1852207219, 1852207984, 1852534631, 1852666734, 1853058675, 1853123432, 1852207219,
-      1852404840, 1852600950, 1852601443, 1852995177, 1852139641, 1852207714, 1852338807, 1852207976, 1853123443, 1852142180,
-      1852142195, 1852336242, 1852995172, 1852008813, 1853057894, 1869898601, 1852207220, 1852273259, 1852534631, 1852666734,
-      1853058150, 1853058157, 1853058158, 1853058675, 1848653898, 1852733292, 1848653914, 1747989838, 1747993414, 1750757940,
-      1214934628, 1164799855, 1315074670, 1433631084, 1315858291, 1316190068, 1852732279, 1160785973, 1432448610, 1432580716,
-      1432579171, 1433168227, 1865429041, 1851418161, 1968858681, 1851418163, 1431986482, 1431986483, 1750756145, 1968859952,
-      1868196710, 1968859952, 1750757680, 1213888820, 1213888865, 1968863025, 1851422513, 1869834349, 1852666723, 1868196711,
-      1969381742, 1970501474, 1747988554, 1747990603, 1752002674, 1865430086, 1752002674, 1848653893, 1852076653, 1852077168,
+      1852404840, 1852600950, 1852601443, 1852995177, 1851419186, 1852139641, 1852207714, 1852338807, 1852207976, 1853123443,
+      1852142180, 1852142195, 1852336242, 1852995172, 1852008813, 1853057894, 1869898601, 1852207220, 1852273259, 1852534631,
+      1852666734, 1853058150, 1853058157, 1853058158, 1853058675, 1848653898, 1852733292, 1848653914, 1747989838, 1747993414,
+      1750757940, 1214934628, 1164799855, 1315074670, 1331326001, 1433631084, 1315858291, 1316190068, 1852732279, 1160785973,
+      1431987506, 1432448610, 1432580716, 1431987505, 1432579171, 1433168227, 1865429041, 1851417192, 1851417192, 1851417193,
+      1851417193, 1851418161, 1968858681, 1851418163, 1431986482, 1431986483, 1750756145, 1968859952, 1868196710, 1968859952,
+      1750757680, 1213888820, 1213888865, 1968863025, 1851422513, 1750759988, 1869834349, 1852666723, 1868196711, 1969381742,
+      1970501474, 1747988554, 1747990603, 1752002674, 1865430086, 1868200038, 1752002674, 1848653893, 1852076653, 1852077168,
       1852404848, 1852601443, 1852662375, 1853123432, 1852077160, 1852207976, 1852404840, 1701209202, 1853252727, 1852733292,
       1969976430, 1970169187, 1702327152, 1970233971, 1970233971, 1966092356, 1966092601, 1968858673, 1969316719, 1752395634,
       1848653879, 1851422516, 1851947639, 1865430341, 1752395892, 1852076400, 1853059170, 1853059172, 1853059175, 1969451629,
@@ -179,26 +186,28 @@ namespace WarcraftLegacies.Source.Ai
     internal static int[] CarrierRow = new int[]
     {
       0, 0, 1, 2, 3, 3, 3, 4, 5, 5,
-      6, 7, 8, 9, 10, 11, 11, 11, 11, 12,
-      13, 14, 15, 15, 15, 16, 16, 16, 16, 16,
-      16, 17, 18, 18, 19, 20, 21, 21, 21, 22,
-      23, 23, 23, 23, 24, 25, 25, 26, 27, 28,
-      29, 29, 29, 29, 30, 31, 32, 33, 34, 34,
-      34, 35, 35, 36, 36, 37, 38, 39, 40, 41,
-      41, 42, 43, 44, 45, 45, 45, 46, 46, 46,
-      46, 46, 46, 46, 47, 47, 47, 47, 48, 48,
+      6, 7, 8, 9, 9, 10, 11, 11, 11, 11,
+      12, 13, 14, 15, 15, 15, 16, 16, 16, 16,
+      16, 16, 16, 16, 16, 17, 18, 18, 19, 20,
+      21, 21, 21, 22, 23, 23, 23, 23, 23, 23,
+      24, 25, 25, 26, 27, 28, 29, 29, 29, 29,
+      29, 30, 31, 32, 32, 33, 34, 34, 34, 35,
+      35, 36, 36, 37, 38, 39, 40, 41, 41, 42,
+      43, 44, 45, 45, 45, 46, 46, 46, 46, 46,
+      46, 46, 47, 47, 47, 47, 47, 48, 48, 48,
       49, 49, 50, 50, 50, 50, 50, 50, 50, 51,
-      51, 51, 51, 51, 52, 52, 52, 53, 53, 54,
-      54, 55, 55, 56, 56, 56, 57, 57, 57, 57,
-      57, 57, 57, 57, 58, 58, 59, 60, 60, 60,
-      61, 62, 63, 63, 64, 64, 65, 66, 66, 66,
-      67, 67, 68, 69, 70, 71, 72, 72, 73, 73,
-      74, 75, 76, 77, 77, 78, 79, 80, 81, 81,
-      81, 81, 82, 82, 82, 82, 83, 84, 84, 84,
-      84, 84, 84, 84, 85, 85, 85, 86, 86, 87,
-      87, 87, 88, 89, 90, 91, 91, 91, 91, 92,
-      92, 92, 92, 92, 93, 93, 94, 94, 94, 94,
-      95, 96, 97, 98, 99, 100, 101, 102,
+      51, 51, 51, 51, 52, 52, 52, 52, 53, 53,
+      54, 54, 55, 55, 56, 56, 56, 57, 57, 57,
+      57, 57, 57, 57, 57, 58, 58, 59, 60, 60,
+      60, 61, 62, 63, 63, 63, 64, 64, 65, 66,
+      66, 66, 66, 67, 67, 67, 68, 69, 70, 71,
+      72, 73, 74, 75, 76, 76, 77, 77, 78, 79,
+      80, 81, 81, 82, 83, 84, 85, 86, 86, 86,
+      86, 87, 87, 87, 87, 87, 88, 89, 89, 89,
+      89, 89, 89, 89, 90, 90, 90, 91, 91, 92,
+      92, 92, 93, 94, 95, 96, 96, 96, 96, 97,
+      97, 97, 97, 97, 98, 98, 99, 99, 99, 99,
+      100, 101, 102, 103, 104, 105, 106, 107,
     };
   }
 }

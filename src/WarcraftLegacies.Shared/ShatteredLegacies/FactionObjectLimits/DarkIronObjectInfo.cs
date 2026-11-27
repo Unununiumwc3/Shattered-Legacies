@@ -30,13 +30,8 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
       yield return new(1750755688, 200, Marksman); // hZih (hrif)
       yield return new(1750755689, 9, Siege); // hZii (hmtm)
       yield return new(1851418929, 4, Tank); // nZi1 (n0CZ)
-      yield return new(1750755690, 200, Tank); // hZij (h018)
-      yield return new(1750755691, 12, new List<UnitCategory> { Tank, Fighter }); // hZik (h01L)
       yield return new(1750755692, 6, new List<UnitCategory> { Elite, Support, Summoner }); // hZil (h037)
       yield return new(1851418930, 200, new List<UnitCategory> { Tank, AntiMage }); // nZi2 (n02D)
-      yield return new(1750755693, 3, new List<UnitCategory> { Siege, Destroyer, Support }); // hZim (h01P)
-      yield return new(1952082224, 200, Support); // tZi0 (tp05)
-      yield return new(1851418931, 200, Support); // nZi3 (n00C)
       yield return new(1211118407, 1, new List<UnitCategory> { Destroyer, Support }); // H03G
       yield return new(1751281524, 200); // hbot
       yield return new(1747992914, 200); // h0AR

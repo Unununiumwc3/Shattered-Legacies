@@ -10,7 +10,8 @@ namespace WarcraftLegacies.Shared.ShatteredLegacies.FactionObjectLimits
     public static IEnumerable<ObjectInfo> GetAllObjectLimits()
     {
       yield return new(1331328304, 1, Support); // OZu0 Nafien
-      yield return new(1868199217, 1, Altar); // oZu1 Totem Lodge of Ursoc
+      yield return new(1868199217, 1, Specialist); // oZu1 Totem Lodge of Ursoc
+      yield return new(1868199218, 1, Altar); // oZu2 Shrine of Ursoc
       yield return new(1852207724, 200, Fighter); // nfrl nfrl
       yield return new(1852207731, 200, Support); // nfrs nfrs
       yield return new(1852207714, 200, Marksman); // nfrb nfrb

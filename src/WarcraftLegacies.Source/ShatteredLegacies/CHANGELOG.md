@@ -4,6 +4,114 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.88.0 — Theramore and Jaina, Kalecgos, the Claw of Ursoc, Acherus flies, the plague goes south
+
+Bot changes: `../Ai/CHANGELOG.md` 0.88.0 (`AiApi.Landmass`). Agreed 2026-11-27; the objects come from
+`tools/shattered-legacies/content/content_088.py` (after `import_24p.py`, set `HEROES_088`). No playtest yet.
+- **Theramore is conquerable** (`Events/TheramoreJaina`): once Dalaran holds Theramore, Jaina's Sanctum is its seat --
+  brought to 0 life it is TAKEN (it never dies; `Core/Effects/CaptureSeat`), and Theramore serves the taker's team.
+  Held by an evil faction (the Legion's and the Old Gods' teams, the Fel Horde, the Dragonmaw) Jaina becomes a
+  **dreadlord** (Mal'Ganis' kit, the dreadlord model); held by anyone else she is Jaina again -- as often as it changes.
+- **Kalecgos** (`Events/QuestTheNexus`): Dalaran's quest "The Nexus" -- Jaina channels at the Nexus for a minute (a
+  little hanky-panky) -> Kalecgos (the 24p's, human form a caster) and 5 blue dragonspawn. "Dragon Form" (30 s) turns
+  him into a great azure dragon: more attack damage, melee, Frost Breath and Devour Magic; the same hero skills and
+  primary attribute (the 24p's timed Metamorphosis replaced by Blizzard).
+- **Defias**: "The Stonemasons' Due" -- 1,500 gold pillaged -> Edwin VanCleef (the 24p's Kingpin, without the 24p's
+  guild building and permanent invisibility).
+- **Majordomo** drops **Benediction** (the Eye of Divinity, holy form only). **Mini-bosses** with an artifact
+  (`Events/BossDrops`): Mmmrrrggglll (the Pearl of the Grimscale, the murloc camp at 11164, 2104) and Snarlmane of the
+  Blackmane gnolls (the Blackmane Warbanner, the gnoll camp at 16744, -9216).
+- **Furbolgs** (`Factions/Furbolg/FurbolgClaw`): Xavius (demi-hero, holds the **Claw of Ursoc**) and Peroth'arn
+  (demi-hero) come with them in Timbermaw Hold. Their own faction while Xavius lives or the Claw is theirs; the first
+  time the Claw leaves them they serve the Claw holder's team, and Xavius and Peroth'arn turn Neutral Hostile. No
+  Nordrassil seat any more; the arrival text announces the Claw. No bot hook.
+- **Harpies**: the seat is **the Broodmother** -- a caged hostage (the Meat Wagon model) by the nests that cannot move;
+  taken at 0 life (CaptureSeat). No eggs yet.
+- **Ebon Blade** (`Factions/EbonBlade/AcherusFlight`): all four death knights at level 10 -> Acherus researches "The Ebon
+  Hold Rises" (60 s) and flies: a transport with Remorseless Winter, Army of the Dead and Death's Advance; its death
+  knights are revived at it. At 0 life it burns, hangs still and invulnerable for 60 s and mends (its life is the
+  timer); attacks never change its owner. Movement: the bots' own (playtest).
+- **Kalimdor <-> Northrend** (`Events/KalimdorCrossing`): two harbours (a waygate pair, for everyone) open when one team
+  holds 70 % of Kalimdor's CPs (from turn 30) or Lordaeron, Dalaran and Quel'thalas have all lost their capitals.
+- **The plague goes south** (`Events/QuilboarPlague`): a Scourge research at the Hourglass and the Frozen Throne, open
+  after the Plague of Undeath (bots at once) -> Amnennar the Coldbringer at Razorfen Downs and 30 plague boars marching
+  on six Kalimdor strongholds; the zombie plague (only dispel / purge cures it) eats 2 life a second, an infected unit
+  that dies rises as a Scourge zombie.
+- **Draenei**: "The Survivors of Shattrath" -- hold the Exodar's bridge six turns -> Maraad trainable. **Dragonmaw**:
+  "Alexstrasza's Chains" -- hold Grim Batol -> a Red Drake every turn, until Nek'rosh is slain: then the red dragons
+  turn Neutral Hostile.
+- **Elite choices** (`Events/EliteChoices`, `gen_hourglass.py`): WL's seven choices are also on the Hourglass; every
+  faction with two elite-tier units gets a lock (one of the two, from turn 10; bots pick at random): Stormwind,
+  Lordaeron, Dalaran, Quel'thalas, Kul Tiras, Gilneas, Scarlet Crusade, Sunfury, Draenei, Legion, Fel Horde, Illidari,
+  Black Empire, Skywall, Nazjatar, Ashtongue, Zandalari, Forsaken, Kezan. Ironforge's and Ahn'qiraj's decision buttons
+  moved to (2, 0).
+- `Core/Conquest`: seats that are not CPs (`Register(vassal, () => holder, ...)`), `Release`, `Join` public.
+- Not in 0.88 (TODO): Twilight (its own patch, its own slot), Garithos, the broodmother's eggs, Anathema, ability
+  choices.
+
+## 0.87.1 — no second fallbacks; the docs brought up to date
+
+Bot changes: `../Ai/CHANGELOG.md` 0.87.1 (version only).
+- **No second fallback for Gilneas or the Draenei** (maintainer): both are themselves fallbacks and are conquered.
+  The placeholder rows "Gilneans on Darkshore" and "Draenei of Shattrath" are gone from `TimelineCatalog` and the
+  Hourglass (`RZd2` / `RZc2`, `RZd8` / `RZc8` deleted, `gen_hourglass.py` rerun). Skywall's info row "Conquered, not
+  defeated" stays.
+- **The Exodar has no preplaced shipyards** (maintainer): the two `o059` in `Units/Exodar_Interior.json` are removed;
+  the Draenei can still build shipyards within their limits.
+- **Docs**: `Timelines/TIMELINES.md` gets "0. The fallback map today" (slot, base, seat, team, code), the engine and
+  HQ tables of 0.87; `SCENARIO_CONCEPTS.md` follows it -- the replaced concepts are listed in its new section 14
+  (Garithos path and Great Alliance stay open); `TODO.md` drops the stale order of the work and the 0.68 / 0.69
+  handoffs and holds the plan discussed for 0.87.1 ("6. Faction by faction"); `UPSTREAM.md` (the Draenei: done),
+  `AI_AGENTS_CONTEXT.md` (state, checks, generators, void dungeons), `README.md`, `VOID_DUNGEONS.md`, the content
+  tools' README, `../Ai/AI_AGENTS_CONTEXT.md` (current build); `PLAYTEST-0.69.md` marked historical. Comments in
+  `TimelineCatalog` and `Setup/FactionChoiceDialogSetup.cs` (Gilneas is Lordaeron's fallback) corrected.
+
+## 0.87.0 — the Exodar flies, Timbermaw Hold, the 24p's Dark Iron, dungeon creeps
+
+Bot changes: `../Ai/CHANGELOG.md` 0.87.0. Map moves: `Timelines/VOID_DUNGEONS.md`.
+- **Orcish Horde -> trolls only** (maintainer): whoever beats the Horde, an Old God too, gets the Zandalari. No Twilight
+  route for the Horde any more.
+- **Fel Horde -> the Dragonmaw** (maintainer): whoever beats it. Twilight's Hammer is on hold (its code stays).
+- **Conquerable** (maintainer) -- each stays in its team until someone takes its seat; it can still be defeated:
+  - **Quel'thalas' Sunfury**: the Netherstorm CP (Tempest Keep's ground).
+  - **Gilneas** (Lordaeron's): Gilneas City. The mercy text when it is taken: "Greymane's walls have fallen. Gilneas begs
+    for mercy and bends the knee to its conqueror."
+  - **The Draenei** (the Legion's): the Exodar's bridge (its CP).
+- **Stromgarde** (agreed 0.81): Stormwind falls back to the Defias before it won Stromgarde -> the quest passes to
+  Lordaeron as "Stromgarde's Oath" (a Lordaeron hero at Stromgarde: its units and Galen Trollbane). Lordaeron gone
+  too -> Stromgarde stands alone, a capturable neutral. Both with an announcement.
+- **The Exodar flies** (maintainer):
+  - Its base is the inside of the ship now: moved into the western void (`tools/shattered-legacies/terrain/
+    exodar_move.py`); Azuremyst's old spot is void -- carved out of Kalimdor.
+  - The only way in is the ship (a waygate with the Exodar model). It lands at the spot nearest the home of whoever beat
+    the Legion. 16 landing spots on all continents and in Outland.
+  - "The Dimensional Ship" (WL's quest, rewritten) unlocks **Set Course** on the Dimensional Generator: aim it anywhere,
+    the ship flies to the nearest landing spot -- 90 s in flight, both gates shut, nobody gets in or out. Only while
+    the bridge is held by the draenei or one of their allies; 5 minutes cooldown. Bots never fly it.
+- **Furbolgs: Timbermaw Hold** (maintainer): their den, a Felwood glade copied into the void. The Totem Lodge (moved to
+  -11154,10970 -- the maintainer's -11138,11210 is a cliff edge, this is the nearest open ground) is its entrance; the
+  **Shrine of Ursoc** inside is their HQ and altar; the Timbermaw Hold CP (10 gold) is theirs on arrival.
+- **The Dark Iron are the 24p's** (maintainer):
+  - Troops: Anvilrage Guardsman, Bear Rider, Chieftain (elite), Magma Tank, Shadowcaster, Flame Keeper, Gyrocopter --
+    with their Dark Iron models. Kept from 0.86: the tinted buildings, Mason, Rifleman, Mortar Team, War Golem,
+    Dreadnaught.
+  - Heroes: Dagran Thaurissan; Golem Lord Argelmach now has the Dark Iron caster model and **Forge Golem** (summons War
+    Golems) instead of Storm Bolt; Fineous Darkvire the Chieftain-king model.
+  - **Seat: the Throne Room** (was Tavern District). Its throne is their HQ, the Throne of Thaurissan.
+  - **Gatebreaker**: every 5 turns their controller (the Throne Room's holder, at first their conqueror) gets a Dark Iron
+    Gatebreaker at Shadowforge City -- about 200 chaos damage, a 4.5 s swing.
+  - **Mercenary Charter** (the Siege Foundry's holder, allied): 50 gold tribute -> a Mortar Team each turn (no golem
+    any more); the first tribute a weapons level. The **Statue of Thaurissan** by the Foundry stands with its holder:
+    +4 armour around it.
+  - **Shadowforge Black Market**: neutral, by the Treasury, anyone may shop -- expensive: Titanforged Signet (+3 all,
+    1000), Titanforged Gauntlets (+9 Strength, 1200), Titanforged Core (immolation, 1800), Book of Experience (600),
+    Mercenary Staff of Town Portal (800), Staff of Teleportation (1500), Granite Token (400).
+  - The faction's own shop is the Dark Iron Arms Vault now (it was "Dark Iron Black Market").
+- **Dungeon creeps** (maintainer): a fallback starts with its dungeon's seat only. Nazjatar's three other CPs, the
+  Treasury and the Siege Foundry, the Goblin Foundry and Ironclad Cove are guarded by creep camps; Majordomo Executus
+  holds Shadowforge's west throne.
+- Models of the 24p Dark Iron (Git LFS): `git lfs pull` after committing.
+
 ## 0.86.1 — build fix: Azshara's skills
 
 - **The map build stopped** in the CLI's object migrations: "Could not find object with key 'A0PD'" (Empress of

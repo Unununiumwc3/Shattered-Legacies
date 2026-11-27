@@ -10,8 +10,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Defias
 {
   // 0.85.0 (maintainer): Stormwind -> the DEFIAS BROTHERHOOD in the Deadmines (Dungeons/VoidDungeons). Trigger: Stormwind
   // Keep lost (the catalog's Hq; replaces the Gilneas fallback -- Gilneas is Lordaeron's now).
-  // - run: Stormwind's units are left behind; the Deadmines' gates open and its three CPs are theirs (the Deadmines
-  //   whoever holds it); Dunco Ratsbon, Count Clessington and a band arrive; Westfall's bandit camp joins; recruits
+  // - run: Stormwind's units are left behind; the Deadmines' gates open and its seat is theirs (0.87.0: the others are
+  //   guarded by creeps); Dunco Ratsbon, Count Clessington and a band arrive; Westfall's bandit camp joins; recruits
   //   every turn (TurnLevy: 3 Bandits and a Brigand, more with the quests); the heroes return by themselves in the
   //   Deadmines (HeroRevival). A VASSAL of whoever holds the Deadmines (at the start: whoever took or razed Stormwind
   //   Keep), never defeated.
@@ -49,13 +49,13 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Defias
         keep.Add(glass);
       }
 
+      StromgardeHandover.Run(p.GetPlayerData().Faction); // 0.87.0: before the swap (Stormwind's quests)
       var defias = new DefiasFaction();
       SwapFaction.Run(p, defias);
       LeaveBehind.RemoveHeroes(p, keep);
       LeaveBehind.ToNeutralHostile(p, keep);
       VoidDungeons.Open(VoidDungeons.Deadmines);
-      StartCps.Force(p, DungeonObjects.Deadmines);
-      StartCps.Give(p, DungeonObjects.GoblinFoundry, DungeonObjects.IroncladCove);
+      StartCps.Force(p, DungeonObjects.Deadmines); // 0.87.0: the seat only -- the other two are guarded by creeps
       Spawn.Units(p, StartX, StartY, new[] { DefiasObjects.Ratsbon, DefiasObjects.Clessington });
       Spawn.Units(p, StartX + 256f, StartY - 256f, Band);
       JoinCamp(p);

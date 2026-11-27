@@ -10,10 +10,10 @@ Full data and every other object (abilities, upgrades, items, used objects, stoc
 
 | Kind | main used | main unused | 24p only | 24p changed | 24p different | stock used | stock unused |
 |---|---|---|---|---|---|---|---|
-| units | 1998 | 25 | 491 | 1045 | 391 | 60 | 283 |
-| abilities | 1763 | 44 | 709 | 490 | 243 | 238 | 273 |
-| upgrades | 528 | 0 | 147 | 133 | 72 | 31 | 15 |
-| items | 107 | 13 | 80 | 29 | 3 | 5 | 222 |
+| units | 2024 | 25 | 491 | 1045 | 391 | 61 | 282 |
+| abilities | 1790 | 45 | 709 | 490 | 243 | 240 | 271 |
+| upgrades | 567 | 0 | 147 | 133 | 72 | 31 | 15 |
+| items | 118 | 13 | 80 | 29 | 3 | 5 | 222 |
 
 ## Unused in the main map
 
@@ -198,12 +198,12 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 |---|---|---|---|---|---|---|
 | `Hamg` | Archmage | hero | stock |  |  | 24p only |
 | `H00Y` | Commander of the Scarlet Crusade (Rise from the ashes) | hero | main | h080 |  | different |
-| `E01H` | Defias Kingpin (Mercenary) | hero | 24p | n0D8 |  | 24p only |
+| `E01H` | Defias Kingpin (Mercenary) | hero | main | n0D8 |  | 24p only |
 | `E004` | Dragon form (Dragon Form) | hero | stock |  |  | 24p only |
 | `E00O` | High Commander (garithos) | hero | 24p |  |  | 24p only |
 | `H04Q` | Leader of the Explorers' League (Ironforge Vassal) | hero | stock |  |  | 24p only |
 | `H04A` | Lord of the Nexus (Nexus) | hero | 24p |  |  | 24p only |
-| `U00W` | Majordomo of Ragnaros (Ironforge) | hero | 24p | h07B |  | 24p only |
+| `U00W` | Majordomo of Ragnaros (Ironforge) | hero | main | h07B |  | 24p only |
 | `H0A2` | Monastery Commander (Scarlet) | hero | main | h080 |  | different |
 | `Ewar` | Princess of Gilneas (gilneas) | hero | main | h02X |  | 24p only |
 | `H08G` | Scarlet Crusader Lord (Scarlet) | hero | main | h080 |  | different |
@@ -278,16 +278,16 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h082` | Workshop (Scarlet) | building | 24p | hpea | h09X,n07N,o04C | 24p only |
 | `n07N` | Airship (scarlet) | unit | 24p | h082 |  | different |
 | `hbot` | Alliance Transport Ship (Alliance) | unit | stock | h03H,h06D,h076,h077,h07D,h07W,hshy |  | different |
-| `h0A6` | Anvilrage Guardsman (Ironforge) | unit | 24p | h07C |  | 24p only |
+| `h0A6` | Anvilrage Guardsman (Ironforge) | unit | main | h07C |  | 24p only |
 | `h08J` | Arbalest (scarlet) | unit | 24p | h081 |  | 24p only |
 | `h01M` | Baelgun Flamebeard (Khaz Modan-Demi) | unit | 24p | h07B |  | 24p only |
 | `hbsh` | Battleship (Alliance) | unit | stock | h03H,h06D,h076,h077,h07D,hshy |  | 24p only |
-| `h0A7` | Bear Rider (Ironforge) | unit | 24p | h07C |  | 24p only |
+| `h0A7` | Bear Rider (Ironforge) | unit | main | h07C |  | 24p only |
 | `n09S` | Blood Elven Ranger (Quel'Thalas) | unit | 24p | h033,h03S,h03T,n05X |  | different |
 | `o04C` | Bombard (scarlet) | unit | 24p | h082 |  | different |
 | `h095` | Bowman (scarlet) | unit | 24p | h09M,h09N,h09O,h09P,h09Q |  | 24p only |
 | `h012` | Captain Falric (Lordaeron-Demi) | unit | stock | halt |  | 24p only |
-| `h0A8` | Chieftain (Ironforge-Elite) | unit | 24p | h01O,h07E,h07F,h07G |  | 24p only |
+| `h0A8` | Chieftain (Ironforge-Elite) | unit | main | h01O,h07E,h07F,h07G |  | 24p only |
 | `h09J` | Crossbowman (scarlet) | unit | 24p | h081 |  | different |
 | `h03W` | Danath Trollbane (Arathor-Demi) | unit | stock | h06T |  | different |
 | `h009` | Dark Knight (Garithos) | unit | 24p | hcas,hkee,htow |  | 24p only |
@@ -301,7 +301,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h06O` | Effect (Consecration) | unit | missing |  |  | 24p only |
 | `h06P` | Effect (Unholy Defense) | unit | stock |  |  | 24p only |
 | `n02F` | Felblood Warlock (Quel'thalas) | unit | main | n0A2 |  | different |
-| `n0CH` | Flame Keeper (Ironforge) | unit | 24p | h042 |  | 24p only |
+| `n0CH` | Flame Keeper (Ironforge) | unit | main | h042 |  | 24p only |
 | `h014` | Forward-Marshal (Stormwind-Offensive) | unit | stock | h06A,h07C |  | different |
 | `h05W` | Grand Inquisitor Isilien (scarlet) | unit | 24p | h080 |  | 24p only |
 | `n06Z` | Gunship (Gilneas) | unit | main | h03E |  | different |
@@ -337,8 +337,8 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `h03Z` | Saboteur (Arathor) | unit | stock | h06A |  | 24p only |
 | `h09H` | Scarlet Champion Herod (Scarlet) | unit | 24p | h080 |  | different |
 | `nser` | Searinox | unit | stock |  |  | 24p only |
-| `h0AB` | Shadowcaster (Ironforge) | unit | 24p | h042 |  | 24p only |
-| `n0CC` | Shadowforge Gatebreaker (Ironforge) | unit | 24p | harm |  | different |
+| `h0AB` | Shadowcaster (Ironforge) | unit | main | h042 |  | 24p only |
+| `n0CC` | Shadowforge Gatebreaker (Ironforge) | unit | main | harm |  | different |
 | `n0CM` | Shadowspawn | unit | stock |  |  | 24p only |
 | `hmtt` | Siege Engine | unit | stock |  |  | 24p only |
 | `hrtt` | Siege Engine (Barrage) | unit | stock |  |  | 24p only |
@@ -365,7 +365,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `U00P` | C'thrax Aberration | hero | main | n0AV |  | different |
 | `E015` | Champion of the Illidari (Naga) | hero | 24p | nnad |  | 24p only |
 | `H08U` | Empress of Nazjatar (Nzoth) | hero | main | n0C0 |  | 24p only |
-| `U02M` | Grimscale Chieftain (Naga) | hero | 24p | n0D8 |  | 24p only |
+| `U02M` | Grimscale Chieftain (Naga) | hero | main | n0D8 |  | 24p only |
 | `U02A` | N'raqi Aberration (yogg) | hero | main | u01F |  | 24p only |
 | `E01D` | N'raqi Arcanist (yogg) | hero | main | n0AV |  | different |
 | `H0A5` | Sea Witch (Nzoth) | hero | main | n0C0 |  | 24p only |
@@ -549,7 +549,7 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `Otcc` | Tauren Chieftain (Cinematic Unused) | hero | stock |  |  | 24p only |
 | `O01J` | The Dark Prophet (Troll) | hero | main | o040 |  | 24p only |
 | `Nman` | The Destroyer (Warsong-Bloodpact) | hero | stock |  |  | different |
-| `U023` | The Soulflayer (Legion) | hero | 24p |  |  | 24p only |
+| `U023` | The Soulflayer (Legion) | hero | main |  |  | 24p only |
 | `Osam` | Veteran of the Horde (Frostwolf-True Horde) | hero | stock |  |  | 24p only |
 | `Ogld` | Warlock | hero | stock |  |  | 24p only |
 | `o02A` | Alterac Watch Tower (real tower) | building | stock |  |  | different |
@@ -925,10 +925,10 @@ Status `24p only` = the id is free in the main map; `different` = the id is take
 | `Ubal` | Envoy of Archimonde (Legion) | hero | stock |  |  | 24p only |
 | `U01O` | Grand Apothecary (Forsaken) | hero | main | u010 |  | 24p only |
 | `Ulic` | Lich | hero | stock |  |  | 24p only |
-| `H047` | Lord of the Satyrs (Legion Vassal) | hero | 24p |  |  | 24p only |
+| `H047` | Lord of the Satyrs (Legion Vassal) | hero | main |  |  | 24p only |
 | `U02I` | Master of the Royal Apothecary Society (Forsaken) | hero | main | u010 |  | 24p only |
 | `H049` | Ranger-Lord (Forsaken) | hero | 24p |  |  | 24p only |
-| `U027` | Steward of Magic (nexus) | hero | 24p | h044 |  | 24p only |
+| `U027` | Steward of Magic (nexus) | hero | main | h044 |  | 24p only |
 | `u010` | Altar of the Queen (Forsaken) | building | 24p | u01K | U01O,U02I,Usyl | 24p only |
 | `h089` | Dark Mansion (Forsaken) | building | 24p | u01K | n0BY,u01K | 24p only |
 | `n043` | Deactivated Demon Gate (Fel Horde) | building | stock |  |  | 24p only |

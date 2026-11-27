@@ -1,0 +1,61 @@
+{
+  "OldId": "oalt",
+  "NewId": "oZu2",
+  "Unk": [
+    0
+  ],
+  "Modifications": [
+    {
+      "Id": "unam",
+      "Type": 3,
+      "Value": "Shrine of Ursoc"
+    },
+    {
+      "Id": "unsf",
+      "Type": 3,
+      "Value": "(Furbolg)"
+    },
+    {
+      "Id": "utra",
+      "Type": 3,
+      "Value": "OZu0"
+    },
+    {
+      "Id": "ufma",
+      "Value": 30
+    },
+    {
+      "Id": "ugol",
+      "Value": 0
+    },
+    {
+      "Id": "ulum",
+      "Value": 0
+    },
+    {
+      "Id": "usca",
+      "Type": 1,
+      "Value": 2.2
+    },
+    {
+      "Id": "umdl",
+      "Type": 3,
+      "Value": "Doodads\\Ashenvale\\Props\\Totem\\Totem"
+    },
+    {
+      "Id": "upat",
+      "Type": 3,
+      "Value": "PathTextures\\4x4SimpleSolid.tga"
+    },
+    {
+      "Id": "uico",
+      "Type": 3,
+      "Value": "ReplaceableTextures\\CommandButtons\\BTNFurbolgElder.blp"
+    },
+    {
+      "Id": "utub",
+      "Type": 3,
+      "Value": "The Sacred Ancestral Totem and the Claw of Ursoc, deep in Timbermaw Hold. Revives the Totem-Keeper; it cannot be destroyed."
+    }
+  ]
+}

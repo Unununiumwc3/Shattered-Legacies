@@ -34,6 +34,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthala
       Regions.UpperNetherstorm.PrepareUnitsForRescue(RescuePreparationMode.Invulnerable);
     }
 
+    internal const string ConquestText =
+      "|cffffcc00Netherstorm has fallen.|r Kael'thas bows to the new masters of Tempest Keep -- the Sunfury fight "
+      + "for whoever holds it now.";
+
     internal static void Run(player p, TurningPointDef def)
     {
       var kael = AllLegends.Sunfury.Kael;
@@ -65,6 +69,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthala
       }
 
       ChangeTeam.JoinOrAlone(p, TeamSetup.Outland);
+      // 0.87.0 (maintainer): CONQUERABLE -- the Sunfury stay in their team until someone takes the Netherstorm CP
+      // (Tempest Keep's ground), then they serve that player's team. They can still be defeated.
+      Conquest.Register(p, UNIT_N02O_NETHERSTORM, null, false, true, ConquestText);
       p.RepositionCamera(area.Center);
       AiApi.LogPin("Quel'thalas fallback -> Sunfury: " + I2S(taken) + " start units, " + I2S(cps) + " CPs, team "
                    + (p.GetPlayerData().Team != null ? p.GetPlayerData().Team.Name : "-"));

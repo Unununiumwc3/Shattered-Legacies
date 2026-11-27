@@ -30,6 +30,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Dragonmaw
     public override void OnRegistered()
     {
       SharedFactionConfigSetup.AddSharedFactionConfig(this);
+      AddQuest(new QuestAlexstraszasChains()); // 0.88.0: hold Grim Batol -> a Red Drake every turn, until Nek'rosh falls
     }
   }
 }

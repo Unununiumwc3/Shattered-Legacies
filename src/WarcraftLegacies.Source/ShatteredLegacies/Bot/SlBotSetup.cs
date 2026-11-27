@@ -60,11 +60,12 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Bot
       AiApi.RegisterHeadquarters(HarpyFaction.FactionName, new[] { HarpyObjects.Roost });
       AiApi.RegisterHeroes(HarpyFaction.FactionName, new List<int> { HarpyObjects.Serena, HarpyObjects.Hatelash });
       // 0.86.0: the Dark Iron (Ironforge's tree as copies; Dagran is WL's legend) and the Furbolgs (lodge + Nafien)
-      AiApi.RegisterHeadquarters(DarkIronFaction.FactionName, new[] { DarkIronObjects.MiningColonyT1,
-        DarkIronObjects.DwarfHoldT2, DarkIronObjects.GreatHoldT3 });
+      // 0.87.0: the Throne of Thaurissan is their HQ, the Shrine of Ursoc the Furbolgs' (inside their dens)
+      AiApi.RegisterHeadquarters(DarkIronFaction.FactionName, new[] { DarkIronObjects.ThroneOfThaurissan,
+        DarkIronObjects.MiningColonyT1, DarkIronObjects.DwarfHoldT2, DarkIronObjects.GreatHoldT3 });
       AiApi.RegisterHeroes(DarkIronFaction.FactionName, new List<int> { UNIT_H03G_EMPEROR_OF_BLACKROCK_IRONFORGE,
         DarkIronObjects.Argelmach, DarkIronObjects.Darkvire });
-      AiApi.RegisterHeadquarters(FurbolgFaction.FactionName, new[] { FurbolgObjects.Lodge });
+      AiApi.RegisterHeadquarters(FurbolgFaction.FactionName, new[] { FurbolgObjects.Shrine });
       AiApi.RegisterHeroes(FurbolgFaction.FactionName, new List<int> { FurbolgObjects.Nafien });
       AiApi.RegisterHeadquarters(EbonBladeFaction.FactionName, new[] { EbonBladeFallback.Acherus });
       AiApi.RegisterHeroes(EbonBladeFaction.FactionName, new List<int>(EbonBladeFallback.Heroes));

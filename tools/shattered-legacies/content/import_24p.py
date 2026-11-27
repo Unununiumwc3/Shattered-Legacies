@@ -506,7 +506,86 @@ NAZJATAR = {
     },
 }
 
-SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT, DRAGONMAW, ZANDALAR, NAZJATAR]
+# 0.87.0 (maintainer): the Dark Iron's own troops from the 24p (its Ironforge "Dark Iron" units with their Dark Iron
+# models), replacing the tinted Ironforge copies of dark_iron.py (which keeps the buildings, the Mason, the Rifleman,
+# the Mortar Team and the War Golem). Plus Shadowforge's extras: the charter's Gatebreaker, Majordomo Executus (the
+# Ragnaros loyalists' boss creep), the Statue of Thaurissan's aura and the Shadowforge Black Market's goods.
+DARK_IRON = {
+    "name": "DarkIronForces",
+    "third": "z",
+    "objects": [
+        ("h0A6", "AnvilrageGuardsman", ["Fighter"], 200),
+        ("h0A7", "BearRider", ["Tank", "Fighter"], 12),
+        ("h0A8", "Chieftain", ["Elite"], 6),
+        ("h0AA", "MagmaTank", ["Siege", "Destroyer"], 3),
+        ("h0AB", "Shadowcaster", ["Support"], 200),
+        ("n0CH", "FlameKeeper", ["Support"], 200),
+        ("hgyr", "Gyrocopter", ["Flyer"], 12),
+        ("n0CC", "Gatebreaker", None, 0),          # every 5 turns to the Dark Iron's overlord (DarkIronFallback)
+        ("U00W", "Majordomo", None, 0),            # creep boss at Shadowforge's west throne
+        ("A0KE", "WillOfTheEmperor", None, 0),     # the Statue of Thaurissan's aura (level 4 in the code)
+        ("A0VN", "TitanforgedImmolation", None, 0),  # a black-market trinket's ability (dark_iron.py)
+        ("I00T", "BookOfExperience", None, 0),     # the Shadowforge Black Market's goods (expensive)
+        ("I00V", "MercenaryStaff", None, 0),
+        ("I01B", "StaffOfTeleportation", None, 0),
+        ("fgrg", "GraniteToken", None, 0),
+    ],
+    "zero_lumber": True,
+    # the 24p's Ironforge tech and castle (named by the originals' requirement / upgrade lists, replaced below)
+    "exclude": ["h07G", "Rguv", "R00J", "R033", "R04R", "R013", "R06Q", "R02H", "R03N", "Rhpm", "Rhfc", "Rhgb", "R00K"],
+    "drop": [],
+    "extra": [],
+    "set": {
+        "n0CM": {"upgr": ""},  # Shadowspawn (the Shadowcaster's summon)
+        # WL's own researches (Ironforge's forge, the Dark Iron copies research them); no 24p tech
+        "h0A6": {"unsf": "(Dark Iron)", "upgr": "Rhme,Rhar", "ureq": ""},
+        "h0A7": {"unsf": "(Dark Iron)", "upgr": "Rhme,Rhar", "ureq": "",
+                 "utub": "Dark Iron shock cavalry on war bears.|n|cfff5962dAbilities:|R Charge, War Plating|n|n"
+                         "|cffffcc00Attacks land units.|r"},
+        "h0A8": {"unsf": "(Dark Iron)", "upgr": "Rhme,Rhar", "ureq": "=hZi2",
+                 "utub": "Veteran commander of the Dark Iron legions.|n|cfff5962dAbilities:|R Taunt, Storming Brew, "
+                         "Bash, Avatar|n|n|cffffcc00Requires a Dark Iron Great Hold.|r"},
+        "h0AA": {"unsf": "(Dark Iron)", "upgr": "Rhme,Rhar", "ureq": ""},
+        "h0AB": {"unsf": "(Dark Iron)", "upgr": "Rhar", "ureq": ""},
+        "n0CH": {"unsf": "(Dark Iron)", "upgr": "Rhar", "ureq": ""},
+        "hgyr": {"unsf": "(Dark Iron)", "upgr": "Rhme,Rhar", "ureq": ""},
+        # the busted golem (maintainer): about 200 chaos damage, a very slow swing
+        "n0CC": {"unam": "Dark Iron Gatebreaker", "unsf": "(Dark Iron)", "ua1t": "chaos", "ua1b": 199, "ua1d": 1,
+                 "ua1s": 2, "ua1c": 4.5, "ugol": 0, "ureq": "", "upgr": ""},
+        "U00W": {"unam": "Majordomo Executus", "unsf": "(Ragnaros)", "upro": "Majordomo Executus"},
+        "A0KE": {"ansf": "(Statue of Thaurissan)"},
+        "I00T": {"igol": 600, "ureq": ""},
+        "I00V": {"igol": 800},
+        "I01B": {"igol": 1500},
+        "fgrg": {"igol": 400},
+    },
+}
+
+# 0.88.0: single heroes for existing factions (no faction of their own): Kalecgos (Dalaran, the Nexus), Edwin VanCleef
+# (Defias, pillage), Mmmrrrggglll (a creep boss with an artifact) and Xavius' model (content_088.py makes the
+# demi-hero units; the 24p hero itself stays unused)
+HEROES_088 = {
+    "name": "Heroes088",
+    "third": "n",
+    "objects": [
+        ("U027", "Kalecgos", None, 0),
+        ("E01H", "VanCleef", None, 0),
+        ("U02M", "Mmmrrrggglll", None, 0),
+        ("H047", "Xavius24p", None, 0),
+    ],
+    # the 24p mercenary system (guild buildings, their units and pick researches) and Xavius' abyssals stay out
+    "exclude": ["A0A9", "A0YM", "R02C", "R093", "R04H", "R04T", "R03S", "Rguv", "R00K", "R03N", "AUin"],
+    "drop": [],
+    "extra": [],
+    "set": {
+        "U027": {"unsf": "(Dalaran)", "ureq": ""},
+        "E01H": {"unsf": "(Defias)", "ureq": "", "uabi": "AInv"},
+        "U02M": {"unsf": "(Creep)", "ureq": "", "uabi": "AInv"},
+        "H047": {"unsf": "(unused)", "ureq": ""},
+    },
+}
+
+SETS = [FORSAKEN, KEZAN, ASHTONGUE, TWILIGHT, DRAGONMAW, ZANDALAR, NAZJATAR, DARK_IRON, HEROES_088]
 
 
 def load(map_dir):
@@ -887,6 +966,8 @@ def write_object_info(s, mapping):
         lines.append(f"      yield return new({fourcc(code)}, {limit}, {cat}); // {code} {name}")
     for code in s.get("researches", []):
         lines.append(f"      yield return new({fourcc(code)}, 200); // {code} research")
+    if not any("yield return" in line for line in lines):
+        lines.append("      yield break; // 0.88.0: a set of single heroes for other factions -- no limits of its own")
     lines += ["    }", "  }", "}", ""]
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(lines))

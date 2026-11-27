@@ -117,11 +117,6 @@
       "Value": ""
     },
     {
-      "Id": "ures",
-      "Type": 3,
-      "Value": "R00Q,ZB74,R06I,ZB24"
-    },
-    {
       "Id": "urev",
       "Value": 1
     },
@@ -219,7 +214,7 @@
     {
       "Id": "utub",
       "Type": 3,
-      "Value": "A fortress of ice and shadow, the Frozen Throne serves as the frigid prison of the Lich King, Ner\u0027zhul."
+      "Value": "A fortress of ice and shadow, the Frozen Throne serves as the frigid prison of the Lich King, Ner'zhul."
     },
     {
       "Id": "umdl",
@@ -230,6 +225,11 @@
       "Id": "utip",
       "Type": 3,
       "Value": "The Frozen Throne"
+    },
+    {
+      "Id": "ures",
+      "Type": 3,
+      "Value": "R00Q,ZB74,R06I,ZB24,RZq2"
     }
   ]
 }

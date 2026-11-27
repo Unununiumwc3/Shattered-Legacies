@@ -46,6 +46,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas
       return t == UNIT_H02K_GREYMANE_S_GATE_GATE_CLOSED || t == UNIT_H02M_GREYMANE_S_GATE_GATE_OPEN;
     }
 
+    internal const string MercyText =
+      "|cffffcc00Greymane's walls have fallen.|r Gilneas begs for mercy and bends the knee to its conqueror.";
+
     internal static void Run(player p, TurningPointDef def)
     {
       var keep = new List<unit>();
@@ -67,6 +70,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Gilneas
       var at = castle != null ? castle.GetPosition() : Regions.Gilneas.Center;
       AllLegends.Gilneas.Genn.ForceCreate(p, at, 270f);
       ChangeTeam.JoinOrAlone(p, TeamSetup.NorthAlliance);
+      // 0.87.0 (maintainer): CONQUERABLE -- in the North Alliance until someone takes Gilneas City; then Gilneas begs
+      // for mercy and serves that player's team (the mercy text, agreed 0.81). It can still be defeated.
+      Conquest.Register(p, UNIT_N046_GILNEAS_CITY, null, false, true, MercyText);
       p.RepositionCamera(at);
       AiApi.LogPin(def.Faction + " fallback -> Gilneas: " + I2S(taken) + " units, " + I2S(cps) + " more CPs, team "
                    + (p.GetPlayerData().Team != null ? p.GetPlayerData().Team.Name : "-"));

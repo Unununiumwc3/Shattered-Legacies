@@ -33,7 +33,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900346
+    "CreationNumber": 900405
   },
   {
     "TypeId": 829839982,
@@ -69,7 +69,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900347
+    "CreationNumber": 900406
   },
   {
     "TypeId": 846617198,
@@ -105,7 +105,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900348
+    "CreationNumber": 900407
   },
   {
     "TypeId": 863394414,
@@ -141,7 +141,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900349
+    "CreationNumber": 900408
   },
   {
     "TypeId": 880171630,
@@ -177,7 +177,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900350
+    "CreationNumber": 900409
   },
   {
     "TypeId": 896948846,
@@ -213,7 +213,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900351
+    "CreationNumber": 900410
   },
   {
     "TypeId": 913726062,
@@ -249,7 +249,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900352
+    "CreationNumber": 900411
   },
   {
     "TypeId": 930503278,
@@ -285,7 +285,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900353
+    "CreationNumber": 900412
   },
   {
     "TypeId": 947280494,
@@ -321,7 +321,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900354
+    "CreationNumber": 900413
   },
   {
     "TypeId": 964057710,
@@ -357,7 +357,7 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900355
+    "CreationNumber": 900414
   },
   {
     "TypeId": 1635146350,
@@ -393,6 +393,42 @@
     "RandomDataMode": -1,
     "CustomPlayerColorId": -1,
     "WaygateDestinationRegionId": -1,
-    "CreationNumber": 900356
+    "CreationNumber": 900415
+  },
+  {
+    "TypeId": 1702255214,
+    "Variation": 0,
+    "Position": {
+      "X": -14892,
+      "Y": 22008,
+      "Z": 0
+    },
+    "Rotation": 4.712389,
+    "Scale": {
+      "X": 1,
+      "Y": 1,
+      "Z": 1
+    },
+    "SkinId": 1702255214,
+    "Flags": 2,
+    "OwnerId": 24,
+    "Unk1": 0,
+    "Unk2": 0,
+    "HP": -1,
+    "MP": -1,
+    "MapItemTableId": -1,
+    "ItemTableSets": [],
+    "GoldAmount": 0,
+    "TargetAcquisition": -1,
+    "HeroLevel": 1,
+    "HeroStrength": 0,
+    "HeroAgility": 0,
+    "HeroIntelligence": 0,
+    "InventoryData": [],
+    "AbilityData": [],
+    "RandomDataMode": -1,
+    "CustomPlayerColorId": -1,
+    "WaygateDestinationRegionId": -1,
+    "CreationNumber": 900416
   }
 ]

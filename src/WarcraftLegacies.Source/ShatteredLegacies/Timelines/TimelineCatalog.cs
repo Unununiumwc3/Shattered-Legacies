@@ -24,12 +24,12 @@ using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Quelthalas;
 
 namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
 {
-  // One turning point per WL faction (was FallbackConfig.All, 0.39.1-0.39.7). Real content: Quel'thalas -> Sunfury
-  // (0.53), Quel'thalas -> Forsaken (0.54) and Kul Tiras -> Kezan Enterprise (0.39.5, rebuilt 0.58); the others are PLACEHOLDERS of the first slice, most of them
-  // superseded by Timelines/SCENARIO_CONCEPTS.md (noted per entry), replaced faction by faction (TODO.md). HQs: WL's
+  // One turning point per WL faction (was FallbackConfig.All, 0.39.1-0.39.7). Since 0.87.1 every row is real content or
+  // WL's own (Theramore, Scarlet Crusade); the placeholders of the first slice (Marin Noggenfogger at the planned place)
+  // are all gone, the last ones replaced or removed per entry. The overview is TIMELINES.md section 0. HQs: WL's
   // essential legends (0.39.4; ALL of them must be lost; a recaptured HQ makes the turning point unavailable again).
-  // Good factions: placeholder fallback (Marin Noggenfogger at the planned place); evil factions: shown on the
-  // Hourglass only (NotYet). 0.53: Decision / Condition = the Hourglass researches (Core/HourglassData.g.cs).
+  // Skywall is shown on the Hourglass only (NotYet: an info row -- it is itself a fallback and is conquered).
+  // 0.53: Decision / Condition = the Hourglass researches (Core/HourglassData.g.cs).
   internal static class TimelineCatalog
   {
     internal static List<TurningPointDef> All = new()
@@ -45,8 +45,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       {
         Trigger = "The Capital Palace is lost",
         Description = "If Lordaeron's capital falls, its survivors flee to Gilneas: you play the Kingdom of Gilneas "
-                      + "behind the Greymane Wall, led by Genn Greymane, in the North Alliance. Everything left in "
-                      + "Lordaeron is lost.",
+                      + "behind the Greymane Wall, led by Genn Greymane, in the North Alliance -- until someone takes "
+                      + "Gilneas City. Everything left in Lordaeron is lost.",
         Decision = HourglassData.DecisionLordaeronGilneas, Condition = HourglassData.ConditionLordaeronGilneas,
         Hq = new[] { UNIT_H000_CAPITAL_PALACE_LORDAERON },
         X = 7168f, Y = 512f,                   // Gilneas City
@@ -63,7 +63,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Hq = new[] { 1747988531 },             // h003 Silvermoon Palace (0.53, maintainer: enough on its own)
         Trigger = "Silvermoon Palace is lost",
         Description = "If Quel'thalas falls, Prince Kael'thas leads the last of his people to Netherstorm. The survivors "
-                      + "start again as the Sunfury.",
+                      + "start again as the Sunfury -- serving whoever takes the Netherstorm CP.",
         Decision = HourglassData.DecisionQuelthalas, Condition = HourglassData.ConditionQuelthalas,
         X = 2752f, Y = -22736f,                // Regions.SunfuryStartingPosition (centre)
         HeroType = 0,                          // Kael'thas leads them (QuelthalasFallback)
@@ -90,17 +90,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Announcement = "|cffffcc00Sylvanas has risen as a banshee.|r In the frozen north the Forsaken gather -- slaves of "
                        + "the Lich King, for now.",
       },
-      // Gilneas' own fallback (0.76.0: Gilneas only exists as Stormwind's fallback); still a placeholder
-      new TurningPointDef("Gilneas", "Gilneans on Darkshore (placeholder)", TurningPointKind.Fallback,
-        TurningPointSource.Timeline)
-      {
-        Trigger = "Gilneas Castle is lost",
-        Description = "Placeholder: a hero appears where the Gilneans would start again.",
-        Decision = HourglassData.DecisionGilneas, Condition = HourglassData.ConditionGilneas,
-        Hq = new[] { 1747989577 },             // h04I Gilneas Castle
-        X = -17238f, Y = 6446f,                // Darkshore
-        Announcement = "|cffffcc00Gilneas has fallen.|r The night elves' ships carry the survivors to the shores of Darkshore.",
-      },
+      // 0.87.1 (maintainer): no second fallback for Gilneas -- it is itself Lordaeron's fallback and is conquered (the
+      // "Gilneans on Darkshore" placeholder is gone)
       // 0.76.0 (maintainer): Stormwind -> Gilneas, on the North Alliance (Timelines/Factions/Gilneas/GilneasFallback.cs).
       // Replaces the Valiance Expedition placeholder; Gilneas is no longer a pick of the Dalaran slot.
       // 0.85.0 (maintainer): Stormwind Keep lost -> the Defias Brotherhood in the Deadmines, sworn to whoever holds the
@@ -123,9 +114,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       {
         Trigger = "The Great Forge is lost",
         Description = "The Bronzebeard throne is empty: a Dark Iron force tunnels up to claim the Great Anvil. You play "
-                      + "the Dark Iron of Shadowforge -- Ironforge's arsenal in Dark Iron hands, Dagran Thaurissan at "
-                      + "their head -- bound by the Mercenary Charter to whoever broke Ironforge, then to whoever holds "
-                      + "the Siege Foundry. Everything else of Ironforge is lost.",
+                      + "the Dark Iron of Shadowforge -- Anvilrage guards, bear riders, magma tanks and golems, "
+                      + "Dagran Thaurissan at their head -- sworn to whoever broke Ironforge, then to whoever holds "
+                      + "their Throne Room. Everything else of Ironforge is lost.",
         Decision = HourglassData.DecisionIronforge, Condition = HourglassData.ConditionIronforge,
         Hq = new[] { UNIT_H001_THE_GREAT_FORGE_IRONFORGE_OTHER },
         RequireTriggerForForcedFallback = true,
@@ -149,15 +140,16 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
                        + "conflict for gold and glory!",
       },
       // concepts: Dream trees -> South Alliance, trigger = the World Tree consumed / Nordrassil falls (P12)
-      // 0.86.0 (maintainer): Nordrassil and Cenarion Hold lost -> the Furbolgs, following whoever holds Nordrassil
-      // (their Sacred Ancestral Totem; Factions/Furbolg); was "Dream trees (placeholder)"
+      // 0.86.0 (maintainer): Nordrassil and Cenarion Hold lost -> the Furbolgs (Factions/Furbolg); was "Dream trees
+      // (placeholder)". 0.88.0: the Claw of Ursoc decides their master, not Nordrassil (FurbolgClaw)
       new TurningPointDef("Druids", TurningPointKind.Fallback, FurbolgFallback.Path)
       {
         Trigger = "Nordrassil and Cenarion Hold are lost",
         Description = "The furbolg tribes follow whoever proves worthy of holding their Sacred Ancestral Totem: you "
-                      + "play the Furbolgs -- Nafien and the Totem Lodge by Nordrassil, warriors every turn, more and "
-                      + "stronger for every world tree your side holds -- sworn to whoever holds Nordrassil. Everything "
-                      + "else of the druids is lost.",
+                      + "play the Furbolgs -- Nafien and their den, Timbermaw Hold, warriors every turn, more and "
+                      + "stronger for every world tree your side holds -- with Xavius and Peroth'arn: your own "
+                      + "masters while Xavius lives or the Claw of Ursoc is yours, whoever takes the Claw takes you. "
+                      + "Everything else of the druids is lost.",
         Decision = HourglassData.DecisionDruids, Condition = HourglassData.ConditionDruids,
         Hq = new[] { UNIT_N002_NORDRASSIL_DRUIDS_OTHER, UNIT_N06D_CENARION_HOLD_SENTINELS_OTHER },
         RequireTriggerForForcedFallback = true,
@@ -176,17 +168,10 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         RequireTriggerForForcedFallback = true,
       },
       // superseded: the Draenei pick takes Maiev's Watchers too (P19)
-      new TurningPointDef("The Exodar", "Draenei of Shattrath (placeholder)", TurningPointKind.Fallback,
-        TurningPointSource.Timeline)
-      {
-        Trigger = "Exodar Regalis is lost",
-        Description = "Placeholder: a hero appears where the draenei would start again.",
-        Decision = HourglassData.DecisionExodar, Condition = HourglassData.ConditionExodar,
-        Hq = new[] { 1697657176 },             // e01X Exodar Regalis
-        X = -982f, Y = -29010f,                // Shattrath
-        Announcement = "|cffffcc00The Exodar has fallen.|r Its people return to Outland -- the Naaru welcome them in Shattrath.",
-      },
+      // 0.87.1 (maintainer): no second fallback for the Draenei -- they are themselves the Legion's fallback and are
+      // conquered through the Exodar's bridge (the "Draenei of Shattrath" placeholder is gone)
       // 0.81.0 (maintainer): Old God conqueror -> Twilight, anyone else -> the Zandalari (no Dragonmaw for the Horde)
+      // 0.87.0 (maintainer): trolls only -- always the Zandalari
       new TurningPointDef("Orcish Horde", TurningPointKind.Fallback, TwilightHammerFallback.HordeRoute)
       {
         Trigger = "Orgrimmar is lost",
@@ -226,8 +211,9 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
       new TurningPointDef("Legion", TurningPointKind.Fallback, DraeneiFallback.Path)
       {
         Trigger = "The Legion Stronghold is lost",
-        Description = "With the Legion beaten on Azeroth the Exodar wakes on Azuremyst: you play the Draenei, sworn to "
-                      + "whoever beat the Legion -- even an old enemy. Everything else of the Legion is lost.",
+        Description = "With the Legion beaten on Azeroth the Exodar wakes: you play the Draenei, sworn to whoever beat "
+                      + "the Legion -- even an old enemy -- then to whoever holds the Exodar's bridge. The ship lands "
+                      + "near your conqueror and can fly again. Everything else of the Legion is lost.",
         Decision = HourglassData.DecisionLegion, Condition = HourglassData.ConditionLegion,
         Hq = new[] { 1966092359 },             // u00G Legion Stronghold
         RequireTriggerForForcedFallback = true,
@@ -238,8 +224,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Description = TwilightHammerFallback.OfferDescription,
         MakeTrigger = () => new ObjectiveCapitalDead(AllLegends.FelHorde.KilsorrowFortress)
           { ResearchId = HourglassData.ConditionFelHorde },
-        RequireTriggerForForcedFallback = true,
-        Announcement = "|cffffcc00Kil'sorrow Fortress has fallen.|r Its survivors gather at Dragonmaw Port.",
+        RequireTriggerForForcedFallback = true, // 0.87.0: the Dragonmaw announce themselves (FromFelHordeText)
       },
       // 0.63 (maintainer): the Black Temple destroyed -> Akama's Ashtongue Deathsworn, sworn to whoever destroyed it, then
       // to whoever holds its CP (Timelines/Factions/Illidari/IllidariFallback.cs)
@@ -271,7 +256,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines
         Trigger = "N'Zoth is lost",
         Description = "With N'Zoth's tether severed the harpies of Stonetalon imprint on the banner of whoever slew "
                       + "him: you play the Harpies -- their nests, a few harpy kinds and two matriarchs -- sworn to "
-                      + "whoever holds Stonetalon Peak. Everything else of the Black Empire is lost.",
+                      + "whoever holds the caged Broodmother by the nests. Everything else of the Black Empire is "
+                      + "lost.",
         Decision = HourglassData.DecisionBlackEmpire, Condition = HourglassData.ConditionBlackEmpire,
         Hq = new[] { UNIT_U01Z_OLD_GOD_NZOTH },
         RequireTriggerForForcedFallback = true,
