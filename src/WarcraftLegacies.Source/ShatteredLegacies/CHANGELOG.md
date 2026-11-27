@@ -4,6 +4,13 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.89.2 - Twilight opening and invasion routes
+
+- Move Twilight's opening camp and P20's camera to the Southern Highlands at (19015, -6411). Cho'gall and five Cultists start with the camp. Its units, buildings and gate share the opening pause. Capture the Grim Batol control point to earn the fortress and its workshops.
+- Neutral northern capitals no longer open the Northrend–Kalimdor crossing while starting bases are being assigned.
+- Move the clickable Statue of Thaurissan to the neighbouring dwarf statue inside Shadowforge and restore the decorative statue at the old spot.
+- Handle the preplaced Majordomo's death once. Register Benediction after the death event and record both steps in the dump.
+
 ## 0.89.1 - restore map startup
 
 - Store locked elite choices in a named type so the Lua runtime can initialize the map before registering commands and starting the turn clock.

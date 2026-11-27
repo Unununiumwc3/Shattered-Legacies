@@ -8,7 +8,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.TwilightH
 internal sealed class QuestCursedFortress : QuestData
 {
   internal QuestCursedFortress() : base("The Cursed Fortress",
-    "Take Grim Batol to bring its workshops and drake towers into the cult.",
+    "Capture the Grim Batol control point for your team to claim the fortress, workshops and drake towers for the cult.",
     @"ReplaceableTextures\CommandButtons\BTNDragonDungeon.blp")
   {
     ResearchId = TwilightHammerObjects.CursedFortress;
@@ -40,7 +40,7 @@ internal sealed class QuestCursedFortress : QuestData
   {
     internal HoldGrimBatol()
     {
-      SetDescription("Your team controls Grim Batol");
+      SetDescription("Your team holds the Grim Batol control point");
       var point = ControlPointManager.Instance.GetFromUnitType(UNIT_N03X_GRIM_BATOL);
       TargetWidget = point.Unit;
       Position = new(point.Unit.X, point.Unit.Y);

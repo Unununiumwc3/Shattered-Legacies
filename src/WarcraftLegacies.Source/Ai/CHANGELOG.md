@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.89.2 - Twilight opening and invasion routes
+
+- The Legion bot must capture the Argus control points and finish its Burning Citadel before its Argus quest unlocks the teleporters to Northrend and Alterac.
+
 ## 0.89.1 - restore map startup
 
 - Store locked elite choices in a named type so the Lua runtime can initialize the map before registering commands and starting the turn clock.

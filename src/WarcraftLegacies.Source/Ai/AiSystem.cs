@@ -310,8 +310,8 @@ namespace WarcraftLegacies.Source.Ai
           // Crusade, whose deadlines are not shifted) is not the bot's business; starting quests without a deadline
           // only for factions of the game start (a later faction's starting quest is a real goal -- e.g. "A Once Great
           // People" of the Scarlet Crusade, the Forsaken's "The Banshee's Rise")
-          // Both opening campaigns resolve through their live assault or caravan, including failure rewards.
-          if (q == f.StartingQuest && (f.Name == "Orcish Horde" || f.Name == "Tauren Tribes"))
+          // These opening campaigns depend on live objectives, including the Legion capturing Argus and upgrading its hall.
+          if (q == f.StartingQuest && (f.Name == "Orcish Horde" || f.Name == "Tauren Tribes" || f.Name == "Legion"))
           {
             continue;
           }
@@ -2942,7 +2942,7 @@ namespace WarcraftLegacies.Source.Ai
   {
     // Bump on every code drop. Shown by the -version command and in every -dump header, so we can always
     // tell which AI build a map actually contains (a stale build looked exactly like "the new commands are broken").
-    public const string Build = "0.89.1";
+    public const string Build = "0.89.2";
 
     public static void Setup()
     {

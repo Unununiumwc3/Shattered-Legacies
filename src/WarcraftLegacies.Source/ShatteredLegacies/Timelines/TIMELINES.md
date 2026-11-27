@@ -40,7 +40,8 @@ its halls cannot be destroyed and the defeat rule passes it by. Fallbacks get no
 
 Shared paths: `ExclusivePath` (`Core/`) -- one destination, claimed once (`TwilightHammerFallback.Path` = the
 Dragonmaw, `HordeRoute` = the Zandalari). Twilight's Hammer is a START faction since 0.89.0 (P20, `TwilightStart`):
-Grim Batol, the Twilight Citadel by the Southern Highlands, the gate of the pass; its fallback is the Dragonmaw.
+The clan starts at the Twilight Citadel in the Southern Highlands with Cho'gall, five Cultists and the gate of the pass.
+Capturing the Grim Batol control point for its team awards the fortress. Its fallback is the Dragonmaw.
 
 ## 1. The model: turning points
 

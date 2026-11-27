@@ -47,21 +47,28 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
       }
     }
 
-    // a capital is lost when it is gone, dead, or no longer its own faction's
-    private static bool Lost(Capital c, string faction)
+    // The capitals start neutral while factions are being assigned their bases.
+    // Count a live capital as conquered only when an enemy player actually holds it.
+    private static bool Lost(Capital capital, player defender)
     {
-      if (c == null || c.Unit == null || GetUnitTypeId(c.Unit) == 0 || GetUnitState(c.Unit, UNIT_STATE_LIFE) <= 0.405f)
+      if (capital == null || capital.Unit == null)
+      {
+        return false;
+      }
+
+      var u = capital.Unit;
+      if (GetUnitTypeId(u) == 0 || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
       {
         return true;
       }
 
-      var owner = GetOwningPlayer(c.Unit);
-      return GetPlayerId(owner) >= 24 || owner.GetPlayerData().Faction?.Name != faction;
+      var owner = GetOwningPlayer(u);
+      return GetPlayerId(owner) < 24 && IsPlayerEnemy(owner, defender);
     }
 
     private static bool NorthFallen() =>
-      Lost(AllLegends.Lordaeron.CapitalPalace, "Lordaeron") && Lost(AllLegends.Dalaran.Dalaran, "Dalaran")
-      && Lost(AllLegends.Quel.Silvermoon, "Quel'thalas");
+      Lost(AllLegends.Lordaeron.CapitalPalace, Player(9)) && Lost(AllLegends.Dalaran.Dalaran, Player(7))
+      && Lost(AllLegends.Quel.Silvermoon, Player(2));
 
     // one team holds at least 70 % of the CPs on Kalimdor
     private static bool KalimdorWinner(out string team)

@@ -40,7 +40,7 @@ CAMPS = [
     ("Ironclad Cove", -25232, -30176, [("ngir", 1), ("nkot", 2), ("nkog", 2), ("nkol", 1), ("nkob", 2)]),
 ]
 # doodads replaced by units: (type, x, y) within 64
-REPLACE = [("BOth", -18635, 24065), ("D006", -23564, 23257)]
+REPLACE = [("BOth", -18635, 24065), ("D006", -22381, 23577)]
 
 
 def le(code):

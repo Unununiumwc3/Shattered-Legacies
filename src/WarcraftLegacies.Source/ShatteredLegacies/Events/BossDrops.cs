@@ -1,4 +1,5 @@
 using MacroTools.Artifacts;
+using MacroTools.PreplacedWidgets;
 using WarcraftLegacies.Source.Ai;
 using WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.DarkIronForces;
 
@@ -14,17 +15,28 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
   {
     internal static void Setup()
     {
+      var boss = AllPreplacedWidgets.Units.Get(DarkIronForcesObjects.Majordomo);
       var death = CreateTrigger();
-      TriggerRegisterPlayerUnitEvent(death, Player(PLAYER_NEUTRAL_AGGRESSIVE), EVENT_PLAYER_UNIT_DEATH, null);
-      TriggerAddAction(death, () => AiApi.Safe("boss drop", () =>
+      TriggerRegisterUnitEvent(death, boss, EVENT_UNIT_DEATH);
+      TriggerAddAction(death, () =>
       {
-        var u = GetTriggerUnit();
-        if (GetUnitTypeId(u) == DarkIronForcesObjects.Majordomo)
+        var x = GetUnitX(boss);
+        var y = GetUnitY(boss);
+        DestroyTrigger(death);
+        AiApi.LogPin("Majordomo Executus died");
+        // Register the artifact's event handlers after the death event has finished dispatching.
+        var dropTimer = CreateTimer();
+        TimerStart(dropTimer, 0f, false, () =>
         {
-          Drop(Objects088.Benediction, GetUnitX(u), GetUnitY(u), "Majordomo Executus has fallen. From his Cache of the "
-            + "Firelord rolls the Eye of Divinity -- |cffffcc00Benediction|r.");
-        }
-      }));
+          DestroyTimer(dropTimer);
+          AiApi.Safe("Majordomo loot", () =>
+          {
+            Drop(Objects088.Benediction, x, y, "Majordomo Executus has fallen. From his Cache of the "
+              + "Firelord rolls the Eye of Divinity -- |cffffcc00Benediction|r.");
+            AiApi.LogPin("Majordomo loot complete");
+          });
+        });
+      });
 
       var t = CreateTimer();
       TimerStart(t, 2f, false, () =>

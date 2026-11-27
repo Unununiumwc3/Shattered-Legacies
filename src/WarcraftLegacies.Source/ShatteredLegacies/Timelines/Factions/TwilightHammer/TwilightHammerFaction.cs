@@ -31,8 +31,8 @@ public sealed class TwilightHammerFaction : Faction
       Turns = 10
     };
     IntroText = () => Loc.Format(
-      "You are playing as {faction}.\n\nCho'gall's cult holds Grim Batol and the Highlands for the Old Gods. Your gate "
-      + "bars the pass in the north; the Twilight Citadel trains your Battlemasters. Win the Dragonmaw of the port for "
+      "You are playing as {faction}.\n\nCho'gall's cult holds the Southern Highlands for the Old Gods. Your gate "
+      + "bars the northern pass. Capture the Grim Batol control point to claim its fortress and workshops; the Twilight Citadel trains your Battlemasters. Win the Dragonmaw of the port for "
       + "the old pact, gather the ascendants -- and wake Deathwing.",
       ("{faction}", $"{PrefixCol}{Loc.Get("the Twilight's Hammer")}|r"));
     ProcessObjectInfo(TwilightHammerObjectInfo.GetAllObjectLimits());
