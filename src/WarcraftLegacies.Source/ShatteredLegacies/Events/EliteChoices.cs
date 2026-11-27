@@ -57,8 +57,23 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
       UPGRADE_ZBML_SPELL_CONDUCTION_C_THUN, UPGRADE_TP28_FLAMETHROWER_IRONFORGE, UPGRADE_TP29_ARTILLERY_IRONFORGE
     };
 
+    // A named type avoids CSharp.lua's shared cache for three- and four-integer tuples.
+    private sealed class LockedPair
+    {
+      internal readonly int Pair;
+      internal readonly int LimitA;
+      internal readonly int LimitB;
+
+      internal LockedPair(int pair, int limitA, int limitB)
+      {
+        Pair = pair;
+        LimitA = limitA;
+        LimitB = limitB;
+      }
+    }
+
     // per faction: the pairs it has, with the limits the two units had before they were locked
-    private static readonly Dictionary<Faction, List<(int Pair, int LimitA, int LimitB)>> _locked = new();
+    private static readonly Dictionary<Faction, List<LockedPair>> _locked = new();
     private static readonly Dictionary<int, Faction> _seen = new(); // pid -> the faction last handled
     private static readonly HashSet<int> _botPicked = new();         // pid * 100 + pair
 
@@ -112,7 +127,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
     {
       if (!_locked.ContainsKey(faction))
       {
-        var list = new List<(int, int, int)>();
+        var list = new List<LockedPair>();
         for (var i = 0; i < Pairs.Length; i++)
         {
           var a = FourCC(Pairs[i].A);
@@ -128,7 +143,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
           faction.ModObjectLimit(b, -lb);
           faction.ModObjectLimit(Pairs[i].ResA, 1);
           faction.ModObjectLimit(Pairs[i].ResB, 1);
-          list.Add((i, la, lb));
+          list.Add(new LockedPair(i, la, lb));
           AiApi.Log("elite choice " + faction.Name + ": " + Pairs[i].A + " / " + Pairs[i].B + " locked");
         }
 
@@ -181,7 +196,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
       AiApi.LogPin("elite choice " + faction.Name + ": " + GetObjectName(unitType) + " (" + I2S(limit) + ")");
     }
 
-    private static void BotPick(player p, List<(int Pair, int LimitA, int LimitB)> pairs)
+    private static void BotPick(player p, List<LockedPair> pairs)
     {
       var glass = Hourglass.Get(GetPlayerId(p));
       if (glass == null)

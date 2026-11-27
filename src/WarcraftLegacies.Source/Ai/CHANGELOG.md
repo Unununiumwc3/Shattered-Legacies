@@ -5,6 +5,11 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.89.1 - restore map startup
+
+- Store locked elite choices in a named type so the Lua runtime can initialize the map before registering commands and starting the turn clock.
+- Pass the vassal to the seat-holder callback to avoid a CSharp.lua delegate type collision during initialization.
+
 ## 0.89.0 — version only
 
 Map / content: `../ShatteredLegacies/CHANGELOG.md` 0.89.0 (Twilight's Hammer on P20; gen_ai_data lists the Twilight

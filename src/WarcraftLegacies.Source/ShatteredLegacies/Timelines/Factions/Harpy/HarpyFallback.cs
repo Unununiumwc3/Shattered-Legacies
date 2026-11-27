@@ -84,7 +84,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Harpy
       // held by N'Zoth's slayer.
       var brood = CreateUnit(p, Objects088.Broodmother, BroodX, BroodY, 270f);
       _broodmother = new CaptureSeat(brood, overlord != null && overlord != p ? overlord : p, BroodText);
-      Conquest.Register(p, () => _broodmother.Holder, overlord != p ? overlord : null, true);
+      Conquest.Register(p, _ => _broodmother.Holder, overlord != p ? overlord : null, true);
       ProtectNests(p);
       for (var i = 0; i < 24; i++)
       {

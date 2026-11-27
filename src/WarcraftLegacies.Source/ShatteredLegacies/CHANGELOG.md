@@ -4,6 +4,11 @@ One version number for the whole map (`README.md`, "Map name and versions"). Bot
 `../Ai/CHANGELOG.md`; up to 0.51.1 that file held the fork's changes too (fallbacks 0.39.1-0.39.10, Kezan Enterprise
 0.39.5-0.39.8, map name 0.39.9, the extra CPs 0.39.4-0.46.2).
 
+## 0.89.1 - restore map startup
+
+- Store locked elite choices in a named type so the Lua runtime can initialize the map before registering commands and starting the turn clock.
+- Pass the vassal to the seat-holder callback to avoid a CSharp.lua delegate type collision during initialization.
+
 ## 0.89.0 — Twilight's Hammer returns as a start faction
 
 No bot changes (version only, `../Ai/CHANGELOG.md`). No playtest yet.

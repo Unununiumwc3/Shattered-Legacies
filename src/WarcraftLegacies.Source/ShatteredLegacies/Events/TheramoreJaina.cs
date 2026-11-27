@@ -63,7 +63,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Events
 
       SetUnitInvulnerable(sanctum, false);
       _seat = new CaptureSeat(sanctum, owner);
-      Conquest.Register(owner, () => _seat.Holder, null, false, true, ConquestText);
+      Conquest.Register(owner, _ => _seat.Holder, null, false, true, ConquestText);
       AiApi.LogPin("Theramore conquerable (Jaina's Sanctum, P" + I2S(GetPlayerId(owner)) + ")");
     }
 

@@ -23,7 +23,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
     internal static List<int> Seats = new();
     // 0.88.0: a seat that is not a CP -- who holds it, asked every check (Jaina's Sanctum, the Broodmother, the Claw of
     // Ursoc: Core/Effects/CaptureSeat); null for a CP seat
-    internal static List<System.Func<player>> SeatHolders = new();
+    // Include the vassal in the callback signature. CSharp.lua caches Func<player> at the same key prefix as Action<player>.
+    internal static List<System.Func<player, player>> SeatHolders = new();
     internal static List<player> Holders = new(); // per vassal: who held the seat at the last check
     internal static HashSet<player> Undefeatable = new();
     // 0.87.0: a vassal's own line when its seat is taken (Gilneas' mercy text); none = the plain "now serve" line
@@ -52,8 +53,8 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       Start(vassal, overlord, keepTeam);
     }
 
-    // 0.88.0: the seat is whatever holder() says (a captured unit, an artifact's carrier); null = nobody
-    internal static void Register(player vassal, System.Func<player> holder, player overlord, bool undefeatable = false,
+    // 0.88.0: the seat is whatever holder(vassal) says (a captured unit, an artifact's carrier); null = nobody
+    internal static void Register(player vassal, System.Func<player, player> holder, player overlord, bool undefeatable = false,
       bool keepTeam = false, string conquestText = null)
     {
       if (conquestText != null)
@@ -69,7 +70,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
       Vassals.Add(vassal);
       Seats.Add(0);
       SeatHolders.Add(holder);
-      Holders.Add(holder());
+      Holders.Add(holder(vassal));
       Start(vassal, overlord, keepTeam);
     }
 
@@ -119,7 +120,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core
         player holder;
         if (SeatHolders[i] != null)
         {
-          holder = SeatHolders[i]();
+          holder = SeatHolders[i](Vassals[i]);
         }
         else
         {

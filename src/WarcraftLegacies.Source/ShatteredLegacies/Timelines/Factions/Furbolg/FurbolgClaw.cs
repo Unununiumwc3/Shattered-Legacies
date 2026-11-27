@@ -65,7 +65,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Factions.Furbolg
       _lost = true;
       Hostile(_xavius);
       Hostile(_perotharn);
-      Conquest.Register(p, Holder, holder, true);
+      Conquest.Register(p, _ => Holder(), holder, true);
       var name = holder.GetPlayerData().Faction?.Name ?? GetPlayerName(holder);
       for (var i = 0; i < 24; i++)
       {

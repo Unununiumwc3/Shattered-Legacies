@@ -4,7 +4,7 @@ namespace WarcraftLegacies.Source.ShatteredLegacies.Timelines.Core.Effects
 {
   // 0.88.0: a SEAT that is a unit, not a CP (Jaina's Sanctum, the Broodmother). It never dies and never changes its
   // owner: brought to 0 life by an enemy of whoever holds it, it is "taken" -- the attacker's player is its holder now
-  // and it is whole again. Core/Conquest asks Holder (Conquest.Register(vassal, () => seat.Holder, ...)).
+  // and it is whole again. Core/Conquest asks Holder (Conquest.Register(vassal, _ => seat.Holder, ...)).
   internal sealed class CaptureSeat
   {
     internal unit Unit { get; }
