@@ -5,6 +5,10 @@ builds were tagged `4.8.2-ai.<build>` in the deleted fork). The `-version` comma
 same version. Up to 0.51.1 this file also held the changes of the fork that hosts the bot (Shattered Legacies); from
 0.52.0 on those are in `../ShatteredLegacies/CHANGELOG.md`.
 
+## 0.89.5 - Spread portal discovery across four scheduler slots
+
+Keep the previous portal graph live while scanning owners in batches. Refresh live destinations and scripted routes after the final batch. Dump summaries show peak task work and the latest heartbeat entries.
+
 ## 0.89.4 - Turn errors
 
 - Fix the round-one Eternal Palace error and the round-ten elite-choice error reported in the 0.89.3 dumps.

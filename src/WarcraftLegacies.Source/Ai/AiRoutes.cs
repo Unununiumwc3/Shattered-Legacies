@@ -103,7 +103,12 @@ namespace WarcraftLegacies.Source.Ai
       AiScheduler.Add("route structures 3", 60, 42, () => CheckStructures(12), true);
       AiScheduler.Add("route structures 4", 60, 46, () => CheckStructures(18), true);
       AiScheduler.Add("route creeps", 60, 50, CheckCreeps, true); // 0.44.3: Neutral Hostile per node area
-      AiScheduler.Add("route portals", 120, 19, CheckPortals, true); // every 30 s
+      // Four consecutive quarter-second slots every 30 seconds. Each invocation advances
+      // the same sweep, even if the optional scheduler budget defers one of its slots.
+      for (var phase = 16; phase <= 19; phase++)
+      {
+        AiScheduler.Add("route portals " + I2S(phase - 15), 120, phase, CheckPortals, true);
+      }
     }
 
     // ---- live edge state ----------------------------------------------------------------------------------
@@ -419,8 +424,47 @@ namespace WarcraftLegacies.Source.Ai
         + (Creeps ? "ON (one-shots off)" : "OFF (one-shots on, 0.44.2)") + "  -- -creeps on|off");
     }
 
+    private static readonly List<unit> _portalCandidates = new();
+    private static int _nextPortalOwner;
+
     private static void CheckPortals()
     {
+      if (_nextPortalOwner == 0)
+      {
+        _portalCandidates.Clear();
+      }
+      var g = CreateGroup();
+      // 0.48: ALL players' waygates, not only the neutral ones. A player-owned waygate (WL's Deeprun Tram for
+      // Ironforge / Stormwind, the Legion Teleporters to Northrend / Alterac) is an edge for its owner and allies only
+      // (PortalAllowed); it closes when the building dies or is deactivated -- found by the unit, not by coordinates.
+      var end = System.Math.Min(_nextPortalOwner + 8, 28);
+      for (var pl = _nextPortalOwner; pl < end; pl++)
+      {
+        GroupEnumUnitsOfPlayer(g, Player(pl), null);
+        unit u;
+        while ((u = FirstOfGroup(g)) != null)
+        {
+          GroupRemoveUnit(g, u);
+          SimpleBot.WaveOps++;
+          if (!WaygateIsActive(u))
+          {
+            continue;
+          }
+
+          _portalCandidates.Add(u);
+        }
+      }
+
+      DestroyGroup(g);
+      _nextPortalOwner = end;
+      if (end < 28)
+      {
+        return;
+      }
+
+      // Keep the previous graph available during collection. Read live owner, position and
+      // destination on publication, including gates that changed while the sweep was running.
+      _nextPortalOwner = 0;
       Ready();
       if (_padjIn == null)
       {
@@ -446,28 +490,13 @@ namespace WarcraftLegacies.Source.Ai
       _pExitX.Clear();
       _pExitY.Clear();
       _pOwner.Clear();
-      var g = CreateGroup();
-      // 0.48: ALL players' waygates, not only the neutral ones. A player-owned waygate (WL's Deeprun Tram for
-      // Ironforge / Stormwind, the Legion Teleporters to Northrend / Alterac) is an edge for its owner and allies only
-      // (PortalAllowed); it closes when the building dies or is deactivated -- found by the unit, not by coordinates.
-      for (var pl = 0; pl < 28; pl++)
+      foreach (var gate in _portalCandidates)
       {
-        GroupEnumUnitsOfPlayer(g, Player(pl), null);
-        unit u;
-        while ((u = FirstOfGroup(g)) != null)
+        if (GetUnitTypeId(gate) != 0 && WaygateIsActive(gate) && GetUnitState(gate, UNIT_STATE_LIFE) > 0.405f)
         {
-          GroupRemoveUnit(g, u);
-          SimpleBot.WaveOps++;
-          if (!WaygateIsActive(u) || GetUnitState(u, UNIT_STATE_LIFE) <= 0.405f)
-          {
-            continue;
-          }
-
-          AddPortalEdge(u, WaygateGetDestinationX(u), WaygateGetDestinationY(u));
+          AddPortalEdge(gate, WaygateGetDestinationX(gate), WaygateGetDestinationY(gate));
         }
       }
-
-      DestroyGroup(g);
       AiPortals.AddStatic(); // 0.46: the Dark Portal, if WL opened it but it is no live edge (0.45.0: none at 540 min)
       AiPortals.Clean();     // 0.46: tickets of dead units
     }

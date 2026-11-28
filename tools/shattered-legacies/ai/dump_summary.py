@@ -91,6 +91,8 @@ def parse(path):
     d["ab"] = ab_values(lines)  # 0.46.2
     d["errors"] = [ln for ln in d["sec"].get("PINNED", []) if "TICK ERROR" in ln or "FAILED" in ln]
     d["errors"] += [ln for ln in lines if ln.startswith("## ERROR in")]
+    # Since 0.89.3 the latest system error is written immediately after the dump header.
+    d["errors"] += d["sec"].get("HEADER", [])[1:]
     return d
 
 
@@ -200,7 +202,7 @@ def summary(dumps, beats, note, real=None):
             key = re.sub(r"^\S+\s", "", e)
             if key not in [re.sub(r"^\S+\s", "", x) for x in errs]:
                 errs.append(e)
-    out += ["**Errors (TICK ERROR / FAILED / section errors): " + ("none" if not errs else str(len(errs))) + "**"]
+    out += ["**Errors (system / tick / failed / section): " + ("none" if not errs else str(len(errs))) + "**"]
     out += [f"- {e}" for e in errs[:15]]
     out.append("")
     if real:
@@ -245,12 +247,24 @@ def summary(dumps, beats, note, real=None):
     tasks = [ln for ln in last["load"] if ln.startswith("task ")]
     if tasks:
         out += ["", f"Top tasks by total ops at {last['tag']} (of {len(tasks)}):", "```"] + tasks[:10] + ["```"]
+        peaks = []
+        for line in tasks:
+            match = re.fullmatch(r"task (.+?) every=\S+ runs=(\d+) last=\d+ max=(\d+) sum=(\d+)", line)
+            if match and int(match[2]) and int(match[3]):
+                peaks.append((int(match[3]), match[1], int(match[4]) / int(match[2])))
+        if peaks:
+            out += ["", "Largest single task runs (counted operations, game to date):", "",
+                    "| task | peak ops | mean ops/run |", "|---|---:|---:|"]
+            for peak, name, mean in sorted(peaks, key=lambda row: -row[0])[:5]:
+                out.append(f"| {name} | {peak} | {mean:.1f} |")
     turns = turnaround_lines(last)  # 0.48.3: back-and-forth measurement
     if turns:
         out += ["", f"Turnarounds at {last['tag']} (0.48.3; per cause, all bots; P lines: turns / walks):", "```"] + turns + ["```"]
     out += ["", f"Bots at {last['tag']}: " + "; ".join(last["states"])]
     for b in beats:
-        out += ["", f"Heartbeat: {b[0]}"] + [f"  {x}" for x in b[1:4]] + (["  ..."] if len(b) > 4 else [])
+        notes = [line for line in b[1:] if not line.startswith("task ")]
+        recent = [line for line in b[1:] if line.startswith("task ")][-3:]
+        out += ["", f"Heartbeat: {b[0]}"] + [f"  {line}" for line in notes + recent]
     return "\n".join(out) + "\n"
 
 
